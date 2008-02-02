@@ -6,6 +6,7 @@
 //Module/Folder_Name => Name of Controller file
 
 $ACTIVE_MODULES['TestModule'] = MODULES_PATH . '/TestModule/TestModuleController.php';
+$ACTIVE_MODULES['Contact'] = 'Contact/Contact.php';
 
 //what skin to use
 define('CURRENT_SKIN', 'default');

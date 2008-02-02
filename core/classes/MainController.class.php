@@ -6,6 +6,7 @@
  *	Handles main task delegations
  * 
  * Revision updates:
+ *  7 - loadModules now loads from list
  *  6 - Run() handles function parameters
  *	5 - run_module_action revised
  *		function names changed
@@ -18,18 +19,21 @@ class MainController
 	public static $DB;
 	public static $activeModule;
 	
-	public static function loadModules()
+	public static function loadModules($ModuleList)
 	{
 		global $ACTIVE_MODULES;
 		global $NAV_BAR;
-		self::$ModuleList = &$ACTIVE_MODULES;
+		global $HTMLHead;
+				
+		self::$ModuleList = $ModuleList;
 		
 		//load each module and initilize
 		foreach(self::$ModuleList as $ModuleName => $ModuleController)
-		{
+		{	
 			//formulate proper module path
-			$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
-			
+			//$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
+			$mpath = $ModuleController;
+		
 			if(file_exists($mpath))
 			{
 				include_once $mpath;
@@ -48,6 +52,12 @@ class MainController
 					if(method_exists($$ModuleName, 'NavBar'))
 					{
 						$NAV_BAR .= $$ModuleName->NavBar();
+					}
+					
+					//Another magic function
+					if(method_exists($$ModuleName, 'HTMLHead'))
+					{
+						$HTMLHead .= $$ModuleName->HTMLHead();
 					}
 				}
 			}

@@ -14,8 +14,10 @@ $time = explode(" ", $time);
 $time = $time[1] + $time[0];
 $start = $time;
 
-define('SITE_ROOT', dirname(__FILE__));
-include SITE_ROOT . '/core/config.inc.php';
+include 'core/config.inc.php';
+
+//load our modules
+MainController::loadModules($ACTIVE_MODULES);
 
 $BaseTemplate = new TemplateSet;
 

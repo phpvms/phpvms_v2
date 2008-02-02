@@ -15,6 +15,7 @@ session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'on');
 
+define('SITE_ROOT', str_replace('/core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
 define('CACHE_PATH', CORE_PATH . '/cache');
 define('CLASS_PATH', CORE_PATH . '/classes');
@@ -31,18 +32,14 @@ define('CACHE_TIMEOUT', 24); //hours
 include CLASS_PATH . '/DB.class.php';
 include CLASS_PATH . '/MainController.class.php';
 include CLASS_PATH . '/ModuleBase.class.php';
-/*include CLASS_PATH . '/SQL.class.php';
-include CLASS_PATH . '/MySQL.class.php';
-include CLASS_PATH . '/MySQLi.class.php';*/
 include CLASS_PATH . '/SessionManager.class.php';
 include CLASS_PATH . '/TemplateSet.class.php';
 include CLASS_PATH . '/Vars.class.php';
+include CLASS_PATH . '/Util.class.php';
 
 if(DBASE_NAME != '')
 {
 	DB::init();
 	DB::connect();
 }
-
-MainController::loadModules();
 ?>

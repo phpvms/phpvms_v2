@@ -11,18 +11,26 @@ class TestModule extends ModuleBase
 {	
 	var $TEMPLATES;
 	
+	function HTMLHead()
+	{
+		echo '<script type="text/javascript">
+	//This is in the <HEAD>
+	</script>';
+	
+	}
 	
 	function NavBar()
 	{
 		//This function is picked up by the system
 		// Generates a navigation "element" for this module
-		return '<li><a href="?page=pageone">A link	
+		echo '<li><a href="?page=pageone">A link</a>
 					<ul>
 						<li><a href="?page=showprofile">Show Profile</li>
 					</ul>
 		        </li>';
 		        
 	}
+	
 	function Controller()
 	{
 		echo 'calling controller<br />';

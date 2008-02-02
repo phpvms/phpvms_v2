@@ -9,6 +9,10 @@
 <script type="text/javascript" src="lib/js/suckerfish.js"></script>
 <link rel="stylesheet" href="lib/skins/default/style.css" type="text/css" />
 
+<?php
+	// Print our additional header text from modules
+	echo $head_text;
+?>
 
 <script type="text/javascript">
 
@@ -33,6 +37,9 @@ $(document).ready(function(){
 	
 		<div id="nav">
 			<ul class="nav">
+				<?php 
+				// Print out our navigation tree from the modules
+				echo $navigation_tree; ?>
 				<li><a href="http://groups.google.com/group/vamsys-discuss">Admin Panel</a>
 					<ul>
 						<li><a href="http://groups.google.com/group/vamsys-discuss">Admin Panel</a></li>

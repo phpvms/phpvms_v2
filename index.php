@@ -27,6 +27,10 @@ if(file_exists($settings_file))
 	include $settings_file;
 	
 $BaseTemplate->template_path = SKINS_PATH;
+
+$BaseTemplate->Set('navigation_tree', $NAVBAR);
+$BaseTemplate->Set('head_text', $HTMLHead);
+
 $BaseTemplate->ShowTemplate('header.tpl');
 
 MainController::RunAllActions();

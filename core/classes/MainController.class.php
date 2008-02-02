@@ -22,7 +22,7 @@ class MainController
 	public static function loadModules($ModuleList)
 	{
 		global $ACTIVE_MODULES;
-		global $NAV_BAR;
+		global $NAVBAR;
 		global $HTMLHead;
 				
 		self::$ModuleList = $ModuleList;
@@ -44,20 +44,25 @@ class MainController
 					global $$ModuleName;
 					
 					self::$activeModule = $ModuleName;
-										
+				
 					$$ModuleName = new $ModuleName();
-					//call_user_method('ParentInit', $$ModuleName);
 					
 					//"Magic function" for the main navigation
 					if(method_exists($$ModuleName, 'NavBar'))
 					{
-						$NAV_BAR .= $$ModuleName->NavBar();
+						ob_start();
+						$$ModuleName->NavBar();
+						$NAVBAR .= ob_get_clean();
+						ob_end_clean();
 					}
 					
 					//Another magic function
 					if(method_exists($$ModuleName, 'HTMLHead'))
 					{
-						$HTMLHead .= $$ModuleName->HTMLHead();
+						ob_start();
+						$$ModuleName->HTMLHead();
+						$HTMLHead .= ob_get_clean();
+						ob_end_clean();
 					}
 				}
 			}

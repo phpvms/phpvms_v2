@@ -42,4 +42,7 @@ if(DBASE_NAME != '')
 	DB::init();
 	DB::connect();
 }
+
+$NAVBAR = '';
+$HTMLHead = '';
 ?>

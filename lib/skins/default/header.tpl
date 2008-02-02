@@ -7,6 +7,8 @@
 		
 <script type="text/javascript" src="lib/js/jquery-1.2.2.pack.js"></script>
 <script type="text/javascript" src="lib/js/suckerfish.js"></script>
+<script type="text/javascript" src="lib/js/phpvms.js"></script>
+
 <link rel="stylesheet" href="lib/skins/default/style.css" type="text/css" />
 
 <?php
@@ -14,15 +16,6 @@
 	echo $head_text;
 ?>
 
-<script type="text/javascript">
-
-$(document).ready(function(){
-	$(".nav").superfish({
-		animation : { opacity:"show",height:"show"}
-	});
-});
-
-</script>
 </head>
 <body>
 

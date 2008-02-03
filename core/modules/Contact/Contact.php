@@ -19,6 +19,7 @@ class Contact extends ModuleBase
 		$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
 		
 		
+		
 		// Main function
 		if($_GET['page'] == "contact")
 		{

@@ -26,17 +26,19 @@ class MainController
 		global $HTMLHead;
 				
 		self::$ModuleList = $ModuleList;
-		
+				
 		//load each module and initilize
 		foreach(self::$ModuleList as $ModuleName => $ModuleController)
 		{	
 			//formulate proper module path
 			//$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
 			$mpath = $ModuleController;
+			
+			
 		
-			if(file_exists($mpath))
+			if(file_exists($ModuleController))
 			{
-				include_once $mpath;
+				include_once $ModuleController;
 				
 				if(class_exists($ModuleName))
 				{
@@ -65,6 +67,7 @@ class MainController
 						ob_end_clean();
 					}
 				}
+			
 			}
 		}
 	}
@@ -108,7 +111,9 @@ class MainController
 		
 		// have a reference to the self 
 		if(!is_object($$ModuleName) || ! method_exists($$ModuleName, $MethodName))
+		{
 			return false;	
+		}
 			
 		// if there are parameters added, then call the function 
 		//	using those additional params

@@ -27,6 +27,7 @@
 				<li><a href="http://groups.google.com/group/vamsys-discuss">Goto Home Page</a></li>
 			</ul>
 		</div>
+		<div id="slice"></div>
 		<div id="navbox">
 				<ul class="nav">
 					<?php 

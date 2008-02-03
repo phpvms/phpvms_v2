@@ -22,7 +22,16 @@ class Util
 		    }
 		}
 		closedir($dh);
+		
+		//sort it in alpha order
+		$title = array();
+		foreach($modules as $key=>$row)
+		{
+			$title[$key] = $row['title'];
+		}
 			
+		array_multisort($title, SORT_REGULAR, $modules);
+		
 		return $modules;
 	}
 }

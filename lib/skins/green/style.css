@@ -89,6 +89,14 @@ li
 	float: right;
 	border-bottom: solid 5px #000;
 }
+
+#slice
+{
+	width: 970px;
+	height: 36px;
+	background: url(images/slice.jpg) no-repeat;
+}
+
 #body
 {
 	width: 970px;
@@ -127,9 +135,12 @@ li
 
 #bodytext
 {
-	width: 76px;
-	float: left;
-	padding: 15px;
+	width: 730px;
+	float: right;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	
 }
 
 #body h1

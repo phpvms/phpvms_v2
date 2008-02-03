@@ -33,8 +33,6 @@ class MainController
 			//formulate proper module path
 			//$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
 			$mpath = $ModuleController;
-			
-			
 		
 			if(file_exists($ModuleController))
 			{

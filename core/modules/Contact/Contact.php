@@ -8,6 +8,15 @@
 class Contact extends ModuleBase
 {
 
+		function NavBar()
+	{
+		//This function is picked up by the system
+		// Generates a navigation "element" for this module
+		echo '<li><a href="?page=contact">Contact Us</a>
+		        </li>';
+		        
+	}
+
 	function Controller()
 	{
 		//Path to our templates folder

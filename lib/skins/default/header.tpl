@@ -19,13 +19,14 @@
 </head>
 <body>
 
+	
 	<div id="topNav">
 		<ul>
 			<li><a href="http://wiki.phpvms.net">Log In</a></li>
 			<li><a href="http://groups.google.com/group/vamsys-discuss">Admin Panel</a></li>
 		</ul>
 	</div>
-	
+	<div id="bodywrap">
 	<div id="body">
 	
 		<div id="nav">

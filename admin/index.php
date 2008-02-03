@@ -1,18 +1,33 @@
 <?php
   
 /**
+ * @author phpvms.net
  * @desc Admin panel home
  */
 	
 include '../core/config.inc.php';
 
+//TODO: login implementation
+
 $ModuleList = Util::GetAdminModules();
 MainController::loadModules($ModuleList);
 
-//header
+$BaseTemplate = new TemplateSet;
+
+//load the main skin
+$settings_file = SITE_ROOT . '/lib/skins/green/green.php';
+if(file_exists($settings_file))
+	include $settings_file;
+	
+$BaseTemplate->template_path = SITE_ROOT . '/lib/skins/green';
+
+$BaseTemplate->Set('navigation_tree', $NAVBAR);
+$BaseTemplate->Set('head_text', $HTMLHead);
+
+$BaseTemplate->ShowTemplate('header.tpl');
 
 MainController::RunAllActions();
 
-//footer
+$BaseTemplate->ShowTemplate('footer.tpl');
  
 ?>

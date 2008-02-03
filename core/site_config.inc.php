@@ -9,6 +9,7 @@
 $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 
 //what skin to use
+define('SITE_URL', 'http://www.phpvms.net/test');
 define('CURRENT_SKIN', 'default');
 
 //database info

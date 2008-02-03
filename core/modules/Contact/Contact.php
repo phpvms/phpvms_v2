@@ -4,12 +4,7 @@
  * This is a contact module
  */
  
- 
- /* Make sure this is added in the site_config.inc.php
- 
- $ACTIVE_MODULES[ModuleName] = 'ThisFileName.php';
- 
- */
+
 class Contact extends ModuleBase
 {
 

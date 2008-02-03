@@ -8,7 +8,7 @@
 class Contact extends ModuleBase
 {
 
-		function NavBar()
+	function NavBar()
 	{
 		//This function is picked up by the system
 		// Generates a navigation "element" for this module

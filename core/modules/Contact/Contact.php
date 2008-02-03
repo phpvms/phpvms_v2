@@ -10,7 +10,7 @@
  $ACTIVE_MODULES[ModuleName] = 'ThisFileName.php';
  
  */
-class Contact extends Contact
+class Contact extends ModuleBase
 {
 
 	function Controller()

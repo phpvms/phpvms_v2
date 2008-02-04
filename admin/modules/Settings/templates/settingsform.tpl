@@ -6,7 +6,7 @@
 <?php
 	if(!$allsettings)
 	{
-		echo 'No settings have been added';
+		echo '<p>No settings have been added</p>';
 	}
 	else
 	{

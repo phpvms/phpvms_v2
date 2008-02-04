@@ -13,7 +13,6 @@ class Dashboard extends ModuleBase
 	{
 		$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
 		
-		
 		if(Vars::GET('admin') == '')
 		{
 			

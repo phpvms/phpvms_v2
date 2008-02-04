@@ -12,7 +12,7 @@ $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 define('SITE_URL', 'http://www.phpvms.net/test');
 define('CURRENT_SKIN', 'default');
 
-define('PREFIX', 'phpvms_');
+define('TABLE_PREFIX', 'phpvms_');
 
 //database info
 define('DBASE_USER', 'nssliven_phpvms');

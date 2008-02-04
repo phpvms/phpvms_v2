@@ -82,6 +82,50 @@ li
 	padding: 3px;
 }
 
+dl
+{
+	position: relative;
+	width: 730px;
+	z-index: 100;
+}
+
+dt
+{
+	clear: both;
+	float: left;
+	width: 180px;
+	padding: 4px 0 2px 0;
+	text-align: left;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+dd
+{
+	float: left;
+	width: 520px;
+	margin: 0 0 8px 0;
+	padding-left: 6px;
+	font-size: 12px;
+}
+
+dd button
+{
+}
+
+dd p
+{
+	margin-top: 0px;
+}
+
+dd input
+{
+	width: 330px;
+	padding: 3px;
+	margin-bottom: 3px;
+	z-index: 500;
+}
+
 #innerwrapper
 {
 	width: 970px;
@@ -200,7 +244,7 @@ li
 
 #footer
 {
-	width: 970px;
+	width: 950px;
 	margin: 0 auto;
 	height: 27px;
 	padding: 5px;

@@ -43,6 +43,8 @@ if(DBASE_NAME != '')
 	DB::connect();
 }
 
+Util::LoadSiteSettings();
+
 $NAVBAR = '';
 $HTMLHead = '';
 ?>

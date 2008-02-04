@@ -42,6 +42,14 @@ class TemplateSet
 		$this->vars[$name] = $value;
 	}
 	
+	public function Show($tpl_name)
+	{
+		if($this)
+			return $this->ShowTemplate($tpl_name);
+		else
+			self::ShowTemplate($tpl_name);
+	}
+	
 	public function ShowTemplate($tpl_name)
 	{	
 		if($this)

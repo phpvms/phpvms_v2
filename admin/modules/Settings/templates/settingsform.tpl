@@ -1,7 +1,7 @@
 
 <h1>Site Settings</h1>
 <p>Select available site options from this page. Don't forget to save!</p>
-<form  id="settingsform" method="POST" action="?admin=settings">
+<form  id="settingsform" method="post" action="?admin=settings">
 <dl>
 <?php
 	if(!$allsettings)
@@ -24,6 +24,6 @@
 	}
 ?>
 	<dt></dt>
-	<dd><input type="submit" id="saveSettings" value="Save Settings" /></dd>
+	<dd><input type="submit" name="saveSettings" id="saveSettings" value="Save Settings" /></dd>
 </dl>
 </form>

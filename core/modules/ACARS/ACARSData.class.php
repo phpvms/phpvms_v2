@@ -7,7 +7,6 @@ class ACARSData
 	
 	function InsertData()
 	{
-		
 		$pilotid = Vars::GET('pnumber');
 		
 		if($pilotid == '')
@@ -28,7 +27,6 @@ class ACARSData
 		$timeDestApt = Vars::GET('timedestapt');
 		$phase = Vars::GET('detailph');
 			
-		
 		$existing = DB::get_row('SELECT id FROM '.TABLE_PREFIX.'acarspos WHERE pilot_num="'.$pilotid.'"');
 		
 		//Do results, do a clean insert
@@ -36,7 +34,7 @@ class ACARSData
 		{
 			//argh, i hate using double quotes. but its a long query =\
 			
-			$sql = "INSERT INTO ".TABLE_PREFIX."acarspos (pilot_num, lat, lon, gs, alt, IATA, depaptICAO, depapt,
+			$sql = "INSERT INTO ".TABLE_PREFIX."acarsdata (pilot_num, lat, lon, gs, alt, IATA, depaptICAO, depapt,
 						disDepApt, timeDepApt, destAptICAO, destApt, disDestApt, timeDestApt, phase)
 					VALUES('$pilotid', '$lat', '$long', $gs, $alt, '$IATA', '$depAptICAO', '$depApt',
 							$disDepApt, $timeDepApt, '$destAptICAO', '$destApt', $disDestApt, '$timeDestApt',
@@ -46,8 +44,7 @@ class ACARSData
 			
 			if(!$res)
 			{
-				//verbose for now
-				DB::debug();
+		
 			}
 		}
 		else
@@ -55,7 +52,7 @@ class ACARSData
 			//do an update
 			
 			$rowid = $existing->id;
-			$sql = "UPDATE".TABLE_PREFIX."acarspos SET pilot_num='$pilotid', lat='$lat', lon='$lon', gs=$gs, 
+			$sql = "UPDATE ".TABLE_PREFIX."acarsdata SET pilot_num='$pilotid', lat='$lat', lon='$lon', gs=$gs, 
 						alt=$alt, IATA='$IATA', depAptICAO='$depAptICAO', depApt='$depApt,
 						disDepApt=$disDepApt, timeDepApt='timeDepApt, destAptICAO='$destAptICAO', 
 						destApt='$destApt', disDestApt=$disDestApt, timeDestApt=$timeDestApt, phase=$phase
@@ -68,13 +65,28 @@ class ACARSData
 				//error out?
 				
 				//verbose for now
-				DB::debug();
 				
 			}
 			
 		}
+		
+		// be verbose about any output for now
+		
+		DB::debug();
 	}
 	
+	//TODO: convert this cutoff time into a SETTING parameter, in minutes
+	function GetACARSData($cutofftime = 1)
+	{
+		//cutoff time in days	
+		if($cutofftime == '')
+			$cutofftime = 1;
+		
+		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'acarsdata 
+					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' DAYS) <= last_update';
+					
+		return DB::get_results($sql);		
+	}
 	
 }
 

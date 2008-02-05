@@ -24,9 +24,9 @@ class MainController
 		global $ACTIVE_MODULES;
 		global $NAVBAR;
 		global $HTMLHead;
-				
+						
 		self::$ModuleList = $ModuleList;
-				
+		
 		//load each module and initilize
 		foreach(self::$ModuleList as $ModuleName => $ModuleController)
 		{	

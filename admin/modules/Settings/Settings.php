@@ -20,11 +20,19 @@ class Settings extends ModuleBase
 		if(Vars::GET('admin') == 'settings')
 		{
 		
-			if(Vars::POST('submit') != '')
+			// Check for POST here since we'll be outputting the form again
+			// jQuery will replace the entire <div> with fresh updated content
+		
+			switch(Vars::POST('action'))
 			{
-				$this->AddSetting();
+				case 'addsetting':
+					$this->AddSetting();
+					break;
+				case 'savesettings':
+					$this->SaveSettings();
+					break;
 			}
-			
+						
 			$this->ShowSettings();
 		}
 		
@@ -36,15 +44,19 @@ class Settings extends ModuleBase
 		
 	}
 	
+	function SaveSettings()
+	{
+		print_r($_POST);
+		
+	}
+	
 	function ShowSettings()
 	{
-		$allsettings = DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
-			
-			$this->TEMPLATE->Set('allsettings', $allsettings);
-			$this->TEMPLATE->ShowTemplate('settingsform.tpl');
-			
-			
-			$this->TEMPLATE->ShowTemplate('addsetting.tpl');
+		$allsettings = DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');	
+		$this->TEMPLATE->Set('allsettings', $allsettings);
+		
+		$this->TEMPLATE->ShowTemplate('settingsform.tpl');
+		$this->TEMPLATE->ShowTemplate('addsetting.tpl');
 	}
 }
 ?>

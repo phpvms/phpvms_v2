@@ -12,5 +12,6 @@
 	<dd><input name="descrip" type="text" value="" /></dd>
 	
 	<dt></dt>
-	<dd><input type="submit" name="submit" value="Add Setting" /></dd>
+	<dd><input type="hidden" name="action" value="addsetting">
+		<input type="submit" name="submit" value="Add Setting" /></dd>
 </form>

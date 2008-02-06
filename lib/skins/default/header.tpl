@@ -6,6 +6,7 @@
 		
 		
 <script type="text/javascript" src="lib/js/jquery-1.2.2.pack.js"></script>
+<script type="text/javascript" src="lib/js/jquery.form.js"></script>
 <script type="text/javascript" src="lib/js/suckerfish.js"></script>
 <script type="text/javascript" src="lib/js/phpvms.js"></script>
 
@@ -15,6 +16,7 @@
 	// Print our additional header text from modules
 	echo $head_text;
 ?>
+
 
 </head>
 <body>

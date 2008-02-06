@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery-1.2.2.pack.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/suckerfish.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
 
@@ -13,7 +14,19 @@
 <?php 
 	echo $head_text;
 ?>
-				
+		
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#form').ajaxForm({
+		target: '#bodytext',
+    	success: function() {
+          	$('#bodytext').fadeIn('slow');
+    	}
+    });
+});
+</script>
+		
 </head>
 <body>
 

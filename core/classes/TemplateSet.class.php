@@ -21,12 +21,23 @@ class TemplateSet
 	
 	public function SetTemplatePath($path)
 	{
-		$this->template_path = $path;
+		if($this)
+			$this->template_path = $path;
+		else	
+			self::$template_path = $path;
 	}
 	
 	public function EnableCaching($bool=true)
 	{
 		$this->enable_caching = $bool;
+	}
+	
+	public function ClearVars()
+	{
+		if($this)
+			$this->vars = array();
+		else
+			self::$vars = array();
 	}
 	
 	public function Set($name, $value)
@@ -35,11 +46,23 @@ class TemplateSet
 		//	Check if the file exists
 		if(strstr($value, '.'))
 		{
-			if(file_exists($this->template_path . '/' . $value))
-				$value = $this->__get_template($this->template_path . '/' . $value, true);
+			if($this)
+			{
+				if(file_exists($this->template_path . '/' . $value))
+					$value = $this->GetTemplate($this->template_path . '/' . $value, true);
+			}
+			else
+			{
+				if(file_exists(self::$template_path . '/' . $value))
+					$value = self::GetTemplate(self::$template_path . '/' . $value, true);
+			}
 		}
 		
-		$this->vars[$name] = $value;
+		if($this)
+			$this->vars[$name] = $value;
+		else
+			self::$vars[$name] = $value;
+			
 	}
 	
 	public function Show($tpl_name)
@@ -55,23 +78,32 @@ class TemplateSet
 		if($this)
 			$tpl_path = $this->template_path . '/' . $tpl_name;
 		else
-			$tpl_path = $tpl_name;
+			$tpl_path = self::$template_path . '/' . $tpl_name;
 		
-		if($this->enable_caching)
+		if($this->enable_caching ==true || self::$enable_caching == true)
 		{
 			$cached_file = CACHE_PATH . '/' . $tpl_name . md5($tpl_name);
 			
+			if($this)
+				$timeout = $this->cache_timeout*3600;
+			else
+				$timeout = self::$cache_timeout*3600;
+				
 			//expired?
-			if ((time() - filemtime($cached_file)) > ($this->cache_timeout*3600))
+			if ((time() - filemtime($cached_file)) > $timeout)
 			{
 				unlink ($cached_file);
+				
 				//get a fresh version
-				$tpl_output = $this->GetTemplate($tpl_path, true);
+				if($this)
+					$tpl_output = $this->GetTemplate($tpl_path, true);
+				else
+					$tpl_output = self::GetTemplate($tpl_path, true);
 				
 				echo $tpl_output;
 				
 				//cache it into the storage file
-				if($this->enable_caching/* && $cache_expired*/)
+				if($this->enable_caching == true || self::$enable_caching == true)
 				{
 					$fp = fopen($cached_file, 'w');
 					fwrite($fp, $tpl_output, strlen($tpl_output));
@@ -95,7 +127,10 @@ class TemplateSet
 	//get the actual template text
 	public function GetTemplate($tpl_path, $ret=false)
 	{
-		extract($this->vars, EXTR_OVERWRITE);
+		if($this)
+			extract($this->vars, EXTR_OVERWRITE);
+		else
+			extract(self::$vars, EXTR_OVERWRITE);
 		
 		ob_start();
 		include $tpl_path; 

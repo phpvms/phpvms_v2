@@ -3,17 +3,6 @@
 /* Just enter the module name
 */
 
-//Module/Folder_Name => Name of Controller file
-
-//$ACTIVE_MODULES['TestModule'] = MODULES_PATH . '/TestModule/TestModuleController.php';
-
-$ACTIVE_MODULES['Login'] = MODULES_PATH . '/Login/Login.php';
-$ACTIVE_MODULES['ACARS'] = MODULES_PATH . '/ACARS/ACARS.php';
-$ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
-$ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
-$ACTIVE_MODULES['PilotProfile'] = MODULES_PATH . '/PilotProfile/PilotProfile.php';
-$ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php';
-
 //what skin to use
 define('SITE_URL', 'http://www.phpvms.net/test');
 define('CURRENT_SKIN', 'default');

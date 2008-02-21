@@ -21,10 +21,7 @@ class TemplateSet
 	
 	public function SetTemplatePath($path)
 	{
-		if($this)
-			$this->template_path = $path;
-		else	
-			self::$template_path = $path;
+		$this->template_path = $path;
 	}
 	
 	public function EnableCaching($bool=true)
@@ -34,10 +31,7 @@ class TemplateSet
 	
 	public function ClearVars()
 	{
-		if($this)
-			$this->vars = array();
-		else
-			self::$vars = array();
+		$this->vars = array();
 	}
 	
 	public function Set($name, $value)
@@ -46,59 +40,33 @@ class TemplateSet
 		//	Check if the file exists
 		if(strstr($value, '.'))
 		{
-			if($this)
-			{
-				if(file_exists($this->template_path . '/' . $value))
-					$value = $this->GetTemplate($this->template_path . '/' . $value, true);
-			}
-			else
-			{
-				if(file_exists(self::$template_path . '/' . $value))
-					$value = self::GetTemplate(self::$template_path . '/' . $value, true);
-			}
+			if(file_exists($this->template_path . '/' . $value))
+				$value = $this->GetTemplate($this->template_path . '/' . $value, true);
+			
 		}
 		
-		if($this)
-			$this->vars[$name] = $value;
-		else
-			self::$vars[$name] = $value;
-			
+		$this->vars[$name] = $value;
 	}
 	
 	public function Show($tpl_name)
 	{
-		if($this)
-			return $this->ShowTemplate($tpl_name);
-		else
-			self::ShowTemplate($tpl_name);
+		return $this->ShowTemplate($tpl_name);
 	}
 	
 	public function ShowTemplate($tpl_name)
 	{	
-		if($this)
-			$tpl_path = $this->template_path . '/' . $tpl_name;
-		else
-			$tpl_path = self::$template_path . '/' . $tpl_name;
+		$tpl_path = $this->template_path . '/' . $tpl_name;
 		
 		if($this->enable_caching ==true || self::$enable_caching == true)
 		{
 			$cached_file = CACHE_PATH . '/' . $tpl_name . md5($tpl_name);
 			
-			if($this)
-				$timeout = $this->cache_timeout*3600;
-			else
-				$timeout = self::$cache_timeout*3600;
-				
 			//expired?
-			if ((time() - filemtime($cached_file)) > $timeout)
+			if ((time() - filemtime($cached_file)) >  ($this->cache_timeout*3600))
 			{
 				unlink ($cached_file);
 				
-				//get a fresh version
-				if($this)
-					$tpl_output = $this->GetTemplate($tpl_path, true);
-				else
-					$tpl_output = self::GetTemplate($tpl_path, true);
+				$tpl_output = $this->GetTemplate($tpl_path, true);
 				
 				echo $tpl_output;
 				
@@ -117,20 +85,14 @@ class TemplateSet
 		}
 		else
 		{
-			if($this)
-				$this->GetTemplate($tpl_path);
-			else
-				self::GetTemplate($tpl_path);
+			return $this->GetTemplate($tpl_path);
 		}
 	}
 	
 	//get the actual template text
 	public function GetTemplate($tpl_path, $ret=false)
 	{
-		if($this)
-			extract($this->vars, EXTR_OVERWRITE);
-		else
-			extract(self::$vars, EXTR_OVERWRITE);
+		extract($this->vars, EXTR_OVERWRITE);
 		
 		ob_start();
 		include $tpl_path; 
@@ -144,7 +106,7 @@ class TemplateSet
 			return $cont;
 	}
 	
-	public function ShowModule($ModuleName)
+	public function ShowModule($ModuleName, $Method='ShowTemplate')
 	{
 		//read the parameters
 		global $$ModuleName;
@@ -162,7 +124,7 @@ class TemplateSet
 				array_push($vals, $param);
 			}
 
-			return call_user_method_array('ShowTemplate',  $$ModuleName, $vals);
+			return call_user_method_array($Method,  $$ModuleName, $vals);
 		}
 	}
 }

@@ -44,6 +44,7 @@ include CLASS_PATH . '/DB.class.php';
 include CLASS_PATH . '/MainController.class.php';
 include CLASS_PATH . '/ModuleBase.class.php';
 include CLASS_PATH . '/SessionManager.class.php';
+include CLASS_PATH . '/Template.class.php';
 include CLASS_PATH . '/TemplateSet.class.php';
 include CLASS_PATH . '/Vars.class.php';
 include CLASS_PATH . '/Util.class.php';
@@ -54,6 +55,7 @@ if(DBASE_NAME != '')
 	DB::connect();
 }
 
+Template::SetTemplatePath(TEMPLATES_PATH);
 Util::LoadSiteSettings();
 
 $NAVBAR = '';

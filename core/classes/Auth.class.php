@@ -19,21 +19,22 @@ class Auth
 	public static $usergroups;
 	
 	/**
-		* Constructor.  
-		*
-		* @param 
-		* @return 
-		*/
+	 * Constructor.  
+	 *
+	 * @param 
+	 * @return 
+	 */
 	function StartAuth() 
 	{	
-		if(SessionManager::GetData('loggedin')==true)
+		self::$init = true;
+		
+		if(SessionManager::GetData('loggedin') == true)
 		{
 			self::$loggedin = true;
 			self::$userinfo = SessionManager::GetData('userinfo');
 			self::$usergroups = SessionManager::UserGroups('usergroups');
 			self::$userid = self::$userinfo->userid;
 			
-			self::$init = true;
 			return true;
 		}
 		else
@@ -56,8 +57,10 @@ class Auth
 	function LoggedIn()
 	{
 		if(self::$init == false)
+		{
 			return self::StartAuth();
-			
+		}
+		
 		return self::$loggedin;
 	}
 	
@@ -76,7 +79,7 @@ class Auth
 	
 	function ProcessLogin($emailaddress, $password)
 	{
-		$username = DB::escape($emailaddress);
+		$emailaddress = DB::escape($emailaddress);
 		$password = DB::escape($password);
 		
 		$sql = 'SELECT * FROM ' . APP_TABLE_PREFIX . 'users
@@ -126,6 +129,7 @@ class Auth
 	
 	function LogOut()
 	{
+		SessionManager::AddData('loggedin', false);
 		SessionManager::AddData('userinfo', '');
 		SessionManager::AddData('usergroups', '');
 		

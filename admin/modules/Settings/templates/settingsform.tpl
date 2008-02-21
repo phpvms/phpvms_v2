@@ -12,14 +12,13 @@
 	{
 		foreach($allsettings as $setting)
 		{
-		
-			echo '<dt><strong>'.$setting->name . '</strong></dt>';
+			echo '<dt><strong>'.$setting->friendlyname . '</strong></dt>';
 			
 			if($setting->name == 'PHPVMS_VERSION')
 				echo '<dd>'.$setting->value.'</dd>';
 			else
 				echo '<dd><input type="text" name="'.$setting->name.'" value="'.$setting->value.'" />
-				<p>'.$setting->descrip.'</p></dd>';
+						<p>'.$setting->descrip.'</p></dd>';
 		}
 	}
 ?>

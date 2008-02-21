@@ -8,7 +8,7 @@
   * @author Nabeel Shahzad
   */
   
-class UsersGroups  
+class UserGroups  
 {
 	var $user_permissions;
 		

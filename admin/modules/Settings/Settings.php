@@ -11,10 +11,8 @@ class Settings extends ModuleBase
 		echo '<li><a href="?admin=settings">Settings</a></li>';
 	}
 	
-	
 	function Controller()
 	{		
-	
 		$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
 		
 		if(Vars::GET('admin') == 'settings')
@@ -56,7 +54,7 @@ class Settings extends ModuleBase
 		$this->TEMPLATE->Set('allsettings', $allsettings);
 		
 		$this->TEMPLATE->ShowTemplate('settingsform.tpl');
-		$this->TEMPLATE->ShowTemplate('addsetting.tpl');
+		//$this->TEMPLATE->ShowTemplate('addsetting.tpl');
 	}
 }
 ?>

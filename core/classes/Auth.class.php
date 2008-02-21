@@ -10,14 +10,13 @@
   
 class Auth  
 {
-	public static $userid;
-	public static $username, $password;
-	public static $displayname;
-	public static $usergroups;
-	public static $loggedin=false;
-	public static $login_error;
 	public static $init=false;
+	public static $loggedin=false;
 	public static $error_message;
+	
+	public static $userid;
+	public static $userinfo;
+	public static $usergroups;
 	
 	/**
 		* Constructor.  
@@ -30,8 +29,9 @@ class Auth
 		if(SessionManager::GetData('loggedin')==true)
 		{
 			self::$loggedin = true;
-			self::$userdata = SessionManager::GetData('userinfo');
+			self::$userinfo = SessionManager::GetData('userinfo');
 			self::$usergroups = SessionManager::UserGroups('usergroups');
+			self::$userid = self::$userinfo->userid;
 			
 			self::$init = true;
 			return true;
@@ -74,14 +74,13 @@ class Auth
 		return false;
 	}
 	
-	function ProcessLogin($username, $password)
+	function ProcessLogin($emailaddress, $password)
 	{
-		$username = DB::escape($username);
+		$username = DB::escape($emailaddress);
 		$password = DB::escape($password);
 		
-		$sql = 'SELECT id, firstname, lastname, username, email, password, salt 
-					FROM ' . APP_TABLE_PREFIX . 'users
-					WHERE username=\''.$username.'\'';
+		$sql = 'SELECT * FROM ' . APP_TABLE_PREFIX . 'users
+					WHERE email=\''.$emailaddress.'\'';
 
 		$userinfo = DB::get_row($sql);
 
@@ -98,7 +97,7 @@ class Auth
 		{	
 			SessionManager::AddData('loggedin', true);	
 			SessionManager::AddData('userinfo', $userinfo);
-			SessionManager::AddData('usergroups', self::GetUsersGroups(self::$userid));
+			SessionManager::AddData('usergroups', self::GetUserGroups($userinfo->userid));
 			
 			return true;
 		}			
@@ -106,20 +105,19 @@ class Auth
 		{
 			// just blank it
 			self::$error_message = 'Invalid Password';
-			
 			self::LogOut();
 			
 			return false;
 		}
 	}
 		
-	function GetUsersGroups($userid)
+	function GetUserGroups($userid)
 	{
 		$userid = DB::escape($userid);
 
-		$sql = 'SELECT g.id, g.name, g.groupstype 
-					FROM '.APP_TABLE_PREFIX.'usergroups u, '.APP_TABLE_PREFIX.'groups g
-					WHERE u.userid='.$userid.' AND g.id=u.groupid';
+		$sql = 'SELECT g.groupid, g.name
+					FROM '.APP_TABLE_PREFIX.'groupmembers u, '.APP_TABLE_PREFIX.'groups g
+					WHERE u.userid='.$userid.' AND g.groupid=u.groupid';
 
 		$ret = DB::get_results($sql);
 

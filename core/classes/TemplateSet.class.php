@@ -57,7 +57,7 @@ class TemplateSet
 	{	
 		$tpl_path = $this->template_path . '/' . $tpl_name;
 		
-		if($this->enable_caching ==true || self::$enable_caching == true)
+		if($this->enable_caching ==true)
 		{
 			$cached_file = CACHE_PATH . '/' . $tpl_name . md5($tpl_name);
 			

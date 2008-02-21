@@ -35,10 +35,6 @@ $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
 $ACTIVE_MODULES['PilotProfile'] = MODULES_PATH . '/PilotProfile/PilotProfile.php';
 $ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php';
 
-define('LIB_PATH', SITE_ROOT.'/lib');
-define('SKINS_PATH', LIB_PATH.'/skins/' . CURRENT_SKIN);
-define('CACHE_TIMEOUT', 24); //hours
-
 // Include all dependencies
 include CLASS_PATH . '/Auth.class.php';
 include CLASS_PATH . '/DB.class.php';
@@ -59,6 +55,10 @@ if(DBASE_NAME != '')
 
 Template::SetTemplatePath(TEMPLATES_PATH);
 Util::LoadSiteSettings();
+
+define('LIB_PATH', SITE_ROOT.'/lib');
+define('SKINS_PATH', LIB_PATH.'/skins/' . CURRENT_SKIN);
+define('CACHE_TIMEOUT', 24); //hours
 
 $NAVBAR = '';
 $HTMLHead = '';

@@ -20,14 +20,12 @@ class Contact extends ModuleBase
 
 	function Controller()
 	{
-		//Path to our templates folder
-		$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
-		
+		//Path to our templates folder		
 		
 		// Main function
 		if($_GET['page'] == "contact")
 		{
-			$this->TPL->ShowTemplate("form.tpl");		
+			Template::ShowTemplate("contact_form.tpl");		
 		}
 		
 		if(isset($_POST['contact']))

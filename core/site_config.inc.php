@@ -3,10 +3,6 @@
 /* Just enter the module name
 */
 
-//what skin to use
-define('SITE_URL', 'http://www.phpvms.net/test');
-define('CURRENT_SKIN', 'default');
-
 define('TABLE_PREFIX', 'phpvms_');
 
 //database info

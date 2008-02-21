@@ -40,6 +40,7 @@ define('SKINS_PATH', LIB_PATH.'/skins/' . CURRENT_SKIN);
 define('CACHE_TIMEOUT', 24); //hours
 
 // Include all dependencies
+include CLASS_PATH . '/Auth.class.php';
 include CLASS_PATH . '/DB.class.php';
 include CLASS_PATH . '/MainController.class.php';
 include CLASS_PATH . '/ModuleBase.class.php';
@@ -47,6 +48,7 @@ include CLASS_PATH . '/SessionManager.class.php';
 include CLASS_PATH . '/Template.class.php';
 include CLASS_PATH . '/TemplateSet.class.php';
 include CLASS_PATH . '/Vars.class.php';
+include CLASS_PATH . '/UserGroups.class.php';
 include CLASS_PATH . '/Util.class.php';
 
 if(DBASE_NAME != '')

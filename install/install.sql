@@ -14,6 +14,24 @@ CREATE TABLE `phpvms_users` (
 PRIMARY KEY ( `userid` )
 );
 
+CREATE TABLE `phpvms_customfields` (
+`fieldid` INT NOT NULL AUTO_INCREMENT ,
+`fieldname` VARCHAR( 25 ) NOT NULL ,
+`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
+`public` ENUM( 'y', 'n' ) NOT NULL ,
+`showonregister` ENUM( 'y', 'n' ) NOT NULL ,
+PRIMARY KEY ( `fieldid` )
+);
+
+
+CREATE TABLE `phpvms_fieldvalues` (
+`id` INT NOT NULL AUTO_INCREMENT ,
+`fieldid` INT NOT NULL ,
+`userid` INT NOT NULL ,
+`value` VARCHAR( 25 ) NOT NULL ,
+PRIMARY KEY ( `id` )
+);
+
 
 CREATE TABLE `phpvms_groups` (
 `groupid` INT NOT NULL AUTO_INCREMENT ,

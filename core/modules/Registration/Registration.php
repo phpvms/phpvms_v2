@@ -2,6 +2,16 @@
 
 class Registration extends ModuleBase
 {
+	function HTMLHead()
+	{
+		/*Show our password strength checker
+			*/
+		if(Vars::GET('page') == 'register')
+		{
+			Template::ShowTemplate('registration_head_jscript.tpl');
+		}
+	}
+	
 	function NavBar()
 	{   //TODO: only show if logged out
 	
@@ -48,6 +58,26 @@ class Registration extends ModuleBase
 			Template::Set('agree_error', '');
 		
 		
+		// Check password length
+		if(Vars::POST('password1') < 6)
+		{
+			$error = true;
+			Template::Set('password_tooshort', 'The password is too short!');
+		}
+		else
+			Template::Set('password_tooshort', '');
+			
+			
+		// Check is passwords are the same	
+		if(Vars::POST('password1') != Vars::POST('password2'))
+		{
+			$error = true;
+			Template::Set('password_mismatch', 'The passwords do not match!');
+		}
+		else
+			Template::Set('password_mismatch', '');
+			
+			
 		if($error == true)
 			return false;
 		

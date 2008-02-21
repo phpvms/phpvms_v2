@@ -17,6 +17,7 @@ class Registration extends ModuleBase
 		{
 			
 			//show our registration stuff
+			Templates::ShowTemplate('registration_mainform.tpl');
 			
 		}
 	}

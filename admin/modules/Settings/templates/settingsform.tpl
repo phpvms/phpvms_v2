@@ -43,6 +43,8 @@
 					
 				default:
 				
+					echo '<dd>';
+					
 					if($setting->value == 'true' || $setting->value == 'false')
 					{
 						if($setting->value == 'true')
@@ -56,20 +58,19 @@
 							$sel_false = 'selected';
 						}
    
-						echo '<dd>
+						echo '
 								<SELECT name="' . $setting->name . '" onChange="showChanged();" >
 								<option value="true" '. $sel_true . '>Enabled</option>
 								<option value="false" ' . $sel_false . '>Disabled</option>
-							  </SELECT>
-							  <p>'.$setting->descrip.'</p>
-							  </dd>';
+							  </SELECT>';
 					}
 					else 
 					{
-						echo '<dd><input type="text" name="'.$setting->name.'" value="'.$setting->value.'" />
-						<p>'.$setting->descrip.'</p></dd>';
+						echo '<input type="text" name="'.$setting->name.'" value="'.$setting->value.'" />';
 					}
 					
+					echo '<p>'.$setting->descrip.'</p>
+						</dd>';
 					break;
 			}
 		}

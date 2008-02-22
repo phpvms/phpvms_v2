@@ -5,6 +5,18 @@
 class SettingsData
 {
 	
+	function GetAllSettings()
+	{
+		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
+	}
+	
+	function GetAllFields()
+	{
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
+		
+	}
+		
+	
 	/**
 	 * Save site settings
 	 *
@@ -36,20 +48,20 @@ class SettingsData
 		$value = DB::escape($value);
 		$descrip = DB::escape($descrip);
 		
-		$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core) 
+		/*$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core) 
 					VALUES (\''.$name.'\', \''.$value.'\', \''.$descrip.'\', \''. $core.'\')';
 		
 		$res = DB::query($sql);
 		
 		if(DB::$errno == 1062 || !$res)
-		{
+		{*/
 			//update
 			// don't change CORE status on update
 			$sql = 'UPDATE ' . TABLE_PREFIX . 'settings 
 						SET value=\''.$value.'\' WHERE name=\''.$name.'\'';
 			
 			$res = DB::query($sql);			
-		}		
+		//}		
 		
 		if(!$res && DB::$errno !=0)
 		{			

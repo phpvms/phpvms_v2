@@ -22,6 +22,22 @@ After filling out the form below, you will get a confirmation email.</p>
 	<dd><input type="text" name="password2" value="" />
 		<p>Please enter your password again for verification purposes</p></dd>
 		
+	<?php
+	/* Show any extra fields
+	 */
+	if($extrafields)
+	{
+		foreach($extrafield as $field)
+		{
+	?>
+	
+		<dt><?php echo $field->fieldname; ?></dt>
+		<dd><input type="text" name="<?php echo $field->fieldname; ?>" /></dd>
+	<?php
+		}
+	}
+	?>
+		
 	<dt></dt>
 	<dd><input type="checkbox" name="agree" /><p>I agree with the terms and conditions</p></dd>
 	<dt></dt>

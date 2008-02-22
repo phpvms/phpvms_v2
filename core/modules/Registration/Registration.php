@@ -26,6 +26,9 @@ class Registration extends ModuleBase
 			if(Auth::LoggedIn()) // Make sure they don't over-ride it
 				return;
 	
+			//Get the extra fields, that'll show in the main form
+			Template::Set('extrafields', $this->GetCustomFields());
+			
 			if(isset($_POST['submit_register']))
 			{
 				// check the registration
@@ -41,6 +44,18 @@ class Registration extends ModuleBase
 				Template::ShowTemplate('registration_mainform.tpl');
 			}
 		}
+	}
+	
+	/* Get the extra fields
+	 */
+	
+	function GetCustomFields()
+	{
+		
+		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'customfields
+					WHERE showonregister=\'y\'';
+		
+		return DB::get_results($sql);		
 	}
 	
 	/* This function goes through the whole form and catalogs the errors

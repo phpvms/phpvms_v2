@@ -41,7 +41,6 @@ class Settings extends ModuleBase
 		
 		/* CustomFields Section
 		 */
-		
 		elseif(Vars::GET('admin') == 'customfields')
 		{
 			switch(Vars::POST('action'))
@@ -49,10 +48,13 @@ class Settings extends ModuleBase
 				case 'savefields':
 					$this->SaveFields();
 					break;
+					
+				case 'addfields':
+					$this->AddField();
+					break;
 			}
 			
 			$this->ShowFields();
-			
 		}
 		
 	}
@@ -66,6 +68,11 @@ class Settings extends ModuleBase
 			$value = DB::escape($value);
 			SettingsData::SaveSetting($name, $value, '', false);
 		}		
+	}
+	
+	function AddField()
+	{
+		SettingsData::AddField();
 	}
 	
 	function SaveFields()

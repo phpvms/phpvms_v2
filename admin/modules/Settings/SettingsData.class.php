@@ -1,10 +1,8 @@
 <?php
 
 
-
 class SettingsData
 {
-	
 	function GetAllSettings()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
@@ -15,8 +13,38 @@ class SettingsData
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
 		
 	}
-		
 	
+	function AddField()
+	{
+		
+		$fieldname = Vars::POST('fieldname');
+		$fieldtype = Vars::POST('fieldtype');
+		$public = Vars::POST('public');
+		$showinregistration = Vars::POST('showinregistration');
+		
+		//Check, set up like this on purpose to default "safe" values
+		if($public == 'yes')
+			$public = 'y';
+		else
+			$public = 'n';
+		
+		if($showinregistration == 'yes')
+			$showinregistration = 'y';
+		else
+			$showinregistration = 'n';		
+		
+		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (fieldname, type, public, showonregister)
+					VALUES ('$fieldname', '$fieldtype', '$public', '$showinregistration')";
+		
+		$res = DB::query($sql);	
+		
+		if(!$res && DB::$errno !=0)
+		{			
+			return false;
+		}
+		
+		return true;		
+	}
 	/**
 	 * Save site settings
 	 *

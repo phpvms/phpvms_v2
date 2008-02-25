@@ -4,11 +4,6 @@
 <title>The PHP Virtual Airlines Management Project</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery-1.2.2.pack.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/suckerfish.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
-
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/style.css" type="text/css" />
 
 <?php 

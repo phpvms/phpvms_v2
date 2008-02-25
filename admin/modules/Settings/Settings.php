@@ -92,7 +92,7 @@ class Settings extends ModuleBase
 	
 	function ShowFields()
 	{
-		$this->TEMPLATE->Set('allfields', SettingsData::GetAllFields());
+		$this->TEMPLATE->Set('allfields', SettingsData::GetAllFieldsForRegister());
 		
 		$this->TEMPLATE->ShowTemplate('customfieldsform.tpl');
 		

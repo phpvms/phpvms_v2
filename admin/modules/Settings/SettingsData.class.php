@@ -8,10 +8,9 @@ class SettingsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
 	}
 	
-	function GetAllFields()
+	function GetAllFieldsForRegister()
 	{
-		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
-		
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE showonregister=y');
 	}
 	
 	function AddField()

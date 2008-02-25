@@ -17,24 +17,23 @@
 </head>
 <body>
 
-	
-	<div id="body">
-	<div id="innerwrapper">
-		<div id="topNav">
-			<img src="<?=SITE_URL?>/lib/skins/green/images/toplogo.jpg" alt="PHPVMS Logo" />
-			<ul>
-				<li><a href="http://code.google.com/p/phpvms/">Logout</a></li>
-				<li><a href="http://groups.google.com/group/vamsys-discuss">Goto Home Page</a></li>
+<div id="body">
+<div id="innerwrapper">
+	<div id="topNav">
+		<img src="<?=SITE_URL?>/lib/skins/green/images/toplogo.jpg" alt="PHPVMS Logo" />
+		<ul>
+			<li><a href="http://code.google.com/p/phpvms/">Logout</a></li>
+			<li><a href="http://groups.google.com/group/vamsys-discuss">Goto Home Page</a></li>
+		</ul>
+	</div>
+	<div id="slice"></div>
+	<div id="navbox">
+			<ul class="nav">
+				<?php 
+					echo $navigation_tree;
+				?>
 			</ul>
-		</div>
-		<div id="slice"></div>
-		<div id="navbox">
-				<ul class="nav">
-					<?php 
-						echo $navigation_tree;
-					?>
-				</ul>
-		</div>
-		
+	</div>
 	
-		<div id="bodytext">
+
+	<div id="bodytext">

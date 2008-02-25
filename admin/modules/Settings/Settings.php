@@ -49,7 +49,7 @@ class Settings extends ModuleBase
 					$this->SaveFields();
 					break;
 					
-				case 'addfields':
+				case 'addfield':
 					$this->AddField();
 					break;
 			}
@@ -72,6 +72,12 @@ class Settings extends ModuleBase
 	
 	function AddField()
 	{
+		if(Vars::POST('fieldname') == '')
+		{
+			echo 'No field name entered!';
+			return;
+		}
+		
 		SettingsData::AddField();
 	}
 	
@@ -92,9 +98,10 @@ class Settings extends ModuleBase
 	
 	function ShowFields()
 	{
-		$this->TEMPLATE->Set('allfields', SettingsData::GetAllFieldsForRegister());
+		$this->TEMPLATE->Set('allfields', SettingsData::GetAllFields());
 		
 		$this->TEMPLATE->ShowTemplate('customfieldsform.tpl');
+		$this->TEMPLATE->ShowTemplate('addcustomfield.tpl');
 		
 	}
 }

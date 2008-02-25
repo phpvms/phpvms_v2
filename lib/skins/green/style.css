@@ -126,6 +126,11 @@ dd input
 	z-index: 500;
 }
 
+.error 
+{
+	font-color: red;
+}
+
 #innerwrapper
 {
 	width: 970px;

@@ -8,14 +8,16 @@ class SettingsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
 	}
 	
-	function GetAllFieldsForRegister()
+	/* This is for the admin panel*/
+	function GetAllFields()
 	{
-		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE showonregister=y');
+		$ret =  DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
+		
+		return $ret;
 	}
 	
 	function AddField()
 	{
-		
 		$fieldname = Vars::POST('fieldname');
 		$fieldtype = Vars::POST('fieldtype');
 		$public = Vars::POST('public');

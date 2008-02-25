@@ -32,16 +32,21 @@ class Registration extends ModuleBase
 			if(isset($_POST['submit_register']))
 			{
 				// check the registration
-				$err = $this->ProcessRegistration();
+				$ret = $this->ProcessRegistration();
 				
-				if($err == true) // Yes, there was an error
-					Template::ShowTemplate('registration_mainform.tpl');
+				// Yes, there was an error
+				if($ret == false) 
+				{
+					Template::Show('registration_mainform.tpl');
+				}
 				else
-					Template::ShowTemplate('registration_sentconfirmation.tpl');
+				{
+					Template::Show('registration_sentconfirmation.tpl');
+				}
 			}
 			else
 			{				
-				Template::ShowTemplate('registration_mainform.tpl');
+				Template::Show('registration_mainform.tpl');
 			}
 		}
 	}
@@ -63,38 +68,79 @@ class Registration extends ModuleBase
 	function ProcessRegistration()
 	{
 		$error = false;
-		
-		if(!$_POST['agree'])
+			
+		/* Check the firstname and last name
+		 */
+		if(Vars::POST('firstname') == '')
 		{
 			$error = true;
-			Template::Set('agree_error', 'You did not agree to the terms and conditions!');
+			Template::Set('firstname_error', true);
 		}
 		else
-			Template::Set('agree_error', '');
+			Template::Set('firstname_error', '');
 		
+		/* Check the last name
+		 */
+		if(Vars::POST('lastname') == '')
+		{
+			$error = true;
+			Template::Set('lastname_error', true);
+		}
+		else
+			Template::Set('lastname_error', '');
+			
+		/* Check the email address
+		 */
+		if(Vars::POST('email') == '')
+		{
+			$error = true;
+			Template::Set('email_error', true);
+		}
+		else
+			Template::Set('email_error', '');
+			
+		/* Check the location
+		 */
+		if(Vars::POST('location') == '')
+		{
+			$error = true;
+			Template::Set('location_error', true);
+		}
+		else
+			Template::Set('location_error', '');		
 		
 		// Check password length
 		if(Vars::POST('password1') < 6)
 		{
 			$error = true;
-			Template::Set('password_tooshort', 'The password is too short!');
+			Template::Set('password_error', 'The password is too short!');
 		}
 		else
-			Template::Set('password_tooshort', '');
-			
+			Template::Set('password_error', '');
 			
 		// Check is passwords are the same	
 		if(Vars::POST('password1') != Vars::POST('password2'))
 		{
 			$error = true;
-			Template::Set('password_mismatch', 'The passwords do not match!');
+			Template::Set('password_error', 'The passwords do not match!');
 		}
 		else
-			Template::Set('password_mismatch', '');
+			Template::Set('password_error', '');
 			
+		/* Check if they agreed to the statement
+		 */
+		if(!$_POST['agree'])
+		{
+			$error = true;
+			Template::Set('agree_error', true);
+		}
+		else
+			Template::Set('agree_error', '');
 			
 		if($error == true)
+		{
 			return false;
+		}
 		
 		//No errors... process the rest
 		

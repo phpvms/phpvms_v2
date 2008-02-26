@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{1863889A-00DF-4350-BA39-669CA949CB81}") = "PHPVMS", "PHPVMS.phpproj", "{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Local|PHP 4 = Local|PHP 4
+		Local|PHP 5 = Local|PHP 5
+		Remote|PHP 4 = Remote|PHP 4
+		Remote|PHP 5 = Remote|PHP 5
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Local|PHP 4.ActiveCfg = Local|PHP 4
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Local|PHP 4.Deploy.0 = Local|PHP 4
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Local|PHP 5.ActiveCfg = Local|PHP 5
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Local|PHP 5.Deploy.0 = Local|PHP 5
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Remote|PHP 4.ActiveCfg = Remote|PHP 4
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Remote|PHP 4.Deploy.0 = Remote|PHP 4
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Remote|PHP 5.ActiveCfg = Remote|PHP 5
+		{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}.Remote|PHP 5.Deploy.0 = Remote|PHP 5
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

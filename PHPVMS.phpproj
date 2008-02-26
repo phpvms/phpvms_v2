@@ -1,0 +1,444 @@
+"General"
+{
+"ProjectIdGuid" = "{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}"
+"ProjectVersion" = "2.3.6.4068"
+}
+"Configurations"
+{
+    "Local|PHP 4"
+    {
+    "IncludeDirs" = ""
+    }
+    "Local|PHP 5"
+    {
+    "IncludeDirs" = ""
+    }
+    "Remote|PHP 4"
+    {
+    "IncludeDirs" = ""
+    }
+    "Remote|PHP 5"
+    {
+    "IncludeDirs" = ""
+    }
+}
+"Files"
+{
+    "admin\\modules\\dashboard\\templates\\welcome.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\dashboard\\dashboard.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\settings\\templates\\addcustomfield.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\settings\\templates\\customfieldsform.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\settings\\templates\\settingsform.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\settings\\settings.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\settings\\settingsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\action.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\index.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\db.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\maincontroller.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\modulebase.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\mysql.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\mysqli.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\oracle.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\sql.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\sessionmanager.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\template.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\templateset.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\util.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\classes\\vars.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\acars\\acars.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\acars\\acarsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\contact\\contact.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\login\\login.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\pireps\\pirepdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\pireps\\pireps.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\pilotprofile\\pilotprofile.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\registration\\registration.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\registration\\registratondata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\testmodule\\testmodulecontroller.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\testmodule\\test.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\contact_form.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\core_javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\registration_customfields.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\registration_head_jscript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\registration_mainform.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\registration_sentconfirmation.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\config.inc.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\site_config.inc.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jqmodal.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery-1.2.2.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery-1.2.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery-calendar.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.dimensions.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.form.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.tablesorter.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.tablesorter.pager.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\liveframe.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\metadata.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\suckerfish.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\blue_bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\blue_more_btn.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\blue_more_btn_h.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\bullet_no.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\css_btn.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\css_btn_h.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\date_bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\folder_icon.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\green_bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\green_more_btn.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\green_more_btn_h.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\header_bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\login_btn.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\login_head_bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\logo.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\main.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\main.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\news_icon.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\pink_bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\pink_more_btn.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\pink_more_btn_h.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\punch_line.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\solution_icon.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\support_icon.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\top_btn_h.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\xhtml_btn.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\images\\xhtml_btn_h.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\default.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\footer.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\header.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\default\\style.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\footer.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\green.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\header.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\style.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    ".vsphpignore"
+    {
+    "ProjRelPath" = "T"
+    }
+    "action.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "fsacars.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "index.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "liveframe.zip"
+    {
+    "ProjRelPath" = "T"
+    }
+    "phpvams.dsk"
+    {
+    "ProjRelPath" = "T"
+    }
+    "phpvams.ppd"
+    {
+    "ProjRelPath" = "T"
+    }
+    "phpvams.ppj"
+    {
+    "ProjRelPath" = "T"
+    }
+    "phpvams.ppw"
+    {
+    "ProjRelPath" = "T"
+    }
+    "phpvams.ppx"
+    {
+    "ProjRelPath" = "T"
+    }
+}
+"ProjStartupServices"
+{
+}
+"Globals"
+{
+}
+"References"
+{
+"UserReference" = "core\\classes\\DB.class.php"
+"UserReference" = "core\\classes\\MainController.class.php"
+"UserReference" = "core\\classes\\ModuleBase.class.php"
+"UserReference" = "core\\classes\\MySQL.class.php"
+"UserReference" = "core\\classes\\MySQLi.class.php"
+"UserReference" = "core\\classes\\Oracle.class.php"
+"UserReference" = "core\\classes\\SessionManager.class.php"
+"UserReference" = "core\\classes\\SQL.class.php"
+"UserReference" = "core\\classes\\TemplateSet.class.php"
+"UserReference" = "core\\classes\\Util.class.php"
+"UserReference" = "core\\classes\\Vars.class.php"
+"UserReference" = "core\\classes\\Template.class.php"
+}

@@ -36,10 +36,10 @@ After filling out the form below, you will get a confirmation email.</p>
 	</dd>
 	
 	<dt>Password</dt>
-	<dd><input id="password" type="text" name="password1" value="" /></dd>
+	<dd><input id="password" type="password" name="password1" value="" /></dd>
 	
 	<dt>Enter your password again</dt>
-	<dd><input type="text" name="password2" value="" />
+	<dd><input type="text" name="password" value="" />
 		<?php
 			if($password_error != '')
 				echo '<p class="error">$password_error</p>';

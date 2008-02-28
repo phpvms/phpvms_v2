@@ -6,12 +6,12 @@
 		
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/style.css" type="text/css" />
 
-<?php 
-	echo $head_text;
-?>
-
 <?php
 	Template::Show('core_javascript.tpl');
+?>
+
+<?php 
+	echo $head_text;
 ?>
 		
 </head>

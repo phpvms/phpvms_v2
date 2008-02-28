@@ -29,7 +29,8 @@ class Registration extends ModuleBase
 				return;
 	
 			//Get the extra fields, that'll show in the main form
-			Template::Set('extrafields', RegistrationData::GetCustomFields());
+			$extrafields = RegistrationData::GetCustomFields();
+			Template::Set('extrafields', $extrafields);
 			
 			if(isset($_POST['submit_register']))
 			{
@@ -43,7 +44,13 @@ class Registration extends ModuleBase
 				}
 				else
 				{
-					Template::Show('registration_sentconfirmation.tpl');
+					if(RegistrationData::CompleteRegistration($extrafields) == false)
+					{
+						//TODO: notify admin
+						Template::Show('registration_error.tpl');
+					}
+					else
+						Template::Show('registration_sentconfirmation.tpl');
 				}
 			}
 			else

@@ -80,7 +80,7 @@ class TemplateSet
 			}
 			else
 			{
-				include $cached_file;
+				@include $cached_file;
 			}
 		}
 		else
@@ -95,7 +95,7 @@ class TemplateSet
 		extract($this->vars, EXTR_OVERWRITE);
 		
 		ob_start();
-		include $tpl_path; 
+		@include $tpl_path; 
 		$cont = ob_get_contents();
 		ob_end_clean();
 		

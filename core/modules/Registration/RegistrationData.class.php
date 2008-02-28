@@ -14,7 +14,6 @@ class RegistrationData
 		return DB::get_results($sql);		
 	}
 
-
 	/*
 	 * Process all the registration data
 	 */	
@@ -100,6 +99,47 @@ class RegistrationData
 		return true;	
 	}	
 	
+	
+	function CompleteRegistration($fields)
+	{
+		$firstname = Vars::POST('firstname');
+		$lastname = Vars::POST('lastname');
+		$email = Vars::POST('email');
+		$location = Vars::POST('location');
+		
+		//Set the password, add some salt
+		$salt = md5(date('His'));
+		$password = md5(Vars::POST('password1') . $salt);
+		
+		//Add this stuff in
+		
+		$sql = "INSERT INTO ".TABLE_PREFIX."users (firstname, lastname, email, location, password, salt, confirmed)
+					VALUES ('$firstname', '$lastname', '$email', '$location', '$password', '$salt', 'n')";
+		
+		$res = DB::query($sql);
+		if(!$res)
+		{
+			DB::debug();
+			return false;
+		}
+		
+		//Grab the new userid, we need it to insert those "custom fields"
+		$userid = DB::$insert_id;
+		
+		if(!$fields)
+			return;
+			
+		//Get customs fields
+		foreach($fields as $field)
+		{
+			if(Vars::POST($field->fieldname)!='')
+			{	
+				$sql = '';
+				
+				DB::query();
+			}
+		}
+	}
 }
 
 ?>

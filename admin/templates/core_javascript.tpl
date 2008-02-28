@@ -8,6 +8,11 @@ $(document).ready(function() { EvokeListeners(); });
 
 function EvokeListeners()
 {
+	// The navigation, it'll apply superfish to it
+	$(".nav").superfish({
+		animation : { opacity:"show",height:"show"}
+	});
+	
 	// Dynamic submit of the whole form
 	$('#form').ajaxForm({
 		target: '#bodytext',
@@ -24,7 +29,7 @@ function EvokeListeners()
 	
 	$('.ajaxcall').bind('dblclick', function() {
 		// do stuff
-		#("#bodytext").load("action.php", $(this).attr("params"));
+		$("#bodytext").load("action.php", $(this).attr("params"));
 	});
 	
 	// Make the message box hide itself

@@ -68,10 +68,13 @@ class Settings extends ModuleBase
 		while(list($name, $value) = each($_POST))
 		{
 			if($name == 'action') continue;
+			elseif($name == 'submit') continue;
 			
 			$value = DB::escape($value);
 			SettingsData::SaveSetting($name, $value, '', false);
 		}		
+		
+		echo '<div id="messagebox">Settings were saved!</div>';
 	}
 	
 	function AddField()
@@ -82,7 +85,13 @@ class Settings extends ModuleBase
 			return;
 		}
 		
-		SettingsData::AddField();
+		echo '<div id="messagebox">';
+		if(SettingsData::AddField())
+			echo 'Settings saved';
+		else
+			echo 'There was an error saving the settings: ' . DB::$err;
+		
+		echo '</div>';
 	}
 	
 	function SaveFields()
@@ -103,8 +112,7 @@ class Settings extends ModuleBase
 		}
 		else
 		{
-			echo 'There was an error deleting the field';
-			DB::debug();
+			echo 'There was an error deleting the field: '. DB::$err;
 		}
 		
 		echo '</div>';	

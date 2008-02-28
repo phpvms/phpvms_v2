@@ -2,7 +2,7 @@
 <?php
 if(!$allfields)
 {
-	echo 'You have not added any custom fields';
+	echo 'You have not added any custom fields<br />';
 	return;
 }
 ?>

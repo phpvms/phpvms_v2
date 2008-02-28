@@ -57,7 +57,7 @@ class TemplateSet
 	{		
 		if($this->enable_caching ==true)
 		{
-			$cached_file = CACHE_PATH . '/' . $tpl_name . md5($tpl_name);
+			$cached_file = CACHE_PATH . '/' . $tpl_name;
 			
 			//expired?
 			if((time() - filemtime($cached_file)) > ($this->cache_timeout*3600))
@@ -83,7 +83,7 @@ class TemplateSet
 		}
 		else
 		{
-			return $this->GetTemplate($tpl_path);
+			return $this->GetTemplate($tpl_name);
 		}
 	}
 	

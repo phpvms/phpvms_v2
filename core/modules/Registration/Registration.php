@@ -28,7 +28,7 @@ class Registration extends ModuleBase
 		{
 			if(RegistrationData::ValidateConfirm())
 			{
-				Tempate::Show('registration_complete.tpl');
+				Template::Show('registration_complete.tpl');
 			}
 			else
 			{

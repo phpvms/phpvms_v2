@@ -174,15 +174,22 @@ class RegistrationData
 					"Content-Transfer-Encoding: base64\r\n\r\n";
 		$headers .= chunk_split(base64_encode($message));
 		
-		mail($email, SITE_NAME . 'Registration', '', $headers);    
+		mail($email, SITE_NAME . ' Registration', '', $headers);    
 	}
 	
 	function ValidateConfirm()
 	{
 		$confid = Vars::GET('confirmid');
 	
-		$sql = "UPDATE ".TABLE_PREFIX."users SET confirmed='y' AND retired='n' WHERE salt='$confid'";
-		return DB::query($sql);
+		$sql = "UPDATE ".TABLE_PREFIX."users SET confirmed='y', retired='n' WHERE salt='$confid'";
+		$res = DB::query($sql);
+		
+		if(!$res && DB::$errno !=0)
+		{			
+			return false;
+		}
+		
+		return true;
 	}
 }
 

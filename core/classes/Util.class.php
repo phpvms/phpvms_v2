@@ -94,5 +94,29 @@ class Util
 		
 		return $modules;
 	}
+	
+	function SendEmail($email, $subject, $message)
+	{
+	
+		$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$boundary = uniqid("VDAYRSVP");
+		$headers .= "Content-Type: multipart/alternative" .
+		"; boundary = $boundary\r\n\r\n";
+		$headers .= "This is a MIME encoded message.\r\n\r\n";
+		//plain text version of message
+		$headers .= "--$boundary\r\n" .
+		"Content-Type: text/plain; charset=ISO-8859-1\r\n" .
+		"Content-Transfer-Encoding: base64\r\n\r\n";
+		$headers .= chunk_split(base64_encode($message));
+
+		//HTML version of message
+		$headers .= "--$boundary\r\n" .
+					"Content-Type: text/html; charset=ISO-8859-1\r\n" .
+					"Content-Transfer-Encoding: base64\r\n\r\n";
+		$headers .= chunk_split(base64_encode($message));
+
+		mail($email, $subject, '', $headers);    
+	}
 }
 ?>

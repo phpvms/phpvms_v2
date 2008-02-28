@@ -110,6 +110,7 @@ class RegistrationData
 		$salt = md5(date('His'));
 		$password = md5(Vars::POST('password1') . $salt);
 		
+		//Stuff it into here, the confirmation email will use it.
 		self::$salt = $salt;
 		
 		//Add this stuff in
@@ -151,32 +152,15 @@ class RegistrationData
 		$email = Vars::POST('email');
 		$confid = self::$salt;
 		
+		$subject = SITE_NAME . ' Registration';
+		
 		//TODO: move this to a template!
 		$message = "Dear $firstname $lastname,\nYour account have been made at " . SITE_NAME .", but must confirm it by clicking on this link:\n"
 
 		. SITE_URL . "/index.php?page=confirm&confirmid=$confid" . "\n Or if you have HTML enabled email: <a href=\"" . SITE_URL . "/index.php?page=confirm&confirmid=$confid" . "\">Click here.</a>\n\nThanks!\n".SITE_NAME." Staff";
 
 		//email them the confirmation            
-
-		$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
-		$headers .= "MIME-Version: 1.0\r\n";
-		$boundary = uniqid("VDAYRSVP");
-		$headers .= "Content-Type: multipart/alternative" .
-		"; boundary = $boundary\r\n\r\n";
-		$headers .= "This is a MIME encoded message.\r\n\r\n";
-		//plain text version of message
-		$headers .= "--$boundary\r\n" .
-		"Content-Type: text/plain; charset=ISO-8859-1\r\n" .
-		"Content-Transfer-Encoding: base64\r\n\r\n";
-		$headers .= chunk_split(base64_encode($message));
-		
-		//HTML version of message
-		$headers .= "--$boundary\r\n" .
-					"Content-Type: text/html; charset=ISO-8859-1\r\n" .
-					"Content-Transfer-Encoding: base64\r\n\r\n";
-		$headers .= chunk_split(base64_encode($message));
-		
-		mail($email, SITE_NAME . ' Registration', '', $headers);    
+		Util::SendEmail($email, $subject, $message);		
 	}
 	
 	function ValidateConfirm()

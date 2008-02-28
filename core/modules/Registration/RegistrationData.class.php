@@ -133,10 +133,12 @@ class RegistrationData
 		//Get customs fields
 		foreach($fields as $field)
 		{
-			if(Vars::POST($field->fieldname)!='')
+			$value = Vars::POST($field->fieldname);
+			if($value != '')
 			{	
-				$sql = '';
-				
+				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues (fieldid, userid, value)
+							VALUES ($field->fieldid, $userid, '$value')";
+											
 				DB::query();
 			}
 		}

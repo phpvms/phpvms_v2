@@ -17,8 +17,8 @@ function EvokeListeners()
 	$('#form').ajaxForm({
 		target: '#bodytext',
 		success: function() {
-			$('#bodytext').fadeIn('slow');
-		}
+					$('#bodytext').fadeIn('slow');
+				}
 	});
 	
 	// Options for binding the dynamic clicks

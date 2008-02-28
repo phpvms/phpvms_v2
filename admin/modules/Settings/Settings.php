@@ -18,7 +18,7 @@ class Settings extends ModuleBase
 	
 	function Controller()
 	{		
-		$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
+		//$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
 		
 		if(Vars::GET('admin') == 'settings')
 		{
@@ -90,18 +90,18 @@ class Settings extends ModuleBase
 	
 	function ShowSettings()
 	{
-		$this->TEMPLATE->Set('allsettings', SettingsData::GetAllSettings());
+		Template::Set('allsettings', SettingsData::GetAllSettings());
 		
-		$this->TEMPLATE->ShowTemplate('settings_mainform.tpl');
+		Template::ShowTemplate('settings_mainform.tpl');
 		//$this->TEMPLATE->ShowTemplate('addsetting.tpl');
 	}
 	
 	function ShowFields()
 	{
-		$this->TEMPLATE->Set('allfields', SettingsData::GetAllFields());
+		Template::Set('allfields', SettingsData::GetAllFields());
 		
-		$this->TEMPLATE->ShowTemplate('settings_customfieldsform.tpl');
-		$this->TEMPLATE->ShowTemplate('settings_addcustomfield.tpl');
+		Template::ShowTemplate('settings_customfieldsform.tpl');
+		Template::ShowTemplate('settings_addcustomfield.tpl');
 		
 	}
 }

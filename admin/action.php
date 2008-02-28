@@ -14,4 +14,7 @@ MainController::loadModules($ModuleList);
 
 MainController::RunAllActions();
 
+echo '<script type="text/javascript>
+        EvokeListeners();
+</script>';
 ?>

@@ -9,8 +9,9 @@ include '../core/config.inc.php';
 
 //TODO: login implementation
 
-$ModuleList = Util::GetAdminModules();
-MainController::loadModules($ModuleList);
+Template::SetTemplatePath(ADMIN_PATH . '/templates');
+//$ModuleList = Util::GetAdminModules();
+MainController::loadModules($ADMIN_MODULES);
 
 $BaseTemplate = new TemplateSet;
 

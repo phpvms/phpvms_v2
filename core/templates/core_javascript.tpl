@@ -13,10 +13,10 @@ function EvokeListeners()
 {
 	$('#form').ajaxForm({
 		target: '#bodytext',
-    	success: function() {
-         	$('#bodytext').fadeIn('slow');
-         	EvokeListeners();
-    	}
-    });
+		success: function() {
+			$('#bodytext').fadeIn('slow');
+			EvokeListeners();
+		}
+	});
 }
 </script>

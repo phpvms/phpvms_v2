@@ -92,7 +92,7 @@ class Settings extends ModuleBase
 	{
 		$this->TEMPLATE->Set('allsettings', SettingsData::GetAllSettings());
 		
-		$this->TEMPLATE->ShowTemplate('settingsform.tpl');
+		$this->TEMPLATE->ShowTemplate('settings_mainform.tpl');
 		//$this->TEMPLATE->ShowTemplate('addsetting.tpl');
 	}
 	
@@ -100,8 +100,8 @@ class Settings extends ModuleBase
 	{
 		$this->TEMPLATE->Set('allfields', SettingsData::GetAllFields());
 		
-		$this->TEMPLATE->ShowTemplate('customfieldsform.tpl');
-		$this->TEMPLATE->ShowTemplate('addcustomfield.tpl');
+		$this->TEMPLATE->ShowTemplate('settings_customfieldsform.tpl');
+		$this->TEMPLATE->ShowTemplate('settings_addcustomfield.tpl');
 		
 	}
 }

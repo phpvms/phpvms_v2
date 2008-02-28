@@ -10,13 +10,12 @@ class Registration extends ModuleBase
 			*/
 		if(Vars::GET('page') == 'register')
 		{
-			Template::ShowTemplate('registration_head_jscript.tpl');
+			Template::ShowTemplate('registration_javascript.tpl');
 		}
 	}
 	
 	function NavBar()
 	{ 
-	
 		if(!Auth::LoggedIn())
 			echo '<li><a href="?page=register">Register</a></li>';
 	}
@@ -32,6 +31,7 @@ class Registration extends ModuleBase
 			}
 			else
 			{
+				//TODO: error template, notify admin
 				DB::debug();
 			}
 		}

@@ -94,16 +94,18 @@ class Settings extends ModuleBase
 	
 	function DeleteField()
 	{
-		//blah blah
-		print_r($_POST);
-		return;
 		$id = DB::escape(Vars::POST('id'));
 		
 		echo '<div id="messagebox">';
 		if(SettingsData::DeleteField($id) == true)
-			echo 'The Custom Field was deleted!';
+		{
+			echo 'The custom field was deleted!';
+		}
 		else
+		{
 			echo 'There was an error deleting the field';
+			DB::debug();
+		}
 		
 		echo '</div>';	
 	}

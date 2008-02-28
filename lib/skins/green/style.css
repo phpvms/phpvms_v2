@@ -73,6 +73,15 @@ ul
 	float: left;
 }
 
+#messagebox
+{
+	border: dashed 1px #FF9900;
+	background-color: #FFFFCC;
+	padding: 5px 5px 5px 5px;
+	color: #000000;
+	font-size: 14px;
+}
+
 ul
 {
 	padding-left: 30px;

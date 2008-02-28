@@ -17,22 +17,22 @@ function EvokeListeners()
 	$('#form').ajaxForm({
 		target: '#bodytext',
 		success: function() {
-					$('#bodytext').fadeIn('slow');
-				}
+			$('#bodytext').fadeIn('slow');
+		}
 	});
 	
-	// Options for binding the dynamic clicks
-	$('.ajaxcall').bind('click', function() {
-		// cancel the single click event
-		return;
+	// Binding the AJAX call clicks
+	$('.ajaxcall').bind('click', function() {		
+		return false; // cancel the single click event
 	});
 	
 	$('.ajaxcall').bind('dblclick', function() {
-		// do stuff
-		$("#bodytext").load("action.php", $(this).attr("params"));
+		$("#bodytext").load("action.php?admin="+$(this).attr("module"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
 	// Make the message box hide itself
 	//$("#messagebox")
+	
+	setTimeout(function() { $("#messagebox").slideUp("slow")}, 5000);
 }
 </script>

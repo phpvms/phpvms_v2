@@ -122,7 +122,7 @@ class SettingsData
 	
 	function DeleteField($id)
 	{
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE id='.$id;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$id;
 
 		$res = DB::query($sql);
 		

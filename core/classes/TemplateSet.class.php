@@ -59,7 +59,7 @@ class TemplateSet
 		{
 			$cached_file = CACHE_PATH . '/' . $tpl_name;
 			
-			//expired?
+			// The cache has expired
 			if((time() - filemtime($cached_file)) > ($this->cache_timeout*3600))
 			{
 				unlink($cached_file);
@@ -69,14 +69,14 @@ class TemplateSet
 				echo $tpl_output;
 				
 				//cache it into the storage file
-				if($this->enable_caching == true || self::$enable_caching == true)
+				if($this->enable_caching == true)
 				{
 					$fp = fopen($cached_file, 'w');
 					fwrite($fp, $tpl_output, strlen($tpl_output));
 					fclose($fp);			
 				}
 			}
-			else
+			else // Cache not expired, so just include that cache
 			{
 				@include $cached_file;
 			}

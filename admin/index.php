@@ -1,7 +1,6 @@
 <?php
-  
 /**
- * @author phpvms.net
+ * @author Nabeel Shahzad <www.phpvms.net>
  * @desc Admin panel home
  */
 	
@@ -9,8 +8,9 @@ include '../core/config.inc.php';
 
 //TODO: login implementation
 
+define('ADMIN_PANEL', true);
+
 Template::SetTemplatePath(ADMIN_PATH . '/templates');
-//$ModuleList = Util::GetAdminModules();
 MainController::loadModules($ADMIN_MODULES);
 
 $BaseTemplate = new TemplateSet;

@@ -23,6 +23,8 @@ class Registration extends ModuleBase
 	function Controller()
 	{	
 	
+		/* Verify the confirmation code from the email
+		 */
 		if(Vars::GET('page') == 'confirm')
 		{
 			if(RegistrationData::ValidateConfirm())
@@ -36,12 +38,16 @@ class Registration extends ModuleBase
 			}
 		}
 		
+		/* Show the registration page
+		 */
 		if(Vars::GET('page') == 'register')
 		{			
 			if(Auth::LoggedIn()) // Make sure they don't over-ride it
 				return;
 	
 			//Get the extra fields, that'll show in the main form
+			// Keep them in a var, so we don't have to do the query again
+			// when completing the registration
 			$extrafields = RegistrationData::GetCustomFields();
 			Template::Set('extrafields', $extrafields);
 			
@@ -75,6 +81,5 @@ class Registration extends ModuleBase
 			}
 		}
 	}
-	
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @author phpvms.net
+ * @author Nabeel Shahzad <www.phpvms.net>
  * @desc Handles AJAX calls
  */
 
@@ -8,11 +8,10 @@ include '../core/config.inc.php';
 
 //TODO: implementation of login-check
 
+define('ADMIN_PANEL', true);
+
 Template::SetTemplatePath(ADMIN_PATH . '/templates');
 MainController::loadModules($ADMIN_MODULES);
-
-//$ModuleList = Util::GetAdminModules();
-//MainController::loadModules($ModuleList);
 
 MainController::RunAllActions();
 

@@ -153,7 +153,7 @@ class RegistrationData
 		$confid = self::$salt;
 		
 		$subject = SITE_NAME . ' Registration';
-		
+		 
 		//TODO: move this to a template!
 		$message = "Dear $firstname $lastname,\nYour account have been made at " . SITE_NAME .", but must confirm it by clicking on this link:\n"
 

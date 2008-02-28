@@ -39,10 +39,10 @@ After filling out the form below, you will get a confirmation email.</p>
 	<dd><input id="password" type="password" name="password1" value="" /></dd>
 	
 	<dt>Enter your password again</dt>
-	<dd><input type="text" name="password" value="" />
+	<dd><input type="password" name="password2" value="" />
 		<?php
 			if($password_error != '')
-				echo '<p class="error">$password_error</p>';
+				echo '<p class="error">'.$password_error.'</p>';
 		?>
 	</dd>
 		

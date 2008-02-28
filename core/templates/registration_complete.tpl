@@ -1,0 +1,1 @@
+Your registration is now complete! You may log-in now

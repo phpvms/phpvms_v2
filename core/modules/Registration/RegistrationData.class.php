@@ -3,6 +3,8 @@
 
 class RegistrationData
 {
+
+	static public $salt;
 	/* Get the extra fields
 	 */
 	function GetCustomFields()
@@ -43,7 +45,7 @@ class RegistrationData
 		
 		/* Check the email address
 		 */
-		if(Vars::POST('email') == '')
+		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", Vars::POST('email')) == false)
 		{
 			$error = true;
 			Template::Set('email_error', true);
@@ -62,7 +64,7 @@ class RegistrationData
 			Template::Set('location_error', '');		
 		
 		// Check password length
-		if(Vars::POST('password1') < 6)
+		if(strlen(Vars::POST('password1')) <= 5)
 		{
 			$error = true;
 			Template::Set('password_error', 'The password is too short!');
@@ -93,12 +95,9 @@ class RegistrationData
 		{
 			return false;
 		}
-		
-		//No errors... process the rest
-		
+				
 		return true;	
 	}	
-	
 	
 	function CompleteRegistration($fields)
 	{
@@ -110,6 +109,8 @@ class RegistrationData
 		//Set the password, add some salt
 		$salt = md5(date('His'));
 		$password = md5(Vars::POST('password1') . $salt);
+		
+		self::$salt = $salt;
 		
 		//Add this stuff in
 		
@@ -127,7 +128,7 @@ class RegistrationData
 		$userid = DB::$insert_id;
 		
 		if(!$fields)
-			return;
+			return true;
 			
 		//Get customs fields
 		foreach($fields as $field)
@@ -139,6 +140,49 @@ class RegistrationData
 				DB::query();
 			}
 		}
+	}
+	
+	function SendEmailConfirm()
+	{
+		$firstname = Vars::POST('firstname');
+		$lastname = Vars::POST('lastname');
+		$email = Vars::POST('email');
+		$confid = self::$salt;
+		
+		//TODO: move this to a template!
+		$message = "Dear $firstname $lastname,\nYour account have been made at " . SITE_NAME .", but must confirm it by clicking on this link:\n"
+
+		. SITE_URL . "/index.php?page=confirm&confirmid=$confid" . "\n Or if you have HTML enabled email: <a href=\"" . SITE_URL . "/index.php?page=confirm&confirmid=$confid" . "\">Click here.</a>\n\nThanks!\n".SITE_NAME." Staff";
+
+		//email them the confirmation            
+
+		$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$boundary = uniqid("VDAYRSVP");
+		$headers .= "Content-Type: multipart/alternative" .
+		"; boundary = $boundary\r\n\r\n";
+		$headers .= "This is a MIME encoded message.\r\n\r\n";
+		//plain text version of message
+		$headers .= "--$boundary\r\n" .
+		"Content-Type: text/plain; charset=ISO-8859-1\r\n" .
+		"Content-Transfer-Encoding: base64\r\n\r\n";
+		$headers .= chunk_split(base64_encode($message));
+		
+		//HTML version of message
+		$headers .= "--$boundary\r\n" .
+					"Content-Type: text/html; charset=ISO-8859-1\r\n" .
+					"Content-Transfer-Encoding: base64\r\n\r\n";
+		$headers .= chunk_split(base64_encode($message));
+		
+		mail($email, SITE_NAME . 'Registration', '', $headers);    
+	}
+	
+	function ValidateConfirm()
+	{
+		$confid = Vars::GET('confirmid');
+	
+		$sql = "UPDATE ".TABLE_PREFIX."users SET confirmed='y' AND retired='n' WHERE salt='$confid'";
+		return DB::query($sql);
 	}
 }
 

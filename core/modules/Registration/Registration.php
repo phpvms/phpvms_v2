@@ -23,6 +23,19 @@ class Registration extends ModuleBase
 	
 	function Controller()
 	{	
+	
+		if(Vars::GET('page') == 'confirm')
+		{
+			if(RegistrationData::ValidateConfirm())
+			{
+				Tempate::Show('registration_complete.tpl');
+			}
+			else
+			{
+				DB::debug();
+			}
+		}
+		
 		if(Vars::GET('page') == 'register')
 		{			
 			if(Auth::LoggedIn()) // Make sure they don't over-ride it
@@ -50,7 +63,10 @@ class Registration extends ModuleBase
 						Template::Show('registration_error.tpl');
 					}
 					else
+					{
+						RegistrationData::SendEmailConfirm();
 						Template::Show('registration_sentconfirmation.tpl');
+					}
 				}
 			}
 			else

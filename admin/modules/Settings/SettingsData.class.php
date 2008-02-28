@@ -99,7 +99,7 @@ class SettingsData
 		
 		return true;			
 	}
-	
+
 	/**
 	 * See if the setting is part of the core
 	 */	
@@ -120,9 +120,26 @@ class SettingsData
 		return false;		
 	}
 	
+	function DeleteField($id)
+	{
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE id='.$id;
+
+		$res = DB::query($sql);
+		
+		if(!$res && DB::$errno !=0)
+		{			
+			return false;
+		}
+
+		return true;	
+
+		//TODO: delete all of the field values! 
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'
+	}
+	
 	/**
 	 * Delete a setting
-	 */	
+		
 	function DeleteSetting($setting_name)
 	{
 		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'settings WHERE name=\''.$setting_name.'\'';
@@ -135,6 +152,6 @@ class SettingsData
 		
 		return false;
 	}
-	
+	 */
 }
 ?>

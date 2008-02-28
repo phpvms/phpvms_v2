@@ -52,6 +52,10 @@ class Settings extends ModuleBase
 				case 'addfield':
 					$this->AddField();
 					break;
+					
+				case 'deletefield':
+					$this->DeleteField();
+					break;
 			}
 			
 			$this->ShowFields();
@@ -86,6 +90,22 @@ class Settings extends ModuleBase
 		
 		print_r($_POST);
 		
+	}
+	
+	function DeleteField()
+	{
+		//blah blah
+		print_r($_POST);
+		return;
+		$id = DB::escape(Vars::POST('id'));
+		
+		echo '<div id="messagebox">';
+		if(SettingsData::DeleteField($id) == true)
+			echo 'The Custom Field was deleted!';
+		else
+			echo 'There was an error deleting the field';
+		
+		echo '</div>';	
 	}
 	
 	function ShowSettings()

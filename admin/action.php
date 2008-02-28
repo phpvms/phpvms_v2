@@ -6,11 +6,13 @@
 
 include '../core/config.inc.php';
 
-
 //TODO: implementation of login-check
 
-$ModuleList = Util::GetAdminModules();
-MainController::loadModules($ModuleList);
+Template::SetTemplatePath(ADMIN_PATH . '/templates');
+MainController::loadModules($ADMIN_MODULES);
+
+//$ModuleList = Util::GetAdminModules();
+//MainController::loadModules($ModuleList);
 
 MainController::RunAllActions();
 

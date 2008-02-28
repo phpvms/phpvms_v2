@@ -54,19 +54,17 @@ class TemplateSet
 	}
 	
 	public function ShowTemplate($tpl_name)
-	{	
-		$tpl_path = $this->template_path . '/' . $tpl_name;
-		
+	{		
 		if($this->enable_caching ==true)
 		{
 			$cached_file = CACHE_PATH . '/' . $tpl_name . md5($tpl_name);
 			
 			//expired?
-			if ((time() - filemtime($cached_file)) >  ($this->cache_timeout*3600))
+			if((time() - filemtime($cached_file)) > ($this->cache_timeout*3600))
 			{
-				unlink ($cached_file);
+				unlink($cached_file);
 				
-				$tpl_output = $this->GetTemplate($tpl_path, true);
+				$tpl_output = $this->GetTemplate($tpl_name, true);
 				
 				echo $tpl_output;
 				
@@ -90,8 +88,24 @@ class TemplateSet
 	}
 	
 	//get the actual template text
-	public function GetTemplate($tpl_path, $ret=false)
+	public function GetTemplate($tpl_name, $ret=false)
 	{
+		
+		/* See if the file has been over-rided in the skin directory
+		 */	
+		 	
+		if(!defined(ADMIN_PANEL))
+		{
+			if(file_exists(SKINS_PATH . '/' . $tpl_name))
+				$tpl_path = SKINS_PATH . '/' . $tpl_name;
+			else
+				$tpl_path = $this->template_path . '/' . $tpl_name;
+		}	
+		else
+		{
+			$tpl_path = $this->template_path . '/' . $tpl_name;
+		}		
+		
 		extract($this->vars, EXTR_OVERWRITE);
 		
 		ob_start();

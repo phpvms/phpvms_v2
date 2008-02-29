@@ -1,4 +1,4 @@
-<h2>Add Setting</h2>
+<h3>Add Setting</h3>
 <form id="form" action="action.php?admin=settings" method="post">
 <p>Name's are converted to upper case. Values of "true" or "false" are converted to boolean, and the setting above will have "Enabled" or "Disabled" as options</p>
 <dl>

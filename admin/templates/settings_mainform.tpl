@@ -1,5 +1,4 @@
-
-<h1>Site Settings</h1>
+<h3>Site Settings</h3>
 <p>Select available site options from this page. Don't forget to save!</p>
 <form id="form" method="post" action="action.php?admin=settings">
 <dl>

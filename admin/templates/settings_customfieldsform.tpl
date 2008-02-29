@@ -1,4 +1,4 @@
-<h1>Custom Fields</h1>
+<h3>Custom Fields</h3>
 <?php
 if(!$allfields)
 {

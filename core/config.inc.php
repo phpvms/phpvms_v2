@@ -30,6 +30,8 @@ include CORE_PATH . '/site_config.inc.php';
 // These are the core modules
 
 $ACTIVE_MODULES['Login'] = MODULES_PATH . '/Login/Login.php';
+$ACTIVE_MODULES['Frontpage'] = MODULES_PATH . '/Frontpage/Frontpage.php';
+//$ACTIVE_MODULES['News'] = MODULES_PATH . '/Frontpage/News.php';
 $ACTIVE_MODULES['ACARS'] = MODULES_PATH . '/ACARS/ACARS.php';
 $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';

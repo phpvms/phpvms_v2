@@ -8,7 +8,7 @@ class NewsData
 	function GetAllNews()
 	{
 		return DB::get_results('SELECT id, subject, body, UNIX_TIMESTAMP(postdate) as postdate, postedby
-									FROM ' . TABLE_PREFIX.'news ORDER BY postdate DESC');
+									FROM ' . TABLE_PREFIX.'news ORDER BY postdate ASC');
 	}
 	
 	function AddNewsItem($subject, $body)

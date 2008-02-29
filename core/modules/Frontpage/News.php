@@ -12,6 +12,9 @@ class News
 		
 		$res = DB::get_results($sql);
 		
+		if(!$res)
+			return;
+			
 		foreach($res as $row)
 		{
 			//TODO: change the date format to a setting in panel

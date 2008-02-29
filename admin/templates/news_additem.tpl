@@ -1,10 +1,15 @@
 <h3>Add News Item</h3>
 
 <form action="?admin=viewnews" method="post">
+<dl>
 
-	<strong>Subject: </strong><input type="text" name="subject" /><br />
-	<textarea id="newseditor" name="newstext">
-	</textarea>
+	<dt><strong>Subject: </strong></dt>
+	<dd><input type="text" name="subject" /></dd>
 	
-	<input type="submit" name="addnews" value="Add News" />
+	<dt>News Text</dt>
+	<dd><textarea id="newseditor" name="newstext" style="width: 90%;"></textarea></dd>
+	
+	<dt></dt>
+	<dd><input type="submit" name="addnews" value="Add News" /></dd>
+</dl>
 </form>

@@ -60,6 +60,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\news_additem.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\settings_addcustomfield.tpl"
     {
     "ProjRelPath" = "T"
@@ -237,6 +241,10 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\jquery.tablesorter.pager.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.wysiwyg.js"
     {
     "ProjRelPath" = "T"
     }

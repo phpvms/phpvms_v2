@@ -1,5 +1,4 @@
 <dl>
-
 <?php
 foreach($allnews as $news)
 {

@@ -45,7 +45,7 @@ class NewsItems
 	function ViewNews()
 	{
 		$allnews = NewsData::GetAllNews();
-		
+			
 		Template::Set('allnews', $allnews);
 		Template::Show('news_list.tpl');
 	}

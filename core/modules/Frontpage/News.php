@@ -7,7 +7,7 @@ class News
 	function ShowNewsFront()
 	{
 		
-		$sql = 'SELECT id, subject, body, postedby, UNIX_TIMESTAMP(postdate) AS postingdate
+		$sql = 'SELECT id, subject, body, postedby, UNIX_TIMESTAMP(postdate) AS postdate
 				 FROM ' . TABLE_PREFIX .'news ORDER BY postdate DESC LIMIT 5';
 		
 		$res = DB::get_results($sql);
@@ -18,7 +18,7 @@ class News
 			Template::Set('subject', $row->subject);
 			Template::Set('body', $row->body);
 			Template::Set('postedby', $row->postedby);
-			Template::Set('postdate', date('m/d/Y', $row->postingdate));
+			Template::Set('postdate', date('m/d/Y', $row->postdate));
 		
 			Template::Show('news_newsitem.tpl');
 		}

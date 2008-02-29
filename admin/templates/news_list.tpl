@@ -5,7 +5,7 @@ foreach($allnews as $news)
 {
 ?>
 	<dt><?=$news->subject;?></dt>
-	<dd>Posted by <?=$news->postedby;?> on <?=date('m/d/Y', $news->postingdate);?><br />
+	<dd>Posted by <?=$news->postedby;?> on <?=date('m/d/Y', $news->postdate);?><br />
 		<a href="action.php" module="viewnews" action="deleteitem" id="<?=$news->id;?>" class="ajaxcall">Delete</a></dd>
 <?php
 }

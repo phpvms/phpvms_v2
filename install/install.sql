@@ -1,3 +1,12 @@
+CREATE TABLE `phpvms_news` (
+`id` INT NOT NULL AUTO_INCREMENT ,
+`subject` VARCHAR( 30 ) NOT NULL ,
+`body` TEXT NOT NULL ,
+`postdate` DATETIME NOT NULL ,
+`postedby` VARCHAR( 25 ) NOT NULL ,
+PRIMARY KEY ( `id` )
+);
+
 CREATE TABLE `phpvms_users` (
 `userid` INT NOT NULL AUTO_INCREMENT ,
 `firstname` VARCHAR( 25 ) NOT NULL ,

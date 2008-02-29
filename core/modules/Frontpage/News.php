@@ -13,7 +13,11 @@ class News
 		
 		foreach($res as $row)
 		{
+			//TODO: change the date format to a setting in panel
 			Template::Set('subject', $row->subject);
+			Template::Set('body', $row->body);
+			Template::Set('postedby', $row->postedby);
+			Template::Set('postdate', date('m/d/Y', $row->postdate);
 		
 			Template::Show('news_newsitem.tpl');
 		}

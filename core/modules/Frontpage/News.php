@@ -17,7 +17,7 @@ class News
 			Template::Set('subject', $row->subject);
 			Template::Set('body', $row->body);
 			Template::Set('postedby', $row->postedby);
-			Template::Set('postdate', date('m/d/Y', $row->postdate);
+			Template::Set('postdate', date('m/d/Y', $row->postdate));
 		
 			Template::Show('news_newsitem.tpl');
 		}

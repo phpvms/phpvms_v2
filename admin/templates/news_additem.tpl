@@ -7,7 +7,7 @@
 	<dd><input type="text" name="subject" /></dd>
 	
 	<dt>News Text</dt>
-	<dd><textarea id="newseditor" name="newstext" style="width: 90%;"></textarea></dd>
+	<dd><textarea id="newseditor" name="body" style="width: 90%;"></textarea></dd>
 	
 	<dt></dt>
 	<dd><input type="submit" name="addnews" value="Add News" /></dd>

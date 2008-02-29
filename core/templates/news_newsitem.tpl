@@ -1,4 +1,4 @@
-<h3><?=$subject;?></h3><br />
+<p><strong><?=$subject;?></strong></p>
 <p>Posted by <?=$postedby;?> on <?=$postdate;?></p>
-<p><?=$body;?></p>
+<p><?php echo htmlspecialchars($body);?></p>
 <hr>

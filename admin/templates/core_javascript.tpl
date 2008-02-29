@@ -1,18 +1,15 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery-1.2.2.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/suckerfish.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.wysiwyg.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
+
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jquery.wysiwyg.css" type="text/css" />
 
 <script type="text/javascript">
 $(document).ready(function() { EvokeListeners(); });
 
 function EvokeListeners()
 {
-	// The navigation, it'll apply superfish to it
-	$(".nav").superfish({
-		animation : { opacity:"show",height:"show"}
-	});
-	
 	// Dynamic submit of the whole form
 	$('#form').ajaxForm({
 		target: '#bodytext',
@@ -31,8 +28,9 @@ function EvokeListeners()
 	});
 	
 	// Make the message box hide itself
-	//$("#messagebox")
-	
 	setTimeout(function() { $("#messagebox").slideUp("slow")}, 5000);
+	
+	//Show editor
+	$("#newseditor").wysiwyg();
 }
 </script>

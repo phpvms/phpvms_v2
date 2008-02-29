@@ -3,7 +3,7 @@
 <head>
 <title>The PHP Virtual Airlines Management Project</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		
+
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/style.css" type="text/css" />
 
 <?php
@@ -13,7 +13,13 @@
 <?php 
 	echo $head_text;
 ?>
-		
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/suckerfish.js"></script>
+
+<script type="text/javascript">
+$(".nav").superfish({
+	animation : { opacity:"show",height:"show"}
+});
+</script>
 </head>
 <body>
 

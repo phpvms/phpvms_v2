@@ -32,6 +32,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\modules\\newsitems\\newsitems.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\modules\\settings\\templates\\addcustomfield.tpl"
     {
     "ProjRelPath" = "T"
@@ -49,6 +53,26 @@
     "ProjRelPath" = "T"
     }
     "admin\\modules\\settings\\settingsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\core_javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\settings_addcustomfield.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\settings_addsetting.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\settings_customfieldsform.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\settings_mainform.tpl"
     {
     "ProjRelPath" = "T"
     }

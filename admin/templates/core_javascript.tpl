@@ -19,7 +19,7 @@ function EvokeListeners()
 	});
 	
 	// Binding the AJAX call clicks
-	$('.ajaxcall').bind('click', function() {		
+	$('.ajaxcall').bind('click', function() {		 
 		return false; // cancel the single click event
 	});
 	

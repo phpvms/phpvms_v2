@@ -19,7 +19,6 @@ class NewsItems
 	
 	function Controller()
 	{
-		
 		if(isset($_POST['addnews']))
 		{
 			$this->AddNewsItem();
@@ -28,6 +27,12 @@ class NewsItems
 		switch(Vars::GET('admin'))
 		{
 			case 'viewnews':
+			
+				if(Vars::POST('action') == 'deleteitem')
+				{
+					echo 'delete';
+				}
+				
 				$this->ViewNews();
 				$this->AddNewsForm();
 				break;
@@ -39,7 +44,10 @@ class NewsItems
 	
 	function ViewNews()
 	{
+		$allnews = NewsData::GetAllNews();
 		
+		Template::Set('allnews', $allnews);
+		Template::Show('news_list.tpl');
 	}
 
 	function AddNewsForm()

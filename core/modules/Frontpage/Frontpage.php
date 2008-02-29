@@ -1,7 +1,7 @@
 <?php
 
 
-define(__FILE__) . '/News.php';
+dirname(__FILE__) . '/News.php';
 
 class Frontpage extends ModuleBase
 {

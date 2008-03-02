@@ -1,6 +1,6 @@
 <h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
 
-<form action="action.php?admin=viewpilots" method="post">
+<form id="dialogform" action="action.php?admin=viewpilots" method="post">
 <dl> 
 <dt>Email Address</dt>
 <dd><input type="text" name="email" value="<?=$pilotinfo->email;?>" /></dd>
@@ -17,4 +17,9 @@
 <dt>Total Hours</dt>
 <dd><?=$pilotinfo->totalhours;?></dd>
 </dl>
+<dt></dt>
+<dd>
+	<div id="results"></div>
+	<input type="submit" name="submit" type="Save Changes" />
+</dd>
 </form>

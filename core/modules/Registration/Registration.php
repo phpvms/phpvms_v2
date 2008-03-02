@@ -13,13 +13,7 @@ class Registration extends ModuleBase
 			Template::ShowTemplate('registration_javascript.tpl');
 		}
 	}
-	
-	function NavBar()
-	{ 
-		if(!Auth::LoggedIn())
-			echo '<li><a href="?page=register">Register</a></li>';
-	}
-	
+		
 	function Controller()
 	{	
 	

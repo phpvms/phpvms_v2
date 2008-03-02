@@ -37,12 +37,12 @@ $(".nav").superfish({
 	</div>
 	<div id="slice"></div>
 	<div id="navbox">
-			<ul class="nav">
-				<?php 
-					echo $navigation_tree;
-				?>
-			</ul>
+		<ul class="nav">
+			<?php 
+				Template::Show('core_navigation.tpl');
+				echo $navigation_tree;
+			?>
+		</ul>
 	</div>
-	
 
 	<div id="bodytext">

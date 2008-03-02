@@ -36,15 +36,11 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\modules\\settings\\templates\\addcustomfield.tpl"
+    "admin\\modules\\pilotadmin\\pilotadmin.php"
     {
     "ProjRelPath" = "T"
     }
-    "admin\\modules\\settings\\templates\\customfieldsform.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\modules\\settings\\templates\\settingsform.tpl"
+    "admin\\modules\\pilotadmin\\pilotdata.class.php"
     {
     "ProjRelPath" = "T"
     }
@@ -168,10 +164,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "core\\modules\\registration\\registratondata.class.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "core\\modules\\testmodule\\testmodulecontroller.php"
     {
     "ProjRelPath" = "T"
@@ -189,10 +181,6 @@
     "ProjRelPath" = "T"
     }
     "core\\templates\\registration_customfields.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
-    "core\\templates\\registration_head_jscript.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -428,30 +416,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "liveframe.zip"
-    {
-    "ProjRelPath" = "T"
-    }
-    "phpvams.dsk"
-    {
-    "ProjRelPath" = "T"
-    }
-    "phpvams.ppd"
-    {
-    "ProjRelPath" = "T"
-    }
-    "phpvams.ppj"
-    {
-    "ProjRelPath" = "T"
-    }
-    "phpvams.ppw"
-    {
-    "ProjRelPath" = "T"
-    }
-    "phpvams.ppx"
-    {
-    "ProjRelPath" = "T"
-    }
 }
 "ProjStartupServices"
 {
@@ -473,4 +437,6 @@
 "UserReference" = "core\\classes\\Util.class.php"
 "UserReference" = "core\\classes\\Vars.class.php"
 "UserReference" = "core\\classes\\Template.class.php"
+"UserReference" = "core\\config.inc.php"
+"UserReference" = "core\\site_config.inc.php"
 }

@@ -1,8 +1,13 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery-1.2.2.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jqModal.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/metadata.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
 
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jquery.wysiwyg.css" type="text/css" />
 
 <script type="text/javascript">
@@ -30,7 +35,13 @@ function EvokeListeners()
 	// Make the message box hide itself
 	setTimeout(function() { $("#messagebox").slideUp("slow")}, 5000);
 	
-	//Show editor
+	//Tablize any lists
+	$("#tabledlist").tablesorter();
+	
+	// Show dialog box
+	 $('#dialog').jqm();
+	 
+	// Show editor
 	$("#newseditor").wysiwyg();
 }
 </script>

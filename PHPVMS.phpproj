@@ -72,6 +72,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\pilots_customfields.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\pilots_details.tpl"
     {
     "ProjRelPath" = "T"
@@ -81,6 +85,14 @@
     "ProjRelPath" = "T"
     }
     "admin\\templates\\pilots_list.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\pilots_pireps.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\pilots_resetpass.tpl"
     {
     "ProjRelPath" = "T"
     }

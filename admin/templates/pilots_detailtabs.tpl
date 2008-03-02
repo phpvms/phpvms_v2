@@ -9,14 +9,12 @@
 		<?php Template::Show('pilots_details.tpl'); ?>
 	</div>
 	<div id="customfields">
-	Test
+		<?php Template::Show('pilots_customfields.tpl'); ?>
 	</div>
 	<div id="pireps">
-	Pireps
+		<?php Template::Show('pilots_pireps.tpl'); ?>
 	</div>
 	<div id="resetpass">
-	reset password
+		<?php Template::Show('pilots_resetpass.tpl'); ?>
 	</div>
 </div>
-
-<div id="messagebox">Settings were saved!</div>

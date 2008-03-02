@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/style.css" type="text/css" />
-<link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/table.css" type="text/css" />
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/table/style.css" type="text/css" />
 
 <?php
 	Template::Show('core_javascript.tpl');

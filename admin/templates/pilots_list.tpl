@@ -27,12 +27,13 @@ foreach($allpilots as $pilot)
 ?>
 <tr>
 	<td><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></td>
-	<td><?=$pilot->email; ?></td>
-	<td><?=$pilot->location; ?></td>
-	<td><?=$pilot->totalflights; ?></td>
-	<td><?=$pilot->totalhours; ?></td>
-	<td><?=$pilot->confirmed; ?></td>
-	<td><?=$pilot->retired; ?></td>
+	<td align="center"><?=$pilot->email; ?></td>
+	<td align="center"><?=$pilot->location; ?></td>
+	<td align="center"><?=$pilot->totalflights; ?></td>
+	<td align="center"><?=$pilot->totalhours; ?></td>
+	<td align="center"><?=$pilot->confirmed; ?></td>
+	<td align="center"><?=$pilot->retired; ?></td>
+	<td align="center"><a id="dialog" href="?admin=viewpilots&action=viewoptions&id=<?=$pilot->userid;?>">Options</a></td>
 </tr>
 <?php
 }

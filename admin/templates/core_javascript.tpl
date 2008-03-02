@@ -1,8 +1,8 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.min.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jqModal.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/ui.tabs.min.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/ui.tabs.ext.pack.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jqModal.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.wysiwyg.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>

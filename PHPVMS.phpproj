@@ -60,6 +60,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\pilots_list.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\settings_addcustomfield.tpl"
     {
     "ProjRelPath" = "T"
@@ -377,6 +381,22 @@
     "ProjRelPath" = "T"
     }
     "lib\\skins\\default\\style.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\table\\asc.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\table\\bg.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\table\\desc.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\green\\table\\style.css"
     {
     "ProjRelPath" = "T"
     }

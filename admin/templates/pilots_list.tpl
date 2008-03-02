@@ -7,7 +7,7 @@ for($i=0;$i<27;$i++)
 ?>
 </div>
 
-<table id="tabledlist">
+<table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
 	<th>Pilot Name</th>

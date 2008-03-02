@@ -40,7 +40,7 @@ function EvokeListeners()
 	$("#tabledlist").tablesorter();
 	
 	// Show dialog box
-	 $('#dialog').jqm();
+	 $('#dialog').jqm({ajax:'@href'});
 	 
 	// Show editor
 	$("#newseditor").wysiwyg();

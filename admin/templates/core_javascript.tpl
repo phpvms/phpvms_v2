@@ -7,6 +7,7 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/metadata.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
 
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jquery.wysiwyg.css" type="text/css" />
 

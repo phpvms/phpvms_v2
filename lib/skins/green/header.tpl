@@ -23,7 +23,9 @@ $(".nav").superfish({
 </script>
 </head>
 <body>
-
+<?php
+	Template::Show('core_htmlreq.tpl');
+?>
 <div id="body">
 <div id="innerwrapper">
 	<div id="topNav">

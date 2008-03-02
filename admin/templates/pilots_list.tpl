@@ -4,6 +4,14 @@ for($i=0;$i<27;$i++)
 {
 	echo '<a href="?admin=viewpilots&letter='.$allletters[$i].'">'.$allletters[$i].'</a> ';
 }
+
+
+if(!$allpilots)
+{
+	echo '<p>There are no pilots!</p>';
+	return;
+}
+
 ?>
 </div>
 
@@ -31,8 +39,6 @@ foreach($allpilots as $pilot)
 	<td align="center"><?=$pilot->location; ?></td>
 	<td align="center"><?=$pilot->totalflights; ?></td>
 	<td align="center"><?=$pilot->totalhours; ?></td>
-	<td align="center"><?=$pilot->confirmed; ?></td>
-	<td align="center"><?=$pilot->retired; ?></td>
 	<td align="center"><a id="dialog" href="?admin=viewpilots&action=viewoptions&id=<?=$pilot->userid;?>">Options</a></td>
 </tr>
 <?php

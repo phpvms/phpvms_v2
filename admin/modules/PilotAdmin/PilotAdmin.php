@@ -18,6 +18,12 @@ class PilotAdmin
 		switch(Vars::GET('admin'))
 		{
 			case 'viewpilots':
+			
+				if(Vars::GET('action') == 'viewoptions')
+				{
+					$this->ViewPilotDetails();	
+					return;
+				}
 				$this->ShowPilotsList();	
 			break;	
 		}
@@ -33,8 +39,14 @@ class PilotAdmin
 		Template::Set('allletters', $letters);
 		Template::Set('allpilots', PilotData::GetAllPilots(Vars::GET('letter')));
 		
-		Template::Show('pilots_list.tpl');	
-				
+		Template::Show('pilots_list.tpl');
+	}
+	
+	function ViewPilotDetails()
+	{
+		Template::Set('pilotinfo', PilotData::GetPilotData(Vars::GET('id')));
+		
+		Template::Show('pilots_details.tpl');
 	}
 }
 

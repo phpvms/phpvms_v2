@@ -23,6 +23,8 @@ define('MODULES_PATH', CORE_PATH . '/modules');
 define('TEMPLATES_PATH', CORE_PATH . '/templates');
 define('ADMIN_PATH', SITE_ROOT . '/admin');
 
+define('DATE_FORMAT', 'm/d/Y');
+
 include CORE_PATH . '/site_config.inc.php';
 
 //Module/Folder_Name => Name of Controller file

@@ -32,6 +32,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\modules\\newsitems\\newsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\modules\\newsitems\\newsitems.php"
     {
     "ProjRelPath" = "T"
@@ -52,11 +56,23 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\core_htmlreq.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\core_javascript.tpl"
     {
     "ProjRelPath" = "T"
     }
     "admin\\templates\\news_additem.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\news_list.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\pilots_details.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -204,6 +220,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\css\\phpvms.css"
+    {
+    "ProjRelPath" = "T"
+    }
     "lib\\js\\jqmodal.js"
     {
     "ProjRelPath" = "T"
@@ -249,6 +269,22 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\suckerfish.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\table\\asc.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\table\\bg.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\table\\desc.gif"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\table\\style.css"
     {
     "ProjRelPath" = "T"
     }

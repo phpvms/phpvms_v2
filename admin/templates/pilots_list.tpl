@@ -4,17 +4,16 @@ for($i=0;$i<27;$i++)
 {
 	echo '<a href="?admin=viewpilots&letter='.$allletters[$i].'">'.$allletters[$i].'</a> ';
 }
-
-
+?>
+</div>
+<br />
+<?php
 if(!$allpilots)
 {
 	echo '<p>There are no pilots!</p>';
 	return;
 }
-
 ?>
-</div>
-
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>

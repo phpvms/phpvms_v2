@@ -6,27 +6,7 @@
 		<li><a href="#resetpass"><span>Password Reset</span></a></li>
 	</ul>
 	<div id="pilotdetails">
-	<?php //Template::Show('pilot_details.tpl'); ?>
-		<h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
-
-		<form action="action.php?admin=viewpilots" method="post">
-		<dl> 
-		<dt>Email Address</dt>
-		<dd><input type="text" name="email" value="<?=$pilotinfo->email;?>" /></dd>
-
-		<dt>Location</dt>
-		<dd><input type="text" name="location" value="<?=$pilotinfo->location;?>"</dd>
-
-		<dt>Last Login</dt>
-		<dd><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></dd>
-
-		<dt>Total Flights</dt>
-		<dd><?=$pilotinfo->totalflights;?></dd>
-
-		<dt>Total Hours</dt>
-		<dd><?=$pilotinfo->totalhours;?></dd>
-		</dl>
-		</form>
+		<?php Template::Show('pilots_details.tpl'); ?>
 	</div>
 	<div id="customfields">
 	Test

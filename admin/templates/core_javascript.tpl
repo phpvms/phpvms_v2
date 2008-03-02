@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery-1.2.2.pack.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jqModal.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.wysiwyg.js"></script>

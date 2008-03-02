@@ -1,4 +1,4 @@
-<div>
+<div align="center">
 <?php
 for($i=0;$i<27;$i++)
 {

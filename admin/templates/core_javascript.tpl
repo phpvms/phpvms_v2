@@ -43,7 +43,7 @@ function EvokeListeners()
 	$("#tabledlist").tablesorter();
 	
 	//Tabs
-	 $("#tabcontainer").tabs({ fx: { height: 'toggle' } });
+	 $("#tabcontainer > ul").tabs({ fx: { height: 'toggle' } });
 	
 	// Show dialog box
 	 $('#dialog').jqm({ajax:'@href'});

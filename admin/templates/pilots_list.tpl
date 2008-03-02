@@ -23,8 +23,6 @@ if(!$allpilots)
 	<th>Location</th>
 	<th>Total Flights</th>
 	<th>Total Hours</th>
-	<th>Confirmed</th>
-	<th>Retired</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -39,7 +37,7 @@ foreach($allpilots as $pilot)
 	<td align="center"><?=$pilot->location; ?></td>
 	<td align="center"><?=$pilot->totalflights; ?></td>
 	<td align="center"><?=$pilot->totalhours; ?></td>
-	<td align="center"><a id="dialog" href="?admin=viewpilots&action=viewoptions&id=<?=$pilot->userid;?>">Options</a></td>
+	<td align="center"><a id="dialog"  class="jqModal" href="?admin=viewpilots&action=viewoptions&id=<?=$pilot->userid;?>">Options</a></td>
 </tr>
 <?php
 }

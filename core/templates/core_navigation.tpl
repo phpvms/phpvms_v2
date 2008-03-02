@@ -21,5 +21,5 @@ else
 <?php
 }
 ?>
-<li><a href="?page=acars">Live ACARS Map</a></li>
+<li><a href="?page=acars">Live Map</a></li>
 <li><a href="?page=contact">Contact Us</a></li>

@@ -18,3 +18,5 @@
 		<?php Template::Show('pilots_resetpass.tpl'); ?>
 	</div>
 </div>
+<div id="dialogresult"></div>
+<div align="right"><input type="button" class="jqmClose" name="jqmClose" value="Close" /></div>

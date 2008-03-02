@@ -27,6 +27,13 @@ function EvokeListeners()
 		}
 	});
 	
+	$('#dialogform').ajaxForm({
+		target: '#dialogresult',
+		success: function() {
+			$('#bodytext').fadeIn('slow');
+		}
+	});
+	
 	// Binding the AJAX call clicks
 	$('.ajaxcall').bind('click', function() {		 
 		return false; // cancel the single click event

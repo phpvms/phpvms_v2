@@ -104,6 +104,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\classes\\auth.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\classes\\db.class.php"
     {
     "ProjRelPath" = "T"
@@ -197,6 +201,10 @@
     "ProjRelPath" = "T"
     }
     "core\\templates\\core_javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\core_navigation.tpl"
     {
     "ProjRelPath" = "T"
     }

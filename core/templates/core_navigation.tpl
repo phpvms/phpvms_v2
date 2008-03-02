@@ -1,5 +1,5 @@
 <?php
-if(!Admin::LoggedIn())
+if(!Auth::LoggedIn())
 {
 ?>
 	<li><a href="?page=login">Login</a></li>

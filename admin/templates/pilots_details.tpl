@@ -1,10 +1,12 @@
 <h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
+
+<form action="action.php?admin=viewpilots" method="post">
 <dl> 
 <dt>Email Address</dt>
-<dd><?=$pilotinfo->email;?></dd>
+<dd><input type="text" name="email" value="<?=$pilotinfo->email;?>" /></dd>
 
 <dt>Location</dt>
-<dd><?=$pilotinfo->location;?></dd>
+<dd><input type="text" name="location" value="<?=$pilotinfo->location;?>"</dd>
 
 <dt>Last Login</dt>
 <dd><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></dd>
@@ -15,3 +17,4 @@
 <dt>Total Hours</dt>
 <dd><?=$pilotinfo->totalhours;?></dd>
 </dl>
+</form>

@@ -4,12 +4,14 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.wysiwyg.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/ui.tabs.min.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/metadata.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
 
-<link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/js/ui.tabs.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jquery.wysiwyg.css" type="text/css" />
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />
 
 <script type="text/javascript">
 $(document).ready(function() { EvokeListeners(); });
@@ -38,6 +40,9 @@ function EvokeListeners()
 	
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
+	
+	//Tabs
+	 $("#tabcontainer > ul").tabs();
 	
 	// Show dialog box
 	 $('#dialog').jqm({ajax:'@href'});

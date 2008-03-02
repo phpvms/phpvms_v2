@@ -14,3 +14,6 @@
 </div>
 <div id="resetpass">
 </div>
+</div>
+
+<div id="messagebox">Settings were saved!</div>

@@ -5,6 +5,7 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/ui.tabs.min.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/ui.tabs.ext.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/metadata.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
 

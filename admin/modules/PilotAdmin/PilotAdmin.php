@@ -39,14 +39,14 @@ class PilotAdmin
 		Template::Set('allletters', $letters);
 		Template::Set('allpilots', PilotData::GetAllPilots(Vars::GET('letter')));
 		
-		Template::Show('pilots_detailtabs.tpl');
+		Template::Show('pilots_list.tpl');
 	}
 	
 	function ViewPilotDetails()
 	{
 		Template::Set('pilotinfo', PilotData::GetPilotData(Vars::GET('id')));
 		
-		Template::Show('pilots_details.tpl');
+		Template::Show('pilots_detailtabs.tpl');
 	}
 }
 

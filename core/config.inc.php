@@ -41,6 +41,7 @@ $ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php
 // Determine our administration modules
 
 $ADMIN_MODULES['NewsItems'] = ADMIN_PATH . '/modules/NewsItems/NewsItems.php';
+$ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
 $ADMIN_MODULES['Settings'] = ADMIN_PATH . '/modules/Settings/Settings.php';
 
 // Include all dependencies

@@ -1,5 +1,6 @@
 <?php
 
+include dirname(__FILE__) . '/PilotData.class.php';
 
 class PilotAdmin
 {

@@ -1,8 +1,5 @@
-<dl>
-
-<dt>Pilot Name</dt>
-<dd><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></dd>
-
+<h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
+<dl> 
 <dt>Email Address</dt>
 <dd><?=$pilotinfo->email;?></dd>
 

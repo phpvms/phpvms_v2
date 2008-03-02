@@ -37,8 +37,8 @@ class TemplateSet
 	public function Set($name, $value)
 	{
 		// See if they're setting the template as a file
-		//	Check if the file exists
-		if(strstr($value, '.') && !is_object($value))
+		//	Check if the file exists 
+		if(!is_object($value) && strstr($value, '.'))
 		{
 			if(file_exists($this->template_path . '/' . $value))
 				$value = $this->GetTemplate($this->template_path . '/' . $value, true);

@@ -6,7 +6,7 @@ class PilotGroups
 	function GetAllGroups()
 	{
 		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups 
-						ORDER BY groupname ASC';
+						ORDER BY name ASC';
 		
 		return DB::get_results($query);
 	}	

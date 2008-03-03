@@ -127,10 +127,17 @@ class PilotAdmin
 		$userid = Vars::POST('userid');
 		$groupname = Vars::POST('groupname');
 		
-		if(PilotGroups::AddUsertoGroup($userid, $groupname))
-			Template::Set('message', 'User has been added to the group!');
-		else	
-			Template::Set('message', 'There was an error adding this user');
+		if(PilotGroups::CheckUserInGroup($userid, $groupname))
+		{
+			Template::Set('message', 'This user is already in this group!');
+		}
+		else
+		{
+			if(PilotGroups::AddUsertoGroup($userid, $groupname))
+				Template::Set('message', 'User has been added to the group!');
+			else	
+				Template::Set('message', 'There was an error adding this user');
+		}
 		
 		Template::Show('core_message.tpl');
 		

@@ -20,12 +20,12 @@ class PilotGroups
 	
 	function GetGroupID($groupname)
 	{
-		$query = 'SELECT id FROM ' . TABLE_PREFIX .'groups 
+		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups 
 					WHERE name=\''.$groupname.'\'';
 		
 		$res = DB::get_row($query);
 		
-		return $res->id;
+		return $res->groupid;
 	}
 	
 	function AddUsertoGroup($userid, $groupidorname)
@@ -33,20 +33,26 @@ class PilotGroups
 		if($groupidorname == '') return false;
 		
 		// If group name is given, get the group ID
-		if(is_string($groupid))
+		if(is_string($groupidorname))
 		{
-			$groupidorname = DB::escape($groupidorname);
 			$groupidorname = self::GetGroupID($groupidorname);
 		}
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (userid, groupid) 
 					VALUES ('.$userid.', '.$groupidorname.')';
 		
-		return DB::query($sql);
+		$ret = DB::query($sql);
+		DB::debug();
 	}
 	
 	function CheckUserInGroup($userid, $groupid)
 	{
+		
+		if(is_string($groupid))
+		{
+			$groupid = self::GetGroupID($groupid);
+		}
+		
 		$query = 'SELECT g.id
 					FROM ' . TABLE_PREFIX . 'groupmembers g
 					WHERE g.userid='.$userid.' AND g.groupid='.$groupid;

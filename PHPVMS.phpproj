@@ -56,15 +56,19 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\templates\\pilots_customfields.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
     "admin\\templates\\pilots_details.tpl"
     {
     "ProjRelPath" = "T"
     }
     "admin\\templates\\pilots_detailtabs.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\pilots_grouplist.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\pilots_groups.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -169,6 +173,10 @@
     "ProjRelPath" = "T"
     }
     "core\\common\\pilotdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\common\\pilotgroups.class.php"
     {
     "ProjRelPath" = "T"
     }

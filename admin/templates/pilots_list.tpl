@@ -1,4 +1,5 @@
 <div align="center">
+	<a href="?admin=viewpilots&letter=">View All</a> 
 <?php
 for($i=0;$i<27;$i++)
 {

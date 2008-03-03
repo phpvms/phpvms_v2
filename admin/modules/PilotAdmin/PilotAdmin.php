@@ -7,6 +7,7 @@ class PilotAdmin
 		echo '<li><a href="#">Pilots</a>
 				<ul>
 					<li><a href="?admin=viewpilots">View Registered Pilots</a></li>
+					<li><a href="?admin=pilotgroups">Pilot Groups</a></li>
 				</ul>
 				</li>';
 	}
@@ -41,7 +42,12 @@ class PilotAdmin
 				}
 				
 				$this->ShowPilotsList();	
-			break;	
+				break;	
+			
+			case 'pilotgroups':	
+				$this->ShowGroups();
+				break;
+				
 		}
 		
 	}
@@ -70,6 +76,12 @@ class PilotAdmin
 		Template::Set('allgroups', PilotData::GetPilotGroups($userid));
 		
 		Template::Show('pilots_detailtabs.tpl');
+	}
+	
+	function ShowGroups()
+	{
+		Template::Set('allgroups', PilotGroups::GetAllGroups());
+		Template::Show('pilots_grouplist.tpl');	
 	}
 	
 	function ChangePassword()

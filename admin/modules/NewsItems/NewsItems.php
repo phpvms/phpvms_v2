@@ -66,7 +66,6 @@ class NewsItems
 		{
 			echo 'fail';
 		}
-		
 	}
 }
 

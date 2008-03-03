@@ -31,9 +31,16 @@ class PilotAdmin
 				*/
 				if(Vars::GET('action') == 'viewoptions')
 				{
-					if(Vars::POST('action') == 'changepassword')
+					$action = Vars::POST('action');
+					
+					if($action == 'changepassword')
 					{
 						$this->ChangePassword();
+						return;
+					}
+					elseif($action == 'addgroup')
+					{
+						print_r($_POST);
 						return;
 					}
 					
@@ -53,7 +60,6 @@ class PilotAdmin
 				
 				$this->ShowGroups();
 				break;
-				
 		}
 		
 	}

@@ -29,20 +29,21 @@ class PilotAdmin
 					tab through AJAX). The hook is available for whoever 
 					wants to use it
 				*/
+				$action = Vars::POST('action');
+				if($action == 'changepassword')
+				{
+					$this->ChangePassword();
+					break;
+				}
+				elseif($action == 'addgroup')
+				{
+					print_r($_POST);
+					break;
+				}
+				
+				
 				if(Vars::GET('action') == 'viewoptions')
 				{
-					$action = Vars::POST('action');
-					
-					if($action == 'changepassword')
-					{
-						$this->ChangePassword();
-						return;
-					}
-					elseif($action == 'addgroup')
-					{
-						print_r($_POST);
-						return;
-					}
 					
 					$this->ViewPilotDetails();	
 					return;

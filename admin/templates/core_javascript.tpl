@@ -27,7 +27,11 @@ function EvokeListeners()
 		}
 	});
 	
-	$('#dialogform').ajaxForm({
+	$('#pilotoptionchangepass').ajaxForm({
+		target: '#dialogresult'
+	});
+	
+	$('#selectpilotgroup').ajaxForm({
 		target: '#dialogresult'
 	});
 	

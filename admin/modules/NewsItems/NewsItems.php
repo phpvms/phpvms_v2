@@ -1,9 +1,5 @@
 <?php
 
-
-include dirname(__FILE__) . '/NewsData.class.php';
-
-
 class NewsItems
 {
 	

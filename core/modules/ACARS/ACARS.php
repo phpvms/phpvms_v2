@@ -1,9 +1,6 @@
 <?php
 
 
-include dirname(__FILE__) . '/ACARSData.class.php';
-
-
 class ACARS extends ModuleBase
 {
 		

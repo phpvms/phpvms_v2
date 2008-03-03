@@ -1,8 +1,5 @@
 <?php
 
-
-include  dirname(__FILE__) . '/PIREPData.class.php';
-
 class PIREPS extends ModuleBase
 {
 	function Controller()

@@ -1,7 +1,5 @@
 <?php
 
-include ADMIN_PATH . '/modules/PilotAdmin/PilotData.class.php';
-
 class PilotProfile extends ModuleBase
 {	
 	function Controller()

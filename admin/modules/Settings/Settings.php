@@ -1,8 +1,5 @@
 <?php
 
-
-include dirname(__FILE__) . '/SettingsData.class.php';
-
 class Settings extends ModuleBase
 {
 		

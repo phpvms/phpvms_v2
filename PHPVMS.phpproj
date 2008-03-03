@@ -36,10 +36,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\modules\\pilotadmin\\pilotdata.class.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "admin\\modules\\settings\\settings.php"
     {
     "ProjRelPath" = "T"

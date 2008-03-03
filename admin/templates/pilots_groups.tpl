@@ -24,17 +24,26 @@ else
 </dl>
 
 <h3>Add to Group</h3>
+
+<?php 
+$total = count($freegroups);
+
+if($total == 0)
+{
+	echo 'No groups to add to';
+	return;
+}
+?>
 <form id="selectpilotgroup" action="action.php?admin=viewpilots" method="post">
 
 <dl>
 	<dt>Select Group:</dt>
 	<dd><select name="groupname">
 		<?php
-			$total = count($freegroups);
-			for($i=0;$i<$total;$i++)
-			{
-				echo '<option value="'.$freegroups[$i].'">'.$freegroups[$i].'</option>';
-			}
+		for($i=0;$i<$total;$i++)
+		{
+			echo '<option value="'.$freegroups[$i].'">'.$freegroups[$i].'</option>';
+		}
 		?>
 		</select></dd>
 

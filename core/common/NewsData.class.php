@@ -20,4 +20,11 @@ class NewsData
 					
 		return DB::query($sql);		
 	}
+	
+	function DeleteItem($id)
+	{
+		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'news WHERE id='.$id;
+		
+		return DB::query($sql);
+	}
 }

@@ -26,7 +26,7 @@ class NewsItems
 			
 				if(Vars::POST('action') == 'deleteitem')
 				{
-					echo 'delete';
+					$this->DeleteNewsItem();
 				}
 				
 				$this->ViewNews();
@@ -64,8 +64,20 @@ class NewsItems
 			
 		if(!NewsData::AddNewsItem($subject, $body))
 		{
-			echo 'fail';
+			Template::Set('message', 'There was an error adding the news item');
 		}
+		
+		Template::Show('core_message.tpl');
+	}
+	
+	function DeleteNewsItem()
+	{	
+		if(NewsData::DeleteItem(Vars::POST('id')))
+			Template::Set('message', 'News item deleted');
+		else
+			Template::Set('message', 'There was an error deleting the item');
+			
+		Template::Show('core_message.tpl');
 	}
 }
 

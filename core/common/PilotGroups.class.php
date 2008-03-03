@@ -33,7 +33,7 @@ class PilotGroups
 		if($groupidorname == '') return false;
 		
 		// If group name is given, get the group ID
-		if(is_string($groupidorname))
+		if(!is_numeric($groupidorname))
 		{
 			$groupidorname = self::GetGroupID($groupidorname);
 		}
@@ -41,14 +41,13 @@ class PilotGroups
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (userid, groupid) 
 					VALUES ('.$userid.', '.$groupidorname.')';
 		
-		$ret = DB::query($sql);
-		DB::debug();
+		return DB::query($sql);
 	}
 	
 	function CheckUserInGroup($userid, $groupid)
 	{
-		
-		if(is_string($groupid))
+			
+		if(!is_numeric($groupid))
 		{
 			$groupid = self::GetGroupID($groupid);
 		}
@@ -56,7 +55,7 @@ class PilotGroups
 		$query = 'SELECT g.groupid
 					FROM ' . TABLE_PREFIX . 'groupmembers g
 					WHERE g.userid='.$userid.' AND g.groupid='.$groupid;
-		
+					
 		if(!DB::get_row($query))
 			return false;
 		else	

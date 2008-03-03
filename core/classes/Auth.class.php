@@ -100,7 +100,7 @@ class Auth
 		{	
 			SessionManager::AddData('loggedin', true);	
 			SessionManager::AddData('userinfo', $userinfo);
-			SessionManager::AddData('usergroups', self::GetUserGroups($userinfo->userid));
+			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
 			
 			return true;
 		}			
@@ -114,19 +114,6 @@ class Auth
 		}
 	}
 		
-	function GetUserGroups($userid)
-	{
-		$userid = DB::escape($userid);
-
-		$sql = 'SELECT g.groupid, g.name
-					FROM '.APP_TABLE_PREFIX.'groupmembers u, ' . TABLE_PREFIX . 'groups g
-					WHERE u.userid='.$userid.' AND g.groupid=u.groupid';
-
-		$ret = DB::get_results($sql);
-
-		return $ret;
-	}
-	
 	function LogOut()
 	{
 		SessionManager::AddData('loggedin', false);

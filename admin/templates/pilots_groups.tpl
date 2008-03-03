@@ -1,5 +1,5 @@
 <?php
-if(!$allgroups)
+if(!$pilotgroups)
 {
 	echo 'This user is not in any groups!';
 	return;
@@ -10,7 +10,7 @@ if(!$allgroups)
 <dt>Group Name</dt>
 <dd><strong>Options</strong></dd>
 <?php 
-foreach($allgroups as $group)
+foreach($pilotgroups as $group)
 {
 ?>
 	<dt><?=$group->groupname;?></dt>

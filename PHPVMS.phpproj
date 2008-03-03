@@ -48,6 +48,18 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\core_message.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\groups_addgroup.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\groups_grouplist.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\news_additem.tpl"
     {
     "ProjRelPath" = "T"
@@ -56,15 +68,15 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\pilots_addtogroup.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\pilots_details.tpl"
     {
     "ProjRelPath" = "T"
     }
     "admin\\templates\\pilots_detailtabs.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\templates\\pilots_grouplist.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -541,4 +553,5 @@
 "UserReference" = "core\\common\\PIREPData.class.php"
 "UserReference" = "core\\common\\RegistrationData.class.php"
 "UserReference" = "core\\common\\SettingsData.class.php"
+"UserReference" = "core\\common\\PilotGroups.class.php"
 }

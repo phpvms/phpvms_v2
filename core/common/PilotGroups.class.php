@@ -45,6 +45,28 @@ class PilotGroups
 		return DB::query($sql);
 	}
 	
+	function CheckUserInGroup($userid, $groupid)
+	{
+		$query = 'SELECT g.id
+					FROM ' . TABLE_PREFIX . 'usergroups g
+					WHERE g.userid='.$userid.' AND g.groupid='.$groupid;
+		
+		return DB::get_row($query);
+	}
+	
+	function GetUserGroups($userid)
+	{
+		$userid = DB::escape($userid);
+		
+		$sql = 'SELECT g.groupid, g.name
+					FROM ' . TABLE_PREFIX . 'groupmembers u, ' . TABLE_PREFIX . 'groups g
+					WHERE u.userid='.$userid.' AND g.groupid=u.groupid';
+		
+		$ret = DB::get_results($sql);
+		
+		return $ret;
+	}
+	
 	function RemoveUserFromGroup($userid, $groupid)
 	{
 		$userid = DB::escape($userid);

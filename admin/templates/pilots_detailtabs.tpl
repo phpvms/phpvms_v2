@@ -9,7 +9,9 @@
 		<?php Template::Show('pilots_details.tpl'); ?>
 	</div>
 	<div id="groups">
-		<?php Template::Show('pilots_groups.tpl'); ?>
+		<?php Template::Show('pilots_groups.tpl'); 
+			  Template::Show('pilots_addtogroup.tpl');
+		?>
 	</div>
 	<div id="pireps">
 		<?php Template::Show('pilots_pireps.tpl'); ?>

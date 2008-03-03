@@ -79,7 +79,19 @@ class PilotAdmin
 		Template::Set('customfields', PilotData::GetFieldData($userid, true));
 		
 		//This is for the groups tab
-		Template::Set('allgroups', PilotData::GetPilotGroups($userid));
+		// Only send the groups they're in
+		$freegroups = array();
+		$allgroups = PilotGroups::GetAllGroups();
+		foreach($allgroups as $group)
+		{
+			if(!PilotGroups::CheckUserInGroup($userid, $group->id))
+			{
+				array_push($freegroups, $group->name);
+			}
+		}
+		
+		Template::Set('pilotgroups', PilotData::GetPilotGroups($userid));
+		Template::Set('freegroups', $freegroups);
 		
 		Template::Show('pilots_detailtabs.tpl');
 	}

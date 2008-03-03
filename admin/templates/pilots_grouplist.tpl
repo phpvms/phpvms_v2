@@ -20,7 +20,7 @@ foreach($allgroups as $group)
 ?>
 <tr>
 	<td align="center"><?=$group->groupname; ?></td>
-	<td align="center"></td>
+	<td align="center">Rename | Delete</td>
 </tr>
 <?php
 }

@@ -37,7 +37,7 @@ class PilotAdmin
 				}
 				elseif($action == 'addgroup')
 				{
-					print_r($_POST);
+					$this->AddPilotToGroup();
 					break;
 				}
 				
@@ -122,6 +122,19 @@ class PilotAdmin
 		Template::Show('core_message.tpl');	
 	}
 	
+	function AddPilotToGroup()
+	{
+		$userid = Vars::POST('userid');
+		$groupname = Vars::POST('groupname');
+		
+		if(PilotGroups::AddUsertoGroup($userid, $groupname))
+			Template::Set('message', 'User has been added to the group!');
+		else	
+			Template::Set('message', 'There was an error adding this user');
+		
+		Template::Show('core_message.tpl');
+		
+	}
 	function ShowGroups()
 	{
 		Template::Set('allgroups', PilotGroups::GetAllGroups());

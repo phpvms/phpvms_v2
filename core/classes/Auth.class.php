@@ -82,7 +82,7 @@ class Auth
 		$emailaddress = DB::escape($emailaddress);
 		$password = DB::escape($password);
 		
-		$sql = 'SELECT * FROM ' . APP_TABLE_PREFIX . 'users
+		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'users
 					WHERE email=\''.$emailaddress.'\'';
 
 		$userinfo = DB::get_row($sql);
@@ -119,7 +119,7 @@ class Auth
 		$userid = DB::escape($userid);
 
 		$sql = 'SELECT g.groupid, g.name
-					FROM '.APP_TABLE_PREFIX.'groupmembers u, '.APP_TABLE_PREFIX.'groups g
+					FROM '.APP_TABLE_PREFIX.'groupmembers u, ' . TABLE_PREFIX . 'groups g
 					WHERE u.userid='.$userid.' AND g.groupid=u.groupid';
 
 		$ret = DB::get_results($sql);

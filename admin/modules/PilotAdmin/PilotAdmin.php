@@ -16,19 +16,29 @@ class PilotAdmin
 		switch(Vars::GET('admin'))
 		{
 			case 'viewpilots':
-			
-				if(Vars::POST('action') == 'changepassword')
-				{
-					$this->ChangePassword();
-					return;
-				}
-				
+
+				/* This function is called for *ANYTHING* in that popup box
+					
+					Preset all of the template items in this function and 
+					call them in the subsequent templates
+					
+					Confusing at first, but easier than loading each tab 
+					independently via AJAX. Though may be an option later 
+					on, but can certainly be done by a plugin (Add another
+					tab through AJAX). The hook is available for whoever 
+					wants to use it
+				*/
 				if(Vars::GET('action') == 'viewoptions')
 				{
+					if(Vars::POST('action') == 'changepassword')
+					{
+						$this->ChangePassword();
+						return;
+					}
+					
 					$this->ViewPilotDetails();	
 					return;
 				}
-				
 				
 				$this->ShowPilotsList();	
 			break;	
@@ -52,8 +62,12 @@ class PilotAdmin
 	{
 		$userid = Vars::GET('userid');
 		
+		//This is for the main tab
 		Template::Set('pilotinfo', PilotData::GetPilotData($userid));
 		Template::Set('customfields', PilotData::GetFieldData($userid, true));
+		
+		//This is for the groups tab
+		Template::Set('allgroups', PilotData::GetPilotGroups($userid));
 		
 		Template::Show('pilots_detailtabs.tpl');
 	}

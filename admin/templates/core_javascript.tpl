@@ -37,7 +37,16 @@ function EvokeListeners()
 	});
 	
 	$('.ajaxcall').bind('dblclick', function() {
-		$("#bodytext").load("action.php?admin="+$(this).attr("module"), {action: $(this).attr("action"), id: $(this).attr("id")});
+		$("#bodytext").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
+	});
+	
+	// Binding the AJAX call clicks
+	$('.dialogajax').bind('click', function() {		 
+		return false; // cancel the single click event
+	});
+	
+	$('.dialogajax').bind('dblclick', function() {
+		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
 	// Make the message box hide itself

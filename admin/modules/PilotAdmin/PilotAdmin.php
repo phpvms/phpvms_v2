@@ -90,7 +90,7 @@ class PilotAdmin
 		$allgroups = PilotGroups::GetAllGroups();
 		foreach($allgroups as $group)
 		{
-			if(!PilotGroups::CheckUserInGroup($userid, $group->id))
+			if(!PilotGroups::CheckUserInGroup($userid, $group->groupid))
 			{
 				array_push($freegroups, $group->name);
 			}

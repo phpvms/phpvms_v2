@@ -48,7 +48,7 @@ class PilotGroups
 	function CheckUserInGroup($userid, $groupid)
 	{
 		$query = 'SELECT g.id
-					FROM ' . TABLE_PREFIX . 'usergroups g
+					FROM ' . TABLE_PREFIX . 'groupmembers g
 					WHERE g.userid='.$userid.' AND g.groupid='.$groupid;
 		
 		return DB::get_row($query);

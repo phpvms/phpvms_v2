@@ -4,10 +4,6 @@
  *	
  * Main Config file
  * 
- * revision updates:
- *	6 - Vars class added
- *	5 - DB class information added
- *		BaseTemplate path moved to index.php
  */
  
 session_start();

@@ -45,6 +45,12 @@ class PilotAdmin
 				break;	
 			
 			case 'pilotgroups':	
+			
+				if(Vars::POST('action') == 'addgroup')
+				{
+					$this->AddGroup();
+				}
+				
 				$this->ShowGroups();
 				break;
 				
@@ -78,10 +84,16 @@ class PilotAdmin
 		Template::Show('pilots_detailtabs.tpl');
 	}
 	
+	function AddGroup()
+	{
+		print_r($_POST);
+	}
+	
 	function ShowGroups()
 	{
 		Template::Set('allgroups', PilotGroups::GetAllGroups());
-		Template::Show('pilots_grouplist.tpl');	
+		Template::Show('groups_grouplist.tpl');	
+		Template::Show('groups_addgroup.tpl');
 	}
 	
 	function ChangePassword()

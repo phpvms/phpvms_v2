@@ -3,10 +3,10 @@
 <form id="dialogform" action="action.php?admin=viewpilots" method="post">
 <dl> 
 	<dt>Email Address</dt>
-	<dd><input type="text" name="email" value="<?=$pilotinfo->email;?>" /></dd>
+	<dd><?=$pilotinfo->email;?></dd>
 
 	<dt>Location</dt>
-	<dd><input type="text" name="location" value="<?=$pilotinfo->location;?>"</dd>
+	<dd><?=$pilotinfo->location;?></dd>
 
 	<dt>Last Login</dt>
 	<dd><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></dd>

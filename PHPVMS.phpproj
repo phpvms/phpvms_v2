@@ -196,6 +196,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\modules\\frontpage\\frontpage.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\frontpage\\news.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\modules\\login\\login.php"
     {
     "ProjRelPath" = "T"

@@ -30,6 +30,8 @@ foreach($allgroups as $group)
 	Rename | Delete
 	<?php
 	}
+	else
+		echo 'This group cannot be renamed or deleted';
 	?>
 	</td>
 </tr>

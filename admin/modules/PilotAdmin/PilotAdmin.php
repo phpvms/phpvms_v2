@@ -86,7 +86,21 @@ class PilotAdmin
 	
 	function AddGroup()
 	{
-		print_r($_POST);
+		$name = Vars::POST('name');
+		
+		if($name == '')
+		{
+			Template::Set('message', 'You must enter a name!');
+		}
+		else
+		{
+			if(PilotGroups::AddGroup($name))
+				Template::Set('message', 'The group "'.$name.'" has been added');
+			else
+				Template::Set('message', 'There was an error!');
+		}
+		
+		Template::Show('core_message.tpl');	
 	}
 	
 	function ShowGroups()
@@ -101,29 +115,29 @@ class PilotAdmin
 		$password1 = Vars::POST('password1');
 		$password2 = Vars::POST('password2');
 		
-		echo '<div id="messagebox">';
 		
 		// Check password length
 		if(strlen($password1) <= 5)
 		{
-			echo 'Password is less than 5 characters';
+			Template::Set('message', 'Password is less than 5 characters');
+			Template::Show('core_message.tpl');
 			return;
 		}
 		
 		// Check is passwords are the same	
 		if($password1 != $password2)
 		{
-			echo 'The passwords do not match';
+			Template::Set('message', 'The passwords do not match');
+			Template::Show('core_message.tpl');
 			return;
 		}
 		
 		if(RegistrationData::ChangePassword(Vars::POST('userid'), $password1))
-			echo 'Password has been successfully changed';
+			Template::Set('message', 'Password has been successfully changed');
 		else
-			echo 'There was an error, administrator has been notified';
+			Template::Set('message', 'There was an error, administrator has been notified');
 			
-		
-		echo '</div>';
+		Template::Show('core_message.tpl');
 	}
 }
 

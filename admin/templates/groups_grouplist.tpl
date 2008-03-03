@@ -1,3 +1,4 @@
+<h3>User Groups</h3>
 <?php
 if(!$allgroups)
 {
@@ -5,7 +6,6 @@ if(!$allgroups)
 	return;
 }
 ?>
-
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
@@ -40,3 +40,4 @@ foreach($allgroups as $group)
 ?>
 </tbody>
 </table>
+<br />

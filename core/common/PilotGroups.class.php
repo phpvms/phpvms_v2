@@ -15,12 +15,7 @@ class PilotGroups
 	{
 		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name) VALUES ('$groupname')";	
 		
-		$res = DB::query($query);
-		
-		if(!$res)
-			return false;
-		else
-			return DB::$insert_id;
+		return DB::query($query);
 	}
 	
 	function GetGroupID($groupname)

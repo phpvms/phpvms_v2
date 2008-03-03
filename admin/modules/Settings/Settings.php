@@ -71,7 +71,8 @@ class Settings extends ModuleBase
 			SettingsData::SaveSetting($name, $value, '', false);
 		}		
 		
-		echo '<div id="messagebox">Settings were saved!</div>';
+		Template::Set('message', 'Settings were saved!');
+		Template::Show('core_message.tpl');
 	}
 	
 	function AddField()
@@ -82,13 +83,12 @@ class Settings extends ModuleBase
 			return;
 		}
 		
-		echo '<div id="messagebox">';
 		if(SettingsData::AddField())
-			echo 'Settings saved';
+			Template::Set('message', 'Settings were saved!');
 		else
-			echo 'There was an error saving the settings: ' . DB::$err;
-		
-		echo '</div>';
+			Template::Set('message', 'There was an error saving the settings: ' . DB::$err);
+					
+		Template::Show('core_message.tpl');
 	}
 	
 	function SaveFields()
@@ -105,22 +105,20 @@ class Settings extends ModuleBase
 		echo '<div id="messagebox">';
 		if(SettingsData::DeleteField($id) == true)
 		{
-			echo 'The custom field was deleted!';
+			Template::Set('message', 'The field was deleted');
 		}
 		else
 		{
-			echo 'There was an error deleting the field: '. DB::$err;
+			Template::Set('message', 'There was an error deleting the field: ' . DB::$err);
 		}
-		
-		echo '</div>';	
+
+		Template::Show('core_message.tpl');
 	}
 	
 	function ShowSettings()
 	{
 		Template::Set('allsettings', SettingsData::GetAllSettings());
-		
 		Template::ShowTemplate('settings_mainform.tpl');
-		//$this->TEMPLATE->ShowTemplate('addsetting.tpl');
 	}
 	
 	function ShowFields()
@@ -129,7 +127,6 @@ class Settings extends ModuleBase
 		
 		Template::ShowTemplate('settings_customfieldsform.tpl');
 		Template::ShowTemplate('settings_addcustomfield.tpl');
-		
 	}
 }
 ?>

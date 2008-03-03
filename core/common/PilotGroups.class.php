@@ -53,11 +53,14 @@ class PilotGroups
 			$groupid = self::GetGroupID($groupid);
 		}
 		
-		$query = 'SELECT g.id
+		$query = 'SELECT g.groupid
 					FROM ' . TABLE_PREFIX . 'groupmembers g
 					WHERE g.userid='.$userid.' AND g.groupid='.$groupid;
 		
-		return DB::get_row($query);
+		if(!DB::get_row($query))
+			return false;
+		else	
+			return true;
 	}
 	
 	function GetUserGroups($userid)
@@ -89,7 +92,7 @@ class PilotGroups
 		$groupid = DB::escape($groupid);
 		
 		//delete from groups table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'groups WHERE id='.$groupid;	
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'groups WHERE groupid='.$groupid;	
 		DB::query($sql);
 				
 		//delete from usergroups table

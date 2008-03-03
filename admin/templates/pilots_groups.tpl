@@ -14,7 +14,7 @@ else
 	foreach($pilotgroups as $group)
 	{
 ?>
-	<dt><?=$group->groupname;?></dt>
+	<dt><?=$group->name;?></dt>
 	<dd><a href="action.php?admin=viewpilots" action="viewoptions" id="<?=$group->groupid;?>" class="dialogajax">Remove</a></dd>
 	
 <?php

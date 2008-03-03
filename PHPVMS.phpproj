@@ -24,15 +24,7 @@
 }
 "Files"
 {
-    "admin\\modules\\dashboard\\templates\\welcome.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
     "admin\\modules\\dashboard\\dashboard.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\modules\\newsitems\\newsdata.class.php"
     {
     "ProjRelPath" = "T"
     }
@@ -49,10 +41,6 @@
     "ProjRelPath" = "T"
     }
     "admin\\modules\\settings\\settings.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\modules\\settings\\settingsdata.class.php"
     {
     "ProjRelPath" = "T"
     }
@@ -172,11 +160,31 @@
     {
     "ProjRelPath" = "T"
     }
-    "core\\modules\\acars\\acars.php"
+    "core\\common\\acarsdata.class.php"
     {
     "ProjRelPath" = "T"
     }
-    "core\\modules\\acars\\acarsdata.class.php"
+    "core\\common\\newsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\common\\pirepdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\common\\pilotdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\common\\registrationdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\common\\settingsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\modules\\acars\\acars.php"
     {
     "ProjRelPath" = "T"
     }
@@ -185,10 +193,6 @@
     "ProjRelPath" = "T"
     }
     "core\\modules\\login\\login.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "core\\modules\\pireps\\pirepdata.class.php"
     {
     "ProjRelPath" = "T"
     }
@@ -252,14 +256,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "lib\\js\\jquery-1.2.2.pack.js"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\js\\jquery-1.2.pack.js"
-    {
-    "ProjRelPath" = "T"
-    }
     "lib\\js\\jquery-calendar.js"
     {
     "ProjRelPath" = "T"
@@ -272,6 +268,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "lib\\js\\jquery.metadata.js"
+    {
+    "ProjRelPath" = "T"
+    }
     "lib\\js\\jquery.tablesorter.pack.js"
     {
     "ProjRelPath" = "T"
@@ -281,14 +281,6 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\jquery.wysiwyg.js"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\js\\liveframe.js"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\js\\metadata.js"
     {
     "ProjRelPath" = "T"
     }

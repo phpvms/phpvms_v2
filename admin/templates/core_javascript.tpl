@@ -28,10 +28,7 @@ function EvokeListeners()
 	});
 	
 	$('#dialogform').ajaxForm({
-		target: '#dialogresult',
-		success: function() {
-			$('#bodytext').fadeIn('slow');
-		}
+		target: '#dialogresult'
 	});
 	
 	// Binding the AJAX call clicks

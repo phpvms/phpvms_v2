@@ -18,6 +18,7 @@ ini_set('display_errors', 'on');
 define('SITE_ROOT', str_replace('/core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
 define('CACHE_PATH', CORE_PATH . '/cache');
+define('COMMON_PATH', CORE_PATH . '/common');
 define('CLASS_PATH', CORE_PATH . '/classes');
 define('MODULES_PATH', CORE_PATH . '/modules');
 define('TEMPLATES_PATH', CORE_PATH . '/templates');
@@ -57,6 +58,13 @@ include CLASS_PATH . '/TemplateSet.class.php';
 include CLASS_PATH . '/Vars.class.php';
 include CLASS_PATH . '/UserGroups.class.php';
 include CLASS_PATH . '/Util.class.php';
+
+include COMMON_PATH . '/ACARSData.class.php';
+include COMMON_PATH . '/NewsData.class.php';
+include COMMON_PATH . '/PilotData.class.php';
+include COMMON_PATH . '/PIREPData.class.php';
+include COMMON_PATH . '/RegistrationData.class.php';
+include COMMON_PATH . '/SettingsData.class.php';
 
 if(DBASE_NAME != '')
 {

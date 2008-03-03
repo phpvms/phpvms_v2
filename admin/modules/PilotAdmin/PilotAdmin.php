@@ -19,11 +19,19 @@ class PilotAdmin
 		{
 			case 'viewpilots':
 			
+				if(Vars::POST('action') == 'changepassword')
+				{
+					$this->ChangePassword();
+					return;
+				}
+				
 				if(Vars::GET('action') == 'viewoptions')
 				{
 					$this->ViewPilotDetails();	
 					return;
 				}
+				
+				
 				$this->ShowPilotsList();	
 			break;	
 		}

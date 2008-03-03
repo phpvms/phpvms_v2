@@ -1,5 +1,6 @@
 <?php
 
+include ADMIN_PATH . '/modules/PilotAdmin/PilotData.class.php';
 
 class PilotProfile extends ModuleBase
 {	
@@ -11,7 +12,6 @@ class PilotProfile extends ModuleBase
 		
 		if(Vars::GET('page') == 'profile')
 		{
-			
 			//show our profile stuff
 			
 		}

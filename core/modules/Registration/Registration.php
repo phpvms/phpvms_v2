@@ -1,7 +1,5 @@
 <?php
 
-include dirname(__FILE__) . '/RegistrationData.class.php';
-
 class Registration extends ModuleBase
 {
 	function HTMLHead()

@@ -24,6 +24,11 @@ class PilotData
 		
 		return DB::get_row($sql);
 	}
+	
+	function ChangePassword($newpass)
+	{
+		
+	}
 }
 
 ?>

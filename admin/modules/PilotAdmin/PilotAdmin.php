@@ -50,9 +50,31 @@ class PilotAdmin
 	
 	function ViewPilotDetails()
 	{
-		Template::Set('pilotinfo', PilotData::GetPilotData(Vars::GET('id')));
+		Template::Set('pilotinfo', PilotData::GetPilotData(Vars::GET('userid')));
 		
 		Template::Show('pilots_detailtabs.tpl');
+	}
+	
+	function ChangePassword()
+	{
+		$password1 = Vars::POST('password1');
+		$password2 = Vars::POST('password2');
+		
+		// Check password length
+		if(strlen($password1) <= 5)
+		{
+			echo 'Password is less than 5 characters';
+			return;
+		}
+		
+		// Check is passwords are the same	
+		if($password1 != $password2)
+		{
+			echo 'The passwords do not match';
+			return;
+		}
+		
+		RegistrationData::ChangePassword(Vars::POST('userid'), $password1);
 	}
 }
 

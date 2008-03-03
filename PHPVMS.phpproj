@@ -72,11 +72,11 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\templates\\pilots_pireps.tpl"
+    "admin\\templates\\pilots_options.tpl"
     {
     "ProjRelPath" = "T"
     }
-    "admin\\templates\\pilots_resetpass.tpl"
+    "admin\\templates\\pilots_pireps.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -519,4 +519,10 @@
 "UserReference" = "core\\classes\\Template.class.php"
 "UserReference" = "core\\config.inc.php"
 "UserReference" = "core\\site_config.inc.php"
+"UserReference" = "core\\common\\ACARSData.class.php"
+"UserReference" = "core\\common\\NewsData.class.php"
+"UserReference" = "core\\common\\PilotData.class.php"
+"UserReference" = "core\\common\\PIREPData.class.php"
+"UserReference" = "core\\common\\RegistrationData.class.php"
+"UserReference" = "core\\common\\SettingsData.class.php"
 }

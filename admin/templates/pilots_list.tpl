@@ -36,7 +36,7 @@ foreach($allpilots as $pilot)
 	<td align="center"><?=$pilot->location; ?></td>
 	<td align="center"><?=$pilot->totalflights; ?></td>
 	<td align="center"><?=$pilot->totalhours; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpilots&action=viewoptions&id=<?=$pilot->userid;?>">Options</a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpilots&action=viewoptions&userid=<?=$pilot->userid;?>">Options</a></td>
 </tr>
 <?php
 }

@@ -1,5 +1,5 @@
 <h3>Reset Pilot Password</h3>
-<p>If someone has forgetten their password and it needs to be reset</p>
+<p>If someone has forgetten their password and it needs to be reset. </p>
 <form id="dialogform" action="action.php?admin=viewpilots" method="post">
 
 <dl>

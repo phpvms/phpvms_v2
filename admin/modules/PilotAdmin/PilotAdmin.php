@@ -50,7 +50,10 @@ class PilotAdmin
 	
 	function ViewPilotDetails()
 	{
-		Template::Set('pilotinfo', PilotData::GetPilotData(Vars::GET('userid')));
+		$userid = Vars::GET('userid');
+		
+		Template::Set('pilotinfo', PilotData::GetPilotData($userid));
+		Template::Set('customfields', PilotData::GetFieldData($userid, true));
 		
 		Template::Show('pilots_detailtabs.tpl');
 	}
@@ -59,6 +62,8 @@ class PilotAdmin
 	{
 		$password1 = Vars::POST('password1');
 		$password2 = Vars::POST('password2');
+		
+		echo '<div id="messagebox">';
 		
 		// Check password length
 		if(strlen($password1) <= 5)
@@ -74,7 +79,13 @@ class PilotAdmin
 			return;
 		}
 		
-		RegistrationData::ChangePassword(Vars::POST('userid'), $password1);
+		if(RegistrationData::ChangePassword(Vars::POST('userid'), $password1))
+			echo 'Password has been successfully changed';
+		else
+			echo 'There was an error, administrator has been notified';
+			
+		
+		echo '</div>';
 	}
 }
 

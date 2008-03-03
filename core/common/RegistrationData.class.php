@@ -145,6 +145,17 @@ class RegistrationData
 		}
 	}
 	
+	function ChangePassword($userid, $newpassword)
+	{
+		$salt = md5(date('His'));
+		$password = md5(Vars::POST('password1') . $salt);
+		
+		self::$salt = $salt;
+		
+		$sql = "UPDATE " . TABLE_PREFIX ."users SET password='$password', salt='$salt', confirmed='n'";
+		return DB::query($sql);		
+	}
+	
 	function SendEmailConfirm()
 	{
 		$firstname = Vars::POST('firstname');

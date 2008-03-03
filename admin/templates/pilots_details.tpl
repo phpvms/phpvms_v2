@@ -17,6 +17,18 @@
 	<dt>Total Hours</dt>
 	<dd><?=$pilotinfo->totalhours;?></dd>
 	
+<?php
+if($customfields)
+{
+	foreach($customfields as $field)
+	{
+?>
+	<dt><?=$field->fieldname;?></dt>
+	<dd><?=$field->value;?></dd>
+<?php
+	}
+}
+?>	
 	<dt></dt>
 	<dd>
 		<div id="results"></div>

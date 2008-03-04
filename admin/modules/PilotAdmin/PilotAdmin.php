@@ -35,14 +35,24 @@ class PilotAdmin
 					$this->ChangePassword();
 					break;
 				}
+				
+				/* These are reloaded into the #pilotgroups ID
+					so the entire groups list is refreshed
+					*/
 				elseif($action == 'addgroup')
 				{
 					$this->AddPilotToGroup();
+					
+					$this->SetGroupsData(Vars::POST('userid'));
+					Template::Show('pilots_groups.tpl');
 					break;
 				}
 				elseif($action == 'removegroup')
 				{
 					$this->RemovePilotGroup();
+					
+					$this->SetGroupsData(Vars::POST('userid'));
+					Template::Show('pilots_groups.tpl');
 					break;
 				}
 				
@@ -89,7 +99,15 @@ class PilotAdmin
 		//This is for the main tab
 		Template::Set('pilotinfo', PilotData::GetPilotData($userid));
 		Template::Set('customfields', PilotData::GetFieldData($userid, true));
+		Template::Set('userid', $userid);
 		
+		$this->SetGroupsData($userid);
+		
+		Template::Show('pilots_detailtabs.tpl');
+	}
+	
+	function SetGroupsData($userid)
+	{
 		//This is for the groups tab
 		// Only send the groups they're in
 		$freegroups = array();
@@ -104,8 +122,6 @@ class PilotAdmin
 		
 		Template::Set('pilotgroups', PilotData::GetPilotGroups($userid));
 		Template::Set('freegroups', $freegroups);
-		
-		Template::Show('pilots_detailtabs.tpl');
 	}
 	
 	function AddGroup()

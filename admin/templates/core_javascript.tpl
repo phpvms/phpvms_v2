@@ -32,7 +32,7 @@ function EvokeListeners()
 	});
 	
 	$('#selectpilotgroup').ajaxForm({
-		target: '#dialogresult'
+		target: '#pilotgroups' 
 	});
 	
 	// Binding the AJAX call clicks

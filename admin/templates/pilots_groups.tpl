@@ -15,7 +15,7 @@ else
 	{
 ?>
 	<dt><?=$group->name;?></dt>
-	<dd><a href="action.php?admin=viewpilots&userid=<?=$_GET['id']; ?>" action="removegroup" id="<?=$group->groupid;?>" class="dialogajax">Remove</a></dd>
+	<dd><a href="action.php?admin=viewpilots&userid=<?=$userid; ?>" action="removegroup" id="<?=$group->groupid;?>" class="dialogajax">Remove</a></dd>
 	
 <?php
 	}

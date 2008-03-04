@@ -170,7 +170,11 @@ class PilotAdmin
 		$groupid = Vars::POST('groupid');
 		
 		if(PilotGroups::RemoveUserFromGroup($userid, $groupid))
+		{
+			DB::debug();
+			
 			Template::Set('message', 'Removed');
+		}
 		else
 			Template::Set('message', 'There was an error removing');
 			

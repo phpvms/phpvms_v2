@@ -80,7 +80,7 @@ class PilotGroups
 		$userid = DB::escape($userid);
 		$groupid = DB::escape($groupid);
 		
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmemebers
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers
 					WHERE userid='.$userid.' AND groupid='.$groupid;
 		
 		return DB::query($sql);

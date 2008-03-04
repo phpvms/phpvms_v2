@@ -99,7 +99,7 @@ class PilotAdmin
 		//This is for the main tab
 		Template::Set('pilotinfo', PilotData::GetPilotData($userid));
 		Template::Set('customfields', PilotData::GetFieldData($userid, true));
-		Template::Set('userid', $userid);
+		
 		
 		$this->SetGroupsData($userid);
 		
@@ -111,6 +111,7 @@ class PilotAdmin
 		//This is for the groups tab
 		// Only send the groups they're in
 		$freegroups = array();
+		
 		$allgroups = PilotGroups::GetAllGroups();
 		foreach($allgroups as $group)
 		{
@@ -120,6 +121,7 @@ class PilotAdmin
 			}
 		}
 		
+		Template::Set('userid', $userid);
 		Template::Set('pilotgroups', PilotData::GetPilotGroups($userid));
 		Template::Set('freegroups', $freegroups);
 	}

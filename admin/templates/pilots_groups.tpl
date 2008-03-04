@@ -22,7 +22,7 @@ else
 }
 ?>
 </dl>
-
+<br /><br />
 <h3>Add to Group</h3>
 
 <?php 

@@ -168,11 +168,9 @@ class PilotAdmin
 	{
 		$userid = Vars::POST('userid');
 		$groupid = Vars::POST('groupid');
-		
+					
 		if(PilotGroups::RemoveUserFromGroup($userid, $groupid))
-		{
-			DB::debug();
-			
+		{			
 			Template::Set('message', 'Removed');
 		}
 		else

@@ -24,7 +24,7 @@ class PilotGroups
 					WHERE name=\''.$groupname.'\'';
 		
 		$res = DB::get_row($query);
-		
+	
 		return $res->groupid;
 	}
 	
@@ -46,8 +46,8 @@ class PilotGroups
 	
 	function CheckUserInGroup($userid, $groupid)
 	{
-			
-		if(!is_numeric($groupid))
+		
+		if(preg_match('`^[0-9]+$`',$groupid) != true)
 		{
 			$groupid = self::GetGroupID($groupid);
 		}

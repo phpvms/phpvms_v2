@@ -72,7 +72,7 @@ class ezSQLcore
 							'query' => $this->last_query);
 			
 		//show output if enabled
-		$this->show_errors ? trigger_error($this->error,E_USER_WARNING) : null;
+		$this->show_errors ? trigger_error($this->error . '(' . $this->last_query . ')', E_USER_WARNING) : null;
 	}
 	
 	function get_all_errors()

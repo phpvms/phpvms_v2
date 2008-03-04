@@ -1,12 +1,12 @@
+<h3>Pilot Groups</h3>
 <?php
 if(!$pilotgroups)
 {
-	echo 'This user is not in any groups!<br />';
+	echo '<br />This user is not in any groups!<br /><br />';
 }
 else
 {
 ?>
-<h3>Current Pilot Groups</h3>
 <dl>
 <dt>Group Name</dt>
 <dd><strong>Options</strong></dd>
@@ -48,7 +48,7 @@ if($total == 0)
 		</select></dd>
 
 	<dt></dt>
-	<dd><input type="hidden" name="userid" value="<?=Vars::GET('userid');?>" />
+	<dd><input type="hidden" name="userid" value="<?=$userid;?>" />
 		<input type="hidden" name="action" value="addgroup" />
 		<input type="submit" name="submit" value="Add to Group" /></dd>
 </dl>

@@ -53,6 +53,15 @@ function EvokeListeners()
 		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
+	// Binding the AJAX call clicks
+	$('.pilotgroupajax').bind('click', function() {		 
+		return false; // cancel the single click event
+	});
+	
+	$('.pilotgroupajax').bind('dblclick', function() {
+		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), userid: $(this).attr("userid"), id: $(this).attr("id")});
+	});
+	
 	// Make the message box hide itself
 	setTimeout(function() { $("#messagebox").slideUp("slow")}, 5000);
 	

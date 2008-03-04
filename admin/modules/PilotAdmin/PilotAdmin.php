@@ -166,10 +166,15 @@ class PilotAdmin
 	
 	function RemovePilotGroup()
 	{
-		$userid = Vars::GET('userid');
+		$userid = Vars::POST('userid');
 		$groupid = Vars::POST('groupid');
 		
-		echo $userid  . ' ' . $groupid;
+		if(PilotGroups::RemoveUserFromGroup($userid, $groupid))
+			Template::Set('message', 'Removed');
+		else
+			Template::Set('message', 'There was an error removing');
+			
+		Template::Show('core_message.tpl');
 	}
 	
 	function ShowGroups()

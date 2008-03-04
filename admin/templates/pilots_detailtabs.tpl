@@ -1,3 +1,4 @@
+<div id="dialogresult"></div>
 <div id="tabcontainer">
 	<ul>
 		<li><a href="#pilotdetails"><span>Pilot Details</span></a></li>
@@ -20,5 +21,4 @@
 		<?php Template::Show('pilots_options.tpl'); ?>
 	</div>
 </div>
-<div id="dialogresult"></div>
 <div align="right"><input type="button" class="jqmClose" name="jqmClose" value="Close" /></div>

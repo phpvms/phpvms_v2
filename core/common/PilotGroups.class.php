@@ -33,7 +33,7 @@ class PilotGroups
 		if($groupidorname == '') return false;
 		
 		// If group name is given, get the group ID
-		if(!is_numeric($groupidorname))
+		if(preg_match('`^[0-9]+$`',$groupid) != true)
 		{
 			$groupidorname = self::GetGroupID($groupidorname);
 		}

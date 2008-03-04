@@ -50,13 +50,15 @@ PRIMARY KEY ( `id` )
 
 
 INSERT INTO `phpvms_groups` (`name`) VALUES ('Administrators');
+INSERT INTO `phpvms_groups` (`name`) VALUES ('Registered Users');
 
 
 CREATE TABLE `phpvms_groupmembers` (
-`id` INT NOT NULL ,
-`groupid` INT NOT NULL ,
-`userid` INT NOT NULL
-) 
+  `id` int(11) NOT NULL auto_increment,
+  `groupid` int(11) NOT NULL default '0',
+  `userid` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);
 
 
 

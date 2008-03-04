@@ -40,6 +40,11 @@ class PilotAdmin
 					$this->AddPilotToGroup();
 					break;
 				}
+				elseif($action == 'removegroup')
+				{
+					$this->RemovePilotGroup();
+					break;
+				}
 				
 				
 				if(Vars::GET('action') == 'viewoptions')
@@ -142,6 +147,15 @@ class PilotAdmin
 		Template::Show('core_message.tpl');
 		
 	}
+	
+	function RemovePilotGroup()
+	{
+		$userid = Vars::GET('userid');
+		$groupid = Vars::POST('groupid');
+		
+		echo $userid  . ' ' . $groupid;
+	}
+	
 	function ShowGroups()
 	{
 		Template::Set('allgroups', PilotGroups::GetAllGroups());

@@ -6,7 +6,8 @@
 	
 include '../core/config.inc.php';
 
-//TODO: login implementation
+if(!Auth::LoggedIn() && !Auth::UserInGroup('Administrators'))
+	die('Unauthorized access!');
 
 define('ADMIN_PANEL', true);
 

@@ -32,9 +32,11 @@ class Auth
 		{
 			self::$loggedin = true;
 			self::$userinfo = SessionManager::GetData('userinfo');
-			self::$usergroups = SessionManager::UserGroups('usergroups');
+			self::$usergroups = SessionManager::GetData('usergroups');
 			self::$userid = self::$userinfo->userid;
 			
+			//print_r(self::$userinfo);
+			//print_r(self::$usergroups);
 			return true;
 		}
 		else
@@ -44,6 +46,11 @@ class Auth
 		}
 	}
 	
+	function UserID()
+	{
+		return self::$userinfo->userid;
+	}
+	
 	function Username()
 	{
 		return self::$userinfo->username;
@@ -51,7 +58,7 @@ class Auth
 	
 	function DisplayName()
 	{
-		return self::$userinfo->displayname;
+		return self::$userinfo->firstname . ' ' . self::$userinfo->lastname;
 	}
 	
 	function LoggedIn()
@@ -87,9 +94,9 @@ class Auth
 
 		$userinfo = DB::get_row($sql);
 
-		if(!is_array($userinfo))
+		if(!$userinfo)
 		{
-			self::$error_message = 'User does not exist';
+			self::$error_message = 'Invalid login, please check your username and password';
 			return false;
 		}
 
@@ -107,7 +114,7 @@ class Auth
 		else 
 		{
 			// just blank it
-			self::$error_message = 'Invalid Password';
+			self::$error_message = 'Invalid login, please check your username and password';
 			self::LogOut();
 			
 			return false;

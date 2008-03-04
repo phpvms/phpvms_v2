@@ -4,8 +4,7 @@
  *	
  * Main Config file
  * 
- */
- 
+ */ 
 session_start();
 
 error_reporting(E_ALL ^ E_NOTICE);
@@ -20,8 +19,6 @@ define('DATE_FORMAT', 'm/d/Y');
 define('MODULES_PATH', CORE_PATH . '/modules');
 define('TEMPLATES_PATH', CORE_PATH . '/templates');
 define('ADMIN_PATH', SITE_ROOT . '/admin');
-
-include CORE_PATH . '/site_config.inc.php';
 
 // These are the core modules
 //	Module/Folder_Name => Name of Controller file
@@ -60,12 +57,15 @@ include COMMON_PATH . '/PIREPData.class.php';
 include COMMON_PATH . '/RegistrationData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
 
+include CORE_PATH . '/site_config.inc.php';
+
 if(DBASE_NAME != '')
 {
 	DB::init();
 	DB::connect();
 }
 
+Auth::StartAuth();
 Template::SetTemplatePath(TEMPLATES_PATH);
 Util::LoadSiteSettings();
 

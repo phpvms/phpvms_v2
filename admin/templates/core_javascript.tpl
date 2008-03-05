@@ -73,11 +73,26 @@ function EvokeListeners()
 	$("#lookupicao").bind('click', function()
 	{
 		icao = $("#airporticao").val();
+		
+		if(icao.length != 4)
+		{
+			$("#statusbox").html("Please enter the full 4 letter ICAO");
+			return false;
+		}
+			
 		$("#statusbox").html("Fetching airport data...");
 		$("#lookupicao").hide();
 		
-		$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=1&type=json&q="+icao+"&callback=?", 
+		$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=1&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
 			function(data){
+			
+			if(data.totalResultsCount == 0)
+			{
+				$("#statusbox").html("Nothing found. Try entering the full 4 letter ICAO");
+				$("#lookupicao").show();
+				return;
+			}
+		
 			$.each(data.geonames, function(i,item){
 				$("#airporticao").val(icao);
 				$("#airportname").val(item.name);   
@@ -89,6 +104,8 @@ function EvokeListeners()
 				$("#lookupicao").show();
 			});
 		});
+		
+		return false;
 	});
 	
 	//Tabs

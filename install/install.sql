@@ -1,10 +1,10 @@
-CREATE TABLE `nssliven_phpvms`.`airports` (
+CREATE TABLE `phpvms_airports` (
 `id` INT NOT NULL AUTO_INCREMENT ,
 `icao` VARCHAR( 5 ) NOT NULL ,
 `name` VARCHAR( 30 ) NOT NULL ,
-`country` VARCHAR( 30 ) NOT NULL ,
+`country` VARCHAR( 50 ) NOT NULL ,
 `lat` FLOAT( 10 ) NOT NULL ,
-`long` FLOAT( 10 ) NOT NULL ,
+`lng` FLOAT( 10 ) NOT NULL ,
 PRIMARY KEY ( `id` )
 );
 

@@ -1,5 +1,13 @@
 <h3>Airport's List</h3>
 <p>The airports that are currently served are listed here.</p>
+<br />
+<?php
+if(!$airports)
+{
+	echo '<p>There are no airports added</p><br /><br />';
+	return;
+}
+?>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
@@ -13,7 +21,7 @@
 </thead>
 <tbody>
 <?php
-foreach($allpilots as $pilot)
+foreach($airports as $airport)
 {
 ?>
 <tr>
@@ -21,7 +29,7 @@ foreach($allpilots as $pilot)
 	<td align="center"><?=$airport->name; ?></td>
 	<td align="center"><?=$airport->country; ?></td>
 	<td align="center"><?=$airport->lat; ?></td>
-	<td align="center"><?=$airport->long; ?></td>
+	<td align="center"><?=$airport->lng; ?></td>
 	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=airports&action=">Options</a></td>
 </tr>
 <?php
@@ -29,3 +37,4 @@ foreach($allpilots as $pilot)
 ?>
 </tbody>
 </table>
+<hr>

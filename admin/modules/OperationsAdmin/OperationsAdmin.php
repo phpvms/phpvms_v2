@@ -1,7 +1,7 @@
 <?php
 
 
-class SchedulesAdmin
+class OperationsAdmin
 {
 	function NavBar()
 	{
@@ -26,10 +26,13 @@ class SchedulesAdmin
 					$this->AddAirport();
 				}
 				 
-				Template::Set('airports', SchedulesData::GetAllAirports());
+				Template::Set('airports', OperationsData::GetAllAirports());
 				Template::Show('ops_airportlist.tpl');
 				
 				Template::Show('ops_addairport.tpl');
+				break;
+			case 'viewschedule':
+			
 				break;
 		}
 	}
@@ -48,19 +51,16 @@ class SchedulesAdmin
 			Template::Show('core_message.tpl');
 			return;
 		}
-		
-		/*if(($ret = SchedulesData::GetAirportInfo($icao)))
+	
+		if(!OperationsData::AddAirport($icao, $name, $country, $lat, $long))
 		{
-			Template::Set('message', 'This airport already exists in the list');
+			if(DB::$errno == 1062) // Duplicate entry
+				Template::Set('message', 'This airport has already been added');
+			else
+				Template::Set('message', 'There was an error adding the airport');
 		}
-		else
-		{*/
-		if(!SchedulesData::AddAirport($icao, $name, $country, $lat, $long))
-			Template::Set('message', 'There was an error adding the airport');
 		else	
 			Template::Set('message', 'The airport has been added');
-		//}
-		
 			
 		Template::Show('core_message.tpl');
 	}

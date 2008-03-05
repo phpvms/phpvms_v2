@@ -34,6 +34,7 @@ $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
 
 $ADMIN_MODULES['NewsItems'] = ADMIN_PATH . '/modules/NewsItems/NewsItems.php';
 $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
+$ADMIN_MODULES['SchedulesAdmin'] = ADMIN_PATH . '/modules/SchedulesAdmin/SchedulesAdmin.php';
 $ADMIN_MODULES['Settings'] = ADMIN_PATH . '/modules/Settings/Settings.php';
 
 // Include all dependencies
@@ -55,6 +56,7 @@ include COMMON_PATH . '/PilotData.class.php';
 include COMMON_PATH . '/PilotGroups.class.php';
 include COMMON_PATH . '/PIREPData.class.php';
 include COMMON_PATH . '/RegistrationData.class.php';
+include COMMON_PATH . '/SchedulesData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
 
 include CORE_PATH . '/site_config.inc.php';

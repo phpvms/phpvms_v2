@@ -68,6 +68,18 @@ function EvokeListeners()
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
 	
+	$("#lookupicao").bind('click', function(){
+		icao = $("#airporticao").val();
+		jsonurl = "http://ws.geonames.org/searchJSON?style=short&type=json&q="+icao
+		
+		$.getJSON(jsonurl, function(data){
+			$.each(data.items, function(i,item){
+				alert(item.geonames.name);
+           
+			});
+		});
+	}
+	
 	//Tabs
 	 $("#tabcontainer > ul").tabs();
 	

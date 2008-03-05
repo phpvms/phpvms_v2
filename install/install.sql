@@ -1,3 +1,15 @@
+CREATE TABLE `nssliven_phpvms`.`phpvms_aircraft` (
+`id` INT NOT NULL AUTO_INCREMENT ,
+`icao` VARCHAR( 4 ) NOT NULL ,
+`name` VARCHAR( 12 ) NOT NULL ,
+`fullname` VARCHAR( 50 ) NOT NULL ,
+`range` FLOAT NOT NULL ,
+`weight` FLOAT NOT NULL ,
+`cruise` SMALLINT NOT NULL ,
+PRIMARY KEY ( `id` ),
+UNIQUE KEY `icao` (`icao`)
+);
+
 CREATE TABLE `phpvms_airports` (
 `id` INT NOT NULL AUTO_INCREMENT ,
 `icao` VARCHAR( 5 ) NOT NULL ,

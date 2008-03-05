@@ -22,8 +22,7 @@ class SchedulesData
 	
 	function GetAirportInfo($icao)
 	{
-		// Look for %icao in case the 3 letter is supplied (JFK instead of KJFK)
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao LIKE \'%'.$icao.'\'');
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
 	}	
 }
 ?>

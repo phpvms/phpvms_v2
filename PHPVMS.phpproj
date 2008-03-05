@@ -76,6 +76,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\ops_airportlist.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\pilots_addtogroup.tpl"
     {
     "ProjRelPath" = "T"
@@ -285,6 +289,10 @@
     "ProjRelPath" = "T"
     }
     "core\\site_config.inc.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\install.sql"
     {
     "ProjRelPath" = "T"
     }

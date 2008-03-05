@@ -5,7 +5,8 @@ CREATE TABLE `phpvms_airports` (
 `country` VARCHAR( 50 ) NOT NULL ,
 `lat` FLOAT( 10 ) NOT NULL ,
 `lng` FLOAT( 10 ) NOT NULL ,
-PRIMARY KEY ( `id` )
+PRIMARY KEY ( `id` ),
+UNIQUE KEY `icao` (`icao`)
 );
 
 CREATE TABLE `phpvms_news` (
@@ -18,19 +19,20 @@ PRIMARY KEY ( `id` )
 );
 
 CREATE TABLE `phpvms_users` (
-`userid` INT NOT NULL AUTO_INCREMENT ,
-`firstname` VARCHAR( 25 ) NOT NULL ,
-`lastname` VARCHAR( 25 ) NOT NULL ,
-`email` VARCHAR( 32 ) NOT NULL ,
-`location` VARCHAR( 32 ) NOT NULL ,
-`password` VARCHAR( 32 ) NOT NULL ,
-`salt` VARCHAR( 32 ) NOT NULL ,
-`lastlogin` DATE NOT NULL ,
-`totalflights` INT NOT NULL ,
-`totalhours` FLOAT NOT NULL ,
-`confirmed` ENUM( 'y', 'n' ) NOT NULL ,
-`retired` ENUM( 'y', 'n' ) NOT NULL ,
-PRIMARY KEY ( `userid` )
+  `userid` int(11) NOT NULL auto_increment,
+  `firstname` varchar(25) NOT NULL default '',
+  `lastname` varchar(25) NOT NULL default '',
+  `email` varchar(32) NOT NULL default '',
+  `location` varchar(32) NOT NULL default '',
+  `password` varchar(32) NOT NULL default '',
+  `salt` varchar(32) NOT NULL default '',
+  `lastlogin` date NOT NULL default '0000-00-00',
+  `totalflights` int(11) NOT NULL default '0',
+  `totalhours` float NOT NULL default '0',
+  `confirmed` enum('y','n') NOT NULL default 'n',
+  `retired` enum('y','n') NOT NULL default 'y',
+  PRIMARY KEY  (`userid`),
+  UNIQUE KEY `email` (`email`)
 );
 
 CREATE TABLE `phpvms_customfields` (
@@ -39,7 +41,8 @@ CREATE TABLE `phpvms_customfields` (
 `type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
 `public` ENUM( 'y', 'n' ) NOT NULL ,
 `showonregister` ENUM( 'y', 'n' ) NOT NULL ,
-PRIMARY KEY ( `fieldid` )
+PRIMARY KEY ( `fieldid` ),
+UNIQUE KEY `fieldname` (`fieldname`)
 );
 
 
@@ -55,7 +58,8 @@ PRIMARY KEY ( `id` )
 CREATE TABLE `phpvms_groups` (
 `groupid` INT NOT NULL AUTO_INCREMENT ,
 `name` VARCHAR( 25 ) NOT NULL ,
-PRIMARY KEY ( `id` )
+PRIMARY KEY ( `id` ),
+UNIQUE KEY `name` (`name`)
 );
 
 
@@ -69,8 +73,6 @@ CREATE TABLE `phpvms_groupmembers` (
   `userid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 );
-
-
 
 CREATE TABLE `phpvms_settings` (
   `id` int(11) NOT NULL auto_increment,

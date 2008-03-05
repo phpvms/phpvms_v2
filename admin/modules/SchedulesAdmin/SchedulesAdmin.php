@@ -49,17 +49,17 @@ class SchedulesAdmin
 			return;
 		}
 		
-		if(($ret = SchedulesData::GetAirportInfo($icao)))
+		/*if(($ret = SchedulesData::GetAirportInfo($icao)))
 		{
 			Template::Set('message', 'This airport already exists in the list');
 		}
 		else
-		{
-			if(!SchedulesData::AddAirport($icao, $name, $country, $lat, $long))
-				Template::Set('message', 'There was an error adding the airport');
-			else	
-				Template::Set('message', 'The airport has been added');
-		}
+		{*/
+		if(!SchedulesData::AddAirport($icao, $name, $country, $lat, $long))
+			Template::Set('message', 'There was an error adding the airport');
+		else	
+			Template::Set('message', 'The airport has been added');
+		//}
 		
 			
 		Template::Show('core_message.tpl');

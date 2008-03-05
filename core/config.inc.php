@@ -15,7 +15,6 @@ define('CORE_PATH', dirname(__FILE__) );
 define('CACHE_PATH', CORE_PATH . '/cache');
 define('COMMON_PATH', CORE_PATH . '/common');
 define('CLASS_PATH', CORE_PATH . '/classes');
-define('DATE_FORMAT', 'm/d/Y');
 define('MODULES_PATH', CORE_PATH . '/modules');
 define('TEMPLATES_PATH', CORE_PATH . '/templates');
 define('ADMIN_PATH', SITE_ROOT . '/admin');

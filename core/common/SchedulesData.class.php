@@ -1,7 +1,7 @@
 <?php
 
 
-class SchedulesData
+class OperationsData
 {
 	
 	function GetAllAirports()

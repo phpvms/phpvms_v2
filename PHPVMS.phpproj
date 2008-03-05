@@ -24,6 +24,10 @@
 }
 "Files"
 {
+    "admin\\lib\\phpvmsadmin.js"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\modules\\dashboard\\dashboard.php"
     {
     "ProjRelPath" = "T"
@@ -273,6 +277,10 @@
     "ProjRelPath" = "T"
     }
     "core\\templates\\registration_customfields.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\registration_error.tpl"
     {
     "ProjRelPath" = "T"
     }

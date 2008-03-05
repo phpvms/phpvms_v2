@@ -28,7 +28,7 @@ class Auth
 	{	
 		self::$init = true;
 		
-		if(SessionManager::GetData('loggedin') == true)
+		if(SessionManager::GetData('loggedin') == 'true')
 		{
 			self::$loggedin = true;
 			self::$userinfo = SessionManager::GetData('userinfo');
@@ -105,7 +105,7 @@ class Auth
 		
 		if($hash == $userinfo->password)
 		{	
-			SessionManager::AddData('loggedin', true);	
+			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);
 			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
 			

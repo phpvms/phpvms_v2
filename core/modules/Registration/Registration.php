@@ -57,7 +57,7 @@ class Registration extends ModuleBase
 				{
 					if(RegistrationData::CompleteRegistration($extrafields) == false)
 					{
-						//TODO: notify admin
+						Template::Set('error', RegistrationData::$error);
 						Template::Show('registration_error.tpl');
 					}
 					else

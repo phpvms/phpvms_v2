@@ -5,6 +5,8 @@ class RegistrationData
 {
 
 	static public $salt;
+	static public $error;
+	
 	/* Get the extra fields
 	 */
 	function GetCustomFields()
@@ -121,7 +123,14 @@ class RegistrationData
 		$res = DB::query($sql);
 		if(!$res)
 		{
-			DB::debug();
+			if(DB::$errno == 1062)
+				self::$error = 'This email address is already registered';
+			else	
+			{
+				self::$error = 'An error occured, please contact the administrator';
+				//TODO: email admin
+			}
+						
 			return false;
 		}
 		

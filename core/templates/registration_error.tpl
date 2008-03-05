@@ -1,1 +1,1 @@
-There was an error processing your registration. An admistrator has been contacted!
+<?=$error; ?>

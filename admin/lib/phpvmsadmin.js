@@ -68,6 +68,8 @@ function EvokeListeners()
 		$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=1&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
 			function(data){
 			
+			 $("#airportname").autocomplete(data.geonames);
+			 
 			if(data.totalResultsCount == 0)
 			{
 				$("#statusbox").html("Nothing found. Try entering the full 4 letter ICAO");

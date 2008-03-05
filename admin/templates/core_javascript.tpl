@@ -68,17 +68,28 @@ function EvokeListeners()
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
 	
-	$("#lookupicao").bind('click', function(){
+	// Dynamically look up airport information based on the
+	//	provided ICAO information
+	$("#lookupicao").bind('click', function()
+	{
 		icao = $("#airporticao").val();
-		jsonurl = "http://ws.geonames.org/searchJSON?style=short&type=json&q="+icao
+		$("#statusbox").html("Fetching airport data...");
+		$("#lookupicao").hide();
 		
-		$.getJSON(jsonurl, function(data){
-			$.each(data.items, function(i,item){
-				alert(item.geonames.name);
-           
+		$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=1&type=json&q="+icao+"&callback=?", 
+			function(data){
+			$.each(data.geonames, function(i,item){
+				$("#airporticao").val(icao);
+				$("#airportname").val(item.name);   
+				$("#airportlat").val(item.lat);   
+				$("#airportcountry").val(item.countryName);
+				$("#airportlong").val(item.lng);   
+			
+				$("#statusbox").html("");
+				$("#lookupicao").show();
 			});
 		});
-	}
+	});
 	
 	//Tabs
 	 $("#tabcontainer > ul").tabs();

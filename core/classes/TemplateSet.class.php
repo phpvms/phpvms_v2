@@ -93,8 +93,8 @@ class TemplateSet
 		
 		/* See if the file has been over-rided in the skin directory
 		 */	
-		 	
-		if(!defined(ADMIN_PANEL))
+		 
+		if(ADMIN_PANEL == false)
 		{
 			if(file_exists(SKINS_PATH . '/' . $tpl_name))
 				$tpl_path = SKINS_PATH . '/' . $tpl_name;

@@ -26,10 +26,10 @@ $BaseTemplate->template_path = SITE_ROOT . '/lib/skins/crystal';
 $BaseTemplate->Set('navigation_tree', $NAVBAR);
 $BaseTemplate->Set('head_text', $HTMLHead);
 
-$BaseTemplate->ShowTemplate('header.tpl');
+$BaseTemplate->Show('header.tpl');
 
 MainController::RunAllActions();
 
-$BaseTemplate->ShowTemplate('footer.tpl');
+$BaseTemplate->Show('footer.tpl');
  
 ?>

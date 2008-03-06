@@ -6,7 +6,6 @@
 <title>Virtual Airline</title>
 
 <link rel="stylesheet" media="all" type="text/css" href="<?=SITE_URL?>/lib/skins/crystal/styles.css" />
-<link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/green/table/style.css" type="text/css" />
 
 <?php
 	Template::Show('core_javascript.tpl');
@@ -19,6 +18,7 @@
 </head>
 <body>
 <div id="body">
+<div id="innerwrapper">
 <?php
 	Template::Show('core_htmlreq.tpl');
 ?>

@@ -1,10 +1,8 @@
 	</div>
 	</div>
 	<div id="footer">
-		copyright &copy; 2008 phpvms.net
+	<p>copyright 2008 - powered by <a href="http://www.phpvms.net" target="_blank">phpVMS</a></p>
 	</div>	
-	
-	</div>
-	
+</div>
 </body>
-</html>		
+</html>

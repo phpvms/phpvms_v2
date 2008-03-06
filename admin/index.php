@@ -17,11 +17,11 @@ MainController::loadModules($ADMIN_MODULES);
 $BaseTemplate = new TemplateSet;
 
 //load the main skin
-$settings_file = SITE_ROOT . '/lib/skins/green/green.php';
+$settings_file = SITE_ROOT . '/lib/skins/crystal/crystal.php';
 if(file_exists($settings_file))
 	include $settings_file;
 	
-$BaseTemplate->template_path = SITE_ROOT . '/lib/skins/green';
+$BaseTemplate->template_path = SITE_ROOT . '/lib/skins/crystal';
 
 $BaseTemplate->Set('navigation_tree', $NAVBAR);
 $BaseTemplate->Set('head_text', $HTMLHead);

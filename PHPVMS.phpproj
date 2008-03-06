@@ -36,11 +36,11 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\modules\\pilotadmin\\pilotadmin.php"
+    "admin\\modules\\operationsadmin\\operationsadmin.php"
     {
     "ProjRelPath" = "T"
     }
-    "admin\\modules\\schedulesadmin\\schedulesadmin.php"
+    "admin\\modules\\pilotadmin\\pilotadmin.php"
     {
     "ProjRelPath" = "T"
     }
@@ -76,7 +76,15 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\ops_addaircraft.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\ops_addairport.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\ops_aircraftlist.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -196,6 +204,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\common\\operationsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\common\\pirepdata.class.php"
     {
     "ProjRelPath" = "T"
@@ -209,10 +221,6 @@
     "ProjRelPath" = "T"
     }
     "core\\common\\registrationdata.class.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "core\\common\\schedulesdata.class.php"
     {
     "ProjRelPath" = "T"
     }
@@ -313,6 +321,14 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\jquery-calendar.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.autocomplete.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\jquery.bigiframe.js"
     {
     "ProjRelPath" = "T"
     }

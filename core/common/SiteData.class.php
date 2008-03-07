@@ -2,7 +2,7 @@
 
 
 
-class NewsData
+class SiteData
 {
 
 	function GetAllNews()

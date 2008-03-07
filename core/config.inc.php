@@ -50,7 +50,7 @@ include CLASS_PATH . '/Util.class.php';
 
 // Common Classes
 include COMMON_PATH . '/ACARSData.class.php';
-include COMMON_PATH . '/NewsData.class.php';
+include COMMON_PATH . '/SiteData.class.php';
 include COMMON_PATH . '/PilotData.class.php';
 include COMMON_PATH . '/PilotGroups.class.php';
 include COMMON_PATH . '/PIREPData.class.php';

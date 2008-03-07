@@ -5,10 +5,11 @@ class NewsItems
 	
 	function NavBar()
 	{
-		echo '<li><a href="#">News</a>
+		echo '<li><a href="#">site</a>
 					<ul>
 						<li><a href="?admin=viewnews">View News</a></li>
 						<li><a href="?admin=addnews">Add News</a></li>
+						<li><a href="?admin=editpages">Site Pages</a></li>
 					</ul>
 				</li>';
 	}
@@ -35,12 +36,22 @@ class NewsItems
 			case 'addnews':
 				$this->AddNewsForm();
 				break;
+				
+			case 'editpages':
+				$this->EditPages();
+			
+				break;
 		}
+	}
+	
+	function EditPages()
+	{
+		
 	}
 	
 	function ViewNews()
 	{
-		$allnews = NewsData::GetAllNews();
+		$allnews = SiteData::GetAllNews();
 			
 		Template::Set('allnews', $allnews);
 		Template::Show('news_list.tpl');
@@ -62,7 +73,7 @@ class NewsItems
 		if($body == '')
 			return;
 			
-		if(!NewsData::AddNewsItem($subject, $body))
+		if(!SiteData::AddNewsItem($subject, $body))
 		{
 			Template::Set('message', 'There was an error adding the news item');
 		}
@@ -72,7 +83,7 @@ class NewsItems
 	
 	function DeleteNewsItem()
 	{	
-		if(NewsData::DeleteItem(Vars::POST('id')))
+		if(SiteData::DeleteItem(Vars::POST('id')))
 			Template::Set('message', 'News item deleted');
 		else
 			Template::Set('message', 'There was an error deleting the item');

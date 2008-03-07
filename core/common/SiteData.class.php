@@ -27,4 +27,11 @@ class SiteData
 		
 		return DB::query($sql);
 	}
+	
+	function GetAllPages()
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."pages ORDER BY postdate DESC";
+		
+		return DB::get_results($sql);
+	}
 }

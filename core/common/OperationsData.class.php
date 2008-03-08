@@ -39,5 +39,13 @@ class OperationsData
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
 	}	
+	
+	function GetSchedules($depicao='')
+	{
+	
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
+		
+		return DB::get_results($sql);
+	}
 }
 ?>

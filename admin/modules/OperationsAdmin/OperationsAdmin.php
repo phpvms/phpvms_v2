@@ -48,8 +48,9 @@ class OperationsAdmin
 				
 				Template::Show('ops_addairport.tpl');
 				break;
-			case 'viewschedule':
+			case 'schedules':
 			
+				$this->ViewSchedules();
 				break;
 		}
 	}
@@ -73,7 +74,7 @@ class OperationsAdmin
 		if(!OperationsData::AddAircaft($icao, $name, $fullname, $range, $weight, $cruise))
 		{
 			if(DB::$errno == 1062) // Duplicate entry
-				Template::Set('message', 'This aircraft alredy exists');
+				Template::Set('message', 'This aircraft already exists');
 			else
 				Template::Set('message', 'There was an error adding the aircraft');
 		}
@@ -110,6 +111,27 @@ class OperationsAdmin
 			Template::Set('message', 'The airport has been added');
 			
 		Template::Show('core_message.tpl');
+	}
+	
+	function ViewSchedules()
+	{
+		/*
+			id
+			code
+			flightnum
+			depicao
+			arricao
+			route
+			aircraft
+			distance
+			deptime
+			arrtime
+			flighttime
+			timesflown
+		*/
+		Template::Set('schedules', OperationsData::GetSchedules());
+		
+		Template::Show('ops_schedules.tpl');
 	}
 }
 ?>

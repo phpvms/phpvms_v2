@@ -200,10 +200,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "core\\common\\newsdata.class.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "core\\common\\operationsdata.class.php"
     {
     "ProjRelPath" = "T"
@@ -225,6 +221,10 @@
     "ProjRelPath" = "T"
     }
     "core\\common\\settingsdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\common\\sitedata.class.php"
     {
     "ProjRelPath" = "T"
     }
@@ -265,6 +265,10 @@
     "ProjRelPath" = "T"
     }
     "core\\modules\\testmodule\\test.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\pages\\readme.txt"
     {
     "ProjRelPath" = "T"
     }
@@ -369,22 +373,6 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\ui.tabs.min.js"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\skins\\crystal\\table\\asc.gif"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\skins\\crystal\\table\\bg.gif"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\skins\\crystal\\table\\desc.gif"
-    {
-    "ProjRelPath" = "T"
-    }
-    "lib\\skins\\crystal\\table\\style.css"
     {
     "ProjRelPath" = "T"
     }
@@ -602,4 +590,6 @@
 "UserReference" = "core\\common\\RegistrationData.class.php"
 "UserReference" = "core\\common\\SettingsData.class.php"
 "UserReference" = "core\\common\\PilotGroups.class.php"
+"UserReference" = "core\\common\\OperationsData.class.php"
+"UserReference" = "core\\common\\SiteData.class.php"
 }

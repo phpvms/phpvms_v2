@@ -57,6 +57,21 @@ PRIMARY KEY ( `fieldid` ),
 UNIQUE KEY `fieldname` (`fieldname`)
 );
 
+CREATE TABLE `phpvms_schedules` (
+  `id` int(11) NOT NULL auto_increment,
+  `code` char(3) NOT NULL default '',
+  `flightnum` int(11) NOT NULL default '0',
+  `depicao` varchar(4) NOT NULL default '',
+  `arricao` varchar(4) NOT NULL default '',
+  `route` text NOT NULL,
+  `aircraft` varchar(12) NOT NULL default '',
+  `distance` float NOT NULL default '0',
+  `deptime` varchar(15) NOT NULL default '',
+  `arrtime` varchar(15) NOT NULL default '',
+  `flighttime` int(11) NOT NULL default '0',
+  `timesflown` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);
 
 CREATE TABLE `phpvms_fieldvalues` (
 `id` INT NOT NULL AUTO_INCREMENT ,

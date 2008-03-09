@@ -28,7 +28,10 @@
 <dt>Arrival Time: </dt>
 <dd><input type="text" name="arrtime" value="" /></dd>
 
-<dt>Aircraft Type: </dt>
+<dt>Flight Time: </dt>
+<dd><input type="text" name="flighttime" value="" /></dd>
+
+<dt>Equipment: </dt>
 <dd><select name="aircraft">
 	<?php echo $aircraft; ?>
 	</select>

@@ -33,9 +33,12 @@ class Login extends ModuleBase
 				}
 				else
 				{
-					//TODO: forward to home page
+					//TODO: check if unconfirmed or not
+					
 					//TODO: add to sessions table 
 					echo 'You have been logged in';
+					Template::Set('redir', SITE_URL . '/' . Vars::GET('redir'));
+					Template::Show('login_complete.tpl');
 					return;
 				}
 			}

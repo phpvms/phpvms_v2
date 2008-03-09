@@ -50,6 +50,13 @@ class OperationsAdmin
 				break;
 			case 'schedules':
 			
+				/* These are loaded in popup box */
+				if(Vars::GET('action') == 'viewroute')
+				{
+					$id = Vars::GET('id');
+					return;	
+				}
+			
 				if(Vars::POST('action') == 'addschedule')
 				{
 					$this->AddSchedule();

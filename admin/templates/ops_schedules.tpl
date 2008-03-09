@@ -33,7 +33,7 @@ foreach($schedules as $sched)
 	<td align="center"><?=$sched->distance; ?></td>
 	<td align="center"><?=$sched->timesflown; ?></td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id<?=$sched->id;?>">Route</a>
+		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id=<?=$sched->id;?>">Route</a>
 	</td>
 </tr>
 <?php

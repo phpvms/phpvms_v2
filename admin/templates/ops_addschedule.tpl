@@ -9,7 +9,9 @@
 <dd><input type="text" name="flightnum" value="" /></dd>
 
 <dt>Leg:</dt>
-<dd><input type="text" name="leg" value="" /></dd>
+<dd><input type="text" name="leg" value="" />
+	<p>Blank will default to "1"</p>
+</dd>
 
 <dt>Departure Airport:</dt>
 <dd><select name="depicao">

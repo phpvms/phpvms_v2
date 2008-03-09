@@ -37,12 +37,13 @@ class Login extends ModuleBase
 					
 					//TODO: add to sessions table 
 					echo 'You have been logged in';
-					Template::Set('redir', SITE_URL . '/' . Vars::GET('redir'));
+					Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
 					Template::Show('login_complete.tpl');
 					return;
 				}
 			}
 			
+			Template::Set('redir', Vars::GET('redir'));
 			Template::Show('login_form.tpl');
 			
 			//TODO: integrate "lost password" functionality

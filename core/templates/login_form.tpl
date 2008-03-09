@@ -11,7 +11,8 @@ if($message)
 	<dd><input type="password" name="password" value="" />
 	
 	<dt></dt>
-	<dd><input type="hidden" name="action" value="login" />
+	<dd><input type="hidden" name="redir" value="<?=$redir;?>" />
+		<input type="hidden" name="action" value="login" />
 		<input type="submit" name="submit" value="Log In" />
 </dl>
 </form>

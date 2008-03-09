@@ -4,12 +4,19 @@
  * @desc Admin panel home
  */
 	
+define('ADMIN_PANEL', true);
+
 include '../core/config.inc.php';
 
-if(!Auth::LoggedIn() && !Auth::UserInGroup('Administrators'))
-	die('Unauthorized access!');
+if(!Auth::LoggedIn())
+{
+	header('Location: '.SITE_URL.'?page=login&redir=/admin');
+}
 
-define('ADMIN_PANEL', true);
+if(!Auth::UserInGroup('Administrators'))
+{
+	die('Unauthorized access!');
+}
 
 Template::SetTemplatePath(ADMIN_PATH . '/templates');
 MainController::loadModules($ADMIN_MODULES);

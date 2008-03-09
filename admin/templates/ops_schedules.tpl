@@ -11,7 +11,6 @@ if(!$schedules)
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
-	<th>Code</th>
 	<th>Flight Number</th>
 	<th>Departure</th>
 	<th>Arrival</th>
@@ -27,8 +26,7 @@ foreach($schedules as $sched)
 {
 ?>
 <tr>
-	<td align="center"><?=$sched->code; ?></td>
-	<td align="center"><?=$sched->flightnum; ?></td>
+	<td align="center"><?php echo $sched->code . $sched->flightnum; ?></td>
 	<td align="center"><?=$sched->depicao; ?>(<?=$sched->deptime;?>)</td>
 	<td align="center"><?=$sched->arricao; ?>(<?=$sched->arrtime;?>)</td>
 	<td align="center"><?=$sched->aircraft; ?></td>

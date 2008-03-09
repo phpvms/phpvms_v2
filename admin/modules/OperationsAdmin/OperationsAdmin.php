@@ -50,9 +50,15 @@ class OperationsAdmin
 				break;
 			case 'schedules':
 			
-				$this->ViewSchedules();
+				if(Vars::POST('action') == 'addschedule')
+				{
+					$this->AddSchedule();
+				}
+			
+				Template::Set('schedules', OperationsData::GetSchedules());
+				Template::Show('ops_schedules.tpl');
 				
-				Template::Show('ops_addschedule.tpl');
+				$this->AddScheduleForm();
 				break;
 		}
 	}
@@ -115,30 +121,53 @@ class OperationsAdmin
 		Template::Show('core_message.tpl');
 	}
 	
-	function ViewSchedules()
+	function AddSchedule()
 	{
-		/*
-			id
-			code
-			flightnum
-			depicao
-			arricao
-			route
-			aircraft
-			distance
-			deptime
-			arrtime
-			flighttime
-			timesflown
-		*/
 		
+		$code = Vars::POST('code');	
+		$flightnum = Vars::POST('flightnum');	
+		$leg = Vars::POST('leg');
+		$depicao = Vars::POST('depicao');	
+		$arricao = Vars::POST('arricao');
+		$route = Vars::POST('route');
+		$aircraft = Vars::POST('aircraft');
+		$distance = Vars::POST('distance');
+		$deptime = Vars::POST('deptime');
+		$arrtime = Vars::POST('arrtime');
+		$flighttime = Vars::POST('flighttime');
+		
+		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
+			|| $depicao == '' || $arricao == '')
+		{
+			Template::Set('message', 'All of the fields must be filled out');
+			Template::Show('core_message.tpl');
+			
+			return;
+		}
+		
+		//Add it in
+		if(!OperationsData::AddSchedule($code, $flightnum, $depicao, $arricao, $route, $aircraft, 
+										$distance, $deptime, $arrtime, $flighttime))
+		{
+			Template::Set('message', 'There was an error adding the schedule');
+		}
+		else
+		{
+			Template::Set('message', 'The schedule has been added');
+		}
+		
+		Template::Show('core_message.tpl');
+	}
+	
+	function AddScheduleForm()
+	{		
 		// Form the options list for the airports available to select
 		//	Do it once here
 		$allairports = OperationsData::GetAllAirports();
 		$airports_options = '';
 		foreach($allairports as $airport)
 		{
-			$airports_options .= '<option value="'.$airport->icao.'">'.$airport->name.' ('.$airport->icao.')</option>';
+			$airports_options .= '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
 		}
 		
 		// Do the same as above for available aircraft
@@ -151,9 +180,8 @@ class OperationsAdmin
 		
 		Template::Set('airports', $airports_options);
 		Template::Set('aircraft', $aircraft_options);
-		Template::Set('schedules', OperationsData::GetSchedules());
 		
-		Template::Show('ops_schedules.tpl');
+		Template::Show('ops_addschedule.tpl');
 	}
 }
 ?>

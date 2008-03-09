@@ -6,7 +6,10 @@
 <dd><input type="text" name="code" value="<?=PID_PREFIX;?>" /></dd>
 
 <dt>Flight Number:</dt>
-<dd><input type="text" name="flightnumber" value="" /></dd>
+<dd><input type="text" name="flightnum" value="" /></dd>
+
+<dt>Leg:</dt>
+<dd><input type="text" name="leg" value="" /></dd>
 
 <dt>Departure Airport:</dt>
 <dd><select name="depicao">
@@ -36,6 +39,9 @@
 	<?php echo $aircraft; ?>
 	</select>
 </dd>
+
+<dt>Route (optional)</dt>
+<dd><textarea name="route"></textarea></dd>
 
 <dt></dt>
 <dd><input type="hidden" name="action" value="addschedule" />

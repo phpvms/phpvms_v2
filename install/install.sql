@@ -59,8 +59,9 @@ UNIQUE KEY `fieldname` (`fieldname`)
 
 CREATE TABLE `phpvms_schedules` (
   `id` int(11) NOT NULL auto_increment,
-  `code` char(3) NOT NULL default '',
-  `flightnum` int(11) NOT NULL default '0',
+  `code` varchar(3) NOT NULL default '',
+  `flightnum` varchar(10) NOT NULL default '0',
+  `leg` smallint(6) NOT NULL default '1',
   `depicao` varchar(4) NOT NULL default '',
   `arricao` varchar(4) NOT NULL default '',
   `route` text NOT NULL,

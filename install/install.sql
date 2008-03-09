@@ -7,7 +7,7 @@ CREATE TABLE `nssliven_phpvms`.`phpvms_aircraft` (
 `weight` FLOAT NOT NULL ,
 `cruise` SMALLINT NOT NULL ,
 PRIMARY KEY ( `id` ),
-UNIQUE KEY `icao` (`icao`)
+UNIQUE KEY `name` (`name`)
 );
 
 CREATE TABLE `phpvms_airports` (

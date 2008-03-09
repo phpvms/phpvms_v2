@@ -4,7 +4,7 @@
 <?php
 if(!$schedules)
 {
-	echo '<p>There are no schedules added</p><br /><br />';
+	echo '<p>There are no schedules added</p><br />';
 	return;
 }
 ?>

@@ -51,6 +51,8 @@ class OperationsAdmin
 			case 'schedules':
 			
 				$this->ViewSchedules();
+				
+				Template::Show('ops_addschedule.tpl');
 				break;
 		}
 	}
@@ -129,6 +131,26 @@ class OperationsAdmin
 			flighttime
 			timesflown
 		*/
+		
+		// Form the options list for the airports available to select
+		//	Do it once here
+		$allairports = OperationsData::GetAllAirports();
+		$airports_options = '';
+		foreach($allairports as $airport)
+		{
+			$airports_options .= '<option value="'.$airport->icao.'">'.$airport->name.' ('.$airport->icao.')</option>';
+		}
+		
+		// Do the same as above for available aircraft
+		$allaircraft = OperationsData::GetAllAircraft();
+		$aircraft_options = '';
+		foreach($allaircraft as $aircraft)
+		{
+			$aircraft_options .= '<option value="'.$aircraft->name.'">'.$aircraft->name.' ('.$aircraft->icao.')</option>';
+		}
+		
+		Template::Set('airports', $airports_options);
+		Template::Set('aircraft', $aircraft_options);
 		Template::Set('schedules', OperationsData::GetSchedules());
 		
 		Template::Show('ops_schedules.tpl');

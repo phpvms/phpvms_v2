@@ -84,11 +84,19 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\ops_addschedule.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\ops_aircraftlist.tpl"
     {
     "ProjRelPath" = "T"
     }
     "admin\\templates\\ops_airportlist.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\ops_schedules.tpl"
     {
     "ProjRelPath" = "T"
     }

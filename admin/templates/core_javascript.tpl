@@ -6,7 +6,7 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jqModal.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.bigiframe.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.autocomplete.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/wymeditor/jquery.wymeditor.pack.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.wysiwyg.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.metadata.js"></script>

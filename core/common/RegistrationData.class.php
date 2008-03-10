@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * RegistrationData
+ *
+ * Model for any registration data
+ * 
+ * @author Nabeel Shahzad <contact@phpvms.net>
+ * @copyright Copyright (c) 2008, phpVMS Project
+ * @license http://www.phpvms.net/license.php
+ * 
+ * @package RegistrationData
+ */
 
 class RegistrationData
 {
@@ -194,7 +204,7 @@ class RegistrationData
 		$res = DB::query($sql);
 		
 		if(!$res && DB::$errno !=0)
-		{			
+		{
 			return false;
 		}
 		

@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * PilotGroups
+ *
+ * Model for pilot groups related functionality
+ * 
+ * @author Nabeel Shahzad <contact@phpvms.net>
+ * @copyright Copyright (c) 2008, phpVMS Project
+ * @license http://www.phpvms.net/license.php
+ * 
+ * @package PilotGroups
+ */
 
 class PilotGroups
 {

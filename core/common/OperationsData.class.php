@@ -1,9 +1,22 @@
 <?php
 
-
+/**
+ * OperationsData
+ *
+ * Database model for any data related to operations:
+ * Airports, Fleet, and Scheduling
+ * 
+ * @author Nabeel Shahzad <contact@phpvms.net>
+ * @copyright Copyright (c) 2008, phpVMS Project
+ * @license http://www.phpvms.net/license.php
+ * 
+ * @package OperationsData
+ */
 class OperationsData
 {
-	
+	/**
+	 * Get all aircraft from database
+	 */
 	function GetAllAircraft()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft ORDER BY icao ASC');

@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * SettingsData
+ *
+ * Model for settings-related data
+ * 
+ * @author Nabeel Shahzad <contact@phpvms.net>
+ * @copyright Copyright (c) 2008, phpVMS Project
+ * @license http://www.phpvms.net/license.php
+ * 
+ * @package PilotData
+ */
 
 class SettingsData
 {

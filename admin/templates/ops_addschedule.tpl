@@ -3,10 +3,12 @@
 <dl>
 
 <dt>Code: </dt>
-<dd><input type="text" name="code" value="<?=PID_PREFIX;?>" /></dd>
+<dd><input type="text" name="code" value="<?=PID_PREFIX;?>" />
+	<p>Default is your airline callsign</dd>
 
 <dt>Flight Number:</dt>
-<dd><input type="text" name="flightnum" value="" /></dd>
+<dd><input type="text" name="flightnum" value="" />
+	<p><a href="http://en.wikipedia.org/wiki/Flight_number" target="_blank">Read about flight numbering (new window)</a></dd>
 
 <dt>Leg:</dt>
 <dd><input type="text" name="leg" value="" />
@@ -27,6 +29,9 @@
 	?>
 	</select>
 </dd>
+
+<dt></dt>
+<dd><strong>Flight times can be entered in any format. Include time zone (as PST, EST, etc)</strong></dd>
 <dt>Departure Time: </dt>
 <dd><input type="text" name="deptime" value="" /></dd>
 

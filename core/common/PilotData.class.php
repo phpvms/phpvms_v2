@@ -1,4 +1,15 @@
 <?php
+/**
+ * PilotData
+ *
+ * Model for pilot-related data (lists, specific information)
+ * 
+ * @author Nabeel Shahzad <contact@phpvms.net>
+ * @copyright Copyright (c) 2008, phpVMS Project
+ * @license http://www.phpvms.net/license.php
+ * 
+ * @package PilotData
+ */
 
 class PilotData
 {

@@ -1,26 +1,26 @@
 <h3>Search Schedules</h3>
-<table id="tabledlist" class="tablesorter">
-<thead>
-<tr>
-	<th>Departure</th>
-	<th>Arrival</th>
-	<th>Aircraft</th>
-	<th>Distance</th>
-	<th>Times Flown</th>
-	<th>Options</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-	<td align="center"><?=$depairports; ?></td>
-	<td align="center"><?=$sched->arricao; ?>(<?=$sched->arrtime;?>)</td>
-	<td align="center"><?=$sched->aircraft; ?></td>
-	<td align="center"><?=$sched->distance; ?></td>
-	<td align="center"><?=$sched->timesflown; ?></td>
-	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id=<?=$sched->id;?>">Route</a>
-	</td>
-</tr>
-</tbody>
-</table>
+<form id="form" action="action.php?page=schedules" method="post">
+
+<p><strong>Select a departure Airport</strong>
+<select id="depicao" name="depicao">
+	<option value="">Select a departure airport</option>
+	<?=$depairports; ?>
+</select>  
+
+<strong>Arrival Airports</strong>
+
+<select id="arricao" name="arricao">
+	<option value="">Select a departure airport</option>
+	<?=$depairports; ?>
+</select>  
+</p>
+<p><strong>Select equipment: </strong> (optional): 
+<select id="equipment" name="equipment">
+	<option value="">Select equipment</option>
+	<?=$depairports; ?>
+</select> 
+
+<input type="submit" name="submit" value="Find Flights" />
+</p>
+</form>
 <hr>

@@ -19,7 +19,8 @@ class SchedulesData
 					WHERE s.depicao = a.icao 
 					ORDER BY depicao ASC';
 									
-		return DB::query($sql);
+		$ret = DB::get_results($sql);		
+		return $ret;
 	}
 }
 

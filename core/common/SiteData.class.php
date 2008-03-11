@@ -120,7 +120,7 @@ class SiteData
 	{
 		//create the file
 		$filename = PAGES_PATH . '/' . $filename . '.html';
-		$fp = @fopen($filename, 'w');
+		$fp = fopen($filename, 'w');
 		
 		if(!$fp) 
 		{

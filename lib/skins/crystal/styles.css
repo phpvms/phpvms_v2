@@ -28,6 +28,7 @@ body
 	float: right;
 	border-bottom: solid 5px #000;
 	border: solid 1px #CCCCCC;
+	border-top: none;
 }
 
 #topBanner

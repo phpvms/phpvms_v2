@@ -15,15 +15,15 @@ class SiteCMS
 	
 	function Controller()
 	{
-		if(isset($_POST['addnews']))
-		{
-			$this->AddNewsItem();
-		}
-		
 		switch(Vars::GET('admin'))
 		{
 			case 'viewnews':
 			
+				if(isset($_POST['addnews']))
+				{
+					$this->AddNewsItem();
+				}
+				
 				if(Vars::POST('action') == 'deleteitem')
 				{
 					$this->DeleteNewsItem();
@@ -43,20 +43,25 @@ class SiteCMS
 				
 			case 'viewpages':
 			
+				/* this is the popup form edit form
+				 */
 				if(Vars::GET('action') == 'editpage')
 				{
 					$this->EditPageForm();
 					return;
 				}
 				
+				/* This is the actual adding page process 
+				 */
 				if(Vars::POST('action') == 'addpage')
 				{
 					$this->AddPage();
 				}
+				/* This a save page update
+				 */
 				elseif(Vars::POST('action') == 'savepage')
 				{
 					$this->EditPage();
-					return;
 				}
 				
 				$this->ViewPages();
@@ -66,11 +71,17 @@ class SiteCMS
 		}
 	}
 	
+	/**
+	 * Show the main page addition form
+	 */
 	function AddPageForm()
 	{
 		Template::Show('pages_addpage.tpl');
 	}
 	
+	/**
+	 * This is the function for adding the actual page
+	 */
 	function AddPage()
 	{
 		$title = Vars::POST('pagename');
@@ -101,7 +112,7 @@ class SiteCMS
 	function EditPage()
 	{
 		$pageid = Vars::POST('pageid');
-		$content = Vars::POST('pageid');
+		$content = Vars::POST('content');
 		
 		if(SiteData::EditFile($pageid, $content))
 		{
@@ -120,7 +131,10 @@ class SiteCMS
 	{
 		$pageid = Vars::GET('pageid');
 		
-		Template::Set('pagedata', SiteData::GetPageData($pageid));
+		$page = SiteData::GetPageData($pageid);
+		Template::Set('pagedata', $page);
+		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . '.html'));
+		
 		Template::Show('pages_editpage.tpl');
 	}
 	

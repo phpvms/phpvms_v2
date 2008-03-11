@@ -1,6 +1,6 @@
 <h3>Add News Item</h3>
 
-<form id="form" action="?admin=viewnews" method="post">
+<form id="form" action="action.php?admin=viewnews" method="post">
 <dl>
 
 	<dt><strong>Subject: </strong></dt>

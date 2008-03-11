@@ -10,7 +10,6 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.metadata.js"></script>
-<script type="text/javascript" src="<?=SITE_URL?>/lib/js/phpvms.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<?=SITE_URL?>/lib/js/wymeditor/skins/default/screen.css" />

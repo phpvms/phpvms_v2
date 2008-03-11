@@ -100,6 +100,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\pages_addpage.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\pages_allpages.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\pilots_addtogroup.tpl"
     {
     "ProjRelPath" = "T"
@@ -636,4 +644,6 @@
 "UserReference" = "core\\common\\PilotGroups.class.php"
 "UserReference" = "core\\common\\OperationsData.class.php"
 "UserReference" = "core\\common\\SiteData.class.php"
+"UserReference" = "core\\classes\\Auth.class.php"
+"UserReference" = "core\\classes\\UserGroups.class.php"
 }

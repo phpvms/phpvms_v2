@@ -8,7 +8,7 @@ class NewsItems
 		echo '<li><a href="#">site</a>
 					<ul>
 						<li><a href="?admin=viewnews">View News</a></li>
-						<li><a href="?admin=editpages">Site Pages</a></li>
+						<li><a href="?admin=viewpages">Site Pages</a></li>
 					</ul>
 				</li>';
 	}
@@ -35,17 +35,70 @@ class NewsItems
 			case 'addnews':
 				$this->AddNewsForm();
 				break;
-				
-			case 'editpages':
-				$this->EditPages();
 			
+			case 'addpage':
+				$this->AddPageForm();
+				break;
+				
+			case 'viewpages':
+			
+				if(Vars::GET('action') == 'editpage')
+				{
+					$this->EditPageForm();
+					break;
+				}
+				
+				
+				if(Vars::POST('action') == 'addpage')
+				{
+					$this->AddPage();
+				}
+				
+				$this->ViewPages();
 				break;
 		}
 	}
 	
-	function EditPages()
+	function AddPage()
 	{
 		
+		$title = Vars::POST('pagename');
+		$content = Vars::POST('content');
+		
+		if(!$title || !$content)
+		{
+			Template::Set('message', 'You must fill out all of the fields');
+			Template::Show('core_message.tpl');
+			return;
+		}
+		
+		if(!SiteData::AddPage($title, $content))
+		{
+			if(DB::$errno == 1062)
+			{
+				Template::Set('message', 'This page already exists!');
+			}
+			else
+			{
+				Template::Set('message', 'There was an error creating the file');
+			}
+			
+			Template::Show('core_message.tpl');
+		}			
+	}
+	
+	function EditPageForm()
+	{
+		$pageid = Vars::GET('pageid');
+		
+		Template::Set('pagedata', SiteData::GetPageData($pageid));
+		Template::Show('pages_editpage.tpl');
+	}
+	
+	function ViewPages()
+	{
+		Template::Set('allpages', SiteData::GetAllPages());
+		Template::Show('pages_allpages.tpl');
 	}
 	
 	function ViewNews()

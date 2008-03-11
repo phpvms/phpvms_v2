@@ -1,93 +1,105 @@
 CREATE TABLE `nssliven_phpvms`.`phpvms_aircraft` (
-`id` INT NOT NULL AUTO_INCREMENT ,
-`icao` VARCHAR( 4 ) NOT NULL ,
-`name` VARCHAR( 12 ) NOT NULL ,
-`fullname` VARCHAR( 50 ) NOT NULL ,
-`range` FLOAT NOT NULL ,
-`weight` FLOAT NOT NULL ,
-`cruise` SMALLINT NOT NULL ,
-PRIMARY KEY ( `id` ),
-UNIQUE KEY `name` (`name`)
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`icao` VARCHAR( 4 ) NOT NULL ,
+	`name` VARCHAR( 12 ) NOT NULL ,
+	`fullname` VARCHAR( 50 ) NOT NULL ,
+	`range` FLOAT NOT NULL ,
+	`weight` FLOAT NOT NULL ,
+	`cruise` SMALLINT NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	UNIQUE KEY `name` (`name`)
 );
 
 CREATE TABLE `phpvms_airports` (
-`id` INT NOT NULL AUTO_INCREMENT ,
-`icao` VARCHAR( 5 ) NOT NULL ,
-`name` VARCHAR( 30 ) NOT NULL ,
-`country` VARCHAR( 50 ) NOT NULL ,
-`lat` FLOAT( 10 ) NOT NULL ,
-`lng` FLOAT( 10 ) NOT NULL ,
-PRIMARY KEY ( `id` ),
-UNIQUE KEY `icao` (`icao`)
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`icao` VARCHAR( 5 ) NOT NULL ,
+	`name` VARCHAR( 30 ) NOT NULL ,
+	`country` VARCHAR( 50 ) NOT NULL ,
+	`lat` FLOAT( 10 ) NOT NULL ,
+	`lng` FLOAT( 10 ) NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	UNIQUE KEY `icao` (`icao`)
 );
 
 CREATE TABLE `phpvms_news` (
-`id` INT NOT NULL AUTO_INCREMENT ,
-`subject` VARCHAR( 30 ) NOT NULL ,
-`body` TEXT NOT NULL ,
-`postdate` DATETIME NOT NULL ,
-`postedby` VARCHAR( 25 ) NOT NULL ,
-PRIMARY KEY ( `id` )
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`subject` VARCHAR( 30 ) NOT NULL ,
+	`body` TEXT NOT NULL ,
+	`postdate` DATETIME NOT NULL ,
+	`postedby` VARCHAR( 25 ) NOT NULL ,
+	PRIMARY KEY ( `id` )
+);
+
+CREATE TABLE `phpvms_pages` (
+	`pageid` int(11) NOT NULL auto_increment,
+	`pagename` varchar(30) NOT NULL default '',
+	`filename` varchar(30) NOT NULL default '',
+	`order` smallint(6) NOT NULL default '0',
+	`postedby` varchar(25) NOT NULL default '',
+	`postdate` datetime NOT NULL default '0000-00-00 00:00:00',
+	`enabled` smallint(6) NOT NULL default '0',
+	PRIMARY KEY  (`id`),
+UNIQUE KEY `pagename` (`pagename`)
 );
 
 CREATE TABLE `phpvms_users` (
-  `userid` int(11) NOT NULL auto_increment,
-  `firstname` varchar(25) NOT NULL default '',
-  `lastname` varchar(25) NOT NULL default '',
-  `email` varchar(32) NOT NULL default '',
-  `location` varchar(32) NOT NULL default '',
-  `password` varchar(32) NOT NULL default '',
-  `salt` varchar(32) NOT NULL default '',
-  `lastlogin` date NOT NULL default '0000-00-00',
-  `totalflights` int(11) NOT NULL default '0',
-  `totalhours` float NOT NULL default '0',
-  `confirmed` enum('y','n') NOT NULL default 'n',
-  `retired` enum('y','n') NOT NULL default 'y',
-  PRIMARY KEY  (`userid`),
-  UNIQUE KEY `email` (`email`)
+	`userid` int(11) NOT NULL auto_increment,
+	`firstname` varchar(25) NOT NULL default '',
+	`lastname` varchar(25) NOT NULL default '',
+	`email` varchar(32) NOT NULL default '',
+	`location` varchar(32) NOT NULL default '',
+	`password` varchar(32) NOT NULL default '',
+	`salt` varchar(32) NOT NULL default '',
+	`lastlogin` date NOT NULL default '0000-00-00',
+	`totalflights` int(11) NOT NULL default '0',
+	`totalhours` float NOT NULL default '0',
+	`confirmed` enum('y','n') NOT NULL default 'n',
+	`retired` enum('y','n') NOT NULL default 'y',
+	PRIMARY KEY  (`userid`),
+	UNIQUE KEY `email` (`email`)
 );
 
 CREATE TABLE `phpvms_customfields` (
-`fieldid` INT NOT NULL AUTO_INCREMENT ,
-`fieldname` VARCHAR( 25 ) NOT NULL ,
-`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
-`public` ENUM( 'y', 'n' ) NOT NULL ,
-`showonregister` ENUM( 'y', 'n' ) NOT NULL ,
-PRIMARY KEY ( `fieldid` ),
-UNIQUE KEY `fieldname` (`fieldname`)
+	`fieldid` INT NOT NULL AUTO_INCREMENT ,
+	`fieldname` VARCHAR( 25 ) NOT NULL ,
+	`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
+	`public` ENUM( 'y', 'n' ) NOT NULL ,
+	`showonregister` ENUM( 'y', 'n' ) NOT NULL ,
+	PRIMARY KEY ( `fieldid` ),
+	UNIQUE KEY `fieldname` (`fieldname`)
 );
 
 CREATE TABLE `phpvms_schedules` (
-  `id` int(11) NOT NULL auto_increment,
-  `code` varchar(3) NOT NULL default '',
-  `flightnum` varchar(10) NOT NULL default '0',
-  `leg` smallint(6) NOT NULL default '1',
-  `depicao` varchar(4) NOT NULL default '',
-  `arricao` varchar(4) NOT NULL default '',
-  `route` text NOT NULL,
-  `aircraft` varchar(12) NOT NULL default '',
-  `distance` float NOT NULL default '0',
-  `deptime` varchar(15) NOT NULL default '',
-  `arrtime` varchar(15) NOT NULL default '',
-  `flighttime` int(11) NOT NULL default '0',
-  `timesflown` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+	`id` int(11) NOT NULL auto_increment,
+	`code` varchar(3) NOT NULL default '',
+	`flightnum` varchar(10) NOT NULL default '0',
+	`leg` smallint(6) NOT NULL default '1',
+	`depicao` varchar(4) NOT NULL default '',
+	`arricao` varchar(4) NOT NULL default '',
+	`route` text NOT NULL,
+	`aircraft` varchar(12) NOT NULL default '',
+	`distance` float NOT NULL default '0',
+	`deptime` varchar(15) NOT NULL default '',
+	`arrtime` varchar(15) NOT NULL default '',
+	`flighttime` int(11) NOT NULL default '0',
+	`timesflown` int(11) NOT NULL default '0',
+	PRIMARY KEY  (`id`)
 );
 
 CREATE TABLE `phpvms_fieldvalues` (
-`id` INT NOT NULL AUTO_INCREMENT ,
-`fieldid` INT NOT NULL ,
-`userid` INT NOT NULL ,
-`value` VARCHAR( 25 ) NOT NULL ,
-PRIMARY KEY ( `id` )
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`fieldid` INT NOT NULL ,
+	`userid` INT NOT NULL ,
+	`value` VARCHAR( 25 ) NOT NULL ,
+	PRIMARY KEY ( `id` )
 );
 
 
 CREATE TABLE `phpvms_groups` (
-`groupid` INT NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR( 25 ) NOT NULL ,
-PRIMARY KEY ( `id` ),
-UNIQUE KEY `name` (`name`)
+	`groupid` INT NOT NULL AUTO_INCREMENT ,
+	`name` VARCHAR( 25 ) NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	UNIQUE KEY `name` (`name`)
 );
 
 
@@ -96,21 +108,21 @@ INSERT INTO `phpvms_groups` (`name`) VALUES ('Active Pilots');
 
 
 CREATE TABLE `phpvms_groupmembers` (
-  `id` int(11) NOT NULL auto_increment,
-  `groupid` int(11) NOT NULL default '0',
-  `userid` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+	`id` int(11) NOT NULL auto_increment,
+	`groupid` int(11) NOT NULL default '0',
+	`userid` int(11) NOT NULL default '0',
+	PRIMARY KEY  (`id`)
 );
 
 CREATE TABLE `phpvms_settings` (
-  `id` int(11) NOT NULL auto_increment,
-  `friendlyname` varchar(25) NOT NULL default '',
-  `name` varchar(25) NOT NULL default '',
-  `value` varchar(150) NOT NULL default '',
-  `descrip` varchar(150) NOT NULL default '',
-  `core` enum('t','f') NOT NULL default 'f',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `name` (`name`)
+	`id` int(11) NOT NULL auto_increment,
+	`friendlyname` varchar(25) NOT NULL default '',
+	`name` varchar(25) NOT NULL default '',
+	`value` varchar(150) NOT NULL default '',
+	`descrip` varchar(150) NOT NULL default '',
+	`core` enum('t','f') NOT NULL default 'f',
+	PRIMARY KEY  (`id`),
+	UNIQUE KEY `name` (`name`)
 ) AUTO_INCREMENT=13 ;
 
 

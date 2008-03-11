@@ -99,5 +99,5 @@ function EvokeListeners()
 	 $('#dialog').jqm({ajax:'@href'});
 	 
 	// Show editor
-	$("#newseditor").wysiwyg();
+	$("#editor").wysiwyg();
 }

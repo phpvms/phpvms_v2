@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{1863889A-00DF-4350-BA39-669CA949CB81}") = "PHPVMS", "PHPVMS.phpproj", "{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}"
 EndProject
 Global

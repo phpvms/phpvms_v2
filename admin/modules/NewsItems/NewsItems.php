@@ -8,7 +8,6 @@ class NewsItems
 		echo '<li><a href="#">site</a>
 					<ul>
 						<li><a href="?admin=viewnews">View News</a></li>
-						<li><a href="?admin=addnews">Add News</a></li>
 						<li><a href="?admin=editpages">Site Pages</a></li>
 					</ul>
 				</li>';

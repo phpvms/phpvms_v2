@@ -1,19 +1,7 @@
-<h3>Schedules</h3>
-<p>The flight routes you currently serve.</p>
-
-<p><a id="dialog" class="jqModal" href="action.php?admin=addschedule">Add a schedule</a></p>
-<br />
-<?php
-if(!$schedules)
-{
-	echo '<p>There are no schedules added</p><br />';
-	return;
-}
-?>
+<h3>Search Schedules</h3>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
-	<th>Flight Number</th>
 	<th>Departure</th>
 	<th>Arrival</th>
 	<th>Aircraft</th>
@@ -23,13 +11,8 @@ if(!$schedules)
 </tr>
 </thead>
 <tbody>
-<?php
-foreach($schedules as $sched)
-{
-?>
 <tr>
-	<td align="center"><?php echo $sched->code . $sched->flightnum; ?></td>
-	<td align="center"><?=$sched->depicao; ?>(<?=$sched->deptime;?>)</td>
+	<td align="center"><?=$depairports; ?></td>
 	<td align="center"><?=$sched->arricao; ?>(<?=$sched->arrtime;?>)</td>
 	<td align="center"><?=$sched->aircraft; ?></td>
 	<td align="center"><?=$sched->distance; ?></td>
@@ -38,9 +21,6 @@ foreach($schedules as $sched)
 		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id=<?=$sched->id;?>">Route</a>
 	</td>
 </tr>
-<?php
-}
-?>
 </tbody>
 </table>
 <hr>

@@ -1,7 +1,7 @@
 "General"
 {
 "ProjectIdGuid" = "{447CD5B4-E8F8-41B6-9791-4F3D0CD1D1DE}"
-"ProjectVersion" = "2.3.6.4068"
+"ProjectVersion" = "2.4.3.4467"
 }
 "Configurations"
 {
@@ -228,6 +228,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\common\\schedulesdata.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\common\\settingsdata.class.php"
     {
     "ProjRelPath" = "T"
@@ -268,6 +272,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\modules\\schedules\\schedules.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\modules\\testmodule\\testmodulecontroller.php"
     {
     "ProjRelPath" = "T"
@@ -292,7 +300,27 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\frontpage_main.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\login_complete.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\login_form.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\news_newsitem.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\profile_main.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\registration_complete.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -304,11 +332,19 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\registration_javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\registration_mainform.tpl"
     {
     "ProjRelPath" = "T"
     }
     "core\\templates\\registration_sentconfirmation.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\schedule_searchform.tpl"
     {
     "ProjRelPath" = "T"
     }

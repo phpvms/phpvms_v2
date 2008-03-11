@@ -1,5 +1,7 @@
 <h3>Aircraft List</h3>
 <p>These are all the aircraft that your airline operates.</p>
+
+<p><a id="dialog" class="jqModal" href="action.php?admin=addaircraft">Add an aircraft</a></p>
 <br />
 <?php
 if(!$allaircraft)

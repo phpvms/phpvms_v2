@@ -1,5 +1,4 @@
 <?php
-
 /**
  * OperationsData
  *
@@ -12,6 +11,7 @@
  * 
  * @package OperationsData
  */
+
 class OperationsData
 {
 	/**

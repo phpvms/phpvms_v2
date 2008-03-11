@@ -25,9 +25,10 @@ $ACTIVE_MODULES['Login'] = MODULES_PATH . '/Login/Login.php';
 $ACTIVE_MODULES['PilotProfile'] = MODULES_PATH . '/PilotProfile/PilotProfile.php';
 $ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php';
 $ACTIVE_MODULES['Frontpage'] = MODULES_PATH . '/Frontpage/Frontpage.php';
-$ACTIVE_MODULES['ACARS'] = MODULES_PATH . '/ACARS/ACARS.php';
-$ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
+$ACTIVE_MODULES['Schedules'] = MODULES_PATH . '/Schedules/Schedules.php';
 $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
+$ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
+
 
 // Determine our administration modules
 
@@ -56,6 +57,7 @@ include COMMON_PATH . '/PilotGroups.class.php';
 include COMMON_PATH . '/PIREPData.class.php';
 include COMMON_PATH . '/RegistrationData.class.php';
 include COMMON_PATH . '/OperationsData.class.php';
+include COMMON_PATH . '/SchedulesData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
 
 include CORE_PATH . '/site_config.inc.php';

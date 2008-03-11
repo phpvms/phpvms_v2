@@ -18,6 +18,10 @@ class OperationsAdmin
 	{
 		switch(Vars::GET('admin'))
 		{
+			case 'addaircraft':
+				Template::Show('ops_addaircraft.tpl');
+				break;
+				
 			case 'aircraft':
 			
 				/* If they're adding an aircraft, go through this pain
@@ -32,6 +36,10 @@ class OperationsAdmin
 				
 				Template::Show('ops_addaircraft.tpl');
 				
+				break;
+			
+			case 'addairport':
+				Template::Show('ops_add_airport.tpl');
 				break;
 				
 			case 'airports':
@@ -48,6 +56,11 @@ class OperationsAdmin
 				
 				Template::Show('ops_addairport.tpl');
 				break;
+				
+			case 'addschedule':
+				$this->AddScheduleForm();
+				break;
+				
 			case 'schedules':
 			
 				/* These are loaded in popup box */
@@ -153,7 +166,7 @@ class OperationsAdmin
 		}
 		
 		//Add it in
-		if(!OperationsData::AddSchedule($code, $flightnum, $depicao, $arricao, $route, $aircraft, 
+		if(!OperationsData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft, 
 										$distance, $deptime, $arrtime, $flighttime))
 		{
 			Template::Set('message', 'There was an error adding the schedule');

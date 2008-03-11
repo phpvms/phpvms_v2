@@ -33,7 +33,7 @@ $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 
 // Determine our administration modules
 
-$ADMIN_MODULES['NewsItems'] = ADMIN_PATH . '/modules/NewsItems/NewsItems.php';
+$ADMIN_MODULES['SiteCMS'] = ADMIN_PATH . '/modules/SiteCMS/SiteCMS.php';
 $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
 $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
 $ADMIN_MODULES['Settings'] = ADMIN_PATH . '/modules/Settings/Settings.php';

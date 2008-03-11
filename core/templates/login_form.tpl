@@ -14,5 +14,8 @@ if($message)
 	<dd><input type="hidden" name="redir" value="<?=$redir;?>" />
 		<input type="hidden" name="action" value="login" />
 		<input type="submit" name="submit" value="Log In" />
+		
+	<dt></dt>
+	<dd><a href="?page=forgotpassword">I forgot my password</a></dd>
 </dl>
 </form>

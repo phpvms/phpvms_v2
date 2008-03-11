@@ -12,7 +12,7 @@ function EvokeListeners()
 	});
 	
 	//Tabs
-	 $("#tabcontainer > ul").tabs();
+	$("#tabcontainer > ul").tabs();
 	
     // Show dialog box
 	$('#jqmdialog').jqm({

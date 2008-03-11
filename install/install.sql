@@ -37,7 +37,7 @@ CREATE TABLE `phpvms_pages` (
 	`order` smallint(6) NOT NULL default '0',
 	`postedby` varchar(25) NOT NULL default '',
 	`postdate` datetime NOT NULL default '0000-00-00 00:00:00',
-	`enabled` smallint(6) NOT NULL default '0',
+	`enabled` smallint(6) NOT NULL default '1',
 	PRIMARY KEY  (`id`),
 UNIQUE KEY `pagename` (`pagename`)
 );

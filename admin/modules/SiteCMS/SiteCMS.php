@@ -1,6 +1,6 @@
 <?php
 
-class NewsItems
+class SiteCMS
 {
 	
 	function NavBar()
@@ -32,11 +32,12 @@ class NewsItems
 				$this->ViewNews();
 				$this->AddNewsForm();
 				break;
+				
 			case 'addnews':
 				$this->AddNewsForm();
 				break;
 			
-			case 'addpage':
+			case 'addpageform':
 				$this->AddPageForm();
 				break;
 				
@@ -48,20 +49,25 @@ class NewsItems
 					break;
 				}
 				
-				
 				if(Vars::POST('action') == 'addpage')
 				{
 					$this->AddPage();
 				}
 				
 				$this->ViewPages();
+				
+				$this->AddPageForm();
 				break;
 		}
 	}
 	
+	function AddPageForm()
+	{
+		Template::Show('pages_addpage.tpl');
+	}
+	
 	function AddPage()
 	{
-		
 		$title = Vars::POST('pagename');
 		$content = Vars::POST('content');
 		
@@ -98,6 +104,7 @@ class NewsItems
 	function ViewPages()
 	{
 		Template::Set('allpages', SiteData::GetAllPages());
+		
 		Template::Show('pages_allpages.tpl');
 	}
 	

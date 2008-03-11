@@ -30,7 +30,7 @@ class SiteData
 	
 	function GetAllPages()
 	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."pages ORDER BY order DESC";
+		$sql = "SELECT * FROM ".TABLE_PREFIX."pages";
 		
 		return DB::get_results($sql);
 	}
@@ -60,6 +60,7 @@ class SiteData
 		//take out any slashes
 		$filename = preg_replace('/(\/|\\\)++/', '', $filename);
 		
+		$filename .= '.html';
 		$postedby = Auth::Username();
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pages (pagename, filename, postedby, postdate)

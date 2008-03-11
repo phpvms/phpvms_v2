@@ -7,6 +7,7 @@ function EvokeListeners()
 		target: '#bodytext',
 		success: function() {
 			$('#bodytext').fadeIn('slow');
+			$('#jqmdialog').jqmHide();
 		}
 	});
 	
@@ -96,7 +97,13 @@ function EvokeListeners()
 	 $("#tabcontainer > ul").tabs();
 	
 	// Show dialog box
-	 $('#dialog').jqm({ajax:'@href'});
+	 $('#jqmdialog').jqm({
+	    ajax:'@href', 
+		onHide: function(h) {
+          h.o.remove();
+          h.w.fadeOut(600); 
+        }
+     });
 	 
 	// Show editor
 	$("#editor").wysiwyg();

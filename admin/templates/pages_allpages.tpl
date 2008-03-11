@@ -1,5 +1,5 @@
 <h3>All Pages</h3>
-<p><a id="dialog" class="jqModal" href="action.php?admin=addpage">Add a page</a></p>
+<p><a id="dialog" class="jqModal" href="action.php?admin=addpageform">Add a page</a></p>
 
 <?php
 if(!$allpages)
@@ -24,7 +24,7 @@ foreach($allpages as $page)
 {
 ?>
 <tr>
-	<td align="center"><?=$page->name; ?></td>
+	<td align="center"><?=$page->pagename; ?></td>
 	<td align="center"><?=$page->postedby; ?></td>
 	<td align="center"><?=$page->postdate; ?></td>
 	<td align="center"><?=$page->filename; ?></td>
@@ -34,3 +34,4 @@ foreach($allpages as $page)
 }
 ?>
 </tbody>
+</table>

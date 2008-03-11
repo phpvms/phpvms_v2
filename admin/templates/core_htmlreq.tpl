@@ -1,1 +1,1 @@
-<div class="jqmWindow" id="dialog"></div>
+<div class="jqmWindow" id="jqmdialog"></div>

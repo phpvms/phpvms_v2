@@ -33,9 +33,7 @@ class OperationsAdmin
 			
 				Template::Set('allaircraft', OperationsData::GetAllAircraft());
 				Template::Show('ops_aircraftlist.tpl');
-				
-				Template::Show('ops_addaircraft.tpl');
-				
+							
 				break;
 			
 			case 'addairport':
@@ -107,7 +105,7 @@ class OperationsAdmin
 				Template::Set('message', 'There was an error adding the aircraft');
 		}
 		else	
-			Template::Set('message', 'The airport has been added');
+			Template::Set('message', 'The aircraft has been added');
 		
 		Template::Show('core_message.tpl');
 		

@@ -1,17 +1,11 @@
 <h3>Add Page</h3>
 <form id="form" action="action.php?admin=viewpages" method="post">
-<dl>
-<dt>Page Title</dt>
-<dd><input name="pagename" type="text">
-	<p>This will show up in the navigation bar.</p>
-</dd>
+<p><strong>Page Title:</strong> <input name="pagename" type="text"> - This will show up in the navigation bar</p>
+<p><strong>Page Content:</strong></p>
+<p><textarea name="content" id="editor" style="width: 99%;"></textarea></p>
 
-<dt>Page Content</dt>
-<dd><textarea name="content" id="editor" ></textarea></dd>
-
-<dt></dt>
-<dd><input type="hidden" name="action" value="addpage" />
-	<input type="submit" name="submit" value="Add Page" />
-</dd>
-</dl>
+<p align="right">
+	<input type="hidden" name="action" value="addpage" />
+	<input type="submit" name="submit"  value="Add Page" />
+</p>
 </form>

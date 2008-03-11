@@ -28,14 +28,6 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\modules\\dashboard\\dashboard.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\modules\\newsitems\\newsitems.php"
-    {
-    "ProjRelPath" = "T"
-    }
     "admin\\modules\\operationsadmin\\operationsadmin.php"
     {
     "ProjRelPath" = "T"
@@ -45,6 +37,10 @@
     "ProjRelPath" = "T"
     }
     "admin\\modules\\settings\\settings.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\modules\\sitecms\\sitecms.php"
     {
     "ProjRelPath" = "T"
     }
@@ -149,14 +145,6 @@
     "ProjRelPath" = "T"
     }
     "admin\\templates\\settings_mainform.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\action.php"
-    {
-    "ProjRelPath" = "T"
-    }
-    "admin\\index.php"
     {
     "ProjRelPath" = "T"
     }
@@ -425,6 +413,22 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\ui.tabs.min.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\footer.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\header.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\javascript.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\skins\\crystal\\styles.css"
     {
     "ProjRelPath" = "T"
     }

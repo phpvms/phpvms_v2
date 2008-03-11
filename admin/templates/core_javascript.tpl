@@ -18,3 +18,6 @@
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jquery.wysiwyg.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />
+
+
+<?=$MODULE_HEAD_INC;?>

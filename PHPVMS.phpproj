@@ -56,6 +56,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\core_navigation.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\groups_addgroup.tpl"
     {
     "ProjRelPath" = "T"
@@ -104,6 +108,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\pages_editpage.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\pilots_addtogroup.tpl"
     {
     "ProjRelPath" = "T"
@@ -145,6 +153,14 @@
     "ProjRelPath" = "T"
     }
     "admin\\templates\\settings_mainform.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\action.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\index.php"
     {
     "ProjRelPath" = "T"
     }
@@ -260,6 +276,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\modules\\pages\\pages.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\modules\\pilotprofile\\pilotprofile.php"
     {
     "ProjRelPath" = "T"
@@ -288,6 +308,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\core_htmlreq.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\core_javascript.tpl"
     {
     "ProjRelPath" = "T"
@@ -304,11 +328,27 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\login_forgotpassword.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\login_form.tpl"
     {
     "ProjRelPath" = "T"
     }
     "core\\templates\\news_newsitem.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\pages_content.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\pages_items.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\pages_notfound.tpl"
     {
     "ProjRelPath" = "T"
     }

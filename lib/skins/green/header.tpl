@@ -10,10 +10,6 @@
 <?php
 	Template::Show('core_javascript.tpl');
 ?>
-
-<?php 
-	echo $head_text;
-?>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/suckerfish.js"></script>
 
 <script type="text/javascript">
@@ -40,7 +36,6 @@ $(".nav").superfish({
 		<ul class="nav">
 			<?php 
 				Template::Show('core_navigation.tpl');
-				echo $navigation_tree;
 			?>
 		</ul>
 	</div>

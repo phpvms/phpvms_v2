@@ -1,6 +1,15 @@
 <?php
-
-
+/**
+ * SiteData
+ *
+ * Model for site CMS related Data
+ * 
+ * @author Nabeel Shahzad <contact@phpvms.net>
+ * @copyright Copyright (c) 2008, phpVMS Project
+ * @license http://www.phpvms.net/license.php
+ * 
+ * @package SiteData
+ */
 
 class SiteData
 {
@@ -28,9 +37,14 @@ class SiteData
 		return DB::query($sql);
 	}
 	
-	function GetAllPages()
+	function GetAllPages($onlyenabled=false)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pages";
+		
+		if($onlyenabled == true)
+		{
+			$sql .= ' WHERE enabled=1';
+		}
 		
 		return DB::get_results($sql);
 	}
@@ -60,7 +74,7 @@ class SiteData
 		//take out any slashes
 		$filename = preg_replace('/(\/|\\\)++/', '', $filename);
 		
-		$filename .= '.html';
+		//$filename .= '.html';
 		$postedby = Auth::Username();
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pages (pagename, filename, postedby, postdate)
@@ -73,10 +87,22 @@ class SiteData
 		return self::EditPage($filename, $content);
 	}
 	
+	function GetPageContent($filename)
+	{
+		// Round-about way, I know. But it's in the name of security. If they're giving a
+		//	bogus name, then it won't find it. 
+		
+		$sql = 'SELECT filename FROM '.TABLE_PREFIX.'pages WHERE filename=\''.$filename.'\'';
+		$row = DB::get_row($sql);
+	
+		if(!$row) return;
+		include PAGES_PATH . '/' . $row->filename . '.html';
+	}
+	
 	function EditPage($filename, $content)
 	{
 		//create the file
-		$filename = PAGES_PATH . '/' . $filename;
+		$filename = PAGES_PATH . '/' . $filename . '.html';
 		$fp = @fopen($filename, 'w');
 		
 		if(!$fp) 

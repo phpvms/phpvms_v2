@@ -21,5 +21,6 @@ else
 <?php
 }
 ?>
+<?=$MODULE_NAV_INC;?>
 <li><a href="?page=acars">Live Map</a></li>
 <li><a href="?page=contact">Contact Us</a></li>

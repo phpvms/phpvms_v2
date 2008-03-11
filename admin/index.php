@@ -30,8 +30,11 @@ if(file_exists($settings_file))
 	
 $BaseTemplate->template_path = SITE_ROOT . '/lib/skins/crystal';
 
-$BaseTemplate->Set('navigation_tree', $NAVBAR);
-$BaseTemplate->Set('head_text', $HTMLHead);
+Template::Set('MODULE_NAV_INC', $NAVBAR);
+Template::Set('MODULE_HEAD_INC', $HTMLHead);
+
+//$BaseTemplate->Set('navigation_tree', $NAVBAR);
+//$BaseTemplate->Set('head_text', $HTMLHead);
 
 $BaseTemplate->Show('header.tpl');
 

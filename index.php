@@ -30,8 +30,10 @@ if(file_exists($settings_file))
 	
 $BaseTemplate->template_path = SKINS_PATH;
 
-$BaseTemplate->Set('navigation_tree', $NAVBAR);
-$BaseTemplate->Set('head_text', $HTMLHead);
+Template::Set('MODULE_NAV_INC', $NAVBAR);
+Template::Set('MODULE_HEAD_INC', $HTMLHead);
+//$BaseTemplate->Set('navigation_tree', $NAVBAR);
+//$BaseTemplate->Set('head_text', $HTMLHead);
 
 $BaseTemplate->ShowTemplate('header.tpl');
 

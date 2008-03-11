@@ -4,7 +4,7 @@ if(!$allpages)
 
 foreach($allpages as $page)
 {
-	echo '<li><a href="?page=content&p='.$page->pagename.'">'.$page->filename.'</a></li>';
+	echo '<li><a href="?page=content&p='.$page->filename.'">'.$page->pagename.'</a></li>';
 }
 
 ?>

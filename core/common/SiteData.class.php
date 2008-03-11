@@ -92,11 +92,14 @@ class SiteData
 		// Round-about way, I know. But it's in the name of security. If they're giving a
 		//	bogus name, then it won't find it. 
 		
-		$sql = 'SELECT filename FROM '.TABLE_PREFIX.'pages WHERE filename=\''.$filename.'\'';
+		$sql = 'SELECT pagename, filename FROM '.TABLE_PREFIX.'pages WHERE filename=\''.$filename.'\'';
 		$row = DB::get_row($sql);
 	
 		if(!$row) return;
-		include PAGES_PATH . '/' . $row->filename . '.html';
+		
+		$row->content = file_get_contents(PAGES_PATH . '/' . $row->filename . '.html');
+
+		return $row;
 	}
 	
 	function EditPage($filename, $content)

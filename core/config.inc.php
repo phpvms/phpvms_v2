@@ -27,6 +27,7 @@ $ACTIVE_MODULES['PilotProfile'] = MODULES_PATH . '/PilotProfile/PilotProfile.php
 $ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php';
 $ACTIVE_MODULES['Frontpage'] = MODULES_PATH . '/Frontpage/Frontpage.php';
 $ACTIVE_MODULES['Schedules'] = MODULES_PATH . '/Schedules/Schedules.php';
+$ACTIVE_MODULES['Pages'] = MODULES_PATH . '/Pages/Pages.php';
 $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
 $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 

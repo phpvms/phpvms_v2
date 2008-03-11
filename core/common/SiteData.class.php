@@ -84,7 +84,7 @@ class SiteData
 		if(!$ret)
 			return false;
 			
-		return self::EditPage($filename, $content);
+		return self::EditPageFile($filename, $content);
 	}
 	
 	function GetPageContent($filename)
@@ -102,7 +102,21 @@ class SiteData
 		return $row;
 	}
 	
-	function EditPage($filename, $content)
+	function EditFile($pageid, $content)
+	{
+		$pagedata = SiteData::GetPageData($pageid);
+		
+		if(SiteData::EditPageFile($pagedata->filename, $content))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+	}
+	
+	function EditPageFile($filename, $content)
 	{
 		//create the file
 		$filename = PAGES_PATH . '/' . $filename . '.html';

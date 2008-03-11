@@ -11,6 +11,14 @@ function EvokeListeners()
 		}
 	});
 	
+	$('#dialogform').ajaxForm({
+		target: '#dialogresult',
+		success: function() {
+			$('#dialogresult').fadeIn('slow');
+			$('#dialogresult').jqmHide();
+		}
+	});
+	
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult'
 	});

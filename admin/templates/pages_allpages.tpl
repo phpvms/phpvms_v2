@@ -28,7 +28,7 @@ foreach($allpages as $page)
 	<td align="center"><?=$page->postedby; ?></td>
 	<td align="center"><?=$page->postdate; ?></td>
 	<td align="center"><?=$page->filename; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpages&action=editpage&pageid=<?=$page->pageid;?>">Options</a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpages&action=editpage&pageid=<?=$page->pageid;?>">Edit</a></td>
 </tr>
 <?php
 }

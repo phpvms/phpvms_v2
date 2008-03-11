@@ -46,12 +46,17 @@ class SiteCMS
 				if(Vars::GET('action') == 'editpage')
 				{
 					$this->EditPageForm();
-					break;
+					return;
 				}
 				
 				if(Vars::POST('action') == 'addpage')
 				{
 					$this->AddPage();
+				}
+				elseif(Vars::POST('action') == 'savepage')
+				{
+					$this->EditPage();
+					return;
 				}
 				
 				$this->ViewPages();
@@ -92,6 +97,24 @@ class SiteCMS
 			Template::Show('core_message.tpl');
 		}			
 	}
+	
+	function EditPage()
+	{
+		$pageid = Vars::POST('pageid');
+		$content = Vars::POST('pageid');
+		
+		if(SiteData::EditFile($pageid, $content))
+		{
+			Template::Set('message', 'Content saved');
+		}
+		else
+		{
+			Template::Set('message', 'There was an error saving content');
+		}
+		
+		Template::Show('core_message.tpl');
+	}
+				
 	
 	function EditPageForm()
 	{

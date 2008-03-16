@@ -1,3 +1,4 @@
+<h1>Login</h1>
 <form name="loginform" action="?page=login" method="post">
 <?php
 if($message)

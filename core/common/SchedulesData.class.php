@@ -22,6 +22,13 @@ class SchedulesData
 		$ret = DB::get_results($sql);		
 		return $ret;
 	}
+	
+	function GetRoutesWithDeparture($depicao)
+	{
+		$sql = 'SELECT * from '.TABLE_PREFIX.'schedules WHERE depicao=\''.$depicao.'\'';
+		
+		return DB::get_results($sql);		
+	}
 }
 
 ?>

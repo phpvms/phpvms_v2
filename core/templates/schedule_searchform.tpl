@@ -3,10 +3,16 @@
 
 <p><strong>Select a departure Airport</strong>
 <select id="depicao" name="depicao">
-	<option value="">Select a departure airport</option>
-	<?=$depairports; ?>
+<option value="">Select a departure airport</option>
+<?php
+foreach($depairports as $airport)
+{
+	echo '<option value="'.$airport->depicao.'">'.$airport->depicao.' ('.$airport->name.')</option>';
+}
+?>
+	
 </select>  
-
+<!--
 <strong>Arrival Airports</strong>
 
 <select id="arricao" name="arricao">
@@ -19,7 +25,8 @@
 	<option value="">Select equipment</option>
 	<?=$depairports; ?>
 </select> 
-
+-->
+<input type="hidden" name="action" value="findflight" />
 <input type="submit" name="submit" value="Find Flights" />
 </p>
 </form>

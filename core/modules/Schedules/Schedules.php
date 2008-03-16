@@ -9,6 +9,12 @@ class Schedules extends ModuleBase
 		{
 			case 'schedules':
 				
+				if(Vars::POST('action') == 'findflight')
+				{
+					$this->FindFlight();
+					return;
+				}
+				
 				$this->ShowSchedules();
 				
 				break;
@@ -20,16 +26,24 @@ class Schedules extends ModuleBase
 		$depapts = SchedulesData::GetDepartureAirports();
 		$depairports = '';
 		
-		foreach($depapts as $airport)
-		{
-			$depairports .= '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
-		}
 		
-		Template::Set('depairports', $depairports);
+		
+		Template::Set('depairports', $depapts);
 		Template::Show('schedule_searchform.tpl');
 		
 		Template::Show('schedule_list.tpl');
 		
+	}
+	
+	function FindFlight()
+	{
+		$depicao = Vars::POST('depicao');
+		
+		if($depicao == '')
+			return;
+			
+		Template::Set('allroutes', SchedulesData::GetRoutesWithDeparture($depicao));
+		Template::Show('schedule_results.tpl');
 	}
 }
 

@@ -380,6 +380,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\schedule_list.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\schedule_results.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\schedule_searchform.tpl"
     {
     "ProjRelPath" = "T"
@@ -437,6 +445,10 @@
     "ProjRelPath" = "T"
     }
     "lib\\js\\jquery.wysiwyg.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "lib\\js\\phpvms.js"
     {
     "ProjRelPath" = "T"
     }

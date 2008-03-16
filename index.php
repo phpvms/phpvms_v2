@@ -16,7 +16,7 @@ $start = $time;*/
 
 include 'core/config.inc.php';
 
-ksort($ACTIVE_MODULES);
+ksort($ACTIVE_MODULES); 
 
 //load our modules
 MainController::loadModules($ACTIVE_MODULES);

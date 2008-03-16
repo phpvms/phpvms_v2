@@ -24,15 +24,11 @@ class Schedules extends ModuleBase
 	function ShowSchedules()
 	{
 		$depapts = SchedulesData::GetDepartureAirports();
-		$depairports = '';
-		
-		
-		
+				
 		Template::Set('depairports', $depapts);
 		Template::Show('schedule_searchform.tpl');
 		
 		Template::Show('schedule_list.tpl');
-		
 	}
 	
 	function FindFlight()
@@ -41,7 +37,7 @@ class Schedules extends ModuleBase
 		
 		if($depicao == '')
 			return;
-			
+		
 		Template::Set('allroutes', SchedulesData::GetRoutesWithDeparture($depicao));
 		Template::Show('schedule_results.tpl');
 	}

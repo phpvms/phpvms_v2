@@ -54,7 +54,7 @@ class Util
 			
 			while (($file = readdir($fh)) !== false) {
 				
-				if ($file == '.' || $file == '..') 
+				if ($file == '.' || $file == '..' || $file == '.svn') 
 					continue;
 				
 				$filepath = $skins_dir . '/' . $file;

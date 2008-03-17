@@ -26,7 +26,7 @@
    
 					echo '<dd>
 						<SELECT name="CURRENT_SKIN">';
-   
+						
 						$tot = count($skins);
 						for($i=0;$i<$tot;$i++)
 						{

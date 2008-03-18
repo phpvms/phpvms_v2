@@ -75,7 +75,11 @@ class Registration extends ModuleBase
 			}
 			else
 			{
-				RegistrationData::SendEmailConfirm();
+				$firstname = Vars::POST('firstname');
+				$lastname = Vars::POST('lastname');
+				$email = Vars::POST('email');
+				
+				RegistrationData::SendEmailConfirm($email, $firstname, $lastname);
 				Template::Show('registration_sentconfirmation.tpl');
 			}
 		}

@@ -33,6 +33,7 @@ class Login extends ModuleBase
 				if(Vars::POST('action') == 'resetpass')
 				{
 					$this->ResetPassword();
+					return;
 				}
 				
 				$this->ForgotPassword();
@@ -55,7 +56,18 @@ class Login extends ModuleBase
 		}
 		else
 		{
-			//TODO: reset the password
+			$pilotdata = PilotData::GetPilotByEmail($email);
+			
+			if(!$pilotdata)
+			{
+				Template::Show('login_notfound.tpl');
+				return;
+			}
+						
+			RegistrationData::ChangePassword($pilotdata->userid, substr(md5(date('mdYhs')), 0, 6));
+			RegistrationData::SendEmailConfirm($pilotdata->email, $pilotdata->firstname, $pilotdata->lastname);
+			
+			Template::Show('login_passwordreset.tpl');
 		}		
 		
 		return true;	

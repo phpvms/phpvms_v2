@@ -175,11 +175,11 @@ class RegistrationData
 		return DB::query($sql);		
 	}
 	
-	function SendEmailConfirm()
+	function SendEmailConfirm($email, $firstname, $lastname)
 	{
-		$firstname = Vars::POST('firstname');
+		/*$firstname = Vars::POST('firstname');
 		$lastname = Vars::POST('lastname');
-		$email = Vars::POST('email');
+		$email = Vars::POST('email');*/
 		$confid = self::$salt;
 		
 		$subject = SITE_NAME . ' Registration';

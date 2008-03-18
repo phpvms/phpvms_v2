@@ -76,15 +76,15 @@
     {
     "ProjRelPath" = "T"
     }
-    "admin\\templates\\ops_addaircraft.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
     "admin\\templates\\ops_addairport.tpl"
     {
     "ProjRelPath" = "T"
     }
     "admin\\templates\\ops_addschedule.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\ops_aircraftform.tpl"
     {
     "ProjRelPath" = "T"
     }
@@ -333,6 +333,10 @@
     "ProjRelPath" = "T"
     }
     "core\\templates\\login_form.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\login_passwordreset.tpl"
     {
     "ProjRelPath" = "T"
     }

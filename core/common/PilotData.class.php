@@ -35,6 +35,12 @@ class PilotData
 		return DB::get_row($sql);
 	}
 	
+	function GetPilotByEmail($email)
+	{
+		$sql = 'SELECT * FROM '. TABLE_PREFIX.'users WHERE email=\''.$email.'\'';
+		return DB::get_row($sql);
+	}
+	
 	function GetFieldData($userid, $inclprivate=false)
 	{
 		$sql = 'SELECT f.fieldname, v.value 

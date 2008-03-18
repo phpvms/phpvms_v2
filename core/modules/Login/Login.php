@@ -69,8 +69,6 @@ class Login extends ModuleBase
 			
 			Template::Show('login_passwordreset.tpl');
 		}		
-		
-		return true;	
 	}
 	
 	function ProcessLogin()

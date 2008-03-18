@@ -82,9 +82,8 @@ class Login extends ModuleBase
 		else
 		{
 			//TODO: check if unconfirmed or not
-			
 			//TODO: add to sessions table 
-			echo 'You have been logged in';
+			
 			Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
 			Template::Show('login_complete.tpl');
 			return;

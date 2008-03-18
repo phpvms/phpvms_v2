@@ -19,16 +19,36 @@ class OperationsAdmin
 		switch(Vars::GET('admin'))
 		{
 			case 'addaircraft':
-				Template::Show('ops_addaircraft.tpl');
-				break;
+			
+				Template::Set('title', 'Add Aircraft');
+				Template::Set('action', 'addaircraft');
+				Template::Show('ops_aircraftform.tpl');
 				
+				break;
+			
+			case 'editaircraft':
+			
+				$id = Vars::GET('id');
+				
+				Template::Set('aircraft', OperationsData::GetAircraftInfo($id));
+				Template::Set('title', 'Edit Aircraft');
+				Template::Set('action', 'editaircraft');
+				Template::Show('ops_aircraftform.tpl');
+				
+				break;
+								
 			case 'aircraft':
 			
+				
 				/* If they're adding an aircraft, go through this pain
 				*/				 
 				if(Vars::POST('action') == 'addaircraft')
 				{
 					$this->AddAircraft();
+				}
+				elseif(Vars::POST('action') == 'editaircraft')
+				{
+					$this->EditAircraft();
 				}
 			
 				Template::Set('allaircraft', OperationsData::GetAllAircraft());
@@ -41,14 +61,14 @@ class OperationsAdmin
 				break;
 				
 			case 'airports':
-			
+				
 				/* If they're adding an airport, go through this pain
 				*/				 
 				if(Vars::POST('action') == 'addairport')
 				{
 					$this->AddAirport();
 				}
-				 
+								
 				Template::Set('airports', OperationsData::GetAllAirports());
 				Template::Show('ops_airportlist.tpl');
 				
@@ -200,6 +220,33 @@ class OperationsAdmin
 		Template::Set('aircraft', $aircraft_options);
 		
 		Template::Show('ops_addschedule.tpl');
+	}
+	
+	function EditAircraft()
+	{
+		$id = Vars::POST('id');
+		$name = Vars::POST('name');	
+		$icao = Vars::POST('icao');	
+		$fullname = Vars::POST('fullname');	
+		$range = Vars::POST('range');	
+		$weight = Vars::POST('weight');	
+		$cruise = Vars::POST('cruise');	
+		
+		if($icao == '' || $name == '' || $fullname == '')
+		{
+			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
+			Template::Show('core_message.tpl');
+			return;
+		}
+		
+		if(!OperationsData::EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise))
+		{
+			Template::Set('message', 'There was an error editing the aircraft');
+		}
+		else	
+			Template::Set('message', 'The aircraft has been edited');
+		
+		Template::Show('core_message.tpl');
 	}
 }
 ?>

@@ -27,6 +27,11 @@ class OperationsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports ORDER BY name ASC');
 	}
 	
+	function GetAircraftInfo($id)
+	{
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);	
+	}
+	
 	function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
@@ -37,6 +42,17 @@ class OperationsData
 		return DB::query($sql);
 		
 	}
+	
+	function EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise)
+	{
+		$icao = strtoupper($icao);
+		
+		$sql = "UPDATE " . TABLE_PREFIX."aircraft SET icao='$icao', name='$name', fullname='$fullname',
+					range='$range', weight='$weight', cruise='$cruise' WHERE id=$id";
+		
+		return DB::query($sql);
+	}
+	
 	function AddAirport($icao, $name, $country, $lat, $long)
 	{
 	

@@ -336,6 +336,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\login_notfound.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\login_passwordreset.tpl"
     {
     "ProjRelPath" = "T"

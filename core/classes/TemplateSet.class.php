@@ -93,7 +93,7 @@ class TemplateSet
 		
 		/* See if the file has been over-rided in the skin directory
 		 */	
-		 
+		 		 
 		if(ADMIN_PANEL == false)
 		{
 			if(file_exists(SKINS_PATH . '/' . $tpl_name))
@@ -106,10 +106,13 @@ class TemplateSet
 			$tpl_path = $this->template_path . '/' . $tpl_name;
 		}		
 		
+		if(!file_exists($tpl_path))
+			return;
+			
 		extract($this->vars, EXTR_OVERWRITE);
 		
 		ob_start();
-		@include $tpl_path; 
+		include $tpl_path; 
 		$cont = ob_get_contents();
 		ob_end_clean();
 		

@@ -20,6 +20,7 @@ function EvokeListeners()
 	    onHide: function(h) {
             h.o.remove(); // remove overlay
             h.w.fadeOut(1500); // hide window 
+            $("$jqmdialog").html('');
         }
     });
     

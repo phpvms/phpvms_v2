@@ -360,6 +360,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\profile_edit.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\profile_main.tpl"
     {
     "ProjRelPath" = "T"

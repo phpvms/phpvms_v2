@@ -107,7 +107,10 @@ class TemplateSet
 		}		
 		
 		if(!file_exists($tpl_path))
+		{
+			trigger_error('The template file "'.$tpl_name.'" doesn\'t exist');
 			return;
+		}
 			
 		extract($this->vars, EXTR_OVERWRITE);
 		

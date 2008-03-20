@@ -8,7 +8,12 @@
 	<dt>Options</dt>
 	<dd>
 		<p>
-			<a href="?page=editprofile">Edit Profile</a> - Edit your profile, including changing your password <br />
+			<strong>Profile</strong><br />
+			<a href="?page=editprofile">Edit Profile</a> - Edit your profile<br />
+			<a href="?page=changepassword">Change my Password</a> <br />
+			<br />
+			<strong>Flight Operations</strong><br />
+			<a href="?page=viewpireps">View my PIREPs</a><br />
 			<a href="?page=schedules">View Flight Schedules</a> - Choose a flight
 		</p>
 		<?php

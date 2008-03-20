@@ -4,19 +4,21 @@ class PIREPS extends ModuleBase
 {
 	function Controller()
 	{
-		$this->TEMPLATE->template_path = dirname(__FILE__);
 		
-		
-		if(Vars::GET('page') == 'filepirep')
+		switch(Vars::GET('page'))
 		{
-			//TODO: show PIREP page
+			case 'viewpireps':
+				
+				break;
+			
+			
+			case 'filepirep':
+				
+				
+				break;
 			
 		}
-		elseif(Vars::GET('page') == 'viewpireps')
-		{
-			//TODO: show pireps
-		}		
-		
 	}
 }
+		
 ?>

@@ -19,19 +19,6 @@
 		?>
 	</dd>
 	
-	<dt>Password</dt>
-	<dd><p>To change your password, enter your new password below</p>
-		<input type="password" id="password" name="password1" value="" />
-		<p>Enter your password again</p>
-		<input type="password" name="password2" value="" />
-		<?php
-			if($password_error != '')
-				echo '<p class="error">'.$password_error.'</p>';
-		?>
-		<p>Enter your old password</p>
-		<input type="password" name="oldpassword" />
-	</dd>
-	
 	<?php
 	if($customfields)
 	{
@@ -45,6 +32,6 @@
 	
 	<dt></dt>
 	<dd><input type="hidden" name="action" value="saveprofile" />
-		<input type="submit" name="submit_register" value="Save Changes" /></dd>
+		<input type="submit" name="submit" value="Save Changes" /></dd>
 </dl>
 </form>

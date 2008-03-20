@@ -15,6 +15,13 @@ class PilotProfile extends ModuleBase
 					return;
 				}
 				
+				/* this comes from ?page=changepassword
+				*/
+				if($_POST['action'] == 'changepassword')
+				{
+					$this->ChangePassword();
+				}
+				
 				Template::Set('userinfo', Auth::$userinfo);
 				Template::Show('profile_main.tpl');
 				break;
@@ -37,6 +44,17 @@ class PilotProfile extends ModuleBase
 						
 				Template::Show('profile_edit.tpl');
 				break;
+			
+			case 'changepassword':
+			
+				if(!Auth::LoggedIn())
+				{
+					echo 'Not logged in';
+					return;
+				}
+				
+				Template::Show('profile_changepassword.tpl');
+				break;
 				
 		}
 	}
@@ -58,7 +76,12 @@ class PilotProfile extends ModuleBase
 		PilotData::SaveProfile(Auth::$userid, $email, $location);
 		PilotData::SaveFields(Auth::$userid, $_POST);
 		
-		//TODO: password change
+		
+	}
+	
+	function ChangePassword()
+	{
+		//TODO: password change		
 	}
 }
 ?>

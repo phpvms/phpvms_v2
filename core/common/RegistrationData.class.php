@@ -27,89 +27,6 @@ class RegistrationData
 		
 		return DB::get_results($sql);		
 	}
-
-	/*
-	 * Process all the registration data
-	 */	
-	function ProcessRegistration()
-	{
-		$error = false;
-			
-		/* Check the firstname and last name
-		 */
-		if(Vars::POST('firstname') == '')
-		{
-			$error = true;
-			Template::Set('firstname_error', true);
-		}
-		else
-			Template::Set('firstname_error', '');
-		
-		/* Check the last name
-		 */
-		if(Vars::POST('lastname') == '')
-		{
-			$error = true;
-			Template::Set('lastname_error', true);
-		}
-		else
-			Template::Set('lastname_error', '');
-		
-		/* Check the email address
-		 */
-		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", Vars::POST('email')) == false)
-		{
-			$error = true;
-			Template::Set('email_error', true);
-		}
-		else
-			Template::Set('email_error', '');
-		
-		/* Check the location
-		 */
-		if(Vars::POST('location') == '')
-		{
-			$error = true;
-			Template::Set('location_error', true);
-		}
-		else
-			Template::Set('location_error', '');		
-		
-		// Check password length
-		if(strlen(Vars::POST('password1')) <= 5)
-		{
-			$error = true;
-			Template::Set('password_error', 'The password is too short!');
-		}
-		else
-			Template::Set('password_error', '');
-		
-		// Check is passwords are the same	
-		if(Vars::POST('password1') != Vars::POST('password2'))
-		{
-			$error = true;
-			Template::Set('password_error', 'The passwords do not match!');
-		}
-		else
-			Template::Set('password_error', '');
-		
-		/* Check if they agreed to the statement
-		 */
-		if(!$_POST['agree'])
-		{
-			$error = true;
-			Template::Set('agree_error', true);
-		}
-		else
-			Template::Set('agree_error', '');
-		
-		if($error == true)
-		{
-			return false;
-		}
-				
-		return true;	
-	}	
 	
 	function CompleteRegistration($fields)
 	{
@@ -175,7 +92,7 @@ class RegistrationData
 		return DB::query($sql);		
 	}
 	
-	function SendEmailConfirm($email, $firstname, $lastname)
+	function SendEmailConfirm($email, $firstname, $lastname, $newpw='')
 	{
 		/*$firstname = Vars::POST('firstname');
 		$lastname = Vars::POST('lastname');
@@ -185,12 +102,19 @@ class RegistrationData
 		$subject = SITE_NAME . ' Registration';
 		 
 		//TODO: move this to a template!
-		$message = "Dear $firstname $lastname,\nYour account have been made at " 
+		Template::Set('firstname', $firstname);
+		Template::Set('lastname', $lastname);
+		Template::Set('confid', $confid);
+		Template::Set('newpw', $newpw);
+		
+		$message = Template::GetTemplate('registration_email.tpl', true);
+		
+		/*$message = "Dear $firstname $lastname,\nYour account have been made at " 
 					. SITE_NAME .", but must confirm it by clicking on this link:\n"
 					. SITE_URL . "/index.php?page=confirm&confirmid=$confid" 
 					. "\n Or if you have HTML enabled email: <a href=\"" 
 					. SITE_URL . "/index.php?page=confirm&confirmid=$confid" 
-					. "\">Click here.</a>\n\nThanks!\n".SITE_NAME." Staff";
+					. "\">Click here.</a>\n\nThanks!\n".SITE_NAME." Staff";*/
 
 		//email them the confirmation            
 		Util::SendEmail($email, $subject, $message);		

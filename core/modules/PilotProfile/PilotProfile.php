@@ -95,7 +95,6 @@ class PilotProfile extends ModuleBase
 		}
 		
 		// Change
-		
 		$hash = md5($_POST['oldpassword'] . Auth::$userinfo->salt);
 		
 		if($hash == Auth::$userinfo->password)

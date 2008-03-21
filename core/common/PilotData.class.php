@@ -64,11 +64,13 @@ class PilotData
 			// if it exists
 			if($res)
 			{
-				$sql = 'UPDATE '.TABLE_PREFIX.'fieldvalues SET value="'.$value.'" WHERE fieldid='.$field->fieldid.' AND userid='.$userid;
+				$sql = 'UPDATE '.TABLE_PREFIX.'fieldvalues 
+						SET value="'.$value.'" WHERE fieldid='.$field->fieldid.' AND userid='.$userid;
 			}
 			else
 			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues (fieldid, userid, value) VALUES ($field->fieldid, $userid, '$value')";
+				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues 
+						(fieldid, userid, value) VALUES ($field->fieldid, $userid, '$value')";
 			}
 			
 			DB::query($sql);
@@ -78,13 +80,10 @@ class PilotData
 	function GetFieldData($userid, $inclprivate=false)
 	{
 		$sql = 'SELECT f.fieldname, v.value 
-					FROM '.TABLE_PREFIX.'customfields f LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
-					ON f.fieldid=v.fieldid AND v.userid='.$userid;
-		
-		/*$sql = 'SELECT f.fieldname, v.value 
-				FROM '.TABLE_PREFIX.'customfields f, '.TABLE_PREFIX.'fieldvalues v
-				WHERE f.fieldid=v.fieldid AND v.userid='.$userid;*/
-		
+					FROM '.TABLE_PREFIX.'customfields f 
+					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
+						ON f.fieldid=v.fieldid AND v.userid='.$userid;
+								
 		if($inclprivate == false)
 			$sql .= " AND f.public='y'";
 			

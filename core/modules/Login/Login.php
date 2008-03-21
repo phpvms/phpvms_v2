@@ -29,6 +29,7 @@ class Login extends ModuleBase
 				break;
 				
 			case 'logout':
+			
 				Auth::LogOut();
 				
 				/*redirect back to front page 
@@ -73,9 +74,11 @@ class Login extends ModuleBase
 				Template::Show('login_notfound.tpl');
 				return;
 			}
-						
-			RegistrationData::ChangePassword($pilotdata->userid, substr(md5(date('mdYhs')), 0, 6));
-			RegistrationData::SendEmailConfirm($pilotdata->email, $pilotdata->firstname, $pilotdata->lastname);
+			
+			$newpw = substr(md5(date('mdYhs')), 0, 6);
+			
+			RegistrationData::ChangePassword($pilotdata->userid, $newpw);
+			RegistrationData::SendEmailConfirm($pilotdata->email, $pilotdata->firstname, $pilotdata->lastname, $newpw);
 			
 			Template::Show('login_passwordreset.tpl');
 		}		

@@ -100,7 +100,7 @@ class Util
 	
 		$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
-		$boundary = uniqid("VDAYRSVP");
+		$boundary = uniqid("PHPVMSMAILER");
 		$headers .= "Content-Type: multipart/alternative" .
 		"; boundary = $boundary\r\n\r\n";
 		$headers .= "This is a MIME encoded message.\r\n\r\n";

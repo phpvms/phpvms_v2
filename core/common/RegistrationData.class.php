@@ -108,14 +108,7 @@ class RegistrationData
 		Template::Set('newpw', $newpw);
 		
 		$message = Template::GetTemplate('registration_email.tpl', true);
-		
-		/*$message = "Dear $firstname $lastname,\nYour account have been made at " 
-					. SITE_NAME .", but must confirm it by clicking on this link:\n"
-					. SITE_URL . "/index.php?page=confirm&confirmid=$confid" 
-					. "\n Or if you have HTML enabled email: <a href=\"" 
-					. SITE_URL . "/index.php?page=confirm&confirmid=$confid" 
-					. "\">Click here.</a>\n\nThanks!\n".SITE_NAME." Staff";*/
-
+				
 		//email them the confirmation            
 		Util::SendEmail($email, $subject, $message);		
 	}

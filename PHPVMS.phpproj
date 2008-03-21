@@ -376,6 +376,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\registration_email.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\registration_error.tpl"
     {
     "ProjRelPath" = "T"

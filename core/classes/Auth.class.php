@@ -105,11 +105,10 @@ class Auth
 		
 		if($hash == $userinfo->password)
 		{	
-			/*SessionManager::AddData('loggedin', 'true');	
+			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);
-			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));*/
-			
-			return $userinfo;
+						
+			return true;
 		}			
 		else 
 		{

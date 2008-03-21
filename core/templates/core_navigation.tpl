@@ -24,3 +24,11 @@ else
 <?=$MODULE_NAV_INC;?>
 <li><a href="?page=acars">Live Map</a></li>
 <li><a href="?page=contact">Contact Us</a></li>
+<?php
+if(Auth::LoggedIn())
+{
+?>
+<li><a href="?page=logout">Log Out</a></li>
+<?php
+}
+?>

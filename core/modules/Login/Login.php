@@ -27,6 +27,16 @@ class Login extends ModuleBase
 				}
 				
 				break;
+				
+			case 'logout':
+				Auth::LogOut();
+				
+				/*redirect back to front page 
+				*/
+				Template::Set('redir', SITE_URL);
+				Template::Show('login_complete.tpl');
+				
+				break;
 			
 			case 'forgotpassword':
 			
@@ -83,9 +93,7 @@ class Login extends ModuleBase
 			return false;
 		}
 		
-		$userinfo = Auth::ProcessLogin($email, $password);
-		
-		if(!is_object($userinfo))
+		if(!Auth::ProcessLogin($email, $password))
 		{
 			Template::Set('message', Auth::$error_message);
 			Template::Show('login_form.tpl');
@@ -93,24 +101,27 @@ class Login extends ModuleBase
 		}
 		else
 		{
-			if($userinfo->confirmed == 'n')
+			//TODO: check if unconfirmed or not
+			//TODO: add to sessions table 
+			
+			if(Auth::$userinfo->confirmed == 'n')
 			{
-				//TODO: show template that they're not confirmed
+				Auth::LogOut();
+				
+				// show error
 			}
 			else
 			{
-				//TODO: add to sessions table 
-				SessionManager::AddData('loggedin', 'true');	
-				SessionManager::AddData('userinfo', $userinfo);
+				// Add our user groups
 				SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
 				
 				Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
 				Template::Show('login_complete.tpl');
 			}
 			
+			return;
 		}
-		
-		return true;
 	}
+	
 }
 ?>

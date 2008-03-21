@@ -1,1 +1,0 @@
-<p>Your password has been reset. You must re-confirm your account, and email has been sent.</p>

@@ -75,13 +75,40 @@ class PilotProfile extends ModuleBase
 		
 		PilotData::SaveProfile(Auth::$userid, $email, $location);
 		PilotData::SaveFields(Auth::$userid, $_POST);
-		
-		
 	}
 	
 	function ChangePassword()
-	{
-		//TODO: password change		
+	{		
+		// Verify
+		if($_POST['oldpassword'] == '')
+		{
+			Template::Set('message', 'You must enter your current password');
+			Template::Show('core_message.tpl');
+			return;
+		}
+		
+		if($_POST['password1'] != $_POST['password2'])
+		{
+			Template::Set('message', 'Your passwords do not match');
+			Template::Show('core_message.tpl');
+			return;
+		}
+		
+		// Change
+		
+		$hash = md5($_POST['oldpassword'] . Auth::$userinfo->salt);
+		
+		if($hash == Auth::$userinfo->password)
+		{	
+			RegistrationData::ChangePassword(Auth::$userid, $_POST['password1']);
+			Template::Set('message', 'Your password has been reset');
+		}
+		else
+		{
+			Template::Set('message', 'You entered an invalid password');
+		}		
+		
+		Template::Show('core_message.tpl');
 	}
 }
 ?>

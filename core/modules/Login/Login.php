@@ -83,7 +83,9 @@ class Login extends ModuleBase
 			return false;
 		}
 		
-		if(!Auth::ProcessLogin($email, $password))
+		$userinfo = Auth::ProcessLogin($email, $password);
+		
+		if(!is_object($userinfo))
 		{
 			Template::Set('message', Auth::$error_message);
 			Template::Show('login_form.tpl');
@@ -91,14 +93,24 @@ class Login extends ModuleBase
 		}
 		else
 		{
-			//TODO: check if unconfirmed or not
-			//TODO: add to sessions table 
+			if($userinfo->confirmed == 'n')
+			{
+				//TODO: show template that they're not confirmed
+			}
+			else
+			{
+				//TODO: add to sessions table 
+				SessionManager::AddData('loggedin', 'true');	
+				SessionManager::AddData('userinfo', $userinfo);
+				SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
+				
+				Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
+				Template::Show('login_complete.tpl');
+			}
 			
-			Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
-			Template::Show('login_complete.tpl');
-			return;
 		}
+		
+		return true;
 	}
-	
 }
 ?>

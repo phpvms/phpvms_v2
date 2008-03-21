@@ -59,7 +59,7 @@ class Registration extends ModuleBase
 	function ProcessRegistration(&$extrafields)
 	{	
 		// check the registration
-		$ret = $this->ProcessRegistration();
+		$ret = $this->VerifyData();
 		
 		// Yes, there was an error
 		if($ret == false) 
@@ -88,7 +88,7 @@ class Registration extends ModuleBase
 	/*
 	 * Process all the registration data
 	 */	
-	function ProcessRegistration()
+	function VerifyData()
 	{
 		$error = false;
 		

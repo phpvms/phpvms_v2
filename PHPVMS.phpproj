@@ -324,6 +324,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\email_lostpassword.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\email_registered.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\frontpage_main.tpl"
     {
     "ProjRelPath" = "T"
@@ -360,6 +368,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "core\\templates\\profile_changepassword.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "core\\templates\\profile_edit.tpl"
     {
     "ProjRelPath" = "T"
@@ -373,10 +385,6 @@
     "ProjRelPath" = "T"
     }
     "core\\templates\\registration_customfields.tpl"
-    {
-    "ProjRelPath" = "T"
-    }
-    "core\\templates\\registration_email.tpl"
     {
     "ProjRelPath" = "T"
     }

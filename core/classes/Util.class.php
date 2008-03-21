@@ -110,11 +110,11 @@ class Util
 		"Content-Transfer-Encoding: base64\r\n\r\n";
 		$headers .= chunk_split(base64_encode($message));
 
-		//HTML version of message
+		/*//HTML version of message
 		$headers .= "--$boundary\r\n" .
 					"Content-Type: text/html; charset=ISO-8859-1\r\n" .
 					"Content-Transfer-Encoding: base64\r\n\r\n";
-		$headers .= chunk_split(base64_encode($message));
+		$headers .= chunk_split(base64_encode($message));*/
 
 		mail($email, $subject, '', $headers);    
 	}

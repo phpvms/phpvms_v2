@@ -84,11 +84,12 @@ class RegistrationData
 	function ChangePassword($userid, $newpassword)
 	{
 		$salt = md5(date('His'));
-		$password = md5(Vars::POST('password1') . $salt);
+
+		$password = md5($newpassword . $salt);
 		
 		self::$salt = $salt;
 		
-		$sql = "UPDATE " . TABLE_PREFIX ."users SET password='$password', salt='$salt', confirmed='n'";
+		$sql = "UPDATE " . TABLE_PREFIX ."users SET password='$password', salt='$salt', confirmed='y' WHERE userid=$userid";
 		return DB::query($sql);		
 	}
 	
@@ -101,13 +102,11 @@ class RegistrationData
 		
 		$subject = SITE_NAME . ' Registration';
 		 
-		//TODO: move this to a template!
 		Template::Set('firstname', $firstname);
 		Template::Set('lastname', $lastname);
 		Template::Set('confid', $confid);
-		Template::Set('newpw', $newpw);
-		
-		$message = Template::GetTemplate('registration_email.tpl', true);
+				
+		$message = Template::GetTemplate('email_registered.tpl', true);
 				
 		//email them the confirmation            
 		Util::SendEmail($email, $subject, $message);		

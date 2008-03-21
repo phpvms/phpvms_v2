@@ -96,13 +96,13 @@ class Auth
 
 		if(!$userinfo)
 		{
-			self::$error_message = 'Invalid login, please check your username and password';
+			self::$error_message = 'This user does not exist';
 			return false;
 		}
 
 		//ok now check it
 		$hash = md5($password . $userinfo->salt);
-		
+				
 		if($hash == $userinfo->password)
 		{	
 			SessionManager::AddData('loggedin', 'true');	
@@ -112,7 +112,6 @@ class Auth
 		}			
 		else 
 		{
-			// just blank it
 			self::$error_message = 'Invalid login, please check your username and password';
 			self::LogOut();
 			

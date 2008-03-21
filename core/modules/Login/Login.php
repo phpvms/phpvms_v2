@@ -78,7 +78,14 @@ class Login extends ModuleBase
 			$newpw = substr(md5(date('mdYhs')), 0, 6);
 			
 			RegistrationData::ChangePassword($pilotdata->userid, $newpw);
-			RegistrationData::SendEmailConfirm($pilotdata->email, $pilotdata->firstname, $pilotdata->lastname, $newpw);
+						
+			Template::Set('firstname', $pilotdata->firstname);
+			Template::Set('lastname', $pilotdata->lastname);
+			Template::Set('newpw', $newpw);
+			
+			$message = Template::GetTemplate('email_lostpassword.tpl', true);
+			
+			Util::SendEmail($pilotdata->email, 'Password Reset', $message);
 			
 			Template::Show('login_passwordreset.tpl');
 		}		

@@ -50,8 +50,8 @@ CREATE TABLE `phpvms_ranks` (
 	UNIQUE KEY `rank` (`rank`)
 );
 
-CREATE TABLE `phpvms_users` (
-	`userid` int(11) NOT NULL auto_increment,
+CREATE TABLE `phpvms_pilots` (
+	`pilotid` int(11) NOT NULL auto_increment,
 	`firstname` varchar(25) NOT NULL default '',
 	`lastname` varchar(25) NOT NULL default '',
 	`email` varchar(32) NOT NULL default '',
@@ -64,7 +64,7 @@ CREATE TABLE `phpvms_users` (
 	`rank` varchar(32) NOT NULL default '',
 	`confirmed` enum('y','n') NOT NULL default 'n',
 	`retired` enum('y','n') NOT NULL default 'y',
-	PRIMARY KEY  (`userid`),
+	PRIMARY KEY  (`pilotid`),
 	UNIQUE KEY `email` (`email`),
 	INDEX (`email`),
 	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`)
@@ -72,7 +72,7 @@ CREATE TABLE `phpvms_users` (
 
 CREATE TABLE `phpvms_pireps` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
-	`userid` INT NOT NULL ,
+	`pilotid` INT NOT NULL ,
 	`airline` VARCHAR( 3 ) NOT NULL ,
 	`flightnum` VARCHAR( 7 ) NOT NULL ,
 	`depicao` VARCHAR( 4 ) NOT NULL ,
@@ -84,7 +84,7 @@ CREATE TABLE `phpvms_pireps` (
 	`submitdate` DATETIME NOT NULL ,
 	`accepted` SMALLINT NOT NULL ,
 	PRIMARY KEY ( `id` ),
-	FOREIGN KEY (`userid`) REFERENCES phpvms_users(`userid`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`flightnum`) REFERENCES phpvms_schedules(`flightnum`) ON UPDATE CASCADE
 );
 
@@ -130,11 +130,11 @@ CREATE TABLE `phpvms_customfields` (
 CREATE TABLE `phpvms_fieldvalues` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`fieldid` INT NOT NULL ,
-	`userid` INT NOT NULL ,
+	`pilotid` INT NOT NULL ,
 	`value` VARCHAR( 25 ) NOT NULL ,
 	PRIMARY KEY ( `id` ),
 	FOREIGN KEY (`fieldid`) REFERENCES phpvms_customfields(`fieldid`) ON DELETE CASCADE,
-	FOREIGN KEY (`userid`) REFERENCES phpvms_users(`userid`) ON DELETE CASCADE
+	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE
 );
 
 
@@ -151,10 +151,10 @@ INSERT INTO `phpvms_groups` (`name`) VALUES ('Active Pilots');
 CREATE TABLE `phpvms_groupmembers` (
 	`id` int(11) NOT NULL auto_increment,
 	`groupid` int(11) NOT NULL default '0',
-	`userid` int(11) NOT NULL default '0',
+	`pilotid` int(11) NOT NULL default '0',
 	PRIMARY KEY  (`id`),
 	FOREIGN KEY (`groupid`) REFERENCES phpvms_groups(`groupid`) ON DELETE CASCADE,
-	FOREIGN KEY (`userid`) REFERENCES phpvms_users(`userid`) ON DELETE CASCADE
+	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE
 );
 
 CREATE TABLE `phpvms_settings` (

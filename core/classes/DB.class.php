@@ -120,13 +120,14 @@ class DB
 	
 	public static function query($query)
 	{
-		self::$insert_id = self::$DB->query($query);
+		$ret = self::$DB->query($query);
 		
 		self::$err = self::$DB->err;
 		self::$errno = self::$DB->errno;
 		self::$num_rows = self::$DB->num_rows;
+		self::$insert_id = self::$DB->insert_id;
 		
-		return self::$insert_id;
+		return $ret; //self::$insert_id;
 	}
 	
 	public static function get_col_info($info_type="name",$col_offset=-1)

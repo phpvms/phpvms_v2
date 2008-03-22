@@ -2,17 +2,6 @@
 
 class SiteCMS
 {
-	
-	function NavBar()
-	{
-		echo '<li><a href="#">site</a>
-					<ul>
-						<li><a href="?admin=viewnews">View News</a></li>
-						<li><a href="?admin=viewpages">Site Pages</a></li>
-					</ul>
-				</li>';
-	}
-	
 	function Controller()
 	{
 		switch(Vars::GET('admin'))

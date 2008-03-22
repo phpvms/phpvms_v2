@@ -1,18 +1,7 @@
 <?php
 
 class Settings extends ModuleBase
-{
-		
-	function NavBar()
-	{
-		echo '<li><a href="#">Settings</a>
-					<ul>
-						<li><a href="?admin=settings">General Settings</a></li>
-						<li><a href="?admin=customfields">Custom Profile Fields</a></li>
-					</ul>
-				</li>';
-	}
-	
+{	
 	function Controller()
 	{		
 		//$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';

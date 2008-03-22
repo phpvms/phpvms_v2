@@ -2,16 +2,6 @@
 
 class PilotAdmin
 {
-	function NavBar()
-	{
-		echo '<li><a href="#">Pilots</a>
-				<ul>
-					<li><a href="?admin=viewpilots">View Registered Pilots</a></li>
-					<li><a href="?admin=pilotgroups">Pilot Groups</a></li>
-				</ul>
-				</li>';
-	}
-	
 	function Controller()
 	{
 		switch(Vars::GET('admin'))

@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2008, phpVMS Project
  * @license http://www.phpvms.net/license.php
  * 
- * @package SiteData
  */
 
 class SiteData

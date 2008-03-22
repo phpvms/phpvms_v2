@@ -33,6 +33,9 @@ class SettingsData
 		$public = Vars::POST('public');
 		$showinregistration = Vars::POST('showinregistration');
 		
+		$fieldname = str_replace(' ', '_', $fieldname);
+		$fieldname = strtoupper($fieldname);
+		
 		//Check, set up like this on purpose to default "safe" values
 		if($public == 'yes')
 			$public = 'y';

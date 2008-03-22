@@ -43,7 +43,7 @@ class PilotData
 	
 	function SaveProfile($pilotid, $email, $location)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."users SET email='$email', location='$location' WHERE pilotid=$pilotid";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location' WHERE pilotid=$pilotid";
 		
 		$ret = DB::query($sql);
 		
@@ -59,7 +59,8 @@ class PilotData
 			$sql = 'SELECT id FROM '.TABLE_PREFIX.'fieldvalues WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
 			$res = DB::get_row($sql);
 		
-			$value = $list[str_replace(' ', '_', $field->fieldname)];
+			$fieldname =str_replace(' ', '_', $field->fieldname);
+			$value = $list[$fieldname];
 				
 			// if it exists
 			if($res)

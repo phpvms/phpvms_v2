@@ -28,7 +28,7 @@ class RegistrationData
 		return DB::get_results($sql);		
 	}
 	
-	function AddUser($fields)
+	function AddUser()
 	{
 		$firstname = Vars::POST('firstname');
 		$lastname = Vars::POST('lastname');
@@ -44,41 +44,40 @@ class RegistrationData
 		
 		//Add this stuff in
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."users (firstname, lastname, email, location, password, salt, confirmed)
+		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, location, password, salt, confirmed)
 					VALUES ('$firstname', '$lastname', '$email', '$location', '$password', '$salt', 'n')";
 		
 		$res = DB::query($sql);
+		
 		if(!$res)
 		{
 			if(DB::$errno == 1062)
-				self::$error = 'This email address is already registered';
-			else	
 			{
-				self::$error = 'An error occured, please contact the administrator';
-				//TODO: email admin
+				self::$error = 'This email address is already registered';
+				
+				return false;
 			}
-						
-			return false;
 		}
 		
 		//Grab the new pilotid, we need it to insert those "custom fields"
 		$pilotid = DB::$insert_id;
-		
-		if(!$fields)
-			return true;
-			
+		$fields = self::GetCustomFields();
+					
 		//Get customs fields
 		foreach($fields as $field)
 		{
 			$value = Vars::POST($field->fieldname);
+		
 			if($value != '')
 			{	
 				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues (fieldid, pilotid, value)
 							VALUES ($field->fieldid, $pilotid, '$value')";
 											
-				DB::query();
+				DB::query($sql);
 			}
 		}
+		
+		return true;
 	}
 	
 	function ChangePassword($pilotid, $newpassword)
@@ -89,7 +88,7 @@ class RegistrationData
 		
 		self::$salt = $salt;
 		
-		$sql = "UPDATE " . TABLE_PREFIX ."users SET password='$password', salt='$salt', confirmed='y' WHERE pilotid=$pilotid";
+		$sql = "UPDATE " . TABLE_PREFIX ."pilots SET password='$password', salt='$salt', confirmed='y' WHERE pilotid=$pilotid";
 		return DB::query($sql);		
 	}
 	
@@ -116,7 +115,7 @@ class RegistrationData
 	{
 		$confid = Vars::GET('confirmid');
 	
-		$sql = "UPDATE ".TABLE_PREFIX."users SET confirmed='y', retired='n' WHERE salt='$confid'";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots SET confirmed='y', retired='n' WHERE salt='$confid'";
 		$res = DB::query($sql);
 		
 		if(!$res && DB::$errno !=0)

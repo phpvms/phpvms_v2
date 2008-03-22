@@ -44,19 +44,19 @@ class Registration extends ModuleBase
 				
 				if(isset($_POST['submit_register']))
 				{
-					$this->ProcessRegistration($extrafields);
+					$this->ProcessRegistration();
 				}
 				else
 				{
 					Template::Show('registration_mainform.tpl');
 				}
 					
-				$this->Register();
+				//$this->ProcessRegistration();
 				break;
 		}
 	}
 	
-	function ProcessRegistration(&$extrafields)
+	function ProcessRegistration()
 	{	
 			
 		// Yes, there was an error
@@ -66,7 +66,7 @@ class Registration extends ModuleBase
 		}
 		else
 		{
-			if(RegistrationData::AddUser($extrafields) == false)
+			if(RegistrationData::AddUser() == false)
 			{
 				Template::Set('error', RegistrationData::$error);
 				Template::Show('registration_error.tpl');

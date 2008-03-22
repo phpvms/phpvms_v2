@@ -10,6 +10,13 @@ class Util
 	 */
 	function LoadSiteSettings()
 	{			
+		global $Config;
+		
+		while(list($key, $value) = each($Config))
+		{
+			define($key, $value);
+		}
+		
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'settings';
 		
 		$all_settings = DB::get_results($sql);
@@ -19,8 +26,8 @@ class Util
 		
 		foreach($all_settings as $setting)
 		{				
-			if(!defined($setting->name))
-			{		
+			//if(!defined($setting->name))
+			//{		
 				//correct value for booleans
 				if($setting->value == 'true')
 				{
@@ -32,7 +39,7 @@ class Util
 				}
 				
 				define($setting->name, $setting->value);
-			}	
+			//}	
 		}
 	
 		return false;

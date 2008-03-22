@@ -40,7 +40,7 @@ class PilotProfile extends ModuleBase
 				}
 											
 				Template::Set('userinfo', Auth::$userinfo);
-				Template::Set('customfields', PilotData::GetFieldData(Auth::$userid, true));
+				Template::Set('customfields', PilotData::GetFieldData(Auth::$pilotid, true));
 						
 				Template::Show('profile_edit.tpl');
 				break;
@@ -73,8 +73,8 @@ class PilotProfile extends ModuleBase
 			return;
 		}
 		
-		PilotData::SaveProfile(Auth::$userid, $email, $location);
-		PilotData::SaveFields(Auth::$userid, $_POST);
+		PilotData::SaveProfile(Auth::$pilotid, $email, $location);
+		PilotData::SaveFields(Auth::$pilotid, $_POST);
 	}
 	
 	function ChangePassword()
@@ -99,7 +99,7 @@ class PilotProfile extends ModuleBase
 		
 		if($hash == Auth::$userinfo->password)
 		{	
-			RegistrationData::ChangePassword(Auth::$userid, $_POST['password1']);
+			RegistrationData::ChangePassword(Auth::$pilotid, $_POST['password1']);
 			Template::Set('message', 'Your password has been reset');
 		}
 		else

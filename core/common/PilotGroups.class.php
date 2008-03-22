@@ -38,7 +38,7 @@ class PilotGroups
 		return $res->groupid;
 	}
 	
-	function AddUsertoGroup($userid, $groupidorname)
+	function AddUsertoGroup($pilotid, $groupidorname)
 	{
 		if($groupidorname == '') return false;
 		
@@ -48,13 +48,13 @@ class PilotGroups
 			$groupidorname = self::GetGroupID($groupidorname);
 		}
 		
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (userid, groupid) 
-					VALUES ('.$userid.', '.$groupidorname.')';
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (pilotid, groupid) 
+					VALUES ('.$pilotid.', '.$groupidorname.')';
 		
 		return DB::query($sql);
 	}
 	
-	function CheckUserInGroup($userid, $groupid)
+	function CheckUserInGroup($pilotid, $groupid)
 	{
 		
 		if(preg_match('`^[0-9]+$`',$groupid) != true)
@@ -64,7 +64,7 @@ class PilotGroups
 		
 		$query = 'SELECT g.groupid
 					FROM ' . TABLE_PREFIX . 'groupmembers g
-					WHERE g.userid='.$userid.' AND g.groupid='.$groupid;
+					WHERE g.pilotid='.$pilotid.' AND g.groupid='.$groupid;
 					
 		if(!DB::get_row($query))
 			return false;
@@ -72,26 +72,26 @@ class PilotGroups
 			return true;
 	}
 	
-	function GetUserGroups($userid)
+	function GetUserGroups($pilotid)
 	{
-		$userid = DB::escape($userid);
+		$pilotid = DB::escape($pilotid);
 		
 		$sql = 'SELECT g.groupid, g.name
 					FROM ' . TABLE_PREFIX . 'groupmembers u, ' . TABLE_PREFIX . 'groups g
-					WHERE u.userid='.$userid.' AND g.groupid=u.groupid';
+					WHERE u.pilotid='.$pilotid.' AND g.groupid=u.groupid';
 		
 		$ret = DB::get_results($sql);
 		
 		return $ret;
 	}
 	
-	function RemoveUserFromGroup($userid, $groupid)
+	function RemoveUserFromGroup($pilotid, $groupid)
 	{
-		$userid = DB::escape($userid);
+		$pilotid = DB::escape($pilotid);
 		$groupid = DB::escape($groupid);
 		
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers
-					WHERE userid='.$userid.' AND groupid='.$groupid;
+					WHERE pilotid='.$pilotid.' AND groupid='.$groupid;
 		
 		return DB::query($sql);
 	}	

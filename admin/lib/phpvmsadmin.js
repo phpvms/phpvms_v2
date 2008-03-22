@@ -61,7 +61,7 @@ function EvokeListeners()
 	});
 	
 	$('.pilotgroupajax').bind('dblclick', function() {
-		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), userid: $(this).attr("userid"), groupid: $(this).attr("id")});
+		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")});
 	});
 	
 	// Make the message box hide itself

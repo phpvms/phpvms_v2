@@ -61,8 +61,8 @@ class RegistrationData
 			return false;
 		}
 		
-		//Grab the new userid, we need it to insert those "custom fields"
-		$userid = DB::$insert_id;
+		//Grab the new pilotid, we need it to insert those "custom fields"
+		$pilotid = DB::$insert_id;
 		
 		if(!$fields)
 			return true;
@@ -73,15 +73,15 @@ class RegistrationData
 			$value = Vars::POST($field->fieldname);
 			if($value != '')
 			{	
-				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues (fieldid, userid, value)
-							VALUES ($field->fieldid, $userid, '$value')";
+				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues (fieldid, pilotid, value)
+							VALUES ($field->fieldid, $pilotid, '$value')";
 											
 				DB::query();
 			}
 		}
 	}
 	
-	function ChangePassword($userid, $newpassword)
+	function ChangePassword($pilotid, $newpassword)
 	{
 		$salt = md5(date('His'));
 
@@ -89,7 +89,7 @@ class RegistrationData
 		
 		self::$salt = $salt;
 		
-		$sql = "UPDATE " . TABLE_PREFIX ."users SET password='$password', salt='$salt', confirmed='y' WHERE userid=$userid";
+		$sql = "UPDATE " . TABLE_PREFIX ."users SET password='$password', salt='$salt', confirmed='y' WHERE pilotid=$pilotid";
 		return DB::query($sql);		
 	}
 	

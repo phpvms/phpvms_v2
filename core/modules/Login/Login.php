@@ -77,7 +77,7 @@ class Login extends ModuleBase
 			
 			$newpw = substr(md5(date('mdYhs')), 0, 6);
 			
-			RegistrationData::ChangePassword($pilotdata->userid, $newpw);
+			RegistrationData::ChangePassword($pilotdata->pilotid, $newpw);
 						
 			Template::Set('firstname', $pilotdata->firstname);
 			Template::Set('lastname', $pilotdata->lastname);

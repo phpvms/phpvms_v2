@@ -14,7 +14,7 @@ class Auth
 	public static $loggedin=false;
 	public static $error_message;
 	
-	public static $userid;
+	public static $pilotid;
 	public static $userinfo;
 	public static $usergroups;
 	
@@ -33,7 +33,7 @@ class Auth
 			self::$loggedin = true;
 			self::$userinfo = SessionManager::GetData('userinfo');
 			self::$usergroups = SessionManager::GetData('usergroups');
-			self::$userid = self::$userinfo->userid;
+			self::$pilotid = self::$userinfo->pilotid;
 			
 			//print_r(self::$userinfo);
 			//print_r(self::$usergroups);
@@ -46,9 +46,9 @@ class Auth
 		}
 	}
 	
-	function UserID()
+	function pilotid()
 	{
-		return self::$userinfo->userid;
+		return self::$userinfo->pilotid;
 	}
 	
 	function Username()
@@ -89,7 +89,7 @@ class Auth
 		$emailaddress = DB::escape($emailaddress);
 		$password = DB::escape($password);
 		
-		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'users
+		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
 					WHERE email=\''.$emailaddress.'\'';
 
 		$userinfo = DB::get_row($sql);
@@ -107,7 +107,7 @@ class Auth
 		{	
 			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);
-			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
+			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
 						
 			return true;
 		}			

@@ -66,8 +66,7 @@ CREATE TABLE `phpvms_pilots` (
 	`retired` enum('y','n') NOT NULL default 'y',
 	PRIMARY KEY  (`pilotid`),
 	UNIQUE KEY `email` (`email`),
-	INDEX (`email`),
-	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`)
+	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `phpvms_pireps` (

@@ -15,7 +15,7 @@ else
 	{
 ?>
 	<dt><?=$group->name;?></dt>
-	<dd><a href="action.php?admin=viewpilots" userid="<?=$userid;?>" action="removegroup" id="<?=$group->groupid;?>" class="pilotgroupajax">Remove</a></dd>
+	<dd><a href="action.php?admin=viewpilots" pilotid="<?=$pilotid;?>" action="removegroup" id="<?=$group->groupid;?>" class="pilotgroupajax">Remove</a></dd>
 	
 <?php
 	}
@@ -48,7 +48,7 @@ if($total == 0)
 		</select></dd>
 
 	<dt></dt>
-	<dd><input type="hidden" name="userid" value="<?=$userid;?>" />
+	<dd><input type="hidden" name="pilotid" value="<?=$pilotid;?>" />
 		<input type="hidden" name="action" value="addgroup" />
 		<input type="submit" name="submit" value="Add to Group" /></dd>
 </dl>

@@ -43,7 +43,7 @@ class PilotAdmin
 				{
 					$this->AddPilotToGroup();
 					
-					$this->SetGroupsData(Vars::POST('userid'));
+					$this->SetGroupsData(Vars::POST('pilotid'));
 					Template::Show('pilots_groups.tpl');
 					break;
 				}
@@ -51,7 +51,7 @@ class PilotAdmin
 				{
 					$this->RemovePilotGroup();
 					
-					$this->SetGroupsData(Vars::POST('userid'));
+					$this->SetGroupsData(Vars::POST('pilotid'));
 					Template::Show('pilots_groups.tpl');
 					break;
 				}
@@ -94,19 +94,19 @@ class PilotAdmin
 	
 	function ViewPilotDetails()
 	{
-		$userid = Vars::GET('userid');
+		$pilotid = Vars::GET('pilotid');
 		
 		//This is for the main tab
-		Template::Set('pilotinfo', PilotData::GetPilotData($userid));
-		Template::Set('customfields', PilotData::GetFieldData($userid, true));
+		Template::Set('pilotinfo', PilotData::GetPilotData($pilotid));
+		Template::Set('customfields', PilotData::GetFieldData($pilotid, true));
 		
 		
-		$this->SetGroupsData($userid);
+		$this->SetGroupsData($pilotid);
 		
 		Template::Show('pilots_detailtabs.tpl');
 	}
 	
-	function SetGroupsData($userid)
+	function SetGroupsData($pilotid)
 	{
 		//This is for the groups tab
 		// Only send the groups they're in
@@ -115,14 +115,14 @@ class PilotAdmin
 		$allgroups = PilotGroups::GetAllGroups();
 		foreach($allgroups as $group)
 		{
-			if(!PilotGroups::CheckUserInGroup($userid, $group->groupid))
+			if(!PilotGroups::CheckUserInGroup($pilotid, $group->groupid))
 			{
 				array_push($freegroups, $group->name);
 			}
 		}
 		
-		Template::Set('userid', $userid);
-		Template::Set('pilotgroups', PilotData::GetPilotGroups($userid));
+		Template::Set('pilotid', $pilotid);
+		Template::Set('pilotgroups', PilotData::GetPilotGroups($pilotid));
 		Template::Set('freegroups', $freegroups);
 	}
 	
@@ -147,16 +147,16 @@ class PilotAdmin
 	
 	function AddPilotToGroup()
 	{
-		$userid = Vars::POST('userid');
+		$pilotid = Vars::POST('pilotid');
 		$groupname = Vars::POST('groupname');
 		
-		if(PilotGroups::CheckUserInGroup($userid, $groupname))
+		if(PilotGroups::CheckUserInGroup($pilotid, $groupname))
 		{
 			Template::Set('message', 'This user is already in this group!');
 		}
 		else
 		{
-			if(PilotGroups::AddUsertoGroup($userid, $groupname))
+			if(PilotGroups::AddUsertoGroup($pilotid, $groupname))
 				Template::Set('message', 'User has been added to the group!');
 			else	
 				Template::Set('message', 'There was an error adding this user');
@@ -168,10 +168,10 @@ class PilotAdmin
 	
 	function RemovePilotGroup()
 	{
-		$userid = Vars::POST('userid');
+		$pilotid = Vars::POST('pilotid');
 		$groupid = Vars::POST('groupid');
 					
-		if(PilotGroups::RemoveUserFromGroup($userid, $groupid))
+		if(PilotGroups::RemoveUserFromGroup($pilotid, $groupid))
 		{			
 			Template::Set('message', 'Removed');
 		}
@@ -210,7 +210,7 @@ class PilotAdmin
 			return;
 		}
 		
-		if(RegistrationData::ChangePassword(Vars::POST('userid'), $password1))
+		if(RegistrationData::ChangePassword(Vars::POST('pilotid'), $password1))
 			Template::Set('message', 'Password has been successfully changed');
 		else
 			Template::Set('message', 'There was an error, administrator has been notified');

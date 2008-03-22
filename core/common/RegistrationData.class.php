@@ -28,7 +28,7 @@ class RegistrationData
 		return DB::get_results($sql);		
 	}
 	
-	function CompleteRegistration($fields)
+	function AddUser($fields)
 	{
 		$firstname = Vars::POST('firstname');
 		$lastname = Vars::POST('lastname');

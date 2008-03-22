@@ -107,6 +107,7 @@ class Auth
 		{	
 			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);
+			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
 						
 			return true;
 		}			

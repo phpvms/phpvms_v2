@@ -58,17 +58,15 @@ class Registration extends ModuleBase
 	
 	function ProcessRegistration(&$extrafields)
 	{	
-		// check the registration
-		$ret = $this->VerifyData();
-		
+			
 		// Yes, there was an error
-		if($ret == false) 
+		if(!$this->VerifyData()) 
 		{
 			Template::Show('registration_mainform.tpl');
 		}
 		else
 		{
-			if(RegistrationData::CompleteRegistration($extrafields) == false)
+			if(RegistrationData::AddUser($extrafields) == false)
 			{
 				Template::Set('error', RegistrationData::$error);
 				Template::Show('registration_error.tpl');

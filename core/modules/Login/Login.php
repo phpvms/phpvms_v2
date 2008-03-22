@@ -11,9 +11,9 @@ class Login extends ModuleBase
 			case 'login':
 				if(Auth::LoggedIn() == true)
 				{
-					echo 'You\'re already logged in!';
+					echo '<p>You\'re already logged in!</p>';
 					return;	
-				}	
+				}
 				
 				Template::Set('redir', Vars::GET('redir'));
 				
@@ -122,8 +122,6 @@ class Login extends ModuleBase
 			}
 			else
 			{
-				// Add our user groups
-				SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->userid));
 				
 				Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
 				Template::Show('login_complete.tpl');

@@ -69,6 +69,31 @@ CREATE TABLE `phpvms_customfields` (
 	UNIQUE KEY `fieldname` (`fieldname`)
 );
 
+CREATE TABLE `phpvms_pireps` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`pilotid` INT NOT NULL ,
+	`airline` VARCHAR( 3 ) NOT NULL ,
+	`flight` VARCHAR( 7 ) NOT NULL ,
+	`depicao` VARCHAR( 4 ) NOT NULL ,
+	`arricao` VARCHAR( 4 ) NOT NULL ,
+	`deptime` VARCHAR( 15 ) NOT NULL ,
+	`arrtime` VARCHAR( 15 ) NOT NULL ,
+	`flighttime` SMALLINT NOT NULL ,
+	`distance` SMALLINT NOT NULL ,
+	`submitdate` DATETIME NOT NULL ,
+	`accepted` SMALLINT NOT NULL ,
+	PRIMARY KEY ( `id` )
+);
+
+CREATE TABLE `phpvms_pirepcomments` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`pirepid` INT NOT NULL ,
+	`commenter` VARCHAR( 20 ) NOT NULL ,
+	`comment` TEXT NOT NULL ,
+	`postdate` DATETIME NOT NULL ,
+	PRIMARY KEY ( `id` )
+);
+
 CREATE TABLE `phpvms_schedules` (
 	`id` int(11) NOT NULL auto_increment,
 	`code` varchar(3) NOT NULL default '',

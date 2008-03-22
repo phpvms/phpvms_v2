@@ -22,7 +22,7 @@ class SiteData
 	
 	function AddNewsItem($subject, $body)
 	{
-		$postedby = Auth::Username();
+		$postedby = Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;
 		
 		$sql = 'INSERT INTO ' . TABLE_PREFIX . "news (subject, body, postdate, postedby)
 					VALUES ('$subject', '$body', NOW(), '$postedby')";

@@ -25,8 +25,12 @@ class SchedulesData
 	
 	function GetRoutesWithDeparture($depicao)
 	{
-		$sql = 'SELECT * from '.TABLE_PREFIX.'schedules WHERE depicao=\''.$depicao.'\'';
-		
+		$sql = 'SELECT s.*, dep.lat AS deplat, dep.lng AS deplong, arr.lat AS arrlat, arr.lng AS arrlong 
+				FROM phpvms_schedules AS s
+					INNER JOIN phpvms_airports AS dep ON dep.icao = s.depicao
+					INNER JOIN phpvms_airports AS arr ON arr.icao = s.arricao
+				WHERE s.depicao=\''.$depicao.'\'';
+			
 		return DB::get_results($sql);		
 	}
 }

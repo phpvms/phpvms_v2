@@ -43,23 +43,19 @@ class DB
 	public function init($type='mysql')
 	{
 		
-		if($type == 'mysql')
+		if($type == 'mysql' || $type == '')
 		{
-			if(function_exists('mysqli_connect'))
-			{
-				self::$DB = new ezSQL_mysqli();
-			}
-			else
-			{
-				self::$DB = new ezSQL_mysql();
-			}
-		}
-				
-		/*if($type == 'mysql')
 			self::$DB = new ezSQL_mysql();
-		
-		if(self::$DB)
-			return true;*/
+		}
+		elseif($type == 'mysqli')
+		{
+			self::$DB = new ezSQL_mysqli();
+		}
+		else
+		{
+			self::$err = 'Invalid database type';
+			return false;
+		}
 	}
 	
 	public static function connect($user='', $pass='', $name='', $server='')

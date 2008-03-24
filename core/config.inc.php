@@ -12,13 +12,18 @@ ini_set('display_errors', 'on');
 
 define('SITE_ROOT', str_replace('/core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
-define('CACHE_PATH', CORE_PATH . '/cache');
-define('COMMON_PATH', CORE_PATH . '/common');
 define('CLASS_PATH', CORE_PATH . '/classes');
-define('PAGES_PATH', CORE_PATH . '/pages');
 define('MODULES_PATH', CORE_PATH . '/modules');
 define('TEMPLATES_PATH', CORE_PATH . '/templates');
+define('CACHE_PATH', CORE_PATH . '/cache');
+define('COMMON_PATH', CORE_PATH . '/common');
+define('PAGES_PATH', CORE_PATH . '/pages');
 define('ADMIN_PATH', SITE_ROOT . '/admin');
+
+if(!file_exists(CORE_PATH.'/site_config.inc.php') || filesize(CORE_PATH.'/site_config.inc.php') == 0)
+{
+	header('Location: install/install.php');	
+}
 
 // These are the core modules
 //	Module/Folder_Name => Name of Controller file
@@ -31,9 +36,7 @@ $ACTIVE_MODULES['Pages'] = MODULES_PATH . '/Pages/Pages.php';
 $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
 $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 
-
 // Determine our administration modules
-
 $ADMIN_MODULES['SiteCMS'] = ADMIN_PATH . '/modules/SiteCMS/SiteCMS.php';
 $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
 $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
@@ -66,7 +69,7 @@ include CORE_PATH . '/site_config.inc.php';
 
 if(DBASE_NAME != '')
 {
-	DB::init();	
+	DB::init(DBASE_TYPE);	
 	DB::connect();
 	DB::hide_errors();
 }

@@ -13,7 +13,7 @@ foreach($allroutes as $route)
 {
 ?>
 <tr>
-	<td align="center"><?php echo $route->code . $route->flightnum; ?></td>
+	<td align="center"><?=$route->code . $route->flightnum; ?> Leg <?=$route->leg?></td>
 	<td align="center"><?=$route->depicao; ?>(<?=$route->deptime;?>)</td>
 	<td align="center"><?=$route->arricao; ?>(<?=$route->arrtime;?>)</td>
 	<td align="center"><?=$route->aircraft; ?></td>

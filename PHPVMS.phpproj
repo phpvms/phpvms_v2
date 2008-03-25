@@ -424,6 +424,26 @@
     {
     "ProjRelPath" = "T"
     }
+    "install\\templates\\footer.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\templates\\header.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\bootloader.inc.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\dbtest.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\install.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "install\\install.sql"
     {
     "ProjRelPath" = "T"

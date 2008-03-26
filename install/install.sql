@@ -63,6 +63,7 @@ CREATE TABLE `phpvms_pilots` (
 	`firstname` varchar(25) NOT NULL default '',
 	`lastname` varchar(25) NOT NULL default '',
 	`email` varchar(32) NOT NULL default '',
+	`code` varchar(3) NOT NULL default '',
 	`location` varchar(32) NOT NULL default '',
 	`password` varchar(32) NOT NULL default '',
 	`salt` varchar(32) NOT NULL default '',
@@ -74,16 +75,15 @@ CREATE TABLE `phpvms_pilots` (
 	`retired` enum('y','n') NOT NULL default 'y',
 	PRIMARY KEY  (`pilotid`),
 	UNIQUE KEY `email` (`email`),
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `phpvms_pireps` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`pilotid` INT NOT NULL ,
+	`flightnum` INT NOT NULL ,
 	`airline` VARCHAR( 3 ) NOT NULL ,
-	`flightnum` VARCHAR( 7 ) NOT NULL ,
-	`depicao` VARCHAR( 4 ) NOT NULL ,
-	`arricao` VARCHAR( 4 ) NOT NULL ,
 	`deptime` VARCHAR( 15 ) NOT NULL ,
 	`arrtime` VARCHAR( 15 ) NOT NULL ,
 	`flighttime` SMALLINT NOT NULL ,

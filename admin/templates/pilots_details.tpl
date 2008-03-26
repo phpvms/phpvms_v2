@@ -5,6 +5,9 @@
 	<dt>Email Address</dt>
 	<dd><?=$pilotinfo->email;?></dd>
 
+	<dt>Airline</dt>
+	<dd><?=$pilotinfo->code;?></dd>
+	
 	<dt>Location</dt>
 	<dd><?=$pilotinfo->location;?></dd>
 

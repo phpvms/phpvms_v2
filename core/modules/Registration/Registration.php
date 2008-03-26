@@ -39,8 +39,9 @@ class Registration extends ModuleBase
 				if(Auth::LoggedIn()) // Make sure they don't over-ride it
 					break;
 					
-				$extrafields = RegistrationData::GetCustomFields();
-				Template::Set('extrafields', $extrafields);
+					
+				Template::Set('extrafields', RegistrationData::GetCustomFields());
+				Template::Set('allairlines', OperationsData::GetAllAirlines());
 				
 				if(isset($_POST['submit_register']))
 				{
@@ -66,17 +67,20 @@ class Registration extends ModuleBase
 		}
 		else
 		{
-			if(RegistrationData::AddUser() == false)
+			$firstname = Vars::POST('firstname');
+			$lastname = Vars::POST('lastname');
+			$email = Vars::POST('email');
+			$code = Vars::POST('code');
+			$location = Vars::POST('location');
+			$password = Vars::POST('password1');
+			
+			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $password) == false)
 			{
 				Template::Set('error', RegistrationData::$error);
 				Template::Show('registration_error.tpl');
 			}
 			else
-			{
-				$firstname = Vars::POST('firstname');
-				$lastname = Vars::POST('lastname');
-				$email = Vars::POST('email');
-				
+			{				
 				RegistrationData::SendEmailConfirm($email, $firstname, $lastname);
 				Template::Show('registration_sentconfirmation.tpl');
 			}

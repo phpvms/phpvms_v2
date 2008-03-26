@@ -28,7 +28,7 @@ class PilotData
 	
 	function GetPilotData($pilotid)
 	{
-		$sql = 'SELECT firstname, lastname, email, location, UNIX_TIMESTAMP(lastlogin) as lastlogin, 
+		$sql = 'SELECT firstname, lastname, email, code, location, UNIX_TIMESTAMP(lastlogin) as lastlogin, 
 						totalflights, totalhours, confirmed, retired
 					FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
 		

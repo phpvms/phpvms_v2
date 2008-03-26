@@ -27,6 +27,18 @@ After filling out the form below, you will get a confirmation email.</p>
 		?>
 	</dd>
 	
+	<dt>Select Airline</dt>
+	<dd>
+		<select name="code" id="code">
+		<?php
+		foreach($allairlines as $airline)
+		{
+			echo '<option value="'.$airline->code.'">'.$airline->name.'</option>';
+		}
+		?>	
+		</select>
+	</dd>
+	
 	<dt>Location</dt>
 	<dd><input type="text" name="location" value="<?=Vars::POST('location');?>" />
 		<?php

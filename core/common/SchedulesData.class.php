@@ -27,6 +27,22 @@ class SchedulesData
 		return $ret;
 	}
 	
+	function GetArrivalAiports($depicao, $code='')
+	{
+		$sql = 'SELECT DISTINCT s.arricao AS icao, a.name 
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
+					WHERE s.arricao = a.icao ';
+		
+		if($code != '')
+			$sql .= ' AND s.code=\''.$code.'\' ';
+		
+		$sql .= ' ORDER BY depicao ASC';
+		
+		$ret = DB::get_results($sql);		
+		return $ret;
+		
+	}
+	
 	function GetRoutesWithDeparture($depicao)
 	{
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong, 

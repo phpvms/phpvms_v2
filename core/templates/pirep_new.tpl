@@ -20,7 +20,12 @@
 
 	<dt>Select Departure Airport:</dt>
 	<dd>
-		<div id="depairports">Select an airline from above</div>
+		<div id="depairport">Select an airline from above</div>
+	</dd>
+	
+	<dt>Select Arrival Airport:</dt>
+	<dd>
+		<div id="arrairport">Select a departure airport from above</div>
 	</dd>
 
 </dl>

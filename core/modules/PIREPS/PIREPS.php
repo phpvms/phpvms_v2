@@ -29,7 +29,7 @@ class PIREPS extends ModuleBase
 				
 				$allapts = SchedulesData::GetDepartureAirports($code);
 				
-				echo '<select name="depicao">
+				echo '<select id="depicao" name="depicao">
 						<option value="">Select a Departure Airport';
 				foreach($allapts as $airport)
 				{
@@ -38,7 +38,23 @@ class PIREPS extends ModuleBase
 				echo '</select>';
 				
 				break;
-			
+			case 'getarrapts':
+				$icao = Vars::GET('icao');
+				$code = Vars::GET('code');
+				
+				if($icao == '') return;
+				
+				$allapts = SchedulesData::GetArrivalAiports($icao, $code); 
+				
+				echo '<select name="arricao">
+						<option value="">Select an Arrival Airport';
+				foreach($allapts as $airport)
+				{
+					echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
+				}
+				echo '</select>';
+				
+				break;
 		}
 	}
 }

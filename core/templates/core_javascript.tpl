@@ -15,7 +15,12 @@ $(document).ready(function(){
 	
 	$("#code").bind('change', function()
 	{
-		$("#depairports").load("action.php?page=getdeptapts&code="+$(this).val());
+		$("#depairport").load("action.php?page=getdeptapts&code="+$(this).val());
+	});
+	
+	$("#depairport").bind('change', function()
+	{
+		$("#arrairport").load("action.php?page=getarrapts&icao=" + $("#depicao").val() + "&code=" + $("#code").val());
 	});
 });
 </script>

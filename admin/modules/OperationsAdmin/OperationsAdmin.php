@@ -82,7 +82,7 @@ class OperationsAdmin
 					$this->AddSchedule();
 				}
 			
-				Template::Set('schedules', OperationsData::GetSchedules());
+				Template::Set('schedules', SchedulesData::GetSchedules());
 				Template::Show('ops_schedules.tpl');
 				
 				$this->AddScheduleForm();
@@ -173,7 +173,7 @@ class OperationsAdmin
 		}
 		
 		//Add it in
-		if(!OperationsData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft, 
+		if(!SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft, 
 										$distance, $deptime, $arrtime, $flighttime))
 		{
 			Template::Set('message', 'There was an error adding the schedule');

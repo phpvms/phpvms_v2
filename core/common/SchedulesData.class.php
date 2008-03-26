@@ -25,13 +25,49 @@ class SchedulesData
 	
 	function GetRoutesWithDeparture($depicao)
 	{
-		$sql = 'SELECT s.*, dep.lat AS deplat, dep.lng AS deplong, arr.lat AS arrlat, arr.lng AS arrlong 
-				FROM phpvms_schedules AS s
-					INNER JOIN phpvms_airports AS dep ON dep.icao = s.depicao
-					INNER JOIN phpvms_airports AS arr ON arr.icao = s.arricao
-				WHERE s.depicao=\''.$depicao.'\'';
-			
-		return DB::get_results($sql);		
+		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong, 
+							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong 
+					FROM phpvms_schedules AS s
+						INNER JOIN phpvms_airports AS dep ON dep.icao = s.depicao
+						INNER JOIN phpvms_airports AS arr ON arr.icao = s.arricao
+					WHERE s.depicao=\''.$depicao.'\'';
+		
+		return DB::get_results($sql);
+	}
+	
+	function GetSchedules($depicao='')
+	{
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
+		
+		return DB::get_results($sql);
+	}
+	
+	function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, 
+		$aircraft, $distance, $deptime, $arrtime, $flighttime)
+	{
+		/*
+			id
+			code
+			flightnum
+			depicao
+			arricao
+			route
+			aircraft
+			distance
+			deptime
+			arrtime
+			flighttime
+			timesflown
+		*/
+		
+		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules 
+				(code, flightnum, leg, depicao, arricao, route, aircraft, distance, deptime, arrtime, flighttime)
+				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',
+				'$deptime', '$arrtime', '$flighttime')";
+		
+		return DB::query($sql);
+		
 	}
 }
 

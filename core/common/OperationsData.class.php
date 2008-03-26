@@ -68,40 +68,5 @@ class OperationsData
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
 	}	
-	
-	function GetSchedules($depicao='')
-	{
-	
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
-		
-		return DB::get_results($sql);
-	}
-	
-	function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, 
-						 $aircraft, $distance, $deptime, $arrtime, $flighttime)
-	{
-		/*
-			id
-			code
-			flightnum
-			depicao
-			arricao
-			route
-			aircraft
-			distance
-			deptime
-			arrtime
-			flighttime
-			timesflown
-		*/
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules 
-					(code, flightnum, leg, depicao, arricao, route, aircraft, distance, deptime, arrtime, flighttime)
-				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',
-						'$deptime', '$arrtime', '$flighttime')";
-		
-		return DB::query($sql);
-		
-	}
 }
 ?>

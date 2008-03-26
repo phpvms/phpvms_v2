@@ -12,12 +12,16 @@
 class SchedulesData
 {
 
-	function GetDepartureAirports()
+	function GetDepartureAirports($code='')
 	{	
-		$sql = 'SELECT DISTINCT s.depicao, a.name 
+		$sql = 'SELECT DISTINCT s.depicao AS icao, a.name 
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
-					WHERE s.depicao = a.icao 
-					ORDER BY depicao ASC';
+					WHERE s.depicao = a.icao ';
+					
+		if($code != '')
+			$sql .= ' AND s.code=\''.$code.'\' ';
+			
+		$sql .= ' ORDER BY depicao ASC';
 									
 		$ret = DB::get_results($sql);		
 		return $ret;

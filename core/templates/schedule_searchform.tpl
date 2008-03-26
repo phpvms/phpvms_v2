@@ -7,7 +7,7 @@
 <?php
 foreach($depairports as $airport)
 {
-	echo '<option value="'.$airport->depicao.'">'.$airport->depicao.' ('.$airport->name.')</option>';
+	echo '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
 }
 ?>
 	

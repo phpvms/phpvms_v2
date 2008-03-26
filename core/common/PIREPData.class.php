@@ -5,7 +5,10 @@
 class PIREPData
 {
 	
-	
+	function GetAllReports()
+	{
+		
+	}
 	
 }
 

@@ -92,6 +92,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "admin\\templates\\ops_airlineform.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "admin\\templates\\ops_airlineslist.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "admin\\templates\\ops_airportlist.tpl"
     {
     "ProjRelPath" = "T"
@@ -365,6 +373,10 @@
     "ProjRelPath" = "T"
     }
     "core\\templates\\pages_notfound.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "core\\templates\\pirep_new.tpl"
     {
     "ProjRelPath" = "T"
     }

@@ -142,7 +142,10 @@ class OperationsAdmin
 	
 		if(!OperationsData::AddAirline($code, $name))
 		{
-			Template::Set('message', 'There was an error adding the airline');
+			if(DB::$errno == 1062) // Duplicate entry
+				Template::Set('message', 'This airline has already been added');
+			else
+				Template::Set('message', 'There was an error adding the airline');
 		}
 		else
 		{

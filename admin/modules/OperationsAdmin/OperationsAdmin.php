@@ -7,6 +7,13 @@ class OperationsAdmin
 	{
 		switch(Vars::GET('admin'))
 		{
+			
+			/**
+			 * These are for the popup boxes
+			 */
+			
+			/* Aircraft Operations
+			 */
 			case 'addaircraft':
 			
 				Template::Set('title', 'Add Aircraft');
@@ -25,7 +32,33 @@ class OperationsAdmin
 				Template::Show('ops_aircraftform.tpl');
 				
 				break;
-								
+			
+			/* Aircraft Operations
+			 */
+			case 'addairline':
+				
+				Template::Set('title', 'Add Airline');
+				Template::Set('action', 'addairline');
+				Template::Show('ops_airlineform.tpl');
+				break;
+				
+			
+			/**
+			 * These are the main form
+			 */		
+			
+			case 'airlines':
+				
+				if(Vars::POST('action') == 'addairline')
+				{
+					$this->AddAirline();
+				}
+				
+				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Show('ops_airlineslist.tpl');
+				
+				break;
+				
 			case 'aircraft':
 			
 				
@@ -65,7 +98,13 @@ class OperationsAdmin
 				break;
 				
 			case 'addschedule':
-				$this->AddScheduleForm();
+			
+				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('allaircraft', OperationsData::GetAllAircraft());
+				Template::Set('allairports', OperationsData::GetAllAirports());
+				
+				Template::Show('ops_addschedule.tpl');
+				
 				break;
 				
 			case 'schedules':
@@ -85,11 +124,34 @@ class OperationsAdmin
 				Template::Set('schedules', SchedulesData::GetSchedules());
 				Template::Show('ops_schedules.tpl');
 				
-				$this->AddScheduleForm();
+				//$this->AddScheduleForm();
 				break;
 		}
 	}
 	
+	function AddAirline()
+	{
+		$code = Vars::POST('code');
+		$name = Vars::POST('name');
+		
+		if($code == '' || $name == '')
+		{
+			Template::Set('message', 'You must fill out all of the fields');
+			Template::Show('core_message.tpl');
+		}
+	
+		if(!OperationsData::AddAirline($code, $name))
+		{
+			Template::Set('message', 'There was an error adding the airline');
+		}
+		else
+		{
+			Template::Set('message', 'Airline has been added!');
+		}
+		
+		Template::Show('core_message.tpl');	
+	}
+			
 	function AddAircraft()
 	{
 		$name = Vars::POST('name');	
@@ -184,31 +246,6 @@ class OperationsAdmin
 		}
 		
 		Template::Show('core_message.tpl');
-	}
-	
-	function AddScheduleForm()
-	{		
-		// Form the options list for the airports available to select
-		//	Do it once here
-		$allairports = OperationsData::GetAllAirports();
-		$airports_options = '';
-		foreach($allairports as $airport)
-		{
-			$airports_options .= '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
-		}
-		
-		// Do the same as above for available aircraft
-		$allaircraft = OperationsData::GetAllAircraft();
-		$aircraft_options = '';
-		foreach($allaircraft as $aircraft)
-		{
-			$aircraft_options .= '<option value="'.$aircraft->name.'">'.$aircraft->name.' ('.$aircraft->icao.')</option>';
-		}
-		
-		Template::Set('airports', $airports_options);
-		Template::Set('aircraft', $aircraft_options);
-		
-		Template::Show('ops_addschedule.tpl');
 	}
 	
 	function EditAircraft()

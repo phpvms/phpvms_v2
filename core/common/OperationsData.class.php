@@ -17,6 +17,12 @@ class OperationsData
 	/**
 	 * Get all aircraft from database
 	 */
+	
+	function GetAllAirlines()
+	{
+		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines ORDER BY code ASC');
+	}
+	
 	function GetAllAircraft()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft ORDER BY icao ASC');
@@ -32,6 +38,15 @@ class OperationsData
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);	
 	}
 	
+	function AddAirline($code, $name)
+	{
+	
+		$code = strtoupper($code);
+		
+		$sql = "INSERT INTO " .TABLE_PREFIX."airlines (code, name) VALUES ('$code', '$name')";
+		
+		return DB::query($sql);	
+	}
 	function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);

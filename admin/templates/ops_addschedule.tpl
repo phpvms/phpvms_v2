@@ -3,7 +3,17 @@
 <dl>
 
 <dt>Code: </dt>
-<dd><input type="text" name="code" value="<?=PID_PREFIX;?>" />
+<dd>
+	<select name="code">
+	<?php
+	
+	foreach($allairlines as $airline)
+	{
+		echo '<option value="'.$airline->code.'">'.$airline->name.'</option>';
+	}
+	
+	?>
+	</select>
 	<p>Default is your airline callsign</dd>
 
 <dt>Flight Number:</dt>
@@ -18,20 +28,26 @@
 <dt>Departure Airport:</dt>
 <dd><select name="depicao">
 	<?php
-		echo $airports;
+	foreach($allairports as $airport)
+	{
+		echo '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
+	}
 	?>
 	</select>  
 </dd>
 <dt>Arrival Airport: </dt>
 <dd><select name="arricao">
 	<?php
-		echo $airports;
+	foreach($allairports as $airport)
+	{
+		echo '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
+	}
 	?>
 	</select>
 </dd>
 
 <dt></dt>
-<dd><strong>Flight times can be entered in any format. Include time zone (as PST, EST, etc)</strong></dd>
+<dd><strong>Please include time zone (as PST, EST, etc)</strong></dd>
 <dt>Departure Time: </dt>
 <dd><input type="text" name="deptime" value="" /></dd>
 
@@ -43,7 +59,12 @@
 
 <dt>Equipment: </dt>
 <dd><select name="aircraft">
-	<?php echo $aircraft; ?>
+	<?php 
+	foreach($allaircraft as $aircraft)
+	{
+		echo '<option value="'.$aircraft->name.'">'.$aircraft->name.' ('.$aircraft->icao.')</option>';
+	}
+	?>
 	</select>
 </dd>
 

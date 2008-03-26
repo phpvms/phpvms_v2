@@ -1,3 +1,11 @@
+CREATE TABLE `phpvms_airlines` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`code` VARCHAR( 3 ) NOT NULL ,
+	`name` VARCHAR( 30 ) NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	UNIQUE KEY `code` (`code`)
+);
+
 CREATE TABLE `phpvms_aircraft` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`icao` VARCHAR( 4 ) NOT NULL ,
@@ -113,6 +121,7 @@ CREATE TABLE `phpvms_schedules` (
 	`timesflown` int(11) NOT NULL default '0',
 	PRIMARY KEY  (`id`),
 	INDEX `depicao_arricao` (`depicao`, `arricao`),
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE
 	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE
 );
 

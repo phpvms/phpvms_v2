@@ -19,12 +19,12 @@ CREATE TABLE `phpvms_aircraft` (
 );
 
 CREATE TABLE `phpvms_airports` (
-	`id` INT NOT NULL AUTO_INCREMENT ,
-	`icao` VARCHAR( 5 ) NOT NULL ,
-	`name` VARCHAR( 30 ) NOT NULL ,
-	`country` VARCHAR( 50 ) NOT NULL ,
-	`lat` FLOAT( 10 ) NOT NULL ,
-	`lng` FLOAT( 10 ) NOT NULL ,
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`icao` VARCHAR( 5 ) NOT NULL,
+	`name` VARCHAR( 30 ) NOT NULL,
+	`country` VARCHAR( 50 ) NOT NULL,
+	`lat` FLOAT( 10 ) NOT NULL,
+	`lng` FLOAT( 10 ) NOT NULL,
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `icao` (`icao`)
 );
@@ -45,6 +45,7 @@ CREATE TABLE `phpvms_pages` (
 	`order` smallint(6) NOT NULL default '0',
 	`postedby` varchar(50) NOT NULL default '',
 	`postdate` datetime NOT NULL default '0000-00-00 00:00:00',
+	`public` enum('y','n') NOT NULL default 'n',
 	`enabled` smallint(6) NOT NULL default '1',
 	PRIMARY KEY  (`pageid`),
 	UNIQUE KEY `pagename` (`pagename`)
@@ -82,8 +83,8 @@ CREATE TABLE `phpvms_pilots` (
 CREATE TABLE `phpvms_pireps` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`pilotid` INT NOT NULL ,
-	`flightnum` INT NOT NULL ,
-	`airline` VARCHAR( 3 ) NOT NULL ,
+	`code` VARCHAR( 3 ) NOT NULL ,
+	`flightnum` INT NOT NULL,
 	`deptime` VARCHAR( 15 ) NOT NULL ,
 	`arrtime` VARCHAR( 15 ) NOT NULL ,
 	`flighttime` SMALLINT NOT NULL ,
@@ -91,6 +92,7 @@ CREATE TABLE `phpvms_pireps` (
 	`submitdate` DATETIME NOT NULL ,
 	`accepted` SMALLINT NOT NULL ,
 	PRIMARY KEY ( `id` ),
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`flightnum`) REFERENCES phpvms_schedules(`flightnum`) ON UPDATE CASCADE
 );
@@ -121,7 +123,7 @@ CREATE TABLE `phpvms_schedules` (
 	`timesflown` int(11) NOT NULL default '0',
 	PRIMARY KEY  (`id`),
 	INDEX `depicao_arricao` (`depicao`, `arricao`),
-	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE
 );
 

@@ -436,6 +436,14 @@
     {
     "ProjRelPath" = "T"
     }
+    "install\\lib\\logo.jpg"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\templates\\config.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "install\\templates\\footer.tpl"
     {
     "ProjRelPath" = "T"
@@ -444,11 +452,27 @@
     {
     "ProjRelPath" = "T"
     }
+    "install\\templates\\s1_db_setup.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\templates\\s2_site_setup.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\installer.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
     "install\\bootloader.inc.php"
     {
     "ProjRelPath" = "T"
     }
     "install\\dbtest.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\index.php"
     {
     "ProjRelPath" = "T"
     }

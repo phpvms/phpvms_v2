@@ -26,4 +26,8 @@ Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
 MainController::RunAllActions();
 
+if($_GET['format'] != 'json')
+	echo '<script type="text/javascript>
+			EvokeListeners();
+		  </script>';
 ?>

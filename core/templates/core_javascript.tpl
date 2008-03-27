@@ -7,7 +7,10 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
+$(document).ready(function(){ EvokeListeners(); });
+
+function EvokeListeners()
+{
 	// The navigation, it'll apply superfish to it
 	$(".nav").superfish({
 		animation : { opacity:"show",height:"show"}
@@ -22,5 +25,5 @@ $(document).ready(function(){
 	{
 		$("#arrairport").load("action.php?page=getarrapts&icao=" + $("#depicao").val() + "&code=" + $("#code").val());
 	});
-});
+}
 </script>

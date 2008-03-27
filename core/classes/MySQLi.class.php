@@ -15,10 +15,10 @@ class ezSQL_mysqli extends ezSQLcore
 	
 	function ezSQL_mysqli($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{				
-		return $this->quick_connect($dbuser, $dbpassword, $dbname, $dbhost);
+		//return $this->quick_connect($dbuser, $dbpassword, $dbname, $dbhost);
 	}
 	
-	function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+	/*function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
 		if($this->dbuser!='' && $dbhost!='')
 		{
@@ -33,7 +33,7 @@ class ezSQL_mysqli extends ezSQLcore
 		}
 
 		return true;
-	}
+	}*/
 	
 
 	function connect($dbuser='', $dbpassword='', $dbhost='localhost')
@@ -50,6 +50,8 @@ class ezSQL_mysqli extends ezSQLcore
 			$this->clear_errors();
 			return true;
 		}
+		
+		return true;
 	}
 	
 	
@@ -78,6 +80,8 @@ class ezSQL_mysqli extends ezSQLcore
 			$this->clear_errors();
 			return true;
 		}
+		
+		return true;
 	}
 	
 	function close()

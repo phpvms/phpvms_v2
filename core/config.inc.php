@@ -72,7 +72,7 @@ include CORE_PATH . '/site_config.inc.php';
 if(DBASE_NAME != '')
 {
 	DB::init(DBASE_TYPE);	
-	DB::connect();
+	DB::connect(DBASE_USER, DBASE_PASS, DBASE_NAME, DBASE_SERVER);
 	DB::hide_errors();
 }
 

@@ -64,7 +64,7 @@ class ezSQLcore
 		// Keep track of last error
 		$this->error = $err_str;
 		$this->errno = $err_no;
-		
+	
 		// Capture all errors to an error array no matter what happens
 		$this->captured_errors[] = array(
 							'error' => $err_str,
@@ -72,7 +72,7 @@ class ezSQLcore
 							'query' => $this->last_query);
 			
 		//show output if enabled
-		$this->show_errors ? trigger_error($this->error . '(' . $this->last_query . ')', E_USER_WARNING) : null;
+		//$this->show_errors ? trigger_error($this->error . '(' . $this->last_query . ')', E_USER_WARNING) : null;
 	}
 	
 	function get_all_errors()

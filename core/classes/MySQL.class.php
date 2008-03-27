@@ -26,18 +26,18 @@ class ezSQL_mysql extends ezSQLcore
 
 	function ezSQL_mysql($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
-		return $this->quick_connect($dbuser, $dbpassword, $dbname, $dbhost);
+		//return $this->quick_connect($dbuser, $dbpassword, $dbname, $dbhost);
 	}
 
 	/*
 	 *  Short hand way to connect to mySQL database server
 	 *  and select a mySQL database at the same time
-	 */
+	 
 	 
 	function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
 		$this->dbname = $dbname;
-
+	
 		if($dbuser != '' && $dbhost != '')
 		{
 			if(!$this->connect($dbuser, $dbpassword, $dbhost))
@@ -47,15 +47,15 @@ class ezSQL_mysql extends ezSQLcore
 		{
 			$this->register_error('Username or host not set');
 		}
-
+	
 		if($this->dbname != '')
 		{
 			if(!$this->select($this->dbname))
 				return false;
 		}
-
+	
 		return true;
-	}
+	}*/
 
 	/*
 	 *  Try database connection
@@ -65,7 +65,7 @@ class ezSQL_mysql extends ezSQLcore
 	{
 		if(!$this->dbh = @mysql_connect($dbhost, $dbuser, $dbpassword, true))
 		{				
-			$this->register_error(mysql_error($this->dbh), mysql_errno($this->dbh));
+			$this->register_error(mysql_error(), mysql_errno());
 			return false;
 		}
 		else
@@ -73,6 +73,8 @@ class ezSQL_mysql extends ezSQLcore
 			$this->clear_errors();
 			return true;
 		}
+		
+		return true;
 	}
 
 	/*
@@ -103,6 +105,8 @@ class ezSQL_mysql extends ezSQLcore
 			$this->clear_errors();				
 			return true;
 		}
+		
+		return true;
 	}
 	
 	function close()
@@ -160,14 +164,14 @@ class ezSQL_mysql extends ezSQLcore
 		}
 
 		// Perform the query via std mysql_query function..
-		$this->result = @mysql_query($query,$this->dbh);
+		$this->result = @mysql_query($query);
 
 		// If there is an error then take note of it..
 		if(!$this->result)
 		{		
 			// Check the error to number to see if something
 			//	actually went wrong
-			$errno = mysql_errno($this->dbh);
+			$errno = mysql_errno();
 			
 			if($errno == 0)
 			{
@@ -175,7 +179,7 @@ class ezSQL_mysql extends ezSQLcore
 				return true;
 			}
 				
-			$this->register_error(mysql_error($this->dbh), $errno);
+			$this->register_error(mysql_error(), $errno);
 			return false;
 		}
 		else
@@ -187,8 +191,8 @@ class ezSQL_mysql extends ezSQLcore
 		$is_insert = false;
 		if(preg_match("/^(insert|delete|update|replace)\s+/i",$query))
 		{
-			$this->rows_affected = @mysql_affected_rows($this->dbh);	
-			$this->insert_id = @mysql_insert_id($this->dbh);
+			$this->rows_affected = @mysql_affected_rows();	
+			$this->insert_id = @mysql_insert_id();
 				
 			if($this->insert_id > 0)
 				$is_insert = true;

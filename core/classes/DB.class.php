@@ -31,7 +31,7 @@ class DB
 	public static $DB;
 	public static $insert_id;
 	public static $errno;
-	public static $err;
+	public static $error;
 	public static $num_rows;
 	
 	
@@ -45,22 +45,36 @@ class DB
 		
 		if($type == 'mysql' || $type == '')
 		{
-			self::$DB = new ezSQL_mysql();
+			if(!self::$DB = new ezSQL_mysql())
+			{
+				self::$error = self::$DB->error;
+				self::$errno = self::$DB->errno;
+				
+				return false;
+			}
+			
 		}
 		elseif($type == 'mysqli')
 		{
-			self::$DB = new ezSQL_mysqli();
+			if(!self::$DB = new ezSQL_mysqli())
+			{
+				self::$error = self::$DB->error;
+				self::$errno = self::$DB->errno;
+				return false;
+			}
 		}
 		else
 		{
-			self::$err = 'Invalid database type';
+			self::$error = 'Invalid database type';
 			return false;
 		}
+		
+		return self::$DB;
 	}
 	
 	public static function connect($user='', $pass='', $name='', $server='')
 	{	
-		if($user == '')
+		/*if($user == '')
 			$user = DBASE_USER;
 		
 		if($pass == '')
@@ -70,22 +84,34 @@ class DB
 			$name = DBASE_NAME;
 		
 		if($server == '')
-			$server = DBASE_SERVER;
+			$server = DBASE_SERVER;*/
 				
 		if(!self::$DB->connect($user, $pass, $server))
 		{
-			die('There was an error connecting to the database!');
+			self::$error = self::$DB->error;
+			self::$errno = self::$DB->errno;
+			
+			return false;
 		}
 		
 		if(!self::$DB->select($name))
 		{
-			die('Selecting '. $name .' didn\'t work');
+			self::$error = self::$DB->error;
+			self::$errno = self::$DB->errno;
+			
+			return false;
 		}
+		
+		return true;
 	}
 	
 	public static function select($dbname)
 	{
-		return self::$DB->select($dbname);
+		$ret = self::$DB->select($dbname);
+		self::$error = self::$DB->error;
+		self::$errno = self::$DB->errno;
+		
+		return $ret;
 	}
 	
 	public static function close()
@@ -97,7 +123,7 @@ class DB
 	{
 		$ret = self::$DB->get_results($query, $type);	
 		
-		self::$err = self::$DB->err;
+		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
 		self::$num_rows = self::$DB->num_rows;
 		
@@ -108,7 +134,7 @@ class DB
 	{
 		$ret = self::$DB->get_row($query, $output, $y);
 		
-		self::$err = self::$DB->err;
+		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
 		
 		return $ret;
@@ -118,7 +144,7 @@ class DB
 	{
 		$ret = self::$DB->query($query);
 		
-		self::$err = self::$DB->err;
+		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
 		self::$num_rows = self::$DB->num_rows;
 		self::$insert_id = self::$DB->insert_id;

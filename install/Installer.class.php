@@ -178,6 +178,16 @@ class Installer
 			return false;
 		}
 		
+		// add to admin group
+		$pilotdata = PilotData::GetPilotByEmail($_POST['email']);
+		
+		if(!PilotGroups::AddUsertoGroup($pilotdata->pilotid, 'Administrators'))
+		{
+			self::$error = DB::$error;
+			return false;
+		}
+		
+		
 		SettingsData::SaveSetting('SITE_NAME', $_POST['SITE_NAME']);
 		
 		return true;

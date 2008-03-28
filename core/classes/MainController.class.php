@@ -73,6 +73,7 @@ class MainController
 	public static function RunAllActions()
 	{
 		//priority with specific module, call the rest later
+		$PModule = '';
 		if($_GET['module']!='')
 		{
 			$PModule = stripslashes($_GET['module']);

@@ -79,7 +79,7 @@ class OperationsAdmin
 				break;
 			
 			case 'addairport':
-				Template::Show('ops_add_airport.tpl');
+				Template::Show('ops_addairport.tpl');
 				break;
 				
 			case 'airports':

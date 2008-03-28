@@ -1,6 +1,10 @@
 <h3>File a Flight Report</h3>
 
-<form action="?page=filepirep" action="post">
+<?php
+if($message!='')
+	echo '<div id="error">'.$message.'</div>';
+?>
+<form action="?page=viewpireps" method="post">
 <dl>
 	<dt>Pilot:</dt>
 	<dd><?=$pilot;?></dd>
@@ -17,7 +21,10 @@
 		?>	
 		</select>
 	</dd>
-
+	
+	<dt>Enter Flight Number:</dt>
+	<dd><input type="text" name="flightnum" /></dd>
+	
 	<dt>Select Departure Airport:</dt>
 	<dd>
 		<div id="depairport">Select an airline from above</div>
@@ -31,6 +38,12 @@
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" />
 		<p>Enter as hours - "5.5" is five and a half hours</p></dd>
+		
+	<dt>Comment</dt>
+	<dd><textarea name="comment" style="width: 100%"></textarea></dd>
+	
+	<dt></dt>
+	<dd><input type="submit" name="submit_pirep" value="File Flight Report" /></dd>
 </dl>
 
 </form>

@@ -122,6 +122,9 @@ class Login extends ModuleBase
 			}
 			else
 			{
+				//error_reporting(E_ALL);
+							
+				PilotData::UpdateLogin(SessionManager::GetValue('userinfo', 'pilotid'));
 				
 				Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
 				Template::Show('login_complete.tpl');

@@ -21,4 +21,4 @@
 		<?php Template::Show('pilots_options.tpl'); ?>
 	</div>
 </div>
-<div align="right"><input type="button" class="jqmClose" name="jqmClose" value="Close" /></div>
+<div align="right" style="clear:both;"><input type="button" class="jqmClose" name="jqmClose" value="Close" /></div>

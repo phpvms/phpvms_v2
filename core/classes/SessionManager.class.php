@@ -42,6 +42,17 @@ class SessionManager
 		return unserialize($_SESSION[$key]);
 	}
 	
+	function GetValue($key, $index)
+	{
+		$upack = unserialize($_SESSION[$key]);
+		
+		if(is_object($upack))
+			return $upack->$index;
+		else
+			return $upack[$index];
+			
+	}
+	
 	function Logout()
 	{
 		session_destroy();

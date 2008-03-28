@@ -19,7 +19,7 @@ function EvokeListeners()
 	    ajax:'@href',
 	    onHide: function(h) {
             h.o.remove(); // remove overlay
-            h.w.fadeOut(1500); // hide window 
+            h.w.fadeOut(100); // hide window 
             $("$jqmdialog").html('');
         }
     });

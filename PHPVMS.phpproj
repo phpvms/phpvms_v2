@@ -444,6 +444,10 @@
     {
     "ProjRelPath" = "T"
     }
+    "install\\templates\\error.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
     "install\\templates\\footer.tpl"
     {
     "ProjRelPath" = "T"
@@ -457,6 +461,10 @@
     "ProjRelPath" = "T"
     }
     "install\\templates\\s2_site_setup.tpl"
+    {
+    "ProjRelPath" = "T"
+    }
+    "install\\templates\\success.tpl"
     {
     "ProjRelPath" = "T"
     }

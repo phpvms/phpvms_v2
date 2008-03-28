@@ -7,12 +7,35 @@ class PIREPS extends ModuleBase
 		
 		switch(Vars::GET('page'))
 		{
-						
+		
 			case 'viewpireps':
+				
+				if(isset($_POST['submit_pirep']))
+				{
+					if(!$this->SubmitPIREP())
+					{
+						Template::Show('pirep_new.tpl');
+						return;
+					}
+				}
+				
+				// Show PIREPs filed
+				
+				Template::Set('accepted', PIREPData::GetReportsByAcceptStatus(Auth::$userinfo->pilotid, 1));
+				Template::Set('pending', PIREPData::GetReportsByAcceptStatus(Auth::$userinfo->pilotid, 0));
+				
+				
+				Template::Show('pireps_viewall.tpl');
 				
 				break;
 			
+			case 'viewreport':
 			
+				Template::Set('report', PIREPData::GetReportInfo(Vars::GET('id')));
+				
+				Template::Show('pirep_viewreport.tpl');
+				break;
+				
 			case 'filepirep':
 				
 				Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
@@ -38,6 +61,7 @@ class PIREPS extends ModuleBase
 				echo '</select>';
 				
 				break;
+				
 			case 'getarrapts':
 				$icao = Vars::GET('icao');
 				$code = Vars::GET('code');
@@ -56,6 +80,31 @@ class PIREPS extends ModuleBase
 				
 				break;
 		}
+	}
+	
+	function SubmitPIREP()
+	{
+		$pilotid = Auth::$userinfo->pilotid;
+		$code = Vars::POST('code');	
+		$flightnum = Vars::POST('flightnum');
+		$depicao = Vars::POST('depicao');
+		$arricao = Vars::POST('arricao');
+		$flighttime = Vars::POST('flighttime');
+		$comment = Vars::POST('comment');
+				
+		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $flighttime == '')
+		{
+			Template::Set('message', 'You must fill out all of the required fields!');
+			return false;
+		}
+		
+		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $flighttime, $comment))
+		{
+			Template::Set('message', 'There was an error adding your PIREP');
+			return false;
+		}
+		
+		return true;	
 	}
 }
 		

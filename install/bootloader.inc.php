@@ -21,7 +21,5 @@ else
 	include CORE_PATH . '/config.inc.php';
 }
 
-
-
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 ?>

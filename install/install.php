@@ -16,13 +16,13 @@ if($_POST['action'] == 'submitdb')
 	}
 	else
 	{
-		if(!Installer::WriteConfig())
+		if(!Installer::AddTables())
 		{
 			Template::Set('message', Installer::$error);
 		}
 		else
 		{
-			if(!Installer::AddTables())
+			if(!Installer::WriteConfig())
 			{
 				Template::Set('message', Installer::$error);
 			}
@@ -43,7 +43,14 @@ switch($_GET['page'])
 	case 'dbsetup':
 	case '':
 		
-		Template::Show('s1_db_setup.tpl');
+		if(!Installer::CheckServer())
+		{
+			Template::Show('s0_config_check.tpl');
+		}
+		else
+		{
+			Template::Show('s1_db_setup.tpl');
+		}
 		
 		break;
 		

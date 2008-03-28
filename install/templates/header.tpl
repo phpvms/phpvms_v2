@@ -13,7 +13,7 @@ body
 	font-size: 12px;
 }
 
-#errormessage
+#error
 {
 	border: 1px solid #FF0000;
 	background: #FFCCDA;

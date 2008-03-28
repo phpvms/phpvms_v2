@@ -7,7 +7,7 @@
 		<?php 
 		if($message!='')
 		{
-			echo '<div id="errormessage">'.$message.'</div>';
+			echo '<div id="error">'.$message.'</div>';
 		}
 		?>		
 	</td>

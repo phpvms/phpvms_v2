@@ -6,6 +6,73 @@ class Installer
 	
 	static $error;
 	
+	function CheckServer()
+	{
+		$noerror = true;
+		$version = phpversion();
+		
+		// Check the PHP version
+		if(substr($version, 0, 1) != '5')
+		{
+			$noerror = false;
+			$type = 'error';
+			$message = 'You need to run PHP 5 (your version: '.$version.')';
+		}	
+		else
+		{
+			$type = 'success';
+			$message = 'OK! (your version:'.$version.')';
+		}
+		
+		Template::Set('phpversion', '<div id="'.$type.'">'.$message.'</div>');	
+		
+		
+		
+		// Check if core/site_config.inc.php is writeable
+		if(!file_exists(CORE_PATH .'/site_config.inc.php'))
+		{
+			if(!$fp = fopen(CORE_PATH .'/site_config.inc.php', 'w'))
+			{
+				$noerror = false;
+				$type = 'error';
+				$message = 'Could not create core/site_config.inc.php. Create this file, blank, with write permissions.';
+			}
+		}
+		else
+		{		
+			if(!is_writeable(CORE_PATH .'/site_config.inc.php'))
+			{
+				$noerror = false;
+				$type = 'error';
+				$message = 'core/site_config.inc.php is not writeable';
+			}
+			else
+			{
+				$type = 'success';
+				$message = 'core/site_config.inc.php is writeable!';
+			}
+		}
+		
+		Template::Set('configfile', '<div id="'.$type.'">'.$message.'</div>');	
+		
+		
+		if(!is_writeable(CORE_PATH .'/pages'))
+		{
+			$noerror = false;
+			$type = 'error';
+			$message = 'core/pages is not writeable';
+		}
+		else
+		{
+			$type = 'success';
+			$message = 'core/pages is writeable!';
+		}
+		
+		Template::Set('pagesdir', '<div id="'.$type.'">'.$message.'</div>');	
+		
+		return $noerror;
+	}
+	
 	function WriteConfig()
 	{
 		$tpl = file_get_contents(SITE_ROOT . '/install/templates/config.tpl');

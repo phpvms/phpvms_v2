@@ -16,5 +16,5 @@ define('DBASE_TYPE', '$DBASE_TYPE');
 
 define('TABLE_PREFIX', '$TABLE_PREFIX');
 
-$Config['SITE_URL'] = '$SITE_URL';
+$Config['SITE_URL'] = 'http://$SITE_URL';
 ?>

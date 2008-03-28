@@ -70,6 +70,10 @@ switch($_GET['page'])
 				Template::Set('message', Installer::$error);
 				Template::Show('s2_site_setup.tpl');
 			}
+			else
+			{
+				echo '<p>Your site is all setup! You can login to the admin panel <a href="'.SITE_URL.'/admin">here</a></p>';
+			}
 		}
 		
 		break;

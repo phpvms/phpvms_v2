@@ -29,9 +29,7 @@ class RegistrationData
 	}
 	
 	function AddUser($firstname, $lastname, $email, $code, $location, $password)
-	{
-		
-		
+	{		
 		//Set the password, add some salt
 		$salt = md5(date('His'));
 		$password = md5($password . $salt);
@@ -61,6 +59,9 @@ class RegistrationData
 		$fields = self::GetCustomFields();
 					
 		//Get customs fields
+		if(!$fields) 
+			return true;
+			
 		foreach($fields as $field)
 		{
 			$value = Vars::POST($field->fieldname);

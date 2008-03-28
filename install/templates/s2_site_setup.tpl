@@ -14,28 +14,32 @@
 	</tr>
 	
 	<tr>
+		<td><strong>Your Admin User</strong></td>
+		<td></td>
+	</tr>
+	<tr>
 		<td><strong>* Site Name: </strong></td>
-		<td><input type="text" name="SITE_NAME" value="<?=$_POST['SITE_NAME']?>"/></td>
+		<td><input type="text" name="SITE_NAME" value="<?=$_POST['SITE_NAME']?>" /></td>
 	</tr>
 	
 	<tr>
 		<td><strong>* Your First Name </strong></td>
-		<td><input type="text" name="firstname" value="<?=$_POST['firstname']?>"/></td>	
+		<td><input type="text" name="firstname" value="<?=$_POST['firstname']?>" /></td>	
 	</tr>
 	
 	<tr>
 		<td width="1px" nowrap><strong>* Your Last Name: </strong></td>
-		<td><input type="text" name="lastname" value="<?=$_POST['lastname']; ?>"/></td>	
+		<td><input type="text" name="lastname" value="<?=$_POST['lastname']; ?>" /></td>	
 	</tr>
 	
 	<tr>
 		<td><strong>* Email: </strong></td>
-		<td><input type="text" name="email" value="<?=$_POST['email']?>"/></td>
+		<td><input type="text" name="email" value="<?=$_POST['email']?>" /></td>
 	</tr>
 	
 	<tr>
 		<td><strong>* Password: </strong></td>
-		<td><input type="text" name="password" value="<?=$_POST['password']?>"/></td>
+		<td><input type="text" name="password" value="<?=$_POST['password']?>" /></td>
 	</tr>
 	
 	<tr>
@@ -44,19 +48,27 @@
 	</tr>
 	
 	<tr>
-		<td valign="top" width="1px" nowrap><strong>* Your Virtual Airline: </strong></td>
-		<td>
-			<input type="text" name="vaname" value="<?=$_POST['vaname']?>"/>
-			<p align="center">This is your first/main airline. You can add more later</p>
-		</td>
+		<td><strong>Your Virtual Airline</strong></td>
+		<td></td>
 	</tr>
 	
 	<tr>
-		<td valign="top" width="1px" nowrap><strong>* Your Airline's Code: </strong></td>
-		<td>
-			<input type="text" name="vacode" value="<?=$_POST['vacode']?>"/>
-			<p align="center">This is your airline's code (ie: VMS)</p>
-		</td>
+		<td width="1px" nowrap><strong>* Your Virtual Airline: </strong></td>
+		<td><input type="text" name="vaname" value="<?=$_POST['vaname']?>" /></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><p align="center">This is your first/main airline. You can add more later</p></td>
+	</tr>
+	
+	<tr>
+		<td width="1px" nowrap><strong>* Your Airline's Code: </strong></td>
+		<td><input type="text" name="vacode" value="<?=$_POST['vacode']?>" /></td>
+	</tr>
+	
+	<tr>
+		<td></td>
+		<td><p align="center">This is your airline's code (ie: VMS)</p></td>
 	</tr>
 	
 	<tr>

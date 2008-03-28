@@ -100,7 +100,20 @@ class Installer
 		{
 			self::$error = DB::$error;
 			return false;
-		}		
+		}
+		
+		// add the user
+		
+		if(!RegistrationData::AddUser($_POST['firstname'], $_POST['lastname'], 
+				$_POST['email'], $_POST['vacode'], '', $_POST['password']))
+		{
+			self::$error = DB::$error;
+			return false;
+		}
+		
+		SettingsData::SaveSetting('SITE_NAME', $_POST['SITE_NAME']);
+		
+		return true;
 		
 	}
 }

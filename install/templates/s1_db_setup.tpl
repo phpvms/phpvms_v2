@@ -1,5 +1,5 @@
 <?php
-	$siteurl = str_replace('install/install.php', '', $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+	$siteurl = str_replace('/install/install.php', '', $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 ?>
 <form action="?page=dbsetup" method="post">
 	<table width="550px">
@@ -18,24 +18,24 @@
 	</tr>
 	<tr>
 		<td><strong>* Database Name: </strong></td>
-		<td><input type="text" name="DBASE_NAME" value="<?=$_POST['DBASE_NAME']?>"/></td>	
+		<td><input type="text" id="DBASE_NAME" name="DBASE_NAME" value="<?=$_POST['DBASE_NAME']?>" /></td>	
 	</tr>
 	<tr>
 		<td><strong>* Database Server: </strong></td>
-		<td><input type="text" name="DBASE_SERVER" value="<?php echo $_POST['DBASE_SERVER']==''?'localhost':$_POST['DBASE_SERVER']; ?>"/></td>	
+		<td><input type="text" id="DBASE_SERVER" name="DBASE_SERVER" value="<?php echo $_POST['DBASE_SERVER']==''?'localhost':$_POST['DBASE_SERVER']; ?>" /></td>	
 	</tr>
 		<tr>
 		<td width="1px" nowrap><strong>* Database Username: </strong></td>
-		<td><input type="text" name="DBASE_USER" value="<?=$_POST['DBASE_USER']?>"/></td>
+		<td><input type="text" id="DBASE_USER" name="DBASE_USER" value="<?=$_POST['DBASE_USER']?>" /></td>
 	</tr>
 	<tr>
 		<td><strong>* Database Password: </strong></td>
-		<td><input type="text" name="DBASE_PASS" value="<?=$_POST['DBASE_PASS']?>"/></td>	
+		<td><input type="text" id="DBASE_PASS" name="DBASE_PASS" value="<?=$_POST['DBASE_PASS']?>" /></td>	
 	</tr>
 	<tr>
 		<td><strong>* Database Type: </strong></td>
 		<td>
-			<select name="DBASE_TYPE">
+			<select id="DBASE_TYPE" name="DBASE_TYPE">
 				<option value="mysql">MySQL</option>
 				<option value="mysqli">MySQLi (Extended)</option>
 			</select>
@@ -54,9 +54,17 @@
 		<input type="text" name="SITE_URL" value="<?php echo $_POST['SITE_URL']==''?$siteurl:$_POST['SITE_URL'];?>" />
 		</td>	
 	</tr>
+	
+	<tr>
+		<td></td>
+		<td align="center">
+			<div id="dbtest"></div><br />
+			<input type="button" id="dbcheck" value="Check Database Connection" />
+		</td>	
+	</tr>
 	<tr>
 		<td><input type="hidden" name="action" value="submitdb" /></td>
-		<td><input type="submit" name="submit" value="Next Step" /></td>
+		<td align="center"><input type="submit" name="submit" value="Next Step" /></td>
 	</tr>
 </table>
 </form>

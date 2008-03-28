@@ -4,6 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>phpVMS Installer</title>
 
+<script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+
 <style>
 body
 {
@@ -19,6 +21,14 @@ body
 	text-align: center;
 }
 
+#success
+{
+	border: 1px solid #008020;
+	background: #D8FFCC;
+	padding: 7px;
+	text-align: center;
+}
+
 #copyright
 {
 	font-size: 10px;
@@ -26,11 +36,22 @@ body
 
 td input
 {
-	width: 90%;
+	width: 385px;
 	padding: 5px;
 	border: 1px solid #CCCCCC;
 }
 </style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+$("#dbcheck").bind('click', function()
+{
+	$("#dbtest").load("dbtest.php", {DBASE_USER: $("#DBASE_USER").val(), DBASE_PASS: $("#DBASE_PASS").val(), DBASE_NAME: $("#DBASE_NAME").val(), DBASE_SERVER: $("#DBASE_SERVER").val(), DBASE_TYPE: $("#DBASE_TYPE").val()});
+});
+});
+
+</script>
+
 </head>
 <body>
 

@@ -21,8 +21,7 @@ define('PAGES_PATH', CORE_PATH . '/pages');
 define('ADMIN_PATH', SITE_ROOT . '/admin');
 
 if(!file_exists(CORE_PATH.'/site_config.inc.php') 
-	|| filesize(CORE_PATH.'/site_config.inc.php') == 0
-	|| PHPVMS_INSTALLED == true)
+	|| filesize(CORE_PATH.'/site_config.inc.php') == 0)
 {
 	header('Location: install/install.php');	
 }

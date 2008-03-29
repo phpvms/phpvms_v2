@@ -1,6 +1,14 @@
 <h3>Posted News</h3>
 
 <p><a id="dialog" class="jqModal" href="action.php?admin=addnews">Add a News Item</a></p>
+
+<?php
+if(!$allnews)
+{
+	echo '<p>No news items have been posted yet</p>';
+	return;
+}
+?>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>

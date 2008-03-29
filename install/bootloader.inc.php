@@ -7,7 +7,7 @@
 define('SITE_ROOT', str_replace('/install', '', dirname(__FILE__)));
 define('CORE_PATH', SITE_ROOT . '/core');
 define('CLASS_PATH', CORE_PATH . '/classes');
-include 'Installer.class.php';
+
 
 if(!file_exists(CORE_PATH.'/site_config.inc.php') || filesize(CORE_PATH.'/site_config.inc.php') == 0)
 {
@@ -20,6 +20,8 @@ else
 {
 	include CORE_PATH . '/config.inc.php';
 }
+
+include 'Installer.class.php';
 
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 ?>

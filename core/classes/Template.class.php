@@ -6,7 +6,7 @@
 
 class Template
 {
-	static $tplset;
+	public static $tplset;
 	
 	public function SetTemplatePath($path)
 	{

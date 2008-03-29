@@ -55,7 +55,6 @@ switch($_GET['page'])
 		break;
 		
 	case 'sitesetup':
-	
 		Template::Show('s2_site_setup.tpl');
 		break;
 		

@@ -19,6 +19,12 @@ class TemplateSet
 	
 	protected $vars = array();
 	
+	/*public function __construct($path='')
+	{
+		if($path!='')
+			$this->Set($path);
+	}*/
+	
 	public function SetTemplatePath($path)
 	{
 		$this->template_path = $path;
@@ -55,7 +61,7 @@ class TemplateSet
 	
 	public function ShowTemplate($tpl_name)
 	{		
-		if($this->enable_caching ==true)
+		if($this->enable_caching == true)
 		{
 			$cached_file = CACHE_PATH . '/' . $tpl_name;
 			
@@ -94,7 +100,7 @@ class TemplateSet
 		/* See if the file has been over-rided in the skin directory
 		 */	
 		 		 
-		if(!defined('ADMIN_PANEL') || ADMIN_PANEL == false)
+		if(ADMIN_PANEL == false)
 		{
 			if(file_exists(SKINS_PATH . '/' . $tpl_name))
 				$tpl_path = SKINS_PATH . '/' . $tpl_name;
@@ -113,7 +119,7 @@ class TemplateSet
 		}
 			
 		extract($this->vars, EXTR_OVERWRITE);
-		
+
 		ob_start();
 		include $tpl_path; 
 		$cont = ob_get_contents();

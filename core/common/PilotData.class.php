@@ -64,6 +64,10 @@ class PilotData
 	{
 		$allfields = RegistrationData::GetCustomFields();
 		
+		
+		if(!$allfields)
+			return true;
+			
 		foreach($allfields as $field)
 		{			
 			$sql = 'SELECT id FROM '.TABLE_PREFIX.'fieldvalues WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
@@ -86,6 +90,8 @@ class PilotData
 			
 			DB::query($sql);
 		}
+		
+		return true;
 	}	
 	
 	function GetFieldData($pilotid, $inclprivate=false)

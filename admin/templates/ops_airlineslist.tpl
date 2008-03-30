@@ -1,7 +1,7 @@
 <h3>Airlines List</h3>
 <p>These are the airlines that belong to your aircraft group.</p>
 
-<p><a id="dialog" class="jqModal" href="action.php?admin=addairline">Add an aircraft</a></p>
+<p><a id="dialog" class="jqModal" href="action.php?admin=addairline">Add an airline</a></p>
 <br />
 <?php
 if(!$allairlines)

@@ -24,11 +24,11 @@ MainController::loadModules($ADMIN_MODULES);
 $BaseTemplate = new TemplateSet;
 
 //load the main skin
-$settings_file = SITE_ROOT . '/lib/skins/crystal/crystal.php';
+$settings_file = SITE_ROOT . '/lib/skins/crystalsidebar/crystal.php';
 if(file_exists($settings_file))
 	include $settings_file;
 	
-$BaseTemplate->template_path = SITE_ROOT . '/lib/skins/crystal';
+$BaseTemplate->template_path = SITE_ROOT . '/lib/skins/crystalsidebar';
 $BaseTemplate->Set('title', SITE_NAME);
 
 Template::Set('MODULE_NAV_INC', $NAVBAR);

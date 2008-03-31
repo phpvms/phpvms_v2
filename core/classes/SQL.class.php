@@ -428,7 +428,7 @@ class ezSQLcore
 			echo "<font color=800080 face=arial size=2><b>ezSQL</b> (v".EZSQL_VERSION.") <b>Debug..</b></font><p>\n";
 		}
 		
-		if ( $this->last_error )
+		if ( $this->error )
 		{
 			echo "<font face=arial size=2 color=000099><b>Last Error --</b> [<font color=000000><b>$this->error ($this->errno)</b></font>]<p>";
 		}

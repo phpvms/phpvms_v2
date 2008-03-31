@@ -24,7 +24,7 @@
 	{
 		foreach($customfields as $field)
 		{
-			echo '<dt>'.$field->fieldname.'</dt>
+			echo '<dt>'.$field->title.'</dt>
 				  <dd><input type="text" name="'.$field->fieldname.'" value="'.$field->value.'" /></dd>';
 		}
 	}

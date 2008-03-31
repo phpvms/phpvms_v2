@@ -1,11 +1,9 @@
 <?php
 
-class Settings extends ModuleBase
+class SettingsAdmin
 {	
 	function Controller()
-	{		
-		//$this->TEMPLATE->template_path = dirname(__FILE__) . '/templates';
-		
+	{				
 		if(Vars::GET('admin') == 'settings')
 		{
 		
@@ -66,13 +64,18 @@ class Settings extends ModuleBase
 	
 	function AddField()
 	{
-		if(Vars::POST('fieldname') == '')
+		if(Vars::POST('title') == '')
 		{
 			echo 'No field name entered!';
 			return;
 		}
 		
-		if(SettingsData::AddField())
+		$title = Vars::POST('title');
+		$fieldtype = Vars::POST('fieldtype');
+		$public = Vars::POST('public');
+		$showinregistration = Vars::POST('showinregistration');
+		
+		if(SettingsData::AddField($title, $fieldtype, $public, $showinregistration))
 			Template::Set('message', 'Settings were saved!');
 		else
 			Template::Set('message', 'There was an error saving the settings: ' . DB::$err);
@@ -91,7 +94,6 @@ class Settings extends ModuleBase
 	{
 		$id = DB::escape(Vars::POST('id'));
 		
-		echo '<div id="messagebox">';
 		if(SettingsData::DeleteField($id) == true)
 		{
 			Template::Set('message', 'The field was deleted');

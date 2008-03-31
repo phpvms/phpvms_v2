@@ -40,8 +40,9 @@ $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 // Determine our administration modules
 $ADMIN_MODULES['SiteCMS'] = ADMIN_PATH . '/modules/SiteCMS/SiteCMS.php';
 $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
+$ADMIN_MODULES['PIREPAdmin'] = ADMIN_PATH . '/modules/PIREPAdmin/PIREPAdmin.php';
 $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
-$ADMIN_MODULES['Settings'] = ADMIN_PATH . '/modules/Settings/Settings.php';
+$ADMIN_MODULES['SettingsAdmin'] = ADMIN_PATH . '/modules/Settings/Settings.php';
 
 // Include all dependencies
 include CLASS_PATH . '/Auth.class.php';

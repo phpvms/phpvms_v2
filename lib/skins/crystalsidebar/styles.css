@@ -42,8 +42,8 @@ body
 {
 	background: url(images/navbg.jpg) repeat-x;
 	width: 970px;
-	margin: 0 auto;
-	height: 37px;
+	margin: 0;
+	height: 0px;
 	border-bottom: solid 1px #cccccc;
 }
 #topNav ul
@@ -51,15 +51,17 @@ body
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	margin: 0 auto;
+	
 }
 #topNav ul li
 {
 	height: 37px;
+	width: 150px;
 	float: left;
 	padding: 0px;
 	background: url(images/navbg.jpg) repeat-x 0 0 #292929;
 	font: bold 12px/37px Arial, Helvetica, sans-serif;
+	clear: both;
 }
 #topNav ul li a
 {
@@ -75,8 +77,8 @@ body
 
 #bodytext
 {
-	width: 950px;
-	
+	width: 770px;
+	margin-left: 162px;
 	padding-left: 10px;
 	padding-top: 5px;
 	padding-right: 10px;
@@ -181,7 +183,7 @@ table.tablesorter {
 	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
 	
-	width: 950px;
+	width: 780px;
 	text-align: center;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
@@ -214,84 +216,82 @@ background-color: #8dbdd8;
 
 
 
-/* Navigation */
-.nav, .nav ul { 
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.nav, .nav * {
+	margin:0;
+	padding:0;
 }
-
 .nav {
-  font-family: Arial, Helvetica, sans-serif;
-  z-index: 1000;
-  position: relative;
+	line-height:1.0;
+	margin-bottom:1.5em;
+	width: 160px;
+}
+.nav ul {
+	background:#fff; /*IE6 needs this*/
+	width: 160px;
+	margin-top: 37px;
+	
 }
 .nav li {
- 
-  float: left;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  background: url(images/navbg.jpg) repeat-x 0 0 #292929;
+	background:#BDD2FF;
+	border-right:1px solid #CFDEFF;
+	border-bottom:1px solid #CFDEFF;
+	float: left;
+	list-style:none;
+	position:relative;
+	width: 160px;
+	z-index:999;
 }
-.nav li a, .nav li a:link, .nav li a:active, .nav li a:visited {
-  font: bold 1.22em/25px Arial, Helvetica, sans-serif;
-  background: #565656;
-  color: #959595;
-  display: block;
-  padding: 0 9px;
-  text-transform: lowercase;
-  text-decoration: none;
+.nav a {
+	color: #13a;
+	display:block;
+	text-decoration:none;
 }
-
-.nav li a:hover {
-  background: #ccc;
-  color: #000;	
-
-}
-#nav-one li:hover a, 
-#nav-one li.sfHover a {
-  background: #ccc;
-  color: #000;
-}
-#nav-one li:hover ul a, 
-#nav-one li.sfHover ul a {
-  background: #565656;
-  color: #959595;	
-}
-#nav-one li:hover ul a:hover, 
-#nav-one li.sfHover ul a:hover {
-  background: #ccc;
-  color: #000;	
+.nav li ul {
+	top:-999em;
+	position:absolute;
+	width:250px;
+	border-top:1px solid #CFDEFF;
 }
 
-.nav ul {
-  background: #565656;
-  background: url(images/navbg.jpg) repeat-x 0 0 #292929;
- 
-  list-style: none;
-  margin: 0;
-  width: 150px;
-  position: absolute;
-  top: -999em;
-  left: -1px;
+.nav li ul li {
+	border-right:1px solid #CFDEFF;
+	border-bottom:1px solid #CFDEFF;
+	border-left:none;
+	width: 250px;
 }
-.nav li:hover ul,
-.nav li.sfHover ul {
-  top: 37px;
+
+.nav li ul li a {
+	width:250px;
 }
-.nav ul li {
-  border: 0;
-  float: none;
+.nav li:hover,
+.nav li.sfHover,
+.nav a:focus, .nav a:hover, .nav a:active {
+	background:#CFDEFF;
 }
-.nav ul a {
-  border: 1px solid #cccccc;
-  border-bottom: 0;
-  padding-right: 20px;
-  width: 150px;
-  white-space: nowrap;
+.nav li:hover ul, /* pure CSS hover is removed below */
+ul.nav li.sfHover ul {
+	left:150px;
+	top:-1px;
 }
-.nav ul a:hover {
-  background: #ccc;
-  color: #000;
+
+.nav li:hover li ul,
+.nav li.sfHover li ul {
+	top:-999em;
+	width: 250px;
+}
+.nav li li:hover ul, /* pure CSS hover is removed below */
+ul.nav li li.sfHover ul {
+	left:150px;
+	top:-1px;
+	
+}
+.nav li li:hover li ul,
+.nav li li.sfHover li ul {
+	top:-999em;
+	width: 250px;
+}
+.nav li li li:hover ul, /* pure CSS hover is removed below */
+ul.nav li li li.sfHover ul {
+	left:150px;
+	top:-1px;
 }

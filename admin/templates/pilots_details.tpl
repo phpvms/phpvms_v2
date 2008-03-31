@@ -26,7 +26,7 @@ if($customfields)
 	foreach($customfields as $field)
 	{
 ?>
-	<dt><?=$field->fieldname;?></dt>
+	<dt><?=$field->title;?></dt>
 	<dd><?=$field->value;?></dd>
 <?php
 	}

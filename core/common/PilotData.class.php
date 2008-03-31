@@ -96,7 +96,7 @@ class PilotData
 	
 	function GetFieldData($pilotid, $inclprivate=false)
 	{
-		$sql = 'SELECT f.fieldname, v.value 
+		$sql = 'SELECT f.title, f.fieldname, v.value 
 					FROM '.TABLE_PREFIX.'customfields f 
 					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
 						ON f.fieldid=v.fieldid AND v.pilotid='.$pilotid;

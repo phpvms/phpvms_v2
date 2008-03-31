@@ -26,14 +26,14 @@ class SettingsData
 		return $ret;
 	}
 	
-	function AddField()
+	function AddField($title, $fieldtype, $public, $showinregistration)
 	{
-		$fieldname = Vars::POST('fieldname');
+		/*$fieldname = Vars::POST('fieldname');
 		$fieldtype = Vars::POST('fieldtype');
 		$public = Vars::POST('public');
-		$showinregistration = Vars::POST('showinregistration');
+		$showinregistration = Vars::POST('showinregistration');*/
 		
-		$fieldname = str_replace(' ', '_', $fieldname);
+		$fieldname = str_replace(' ', '_', $title);
 		$fieldname = strtoupper($fieldname);
 		
 		//Check, set up like this on purpose to default "safe" values
@@ -47,8 +47,8 @@ class SettingsData
 		else
 			$showinregistration = 'n';		
 		
-		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (fieldname, type, public, showonregister)
-					VALUES ('$fieldname', '$fieldtype', '$public', '$showinregistration')";
+		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (title, fieldname, type, public, showonregister)
+					VALUES ('$title', '$fieldname', '$fieldtype', '$public', '$showinregistration')";
 		
 		$res = DB::query($sql);	
 		

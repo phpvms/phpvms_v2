@@ -6,7 +6,7 @@
 <?php
 if(!$schedules)
 {
-	echo '<p>There are no schedules added</p><br />';
+	echo '<p id="error">No schedules have been added</p>';
 	return;
 }
 ?>

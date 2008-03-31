@@ -129,6 +129,7 @@ CREATE TABLE `phpvms_schedules` (
 
 CREATE TABLE `phpvms_customfields` (
 	`fieldid` INT NOT NULL AUTO_INCREMENT ,
+	`title` VARCHAR( 25 ) NOT NULL ,
 	`fieldname` VARCHAR( 25 ) NOT NULL ,
 	`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
 	`public` ENUM( 'y', 'n' ) NOT NULL ,
@@ -183,10 +184,11 @@ INSERT INTO `phpvms_settings` VALUES(2, 'Virtual Airline Name', 'SITE_NAME', 'PH
 INSERT INTO `phpvms_settings` VALUES(3, 'Webmaster Email Address', 'ADMIN_EMAIL', '', 'This is the email address that email will get sent to/from', 't');
 INSERT INTO `phpvms_settings` VALUES(4, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 't');
 INSERT INTO `phpvms_settings` VALUES(5, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 't');
-INSERT INTO `phpvms_settings` VALUES(6, 'Friendly URLs', 'FRIENDLY_URLS', 'false', 'Enable URL rewriting for clean URLs. MUST have mod_rewrite available, and .htaccess enabled', 't');
-INSERT INTO `phpvms_settings` VALUES(7, 'Cache Templates', 'TEMPLATE_USE_CACHE', 'false', 'Cache database queries. Can alleviate alot of DB load on high-traffic sites', 't');
-INSERT INTO `phpvms_settings` VALUES(8, 'Template Cache Timeout', 'TEMPLATE_CACHE_EXPIRE', '24', 'Number of hours to automatically refresh the display cache', 't');
-INSERT INTO `phpvms_settings` VALUES(9, 'Cache Database Queries', 'DBASE_USE_CACHE', 'false', 'Cache database queries. Can alleviate alot of DB load on high-traffic sites', 't');
-INSERT INTO `phpvms_settings` VALUES(10, 'Database Cache Timeout', 'DBASE_CACHE_TIMEOUT', '24', 'Number of hours to expire the cache in', 't');
-INSERT INTO `phpvms_settings` VALUES(11, 'Cache Path', 'CACHE_PATH', '', 'Absolute path to the database cache', 't');
-INSERT INTO `phpvms_settings` VALUES(12, 'Default User Group', 'DEFAULT_GROUP', 'GeneralUsers', 'This is the default group if they are not explicitly denied', 't');
+INSERT INTO `phpvms_settings` VALUES(6, 'Google API Key', 'GOOGLE_KEY', 'ABQIAAAA3xXZfpGLJIbaKcMHkzRclhT4wnoliI34TdbmxMg3ZtWKg6YWxxTTpjyhr5hnAcIFpUCpPWacpZA8GQ', 'This is your Google API key. You need it for the maps functionality to work', 't');
+INSERT INTO `phpvms_settings` VALUES(7, 'Friendly URLs', 'FRIENDLY_URLS', 'false', 'Enable URL rewriting for clean URLs. MUST have mod_rewrite available, and .htaccess enabled', 't');
+INSERT INTO `phpvms_settings` VALUES(8, 'Cache Templates', 'TEMPLATE_USE_CACHE', 'false', 'Cache database queries. Can alleviate alot of DB load on high-traffic sites', 't');
+INSERT INTO `phpvms_settings` VALUES(9, 'Template Cache Timeout', 'TEMPLATE_CACHE_EXPIRE', '24', 'Number of hours to automatically refresh the display cache', 't');
+INSERT INTO `phpvms_settings` VALUES(10, 'Cache Database Queries', 'DBASE_USE_CACHE', 'false', 'Cache database queries. Can alleviate alot of DB load on high-traffic sites', 't');
+INSERT INTO `phpvms_settings` VALUES(11, 'Database Cache Timeout', 'DBASE_CACHE_TIMEOUT', '24', 'Number of hours to expire the cache in', 't');
+INSERT INTO `phpvms_settings` VALUES(12, 'Cache Path', 'CACHE_PATH', '', 'Absolute path to the database cache', 't');
+INSERT INTO `phpvms_settings` VALUES(13, 'Default User Group', 'DEFAULT_GROUP', 'GeneralUsers', 'This is the default group if they are not explicitly denied', 't');

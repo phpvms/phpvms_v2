@@ -29,6 +29,7 @@ if(file_exists($settings_file))
 	include $settings_file;
 	
 $BaseTemplate->template_path = SITE_ROOT . '/lib/skins/crystal';
+$BaseTemplate->Set('title', SITE_NAME);
 
 Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);

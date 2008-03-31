@@ -37,6 +37,8 @@ class RegistrationData
 		//Stuff it into here, the confirmation email will use it.
 		self::$salt = $salt;
 		
+		$firstname = ucwords($firstname);
+		$lastname = ucwords($lastname);
 		//Add this stuff in
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, code, location, password, salt, confirmed)

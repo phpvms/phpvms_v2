@@ -2,8 +2,8 @@
 <p>Add a custom field, that a registrar can fill out on registration, or an admin can add information to.</p>
 <form id="form" method="post" action="action.php?admin=customfields">
 <dl>
-	<dt>Field Name</dt>
-	<dd><input type="text" name="fieldname" value="" /></dd>
+	<dt>Title</dt>
+	<dd><input type="text" name="title" value="" /></dd>
 	
 	<dt>Field Type</dt>
 	<dd>

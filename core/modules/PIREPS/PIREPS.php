@@ -31,7 +31,9 @@ class PIREPS extends ModuleBase
 			
 			case 'viewreport':
 			
-				Template::Set('report', PIREPData::GetReportInfo(Vars::GET('id')));
+				$pirepid = Vars::GET('pirepid');
+				Template::Set('report', PIREPData::GetReportDetails($pirepid));
+				Template::Set('comments', PIREPData::GetComments($pirepid));
 				
 				Template::Show('pirep_viewreport.tpl');
 				break;
@@ -52,6 +54,12 @@ class PIREPS extends ModuleBase
 				
 				$allapts = SchedulesData::GetDepartureAirports($code);
 				
+				if(!$allapts)
+				{
+					echo 'There are no routes for this airline<br />';
+					return;
+				}
+				
 				echo '<select id="depicao" name="depicao">
 						<option value="">Select a Departure Airport';
 				foreach($allapts as $airport)
@@ -70,6 +78,9 @@ class PIREPS extends ModuleBase
 				
 				$allapts = SchedulesData::GetArrivalAiports($icao, $code); 
 				
+				if(!$allapts)
+					return;
+					
 				echo '<select name="arricao">
 						<option value="">Select an Arrival Airport';
 				foreach($allapts as $airport)
@@ -103,7 +114,7 @@ class PIREPS extends ModuleBase
 			Template::Set('message', 'There was an error adding your PIREP');
 			return false;
 		}
-		
+				
 		return true;	
 	}
 }

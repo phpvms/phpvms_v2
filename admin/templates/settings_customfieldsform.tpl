@@ -14,7 +14,7 @@ if(!$allfields)
 foreach($allfields as $field)
 {
 ?>
-	<dt><?=$field->fieldname;?></dt>
+	<dt><?=$field->title;?></dt>
 	<dd><a href="action.php?admin=customfields" action="deletefield" id="<?=$field->fieldid;?>" class="ajaxcall">Delete</a></dd>
 <?php
 }

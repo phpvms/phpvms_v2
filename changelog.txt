@@ -1,0 +1,26 @@
+
+
+phpVMS Build Changelog:
+
+
+Build 256 - 03/31/2008
+
+  - fixed #15
+  - fixed #58
+  - fixed #57
+  - refs #39 - PIREP comments added, sends email
+
+  * Add comments to PIREP (from Admin Panel), sends email to submitter with the comment,
+    and link back to view the comment. Submitter can then reply to any inquiry, and
+    then the report can be accepted/rejected based on that.
+  * Show comments in 'View Report' page
+  * Show unaccepted reports in admin panel (new entry in navigation)
+  * New crystal theme, with sidebar instead of top navigation (default admin theme)
+  * Added Google Maps API key into settings for future (in table SQL)
+  * Custom Fields have "title" field, which shows, which is converted into the formal name
+    Required alteration in table
+  * Name capitalization on Registration
+  * Template HTML cleaned up
+  * Wording fixes
+  * Core bug fixes (database connector fixes)
+  * Templates were showing incorrectly in installer

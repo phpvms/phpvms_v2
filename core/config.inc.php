@@ -10,6 +10,8 @@ session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'on');
 
+$Config['PHPVMS_VERSION'] = '0.9.258';
+
 define('SITE_ROOT', str_replace('/core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
 define('CLASS_PATH', CORE_PATH . '/classes');
@@ -43,6 +45,7 @@ $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php'
 $ADMIN_MODULES['PIREPAdmin'] = ADMIN_PATH . '/modules/PIREPAdmin/PIREPAdmin.php';
 $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
 $ADMIN_MODULES['SettingsAdmin'] = ADMIN_PATH . '/modules/Settings/Settings.php';
+$ADMIN_MODULES['CronAdmin'] = ADMIN_PATH . '/modules/Cron/CronAdmin.php';
 
 // Include all dependencies
 include CLASS_PATH . '/Auth.class.php';

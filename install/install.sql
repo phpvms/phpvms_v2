@@ -183,6 +183,7 @@ INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '0.0
 INSERT INTO `phpvms_settings` VALUES(2, 'Virtual Airline Name', 'SITE_NAME', 'PHPVMS', 'The name of your site. This will show up in the browser title bar.', 't');
 INSERT INTO `phpvms_settings` VALUES(3, 'Webmaster Email Address', 'ADMIN_EMAIL', '', 'This is the email address that email will get sent to/from', 't');
 INSERT INTO `phpvms_settings` VALUES(4, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 't');
+INSERT INTO `phpvms_settings` VALUES(5, 'Notify for Updates', 'NOTIFY_UPDATE', 'true', 'This will notify in the admin panel if an update is available', 't');
 INSERT INTO `phpvms_settings` VALUES(5, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 't');
 INSERT INTO `phpvms_settings` VALUES(6, 'Google API Key', 'GOOGLE_KEY', 'ABQIAAAA3xXZfpGLJIbaKcMHkzRclhT4wnoliI34TdbmxMg3ZtWKg6YWxxTTpjyhr5hnAcIFpUCpPWacpZA8GQ', 'This is your Google API key. You need it for the maps functionality to work', 't');
 INSERT INTO `phpvms_settings` VALUES(7, 'Friendly URLs', 'FRIENDLY_URLS', 'false', 'Enable URL rewriting for clean URLs. MUST have mod_rewrite available, and .htaccess enabled', 't');

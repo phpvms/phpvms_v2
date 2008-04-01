@@ -23,6 +23,13 @@ class CronAdmin
 				Template::Show('core_error.tpl');
 			}
 		}
+		
+		
+		
+		if($_GET['admin'] == 'about')
+		{
+			Template::Show('core_about.tpl');
+		}
 	}
 }
 ?>

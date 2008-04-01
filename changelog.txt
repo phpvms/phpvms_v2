@@ -2,6 +2,12 @@
 
 phpVMS Build Changelog:
 
+Next Build - 
+
+  * About page in Admin Panel
+  * Definition lists heights evened out
+
+
 
 Build 258 - 03/31/2008
 

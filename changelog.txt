@@ -3,7 +3,7 @@
 phpVMS Build Changelog:
 
 
-Build 256 - 03/31/2008
+Build 258 - 03/31/2008
 
   - fixed #15
   - fixed #58

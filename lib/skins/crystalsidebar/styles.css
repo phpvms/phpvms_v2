@@ -20,7 +20,6 @@ body
 	padding-bottom: 10px;
 }
 
-
 #innerwrapper
 {
 	width: 970px;
@@ -179,16 +178,13 @@ dd input
 /* Tables */
 /* tables */
 table.tablesorter {
-	font-family:arial;
-	background-color: #CDCDCD;
-	margin:10px 0pt 15px;
 	
 	width: 780px;
 	text-align: center;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
-	border: 1px solid #cccccc;
+	
 	font-size: 8pt;
 	padding: 4px;
 }
@@ -196,25 +192,22 @@ table.tablesorter thead tr .header {
 	cursor: pointer;
 }
 table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
+	padding: 6px;
 	vertical-align: top;
+	border-bottom: dashed 1px #333;
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
 table.tablesorter thead tr .headerSortUp {
-	background-image: url(images/asc.gif);
+	background-image: url(images/asc.gif) no-repeat;
 }
 table.tablesorter thead tr .headerSortDown {
-	background-image: url(images/desc.gif);
+	background-image: url(images/desc.gif) no-repeat;
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-background-color: #8dbdd8;
+	background-color: #8dbdd8;
 }
-
-
 
 .nav, .nav * {
 	margin:0;

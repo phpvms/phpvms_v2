@@ -7,8 +7,11 @@ class PIREPData
 	
 	function GetAllReportsByAccept($accept=0)
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps 
-					WHERE accepted='.intval($accept);
+		$sql = 'SELECT u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime,
+					   p.distance, p.submitdate, p.accepted
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 		
 		return DB::get_results($sql);
 	}
@@ -33,12 +36,11 @@ class PIREPData
 	
 	function GetReportDetails($pirepid)
 	{
-	
 		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime,
 					   p.distance, p.submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-					WHERE p.pilotid=u.pilotid AND p.id='.$pirepid;
+					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 		
 		return DB::get_row($sql);		
 	}

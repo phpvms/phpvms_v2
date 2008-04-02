@@ -23,7 +23,7 @@ foreach($pending as $pirep)
 {
 ?>
 <tr>
-	<td align="center"><a href="?page=viewreport&pirepid=<?=$pirep->id?>"><?=$pirep->code.$pirep->flightnum; ?></a></td>
+	<td align="center"><a href="?page=viewreport&pirepid=<?=$pirep->pirepid?>"><?=$pirep->code.$pirep->flightnum; ?></a></td>
 	<td align="center"><?=$pirep->depicao; ?></td>
 	<td align="center"><?=$pirep->arricao; ?></td>
 	<td align="center"><?=$pirep->flighttime; ?></td>
@@ -62,7 +62,7 @@ foreach($accepted as $pirep)
 {
 ?>
 <tr>
-	<td align="center"><a href="?page=viewreport&id=<?=$pirep->id?>"><?=$pirep->code.$pirep->flightnum; ?></a></td>
+	<td align="center"><a href="?page=viewreport&id=<?=$pirep->pirepid?>"><?=$pirep->code.$pirep->flightnum; ?></a></td>
 	<td align="center"><?=$pirep->depicao; ?></td>
 	<td align="center"><?=$pirep->arricao; ?></td>
 	<td align="center"><?=$pirep->flighttime; ?></td>

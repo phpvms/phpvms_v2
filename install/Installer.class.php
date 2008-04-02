@@ -145,6 +145,9 @@ class Installer
 				$sql = str_replace('phpvms_', $_POST['TABLE_PREFIX'], $sql);
 				
 				DB::query($sql);
+				
+				if(DB::$errno == 1050)
+					continue;
 				$sql = '';
 			}	
 			else
@@ -183,10 +186,10 @@ class Installer
 		
 		if(!PilotGroups::AddUsertoGroup($pilotdata->pilotid, 'Administrators'))
 		{
+			DB::debug();
 			self::$error = DB::$error;
 			return false;
 		}
-		
 		
 		SettingsData::SaveSetting('SITE_NAME', $_POST['SITE_NAME']);
 		

@@ -11,7 +11,7 @@ class ezSQL_mysqli extends ezSQLcore
 	var $dbpassword = false;
 	var $dbname = false;
 	var $dbhost = false;
-	
+	var $result;
 	
 	function ezSQL_mysqli($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{				
@@ -133,10 +133,10 @@ class ezSQL_mysqli extends ezSQLcore
 		}
 		
 		// Perform the query via std mysql_query function..
-		$this->result = $this->dbh->query($query);
-		
+		$result = $this->dbh->query($query);
+
 		// If there is an error then take note of it..
-		if ( !$this->result )
+		if ( !$result )
 		{
 			$errno = $this->dbh->errno;
 			
@@ -174,21 +174,24 @@ class ezSQL_mysqli extends ezSQLcore
 			// Take note of column info
 			$i=0;
 			
-			while ($finfo = $this->result->fetch_field()) 
+			if($result)
 			{
-				$this->col_info[$i] = $finfo;
-				$i++;
-			}
-	
-			// Store Query Results
-			$num_rows=0;
-			while($row = $this->result->fetch_object())
-			{
-				$this->last_result[$num_rows] = $row;
-				$num_rows++;
-			}
+				while ($finfo = $result->fetch_field()) 
+				{
+					$this->col_info[$i] = $finfo;
+					$i++;
+				}
+		
+				// Store Query Results
+				$num_rows=0;
+				while($row = $result->fetch_object())
+				{
+					$this->last_result[$num_rows] = $row;
+					$num_rows++;
+				}
 				
-			$this->result->close();
+				$result->close();
+			}
 			
 			// Log number of rows the query returned
 			$this->num_rows = $num_rows;

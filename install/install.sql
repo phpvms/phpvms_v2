@@ -4,7 +4,7 @@ CREATE TABLE `phpvms_airlines` (
 	`name` VARCHAR( 30 ) NOT NULL ,
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `code` (`code`)
-);
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_aircraft` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
@@ -16,7 +16,7 @@ CREATE TABLE `phpvms_aircraft` (
 	`cruise` SMALLINT NOT NULL ,
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `name` (`name`)
-);
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_airports` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -27,85 +27,7 @@ CREATE TABLE `phpvms_airports` (
 	`lng` FLOAT( 10 ) NOT NULL,
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `icao` (`icao`)
-);
-
-CREATE TABLE `phpvms_news` (
-	`id` INT NOT NULL AUTO_INCREMENT ,
-	`subject` VARCHAR( 30 ) NOT NULL ,
-	`body` TEXT NOT NULL ,
-	`postdate` DATETIME NOT NULL ,
-	`postedby` VARCHAR( 50 ) NOT NULL,
-	PRIMARY KEY ( `id` )
-);
-
-CREATE TABLE `phpvms_pages` (
-	`pageid` int(11) NOT NULL auto_increment,
-	`pagename` varchar(30) NOT NULL default '',
-	`filename` varchar(30) NOT NULL default '',
-	`order` smallint(6) NOT NULL default '0',
-	`postedby` varchar(50) NOT NULL default '',
-	`postdate` datetime NOT NULL default '0000-00-00 00:00:00',
-	`public` enum('y','n') NOT NULL default 'n',
-	`enabled` smallint(6) NOT NULL default '1',
-	PRIMARY KEY  (`pageid`),
-	UNIQUE KEY `pagename` (`pagename`)
-);
-
-CREATE TABLE `phpvms_ranks` (
-	`rankid` int(11) NOT NULL auto_increment,
-	`rank` varchar(32) NOT NULL default '',
-	`minhours` smallint(6) NOT NULL default '0',
-	PRIMARY KEY  (`rankid`),
-	UNIQUE KEY `rank` (`rank`)
-);
-
-CREATE TABLE `phpvms_pilots` (
-	`pilotid` int(11) NOT NULL auto_increment,
-	`firstname` varchar(25) NOT NULL default '',
-	`lastname` varchar(25) NOT NULL default '',
-	`email` varchar(32) NOT NULL default '',
-	`code` varchar(3) NOT NULL default '',
-	`location` varchar(32) NOT NULL default '',
-	`password` varchar(32) NOT NULL default '',
-	`salt` varchar(32) NOT NULL default '',
-	`lastlogin` date NOT NULL default '0000-00-00',
-	`totalflights` int(11) NOT NULL default '0',
-	`totalhours` float NOT NULL default '0',
-	`rank` varchar(32) NOT NULL default '',
-	`confirmed` enum('y','n') NOT NULL default 'n',
-	`retired` enum('y','n') NOT NULL default 'y',
-	PRIMARY KEY  (`pilotid`),
-	UNIQUE KEY `email` (`email`),
-	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
-	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`) ON UPDATE CASCADE
-);
-
-CREATE TABLE `phpvms_pireps` (
-	`id` INT NOT NULL AUTO_INCREMENT ,
-	`pilotid` INT NOT NULL ,
-	`code` VARCHAR( 3 ) NOT NULL ,
-	`flightnum` INT NOT NULL,
-	`depicao` VARCHAR( 4 ) NOT NULL ,
-	`arricao` VARCHAR( 4 ) NOT NULL ,
-	`flighttime` VARCHAR( 6 ) NOT NULL ,
-	`distance` SMALLINT NOT NULL ,
-	`submitdate` DATETIME NOT NULL ,
-	`accepted` SMALLINT NOT NULL ,
-	PRIMARY KEY ( `id` ),
-	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
-	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`flightnum`) REFERENCES phpvms_schedules(`flightnum`) ON UPDATE CASCADE
-);
-
-CREATE TABLE `phpvms_pirepcomments` (
-	`id` INT NOT NULL AUTO_INCREMENT ,
-	`pirepid` INT NOT NULL ,
-	`pilotid` INT NOT NULL ,
-	`comment` TEXT NOT NULL ,
-	`postdate` DATETIME NOT NULL ,
-	PRIMARY KEY ( `id` ),
-	FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`id`) ON UPDATE CASCADE ON DELETE CASCADE
-);
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_schedules` (
 	`id` int(11) NOT NULL auto_increment,
@@ -122,10 +44,97 @@ CREATE TABLE `phpvms_schedules` (
 	`flighttime` int(11) NOT NULL default '0',
 	`timesflown` int(11) NOT NULL default '0',
 	PRIMARY KEY  (`id`),
+	INDEX `depicao` (`depicao`),
+	INDEX `flightnum` (`flightnum`),
 	INDEX `depicao_arricao` (`depicao`, `arricao`),
 	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE
-);
+)ENGINE=INNODB;
+
+
+CREATE TABLE `phpvms_news` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`subject` VARCHAR( 30 ) NOT NULL ,
+	`body` TEXT NOT NULL ,
+	`postdate` DATETIME NOT NULL ,
+	`postedby` VARCHAR( 50 ) NOT NULL,
+	PRIMARY KEY ( `id` )
+)ENGINE=INNODB;
+
+CREATE TABLE `phpvms_pages` (
+	`pageid` int(11) NOT NULL auto_increment,
+	`pagename` varchar(30) NOT NULL default '',
+	`filename` varchar(30) NOT NULL default '',
+	`order` smallint(6) NOT NULL default '0',
+	`postedby` varchar(50) NOT NULL default '',
+	`postdate` datetime NOT NULL default '0000-00-00 00:00:00',
+	`public` enum('y','n') NOT NULL default 'n',
+	`enabled` smallint(6) NOT NULL default '1',
+	PRIMARY KEY  (`pageid`),
+	UNIQUE KEY `pagename` (`pagename`)
+)ENGINE=INNODB;
+
+
+CREATE TABLE `phpvms_ranks` (
+	`rankid` int(11) NOT NULL auto_increment,
+	`rank` varchar(32) NOT NULL default '',
+	`minhours` smallint(6) NOT NULL default '0',
+	PRIMARY KEY  (`rankid`),
+	UNIQUE KEY `rank` (`rank`)
+)ENGINE=INNODB;
+
+INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire', 0);
+
+CREATE TABLE `phpvms_pilots` (
+	`pilotid` int(11) NOT NULL auto_increment,
+	`firstname` varchar(25) NOT NULL default '',
+	`lastname` varchar(25) NOT NULL default '',
+	`email` varchar(32) NOT NULL default '',
+	`code` varchar(3) NOT NULL default '',
+	`location` varchar(32) NOT NULL default '',
+	`password` varchar(32) NOT NULL default '',
+	`salt` varchar(32) NOT NULL default '',
+	`lastlogin` date NOT NULL default '0000-00-00',
+	`totalflights` int(11) NOT NULL default '0',
+	`totalhours` float NOT NULL default '0',
+	`rank` varchar(32) NOT NULL default 'New Hire',
+	`confirmed` enum('y','n') NOT NULL default 'n',
+	`retired` enum('y','n') NOT NULL default 'y',
+	PRIMARY KEY  (`pilotid`),
+	UNIQUE KEY `email` (`email`),
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
+	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`) ON UPDATE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE `phpvms_pireps` (
+	`pirepid` INT (11) NOT NULL AUTO_INCREMENT ,
+	`pilotid` INT NOT NULL ,
+	`code` VARCHAR( 3 ) NOT NULL ,
+	`flightnum` varchar(10) NOT NULL default '0',
+	`depicao` VARCHAR( 4 ) NOT NULL ,
+	`arricao` VARCHAR( 4 ) NOT NULL ,
+	`flighttime` VARCHAR( 10 ) NOT NULL ,
+	`distance` SMALLINT NOT NULL ,
+	`submitdate` DATETIME NOT NULL ,
+	`accepted` SMALLINT NOT NULL ,
+	PRIMARY KEY ( `pirepid` ),
+	INDEX `code` (`code`),
+	INDEX `pilotid` (`pilotid`),
+	INDEX `flightnum` (`flightnum`),
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
+	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (`flightnum`) REFERENCES phpvms_schedules(`flightnum`) ON UPDATE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE `phpvms_pirepcomments` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`pirepid` INT NOT NULL ,
+	`pilotid` INT NOT NULL ,
+	`comment` TEXT NOT NULL ,
+	`postdate` DATETIME NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON UPDATE CASCADE ON DELETE CASCADE
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_customfields` (
 	`fieldid` INT NOT NULL AUTO_INCREMENT ,
@@ -136,7 +145,7 @@ CREATE TABLE `phpvms_customfields` (
 	`showonregister` ENUM( 'y', 'n' ) NOT NULL ,
 	PRIMARY KEY ( `fieldid` ),
 	UNIQUE KEY `fieldname` (`fieldname`)
-);
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_fieldvalues` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
@@ -146,15 +155,14 @@ CREATE TABLE `phpvms_fieldvalues` (
 	PRIMARY KEY ( `id` ),
 	FOREIGN KEY (`fieldid`) REFERENCES phpvms_customfields(`fieldid`) ON DELETE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE
-);
-
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_groups` (
 	`groupid` INT NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR( 25 ) NOT NULL ,
 	PRIMARY KEY ( `groupid` ),
 	UNIQUE KEY `name` (`name`)
-);
+)ENGINE=INNODB;
 
 INSERT INTO `phpvms_groups` (`name`) VALUES ('Administrators');
 INSERT INTO `phpvms_groups` (`name`) VALUES ('Active Pilots');
@@ -166,7 +174,7 @@ CREATE TABLE `phpvms_groupmembers` (
 	PRIMARY KEY  (`id`),
 	FOREIGN KEY (`groupid`) REFERENCES phpvms_groups(`groupid`) ON DELETE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE
-);
+)ENGINE=INNODB;
 
 CREATE TABLE `phpvms_settings` (
 	`id` int(11) NOT NULL auto_increment,
@@ -177,7 +185,7 @@ CREATE TABLE `phpvms_settings` (
 	`core` enum('t','f') NOT NULL default 'f',
 	PRIMARY KEY  (`id`),
 	UNIQUE KEY `name` (`name`)
-);
+)ENGINE=INNODB;
 
 INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '0.0.1', '', 't');
 INSERT INTO `phpvms_settings` VALUES(2, 'Virtual Airline Name', 'SITE_NAME', 'PHPVMS', 'The name of your site. This will show up in the browser title bar.', 't');

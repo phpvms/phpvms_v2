@@ -21,7 +21,7 @@ CREATE TABLE `phpvms_aircraft` (
 CREATE TABLE `phpvms_airports` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`icao` VARCHAR( 5 ) NOT NULL,
-	`name` VARCHAR( 30 ) NOT NULL,
+	`name` VARCHAR( 75 ) NOT NULL,
 	`country` VARCHAR( 50 ) NOT NULL,
 	`lat` FLOAT( 10 ) NOT NULL,
 	`lng` FLOAT( 10 ) NOT NULL,

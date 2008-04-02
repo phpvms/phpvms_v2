@@ -7,9 +7,9 @@ class PIREPData
 	
 	function GetAllReportsByAccept($accept=0)
 	{
-		$sql = 'SELECT u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime,
-					   p.distance, p.submitdate, p.accepted
+		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+				p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 		
@@ -18,7 +18,9 @@ class PIREPData
 	
 	function GetAllReportsForPilot($pilotid='')
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps';
+		$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao,
+					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
+					FROM '.TABLE_PREFIX.'pireps';
 		
 		if($pilotid!='')
 			$sql .=' WHERE pilotid='.intval($pilotid);
@@ -26,19 +28,19 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 	
-	/*function GetReportInfo($id)
+	function ChangePIREPStatus($pirepid, $status)
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps 
-					WHERE id='.$id;
+		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
+					SET accepted='.$status.' WHERE pirepid='.$pirepid;
 		
-		return DB::get_row($sql);
-	}*/
+		return DB::query($sql);
+	}
 	
 	function GetReportDetails($pirepid)
 	{
 		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime,
-					   p.distance, p.submitdate, p.accepted
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 		
@@ -56,7 +58,7 @@ class PIREPData
 	
 	function GetComments($pirepid)
 	{
-		$sql = 'SELECT c.comment, c.postdate,
+		$sql = 'SELECT c.comment, UNIX_TIMESTAMP(c.postdate) as postdate,
 						p.firstname, p.lastname
 					FROM '.TABLE_PREFIX.'pirepcomments c, '.TABLE_PREFIX.'pilots p
 					WHERE p.pilotid=c.pilotid AND c.pirepid='.$pirepid.'
@@ -90,7 +92,6 @@ class PIREPData
 	
 	function AddComment($pirepid, $commenter, $comment)
 	{
-	
 		$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
 					VALUES ($pirepid, $commenter, '$comment', NOW())";
 		

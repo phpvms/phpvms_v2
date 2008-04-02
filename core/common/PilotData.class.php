@@ -60,6 +60,15 @@ class PilotData
 		return $ret;
 	}
 	
+	function UpdateFlightData($pilotid, $flighttime)
+	{
+		$sql = "UPDATE " .TABLE_PREFIX."pilots 
+					SET totalhours=totalhours+$flighttime, totalflights=totalflights+1
+					WHERE pilotid=$pilotid";
+		
+		return DB::query($sql);		
+	}
+	
 	function SaveFields($pilotid, $list)
 	{
 		$allfields = RegistrationData::GetCustomFields();

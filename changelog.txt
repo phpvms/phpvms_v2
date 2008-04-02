@@ -4,11 +4,11 @@ phpVMS Build Changelog:
 
 Next Build - 
 
+  * Accept/Reject PIREPs in Admin Panel (after accept, adds total flights/hours)
   * About page in Admin Panel
   * Definition lists heights evened out
   * PIREP list view enhancements
   * "New Version" available message, fixed to show only on main page
-
 
 Build 258 - 03/31/2008
 
@@ -31,3 +31,8 @@ Build 258 - 03/31/2008
   * Wording fixes
   * Core bug fixes (database connector fixes)
   * Templates were showing incorrectly in installer
+
+
+
+=====
+http://www.phpvms.net

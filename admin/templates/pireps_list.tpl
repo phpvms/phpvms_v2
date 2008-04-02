@@ -30,9 +30,13 @@ foreach($pireps as $report)
 	<td align="center"><?=$report->depicao; ?></td>
 	<td align="center"><?=$report->arricao; ?></td>
 	<td align="center"><?=$report->flighttime; ?></td>
-	<td align="center"><?=$report->submitdate; ?></td>
+	<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?></td>
 	<td align="center">
-	  <a id="dialog" class="jqModal" href="action.php?admin=addcomment&pirepid=<?=$report->id;?>">Add Comment</a>
+		<a href="action.php?admin=viewpireps" action="approvepirep" 
+			id="<?=$report->pirepid;?>" class="ajaxcall">Accept Report</a>
+		<br />
+		<a id="dialog" class="jqModal" 
+			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>">Add Comment</a>
 	</td>
 </tr>
 <?php

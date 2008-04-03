@@ -79,10 +79,12 @@ class PIREPAdmin
 		
 		if($pirepid == '') return;
 			
-		$pirep  = PIREPData::GetReportDetails($pirepid);
+		$pirep_details  = PIREPData::GetReportDetails($pirepid);
 		
-		PIREPData::ChangePIREPStatus($pirepid, '1'); // 1 is accepted
-		PilotData::UpdateFlightData(Auth::$userinfo->pilotid, $pirep->flighttime);	
+		if(intval($pirep_details->accepted) == 1) return;
+	
+		PIREPData::ChangePIREPStatus($pirep_details, '1'); // 1 is accepted
+		PilotData::UpdateFlightData(Auth::$userinfo->pilotid, $pirep_details->flighttime);	
 	}
 	
 	/**
@@ -97,14 +99,19 @@ class PIREPAdmin
 		if($pirepid == '' || $comment == '') return;
 	
 		PIREPData::ChangePIREPStatus($pirepid, '2'); // 2 is rejected
-	
+		$pirep_details = PIREPData::GetReportDetails($pirepid);
+		
+		// If it was previously accepted, subtract the flight data
+		if(intval($pirep_details->accepted) == 1)
+		{
+			PilotData::UpdateFlightData(Auth::$userinfo->pilotid, -1 * floatval($pirep->flighttime), -1);
+		}
+		
 		// Send comment for rejection	
 		if($comment != '')
 		{
 			$commenter = Auth::$userinfo->pilotid;
 			PIREPData::AddComment($pirepid, $commenter, $comment);
-			
-			$pirep_details = PIREPData::GetReportDetails($pirepid);
 			
 			// Send them an email
 			Template::Set('firstname', $pirep_details->firstname);

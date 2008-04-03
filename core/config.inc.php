@@ -77,6 +77,7 @@ if(DBASE_NAME != '')
 	DB::init(DBASE_TYPE);	
 	DB::connect(DBASE_USER, DBASE_PASS, DBASE_NAME, DBASE_SERVER);
 	DB::hide_errors();
+	DB::query('SET FOREIGN_KEY_CHECKS=1;'); // Compensate for host-side setting
 }
 
 Auth::StartAuth();

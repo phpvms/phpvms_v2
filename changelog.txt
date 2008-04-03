@@ -6,9 +6,12 @@ Next Build -
 
   * Accept/Reject PIREPs in Admin Panel (after accept, adds total flights/hours)
   * About page in Admin Panel
-  * Definition lists heights evened out
+  * Database tables changed to InnoDB, show some respect to the FK and integrity =D
+  * "SET FOREIGN_KEY_CHECKS=1;" to compensate for host-specific settings
   * PIREP list view enhancements
+  * Definition lists heights evened out
   * "New Version" available message, fixed to show only on main page
+  * Design enhancements
 
 Build 258 - 03/31/2008
 
@@ -31,7 +34,6 @@ Build 258 - 03/31/2008
   * Wording fixes
   * Core bug fixes (database connector fixes)
   * Templates were showing incorrectly in installer
-
 
 
 =====

@@ -60,10 +60,10 @@ class PilotData
 		return $ret;
 	}
 	
-	function UpdateFlightData($pilotid, $flighttime)
+	function UpdateFlightData($pilotid, $flighttime, $numflights=1)
 	{
 		$sql = "UPDATE " .TABLE_PREFIX."pilots 
-					SET totalhours=totalhours+$flighttime, totalflights=totalflights+1
+					SET totalhours=totalhours+$flighttime, totalflights=totalflights+$numflights
 					WHERE pilotid=$pilotid";
 		
 		return DB::query($sql);		

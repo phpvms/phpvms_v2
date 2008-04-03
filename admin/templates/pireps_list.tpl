@@ -16,7 +16,7 @@ if(!$pireps)
 	<th>Arrival</th>
 	<th>Flight Time</th>
 	<th>Submitted</th>
-	<th>Options</th>
+	<th>Options (* for double click)</th>
 </tr>
 </thead>
 <tbody>
@@ -33,7 +33,10 @@ foreach($pireps as $report)
 	<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?></td>
 	<td align="center">
 		<a href="action.php?admin=viewpireps" action="approvepirep" 
-			id="<?=$report->pirepid;?>" class="ajaxcall">Accept Report</a>
+			id="<?=$report->pirepid;?>" class="ajaxcall">Accept * </a>
+		<br />
+		<a id="dialog" class="jqModal" 
+			href="action.php?admin=rejectpirep&pirepid=<?=$report->pirepid;?>">Reject</a>
 		<br />
 		<a id="dialog" class="jqModal" 
 			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>">Add Comment</a>
@@ -44,4 +47,3 @@ foreach($pireps as $report)
 ?>
 </tbody>
 </table>
-<hr>

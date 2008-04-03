@@ -20,6 +20,16 @@ body
 	padding-bottom: 10px;
 }
 
+h3
+{
+	background: url(images/h3.jpg) no-repeat left;
+	height: 36px;
+	font-size: 30px;
+	padding-left: 48px;
+	padding-bottom: 3px;
+	margin-top: 7px;
+}
+
 #innerwrapper
 {
 	width: 970px;
@@ -43,14 +53,14 @@ body
 	width: 970px;
 	margin: 0;
 	height: 0px;
-	border-bottom: solid 1px #cccccc;
+	
 }
 #topNav ul
 {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	
+	clear: both;
 }
 #topNav ul li
 {
@@ -78,11 +88,7 @@ body
 {
 	width: 770px;
 	margin-left: 162px;
-	padding-left: 10px;
-	padding-top: 5px;
-	padding-right: 10px;
-	padding-bottom: 0px;
-	
+	padding: 0 10px 10px 0;
 }
 
 #messagebox

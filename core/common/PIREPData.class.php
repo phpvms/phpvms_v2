@@ -23,9 +23,20 @@ class PIREPData
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid 
-						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate';
+						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate
+					ORDER BY p.submitdate ASC';
 					
 		return DB::get_results($sql);	
+	}
+	
+	function GetReportCount($days = 7)
+	{
+		
+		$sql = 'SELECT DISTINCT(DATE(submitdate)) AS submitdate, 
+					(SELECT COUNT(*) FROM '.TABLE_PREFIX.'pireps WHERE DATE(submitdate)=DATE(p.submitdate)) AS count
+				FROM '.TABLE_PREFIX.'pireps p WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= p.submitdate';
+		
+		return DB::get_results($sql);		
 	}
 	
 	function GetAllReportsForPilot($pilotid='')

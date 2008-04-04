@@ -27,22 +27,28 @@ class PIREPAdmin
 		switch(Vars::GET('admin'))
 		{
 			case 'rejectpirep':
-
 				Template::Set('pirepid', Vars::GET('pirepid'));
 				
 				Template::Show('pirep_reject.tpl');
+				
 				break;
 				
-			case 'viewpireps':
+			case 'viewrecent':
+				Template::Set('pireps', PIREPData::GetRecentReports());
+				Template::Set('descrip', 'These pilot reports are from the past 48 hours');
+				
+				Template::Show('pireps_list.tpl');
+				break;
+				
+			case 'viewpending':
 		
-				Template::Set('pireps', PIREPData::GetAllReportsByAccept(0));
-				Template::Set('descrip', 'These PIREPs are pending');
+				Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
+				Template::Set('descrip', 'These pilot reports are pending approval');
 				
 				Template::Show('pireps_list.tpl');
 				break;
 				
 			case 'addcomment':
-
 				Template::Set('pirepid', Vars::GET('pirepid'));
 				
 				Template::Show('pirep_addcomment.tpl');
@@ -83,7 +89,7 @@ class PIREPAdmin
 		
 		if(intval($pirep_details->accepted) == 1) return;
 	
-		PIREPData::ChangePIREPStatus($pirep_details, '1'); // 1 is accepted
+		PIREPData::ChangePIREPStatus($pirep_details, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData(Auth::$userinfo->pilotid, $pirep_details->flighttime);	
 	}
 	
@@ -98,7 +104,7 @@ class PIREPAdmin
 				
 		if($pirepid == '' || $comment == '') return;
 	
-		PIREPData::ChangePIREPStatus($pirepid, '2'); // 2 is rejected
+		PIREPData::ChangePIREPStatus($pirepid, PIREP_REJECTED); // 2 is rejected
 		$pirep_details = PIREPData::GetReportDetails($pirepid);
 		
 		// If it was previously accepted, subtract the flight data

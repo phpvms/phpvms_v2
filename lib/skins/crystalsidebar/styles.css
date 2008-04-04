@@ -188,6 +188,15 @@ table.tablesorter {
 	width: 780px;
 	text-align: center;
 }
+
+table.tablesorter input
+{
+	width: 90%;
+	padding: 3px;
+	border: solid 1px #7094FF;
+	background: #FFFFFF;
+}
+
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
 	

@@ -16,6 +16,18 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 	
+	function GetRecentReports($days=2)
+	{
+		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+					WHERE p.pilotid=u.pilotid 
+						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate';
+					
+		return DB::get_results($sql);	
+	}
+	
 	function GetAllReportsForPilot($pilotid='')
 	{
 		$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao,

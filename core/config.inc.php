@@ -40,12 +40,12 @@ $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
 $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 
 // Determine our administration modules
+$ADMIN_MODULES['Dashboard'] = ADMIN_PATH . '/modules/Dashboard/DashboardAdmin.php';
 $ADMIN_MODULES['SiteCMS'] = ADMIN_PATH . '/modules/SiteCMS/SiteCMS.php';
 $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
 $ADMIN_MODULES['PIREPAdmin'] = ADMIN_PATH . '/modules/PIREPAdmin/PIREPAdmin.php';
 $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
 $ADMIN_MODULES['SettingsAdmin'] = ADMIN_PATH . '/modules/Settings/Settings.php';
-$ADMIN_MODULES['CronAdmin'] = ADMIN_PATH . '/modules/Cron/CronAdmin.php';
 
 // Include all dependencies
 include CLASS_PATH . '/Auth.class.php';
@@ -70,6 +70,8 @@ include COMMON_PATH . '/OperationsData.class.php';
 include COMMON_PATH . '/SchedulesData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
 
+include COMMON_PATH . '/GphpChart.class.php';
+
 include CORE_PATH . '/site_config.inc.php';
 
 if(DBASE_NAME != '')
@@ -87,6 +89,12 @@ Util::LoadSiteSettings();
 define('LIB_PATH', SITE_ROOT.'/lib');
 define('SKINS_PATH', LIB_PATH.'/skins/' . CURRENT_SKIN);
 define('CACHE_TIMEOUT', 24); //hours
+
+define('PIREP_PENDING', 0);
+define('PIREP_ACCEPTED', 1);
+define('PIREP_REJECTED', 2);
+define('PIREP_INPROGRESS', 3); // value of 3
+
 
 $NAVBAR = '';
 $HTMLHead = '';

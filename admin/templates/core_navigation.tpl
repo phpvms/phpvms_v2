@@ -14,7 +14,8 @@
 </li>
 <li><a href="#">PIREPs</a>
 	<ul>
-		<li><a href="?admin=viewpireps">View Recent</a></li>
+		<li><a href="?admin=viewpending">View Pending</a></li>
+		<li><a href="?admin=viewrecent">View Recent Reports</a></li>
 	</ul>
 </li>
 <li><a href="#">Pilots</a>

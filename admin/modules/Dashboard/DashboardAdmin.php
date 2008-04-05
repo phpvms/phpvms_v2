@@ -17,11 +17,9 @@ class Dashboard
 		{
 			case '':
 			
-				$this->CheckForUpdates();
-				
-				
-				$this->ShowReportCounts();
-				
+				/* Dashboard.tpl calls the functions below
+				*/
+				Template::Show('dashboard.tpl');
 				break;
 				
 			case 'about':
@@ -32,6 +30,9 @@ class Dashboard
 		}
 	}
 	
+	/**
+	 * Show the notification that an update is available
+	 */
 	function CheckForUpdates()
 	{
 		if(NOTIFY_UPDATE == true)
@@ -46,41 +47,34 @@ class Dashboard
 		}
 	}
 	
-	
+	/**
+	 * Show the graph of the past week's reports
+	 */
 	function ShowReportCounts()
 	{
-		
 		// Recent PIREP #'s
+		$max = 0;
+		$data = array();
 		
-		/*
-		for ($x = 1; $x < 32; $x++) {
-			$lower_bound = mktime(0,0,0,date('m'),$x,date('Y'));
-			$upper_bound = mktime(0,0,0,date('m'),$x + 1,date('Y'));
-			$query = "SELECT count(id) FROM orders WHERE timeordered > FROM_UNIXTIME($lower_bound) AND timeordered < FROM_UNIXTIME($upper_bound)";
-			$res = DB::get_var($query);
-			$data[] = $res; // add to data
-			
-			$max = ($res > $max) ? $res : $max; // for y-axis label scaling
-		}
-		*/
-		
-		$reports = PIREPData::GetReportCount();
-		
-		$lineChart = new gLineChart;
-				
-		$values = array();
-		$valueLabels = array();
-		foreach($reports as $report)
+		// This is for the past 7 days
+		for($i=-7;$i<=0;$i++)
 		{
-			array_push($values, $report->count);
+			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));		
+			$count = PIREPData::GetReportCount($date);
+			
+			array_push($data, intval($count));
+			$label .= date('m/d', $date) .'|';
+			
+			if($count > $max) 
+				$max = $count;
 		}
+						
+		$chart = new googleChart($data);
+		$chart->dimensions = '700x200';
+		$chart->setLabelsMinMax($max,'left');
+		$chart->setLabels($label,'bottom');
 		
-		$lineChart->width = 500;
-		$lineChart->addDataSet($values);
-		$lineChart->valueLabels = array('Report Submissions');
-				
-		echo '<img src="'. $lineChart->getUrl() . '" />';
-
+		echo '<img src="'.$chart->draw(false).'" align="center" />';
 	}
 }
 ?>

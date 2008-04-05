@@ -107,6 +107,7 @@ h3
 	background: #FFCCDA;
 	padding: 7px;
 	text-align: center;
+	width: 100%;
 }
 
 #success
@@ -115,6 +116,7 @@ h3
 	background: #D8FFCC;
 	padding: 7px;
 	text-align: center;
+	width: 100%;
 }
 
 dl

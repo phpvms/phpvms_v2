@@ -2,9 +2,10 @@
 
 class PIREPS extends ModuleBase
 {
+	public $pirep;
+	
 	function Controller()
 	{
-		
 		switch(Vars::GET('page'))
 		{
 		
@@ -32,7 +33,10 @@ class PIREPS extends ModuleBase
 			case 'viewreport':
 			
 				$pirepid = Vars::GET('pirepid');
-				Template::Set('report', PIREPData::GetReportDetails($pirepid));
+				$this->pirep = PIREPData::GetReportDetails($pirepid);
+				
+				
+				Template::Set('report', $this->pirep);
 				Template::Set('comments', PIREPData::GetComments($pirepid));
 				
 				Template::Show('pirep_viewreport.tpl');
@@ -42,6 +46,7 @@ class PIREPS extends ModuleBase
 				
 				Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
 				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('allaircraft', OperationsData::GetAllAircraft());
 				
 				Template::Show('pirep_new.tpl');
 				break;
@@ -100,16 +105,17 @@ class PIREPS extends ModuleBase
 		$flightnum = Vars::POST('flightnum');
 		$depicao = Vars::POST('depicao');
 		$arricao = Vars::POST('arricao');
+		$aircraft = Vars::POST('aircraft');
 		$flighttime = Vars::POST('flighttime');
 		$comment = Vars::POST('comment');
 				
-		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $flighttime == '')
+		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
 			return false;
 		}
 		
-		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $flighttime, $comment))
+		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
 			return false;

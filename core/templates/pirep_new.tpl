@@ -35,6 +35,19 @@ if($message!='')
 		<div id="arrairport">Select a departure airport from above</div>
 	</dd>
 	
+	<dt>Select Aircraft:</dt>
+	<dd>
+		<select name="aircraft" id="aircraft">
+			<option value="">Select the aircraft of this flight</option>
+		<?php
+		foreach($allaircraft as $aircraft)
+		{
+			echo '<option value="'.$aircraft->name.'">'.$aircraft->name.'</option>';
+		}
+		?>	
+		</select>
+	</dd>
+	
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" />
 		<p>Enter as hours - "5.5" is five and a half hours</p></dd>

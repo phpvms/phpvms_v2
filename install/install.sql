@@ -51,7 +51,6 @@ CREATE TABLE `phpvms_schedules` (
 	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 
-
 CREATE TABLE `phpvms_news` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`subject` VARCHAR( 30 ) NOT NULL ,
@@ -73,7 +72,6 @@ CREATE TABLE `phpvms_pages` (
 	PRIMARY KEY  (`pageid`),
 	UNIQUE KEY `pagename` (`pagename`)
 )ENGINE=INNODB;
-
 
 CREATE TABLE `phpvms_ranks` (
 	`rankid` int(11) NOT NULL auto_increment,
@@ -113,6 +111,7 @@ CREATE TABLE `phpvms_pireps` (
 	`flightnum` varchar(10) NOT NULL default '0',
 	`depicao` VARCHAR( 4 ) NOT NULL ,
 	`arricao` VARCHAR( 4 ) NOT NULL ,
+	`aircraft` VARCHAR( 12 ) NOT NULL ,
 	`flighttime` VARCHAR( 10 ) NOT NULL ,
 	`distance` SMALLINT NOT NULL ,
 	`submitdate` DATETIME NOT NULL ,
@@ -123,6 +122,7 @@ CREATE TABLE `phpvms_pireps` (
 	INDEX `flightnum` (`flightnum`),
 	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE,
 	FOREIGN KEY (`flightnum`) REFERENCES phpvms_schedules(`flightnum`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 

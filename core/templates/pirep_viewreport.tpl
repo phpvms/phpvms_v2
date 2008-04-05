@@ -8,6 +8,9 @@
 	<dt>Route:</dt>
 	<dd><?=$report->depicao . ' -> ' . $report->arricao;?></dd>
 	
+	<dt>Aircraft:</dt>
+	<dd><?=$report->aircraft;?></dd>
+	
 	<dt>Hours:</dt>
 	<dd><?=$report->flighttime;?></dd>
 </dl>
@@ -20,13 +23,12 @@ if($comments)
 	foreach($comments as $comment)
 	{
 ?>
-	<p><?=$comment->comment?> - By <?=$comment->firstname . ' ' .$comment->lastname?></p>
+		<p><?=$comment->comment?> - By <?=$comment->firstname . ' ' .$comment->lastname?></p>
 <?php
 	}
 	
 	echo '</div>';
 }
+
+Template::Show('pirep_map.tpl');
 ?>
-<div style="clear:both;">
-	<p>Map Here!</p>
-</div>

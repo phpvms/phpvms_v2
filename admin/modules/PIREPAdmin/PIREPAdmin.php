@@ -28,7 +28,6 @@ class PIREPAdmin
 		{
 			case 'rejectpirep':
 				Template::Set('pirepid', Vars::GET('pirepid'));
-				
 				Template::Show('pirep_reject.tpl');
 				
 				break;
@@ -41,11 +40,9 @@ class PIREPAdmin
 				break;
 				
 			case 'viewpending':
-		
-				Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
-				Template::Set('descrip', 'These pilot reports are pending approval');
-				
+				Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));				
 				Template::Show('pireps_list.tpl');
+				
 				break;
 				
 			case 'addcomment':

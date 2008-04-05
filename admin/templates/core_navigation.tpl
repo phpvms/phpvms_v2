@@ -1,3 +1,4 @@
+<li><a href="?admin=">Dashboard</a></li>
 <li><a href="#">Site</a>
 	<ul>
 		<li><a href="?admin=viewnews">View News</a></li>

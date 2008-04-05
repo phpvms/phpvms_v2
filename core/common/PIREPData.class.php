@@ -29,9 +29,21 @@ class PIREPData
 		return DB::get_results($sql);	
 	}
 	
-	function GetReportCount($days = 7)
+	/**
+	 * Get the number of reports on a certain date 
+	 *  Pass unix timestamp
+	 */
+	function GetReportCount($date)
 	{
+		$sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'pireps 
+					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME('.$date.'))';
 		
+		$row = DB::get_row($sql);
+		return $row->count;
+	}
+	
+	function GetCountsForDays($days = 7)
+	{
 		$sql = 'SELECT DISTINCT(DATE(submitdate)) AS submitdate, 
 					(SELECT COUNT(*) FROM '.TABLE_PREFIX.'pireps WHERE DATE(submitdate)=DATE(p.submitdate)) AS count
 				FROM '.TABLE_PREFIX.'pireps p WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= p.submitdate';
@@ -60,11 +72,15 @@ class PIREPData
 	}
 	
 	function GetReportDetails($pirepid)
-	{
+	{					
 		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,	
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
+					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						INNER JOIN phpvms_airports AS dep ON dep.icao = p.depicao
+						INNER JOIN phpvms_airports AS arr ON arr.icao = p.arricao
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 		
 		return DB::get_row($sql);		
@@ -90,11 +106,11 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 	
-	function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $flighttime, $comment='')
+	function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment='')
 	{
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps 	
-					(pilotid, code, flightnum, depicao, arricao, flighttime, submitdate)
-					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$flighttime', NOW())";
+					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate)
+					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW())";
 		
 		$ret = DB::query($sql);
 		

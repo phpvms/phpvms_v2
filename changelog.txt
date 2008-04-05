@@ -4,6 +4,8 @@ phpVMS Build Changelog:
 
 Next Build - 
 
+  * Charts show up on Dashboard (Module based), for some rudimentary stats (more coming)
+  * Google Map shows route on "View Report" page
   * Accept/Reject PIREPs in Admin Panel (after accept, adds total flights/hours)
   * About page in Admin Panel
   * Database tables changed to InnoDB, show some respect to the FK and integrity =D

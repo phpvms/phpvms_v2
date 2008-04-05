@@ -10,7 +10,7 @@ session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'on');
 
-$Config['PHPVMS_VERSION'] = '0.9.261';
+$Config['PHPVMS_VERSION'] = '0.9.272';
 
 define('SITE_ROOT', str_replace('/core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );

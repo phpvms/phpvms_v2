@@ -134,14 +134,19 @@ class TemplateSet
 	
 	public function ShowModule($ModuleName, $Method='ShowTemplate')
 	{
-		//read the parameters
+		$ModuleName = strtoupper($ModuleName);
 		global $$ModuleName;
 		
-		if(!is_object($$ModuleName))
-			return;
+		// have a reference to the self 
+		if(!is_object($$ModuleName) || ! method_exists($$ModuleName, $MethodName))
+		{
+			return false;	
+		}
 		
+		// if there are parameters added, then call the function 
+		//	using those additional params
 		$args = func_num_args();
-		if($args>1)
+		if($args>2)
 		{
 			$vals=array();
 			for($i=2;$i<$args;$i++)
@@ -149,8 +154,13 @@ class TemplateSet
 				$param = func_get_arg($i);
 				array_push($vals, $param);
 			}
-
-			return call_user_method_array($Method,  $$ModuleName, $vals);
+			
+			return call_user_method_array($MethodName,  $$ModuleName, $vals);
+		}
+		else
+		{
+			//no parameters, straight return
+			return $$ModuleName->$MethodName();
 		}
 	}
 }

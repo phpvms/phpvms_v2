@@ -1,33 +1,50 @@
 <h3>View Pilot Report</h3>
 
-<div>
-<dl>
-	<dt>Submitted on: </dt>
-	<dd><?=$report->submitdate;?></dd>
-	
-	<dt>Route:</dt>
-	<dd><?=$report->depicao . ' -> ' . $report->arricao;?></dd>
-	
-	<dt>Aircraft:</dt>
-	<dd><?=$report->aircraft;?></dd>
-	
-	<dt>Hours:</dt>
-	<dd><?=$report->flighttime;?></dd>
-</dl>
-</div>
+<table id="tabledlist" class="tablesorter">
+<thead>
+<tr>
+	<th>Flight Number</th>
+	<th>Departure</th>	
+	<th>Arrival</th>
+	<th>Flight Time</th>
+	<th>Submitted</th>
+</tr>
+</thead>
+<tbody>
+	<tr>
+		<td align="center"><?=$report->code . $report->flightnum; ?></td>
+		<td align="center"><?=$report->depicao; ?></td>
+		<td align="center"><?=$report->arricao; ?></td>
+		<td align="center"><?=$report->flighttime; ?></td>
+		<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?>
+	</tr>
+</tbody>
+</table>
+
 <?php
 if($comments)
 {
-	echo '<div style="clear:both;"><h3>Comments</h3>';
+	echo '<h3>Comments</h3>
+		<table id="tabledlist" class="tablesorter">
+<thead>
+<tr>
+	<th>Commenter</th>
+	<th>Comment</th>	
+</tr>
+</thead>
+<tbody>';
 	
 	foreach($comments as $comment)
 	{
 ?>
-		<p><?=$comment->comment?> - By <?=$comment->firstname . ' ' .$comment->lastname?></p>
+	<tr>
+		<td width="15%" nowrap><?=$comment->firstname . ' ' .$comment->lastname?></td>
+		<td align="left"><?=$comment->comment?></td>
+	</tr>
 <?php
 	}
 	
-	echo '</div>';
+	echo '</tbody></table>';
 }
 
 Template::Show('pirep_map.tpl');

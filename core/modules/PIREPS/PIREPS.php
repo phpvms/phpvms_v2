@@ -21,10 +21,8 @@ class PIREPS extends ModuleBase
 				}
 				
 				// Show PIREPs filed
-				
-				Template::Set('accepted', PIREPData::GetReportsByAcceptStatus(Auth::$userinfo->pilotid, 1));
-				Template::Set('pending', PIREPData::GetReportsByAcceptStatus(Auth::$userinfo->pilotid, 0));
-				
+							
+				Template::Set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
 				
 				Template::Show('pireps_viewall.tpl');
 				
@@ -35,8 +33,10 @@ class PIREPS extends ModuleBase
 				$pirepid = Vars::GET('pirepid');
 				$this->pirep = PIREPData::GetReportDetails($pirepid);
 				
-				
+						
 				Template::Set('report', $this->pirep);
+				Template::Set('points', array(array($this->pirep->deplat, $this->pirep->deplong),
+											  array($this->pirep->arrlat, $this->pirep->arrlong)));
 				Template::Set('comments', PIREPData::GetComments($pirepid));
 				
 				Template::Show('pirep_viewreport.tpl');
@@ -122,6 +122,15 @@ class PIREPS extends ModuleBase
 		}
 				
 		return true;	
+	}
+	
+	/**
+	 *
+	 */
+	function RecentFrontPage($days = 1)
+	{		
+		Template::Set('reports', PIREPData::GetRecentReports($days));	
+		Template::Show('frontpage_reports.tpl');
 	}
 }
 		

@@ -8,8 +8,8 @@ class PIREPData
 	function GetAllReportsByAccept($accept=0)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
-				p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 		
@@ -19,12 +19,12 @@ class PIREPData
 	function GetRecentReports($days=2)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid 
 						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate
-					ORDER BY p.submitdate ASC';
+					ORDER BY p.submitdate DESC';
 					
 		return DB::get_results($sql);	
 	}
@@ -53,13 +53,15 @@ class PIREPData
 	
 	function GetAllReportsForPilot($pilotid='')
 	{
-		$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao,
+		$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
 					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
 					FROM '.TABLE_PREFIX.'pireps';
 		
 		if($pilotid!='')
 			$sql .=' WHERE pilotid='.intval($pilotid);
 			
+		$sql .= ' ORDER BY submitdate DESC';
+		
 		return DB::get_results($sql);
 	}
 	

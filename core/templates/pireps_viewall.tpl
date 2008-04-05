@@ -1,78 +1,57 @@
-<h3>Pilot Reports</h3>
-
-<h3>Pending</h3>
+<h3>PIREPs List</h3>
+<p><?=$descrip;?></p>
 <?php
-if(!$pending)
-	echo '<p>No flight reports pending</p>';
-else
+if(!$pireps)
 {
+	echo '<p>No reports have been found</p>';
+	return;
+}	
 ?>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
-	<th>Flight</th>
+	<th>Flight Number</th>
 	<th>Departure</th>	
 	<th>Arrival</th>
+	<th>Aircraft</th>
 	<th>Flight Time</th>
-	<th>Date Submitted</th>
+	<th>Submitted</th>
+	<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <?php
-foreach($pending as $pirep)
+foreach($pireps as $report)
 {
 ?>
 <tr>
-	<td align="center"><a href="?page=viewreport&pirepid=<?=$pirep->pirepid?>"><?=$pirep->code.$pirep->flightnum; ?></a></td>
-	<td align="center"><?=$pirep->depicao; ?></td>
-	<td align="center"><?=$pirep->arricao; ?></td>
-	<td align="center"><?=$pirep->flighttime; ?></td>
-	<td align="center"><?=$pirep->submitdate; ?></td>
+	<td align="center">
+		<a href="?page=viewreport&pirepid=<?=$report->pirepid?>"><?=$report->code . $report->flightnum; ?></a>
+	</td>
+	<td align="center"><?=$report->depicao; ?></td>
+	<td align="center"><?=$report->arricao; ?></td>
+	<td align="center"><?=$report->aircraft; ?></td>
+	<td align="center"><?=$report->flighttime; ?></td>
+	<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?>
+		
+	</td>
+	<td align="center">
+		<?php
+		
+		if($report->accepted == PIREP_ACCEPTED)
+			echo '<div id="success">Accepted</div>';
+		elseif($report->accepted == PIREP_REJECTED)
+			echo '<div id="error">Rejected</div>';
+		elseif($report->accepted == PIREP_PENDING)
+			echo '<div id="error">Approval Pending</div>';
+		elseif($report->accepted == PIREP_INPROGRESS)
+			echo '<div id="error">Flight in Progress</div>';
+		
+		?>
+	</td>
 </tr>
 <?php
 }
 ?>
 </tbody>
 </table>
-<hr>
-<?php
-}
-?>
-<h3>Accepted</h3>
-
-<?php
-if(!$accepted)
-	echo '<p>No accepted flight reports</p>';
-else
-{
-?>
-<table id="tabledlist" class="tablesorter">
-<thead>
-<tr>
-	<th>Flight</th>
-	<th>Departure</th>	
-	<th>Arrival</th>
-	<th>Flight Time</th>
-	<th>Date Submitted</th>
-</tr>
-</thead>
-<tbody>
-<?php
-foreach($accepted as $pirep)
-{
-?>
-<tr>
-	<td align="center"><a href="?page=viewreport&id=<?=$pirep->pirepid?>"><?=$pirep->code.$pirep->flightnum; ?></a></td>
-	<td align="center"><?=$pirep->depicao; ?></td>
-	<td align="center"><?=$pirep->arricao; ?></td>
-	<td align="center"><?=$pirep->flighttime; ?></td>
-	<td align="center"><?=$pirep->submitdate; ?></td>
-</tr>
-<?php
-}
-?>
-</tbody>
-</table>
-<?php
-}
-?>

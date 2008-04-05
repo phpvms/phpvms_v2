@@ -1,3 +1,4 @@
+<li><a href="?page=">home</a></li>
 <?php
 if(!Auth::LoggedIn())
 {

@@ -20,6 +20,16 @@ body
 	padding-bottom: 10px;
 }
 
+h3
+{
+	background: url(images/h3.jpg) no-repeat left;
+	height: 30px;
+	font-size: 22px;
+	padding-left: 36px;
+	padding-bottom: 3px;
+	margin-top: 7px;
+}
+
 
 #innerwrapper
 {
@@ -76,12 +86,24 @@ body
 #bodytext
 {
 	width: 950px;
-	
 	padding-left: 10px;
 	padding-top: 5px;
 	padding-right: 10px;
 	padding-bottom: 0px;
 	
+}
+
+#mainbox
+{
+	width: 640px;
+	float: left;
+}
+
+#sidebar
+{
+	float: right;
+	width: 300px;
+	clear: right;
 }
 
 #messagebox
@@ -177,16 +199,22 @@ dd input
 /* Tables */
 /* tables */
 table.tablesorter {
-	font-family:arial;
-	background-color: #CDCDCD;
-	margin:10px 0pt 15px;
 	
-	width: 950px;
+	width: 100%;
 	text-align: center;
 }
+
+table.tablesorter input
+{
+	width: 90%;
+	padding: 3px;
+	border: solid 1px #7094FF;
+	background: #FFFFFF;
+}
+
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
-	border: 1px solid #cccccc;
+	
 	font-size: 8pt;
 	padding: 4px;
 }
@@ -194,24 +222,22 @@ table.tablesorter thead tr .header {
 	cursor: pointer;
 }
 table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
+	padding: 6px;
 	vertical-align: top;
+	border-bottom: dashed 1px #333;
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 }
 table.tablesorter thead tr .headerSortUp {
-	background-image: url(images/asc.gif);
+	background-image: url(images/asc.gif) no-repeat;
 }
 table.tablesorter thead tr .headerSortDown {
-	background-image: url(images/desc.gif);
+	background-image: url(images/desc.gif) no-repeat;
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-background-color: #8dbdd8;
+	background-color: #8dbdd8;
 }
-
 
 
 /* Navigation */

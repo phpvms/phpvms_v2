@@ -86,7 +86,7 @@ class PIREPAdmin
 		
 		if(intval($pirep_details->accepted) == 1) return;
 	
-		PIREPData::ChangePIREPStatus($pirep_details, PIREP_ACCEPTED); // 1 is accepted
+		PIREPData::ChangePIREPStatus($pirep_details->pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData(Auth::$userinfo->pilotid, $pirep_details->flighttime);	
 	}
 	

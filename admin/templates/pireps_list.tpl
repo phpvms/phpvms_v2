@@ -45,7 +45,7 @@ foreach($pireps as $report)
 		?>
 	</td>
 	<td align="center">
-		<a href="action.php?admin=viewpireps" action="approvepirep" 
+		<a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepirep" 
 			id="<?=$report->pirepid;?>" class="ajaxcall">Accept * </a>
 		<br />
 		<a id="dialog" class="jqModal" 

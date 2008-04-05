@@ -14,6 +14,8 @@ function EvokeListeners()
 	//Tabs
 	$("#tabcontainer > ul").tabs();
 	
+	$('#jqmdialog').bind('dblclick', function() { return false });
+	
     // Show dialog box
 	$('#jqmdialog').jqm({
 	    ajax:'@href',

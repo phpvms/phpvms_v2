@@ -84,9 +84,9 @@ class PIREPAdmin
 			
 		$pirep_details  = PIREPData::GetReportDetails($pirepid);
 		
-		if(intval($pirep_details->accepted) == 1) return;
+		if(intval($pirep_details->accepted) == PIREP_ACCEPTED) return;
 	
-		PIREPData::ChangePIREPStatus($pirep_details->pirepid, PIREP_ACCEPTED); // 1 is accepted
+		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData(Auth::$userinfo->pilotid, $pirep_details->flighttime);	
 	}
 	
@@ -105,7 +105,7 @@ class PIREPAdmin
 		$pirep_details = PIREPData::GetReportDetails($pirepid);
 		
 		// If it was previously accepted, subtract the flight data
-		if(intval($pirep_details->accepted) == 1)
+		if(intval($pirep_details->accepted) == PIREP_ACCEPTED)
 		{
 			PilotData::UpdateFlightData(Auth::$userinfo->pilotid, -1 * floatval($pirep->flighttime), -1);
 		}

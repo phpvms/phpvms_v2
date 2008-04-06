@@ -22,6 +22,8 @@ class PilotProfile extends ModuleBase
 					$this->ChangePassword();
 				}
 				
+				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+				Template::Set('report', PIREPData::GetLastReports(Auth::$userinfo->pilotid));
 				Template::Set('userinfo', Auth::$userinfo);
 				Template::Show('profile_main.tpl');
 				break;

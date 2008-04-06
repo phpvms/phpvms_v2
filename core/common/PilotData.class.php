@@ -26,6 +26,11 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
+	function GetPilotCode($code, $pilotid)
+	{
+		return $code . str_pad($pilotid, 4, '0', STR_PAD_LEFT);
+	}
+	
 	function GetPilotData($pilotid)
 	{
 		$sql = 'SELECT pilotid, firstname, lastname, email, code, location, UNIX_TIMESTAMP(lastlogin) as lastlogin, 

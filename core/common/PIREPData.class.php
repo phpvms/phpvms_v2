@@ -88,6 +88,19 @@ class PIREPData
 		return DB::get_row($sql);		
 	}
 
+	function GetLastReports($pilotid, $count = 1)
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps 
+					WHERE pilotid='.intval($pilotid).' 
+					ORDER BY submitdate DESC
+					LIMIT '.intval($count);
+		
+		if($count == 1)
+			return DB::get_row($sql);
+		else
+			return DB::get_results($sql);		
+	}
+	
 	function GetReportsByAcceptStatus($pilotid, $accept=0)
 	{
 		

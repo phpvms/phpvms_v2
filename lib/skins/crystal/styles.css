@@ -23,7 +23,7 @@ body
 h3
 {
 	background: url(images/h3.jpg) no-repeat left;
-	height: 30px;
+	height: 26px;
 	font-size: 22px;
 	padding-left: 36px;
 	padding-bottom: 3px;
@@ -56,6 +56,7 @@ h3
 	height: 37px;
 	border-bottom: solid 1px #cccccc;
 }
+
 #topNav ul
 {
 	margin: 0;
@@ -63,6 +64,7 @@ h3
 	list-style: none;
 	margin: 0 auto;
 }
+
 #topNav ul li
 {
 	height: 37px;
@@ -71,6 +73,7 @@ h3
 	background: url(images/navbg.jpg) repeat-x 0 0 #292929;
 	font: bold 12px/37px Arial, Helvetica, sans-serif;
 }
+
 #topNav ul li a
 {
 	padding: 0 18px;
@@ -91,6 +94,11 @@ h3
 	padding-right: 10px;
 	padding-bottom: 0px;
 	
+}
+
+.indent 
+{
+	padding-left: 32px;
 }
 
 #mainbox
@@ -177,19 +185,19 @@ dd input
 	z-index: 500;
 }
 
-
 #footer
 {
 	width: 970px;
 	background: url(images/bottombg.jpg) repeat-x 0 0 #ffffff;
 	height: 148px;
 	margin: 0 auto;
-	padding: 0 0 0 0;
+	padding: 10px 0 0 0;
 	clear: both;
 	
 	border-left: none;
 	border-right: none;
 }
+
 #footer p
 {
 	padding: 10px;

@@ -45,6 +45,26 @@ class PIREPAdmin
 				
 				break;
 				
+			case 'viewall':
+				
+				if($_GET['start'] == '')
+					$_GET['start'] = 0;
+				
+				$num_per_page = 20;
+				$allreports = PIREPData::GetAllReports($_GET['start'], $num_per_page);
+				
+				if(count($allreports) >= $num_per_page)
+				{
+					Template::Set('paginate', true);
+					Template::Set('admin', 'viewall');
+					Template::Set('start', intval($_GET['start'])+20);
+				}
+				
+				Template::Set('pireps', $allreports);
+				Template::Show('pireps_list.tpl');
+				
+				break;
+				
 			case 'addcomment':
 				Template::Set('pirepid', Vars::GET('pirepid'));
 				

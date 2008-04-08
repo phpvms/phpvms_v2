@@ -1,7 +1,15 @@
 <h3>Site Settings</h3>
 <p>Select available site options from this page. Don't forget to save!</p>
 <form id="form" method="post" action="action.php?admin=settings">
-<dl>
+
+<table id="tabledlist" class="tablesorter">
+<thead>
+	<tr>
+		<th>Setting Name</th>
+		<th>Setting Value</th>
+	</tr>
+</thead>
+<tbody>
 <?php
 	if(!$allsettings)
 	{
@@ -11,20 +19,22 @@
 	{
 		foreach($allsettings as $setting)
 		{
-			echo '<dt><strong>'.$setting->friendlyname . '</strong></dt>';
+			
+			echo '<tr>
+					<td width="40%" nowrap><strong>'.$setting->friendlyname . '</strong></td>';
 			
 			switch($setting->name)
 			{
 			
 				case 'PHPVMS_VERSION':
-					echo '<dd>'.$setting->value.'</dd>';
+					echo '<td>'.PHPVMS_VERSION.'</td>';
 					break;
 					
 				case 'CURRENT_SKIN':
 				
 					$skins = Util::GetAvailableSkins();
    
-					echo '<dd>
+					echo '<td>
 						<SELECT name="CURRENT_SKIN">';
 						
 						$tot = count($skins);
@@ -37,12 +47,12 @@
    
 					echo '</SELECT>
 						  <p>'.$setting->descrip.'</p>
-						  </dd>';
+						  </td>';
 					break;
 					
 				default:
 				
-					echo '<dd>';
+					echo '<td>';
 					
 					if($setting->value == 'true' || $setting->value == 'false')
 					{
@@ -69,17 +79,20 @@
 					}
 					
 					echo '<p>'.$setting->descrip.'</p>
-						</dd>';
+						</td>';
 					break;
 			}
+			
+			echo '</tr>';
 		}
 	}
 ?>
-	<dt></dt>
-	<dd><input type="hidden" name="action" value="savesettings">
+<tr>
+	<td></td>
+	<td><input type="hidden" name="action" value="savesettings">
 		<input type="submit" name="submit" value="Save Settings" />
-	</dd>
-	
-	
-</dl>
+	</td>
+</tr>
+</tbody>
+</table>
 </form>

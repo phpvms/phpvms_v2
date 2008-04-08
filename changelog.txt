@@ -2,7 +2,18 @@
 
 phpVMS Build Changelog:
 
-Build 272
+Build 279
+
+  * Pilot ranks - Add ranks, system calculates hours on PIREP approval, or addition of new ranks
+  * Pilot profile shows rank, hours until the next rank
+  * Add custom field to popup
+  * Settings Form fixed
+  * Custom fields form
+  * User session had old data, updates on page refresh
+  * Add News form fixed
+  * Display enhancements
+  
+Build 277
 
   * Charts show up on Dashboard (Module based), for some rudimentary stats (more coming)
   * Google Map shows route on "View Report" page
@@ -15,7 +26,7 @@ Build 272
   * "New Version" available message, fixed to show only on main page
   * Design enhancements
 
-Build 258 - 03/31/2008
+Build 258
 
   - fixed #15
   - fixed #58

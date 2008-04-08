@@ -101,6 +101,11 @@ h3
 	float: right;
 }
 
+.autohide
+{
+	float: right;
+}
+
 #error
 {
 	border: 1px solid #FF0000;

@@ -50,6 +50,7 @@ class OperationsData
 	function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
+		$name = strtoupper($name);
 		
 		$sql = "INSERT INTO " . TABLE_PREFIX . "aircraft (icao, name, fullname, range, weight, cruise)
 					VALUES ('$icao', '$name', '$fullname', '$range', '$weight', '$cruise')";

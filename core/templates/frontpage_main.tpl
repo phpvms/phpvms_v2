@@ -10,7 +10,7 @@
 <div id="sidebar">
 	<h3>Recent Reports</h3>
 	
-	<?php MainController::Run('PIREPS', 'RecentFrontPage', 1); ?>
+	<?php MainController::Run('PIREPS', 'RecentFrontPage', 5); ?>
 
 	<h3>Newest Pilots</h3>
 	<p>List 'em here</p>

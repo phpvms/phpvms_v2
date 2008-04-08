@@ -68,6 +68,7 @@ function EvokeListeners()
 	
 	// Make the message box hide itself
 	setTimeout(function() { $("#messagebox").slideUp("slow")}, 5000);
+	setTimeout(function() { $(".autohide").slideUp("slow")}, 5000);
 	
 	//Tablize any lists
 	$("#tabledlist").tablesorter();

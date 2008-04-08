@@ -81,6 +81,10 @@ class SchedulesData
 			timesflown
 		*/
 		
+		if($leg == '') $leg = 1;
+		$deptime = strtoupper($deptime);
+		$arrtime = strtoupper($arrtime);
+		
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules 
 				(code, flightnum, leg, depicao, arricao, route, aircraft, distance, deptime, arrtime, flighttime)
 				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',

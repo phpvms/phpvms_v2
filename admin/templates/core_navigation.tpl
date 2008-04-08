@@ -17,6 +17,7 @@
 	<ul>
 		<li><a href="?admin=viewpending">View Pending</a></li>
 		<li><a href="?admin=viewrecent">View Recent Reports</a></li>
+		<li><a href="?admin=viewall">View All Reports</a></li>
 	</ul>
 </li>
 <li><a href="#">Pilots</a>
@@ -29,6 +30,7 @@
 	<ul>
 		<li><a href="?admin=settings">General Settings</a></li>
 		<li><a href="?admin=customfields">Profile Fields</a></li>
+		<li><a href="?admin=pilotranks">Pilot Ranks</a></li>
 		<li><a href="?admin=about">About phpVMS</a></li>
 	</ul>
 </li>

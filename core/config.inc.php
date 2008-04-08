@@ -10,7 +10,7 @@ session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'on');
 
-$Config['PHPVMS_VERSION'] = '0.9.277';
+$Config['PHPVMS_VERSION'] = '0.9.279';
 
 define('SITE_ROOT', str_replace('/core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
@@ -44,6 +44,7 @@ $ADMIN_MODULES['Dashboard'] = ADMIN_PATH . '/modules/Dashboard/DashboardAdmin.ph
 $ADMIN_MODULES['SiteCMS'] = ADMIN_PATH . '/modules/SiteCMS/SiteCMS.php';
 $ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
 $ADMIN_MODULES['PIREPAdmin'] = ADMIN_PATH . '/modules/PIREPAdmin/PIREPAdmin.php';
+$ADMIN_MODULES['PilotRanking'] = ADMIN_PATH . '/modules/PilotRanking/RankingAdmin.php';
 $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
 $ADMIN_MODULES['SettingsAdmin'] = ADMIN_PATH . '/modules/Settings/Settings.php';
 
@@ -65,6 +66,7 @@ include COMMON_PATH . '/SiteData.class.php';
 include COMMON_PATH . '/PilotData.class.php';
 include COMMON_PATH . '/PilotGroups.class.php';
 include COMMON_PATH . '/PIREPData.class.php';
+include COMMON_PATH . '/RanksData.class.php';
 include COMMON_PATH . '/RegistrationData.class.php';
 include COMMON_PATH . '/OperationsData.class.php';
 include COMMON_PATH . '/SchedulesData.class.php';

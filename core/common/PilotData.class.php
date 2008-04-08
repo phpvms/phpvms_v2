@@ -33,8 +33,7 @@ class PilotData
 	
 	function GetPilotData($pilotid)
 	{
-		$sql = 'SELECT pilotid, firstname, lastname, email, code, location, UNIX_TIMESTAMP(lastlogin) as lastlogin, 
-						totalflights, totalhours, confirmed, retired
+		$sql = 'SELECT *, UNIX_TIMESTAMP(lastlogin) as lastlogin
 					FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
 		
 		return DB::get_row($sql);

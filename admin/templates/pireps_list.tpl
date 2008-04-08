@@ -60,3 +60,12 @@ foreach($pireps as $report)
 ?>
 </tbody>
 </table>
+
+<?php
+if($paginate)
+{
+?>
+<a href="?admin=<?=$admin?>&start=<?=$start?>">Next Page</a></a>
+<?php
+}
+?>

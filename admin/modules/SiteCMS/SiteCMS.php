@@ -19,11 +19,11 @@ class SiteCMS
 				}
 				
 				$this->ViewNews();
-				$this->AddNewsForm();
+				
 				break;
 				
 			case 'addnews':
-				$this->AddNewsForm();
+				Template::Show('news_additem.tpl');
 				break;
 			
 			case 'addpageform':
@@ -140,11 +140,6 @@ class SiteCMS
 			
 		Template::Set('allnews', $allnews);
 		Template::Show('news_list.tpl');
-	}
-
-	function AddNewsForm()
-	{
-		Template::Show('news_additem.tpl');
 	}	
 	
 	function AddNewsItem()

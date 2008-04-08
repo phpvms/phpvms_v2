@@ -9,7 +9,10 @@
 	<dd><?=$pilotinfo->code;?></dd>
 	
 	<dt>Location</dt>
-	<dd><?=$pilotinfo->location;?></dd>
+	<dd><?=$pilotinfo->location==''?'-':$pilotinfo->location;?></dd>
+	
+	<dt>Current Rank</dt>
+	<dd><?=$pilotinfo->rank;?></dd>
 
 	<dt>Last Login</dt>
 	<dd><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></dd>
@@ -27,7 +30,7 @@ if($customfields)
 	{
 ?>
 	<dt><?=$field->title;?></dt>
-	<dd><?=$field->value;?></dd>
+	<dd><?=$field->value==''?'-':$field->value;?></dd>
 <?php
 	}
 }

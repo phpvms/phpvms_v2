@@ -5,6 +5,17 @@
 class PIREPData
 {
 	
+	function GetAllReports($start=0, $count=20)
+	{
+		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
+						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+					WHERE p.pilotid=u.pilotid LIMIT '.$start.', '.$count;
+		
+		return DB::get_results($sql);
+	}
+	
 	function GetAllReportsByAccept($accept=0)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
@@ -13,6 +24,21 @@ class PIREPData
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 		
+		return DB::get_results($sql);
+	}
+	
+	function GetRecentReportsByCount($count = 10)
+	{
+		if($count == '') $count = 10;
+		
+		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank, 
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+					WHERE p.pilotid=u.pilotid
+					ORDER BY p.submitdate DESC
+					LIMIT='.intval($count);
+					
 		return DB::get_results($sql);
 	}
 	

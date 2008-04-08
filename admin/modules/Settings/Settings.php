@@ -3,48 +3,55 @@
 class SettingsAdmin
 {	
 	function Controller()
-	{				
-		if(Vars::GET('admin') == 'settings')
+	{	
+	
+		switch(Vars::GET('admin'))
 		{
-		
-			// Check for POST here since we'll be outputting the form again
-			// jQuery will replace the entire <div> with fresh updated content
-		
-			switch(Vars::POST('action'))
-			{
-				case 'addsetting':
-					$this->AddSetting();
-					break;
-				case 'savesettings':
-					$this->SaveSettings();
-					break;
-			}
-						
-			$this->ShowSettings();
-		}
-		
-		/* CustomFields Section
-		 */
-		elseif(Vars::GET('admin') == 'customfields')
-		{
-			switch(Vars::POST('action'))
-			{
-				case 'savefields':
-					$this->SaveFields();
-					break;
-					
-				case 'addfield':
-					$this->AddField();
-					break;
-					
-				case 'deletefield':
-					$this->DeleteField();
-					break;
-			}
+			case 'settings':		
+				switch(Vars::POST('action'))
+				{
+					case 'addsetting':
+						$this->AddSetting();
+						break;
+					case 'savesettings':
+						$this->SaveSettings();
+						break;
+				}
+				
+				$this->ShowSettings();
 			
-			$this->ShowFields();
-		}
+				break;
 		
+			/* CustomFields Section
+			 */
+			 
+			// Show the popup
+			case 'addfield':
+				Template::Show('settings_addcustomfield.tpl');
+				break;
+				
+				
+			case 'customfields':
+		
+				switch(Vars::POST('action'))
+				{
+					case 'savefields':
+						$this->SaveFields();
+						break;
+						
+					case 'addfield':
+						$this->AddField();
+						break;
+						
+					case 'deletefield':
+						$this->DeleteField();
+						break;
+				}
+				
+				$this->ShowFields();
+				
+				break;
+		}
 	}
 		
 	function SaveSettings()
@@ -117,7 +124,6 @@ class SettingsAdmin
 		Template::Set('allfields', SettingsData::GetAllFields());
 		
 		Template::ShowTemplate('settings_customfieldsform.tpl');
-		Template::ShowTemplate('settings_addcustomfield.tpl');
 	}
 }
 ?>

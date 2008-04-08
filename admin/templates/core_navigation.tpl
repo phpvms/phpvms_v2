@@ -28,7 +28,7 @@
 <li><a href="#">Settings</a>
 	<ul>
 		<li><a href="?admin=settings">General Settings</a></li>
-		<li><a href="?admin=customfields">Custom Profile Fields</a></li>
+		<li><a href="?admin=customfields">Profile Fields</a></li>
 		<li><a href="?admin=about">About phpVMS</a></li>
 	</ul>
 </li>

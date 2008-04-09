@@ -2,6 +2,12 @@
 
 phpVMS Build Changelog:
 
+Next Build
+ 
+  * All flight routes show up on one big map
+  * Rewrote Google Maps code, class based, makes it easier for add-ons and also any other maps
+  * Show some graphs on Pilot Center, like aircraft flown statistics
+
 Build 279
 
   * Pilot ranks - Add ranks, system calculates hours on PIREP approval, or addition of new ranks

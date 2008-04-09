@@ -24,6 +24,7 @@
 		<br />
 		<strong>Flight Operations</strong><br /><br />
 			<a href="?page=viewpireps">View my PIREPs</a><br />
+			<a href="?page=routesmap">View a map of all my flights</a><br />
 			<a href="?page=filepirep">File a Pilot Report</a><br />
 			<a href="?page=schedules">View Flight Schedules</a> - Choose a flight
 		</div>
@@ -37,5 +38,8 @@
 	<p> <strong>Rank: </strong><?=$userinfo->rank;?> <br />
 		<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
 		<strong>Total Hours: </strong><?=$userinfo->totalhours?></p>
+	
+	<strong>Aircraft Flown</strong>
+	<p><img src="<?php echo $ac_chart_url;?>" align="center" /></p>
 </div>
 <br />

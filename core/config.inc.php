@@ -73,6 +73,7 @@ include COMMON_PATH . '/SchedulesData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
 
 include COMMON_PATH . '/GoogleChart.class.php';
+include COMMON_PATH . '/GoogleMap.class.php';
 
 include CORE_PATH . '/site_config.inc.php';
 

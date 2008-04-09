@@ -77,16 +77,31 @@ class PIREPData
 		return DB::get_results($sql);		
 	}
 	
-	function GetAllReportsForPilot($pilotid='')
+	function GetAircraftFlownStats($pilotid)
 	{
-		$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
+		$sql = 'SELECT aircraft, COUNT(aircraft) count
+					FROM '.TABLE_PREFIX.'pireps 
+					WHERE pilotid='.$pilotid.'
+					GROUP BY aircraft';
+					
+		return DB::get_results($sql);
+	}
+	
+	function GetAllReportsForPilot($pilotid)
+	{
+		/*$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
 					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
-					FROM '.TABLE_PREFIX.'pireps';
-		
-		if($pilotid!='')
-			$sql .=' WHERE pilotid='.intval($pilotid);
-			
-		$sql .= ' ORDER BY submitdate DESC';
+					FROM '.TABLE_PREFIX.'pireps';*/
+		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,	
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
+					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						INNER JOIN phpvms_airports AS dep ON dep.icao = p.depicao
+						INNER JOIN phpvms_airports AS arr ON arr.icao = p.arricao
+					WHERE p.pilotid=u.pilotid AND p.pilotid='.intval($pilotid).' 
+					ORDER BY p.submitdate DESC';
 		
 		return DB::get_results($sql);
 	}

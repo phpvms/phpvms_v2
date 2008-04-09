@@ -85,6 +85,8 @@ class SchedulesData
 		$deptime = strtoupper($deptime);
 		$arrtime = strtoupper($arrtime);
 		
+		if($depicao == $arricao) return;
+		
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules 
 				(code, flightnum, leg, depicao, arricao, route, aircraft, distance, deptime, arrtime, flighttime)
 				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',

@@ -59,6 +59,4 @@ if($comments)
 	
 	echo '</tbody></table>';
 }
-
-Template::Show('pirep_map.tpl');
 ?>

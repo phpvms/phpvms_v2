@@ -26,6 +26,30 @@ class PilotProfile extends ModuleBase
 				Template::Set('report', PIREPData::GetLastReports(Auth::$userinfo->pilotid));
 				Template::Set('nextrank', RanksData::GetNextRank(Auth::$userinfo->totalhours));
 				Template::Set('userinfo', Auth::$userinfo);
+				
+				//Select aircraft types
+				$stats = PIREPData::GetAircraftFlownStats(Auth::$userinfo->pilotid);
+				
+				$data = '';
+				$labels = '';
+				foreach($stats as $stat)
+				{
+					if($stat->aircraft == '') continue;
+					
+					$data .= $stat->count . ',';
+					$labels .= $stat->aircraft.'|';
+				}
+				
+				// remove that final lone char
+				$data = substr($data, 0, strlen($data)-1);
+				$labels = substr($labels, 0, strlen($labels)-1);
+					
+				$chart = new googleChart($data, 'pie');
+				$chart->dimensions = '350x200';
+				$chart->setLabels($labels);
+			
+				Template::Set('ac_chart_url', $chart->draw(false));
+				
 				Template::Show('profile_main.tpl');
 				break;
 				

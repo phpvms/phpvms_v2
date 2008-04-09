@@ -31,17 +31,40 @@ class PIREPS extends ModuleBase
 			case 'viewreport':
 			
 				$pirepid = Vars::GET('pirepid');
-				$this->pirep = PIREPData::GetReportDetails($pirepid);
+				$pirep = PIREPData::GetReportDetails($pirepid);
 				
-						
-				Template::Set('report', $this->pirep);
-				Template::Set('points', array(array($this->pirep->deplat, $this->pirep->deplong),
-											  array($this->pirep->arrlat, $this->pirep->arrlong)));
+									
+				Template::Set('report', $pirep);
 				Template::Set('comments', PIREPData::GetComments($pirepid));
-				
+												
 				Template::Show('pirep_viewreport.tpl');
-				break;
 				
+				$map = new GoogleMap;
+				$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
+				$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
+				$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
+				
+				$map->ShowMap();
+				break;
+			
+			/* Show map with all of their routes
+			*/
+			case 'routesmap':
+			
+				$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
+				
+				$map = new GoogleMap;
+				
+				foreach($pireps as $pirep)
+				{
+					$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
+					$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
+					$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
+				}
+				
+				$map->ShowMap();
+				
+				break;
 			case 'filepirep':
 				
 				Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);

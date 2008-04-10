@@ -33,7 +33,12 @@ class PIREPS extends ModuleBase
 				$pirepid = Vars::GET('pirepid');
 				$pirep = PIREPData::GetReportDetails($pirepid);
 				
-									
+				if(!$pirep)
+				{
+					echo '<p>This PIREP does not exist!</p>';
+					return;
+				}
+				
 				Template::Set('report', $pirep);
 				Template::Set('comments', PIREPData::GetComments($pirepid));
 												
@@ -52,6 +57,12 @@ class PIREPS extends ModuleBase
 			case 'routesmap':
 			
 				$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
+				
+				if(!$pireps)
+				{
+					echo '<p>There are no pilot reports</p>';
+					return;
+				}
 				
 				$map = new GoogleMap;
 				

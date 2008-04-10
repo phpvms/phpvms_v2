@@ -24,6 +24,11 @@ class StatsData
 
 		$stats = DB::get_results($sql);
 
+		if(!$stats)
+		{
+			return;
+		}
+		
 		$data = '';
 		$labels = '';
 		foreach($stats as $stat)

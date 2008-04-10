@@ -3,5 +3,5 @@
 MainController::Run('Dashboard', 'CheckForUpdates');
 
 echo '<p><strong>Pilot Reports for the Past Week</strong></p>';
-MainController::Run('Dashboard', 'ShowReportCounts');
+StatsData::ShowReportCounts();
 ?>

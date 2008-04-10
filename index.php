@@ -2,13 +2,13 @@
 
 /**
  * LiveFrame - www.nsslive.net
- *	
+ *
  *  Main Index file for LiveFrameX
- * 
+ *
  * revision updates:
  *	5 -	BaseTemplate path moved here (@ 21)
  */
- 
+
 	/*$time = microtime();
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
@@ -16,7 +16,7 @@
 
 include 'core/config.inc.php';
 
-ksort($ACTIVE_MODULES); 
+ksort($ACTIVE_MODULES);
 
 //load our modules
 MainController::loadModules($ACTIVE_MODULES);
@@ -27,10 +27,11 @@ $BaseTemplate = new TemplateSet;
 $settings_file = SKINS_PATH . '/' . CURRENT_SKIN . '.php';
 if(file_exists($settings_file))
 	include $settings_file;
-	
+
 $BaseTemplate->template_path = SKINS_PATH;
 
 $BaseTemplate->Set('title', SITE_NAME);
+
 Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
 //$BaseTemplate->Set('navigation_tree', $NAVBAR);

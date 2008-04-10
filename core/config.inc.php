@@ -1,10 +1,10 @@
 <?php
 /**
  * LiveFrame - www.nsslive.net
- *	
+ *
  * Main Config file
- * 
- */ 
+ *
+ */
 session_start();
 
 error_reporting(E_ALL ^ E_NOTICE);
@@ -22,10 +22,10 @@ define('COMMON_PATH', CORE_PATH . '/common');
 define('PAGES_PATH', CORE_PATH . '/pages');
 define('ADMIN_PATH', SITE_ROOT . '/admin');
 
-if(!file_exists(CORE_PATH.'/site_config.inc.php') 
+if(!file_exists(CORE_PATH.'/site_config.inc.php')
 	|| filesize(CORE_PATH.'/site_config.inc.php') == 0)
 {
-	header('Location: install/install.php');	
+	header('Location: install/install.php');
 }
 
 // These are the core modules
@@ -71,6 +71,7 @@ include COMMON_PATH . '/RegistrationData.class.php';
 include COMMON_PATH . '/OperationsData.class.php';
 include COMMON_PATH . '/SchedulesData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
+include COMMON_PATH . '/StatsData.class.php';
 
 include COMMON_PATH . '/GoogleChart.class.php';
 include COMMON_PATH . '/GoogleMap.class.php';
@@ -79,7 +80,7 @@ include CORE_PATH . '/site_config.inc.php';
 
 if(DBASE_NAME != '')
 {
-	DB::init(DBASE_TYPE);	
+	DB::init(DBASE_TYPE);
 	DB::connect(DBASE_USER, DBASE_PASS, DBASE_NAME, DBASE_SERVER);
 	DB::hide_errors();
 	DB::query('SET FOREIGN_KEY_CHECKS=1;'); // Compensate for host-side setting

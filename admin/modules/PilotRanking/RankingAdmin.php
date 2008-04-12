@@ -40,7 +40,7 @@ class PilotRanking
 			return;
 		}
 		
-		if(is_string($minhours))		
+		if(!is_numeric($minhours))
 		{
 			Template::Set('message', 'The hours must be a number');
 			Template::Show('core_message.tpl');

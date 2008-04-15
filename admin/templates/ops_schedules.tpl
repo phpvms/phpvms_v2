@@ -1,7 +1,9 @@
 <h3>Schedules</h3>
 <p>The flight routes you currently serve.</p>
-
-<p><a id="dialog" class="jqModal" href="action.php?admin=addschedule">Add a schedule</a></p>
+<?php
+// id="dialog" class="jqModal" 
+?>
+<p><a href="index.php?admin=addschedule">Add a schedule</a></p>
 <br />
 <?php
 if(!$schedules)

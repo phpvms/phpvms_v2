@@ -1,5 +1,8 @@
 <h3>Add Schedule</h3>
-<form id="form" action="action.php?admin=schedules" method="post">
+<?php
+//id="form"
+?>
+<form action="index.php?admin=schedules" method="post">
 <dl>
 
 <dt>Code: </dt>

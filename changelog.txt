@@ -2,14 +2,23 @@
 
 phpVMS Build Changelog:
 
-Next Build
+Build 286 04.15
 
-  * Added form to edit rank
-  * Confirmation changed to
-  * All flight routes show up on one big map
+  * Rank is now editable
+  * Adding/Editing rank doesn't throw "Not Number" error
+  * Add Schedule form moved out of popup (the form was just too large)
+  * Confirmation done by admin, instead of automatic on email confirm
+  * All accepted PIREPs for PIREP show up on a map
+  * Installer fix
   * Rewrote Google Maps code, class based, makes it easier for add-ons and also any other maps
   * Show some graphs on Pilot Center, like aircraft flown statistics
-  * Database updated to fix hitting integer limit
+  * Database updated to fix hitting integer limit on distance/cruise
+
+ Known Problems:
+  
+  * Add Schedule form has a giant gap in Firefox
+  * No email is sent out yet when pilot is accepted or confirmed
+  * Default login form is ugly. Yup, it's a problem =D
 
   * Updated queries:
   	Run these queries to update, change the phpvms_ if your prefix is different
@@ -20,7 +29,6 @@ Next Build
 		CHANGE `cruise` `cruise` VARCHAR( 15 ) NOT NULL DEFAULT '0';
 
     ALTER TABLE `phpvms_pilots` MODIFY COLUMN `confirmed` INTEGER UNSIGNED NOT NULL DEFAULT 0;
-
 
 Build 279
 

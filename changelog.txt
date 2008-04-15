@@ -3,10 +3,24 @@
 phpVMS Build Changelog:
 
 Next Build
- 
+
+  * Added form to edit rank
+  * Confirmation changed to
   * All flight routes show up on one big map
   * Rewrote Google Maps code, class based, makes it easier for add-ons and also any other maps
   * Show some graphs on Pilot Center, like aircraft flown statistics
+  * Database updated to fix hitting integer limit
+
+  * Updated queries:
+  	Run these queries to update, change the phpvms_ if your prefix is different
+
+    ALTER TABLE `phpvms_aircraft`
+    	CHANGE `range` `range` VARCHAR( 15 ) NOT NULL DEFAULT '0',
+		CHANGE `weight` `weight` VARCHAR( 15 ) NOT NULL DEFAULT '0',
+		CHANGE `cruise` `cruise` VARCHAR( 15 ) NOT NULL DEFAULT '0';
+
+    ALTER TABLE `phpvms_pilots` MODIFY COLUMN `confirmed` INTEGER UNSIGNED NOT NULL DEFAULT 0;
+
 
 Build 279
 

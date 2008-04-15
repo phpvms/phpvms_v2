@@ -1,11 +1,7 @@
 Dear <?php echo $firstname .' '. $lastname; ?>,
 
-Your account have been made at <?=SITE_NAME?>, but you must confirm it by clicking on this link:
+Your account have been made at <?=SITE_NAME?>, but your account has not yet been activated. You will receive an email when your registration has been activated by someone on our staff.
 
-<?php echo SITE_URL; ?>/index.php?page=confirm&confirmid=<?=$confid?>
-
-Or if you have HTML enabled email:
-<a href="<?php echo SITE_URL; ?>/index.php?page=confirm&confirmid=<?=$confid?>"><?php echo SITE_URL; ?>/index.php?page=confirm&confirmid=<?=$confid?></a>
 
 Thanks!
 <?=SITE_NAME?> Staff

@@ -66,13 +66,7 @@ After filling out the form below, you will get a confirmation email.</p>
 	?>
 		
 	<dt></dt>
-	<dd><input type="checkbox" name="agree" value="<?=Vars::POST('firstname');?>" />
-		<p>I agree with the terms and conditions</p>
-		<?php
-			if($agree_error == true)
-				echo '<p class="error">You didn\'t agree to the terms and conditions</p>';
-		?>
-	</dd>
+	<dd><p>By clicking register, you're agreeing to the terms and conditions</p></dd>
 	<dt></dt>
 	<dd><input type="submit" name="submit_register" value="Register!" /></dd>
 </dl>

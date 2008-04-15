@@ -99,6 +99,10 @@ define('PIREP_ACCEPTED', 1);
 define('PIREP_REJECTED', 2);
 define('PIREP_INPROGRESS', 3); // value of 3
 
+define('PILOT_PENDING', 0);
+define('PILOT_ACCEPTED', 1);
+define('PILOT_REJECTED', 2);
+
 
 $NAVBAR = '';
 $HTMLHead = '';

@@ -20,7 +20,7 @@ class PilotData
 		
 		if($letter!='')
 			$sql .= " WHERE lastname LIKE '$letter%' ";
-		
+
 		$sql .= ' ORDER BY lastname DESC';
 		
 		return DB::get_results($sql);
@@ -44,7 +44,17 @@ class PilotData
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'pilots WHERE email=\''.$email.'\'';
 		return DB::get_row($sql);
 	}
-	
+
+	function GetPendingPilots($count='')
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots WHERE confirmed='.PILOT_PENDING;
+
+		if($count!='')
+			$sql .= ' LIMIT '.intval($count);
+
+			
+		return DB::get_results($sql);
+	}
 	function SaveProfile($pilotid, $email, $location)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location' WHERE pilotid=$pilotid";
@@ -53,7 +63,21 @@ class PilotData
 		
 		return $ret;
 	}
-	
+
+	function AcceptPilot($pilotid)
+	{
+		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed=1
+					WHERE pilotid='.$pilotid;
+		DB::query($sql);
+	}
+
+    function RejectPilot($pilotid)
+	{
+		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed=2
+					WHERE pilotid='.$pilotid;
+
+		DB::query($sql);
+	}
 	
 	function UpdateLogin($pilotid)
 	{
@@ -85,7 +109,7 @@ class PilotData
 		{			
 			$sql = 'SELECT id FROM '.TABLE_PREFIX.'fieldvalues WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
 			$res = DB::get_row($sql);
-		
+
 			$fieldname =str_replace(' ', '_', $field->fieldname);
 			$value = $list[$fieldname];
 				
@@ -105,7 +129,7 @@ class PilotData
 		}
 		
 		return true;
-	}	
+	}
 	
 	function GetFieldData($pilotid, $inclprivate=false)
 	{

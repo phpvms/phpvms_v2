@@ -7,6 +7,13 @@ class RanksData
 	
 	static $lasterror;
 	
+	function GetRankInfo($rankid)
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots WHERE rankid='.$rankid;
+		
+		return DB::get_row($sql);
+	}
+	
 	function GetAllRanks()
 	{
 		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
@@ -38,6 +45,14 @@ class RanksData
 		self::CalculatePilotRanks();
 	
 		return true;
+	}
+	
+	function UpdateRank($rankid, $title, $minhours)
+	{
+		$sql = "UPDATE ".TABLE_PREFIX."ranks SET rank='$title', minhours='$minhours'
+					WHERE rankid=$rankid";
+		
+		DB::query($sql);
 	}
 	
 	/**

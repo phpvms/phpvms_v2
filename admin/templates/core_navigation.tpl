@@ -22,6 +22,7 @@
 </li>
 <li><a href="#">Pilots</a>
 	<ul>
+		<li><a href="?admin=pendingpilots">Pending Registrations</a></li>
 		<li><a href="?admin=viewpilots">View Registered Pilots</a></li>
 		<li><a href="?admin=pilotgroups">Pilot Groups</a></li>
 	</ul>

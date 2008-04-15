@@ -5,21 +5,35 @@ class PilotRanking
 {
 	function Controller()
 	{
+		switch(Vars::POST('action'))
+		{
+			case 'addrank':
+				$this->AddRank();
+				break;
+			case 'editrank':
+				$this->EditRank();
+				break;
+		}
+		
 		switch(Vars::GET('admin'))
 		{
 			case 'addrank':
-				Template::Show('ranks_addrank.tpl');
+				Template::Set('title', 'Add Rank');
+				Template::Set('action', 'addrank');
+				Template::Show('ranks_rankform.tpl');
 				break;
 				
+			case 'editrank':
+				Template::Set('title', 'Edit Rank');
+				Template::Set('action', 'editrank');
+				Template::Set('rank', RanksData::GetRankInfo(Vars::GET('rankid')));
+				
+				break;
+
 			case 'calculateranks':
 				RanksData::CalculatePilotRanks();
 				
 			case 'pilotranks':
-			
-				if($_POST['action'] == 'addrank')
-				{
-					$this->AddRank();	
-				}
 				
 				Template::Set('ranks', RanksData::GetAllRanks());
 				Template::ShowTemplate('ranks_allranks.tpl');

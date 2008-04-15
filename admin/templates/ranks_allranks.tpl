@@ -8,6 +8,7 @@
 	<th>Minimum Hours</th>
 	<th>Rank Title</th>
 	<th>Total Pilots</th>
+	<th>Options</th>
 </tr>
 </thead>
 <tbody>
@@ -19,6 +20,7 @@ foreach($ranks as $rank)
 	<td align="center"><?=$rank->minhours; ?></td>
 	<td align="center"><?=$rank->rank; ?></td>
 	<td align="center"><?=$rank->totalpilots; ?></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editrank&rankid=<?=$rank->rankid;?>">Edit</a></td>
 </tr>
 <?php
 }

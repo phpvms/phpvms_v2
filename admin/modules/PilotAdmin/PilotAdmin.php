@@ -4,6 +4,7 @@ class PilotAdmin
 {
 	function Controller()
 	{
+
 		switch(Vars::GET('admin'))
 		{
 			case 'viewpilots':
@@ -49,13 +50,28 @@ class PilotAdmin
 				
 				if(Vars::GET('action') == 'viewoptions')
 				{
-					
-					$this->ViewPilotDetails();	
+					$this->ViewPilotDetails();
 					return;
 				}
 				
 				$this->ShowPilotsList();	
-				break;	
+				break;
+
+			case 'pendingpilots':
+
+                switch(Vars::POST('action'))
+				{
+					case 'approvepilot':
+						PilotData::AcceptPilot(Vars::POST('id'));
+						break;
+					case 'rejectpilot':
+						PilotData::RejectPilot(Vars::POST('id'));
+						break;
+				}
+
+				Template::Set('allpilots', PilotData::GetPendingPilots());
+				Template::Show('pilots_pending.tpl');
+				break;
 			
 			case 'pilotgroups':	
 			

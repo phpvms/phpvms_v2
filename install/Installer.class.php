@@ -173,9 +173,9 @@ class Installer
 		}
 		
 		// add the user
-		
-		if(!RegistrationData::AddUser($_POST['firstname'], $_POST['lastname'], 
-				$_POST['email'], $_POST['vacode'], '', $_POST['password']))
+
+		if(!RegistrationData::AddUser($_POST['firstname'], $_POST['lastname'],
+				$_POST['email'], $_POST['vacode'], '', $_POST['password'], PILOT_ACCEPTED))
 		{
 			self::$error = DB::$error;
 			return false;
@@ -183,7 +183,7 @@ class Installer
 		
 		// add to admin group
 		$pilotdata = PilotData::GetPilotByEmail($_POST['email']);
-		
+
 		if(!PilotGroups::AddUsertoGroup($pilotdata->pilotid, 'Administrators'))
 		{
 			DB::debug();

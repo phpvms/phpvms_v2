@@ -8,12 +8,12 @@ CREATE TABLE `phpvms_airlines` (
 
 CREATE TABLE `phpvms_aircraft` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
-	`icao` VARCHAR( 4 ) NOT NULL ,
-	`name` VARCHAR( 12 ) NOT NULL ,
-	`fullname` VARCHAR( 50 ) NOT NULL ,
-	`range` FLOAT NOT NULL ,
-	`weight` FLOAT NOT NULL ,
-	`cruise` SMALLINT NOT NULL ,
+	`icao` VARCHAR( 4 ) NOT NULL,
+	`name` VARCHAR( 12 ) NOT NULL,
+	`fullname` VARCHAR( 50 ) NOT NULL,
+	`range` VARCHAR( 15 ) NOT NULL,
+	`weight` VARCHAR( 15 ) NOT NULL,
+	`cruise` VARCHAR( 15 ) NOT NULL,
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `name` (`name`)
 )ENGINE=INNODB;
@@ -96,7 +96,7 @@ CREATE TABLE `phpvms_pilots` (
 	`totalflights` int(11) NOT NULL default '0',
 	`totalhours` float NOT NULL default '0',
 	`rank` varchar(32) NOT NULL default 'New Hire',
-	`confirmed` enum('y','n') NOT NULL default 'n',
+	`confirmed` int(11) NOT NULL default '0',
 	`retired` enum('y','n') NOT NULL default 'y',
 	PRIMARY KEY  (`pilotid`),
 	UNIQUE KEY `email` (`email`),

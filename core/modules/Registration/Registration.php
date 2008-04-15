@@ -20,8 +20,9 @@ class Registration extends ModuleBase
 		
 		switch(Vars::GET('page'))
 		{
+			/*
 			case 'confirm':
-				
+
 				if(RegistrationData::ValidateConfirm())
 				{
 					Template::Show('registration_complete.tpl');
@@ -31,8 +32,9 @@ class Registration extends ModuleBase
 					//TODO: error template, notify admin
 					DB::debug();
 				}
-				
+
 				break;
+			*/
 			
 			case 'register':
 			
@@ -86,7 +88,7 @@ class Registration extends ModuleBase
 			}
 		}
 	}
-	
+
 	/*
 	 * Process all the registration data
 	 */	
@@ -153,7 +155,7 @@ class Registration extends ModuleBase
 			Template::Set('password_error', '');
 		
 		/* Check if they agreed to the statement
-		 */
+
 		if(!$_POST['agree'])
 		{
 			$error = true;
@@ -161,7 +163,7 @@ class Registration extends ModuleBase
 		}
 		else
 			Template::Set('agree_error', '');
-		
+		 */
 		if($error == true)
 		{
 			return false;

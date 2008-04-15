@@ -20,6 +20,9 @@ class Dashboard
 				/* Dashboard.tpl calls the functions below
 				*/
 				Template::Show('dashboard.tpl');
+
+                /*Template::Set('allpilots', PilotData::GetPendingPilots());
+				Template::Show('pilots_pending.tpl');*/
 				break;
 
 			case 'about':

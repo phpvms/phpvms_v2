@@ -28,7 +28,7 @@ class RegistrationData
 		return DB::get_results($sql);		
 	}
 	
-	function AddUser($firstname, $lastname, $email, $code, $location, $password)
+	function AddUser($firstname, $lastname, $email, $code, $location, $password, $confirm=0)
 	{		
 		//Set the password, add some salt
 		$salt = md5(date('His'));
@@ -36,13 +36,13 @@ class RegistrationData
 		
 		//Stuff it into here, the confirmation email will use it.
 		self::$salt = $salt;
-		
+
 		$firstname = ucwords($firstname);
 		$lastname = ucwords($lastname);
 		//Add this stuff in
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, code, location, password, salt, confirmed)
-					VALUES ('$firstname', '$lastname', '$email', '$code', '$location', '$password', '$salt', 'n')";
+					VALUES ('$firstname', '$lastname', '$email', '$code', '$location', '$password', '$salt', $confirm)";
 		
 		$res = DB::query($sql);
 		

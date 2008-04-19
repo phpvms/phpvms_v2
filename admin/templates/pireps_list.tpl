@@ -32,7 +32,7 @@ foreach($pireps as $report)
 	<td align="center"><?=$report->flighttime; ?></td>
 	<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?>
 		<?php
-		
+
 		if($report->accepted == PIREP_ACCEPTED)
 			echo '<div id="success">Accepted</div>';
 		elseif($report->accepted == PIREP_REJECTED)
@@ -46,13 +46,13 @@ foreach($pireps as $report)
 	</td>
 	<td align="center">
 		<a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepirep" 
-			id="<?=$report->pirepid;?>" class="ajaxcall">Accept * </a>
+			id="<?=$report->pirepid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
 		<br />
 		<a id="dialog" class="jqModal" 
-			href="action.php?admin=rejectpirep&pirepid=<?=$report->pirepid;?>">Reject</a>
+			href="action.php?admin=rejectpirep&pirepid=<?=$report->pirepid;?>"><img src="lib/images/reject.gif" alt="Reject" /></a>
 		<br />
 		<a id="dialog" class="jqModal" 
-			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>">Add Comment</a>
+			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
 	</td>
 </tr>
 <?php

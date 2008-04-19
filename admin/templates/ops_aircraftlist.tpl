@@ -32,7 +32,7 @@ foreach($allaircraft as $aircraft)
 	<td align="center"><?=$aircraft->range; ?></td>
 	<td align="center"><?=$aircraft->weight; ?></td>
 	<td align="center"><?=$aircraft->cruise; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editaircraft&id=<?=$aircraft->id;?>">Options</a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editaircraft&id=<?=$aircraft->id;?>"><img src="lib/images/options.gif" alt="Options" /></a></td>
 </tr>
 <?php
 }

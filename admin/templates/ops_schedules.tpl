@@ -1,9 +1,6 @@
 <h3>Schedules</h3>
 <p>The flight routes you currently serve.</p>
-<?php
-// id="dialog" class="jqModal" 
-?>
-<p><a href="index.php?admin=addschedule">Add a schedule</a></p>
+<p><a id="dialog" class="jqModal" href="action.php?admin=addschedule"><img src="lib/images/addschedule.gif" alt="Add Schedule" /></a></p>
 <br />
 <?php
 if(!$schedules)
@@ -37,7 +34,7 @@ foreach($schedules as $sched)
 	<td align="center"><?=$sched->distance; ?></td>
 	<td align="center"><?=$sched->timesflown; ?></td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id=<?=$sched->id;?>">Route</a>
+		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id=<?=$sched->id;?>"><img src="lib/images/flightroute.gif" alt="Flight Route" /></a>
 	</td>
 </tr>
 <?php

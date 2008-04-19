@@ -65,13 +65,13 @@ map.addOverlay(marker);
 	 *	If a div name is supplied, display it in that
 	 *	If it's not, then just create one
 	 */
-	function ShowMap($divname='')
+	function ShowMap($width='800px', $height='600px', $divname='')
 	{
 		if($divname == '')
 		{
 			$divname = 'googlemap';
 			echo '<div style="clear:both;" align="center">
-					<div id="'.$divname.'" style="width: 800px; height: 600px"></div> 
+					<div id="'.$divname.'" style="width: '.$width.'; height: '.$height.'"></div>
 				</div>';
 		}
 

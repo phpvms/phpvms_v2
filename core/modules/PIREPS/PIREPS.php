@@ -38,18 +38,12 @@ class PIREPS extends ModuleBase
 					echo '<p>This PIREP does not exist!</p>';
 					return;
 				}
-				
-				Template::Set('report', $pirep);
+
+				Template::Set('pirep', $pirep);
 				Template::Set('comments', PIREPData::GetComments($pirepid));
 												
 				Template::Show('pirep_viewreport.tpl');
-				
-				$map = new GoogleMap;
-				$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
-				$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
-				$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
-				
-				$map->ShowMap();
+				Template::Show('pirep_map.tpl');
 				break;
 			
 			/* Show map with all of their routes

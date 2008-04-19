@@ -1,6 +1,6 @@
 <h3>Posted News</h3>
 
-<p><a id="dialog" class="jqModal" href="action.php?admin=addnews">Add a News Item</a></p>
+<p><a id="dialog" class="jqModal" href="action.php?admin=addnews"><img src="lib/images/addnews.gif" alt="Add News" /></a></p>
 
 <?php
 if(!$allnews)
@@ -28,7 +28,7 @@ foreach($allnews as $news)
 	<td align="center"><?=$news->postedby;?></td>
 	<td align="center"><?=date(DATE_FORMAT, $news->postdate);?></td>
 	<td align="center">
-		<a href="action.php?admin=viewnews" action="deleteitem" id="<?=$news->id;?>" class="ajaxcall">Delete</a>
+		<a href="action.php?admin=viewnews" action="deleteitem" id="<?=$news->id;?>" class="ajaxcall"><img src="lib/images/delete.gif" alt="Delete" /></a>
 	</td>
 </tr>
 <?php

@@ -82,7 +82,7 @@ class PIREPData
 		/*$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
 					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
 					FROM '.TABLE_PREFIX.'pireps';*/
-		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
+		$sql = 'SELECT p.pirepid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,

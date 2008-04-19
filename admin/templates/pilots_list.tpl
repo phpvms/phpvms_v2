@@ -1,5 +1,6 @@
+<h3>Pilots List</h3>
 <div align="center">
-	<a href="?admin=viewpilots&letter=">View All</a> 
+	<a href="?admin=viewpilots&letter=">View All</a>
 <?php
 for($i=0;$i<27;$i++)
 {
@@ -37,7 +38,7 @@ foreach($allpilots as $pilot)
 	<td align="center"><?=$pilot->location; ?></td>
 	<td align="center"><?=$pilot->totalflights; ?></td>
 	<td align="center"><?=$pilot->totalhours; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpilots&action=viewoptions&pilotid=<?=$pilot->pilotid;?>">Options</a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpilots&action=viewoptions&pilotid=<?=$pilot->pilotid;?>"><img src="lib/images/options.gif" alt="Options" /></a></td>
 </tr>
 <?php
 }

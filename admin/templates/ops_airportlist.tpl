@@ -1,6 +1,6 @@
 <h3>Airport's List</h3>
 <p>The airports that are currently served are listed here.</p>
-<p><a id="dialog" class="jqModal" href="action.php?admin=addairport">Add an airport</a></p>
+<p><a id="dialog" class="jqModal" href="action.php?admin=addairport"><img src="lib/images/addairport.gif" alt="Add Airport" /></a></p>
 <?php
 if(!$airports)
 {
@@ -30,7 +30,7 @@ foreach($airports as $airport)
 	<td align="center"><?=$airport->country; ?></td>
 	<td align="center"><?=$airport->lat; ?></td>
 	<td align="center"><?=$airport->lng; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=airports&action=">Options</a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=airports&action="><img src="lib/images/options.gif" alt="Options" /></a></td>
 </tr>
 <?php
 }

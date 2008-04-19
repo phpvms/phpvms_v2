@@ -30,6 +30,11 @@ h3
 	margin-top: 7px;
 }
 
+img
+{
+	border: none;
+}
+
 #innerwrapper
 {
 	width: 970px;

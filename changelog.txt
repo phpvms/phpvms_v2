@@ -2,6 +2,14 @@
 
 phpVMS Build Changelog:
 
+Next Build
+
+  * Action images in admin panel
+  * Added license information to source files
+  * Reorganized PIREP page
+  * Some updates/improvments to Google Maps code, easier to modify size
+  * PIREP list bugfix
+
 Build 286 04.15
 
   * Rank is now editable

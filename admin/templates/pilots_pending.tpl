@@ -26,9 +26,9 @@ foreach($allpilots as $pilot)
 	<td align="center"><?=$pilot->location; ?></td>
 	<td align="center">
         <a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepilot"
-			id="<?=$pilot->pilotid;?>" class="ajaxcall">Accept</a> * |
+			id="<?=$pilot->pilotid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
         <a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="rejectpilot"
-			id="<?=$pilot->pilotid;?>" class="ajaxcall">Reject</a> *
+			id="<?=$pilot->pilotid;?>" class="ajaxcall"><img src="lib/images/reject.gif" alt="Reject" /></a>
 	</td>
 </tr>
 <?php

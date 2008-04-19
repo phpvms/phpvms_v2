@@ -13,20 +13,20 @@
 </thead>
 <tbody>
 	<tr>
-		<td align="center"><?=$report->code . $report->flightnum; ?></td>
-		<td align="center"><?=$report->depicao; ?></td>
-		<td align="center"><?=$report->arricao; ?></td>
-		<td align="center"><?=$report->flighttime; ?></td>
-		<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?>
+		<td align="center"><?=$pirep->code . $report->flightnum; ?></td>
+		<td align="center"><?=$pirep->depicao; ?></td>
+		<td align="center"><?=$pirep->arricao; ?></td>
+		<td align="center"><?=$pirep->flighttime; ?></td>
+		<td align="center"><?=date(DATE_FORMAT, $pirep->submitdate); ?>
 		<td align="center">
 		<?php
-			if($report->accepted == PIREP_ACCEPTED)
+			if($pirep->accepted == PIREP_ACCEPTED)
 				echo '<div id="success">Accepted</div>';
-			elseif($report->accepted == PIREP_REJECTED)
+			elseif($pirep->accepted == PIREP_REJECTED)
 				echo '<div id="error">Rejected</div>';
-			elseif($report->accepted == PIREP_PENDING)
+			elseif($pirep->accepted == PIREP_PENDING)
 				echo '<div id="error">Approval Pending</div>';
-			elseif($report->accepted == PIREP_INPROGRESS)
+			elseif($pirep->accepted == PIREP_INPROGRESS)
 				echo '<div id="error">Flight in Progress</div>';
 		?>
 	</td>

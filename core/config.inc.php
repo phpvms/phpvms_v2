@@ -49,7 +49,6 @@ $ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/Opera
 $ADMIN_MODULES['SettingsAdmin'] = ADMIN_PATH . '/modules/Settings/Settings.php';
 
 // Include all dependencies
-include CLASS_PATH . '/Auth.class.php';
 include CLASS_PATH . '/DB.class.php';
 include CLASS_PATH . '/MainController.class.php';
 include CLASS_PATH . '/ModuleBase.class.php';
@@ -57,10 +56,10 @@ include CLASS_PATH . '/SessionManager.class.php';
 include CLASS_PATH . '/Template.class.php';
 include CLASS_PATH . '/TemplateSet.class.php';
 include CLASS_PATH . '/Vars.class.php';
-include CLASS_PATH . '/UserGroups.class.php';
 include CLASS_PATH . '/Util.class.php';
 
 // Common Classes
+include COMMON_PATH . '/Auth.class.php';
 include COMMON_PATH . '/ACARSData.class.php';
 include COMMON_PATH . '/SiteData.class.php';
 include COMMON_PATH . '/PilotData.class.php';
@@ -68,10 +67,12 @@ include COMMON_PATH . '/PilotGroups.class.php';
 include COMMON_PATH . '/PIREPData.class.php';
 include COMMON_PATH . '/RanksData.class.php';
 include COMMON_PATH . '/RegistrationData.class.php';
+include COMMON_PATH . '/RSSFeed.class.php';
 include COMMON_PATH . '/OperationsData.class.php';
 include COMMON_PATH . '/SchedulesData.class.php';
 include COMMON_PATH . '/SettingsData.class.php';
 include COMMON_PATH . '/StatsData.class.php';
+include COMMON_PATH . '/UserGroups.class.php';
 
 include COMMON_PATH . '/GoogleChart.class.php';
 include COMMON_PATH . '/GoogleMap.class.php';

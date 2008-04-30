@@ -98,20 +98,20 @@ class TemplateSet
 	{
 		
 		/* See if the file has been over-rided in the skin directory
-		 */	
+		 */
 		 		 
-		if(ADMIN_PANEL == false)
+		if(!defined('ADMIN_PANEL'))
 		{
 			if(file_exists(SKINS_PATH . '/' . $tpl_name))
 				$tpl_path = SKINS_PATH . '/' . $tpl_name;
 			else
 				$tpl_path = $this->template_path . '/' . $tpl_name;
-		}	
+		}
 		else
 		{
 			$tpl_path = $this->template_path . '/' . $tpl_name;
-		}		
-		
+		}
+
 		if(!file_exists($tpl_path))
 		{
 			trigger_error('The template file "'.$tpl_name.'" doesn\'t exist');

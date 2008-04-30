@@ -27,11 +27,21 @@ class Vars
 	
 	public static function POST($name)
 	{
+		if(is_array($_POST[$name]))
+		{
+			return $_POST[$name];
+		}
+		
 		return self::cleaned($_POST[$name]);
 	}
 	
 	public static function GET($name)
 	{
+		if(is_array($_GET[$name]))
+		{
+			return $_GET[$name];
+		}
+		
 		return self::cleaned($_GET[$name]);
 	}
 	

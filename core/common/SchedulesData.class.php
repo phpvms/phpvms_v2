@@ -32,7 +32,7 @@ class SchedulesData
 		$sql = 'SELECT DISTINCT s.arricao AS icao, a.name 
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
 					WHERE s.arricao = a.icao ';
-		
+
 		if($code != '')
 			$sql .= ' AND s.code=\''.$code.'\' ';
 		
@@ -93,7 +93,23 @@ class SchedulesData
 				'$deptime', '$arrtime', '$flighttime')";
 		
 		return DB::query($sql);
-		
+
+	}
+
+	function EditSchedule($scheduleid, $code, $flightnum, $leg, $route,
+				$aircraft, $distance, $deptime, $arrtime, $flighttime)
+	{
+        if($leg == '') $leg = 1;
+		$deptime = strtoupper($deptime);
+		$arrtime = strtoupper($arrtime);
+
+
+		$sql = "UPDATE " . TABLE_PREFIX ."schedules SET code='$code', flightnum='$flightnum', leg='$leg',
+						route='$route', aircraft='$aircraft', distance='$distance', deptime='$deptime',
+						arrtime='$arrtime', flighttime='$flighttime'
+					WHERE id=$scheduleid";
+
+		return DB::query($sql);
 	}
 }
 

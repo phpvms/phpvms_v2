@@ -19,7 +19,7 @@ class MainController
 	public static $DB;
 	public static $activeModule;
 	
-	public static function loadModules($ModuleList)
+	public static function loadModules(&$ModuleList)
 	{
 		global $ACTIVE_MODULES;
 		global $NAVBAR;

@@ -5,7 +5,7 @@
 */
 
 define('SITE_ROOT', dirname(__FILE__));
-include SITE_ROOT . '/core/config.inc.php';
+include 'core/codon.config.php';
 
 ksort($ACTIVE_MODULES); 
 

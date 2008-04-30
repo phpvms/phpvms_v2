@@ -122,8 +122,7 @@ CREATE TABLE `phpvms_pireps` (
 	INDEX `flightnum` (`flightnum`),
 	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE,
-	FOREIGN KEY (`flightnum`) REFERENCES phpvms_schedules(`flightnum`) ON UPDATE CASCADE
+	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 
 CREATE TABLE `phpvms_pirepcomments` (

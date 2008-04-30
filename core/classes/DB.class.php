@@ -63,6 +63,15 @@ class DB
 				return false;
 			}
 		}
+		elseif($type == 'oracle')
+		{
+			if(!self::$DB = new ezSQL_oracle8_9())
+			{
+				self::$error = self::$DB->error;
+				self::$errno = self::$DB->errno;
+				return false;
+			}
+		}
 		else
 		{
 			self::$error = 'Invalid database type';
@@ -73,19 +82,7 @@ class DB
 	}
 	
 	public static function connect($user='', $pass='', $name='', $server='')
-	{	
-		/*if($user == '')
-			$user = DBASE_USER;
-		
-		if($pass == '')
-			$pass = DBASE_PASS;
-		
-		if($name == '')
-			$name = DBASE_NAME;
-		
-		if($server == '')
-			$server = DBASE_SERVER;*/
-				
+	{					
 		if(!self::$DB->connect($user, $pass, $server))
 		{
 			self::$error = self::$DB->error;
@@ -129,7 +126,7 @@ class DB
 		
 		return $ret;
 	}
-		
+	
 	public static function get_row($query=null, $output=OBJECT, $y=0)
 	{
 		$ret = self::$DB->get_row($query, $output, $y);

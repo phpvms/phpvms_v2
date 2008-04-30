@@ -6,7 +6,7 @@
 	
 define('ADMIN_PANEL', true);
 
-include '../core/config.inc.php';
+include '../core/codon.config.php';
 
 if(!Auth::LoggedIn())
 {

@@ -4,8 +4,7 @@
  * @desc Handles AJAX calls
  */
 
-include '../core/config.inc.php';
-
+include '../core/codon.config.php';
 
 if(!Auth::LoggedIn() && !Auth::UserInGroup('Administrators'))
         die('Unauthorized access!');

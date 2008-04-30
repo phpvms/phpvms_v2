@@ -3,7 +3,7 @@
  * phpVMS Installer File
  */
 
-include dirname(__FILE__).'/bootloader.inc.php';
+include dirname(__FILE__).'/loader.inc.php';
 
 if($_POST['action'] == 'submitdb')
 {

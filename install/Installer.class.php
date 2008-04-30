@@ -29,9 +29,9 @@ class Installer
 		
 		
 		// Check if core/site_config.inc.php is writeable
-		if(!file_exists(CORE_PATH .'/site_config.inc.php'))
+		if(!file_exists(CORE_PATH .'/local.config.php'))
 		{
-			if(!$fp = fopen(CORE_PATH .'/site_config.inc.php', 'w'))
+			if(!$fp = fopen(CORE_PATH .'/local.config.php', 'w'))
 			{
 				$noerror = false;
 				$type = 'error';
@@ -40,20 +40,20 @@ class Installer
 		}
 		else
 		{		
-			if(!is_writeable(CORE_PATH .'/site_config.inc.php'))
+			if(!is_writeable(CORE_PATH .'/local.config.php'))
 			{
 				$noerror = false;
 				$type = 'error';
-				$message = 'core/site_config.inc.php is not writeable';
+				$message = 'core/local.config.php is not writeable';
 			}
 			else
 			{
 				$type = 'success';
-				$message = 'core/site_config.inc.php is writeable!';
+				$message = 'core/local.config.php is writeable!';
 			}
 		}
 		
-		Template::Set('configfile', '<div id="'.$type.'">'.$message.'</div>');	
+		Template::Set('configfile', '<div id="'.$type.'">'.$message.'</div>');
 		
 		
 		if(!is_writeable(CORE_PATH .'/pages'))
@@ -85,11 +85,11 @@ class Installer
 		$tpl = str_replace('$TABLE_PREFIX', $_POST['TABLE_PREFIX'], $tpl);
 		$tpl = str_replace('$SITE_URL', $_POST['SITE_URL'], $tpl);
 		
-		$fp = fopen(CORE_PATH .'/site_config.inc.php', 'w');
+		$fp = fopen(CORE_PATH .'/local.config.php', 'w');
 		
 		if(!$fp)
 		{
-			self::$error = 'There was an error opening site_config.inc.php. Please check your permissions';
+			self::$error = 'There was an error opening local.config.php. Please check your permissions';
 			return false;
 		}
 		

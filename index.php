@@ -14,7 +14,7 @@
 	$time = $time[1] + $time[0];
 	$start = $time;*/
 
-include 'core/config.inc.php';
+include 'core/codon.config.php';
 
 ksort($ACTIVE_MODULES);
 

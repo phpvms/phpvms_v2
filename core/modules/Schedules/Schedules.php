@@ -28,6 +28,9 @@ class Schedules extends ModuleBase
 		Template::Set('depairports', $depapts);
 		Template::Show('schedule_searchform.tpl');
 		
+		// Show the routes. Remote this to not show them.
+		Template::Set('allroutes', SchedulesData::GetSchedules());
+		
 		Template::Show('schedule_list.tpl');
 	}
 	
@@ -36,9 +39,14 @@ class Schedules extends ModuleBase
 		$depicao = Vars::POST('depicao');
 		
 		if($depicao == '')
-			return;
+		{
+			Template::Set('allroutes', SchedulesData::GetSchedules());
+		}
+		else
+		{
+			Template::Set('allroutes', SchedulesData::GetRoutesWithDeparture($depicao));
+		}
 		
-		Template::Set('allroutes', SchedulesData::GetRoutesWithDeparture($depicao));
 		Template::Show('schedule_results.tpl');
 	}
 }

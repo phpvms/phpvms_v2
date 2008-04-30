@@ -3,7 +3,7 @@
 
 <p><strong>Select a departure Airport</strong>
 <select id="depicao" name="depicao">
-<option value="">Select a departure airport</option>
+<option value="">Select All</option>
 <?php
 foreach($depairports as $airport)
 {

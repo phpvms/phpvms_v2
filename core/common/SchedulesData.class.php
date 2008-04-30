@@ -55,10 +55,13 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
-	function GetSchedules($depicao='')
+	function GetSchedules($limit='')
 	{
 		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
+		
+		if($limit != '')
+			$sql .= ' LIMIT ' . $limit;
 		
 		return DB::get_results($sql);
 	}

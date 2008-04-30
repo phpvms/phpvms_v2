@@ -14,7 +14,7 @@ foreach($allroutes as $route)
 {
 ?>
 <tr>
-	<td align="center"><?=$route->code . $route->flightnum; ?> Leg <?=$route->leg?></td>
+	<td><?=$route->code . $route->flightnum; ?> Leg <?=$route->leg?></td>
 	<td align="center"><?=$route->depname?> (<?=$route->depicao; ?>) to <?=$route->arrname?> (<?=$route->arricao; ?>)</td>
 	<td align="center"><?=$route->aircraft; ?></td>
 	<td><?=$route->deptime;?></td>

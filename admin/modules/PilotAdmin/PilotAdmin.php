@@ -105,6 +105,7 @@ class PilotAdmin
 		//This is for the main tab
 		Template::Set('pilotinfo', PilotData::GetPilotData($pilotid));
 		Template::Set('customfields', PilotData::GetFieldData($pilotid, true));
+		Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
 		
 		
 		$this->SetGroupsData($pilotid);

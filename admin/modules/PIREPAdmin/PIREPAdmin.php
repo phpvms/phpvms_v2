@@ -27,12 +27,14 @@ class PIREPAdmin
 		switch(Vars::GET('admin'))
 		{
 			case 'rejectpirep':
+
 				Template::Set('pirepid', Vars::GET('pirepid'));
 				Template::Show('pirep_reject.tpl');
 				
 				break;
 				
 			case 'viewrecent':
+				Template::Set('title', 'Recent Reports');
 				Template::Set('pireps', PIREPData::GetRecentReports());
 				Template::Set('descrip', 'These pilot reports are from the past 48 hours');
 				
@@ -40,6 +42,7 @@ class PIREPAdmin
 				break;
 				
 			case 'viewpending':
+				Template::Set('title', 'Pending Reports');
 				Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));				
 				Template::Show('pireps_list.tpl');
 				
@@ -60,6 +63,7 @@ class PIREPAdmin
 					Template::Set('start', intval($_GET['start'])+20);
 				}
 				
+				Template::Set('title', 'PIREPs List');
 				Template::Set('pireps', $allreports);
 				Template::Show('pireps_list.tpl');
 				

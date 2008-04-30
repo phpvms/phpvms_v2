@@ -44,7 +44,7 @@ include '../core/codon.config.php';
 
 if(!Auth::LoggedIn())
 {
-	header('Location: '.SITE_URL.'?page=login&redir=/admin');
+	header('Location: '.SITE_URL.'?page=login&redir=admin');
 }
 
 if(!Auth::UserInGroup('Administrators'))

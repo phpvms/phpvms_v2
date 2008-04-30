@@ -1,4 +1,7 @@
-<h3>PIREPs List</h3>
+<?php 
+if($title!='')
+	echo "<h3>$title</h3>";
+?>
 <p><?=$descrip;?></p>
 <?php
 if(!$pireps)

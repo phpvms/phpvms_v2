@@ -1,4 +1,4 @@
-<h3>Pilot Groups</h3>
+<h4>Pilot Groups</h4>
 <?php
 if(!$pilotgroups)
 {
@@ -22,8 +22,8 @@ else
 }
 ?>
 </dl>
-<br /><br /><br />
-<h3>Add to Group</h3>
+<div style="clear: both;"></div>
+<h4>Add to Group</h3>
 
 <?php 
 $total = count($freegroups);

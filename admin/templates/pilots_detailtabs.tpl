@@ -1,5 +1,7 @@
+<div id="floatercontainer">
+<h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
 <div id="dialogresult"></div>
-<div id="tabcontainer">
+<div id="tabcontainer" style="float: left">
 	<ul>
 		<li><a href="#pilotdetails"><span>Pilot Details</span></a></li>
 		<li><a href="#pilotgroups"><span>Pilot Groups</span></a></li>
@@ -15,10 +17,10 @@
 		?>
 	</div>
 	<div id="pireps">
-		<?php Template::Show('pilots_pireps.tpl'); ?>
+		<?php Template::Show('pireps_list.tpl'); ?>
 	</div>
 	<div id="resetpass">
 		<?php Template::Show('pilots_options.tpl'); ?>
 	</div>
 </div>
-<div align="right" style="clear:both;"><input type="button" class="jqmClose" name="jqmClose" value="Close" /></div>
+</div>

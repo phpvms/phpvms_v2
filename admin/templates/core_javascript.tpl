@@ -13,7 +13,6 @@
 <script type="text/javascript" src="<?=SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="<?=SITE_URL?>/lib/js/wymeditor/skins/default/screen.css" />
-<link rel="stylesheet" href="<?=SITE_URL?>/lib/js/ui.tabs.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jquery.wysiwyg.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />

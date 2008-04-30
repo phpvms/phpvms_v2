@@ -1,5 +1,3 @@
-<h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
-
 <form id="dialogform" action="action.php?admin=viewpilots" method="post">
 <dl> 
 	<dt>Email Address</dt>
@@ -38,7 +36,6 @@ if($customfields)
 	<dt></dt>
 	<dd>
 		<div id="results"></div>
-		<input type="submit" name="submit" value="Save Changes" />
 	</dd>
 </dl>
 </form>

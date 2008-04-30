@@ -4,6 +4,10 @@ phpVMS Build Changelog:
 
 Next Build
 
+  * Pilot profile moved out of popup box (easier to work with)
+  * Template over-riding is working properly
+  * Editable schedules
+  * PIREP/Schedules disconnected so editing/deletion doesn't affect
   * Action images in admin panel
   * Added license information to source files
   * Reorganized PIREP page

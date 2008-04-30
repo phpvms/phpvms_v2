@@ -27,19 +27,15 @@ class SiteCMS
 				break;
 			
 			case 'addpageform':
-				$this->AddPageForm();
+
+				Template::Set('title', 'Add Page');
+				Template::Set('action', 'addpage');
+				
+				Template::Show('pages_editpage.tpl');
 				break;
 				
 			case 'viewpages':
 			
-				/* this is the popup form edit form
-				 */
-				if(Vars::GET('action') == 'editpage')
-				{
-					$this->EditPageForm();
-					return;
-				}
-				
 				/* This is the actual adding page process 
 				 */
 				if(Vars::POST('action') == 'addpage')
@@ -53,19 +49,20 @@ class SiteCMS
 					$this->EditPage();
 				}
 				
+				
+				/* this is the popup form edit form
+				 */
+				if(Vars::GET('action') == 'editpage')
+				{
+					$this->EditPageForm();
+					return;
+				}
+				
+				
 				$this->ViewPages();
 				
-				$this->AddPageForm();
 				break;
 		}
-	}
-	
-	/**
-	 * Show the main page addition form
-	 */
-	function AddPageForm()
-	{
-		Template::Show('pages_addpage.tpl');
 	}
 	
 	/**
@@ -74,12 +71,12 @@ class SiteCMS
 	function AddPage()
 	{
 		$title = Vars::POST('pagename');
-		$content = Vars::POST('content');
+		$content = $_POST['content'];
 		
-		if(!$title || !$content)
+		if(!$title)
 		{
-			Template::Set('message', 'You must fill out all of the fields');
-			Template::Show('core_message.tpl');
+			Template::Set('message', 'You must have a title');
+			Template::Show('core_error.tpl');
 			return;
 		}
 		
@@ -94,25 +91,26 @@ class SiteCMS
 				Template::Set('message', 'There was an error creating the file');
 			}
 			
-			Template::Show('core_message.tpl');
-		}			
+			Template::Show('core_error.tpl');
+		}	
+
+		Template::Set('message', 'Page Added!');
+		Template::Show('core_success.tpl');
 	}
 	
 	function EditPage()
 	{
 		$pageid = Vars::POST('pageid');
-		$content = Vars::POST('content');
+		$content = $_POST['content']; // Vars::POST('content'); // WE want this raw
 		
-		if(SiteData::EditFile($pageid, $content))
-		{
-			Template::Set('message', 'Content saved');
-		}
-		else
+		if(!SiteData::EditFile($pageid, $content))
 		{
 			Template::Set('message', 'There was an error saving content');
+			Template::Show('core_error.tpl');
 		}
 		
-		Template::Show('core_message.tpl');
+		Template::Set('message', 'Content saved');
+		Template::Show('core_success.tpl');
 	}
 				
 	
@@ -122,8 +120,10 @@ class SiteCMS
 		
 		$page = SiteData::GetPageData($pageid);
 		Template::Set('pagedata', $page);
-		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . '.html'));
+		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
 		
+		Template::Set('title', 'Edit Page');
+		Template::Set('action', 'savepage');
 		Template::Show('pages_editpage.tpl');
 	}
 	

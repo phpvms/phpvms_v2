@@ -181,6 +181,11 @@ dd input
 	z-index: 1500;
 }
 
+input, textarea
+{
+	border: solid 1px #CCCCCC;
+	background: #FFFFFF;
+}
 
 #footer
 {

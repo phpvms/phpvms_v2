@@ -148,7 +148,19 @@ class PIREPS extends ModuleBase
 			Template::Set('message', 'There was an error adding your PIREP');
 			return false;
 		}
-				
+		
+		
+		// Load PIREP into RSS feed
+		$reports = PIREPData::GetRecentReportsByCount(10);
+		$rss = new RSSFeed('Latest Pilot Reports', SITE_URL, 'The latest pilot reports');
+		
+		foreach($reports as $report)
+		{
+			$rss->AddItem('Report #'.$report->id.' - '.$report->depicao.' to '.$report->arricao, 
+							SITE_URL.'/admin/index.php?admin=viewpending','', 
+							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid));;
+		}
+		
 		return true;	
 	}
 	

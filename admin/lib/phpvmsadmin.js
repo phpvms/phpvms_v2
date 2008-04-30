@@ -29,7 +29,8 @@ function EvokeListeners()
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
 	 
 	// Show editor
-	$("#editor").wysiwyg();
+	//$('#editor').markItUp(mySettings);
+
 	
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult'

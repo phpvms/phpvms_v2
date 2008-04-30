@@ -96,8 +96,13 @@ class SiteData
 	
 		if(!$row) return;
 		
-		$row->content = file_get_contents(PAGES_PATH . '/' . $row->filename . '.html');
-
+		//run output buffering, so we can parse any PHP in there
+		
+		ob_start();
+		include PAGES_PATH . '/' . $row->filename . PAGE_EXT; 
+		$row->content = ob_get_contents();
+		ob_end_clean();
+		
 		return $row;
 	}
 	
@@ -105,7 +110,7 @@ class SiteData
 	{
 		$pagedata = SiteData::GetPageData($pageid);
 		
-		if(SiteData::EditPageFile($pagedata->filename, $content))
+		if(self::EditPageFile($pagedata->filename, stripslashes($content)))
 		{
 			return true;
 		}
@@ -118,7 +123,7 @@ class SiteData
 	function EditPageFile($filename, $content)
 	{
 		//create the file
-		$filename = PAGES_PATH . '/' . $filename . '.html';
+		$filename = PAGES_PATH . '/' . $filename . PAGE_EXT;
 		$fp = fopen($filename, 'w');
 		
 		if(!$fp) 

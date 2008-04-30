@@ -2,13 +2,19 @@
 /**
  * phpVMS Installer File
  */
-
+/* error_reporting(E_ALL ^ E_NOTICE);
+ ini_set('display_errors', 'on');
+*/
 include dirname(__FILE__).'/loader.inc.php';
-
+/*
+echo Template::$tplset->template_path .'<br />';
+Template::SetTemplatePath(SITE_ROOT.'/install/templates');
+echo Template::$tplset->template_path;
+*/
 if($_POST['action'] == 'submitdb')
 {
 	//dbname] => [dbpass] => [dbuser] => [dbtype] => mysql [tableprefix] => phpvms_ [siteurl] => www.phpvms.net/test/ [action] => submitdb [
-	
+
 	if($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == '' || $_POST['DBASE_PASS'] == '' || $_POST['DBASE_TYPE'] == ''
 			|| $_POST['DBASE_SERVER'] == '' || $_POST['SITE_URL'] == '')
 	{

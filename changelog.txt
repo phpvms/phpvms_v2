@@ -3,7 +3,7 @@
 phpVMS Build Changelog:
 
 Next Build
-
+  * Officially sync'd with Codon framework (nsslive.net/codon)
   * Pilot profile moved out of popup box (easier to work with)
   * Pilot profile shows PIREPs for that pilot
   * Template over-riding is working properly

@@ -24,7 +24,7 @@ class Installer
 			$message = 'OK! (your version:'.$version.')';
 		}
 		
-		Template::Set('phpversion', '<div id="'.$type.'">'.$message.'</div>');	
+		Template::Set('phpversion', '<div id="'.$type.'">'.$message.'</div>');
 		
 		
 		
@@ -35,7 +35,7 @@ class Installer
 			{
 				$noerror = false;
 				$type = 'error';
-				$message = 'Could not create core/site_config.inc.php. Create this file, blank, with write permissions.';
+				$message = 'Could not create core/local.config.php. Create this file, blank, with write permissions.';
 			}
 		}
 		else

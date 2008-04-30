@@ -42,7 +42,7 @@ define('PILOT_PENDING', 0);
 define('PILOT_ACCEPTED', 1);
 define('PILOT_REJECTED', 2);
 
-define('PAGE_EXT', '.htm');
+$Config['PAGE_EXT'] = '.htm';
 
 // Common Classes
 include COMMON_PATH . '/Auth.class.php';

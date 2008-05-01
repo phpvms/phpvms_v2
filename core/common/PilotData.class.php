@@ -26,8 +26,21 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
+	function GetAllPilotsDetailed($start='', $limit=20)
+	{
+	
+		$sql = 'SELECT p.* FROM '.TABLE_PREFIX.'pilots p
+					ORDER BY totalhours DESC';
+		
+		if($start!='')
+			$sql .= ' LIMIT '.$start.','.$limit;
+			
+		return DB::get_results($sql);	
+	}
+	
 	function GetPilotCode($code, $pilotid)
 	{
+		$pilotid = $pilotid + PILOTID_OFFSET;
 		return $code . str_pad($pilotid, 4, '0', STR_PAD_LEFT);
 	}
 	

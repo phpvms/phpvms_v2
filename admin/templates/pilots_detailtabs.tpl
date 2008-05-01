@@ -1,4 +1,4 @@
-<div id="floatercontainer">
+<div id="wrapper">
 <h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
 <div id="dialogresult"></div>
 <div id="tabcontainer" style="float: left">

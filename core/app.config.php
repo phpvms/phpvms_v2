@@ -43,6 +43,7 @@ define('PILOT_ACCEPTED', 1);
 define('PILOT_REJECTED', 2);
 
 $Config['PAGE_EXT'] = '.htm';
+$Config['PILOTID_OFFSET'] = 1000; // Start the Pilot's ID from 1000
 
 // Common Classes
 include COMMON_PATH . '/Auth.class.php';
@@ -71,6 +72,7 @@ $ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php
 $ACTIVE_MODULES['Frontpage'] = MODULES_PATH . '/Frontpage/Frontpage.php';
 $ACTIVE_MODULES['Schedules'] = MODULES_PATH . '/Schedules/Schedules.php';
 $ACTIVE_MODULES['Pages'] = MODULES_PATH . '/Pages/Pages.php';
+$ACTIVE_MODULES['Pilots'] = MODULES_PATH . '/Pilots/Pilots.php';
 $ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
 $ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
 

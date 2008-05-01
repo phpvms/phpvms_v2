@@ -22,13 +22,21 @@ else
 <?php
 }
 ?>
+<li><a href="?page=pilots">Pilots</a></li>
 <?=$MODULE_NAV_INC;?>
-<li><a href="?page=acars">Live Map</a></li>
+<?php//<li><a href="?page=acars">Live Map</a></li>
+?>
 <li><a href="?page=contact">Contact Us</a></li>
 <?php
 if(Auth::LoggedIn())
 {
+	if(Auth::UserInGroup('Administrators'))
+	{
+		echo '<li><a href="'.SITE_URL.'/admin">Admin Center</a></li>';
+	}
 ?>
+
+
 <li><a href="?page=logout">Log Out</a></li>
 <?php
 }

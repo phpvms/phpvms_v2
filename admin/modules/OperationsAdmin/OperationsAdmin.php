@@ -95,7 +95,6 @@ class OperationsAdmin
 				Template::Set('airports', OperationsData::GetAllAirports());
 				Template::Show('ops_airportlist.tpl');
 				
-				Template::Show('ops_addairport.tpl');
 				break;
 				
 			case 'addschedule':

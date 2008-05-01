@@ -37,4 +37,3 @@ foreach($airports as $airport)
 ?>
 </tbody>
 </table>
-<hr>

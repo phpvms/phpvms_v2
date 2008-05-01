@@ -1,3 +1,4 @@
+<div id="wrapper">
 <h3><?=$title?></h3>
 <?php
 //id="form"
@@ -109,3 +110,4 @@
 </dd>
 </dl>
 </form>
+</div>

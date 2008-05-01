@@ -21,7 +21,7 @@ class OperationsAdmin
 				Template::Show('ops_aircraftform.tpl');
 				
 				break;
-			
+
 			case 'editaircraft':
 			
 				$id = Vars::GET('id');
@@ -32,6 +32,7 @@ class OperationsAdmin
 				Template::Show('ops_aircraftform.tpl');
 				
 				break;
+
 			
 			/* Aircraft Operations
 			 */
@@ -99,26 +100,53 @@ class OperationsAdmin
 				
 			case 'addschedule':
 			
-				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('title', 'Add Schedule');
+				Template::Set('action', 'addschedule');
+
+                Template::Set('allairlines', OperationsData::GetAllAirlines());
 				Template::Set('allaircraft', OperationsData::GetAllAircraft());
 				Template::Set('allairports', OperationsData::GetAllAirports());
-				
-				Template::Show('ops_addschedule.tpl');
-				
+
+				Template::Show('ops_scheduleform.tpl');
+
 				break;
-				
+
+            case 'editschedule':
+
+				$id = Vars::GET('id');
+
+				Template::Set('title', 'Edit Schedule');
+				Template::Set('schedule', SchedulesData::GetSchedule($id));
+				Template::Set('action', 'editschedule');
+
+                Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('allaircraft', OperationsData::GetAllAircraft());
+				Template::Set('allairports', OperationsData::GetAllAirports());
+
+				Template::Show('ops_scheduleform.tpl');
+
+				break;
+
 			case 'schedules':
-			
+
 				/* These are loaded in popup box */
 				if(Vars::GET('action') == 'viewroute')
 				{
 					$id = Vars::GET('id');
-					return;	
+					return;
 				}
-			
+
 				if(Vars::POST('action') == 'addschedule')
 				{
 					$this->AddSchedule();
+				}
+				elseif(Vars::POST('action') == 'editschedule')
+				{
+					$this->EditSchedule(); //print_r($_POST);
+				}
+				elseif(Vars::POST('action') == 'deleteschedule')
+				{
+					$this->DeleteSchedule();
 				}
 			
 				Template::Set('schedules', SchedulesData::GetSchedules());
@@ -146,13 +174,13 @@ class OperationsAdmin
 				Template::Set('message', 'This airline has already been added');
 			else
 				Template::Set('message', 'There was an error adding the airline');
+
+            Template::Show('core_error.tpl');
+			return;
 		}
-		else
-		{
-			Template::Set('message', 'Airline has been added!');
-		}
-		
-		Template::Show('core_message.tpl');	
+
+		Template::Set('message', 'Airline has been added!');
+		Template::Show('core_success.tpl');
 	}
 			
 	function AddAircraft()
@@ -177,12 +205,14 @@ class OperationsAdmin
 				Template::Set('message', 'This aircraft already exists');
 			else
 				Template::Set('message', 'There was an error adding the aircraft');
+
+			Template::Show('core_error.tpl');
+			return;
 		}
-		else	
-			Template::Set('message', 'The aircraft has been added');
-		
-		Template::Show('core_message.tpl');
-		
+
+		Template::Set('message', 'The aircraft has been added');
+
+		Template::Show('core_success.tpl');
 	}
 	
 	function AddAirport()
@@ -206,18 +236,21 @@ class OperationsAdmin
 				Template::Set('message', 'This airport has already been added');
 			else
 				Template::Set('message', 'There was an error adding the airport');
+
+			Template::Show('core_error.tpl');
+			return;
 		}
-		else	
-			Template::Set('message', 'The airport has been added');
-			
-		Template::Show('core_message.tpl');
+
+		Template::Set('message', 'The airport has been added');
+
+		Template::Show('core_success.tpl');
 	}
 	
 	function AddSchedule()
 	{
 		
-		$code = Vars::POST('code');	
-		$flightnum = Vars::POST('flightnum');	
+		$code = Vars::POST('code');
+		$flightnum = Vars::POST('flightnum');
 		$leg = Vars::POST('leg');
 		$depicao = Vars::POST('depicao');	
 		$arricao = Vars::POST('arricao');
@@ -227,7 +260,7 @@ class OperationsAdmin
 		$deptime = Vars::POST('deptime');
 		$arrtime = Vars::POST('arrtime');
 		$flighttime = Vars::POST('flighttime');
-		
+
 		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
 			|| $depicao == '' || $arricao == '')
 		{
@@ -236,21 +269,72 @@ class OperationsAdmin
 			
 			return;
 		}
-		
+
 		//Add it in
-		if(!SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft, 
+		if(!SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
 										$distance, $deptime, $arrtime, $flighttime))
 		{
-			Template::Set('message', 'There was an error adding the schedule');
+            Template::Set('message', 'There was an error adding the schedule');
+			Template::Show('core_error.tpl');
+			return;
 		}
-		else
-		{
-			Template::Set('message', 'The schedule has been added');
-		}
-		
-		Template::Show('core_message.tpl');
+
+        Template::Set('message', 'The schedule has been added');
+		Template::Show('core_success.tpl');
 	}
-	
+
+	function EditSchedule()
+	{
+		$scheduleid = Vars::POST('id');
+   		$code = Vars::POST('code');
+		$flightnum = Vars::POST('flightnum');
+		$leg = Vars::POST('leg');
+		$depicao = Vars::POST('depicao');
+		$arricao = Vars::POST('arricao');
+		$route = Vars::POST('route');
+		$aircraft = Vars::POST('aircraft');
+		$distance = Vars::POST('distance');
+		$deptime = Vars::POST('deptime');
+		$arrtime = Vars::POST('arrtime');
+		$flighttime = Vars::POST('flighttime');
+
+		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
+			|| $depicao == '' || $arricao == '')
+		{
+			Template::Set('message', 'All of the fields must be filled out');
+			Template::Show('core_message.tpl');
+
+			return;
+		}
+
+		if(!SchedulesData::EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
+										$distance, $deptime, $arrtime, $flighttime))
+		{
+			Template::Set('message', 'There was an error editing the schedule');
+			Template::Show('core_error.tpl');
+			return;
+		}
+
+		Template::Set('message', 'The schedule has been edited');
+		Template::Show('core_success.tpl');
+	}
+
+	function DeleteSchedule()
+	{
+		$id = Vars::POST('id');
+
+
+        if(!SchedulesData::DeleteSchedule($id))
+		{
+			Template::Set('message', 'There was an error deleting the schedule');
+			Template::Show('core_error.tpl');
+			return;
+		}
+
+		Template::Set('message', 'The schedule has been deleted');
+		Template::Show('core_success.tpl');
+	}
+
 	function EditAircraft()
 	{
 		$id = Vars::POST('id');
@@ -264,18 +348,19 @@ class OperationsAdmin
 		if($icao == '' || $name == '' || $fullname == '')
 		{
 			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			return;
 		}
-		
+
 		if(!OperationsData::EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise))
 		{
 			Template::Set('message', 'There was an error editing the aircraft');
+            Template::Show('core_error.tpl');
+			return;
 		}
-		else	
-			Template::Set('message', 'The aircraft has been edited');
-		
-		Template::Show('core_message.tpl');
+
+		Template::Set('message', 'The aircraft has been edited');
+		Template::Show('core_success.tpl');
 	}
 }
 ?>

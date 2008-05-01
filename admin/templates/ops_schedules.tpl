@@ -34,7 +34,10 @@ foreach($schedules as $sched)
 	<td align="center"><?=$sched->distance; ?></td>
 	<td align="center"><?=$sched->timesflown; ?></td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=schedules&action=viewroute&id=<?=$sched->id;?>"><img src="lib/images/flightroute.gif" alt="Flight Route" /></a>
+		<a id="dialog" class="jqModal" href="action.php?admin=editschedule&id=<?=$sched->id;?>"><img src="lib/images/edit.gif" alt="Edit Schedule" /></a>
+		<br />
+        <a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="deleteschedule"
+			id="<?=$sched->id;?>" class="ajaxcall"><img src="lib/images/delete.gif" alt="Delete" /></a>
 	</td>
 </tr>
 <?php

@@ -12,6 +12,14 @@
 class SchedulesData
 {
 
+
+	function GetSchedule($id)
+	{
+		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.$id;
+
+		return DB::get_row($sql);
+	}
+	
 	function GetDepartureAirports($code='')
 	{	
 		$sql = 'SELECT DISTINCT s.depicao AS icao, a.name 
@@ -99,7 +107,7 @@ class SchedulesData
 
 	}
 
-	function EditSchedule($scheduleid, $code, $flightnum, $leg, $route,
+	function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
 				$aircraft, $distance, $deptime, $arrtime, $flighttime)
 	{
         if($leg == '') $leg = 1;
@@ -108,9 +116,17 @@ class SchedulesData
 
 
 		$sql = "UPDATE " . TABLE_PREFIX ."schedules SET code='$code', flightnum='$flightnum', leg='$leg',
+						depicao='$depicao', arricao='$arricao',
 						route='$route', aircraft='$aircraft', distance='$distance', deptime='$deptime',
 						arrtime='$arrtime', flighttime='$flighttime'
 					WHERE id=$scheduleid";
+
+		return DB::query($sql);
+	}
+
+	function DeleteSchedule($scheduleid)
+	{
+		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules WHERE id='.$scheduleid;
 
 		return DB::query($sql);
 	}

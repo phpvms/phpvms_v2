@@ -28,8 +28,6 @@
  */
  
 
-
-
 class RanksData
 {
 	

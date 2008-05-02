@@ -19,7 +19,7 @@ foreach($allpilots as $pilot)
 			<?=PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?>
 	</td>
 	<td><?=$pilot->firstname.' '.$pilot->lastname?></td>
-	<td><?=$pilot->rank?></td>
+	<td><img src="<?=$pilot->rankimage?>" alt="<?=$pilot->rank;?>" /></td>
 	<td><?=$pilot->totalflights?></td>
 	<td><?=$pilot->totalhours?></td>
 </tr>

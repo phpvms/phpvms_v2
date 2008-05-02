@@ -45,7 +45,8 @@ class PilotData
 	function GetAllPilotsDetailed($start='', $limit=20)
 	{
 	
-		$sql = 'SELECT p.* FROM '.TABLE_PREFIX.'pilots p
+		$sql = 'SELECT p.*, r.rankimage FROM '.TABLE_PREFIX.'pilots p, '.TABLE_PREFIX.'ranks r
+					WHERE r.rank = p.rank
 					ORDER BY totalhours DESC';
 		
 		if($start!='')

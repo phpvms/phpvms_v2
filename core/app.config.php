@@ -10,7 +10,7 @@ define('PILOT_ACCEPTED', 1);
 define('PILOT_REJECTED', 2);
 
 $Config['PAGE_EXT'] = '.htm';
-$Config['PILOTID_OFFSET'] = 1000; // Start the Pilot's ID from 1000
+$Config['PILOTID_OFFSET'] = 0; // Start the Pilot's ID from 1000
 
 // Common Classes
 include COMMON_PATH . '/Auth.class.php';

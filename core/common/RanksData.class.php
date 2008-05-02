@@ -37,7 +37,7 @@ class RanksData
 	
 	function GetRankInfo($rankid)
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots WHERE rankid='.$rankid;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks WHERE rankid='.$rankid;
 		
 		return DB::get_row($sql);
 	}
@@ -56,10 +56,11 @@ class RanksData
 		return DB::get_row($sql);
 	}
 	
-	function AddRank($hours, $title)
+	function AddRank($hours, $title, $imageurl)
 	{
 		$hours = intval($hours);
-		$sql = "INSERT INTO ".TABLE_PREFIX."ranks (rank, minhours) VALUES('$title', '$hours')";
+		
+		$sql = "INSERT INTO ".TABLE_PREFIX."ranks (rank, rankimage, minhours) VALUES('$title', '$imageurl', '$hours')";
 		
 		$ret = DB::query($sql);
 		
@@ -75,9 +76,9 @@ class RanksData
 		return true;
 	}
 	
-	function UpdateRank($rankid, $title, $minhours)
+	function UpdateRank($rankid, $title, $minhours, $imageurl)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."ranks SET rank='$title', minhours='$minhours'
+		$sql = "UPDATE ".TABLE_PREFIX."ranks SET rank='$title', rankimage='$imageurl', minhours='$minhours'
 					WHERE rankid=$rankid";
 		
 		DB::query($sql);

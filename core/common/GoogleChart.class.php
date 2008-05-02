@@ -318,6 +318,10 @@ class googleChart {
 			if ($labels=='minmax') { //auto set min/max range
 				$this->lineLabels='';
 				$this->labels='';
+				
+				if($this->minMaxLabel == 0)
+					$this->minMaxLabel = 1;
+					
 				$xLabel=round($this->max/$this->minMaxLabel);
 				$this->lineLabels=$type; //set side to display on
 				$this->lineLabelAxis='0:';

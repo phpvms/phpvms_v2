@@ -141,11 +141,17 @@ class Login extends ModuleBase
 			//TODO: check if unconfirmed or not
 			//TODO: add to sessions table 
 			
-			if(Auth::$userinfo->confirmed == 'n')
+			if(Auth::$userinfo->confirmed == PILOT_PENDING)
 			{
+				Template::Show('login_unconfirmed.tpl');
 				Auth::LogOut();
 				
 				// show error
+			}
+			elseif(Auth::$userinfo->confirmed == PILOT_REJECTED)
+			{
+				Template::Show('login_rejected.tpl');
+				Auth::LogOut();
 			}
 			else
 			{

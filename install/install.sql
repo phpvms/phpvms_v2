@@ -76,6 +76,7 @@ CREATE TABLE `phpvms_pages` (
 CREATE TABLE `phpvms_ranks` (
 	`rankid` int(11) NOT NULL auto_increment,
 	`rank` varchar(32) NOT NULL default '',
+	`rankimage` TEXT NOT NULL ,
 	`minhours` smallint(6) NOT NULL default '0',
 	PRIMARY KEY  (`rankid`),
 	UNIQUE KEY `rank` (`rank`)

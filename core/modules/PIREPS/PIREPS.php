@@ -188,6 +188,8 @@ class PIREPS extends ModuleBase
 							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid));;
 		}
 		
+		
+		$rss->BuildFeed(LIB_PATH.'/rss/latestpireps.rss');
 		return true;	
 	}
 	

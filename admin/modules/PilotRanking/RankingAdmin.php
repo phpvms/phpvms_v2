@@ -46,6 +46,7 @@ class PilotRanking
 			case 'addrank':
 				Template::Set('title', 'Add Rank');
 				Template::Set('action', 'addrank');
+				
 				Template::Show('ranks_rankform.tpl');
 				break;
 				
@@ -54,6 +55,7 @@ class PilotRanking
 				Template::Set('action', 'editrank');
 				Template::Set('rank', RanksData::GetRankInfo(Vars::GET('rankid')));
 				
+				Template::Show('ranks_rankform.tpl');
 				break;
 
 			case 'calculateranks':
@@ -72,33 +74,67 @@ class PilotRanking
 	{
 		$minhours = Vars::POST('minhours');
 		$rank = Vars::POST('rank');
+		$imageurl = Vars::POST('imageurl');
 		
 		if($minhours == '' || $rank == '')
 		{
 			Template::Set('message', 'Hours and Rank must be blank');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			return;
 		}
 		
 		if(!is_numeric($minhours))
 		{
 			Template::Set('message', 'The hours must be a number');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 		}
 		
-		if(!RanksData::AddRank($minhours, $rank))
+		if(!RanksData::AddRank($minhours, $rank, $imageurl))
 		{
-			Template::Set('message', DB::error());
-			Template::Show('core_message.tpl');
-			return;
+			if(DB::errno() != 0)
+			{
+				Template::Set('message', 'Error adding the rank: '. DB::error());
+				Template::Show('core_error.tpl');
+				return;
+			}
 		}
-		else
+		DB::debug();
+		Template::Set('message', 'Rank Added!');
+		Template::Show('core_success.tpl');		
+	}
+	
+	function EditRank()
+	{
+		$rankid = Vars::POST('rankid');
+		$minhours = Vars::POST('minhours');
+		$rank = Vars::POST('rank');
+		$imageurl = Vars::POST('rankimage');
+		
+		if($minhours == '' || $rank == '')
 		{
-			Template::Set('message', 'Rank Added!');
-			Template::Show('core_message.tpl');
+			Template::Set('message', 'Hours and Rank must be blank');
+			Template::Show('core_error.tpl');
 			return;
 		}
 		
+		if(!is_numeric($minhours))
+		{
+			Template::Set('message', 'The hours must be a number');
+			Template::Show('core_error.tpl');
+		}
+		
+		if(!RanksData::UpdateRank($rankid, $rank, $minhours, $imageurl))
+		{
+			if(DB::errno() != 0)
+			{
+				Template::Set('message', 'Error updating the rank: '.DB::error());
+				Template::Show('core_error.tpl');
+				return;
+			}
+		}
+		
+		Template::Set('message', 'Rank Added!');
+		Template::Show('core_success.tpl');		
 	}
 }
 

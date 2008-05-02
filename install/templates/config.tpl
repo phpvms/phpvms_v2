@@ -5,7 +5,7 @@
  *
  * You can add any additional modules at the bottom
  * This file won't be modified/touched by future versions
- * of phpVMS
+ * of phpVMS, you can change your settings here
  *
  */
 define('DBASE_USER', '$DBASE_USER');
@@ -17,4 +17,5 @@ define('DBASE_TYPE', '$DBASE_TYPE');
 define('TABLE_PREFIX', '$TABLE_PREFIX');
 
 $Config['SITE_URL'] = 'http://$SITE_URL';
+$Config['PILOTID_OFFSET'] = 0; // This is where to start the pilot ID from
 ?>

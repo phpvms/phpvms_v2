@@ -5,7 +5,7 @@
 
 phpVMS Build Changelog:
 
-Next Build
+Build 302
 
   New Stuff
   * Officially sync'd with Codon framework (www.nsslive.net/codon)

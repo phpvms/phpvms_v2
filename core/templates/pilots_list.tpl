@@ -16,7 +16,7 @@ foreach($allpilots as $pilot)
 ?>
 <tr>
 	<td><a href="?page=pilotreports&pilotid=<?=$pilot->pilotid?>">
-			<?=PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?>
+			<?=PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?></a>
 	</td>
 	<td><?=$pilot->firstname.' '.$pilot->lastname?></td>
 	<td><img src="<?=$pilot->rankimage?>" alt="<?=$pilot->rank;?>" /></td>

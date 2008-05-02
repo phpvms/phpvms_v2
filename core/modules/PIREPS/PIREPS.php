@@ -197,8 +197,9 @@ class PIREPS extends ModuleBase
 	 *
 	 */
 	function RecentFrontPage($count = 10)
-	{		
-		Template::Set('reports', PIREPData::GetRecentReportsByCount($count));	
+	{
+		Template::Set('reports', PIREPData::GetRecentReportsByCount($count));
+		
 		Template::Show('frontpage_reports.tpl');
 	}
 }

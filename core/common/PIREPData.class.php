@@ -65,7 +65,7 @@ class PIREPData
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid
 					ORDER BY p.submitdate DESC
-					LIMIT='.intval($count);
+					LIMIT '.intval($count);
 
 		return DB::get_results($sql);
 	}

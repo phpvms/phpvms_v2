@@ -60,6 +60,16 @@ class Dashboard
 		}
 	}
 
+	function CheckInstallFolder()
+	{
+		if(file_exists(SITE_ROOT.'/install'))
+		{
+			Template::Set('message', '<strong>The install folder still exists!! Delete this folder immediately!</strong>');
+			Template::Show('core_error.tpl');
+		}
+	}
+
+
 	/**
 	 * Show the notification that an update is available
 	 */

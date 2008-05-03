@@ -30,7 +30,7 @@ foreach($airports as $airport)
 	<td align="center"><?=$airport->country; ?></td>
 	<td align="center"><?=$airport->lat; ?></td>
 	<td align="center"><?=$airport->lng; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=airports&action="><img src="lib/images/options.gif" alt="Options" /></a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editairport&icao=<?=$airport->icao?>"><img src="lib/images/edit.gif" alt="Edit" /></a></td>
 </tr>
 <?php
 }

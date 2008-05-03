@@ -25,6 +25,7 @@ CREATE TABLE `phpvms_airports` (
 	`country` VARCHAR( 50 ) NOT NULL,
 	`lat` FLOAT( 10 ) NOT NULL,
 	`lng` FLOAT( 10 ) NOT NULL,
+	`hub` smallint(6) NOT NULL default '0',
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `icao` (`icao`)
 )ENGINE=INNODB;
@@ -91,6 +92,7 @@ CREATE TABLE `phpvms_pilots` (
 	`email` varchar(32) NOT NULL default '',
 	`code` varchar(3) NOT NULL default '',
 	`location` varchar(32) NOT NULL default '',
+	`hub` varchar(4) NOT NULL default '',
 	`password` varchar(32) NOT NULL default '',
 	`salt` varchar(32) NOT NULL default '',
 	`lastlogin` date NOT NULL default '0000-00-00',

@@ -45,7 +45,7 @@ class OperationsData
 	
 	function GetAllAirports()
 	{
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports ORDER BY name ASC');
+		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports ORDER BY icao ASC');
 	}
 	
 	function GetAircraftInfo($id)
@@ -77,21 +77,40 @@ class OperationsData
 	function EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
-		
+
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft SET icao='$icao', name='$name', fullname='$fullname',
 					range='$range', weight='$weight', cruise='$cruise' WHERE id=$id";
 		
 		return DB::query($sql);
 	}
 	
-	function AddAirport($icao, $name, $country, $lat, $long)
+	function AddAirport($icao, $name, $country, $lat, $long, $hub)
 	{
 	
 		$icao = strtoupper($icao);
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX ."airports (icao, name, country, lat, lng)
-					VALUES ('$icao', '$name', '$country', $lat, $long)";
-		
+
+		if($hub == true)
+			$hub = 1;
+		else
+			$hub = 0;
+
+		$sql = "INSERT INTO " . TABLE_PREFIX ."airports (icao, name, country, lat, lng, hub)
+					VALUES ('$icao', '$name', '$country', $lat, $long, $hub)";
+
+		return DB::query($sql);
+	}
+
+	function EditAirport($icao, $name, $country, $lat, $long, $hub)
+	{
+        if($hub == true)
+			$hub = 1;
+		else
+			$hub = 0;
+
+		$sql = "UPDATE " . TABLE_PREFIX ."airports
+					SET name='$name', country='$country', lat=$lat, lng=$long, hub=$hub
+					WHERE icao='$icao'";
+
 		return DB::query($sql);
 	}
 	

@@ -5,6 +5,14 @@
 
 phpVMS Build Changelog:
 
+Next Build
+
+
+  Updated Queries:
+  	ALTER TABLE `phpvms_airports` ADD `hub` SMALLINT NOT NULL ;
+	ALTER TABLE `phpvms_pilots` ADD `hub` VARCHAR( 4 ) NOT NULL AFTER `location` ;
+
+
 Build 304
 
   New Stuff
@@ -16,7 +24,7 @@ Build 304
 		path to the image from the root
   * Editable/Deletable schedules
   * Login notifies the unconfirmed/rejected pilots, disallows their login
-  
+
   Fixes
   * PIREP/Schedules disconnected so editing/deletion doesn't affect
      NOTE: This *requires* the updated query below, or else you will

@@ -32,7 +32,7 @@ class Login extends ModuleBase
 		
 	function Controller()
 	{	
-	
+
 		switch(Vars::GET('page'))
 		{
 			case 'login':
@@ -139,8 +139,8 @@ class Login extends ModuleBase
 		else
 		{
 			//TODO: check if unconfirmed or not
-			//TODO: add to sessions table 
-			
+			//TODO: add to sessions table
+
 			if(Auth::$userinfo->confirmed == PILOT_PENDING)
 			{
 				Template::Show('login_unconfirmed.tpl');

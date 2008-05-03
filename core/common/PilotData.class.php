@@ -96,14 +96,14 @@ class PilotData
 
 	function AcceptPilot($pilotid)
 	{
-		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed=1
+		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_ACCEPTED.'
 					WHERE pilotid='.$pilotid;
 		DB::query($sql);
 	}
 
     function RejectPilot($pilotid)
 	{
-		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed=2
+		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
 					WHERE pilotid='.$pilotid;
 
 		DB::query($sql);

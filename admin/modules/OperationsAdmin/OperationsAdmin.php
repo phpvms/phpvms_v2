@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License along with 
  *	this program; if not, write to the:
- *		Free Software Foundation, Inc., 
+ *		Free Software Foundation, Inc.,
  *		59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @author Nabeel Shahzad 
@@ -107,9 +107,20 @@ class OperationsAdmin
 				break;
 			
 			case 'addairport':
-				Template::Show('ops_addairport.tpl');
+				Template::Set('title', 'Add Airport');
+				Template::Set('action', 'addairport');
+
+				Template::Show('ops_airportform.tpl');
 				break;
-				
+
+			case 'editairport':
+                Template::Set('title', 'Edit Airport');
+				Template::Set('action', 'editairport');
+				Template::Set('airport', OperationsData::GetAirportInfo(Vars::GET('icao')));
+
+				Template::Show('ops_airportform.tpl');
+				break;
+
 			case 'airports':
 				
 				/* If they're adding an airport, go through this pain
@@ -117,6 +128,10 @@ class OperationsAdmin
 				if(Vars::POST('action') == 'addairport')
 				{
 					$this->AddAirport();
+				}
+				elseif(Vars::POST('action') == 'editairport')
+				{
+					$this->EditAirport();
 				}
 								
 				Template::Set('airports', OperationsData::GetAllAirports());
@@ -243,20 +258,26 @@ class OperationsAdmin
 	
 	function AddAirport()
 	{
-		$icao = Vars::POST('icao');	
+		$icao = Vars::POST('icao');
 		$name = Vars::POST('name');
 		$country = Vars::POST('country');
 		$lat = Vars::POST('lat');
 		$long = Vars::POST('long');
-		
+		$hub = Vars::POST('hub');
+
 		if($icao == '' || $name == '' || $country == '' || $lat == '' || $long == '')
 		{
 			Template::Set('message', 'Some fields were blank!');
 			Template::Show('core_message.tpl');
 			return;
 		}
+
+        if($hub == 'true')
+			$hub = true;
+		else
+			$hub = false;
 	
-		if(!OperationsData::AddAirport($icao, $name, $country, $lat, $long))
+		if(!OperationsData::AddAirport($icao, $name, $country, $lat, $long, $hub))
 		{
 			if(DB::$errno == 1062) // Duplicate entry
 				Template::Set('message', 'This airport has already been added');
@@ -269,6 +290,39 @@ class OperationsAdmin
 
 		Template::Set('message', 'The airport has been added');
 
+		Template::Show('core_success.tpl');
+	}
+
+	function EditAirport()
+	{
+        $icao = Vars::POST('icao');
+		$name = Vars::POST('name');
+		$country = Vars::POST('country');
+		$lat = Vars::POST('lat');
+		$long = Vars::POST('long');
+		$hub = Vars::POST('hub');
+
+		if($icao == '' || $name == '' || $country == '' || $lat == '' || $long == '')
+		{
+			Template::Set('message', 'Some fields were blank!');
+			Template::Show('core_message.tpl');
+			return;
+		}
+
+		if($hub == 'true')
+			$hub = true;
+		else
+			$hub = false;
+
+		if(!OperationsData::EditAirport($icao, $name, $country, $lat, $long, $hub))
+		{
+			Template::Set('message', 'There was an error adding the airport: '.DB::$error);
+
+			Template::Show('core_error.tpl');
+			return;
+		}
+
+		Template::Set('message', $icao . ' has been edited');
 		Template::Show('core_success.tpl');
 	}
 	

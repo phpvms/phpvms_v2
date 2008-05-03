@@ -127,7 +127,7 @@ class Auth
 		if($hash == $userinfo->password)
 		{	
 		
-			//self::$userinfo =  $userinfo;
+			self::$userinfo =  $userinfo;
 
 			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);

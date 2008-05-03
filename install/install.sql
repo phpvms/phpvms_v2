@@ -120,7 +120,6 @@ CREATE TABLE `phpvms_pireps` (
 	PRIMARY KEY ( `pirepid` ),
 	INDEX `code` (`code`),
 	INDEX `pilotid` (`pilotid`),
-	INDEX `flightnum` (`flightnum`),
 	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE

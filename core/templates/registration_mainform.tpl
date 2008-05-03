@@ -1,6 +1,5 @@
-<h1><?php echo SITE_NAME; ?> Registration</h1>
-<p>Welcome to the registration form for <?php echo SITE_NAME; ?>. 
-After filling out the form below, you will get a confirmation email.</p>
+<h3>Registration</h3>
+<p>Welcome to the registration form for <?php echo SITE_NAME; ?>. After you register, you will be notified by a staff member about your membership.</p>
 <form method="post" action="index.php?page=register">
 <dl>
 	<dt>First Name:</dt>
@@ -34,6 +33,18 @@ After filling out the form below, you will get a confirmation email.</p>
 		foreach($allairlines as $airline)
 		{
 			echo '<option value="'.$airline->code.'">'.$airline->name.'</option>';
+		}
+		?>	
+		</select>
+	</dd>
+	
+	<dt>Hub</dt>
+	<dd>
+		<select name="hub" id="hub">
+		<?php
+		foreach($allhubs as $hub)
+		{
+			echo '<option value="'.$hub->icao.'">'.$hub->icao.' - ' . $hub->name .'</option>';
 		}
 		?>	
 		</select>

@@ -38,6 +38,12 @@ class OperationsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines ORDER BY code ASC');
 	}
 	
+	function GetAllHubs()
+	{
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1 
+								ORDER BY icao ASC');
+	}
+	
 	function GetAllAircraft()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft ORDER BY icao ASC');

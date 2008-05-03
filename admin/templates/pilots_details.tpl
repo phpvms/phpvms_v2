@@ -9,6 +9,9 @@
 	<dt>Location</dt>
 	<dd><?=$pilotinfo->location==''?'-':$pilotinfo->location;?></dd>
 	
+	<dt>Hub</dt>
+	<dd><?=$pilotinfo->hub?></dd>
+	
 	<dt>Current Rank</dt>
 	<dd><?=$pilotinfo->rank;?></dd>
 

@@ -28,7 +28,7 @@ foreach($pireps as $report)
 {
 ?>
 <tr>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=viewpilots&action=viewoptions&pilotid=<?=$report->pilotid;?>"><?=$report->firstname .' ' . $report->lastname?></a></td>
+	<td align="center"><a href="?admin=viewpilots&action=viewoptions&pilotid=<?=$report->pilotid;?>"><?=$report->firstname .' ' . $report->lastname?></a></td>
 	<td align="center"><?=$report->code . $report->flightnum; ?></td>
 	<td align="center"><?=$report->depicao; ?></td>
 	<td align="center"><?=$report->arricao; ?></td>

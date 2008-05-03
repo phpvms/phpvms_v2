@@ -33,7 +33,7 @@ foreach($allpilots as $pilot)
 {
 ?>
 <tr>
-	<td><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></td>
+	<td><a href="index.php?admin=viewpilots&action=viewoptions&pilotid=<?=$pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
 	<td align="center"><?=$pilot->email; ?></td>
 	<td align="center"><?=$pilot->location; ?></td>
 	<td align="center"><?=$pilot->totalflights; ?></td>

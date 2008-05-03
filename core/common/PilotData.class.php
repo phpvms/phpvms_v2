@@ -87,7 +87,8 @@ class PilotData
 	}
 	function SaveProfile($pilotid, $email, $location)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location' WHERE pilotid=$pilotid";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location', hub='$hub' 
+					WHERE pilotid=$pilotid";
 		
 		$ret = DB::query($sql);
 		

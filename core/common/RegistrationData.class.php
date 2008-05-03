@@ -45,7 +45,7 @@ class RegistrationData
 		return DB::get_results($sql);		
 	}
 	
-	function AddUser($firstname, $lastname, $email, $code, $location, $password, $confirm=0)
+	function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=0)
 	{		
 		//Set the password, add some salt
 		$salt = md5(date('His'));
@@ -58,8 +58,8 @@ class RegistrationData
 		$lastname = ucwords($lastname);
 		//Add this stuff in
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, code, location, password, salt, confirmed)
-					VALUES ('$firstname', '$lastname', '$email', '$code', '$location', '$password', '$salt', $confirm)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, code, location, hub, password, salt, confirmed)
+					VALUES ('$firstname', '$lastname', '$email', '$code', '$location', '$hub', '$password', '$salt', $confirm)";
 		
 		$res = DB::query($sql);
 		

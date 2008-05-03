@@ -71,6 +71,7 @@ class Registration extends ModuleBase
 					
 				Template::Set('extrafields', RegistrationData::GetCustomFields());
 				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('allhubs', OperationsData::GetAllHubs());
 				
 				if(isset($_POST['submit_register']))
 				{
@@ -101,9 +102,11 @@ class Registration extends ModuleBase
 			$email = Vars::POST('email');
 			$code = Vars::POST('code');
 			$location = Vars::POST('location');
+			$hub = Vars::POST('hub');
 			$password = Vars::POST('password1');
 			
-			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $password) == false)
+			
+			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $hub, $password) == false)
 			{
 				Template::Set('error', RegistrationData::$error);
 				Template::Show('registration_error.tpl');

@@ -12,6 +12,7 @@ if(!$allpilots)
 	<th>Pilot Name</th>
 	<th>Email Address</th>
 	<th>Location</th>
+	<th>Hub</th>
 	<th>Options (* double click)</th>
 </tr>
 </thead>
@@ -21,9 +22,10 @@ foreach($allpilots as $pilot)
 {
 ?>
 <tr>
-	<td><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></td>
+	<td><a href="index.php?admin=viewpilots&action=viewoptions&pilotid=<?=$pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
 	<td align="center"><?=$pilot->email; ?></td>
 	<td align="center"><?=$pilot->location; ?></td>
+	<td align="center"><?=$pilot->hub; ?></td>
 	<td align="center">
         <a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepilot"
 			id="<?=$pilot->pilotid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>

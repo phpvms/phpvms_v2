@@ -90,8 +90,4 @@ Util::LoadSiteSettings();
 define('LIB_PATH', SITE_ROOT.'/lib');
 define('SKINS_PATH', LIB_PATH.'/skins/' . CURRENT_SKIN);
 define('CACHE_TIMEOUT', 24); //hours
-
-
-$NAVBAR = '';
-$HTMLHead = '';
 ?>

@@ -171,6 +171,20 @@ class ezSQL_mysqli extends ezSQLcore
 		// Perform the query via std mysql_query function..
 		$result = $this->dbh->query($query);
 
+		if(is_bool($result))
+		{
+			if($result === false)
+			{
+				$this->register_error($this->dbh->error, $this->dbh->errno);
+			}
+			else
+			{
+				$this->clear_errors();
+			}
+			
+			return $result;
+		}
+			
 		// If there is an error then take note of it..
 		if ( !$result )
 		{

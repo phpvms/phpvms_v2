@@ -57,6 +57,11 @@ class DB
 	public static $num_rows;
 	
 	
+	public function getInstance()
+	{
+		return self::$DB;
+	}
+	
 	public function __destruct()
 	{
 		self::$DB->close();

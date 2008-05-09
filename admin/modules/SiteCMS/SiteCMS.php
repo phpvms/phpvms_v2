@@ -19,6 +19,20 @@
  
 class SiteCMS
 {
+	function HTMLHead()
+	{
+		switch($_GET['admin'])
+		{
+			case 'viewnews':
+				Template::Set('sidebar', 'sidebar_news.tpl');
+				break;
+			
+			case 'viewpages':
+				Template::Set('sidebar', 'sidebar_pages.tpl');
+				break;
+		}
+	}
+	
 	function Controller()
 	{
 		switch(Vars::GET('admin'))

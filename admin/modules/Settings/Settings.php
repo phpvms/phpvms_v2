@@ -19,6 +19,19 @@
  
 class SettingsAdmin
 {	
+
+	function HTMLHead()
+	{
+		if($_GET['admin'] == 'settings')
+		{
+			Template::Set('sidebar', 'sidebar_settings.tpl');		
+		}
+		elseif($_GET['admin'] == 'customfields')
+		{
+			Template::Set('sidebar', 'sidebar_customfields.tpl');		
+		}
+		
+	}
 	function Controller()
 	{	
 	

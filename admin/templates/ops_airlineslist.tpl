@@ -1,6 +1,4 @@
 <h3>Airlines List</h3>
-<p>These are the airlines that belong to your aircraft group.</p>
-<p><a id="dialog" class="jqModal" href="action.php?admin=addairline"><img src="lib/images/addairline.gif" alt="Add Airline" /></a></p>
 <?php
 if(!$allairlines)
 {
@@ -31,4 +29,3 @@ foreach($allairlines as $airline)
 ?>
 </tbody>
 </table>
-<hr>

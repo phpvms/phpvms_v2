@@ -1,5 +1,4 @@
 <h3>All Pages</h3>
-<p><a href="?admin=addpageform"><img src="lib/images/addpage.gif" alt="Add Page" /></a></p>
 
 <?php
 if(!$allpages)

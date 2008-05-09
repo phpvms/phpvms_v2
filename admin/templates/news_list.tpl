@@ -1,7 +1,4 @@
 <h3>Posted News</h3>
-
-<p><a id="dialog" class="jqModal" href="action.php?admin=addnews"><img src="lib/images/addnews.gif" alt="Add News" /></a></p>
-
 <?php
 if(!$allnews)
 {
@@ -36,4 +33,3 @@ foreach($allnews as $news)
 ?>
 </tbody>
 </table>
-<hr>

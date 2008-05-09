@@ -1,5 +1,4 @@
 <h3>Custom Fields</h3>
-<p><a id="dialog" class="jqModal" href="action.php?admin=addfield">Add a Custom Field</a></p>
 <?php
 if(!$allfields)
 {
@@ -29,4 +28,3 @@ foreach($allfields as $field)
 ?>
 </tbody>
 </table>
-

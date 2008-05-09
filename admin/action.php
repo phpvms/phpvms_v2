@@ -54,8 +54,4 @@ MainController::loadModules($ADMIN_MODULES);
 
 MainController::RunAllActions();
 
-if($_GET['format'] != 'json')
-	echo '<script type="text/javascript>
-			EvokeListeners();
-	</script>';
 ?>

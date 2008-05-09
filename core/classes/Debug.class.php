@@ -36,30 +36,57 @@
  * @license BSD License
  * @package codon_core
  */
+ 
+class Debug
+{
+	function Init()
+	{
+		
+		echo "
+<script type=\"text/javascript\" src=\"".SITE_URL."/lib/js/jquery.growl.js\"></script>
+		
+<script type=\"text/javascript\">
+$(document).ready(function() {
+	$.growl.settings.displayTimeout = 0;
+	$.growl.settings.noticeTemplate = ''
+		+ '<div class=\"%priority%\">'
+		+ '<div style=\"float: right; background-image: url(my.growlTheme/normalTop.png); position: relative; width: 259px; height: 16px; margin: 0pt; overflow:scroll;\"></div>'
+		+ '<div style=\"float: left; background-image: url(my.growlTheme/normalBackground.png); position: relative; font-family: Arial; font-size: 12px; line-height: 14px; width: 259px; margin: 0pt;\">' 
+		//+ '  <img style=\"margin: 14px; margin-top: 0px; float: left;\" src=\"%image%\" />'
+		+ '  <h3 style=\"margin: 0pt; margin-left: 2px; padding: 0px; padding-bottom: 10px; font-size: 13px;\">%title% (%priority%)</h3>'
+		+ '  <p style=\"margin: 0pt 4px; margin-left: 2px; font-size: 12px; color: #FFFFFF; overflow:scroll;\">%message%</p>'
+		+ '</div>'
+		+ '<div style=\"float: right; background-image: url(my.growlTheme/normalBottom.png); position: relative; width: 259px; height: 16px; margin-bottom: 10px;\"></div>'
+		+ '</div>';
 
-/* This is for a popup box, or an AJAX call
-	Don't show the site header/footer
-*/
+	$.growl.settings.noticeCss = {
+		position: 'relative'
+	};
+});
 
-define('SITE_ROOT', dirname(__FILE__));
-include 'core/codon.config.php';
+function AddItem(title, msg)
+{
+	$.growl(title, msg);
+}
 
-ksort($ACTIVE_MODULES); 
+</script>";		
 
-//load our modules
-MainController::loadModules($ACTIVE_MODULES);
-
-$BaseTemplate = new TemplateSet;
-
-//load the main skin
-$settings_file = SKINS_PATH . '/' . CURRENT_SKIN . '.php';
-if(file_exists($settings_file))
-	include $settings_file;
-
-$BaseTemplate->template_path = SKINS_PATH;
-
-Template::Set('MODULE_NAV_INC', $NAVBAR);
-Template::Set('MODULE_HEAD_INC', $HTMLHead);
-
-MainController::RunAllActions();
-?>
+		
+	}
+			
+	function Show($input)
+	{
+		if(is_array($input) || is_object($input))
+		{
+			$input = print_r($input, true);
+		}
+		
+		$input = addslashes($input);
+		$array = array("\r\n", "\n\r", "\n", "\r");
+		$input = str_replace($array, "<br>", $input);
+		$input = '<pre>'.$input.'</pre>';
+		echo "<script type=\"text/javascript\">
+				AddItem('Debug Message', \"$input\");
+			  </script>";
+	}
+}

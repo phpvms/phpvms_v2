@@ -19,6 +19,16 @@
  
 class PilotRanking
 {
+
+	function HTMLHead()
+	{
+	
+		if($_GET['admin'] == 'pilotranks' 
+			|| $_GET['admin'] == 'calculateranks')
+		{
+			Template::Set('sidebar', 'sidebar_ranks.tpl');		
+		}
+	}
 	function Controller()
 	{
 		switch(Vars::POST('action'))
@@ -50,7 +60,7 @@ class PilotRanking
 
 			case 'calculateranks':
 				RanksData::CalculatePilotRanks();
-				
+				// no break, show the ranks again
 			case 'pilotranks':
 				
 				Template::Set('ranks', RanksData::GetAllRanks());

@@ -195,10 +195,4 @@ INSERT INTO `phpvms_settings` VALUES(4, 'Date Format', 'DATE_FORMAT', 'm/d/Y', '
 INSERT INTO `phpvms_settings` VALUES(5, 'Notify for Updates', 'NOTIFY_UPDATE', 'true', 'This will notify in the admin panel if an update is available', 't');
 INSERT INTO `phpvms_settings` VALUES(6, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 't');
 INSERT INTO `phpvms_settings` VALUES(7, 'Google API Key', 'GOOGLE_KEY', '', 'This is your Google API key. You need it for the maps functionality to work', 't');
-INSERT INTO `phpvms_settings` VALUES(8, 'Friendly URLs', 'FRIENDLY_URLS', 'false', 'Enable URL rewriting for clean URLs. MUST have mod_rewrite available, and .htaccess enabled', 't');
-INSERT INTO `phpvms_settings` VALUES(9, 'Cache Templates', 'TEMPLATE_USE_CACHE', 'false', 'Cache database queries. Can alleviate alot of DB load on high-traffic sites', 't');
-INSERT INTO `phpvms_settings` VALUES(10, 'Template Cache Timeout', 'TEMPLATE_CACHE_EXPIRE', '24', 'Number of hours to automatically refresh the display cache', 't');
-INSERT INTO `phpvms_settings` VALUES(11, 'Cache Database Queries', 'DBASE_USE_CACHE', 'false', 'Cache database queries. Can alleviate alot of DB load on high-traffic sites', 't');
-INSERT INTO `phpvms_settings` VALUES(12, 'Database Cache Timeout', 'DBASE_CACHE_TIMEOUT', '24', 'Number of hours to expire the cache in', 't');
-INSERT INTO `phpvms_settings` VALUES(13, 'Cache Path', 'CACHE_PATH', '', 'Absolute path to the database cache', 't');
-INSERT INTO `phpvms_settings` VALUES(14, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 't');
+INSERT INTO `phpvms_settings` VALUES(8, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 't');

@@ -21,7 +21,7 @@
 		{
 			
 			echo '<tr>
-					<td width="40%" nowrap><strong>'.$setting->friendlyname . '</strong></td>';
+					<td width="15%" nowrap><strong>'.$setting->friendlyname . '</strong></td>';
 			
 			switch($setting->name)
 			{
@@ -46,8 +46,9 @@
 						}
    
 					echo '</SELECT>
-						  <p>'.$setting->descrip.'</p>
+						  
 						  </td>';
+						 //<p>'.$setting->descrip.'</p>
 					break;
 					
 				default:

@@ -1,7 +1,5 @@
-$(document).ready(function() { EvokeListeners(); });
-
-function EvokeListeners()
-{
+$(document).ready(function() {
+ 
 	// Dynamic submit of the whole form
 	$('#form').ajaxForm({
 		target: '#bodytext',
@@ -14,7 +12,10 @@ function EvokeListeners()
 	//Tabs
 	$("#tabcontainer > ul").tabs();
 	
-	$('#jqmdialog').bind('dblclick', function() { return false });
+	$.listen('dblclick','#jqmdialog', function()
+	{
+		return false;
+	});
 	
     // Show dialog box
 	$('#jqmdialog').jqm({
@@ -28,9 +29,6 @@ function EvokeListeners()
     
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
 	 
-	// Show editor
-	//$('#editor').markItUp(mySettings);
-
 	
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult'
@@ -41,43 +39,39 @@ function EvokeListeners()
 	});
 	
 	// Binding the AJAX call clicks
-	$('.ajaxcall').bind('click', function() {		 
+	$.listen('click','.ajaxcall', function() {
 		return false; // cancel the single click event
 	});
 	
-	$('.ajaxcall').bind('dblclick', function() {
+	$.listen('dblclick','.ajaxcall', function() {
 		$("#bodytext").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
 	// Binding the AJAX call clicks
-	$('.dialogajax').bind('click', function() {		 
+	$.listen('click','.dialogajax', function() {
 		return false; // cancel the single click event
 	});
 	
-	$('.dialogajax').bind('dblclick', function() {
+	$.listen('dblclick','.dialogajax', function() {
 		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
 	$("ul.nav").superfish();
 	
 	// Binding the AJAX call clicks
-	$('.pilotgroupajax').bind('click', function() {		 
+	$.listen('click','.pilotgroupajax', function() {
 		return false; // cancel the single click event
 	});
 	
-	$('.pilotgroupajax').bind('dblclick', function() {
+	$.listen('dblclick','.pilotgroupajax', function() {
 		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")});
 	});
-	
-	// Make the message box hide itself
-	setTimeout(function() { $("#messagebox").slideUp("slow")}, 5000);
-	setTimeout(function() { $(".autohide").slideUp("slow")}, 5000);
-	
+		
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
 	
 	// Dynamically look up airport information based on the provided ICAO
-	$("#lookupicao").bind('click', function()
+	$.listen("click","#lookupicao", function()
 	{
 		icao = $("#airporticao").val();
 		
@@ -116,4 +110,4 @@ function EvokeListeners()
 		
 		return false;
 	});
-}
+});

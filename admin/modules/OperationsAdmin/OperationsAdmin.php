@@ -19,12 +19,26 @@
  
 
 class OperationsAdmin
-{	
+{		
 	function HTMLHead()
 	{
-		Template::Set('sidebar', 'ops_sidebar.tpl');
+		switch($_GET['admin'])
+		{
+			case 'airlines':
+				Template::Set('sidebar', 'sidebar_airlines.tpl');
+				break;
+			case 'aircraft':
+				Template::Set('sidebar', 'sidebar_aircraft.tpl');
+				break;
+			case 'airports':
+				Template::Set('sidebar', 'sidebar_airports.tpl');
+				break;
+			case 'schedules':
+				Template::Set('sidebar', 'sidebar_schedules.tpl');
+				break;
+		}
 	}
-	
+
 	function Controller()
 	{
 		switch(Vars::GET('admin'))

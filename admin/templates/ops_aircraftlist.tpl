@@ -38,4 +38,3 @@ foreach($allaircraft as $aircraft)
 ?>
 </tbody>
 </table>
-<hr>

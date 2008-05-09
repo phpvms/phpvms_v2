@@ -1,7 +1,7 @@
 <li><a href="?admin=">Dashboard</a></li>
 <li><a href="#">Site</a>
 	<ul>
-		<li><a href="?admin=viewnews">View News</a></li>
+		<li><a href="?admin=viewnews">Site News</a></li>
 		<li><a href="?admin=viewpages">Site Pages</a></li>
 	</ul>
 </li>

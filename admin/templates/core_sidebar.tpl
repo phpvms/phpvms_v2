@@ -1,6 +1,1 @@
-<?php
-if($sidebar!='')
-{
-	echo '<div id="sidecolumn">'.$sidebar.'</div>';
-}
-?>
+<div id="sidecolumn"><?=$sidebar?></div>

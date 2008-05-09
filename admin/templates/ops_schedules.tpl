@@ -1,7 +1,4 @@
 <h3>Schedules</h3>
-<p>The flight routes you currently serve.</p>
-<p><a href="?admin=addschedule"><img src="lib/images/addschedule.gif" alt="Add Schedule" /></a></p>
-<br />
 <?php
 if(!$schedules)
 {
@@ -45,4 +42,3 @@ foreach($schedules as $sched)
 ?>
 </tbody>
 </table>
-<hr>

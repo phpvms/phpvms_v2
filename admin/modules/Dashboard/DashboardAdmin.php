@@ -24,7 +24,12 @@
 
 class Dashboard
 {
-
+	function HTMLHead()
+	{
+		if($_GET['admin'] == '')
+			Template::Set('sidebar', 'sidebar_dashboard.tpl');
+	}
+	
 	function Controller()
 	{
 		/*
@@ -54,7 +59,7 @@ class Dashboard
 	{
 		if(file_exists(SITE_ROOT.'/install'))
 		{
-			Template::Set('message', '<strong>The install folder still exists!! Delete this folder immediately!</strong>');
+			Template::Set('message', 'The install folder still exists!! Delete this folder immediately!');
 			Template::Show('core_error.tpl');
 		}
 	}

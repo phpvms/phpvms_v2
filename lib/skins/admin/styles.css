@@ -17,15 +17,14 @@ table
 	width: 100%;
 }
 
-table.tablesorter {
-	
+table.tablesorter 
+{
 	width: 100%;
-	text-align: center;
 }
 
 table.tablesorter input
 {
-	width: 90%;
+	width: 300px;
 	padding: 3px;
 	border: solid 1px #7094FF;
 	background: #FFFFFF;
@@ -50,6 +49,7 @@ table.tablesorter tbody tr
 table.tablesorter tbody td {
 	padding: 6px;
 	vertical-align: top;
+	border-bottom: dotted 1px #CCCCCC;
 }
 
 
@@ -73,7 +73,7 @@ img
 	background: #FFCCDA;
 	padding: 7px;
 	text-align: center;
-	float: right;
+	width: auto;
 }
 
 #success
@@ -82,7 +82,7 @@ img
 	background: #D8FFCC;
 	padding: 7px;
 	text-align: center;
-	float: right;
+	width: auto;
 }
 
 #container
@@ -311,8 +311,8 @@ h3
 
 #bodytext
 {	
-	width: 75%;
-	margin-left: 205px;
+	width: auto;
+	margin-left: 210px;
 	padding: 3px;
 }
 #sidecolumn
@@ -329,6 +329,7 @@ h3
 	clear: right;
 	padding-bottom: 32767px;
 	margin-bottom: -32767px;
+	padding-right: 3px;
 }
 
 #sidecolumn ul, li

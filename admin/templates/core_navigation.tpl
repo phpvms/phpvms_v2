@@ -5,8 +5,8 @@
 		<li><a href="?admin=viewpages">Site Pages</a></li>
 	</ul>
 </li>
-<li><a href="#">Operations</a>
-	<ul>
+<li><a href="?admin=airlines">Operations</a>
+	 <ul>
 		<li><a href="?admin=airlines">1. Airlines</a></li>
 		<li><a href="?admin=aircraft">2. Aircraft</a></li>
 		<li><a href="?admin=airports">3. Airports</a></li>

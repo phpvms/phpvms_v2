@@ -20,6 +20,11 @@
 
 class OperationsAdmin
 {	
+	function HTMLHead()
+	{
+		Template::Set('sidebar', 'ops_sidebar.tpl');
+	}
+	
 	function Controller()
 	{
 		switch(Vars::GET('admin'))

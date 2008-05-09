@@ -1,6 +1,5 @@
 <h3>Airport's List</h3>
 <p>The airports that are currently served are listed here.</p>
-<p><a id="dialog" class="jqModal" href="action.php?admin=addairport"><img src="lib/images/addairport.gif" alt="Add Airport" /></a></p>
 <?php
 if(!$airports)
 {

@@ -16,8 +16,7 @@
 <div id="innerwrapper">
 <?php
 	Template::Show('core_htmlreq.tpl');
-?>
-	<div id="topBanner">
+?>	<div id="topBanner">
 	</div>
 	
 	<div id="topNav">
@@ -26,6 +25,7 @@
 				Template::Show('core_navigation.tpl');
 			?>
 		</ul>
-	</div>
+	</div>1`
 	
 	<div id="bodytext">
+	<div id="results"></div>

@@ -84,7 +84,7 @@ class TemplateSet
 		if(!is_object($value) && strstr($value, '.'))
 		{
 			if(file_exists($this->template_path . '/' . $value))
-				$value = $this->GetTemplate($this->template_path . '/' . $value, true);
+				$value = $this->GetTemplate($value, true);
 			
 		}
 		

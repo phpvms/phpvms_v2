@@ -58,6 +58,8 @@ function EvokeListeners()
 		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
+	$("ul.nav").superfish();
+	
 	// Binding the AJAX call clicks
 	$('.pilotgroupajax').bind('click', function() {		 
 		return false; // cancel the single click event

@@ -14,12 +14,18 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage pirep_data
  */
 
 class PIREPData
 {
-
+	/**
+	 * Return all of the pilot reports. Can pass a start and
+	 * count for pagination. Returns 20 rows by default. If you
+	 * only want to return the latest n number of reports, use
+	 * GetRecentReportsByCount()
+	 */
 	function GetAllReports($start=0, $count=20)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
@@ -31,6 +37,11 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * Get all of the reports by the accepted status. Use the
+	 * constants:
+	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
+	 */
 	function GetAllReportsByAccept($accept=0)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
@@ -42,6 +53,10 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * Get the latest reports that have been submitted, 
+	 * return the last 10 by default
+	 */
 	function GetRecentReportsByCount($count = 10)
 	{
 		if($count == '') $count = 10;
@@ -57,6 +72,9 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * Get the latest reports by n number of days
+	 */
 	function GetRecentReports($days=2)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
@@ -72,7 +90,7 @@ class PIREPData
 
 	/**
 	 * Get the number of reports on a certain date
-	 *  Pass unix timestamp
+	 *  Pass unix timestamp for the date
 	 */
 	function GetReportCount($date)
 	{
@@ -83,6 +101,11 @@ class PIREPData
 		return $row->count;
 	}
 
+	/**
+	 * Get the number of reports for the last x  number of days
+	 * Returns 1 row for every day, with the total number of
+	 * reports per day
+	 */
 	function GetCountsForDays($days = 7)
 	{
 		$sql = 'SELECT DISTINCT(DATE(submitdate)) AS submitdate,
@@ -92,6 +115,10 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * Get all of the reports for a pilot. Pass the pilot id
+	 * The ID is their database ID number, not their airline ID number
+	 */
 	function GetAllReportsForPilot($pilotid)
 	{
 		/*$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
@@ -111,6 +138,11 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * Change the status of a PIREP. For the status, use the
+	 * constants:
+	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
+	 */
 	function ChangePIREPStatus($pirepid, $status)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
@@ -119,6 +151,9 @@ class PIREPData
 		return DB::query($sql);
 	}
 
+	/**
+	 * Get all of the details for a PIREP, including lat/long of the airports
+	 */
 	function GetReportDetails($pirepid)
 	{
 		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
@@ -134,6 +169,9 @@ class PIREPData
 		return DB::get_row($sql);
 	}
 
+	/**
+	 * Get the latest reports for a pilot
+	 */
 	function GetLastReports($pilotid, $count = 1)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
@@ -147,6 +185,11 @@ class PIREPData
 			return DB::get_results($sql);
 	}
 
+	/**
+	 * Get a pilot's reports by the status.  Use the
+	 * constants:
+	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED, PIREP_INPROGRESS
+	 */
 	function GetReportsByAcceptStatus($pilotid, $accept=0)
 	{
 
@@ -156,6 +199,9 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * Get all of the comments for a pilot report
+	 */
 	function GetComments($pirepid)
 	{
 		$sql = 'SELECT c.comment, UNIX_TIMESTAMP(c.postdate) as postdate,
@@ -167,6 +213,9 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 
+	/**
+	 * File a PIREP
+	 */
 	function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment='')
 	{
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
@@ -190,6 +239,9 @@ class PIREPData
 		return true;
 	}
 
+	/**
+	 * Add a comment to the flight report
+	 */
 	function AddComment($pirepid, $commenter, $comment)
 	{
 		$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)

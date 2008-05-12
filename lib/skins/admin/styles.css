@@ -709,3 +709,39 @@ div#mb_caption
 .filetree span.folder { background: url(images/folder.gif) 0 0 no-repeat; }
 .filetree li.expandable span.folder { background: url(images/folder-closed.gif) 0 0 no-repeat; }
 .filetree span.file { background: url(images/file.gif) 0 0 no-repeat; }
+
+ .jqiwarning .jqi{
+      background-color: #b0be96;
+}
+.jqifade{
+      background-color: #ffffff;
+}
+div.jqi{
+      position: absolute;
+      background-color: #c0cEa6;
+      padding: 10px;
+      width: 300px;
+}
+div.jqi .jqiclose{
+      float: right;
+      margin: -35px -10px 0 0;
+      cursor: pointer;
+}
+div.jqi .jqicontainer{
+      background-color: #e0eEc6;
+      padding: 5px;
+      color: #ffffff;
+      font-weight: bold;
+}
+div.jqi .jqimessage{
+      background-color: #c0cEa6;
+      padding: 10px;
+}
+div.jqi .jqibuttons{
+      text-align: center;
+      padding: 5px 0 0 0;
+}
+div.jqi button{
+      padding: 3px 10px 3px 10px;
+      margin: 0 10px;
+}

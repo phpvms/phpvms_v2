@@ -14,7 +14,8 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage phpvms_api
  */
  
 class Auth  
@@ -57,21 +58,25 @@ class Auth
 		}
 	}
 	
-	function pilotid()
+	/**
+	 * Return the current pilot's ID
+	 */
+	function PilotID()
 	{
 		return self::$userinfo->pilotid;
 	}
 	
-	function Username()
-	{
-		return self::$userinfo->username;
-	}
-	
+	/**
+	 * Get their firstname/last name
+	 */
 	function DisplayName()
 	{
 		return self::$userinfo->firstname . ' ' . self::$userinfo->lastname;
 	}
 	
+	/**
+	 * Return true/false if they're logged in or not
+	 */
 	function LoggedIn()
 	{
 		if(self::$init == false)
@@ -82,6 +87,9 @@ class Auth
 		return self::$loggedin;
 	}
 	
+	/**
+	 * See if a use is in a given group
+	 */
 	function UserInGroup($groupname)
 	{
 		if(!self::LoggedIn()) return false;
@@ -95,6 +103,9 @@ class Auth
 		return false;
 	}
 	
+	/**
+	 * Log the user in
+	 */
 	function ProcessLogin($emailaddress, $password)
 	{
 		$emailaddress = DB::escape($emailaddress);
@@ -133,7 +144,10 @@ class Auth
 			return false;
 		}
 	}
-		
+	
+	/**
+	 * Log them out
+	 */	
 	function LogOut()
 	{
 		SessionManager::AddData('loggedin', false);

@@ -14,7 +14,8 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage registration_data
  */
 
 class RegistrationData
@@ -23,17 +24,22 @@ class RegistrationData
 	static public $salt;
 	static public $error;
 	
-	/* Get the extra fields
+	/**
+	 * Get all of the custom fields that will show up
+	 *	during the registration
 	 */
 	function GetCustomFields()
 	{
 		
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'customfields
-				WHERE showonregister=\'y\'';
+					WHERE showonregister=1';
 		
 		return DB::get_results($sql);		
 	}
 	
+	/**
+	 * Add a  User
+	 */
 	function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=0)
 	{		
 		//Set the password, add some salt
@@ -47,8 +53,10 @@ class RegistrationData
 		$lastname = ucwords($lastname);
 		//Add this stuff in
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, code, location, hub, password, salt, confirmed)
-					VALUES ('$firstname', '$lastname', '$email', '$code', '$location', '$hub', '$password', '$salt', $confirm)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, 
+					code, location, hub, password, salt, confirmed)
+				  VALUES ('$firstname', '$lastname', '$email', '$code', 
+							'$location', '$hub', '$password', '$salt', $confirm)";
 		
 		$res = DB::query($sql);
 		
@@ -121,10 +129,10 @@ class RegistrationData
 	{
 		$confid = Vars::GET('confirmid');
 	
-		$sql = "UPDATE ".TABLE_PREFIX."pilots SET confirmed='y', retired='n' WHERE salt='$confid'";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots SET confirmed=1, retired=0 WHERE salt='$confid'";
 		$res = DB::query($sql);
 		
-		if(!$res && DB::$errno !=0)
+		if(DB::$errno !=0)
 		{
 			return false;
 		}

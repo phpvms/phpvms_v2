@@ -14,16 +14,18 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage statistics
  */
  
 class StatsData
 {
 	/**
 	 * Show pie chart for all of the aircraft flown
-	 *  by a certain pilot
+	 *  by a certain pilot. Outputs image, unless $ret == true,
+	 * 	then it returns the URL.
 	 */
-	function PilotAircraftFlownGraph($pilotid)
+	function PilotAircraftFlownGraph($pilotid, $ret = false)
 	{
 		//Select aircraft types
 		$sql = 'SELECT aircraft, COUNT(aircraft) count
@@ -56,14 +58,17 @@ class StatsData
 		$chart->dimensions = '350x200';
 		$chart->setLabels($labels);
 
-		echo '<img src="'.$chart->draw(false).'" align="center" />';
-		//Template::Set('ac_chart_url', $chart->draw(false));
+		if($ret == true)
+			return $chart->draw(false);
+		else
+			echo '<img src="'.$chart->draw(false).'" align="center" />';
 	}
 
 	/**
-	 * Show the graph of the past week's reports
+	 * Show the graph of the past week's reports. Outputs the
+	 *	image unless $ret == true
 	 */
-	function ShowReportCounts()
+	function ShowReportCounts($ret=false)
 	{
 		// Recent PIREP #'s
 		$max = 0;
@@ -87,7 +92,10 @@ class StatsData
 		$chart->setLabelsMinMax($max,'left');
 		$chart->setLabels($label,'bottom');
 
-		echo '<img src="'.$chart->draw(false).'" align="center" />';
+		if($ret == true)
+			return $chart->draw(false);
+		else
+			echo '<img src="'.$chart->draw(false).'" align="center" />';
 	}
 }
 ?>

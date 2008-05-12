@@ -14,7 +14,8 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage custom_fields_data
  */ 
 
 class SettingsData
@@ -24,7 +25,9 @@ class SettingsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
 	}
 	
-	/* This is for the admin panel*/
+	/**
+	 * Return all of the custom fields data
+	 */
 	function GetAllFields()
 	{
 		$ret =  DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
@@ -32,6 +35,9 @@ class SettingsData
 		return $ret;
 	}
 	
+	/** 
+	 * Add a custom field to be used in a profile
+	 */
 	function AddField($title, $fieldtype, $public, $showinregistration)
 	{
 		/*$fieldname = Vars::POST('fieldname');
@@ -43,18 +49,18 @@ class SettingsData
 		$fieldname = strtoupper($fieldname);
 		
 		//Check, set up like this on purpose to default "safe" values
-		if($public == 'yes')
-			$public = 'y';
+		if($public == true)
+			$public = 1;
 		else
-			$public = 'n';
+			$public = 0;
 		
-		if($showinregistration == 'yes')
-			$showinregistration = 'y';
+		if($showinregistration == true)
+			$showinregistration = 1;
 		else
-			$showinregistration = 'n';		
+			$showinregistration = 0;
 		
 		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (title, fieldname, type, public, showonregister)
-					VALUES ('$title', '$fieldname', '$fieldtype', '$public', '$showinregistration')";
+					VALUES ('$title', '$fieldname', '$fieldtype', $public, $showinregistration)";
 		
 		$res = DB::query($sql);	
 		

@@ -14,13 +14,16 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage schedules_data
  */
  
 class SchedulesData
 {
 
-
+	/**
+	 * Return information about a schedule (pass the ID)
+	 */
 	function GetSchedule($id)
 	{
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.$id;
@@ -28,37 +31,48 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
-	function GetDepartureAirports($code='')
+	/**
+	 * Return all the airports by depature, which have a schedule, for 
+	 *	a certain airline. If the airline
+	 * @return object_array
+	 */
+	function GetDepartureAirports($airlinecode='')
 	{	
 		$sql = 'SELECT DISTINCT s.depicao AS icao, a.name 
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
 					WHERE s.depicao = a.icao ';
 					
-		if($code != '')
-			$sql .= ' AND s.code=\''.$code.'\' ';
+		if($airlinecode != '')
+			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
 			
 		$sql .= ' ORDER BY depicao ASC';
 									
-		$ret = DB::get_results($sql);		
-		return $ret;
+		return DB::get_results($sql);		
 	}
 	
-	function GetArrivalAiports($depicao, $code='')
+	/**
+	 * Get all of the airports which have a schedule, from
+	 *	a certain airport, using the airline code. Code
+	 *	is optional, otherwise it returns all of the airports.
+	 * @return database object
+	 */
+	function GetArrivalAiports($depicao, $airlinecode='')
 	{
 		$sql = 'SELECT DISTINCT s.arricao AS icao, a.name 
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
 					WHERE s.arricao = a.icao ';
 
-		if($code != '')
-			$sql .= ' AND s.code=\''.$code.'\' ';
+		if($airlinecode != '')
+			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
 		
 		$sql .= ' ORDER BY depicao ASC';
 		
-		$ret = DB::get_results($sql);		
-		return $ret;
-		
+		return DB::get_results($sql);		
 	}
 	
+	/**
+	 * Return all of the routes give the departure airport
+	 */
 	function GetRoutesWithDeparture($depicao)
 	{
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong, 
@@ -71,6 +85,9 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
+	/**
+	 * Get all the schedules, $limit is the number to return
+	 */
 	function GetSchedules($limit='')
 	{
 		
@@ -82,6 +99,9 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
+	/**
+	 * Add a schedule
+	 */
 	function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, 
 		$aircraft, $distance, $deptime, $arrtime, $flighttime)
 	{
@@ -115,6 +135,9 @@ class SchedulesData
 
 	}
 
+	/**
+	 * Edit a schedule
+	 */
 	function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
 				$aircraft, $distance, $deptime, $arrtime, $flighttime)
 	{
@@ -132,6 +155,9 @@ class SchedulesData
 		return DB::query($sql);
 	}
 
+	/**
+	 * Delete a schedule
+	 */
 	function DeleteSchedule($scheduleid)
 	{
 		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules WHERE id='.$scheduleid;

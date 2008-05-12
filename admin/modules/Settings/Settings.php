@@ -112,6 +112,16 @@ class SettingsAdmin
 		$public = Vars::POST('public');
 		$showinregistration = Vars::POST('showinregistration');
 		
+		if($public == 'yes')
+			$public = true;
+		else
+			$public = false;
+			
+		if($showinregistration == 'yes')
+			$showinregistration = true;
+		else	
+			$showinregistratino = false;
+		
 		if(SettingsData::AddField($title, $fieldtype, $public, $showinregistration))
 			Template::Set('message', 'Settings were saved!');
 		else

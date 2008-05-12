@@ -68,7 +68,7 @@ CREATE TABLE `phpvms_pages` (
 	`order` smallint(6) NOT NULL default '0',
 	`postedby` varchar(50) NOT NULL default '',
 	`postdate` datetime NOT NULL default '0000-00-00 00:00:00',
-	`public` enum('y','n') NOT NULL default 'n',
+	`public` smallint(6) NOT NULL default '0',
 	`enabled` smallint(6) NOT NULL default '1',
 	PRIMARY KEY  (`pageid`),
 	UNIQUE KEY `pagename` (`pagename`)
@@ -99,8 +99,8 @@ CREATE TABLE `phpvms_pilots` (
 	`totalflights` int(11) NOT NULL default '0',
 	`totalhours` float NOT NULL default '0',
 	`rank` varchar(32) NOT NULL default 'New Hire',
-	`confirmed` int(11) NOT NULL default '0',
-	`retired` enum('y','n') NOT NULL default 'y',
+	`confirmed`smallint(6) NOT NULL default '0',
+	`retired` smallint(6) NOT NULL default '0',
 	PRIMARY KEY  (`pilotid`),
 	UNIQUE KEY `email` (`email`),
 	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
@@ -142,8 +142,8 @@ CREATE TABLE `phpvms_customfields` (
 	`title` VARCHAR( 25 ) NOT NULL ,
 	`fieldname` VARCHAR( 25 ) NOT NULL ,
 	`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
-	`public` ENUM( 'y', 'n' ) NOT NULL ,
-	`showonregister` ENUM( 'y', 'n' ) NOT NULL ,
+	`public` smallint(6) NOT NULL default '0',
+	`showonregister` smallint(6) NOT NULL default '0',
 	PRIMARY KEY ( `fieldid` ),
 	UNIQUE KEY `fieldname` (`fieldname`)
 )ENGINE=INNODB;
@@ -183,7 +183,7 @@ CREATE TABLE `phpvms_settings` (
 	`name` varchar(25) NOT NULL default '',
 	`value` varchar(150) NOT NULL default '',
 	`descrip` varchar(150) NOT NULL default '',
-	`core` enum('t','f') NOT NULL default 'f',
+	`core` smallint(6) NOT NULL default '0',
 	PRIMARY KEY  (`id`),
 	UNIQUE KEY `name` (`name`)
 )ENGINE=INNODB;

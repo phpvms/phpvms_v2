@@ -14,7 +14,8 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage operations_data
  */
  
 class OperationsData
@@ -28,27 +29,42 @@ class OperationsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines ORDER BY code ASC');
 	}
 	
+	/**
+	 * Get all of the hubs
+	 */
 	function GetAllHubs()
 	{
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1 
 								ORDER BY icao ASC');
 	}
 	
+	/**
+	 * Get all of the aircraft
+	 */
 	function GetAllAircraft()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft ORDER BY icao ASC');
 	}
 	
+	/**
+	 * Get all of the airports
+	 */
 	function GetAllAirports()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports ORDER BY icao ASC');
 	}
 	
+	/**
+	 * Get information about a specific aircraft
+	 */
 	function GetAircraftInfo($id)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);	
 	}
 	
+	/**
+	 * Add an airline
+	 */
 	function AddAirline($code, $name)
 	{
 	
@@ -58,6 +74,10 @@ class OperationsData
 		
 		return DB::query($sql);	
 	}
+	
+	/**
+	 * Add an aircraft
+	 */
 	function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
@@ -70,6 +90,9 @@ class OperationsData
 		
 	}
 	
+	/**
+	 * Edit an aircraft
+	 */
 	function EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
@@ -80,6 +103,9 @@ class OperationsData
 		return DB::query($sql);
 	}
 	
+	/**
+	 * Add an airport
+	 */
 	function AddAirport($icao, $name, $country, $lat, $long, $hub)
 	{
 	
@@ -96,6 +122,9 @@ class OperationsData
 		return DB::query($sql);
 	}
 
+	/**
+	 * Edit the airport
+	 */
 	function EditAirport($icao, $name, $country, $lat, $long, $hub)
 	{
         if($hub == true)
@@ -110,6 +139,9 @@ class OperationsData
 		return DB::query($sql);
 	}
 	
+	/**
+	 * Get information about an airport
+	 */
 	function GetAirportInfo($icao)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');

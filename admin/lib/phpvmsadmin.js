@@ -28,6 +28,30 @@ $(document).ready(function() {
             $("$jqmdialog").html('');
         }
     });
+	
+	$.listen('click', '.deleteitem', function(){return false;});
+	$.listen('dblclick','.deleteitem', function(){	
+		var url = $(this).attr("href");
+		var action = $(this).attr("action");
+		var id = $(this).attr("id");
+		
+		$.prompt('Are you sure?', {
+			buttons: { Yes: true, Cancel: false },
+			callback: function(v,m)
+			{
+				if(v == true)
+				{
+					$.post(url, {action: action, id: id});
+					rmvid= "#row"+id;
+					$(rmvid).slideUp();
+				}
+				
+				$('#jqmdialog').jqmAddTrigger('.jqModal');
+			}			
+		});	
+		
+		return false;
+	});
     
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
 		

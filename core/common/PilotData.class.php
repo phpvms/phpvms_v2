@@ -14,12 +14,16 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package core_api
+ * @package phpvms
+ * @subpackage pilot_data
  */
  
 class PilotData
 {
-	
+	/** 
+	 * Get all the pilots, or the pilots who's last names start
+	 * with the letter
+	 */
 	function GetAllPilots($letter='')
 	{
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'pilots ';
@@ -32,6 +36,9 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
+	/**
+	 * Get all the detailed pilot's information
+	 */
 	function GetAllPilotsDetailed($start='', $limit=20)
 	{
 	
@@ -45,12 +52,19 @@ class PilotData
 		return DB::get_results($sql);	
 	}
 	
+	/**
+	 * Return the pilot's code (ie DVA1031), using
+	 * the code and their DB ID
+	 */
 	function GetPilotCode($code, $pilotid)
 	{
 		$pilotid = $pilotid + PILOTID_OFFSET;
 		return $code . str_pad($pilotid, 4, '0', STR_PAD_LEFT);
 	}
 	
+	/**
+	 * The the basic pilot information 
+	 */
 	function GetPilotData($pilotid)
 	{
 		$sql = 'SELECT *, UNIX_TIMESTAMP(lastlogin) as lastlogin
@@ -59,12 +73,18 @@ class PilotData
 		return DB::get_row($sql);
 	}
 	
+	/**
+	 * Get a pilot's information by email
+	 */
 	function GetPilotByEmail($email)
 	{
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'pilots WHERE email=\''.$email.'\'';
 		return DB::get_row($sql);
 	}
 
+	/**
+	 * Get the list of all the pending pilots
+	 */
 	function GetPendingPilots($count='')
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots WHERE confirmed='.PILOT_PENDING;
@@ -75,6 +95,10 @@ class PilotData
 			
 		return DB::get_results($sql);
 	}
+	
+	/**
+	 * Save the email and location changes to the pilot's prfile
+	 */
 	function SaveProfile($pilotid, $email, $location)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location', hub='$hub' 
@@ -84,14 +108,20 @@ class PilotData
 		
 		return $ret;
 	}
-
+	
+	/**
+	 * Accept the pilot (allow them into the system)
+	 */
 	function AcceptPilot($pilotid)
 	{
 		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_ACCEPTED.'
 					WHERE pilotid='.$pilotid;
 		DB::query($sql);
 	}
-
+	
+	/**
+	 * Reject a pilot
+	 */
     function RejectPilot($pilotid)
 	{
 		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
@@ -100,6 +130,9 @@ class PilotData
 		DB::query($sql);
 	}
 	
+	/**
+	 * Update the login time
+	 */
 	function UpdateLogin($pilotid)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET lastlogin=NOW() WHERE pilotid=$pilotid";
@@ -109,6 +142,9 @@ class PilotData
 		return $ret;
 	}
 	
+	/**
+	 * After a PIREP been accepted, update their statistics
+	 */
 	function UpdateFlightData($pilotid, $flighttime, $numflights=1)
 	{
 		$sql = "UPDATE " .TABLE_PREFIX."pilots 
@@ -118,6 +154,9 @@ class PilotData
 		return DB::query($sql);		
 	}
 	
+	/**
+	 * Save the custom fields. Usually just pass the $_POST
+	 */
 	function SaveFields($pilotid, $list)
 	{
 		$allfields = RegistrationData::GetCustomFields();
@@ -152,6 +191,9 @@ class PilotData
 		return true;
 	}
 	
+	/**
+	 * Get all of the "cusom fields" for a pilot
+	 */
 	function GetFieldData($pilotid, $inclprivate=false)
 	{
 		$sql = 'SELECT f.title, f.fieldname, v.value 
@@ -160,11 +202,14 @@ class PilotData
 						ON f.fieldid=v.fieldid AND v.pilotid='.$pilotid;
 								
 		if($inclprivate == false)
-			$sql .= " AND f.public='y'";
+			$sql .= " AND f.public=1";
 			
 		return DB::get_results($sql);
 	}
 	
+	/**
+	 * Get the groups a pilot is in
+	 */
 	function GetPilotGroups($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);

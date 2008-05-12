@@ -5,13 +5,28 @@
 
 phpVMS Build Changelog:
 
-Next Build
+Next Build (the V1 build!)
 
+  New Stuff/Changes
+  * New Admin panel, sidebar with integrated help, cleaner design
+  * API Documentation (http://www.phpvms.net/docs/api) for plug-ins
+  * Deleting schedule now asks "Are you sure?"
+  
+  Fixes
+  * Updated framework
+  * Code streamlining
+  * MySQLi blocker bug fixed; allowed back as an option in the installer
+  * Javasc
 
-  Updated Queries:
+  Update Queries:
   	ALTER TABLE `phpvms_airports` ADD `hub` SMALLINT NOT NULL ;
 	ALTER TABLE `phpvms_pilots` ADD `hub` VARCHAR( 4 ) NOT NULL AFTER `location` ;
-
+	ALTER TABLE `phpvms_customfields` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT 'y',
+		CHANGE `showonregister` `showonregister` SMALLINT NOT NULL DEFAULT 'y';
+	ALTER TABLE `phpvms_pilots` CHANGE `confirmed` `confirmed` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
+		CHANGE `retired` `retired` SMALLINT NOT NULL DEFAULT 'y';
+	ALTER TABLE `phpvms_pages` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT '0';
+	ALTER TABLE `phpvms_settings` CHANGE `core` `core` SMALLINT NOT NULL;
 
 Build 304
 

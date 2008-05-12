@@ -16,7 +16,7 @@ Template::Show('core_javascript.tpl');
 <div id="container">
 
 <div id="topsection">
-	<img src="<?=SITE_URL?>/lib/skins/admin/images/logo_horiz.png" alt="header graphic" style="float: left;" />
+	<img src="<?=SITE_URL?>/lib/skins/admin/images/logo.jpg" alt="header graphic" style="float: left;" />
 	<div id="nav">
 		<ul class="nav">
 		<?php

@@ -19,6 +19,23 @@
  
 class PilotAdmin
 {
+
+	function HTMLHead()
+	{
+		switch($_GET['admin'])
+		{
+			case 'viewpilots':
+				Template::Set('sidebar', 'sidebar_pilots.tpl');
+				break;
+			case 'pendingpilots':
+				Template::Set('sidebar', 'sidebar_pending.tpl');
+				break;
+			case 'pilotgroups':
+				Template::Set('sidebar', 'sidebar_groups.tpl');
+				break;
+		}
+	}		
+		
 	function Controller()
 	{
 

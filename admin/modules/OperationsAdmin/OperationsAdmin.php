@@ -215,7 +215,8 @@ class OperationsAdmin
 		if($code == '' || $name == '')
 		{
 			Template::Set('message', 'You must fill out all of the fields');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
+			return;
 		}
 	
 		if(!OperationsData::AddAirline($code, $name))

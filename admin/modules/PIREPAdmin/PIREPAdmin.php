@@ -19,6 +19,15 @@
  
 class PIREPAdmin
 {
+	function HTMLHead()
+	{
+		switch($_GET['admin'])
+		{
+			case 'viewpending':
+				Template::Set('sidebar', 'sidebar_pirep_pending.tpl');
+				break;
+		}
+	}
 	
 	function Controller()
 	{

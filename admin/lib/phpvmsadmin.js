@@ -1,14 +1,5 @@
 $(document).ready(function() {
- 
-	// Dynamic submit of the whole form
-	$('#form').ajaxForm({
-		target: '#bodytext',
-		success: function() {
-			$('#bodytext').fadeIn('slow');
-            $('#jqmdialog').jqmHide();
-		}
-	});
-	
+ 	
 	//Tabs
 	$("#tabcontainer > ul").tabs();
 	
@@ -20,6 +11,17 @@ $(document).ready(function() {
     // Show dialog box
 	$('#jqmdialog').jqm({
 	    ajax:'@href',
+		onLoad: function(h) {
+			 $("#form").ajaxForm({
+				target: '#bodytext',
+				success: function() {
+				$('#bodytext').fadeIn('slow');
+				            $('#jqmdialog').jqmHide();
+				}
+			});
+
+			h.w.show();
+		},
 	    onHide: function(h) {
             h.o.remove(); // remove overlay
             h.w.fadeOut(100); // hide window 
@@ -28,8 +30,7 @@ $(document).ready(function() {
     });
     
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
-	 
-	
+		
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult'
 	});

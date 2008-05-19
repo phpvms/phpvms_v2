@@ -23,7 +23,28 @@ class PilotProfile extends ModuleBase
 	{
 		switch(Vars::GET('page'))
 		{
+			/**
+			 * This is the public profile for the pilot
+			 */
+			case 'pilotprofile':
+			
+				$pilotid = Vars::GET('pilotid');
+				
+				$userinfo = PilotData::GetPilotData($pilotid);
+								
+				Template::Set('userinfo', $userinfo);
+				Template::Set('allfields', PilotData::GetFieldData($pilotid, false));
+				Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+				
+				Template::Show('pilot_public_profile.tpl');
+				Template::Show('pireps_viewall.tpl');
+				
+				break;
 
+			/**
+			 * This is the profile for the pilot
+			 *	They can edit their profile from  here.
+			 */
 			case 'profile':
 
 				if(!Auth::LoggedIn())
@@ -47,7 +68,7 @@ class PilotProfile extends ModuleBase
 
 				Template::Show('profile_main.tpl');
 				break;
-
+				
 			case 'editprofile':
 
 				if(!Auth::LoggedIn())

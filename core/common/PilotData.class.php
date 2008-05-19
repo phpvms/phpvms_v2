@@ -99,10 +99,14 @@ class PilotData
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
-	function SaveProfile($pilotid, $email, $location)
+	function SaveProfile($pilotid, $email, $location, $hub='')
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location', hub='$hub' 
-					WHERE pilotid=$pilotid";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location' ";
+		
+		if($hub!= '')
+			$sql.=", hub='$hub' ";
+			
+		$sql .= 'WHERE pilotid='.$pilotid;
 		
 		$ret = DB::query($sql);
 		
@@ -152,6 +156,19 @@ class PilotData
 					WHERE pilotid=$pilotid";
 		
 		return DB::query($sql);		
+	}
+	
+	/**
+	 * Don't update the pilot's flight data, but just replace it
+	 * 	with the values given
+	 */
+	function ReplaceFlightData($pilotid, $flighttime, $numflights)
+	{
+		$sql = "UPDATE " .TABLE_PREFIX."pilots 
+					SET totalhours=$flighttime, totalflights=$numflights
+					WHERE pilotid=$pilotid";
+		
+		return DB::query($sql);	
 	}
 	
 	/**

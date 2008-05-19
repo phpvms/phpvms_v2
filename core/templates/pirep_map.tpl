@@ -5,5 +5,10 @@
 	$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
 	$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
 
-	$map->ShowMap('800px', '600px');
+	// Center the map
+	$centerlat = ($pirep->deplat + $pirep->arrlat) / 2;
+	$centerlong = ($pirep->deplong + $pirep->arrlong) / 2;
+	$map->CenterMap($centerlat, $centerlong);
+	
+	$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
 ?>

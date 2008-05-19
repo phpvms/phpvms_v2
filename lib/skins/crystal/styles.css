@@ -3,7 +3,7 @@ body
 	background: url(images/mainbg.jpg) repeat-x 0 0 #fff;
 	color: #171717;
 	font-family: arial,helvetica,clean,sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	margin: 0;
 	padding: 0;
 }
@@ -24,7 +24,7 @@ h3
 {
 	background: url(images/h3.jpg) no-repeat left;
 	height: 26px;
-	font-size: 22px;
+	font-size: 20px;
 	padding-left: 36px;
 	padding-bottom: 3px;
 	margin-top: 7px;

@@ -17,4 +17,7 @@
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />
 
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=SITE_URL?>/lib/rss/latestpireps.rss">
+
 <?=$MODULE_HEAD_INC;?>

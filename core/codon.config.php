@@ -62,6 +62,7 @@ if(!file_exists(CORE_PATH.'/local.config.php')
 
 // Include all dependencies
 include CLASS_PATH . '/DB.class.php';
+include CLASS_PATH . '/Debug.class.php';
 include CLASS_PATH . '/EventDispatch.class.php';
 include CLASS_PATH . '/JSON.class.php';
 include CLASS_PATH . '/MainController.class.php';

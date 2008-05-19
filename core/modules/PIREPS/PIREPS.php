@@ -67,6 +67,7 @@ class PIREPS extends ModuleBase
 			*/
 			case 'routesmap':
 			
+				echo '<h3>All flights</h3>';
 				$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
 				
 				if(!$pireps)

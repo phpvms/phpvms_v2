@@ -13,12 +13,7 @@ else
 	// Show these items only if they are logged in
 ?>
 	<li><a href="?page=profile">Pilot Center</a></li>
-	<li><a href="#">PIREPs</a>
-		<ul>
-			<li><a href="?page=filepirep">File a PIREP</a></li>
-			<li><a href="?page=viewpireps">View PIREPs</a></li>
-		</ul>
-	</li>
+	
 <?php
 }
 ?>

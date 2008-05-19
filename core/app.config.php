@@ -12,6 +12,9 @@ define('PILOT_REJECTED', 2);
 $Config['PAGE_EXT'] = '.htm';
 $Config['PILOTID_OFFSET'] = 0; // Start the Pilot's ID from 1000
 
+$Config['MAP_WIDTH'] = '600px';
+$Config['MAP_HEIGHT'] = '400px';
+
 // Common Classes
 include COMMON_PATH . '/Auth.class.php';
 include COMMON_PATH . '/ACARSData.class.php';

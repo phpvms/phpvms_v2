@@ -23,7 +23,7 @@ class PIREPAdmin
 	{
 		switch($_GET['admin'])
 		{
-			case 'viewpending':
+			case 'viewpending': case 'viewrecent': case 'viewall':
 				Template::Set('sidebar', 'sidebar_pirep_pending.tpl');
 				break;
 		}

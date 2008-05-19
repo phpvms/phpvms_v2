@@ -54,31 +54,55 @@ class PilotAdmin
 					tab through AJAX). The hook is available for whoever 
 					wants to use it
 				*/
-				$action = Vars::POST('action');
-				if($action == 'changepassword')
+				switch($_POST['action'])
 				{
-					$this->ChangePassword();
-					break;
-				}
+					case 'changepassword':
 				
+						$this->ChangePassword();
+						return;			
+				
+						break;
 				/* These are reloaded into the #pilotgroups ID
 					so the entire groups list is refreshed
 					*/
-				elseif($action == 'addgroup')
-				{
-					$this->AddPilotToGroup();
-					
-					$this->SetGroupsData(Vars::POST('pilotid'));
-					Template::Show('pilots_groups.tpl');
-					break;
-				}
-				elseif($action == 'removegroup')
-				{
-					$this->RemovePilotGroup();
-					
-					$this->SetGroupsData(Vars::POST('pilotid'));
-					Template::Show('pilots_groups.tpl');
-					break;
+					case 'addgroup':
+				
+						$this->AddPilotToGroup();
+						$this->SetGroupsData(Vars::POST('pilotid'));
+						Template::Show('pilots_groups.tpl');
+						return;
+						
+						break;
+				
+					case 'removegroup':
+				
+						$this->RemovePilotGroup();
+						
+						$this->SetGroupsData(Vars::POST('pilotid'));
+						Template::Show('pilots_groups.tpl');
+						return;
+						break;
+						
+					case 'saveprofile':
+						
+						$pilotid = Vars::POST('pilotid');
+						$email = Vars::POST('email');
+						$location = Vars::POST('location');
+						$hub = Vars::POST('hub');
+						
+						$flighttime = Vars::POST('totalhours');
+						$numflights = Vars::POST('totalflights');
+						
+						// save all their profile stuff
+						PilotData::SaveProfile($pilotid, $email , $location, $hub);
+						PilotData::ReplaceFlightData($pilotid, $flighttime, $numflights);
+						PilotData::SaveFields($pilotid, $_POST);
+						
+						Template::Set('message', 'Profile updated successfully');
+						Template::Show('core_success.tpl');
+						
+						return;
+						break;
 				}
 				
 				

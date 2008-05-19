@@ -1,8 +1,5 @@
 $(document).ready(function() {
  	
-	//Tabs
-	$("#tabcontainer > ul").tabs();
-	
 	$.listen('dblclick','#jqmdialog', function()
 	{
 		return false;
@@ -11,12 +8,14 @@ $(document).ready(function() {
     // Show dialog box
 	$('#jqmdialog').jqm({
 	    ajax:'@href',
-		onLoad: function(h) {
+		onLoad: function(h) 
+		{
 			 $("#form").ajaxForm({
 				target: '#bodytext',
-				success: function() {
-				$('#bodytext').fadeIn('slow');
-				            $('#jqmdialog').jqmHide();
+				success: function() 
+				{
+					$('#bodytext').fadeIn('slow');
+					$('#jqmdialog').jqmHide();
 				}
 			});
 
@@ -25,10 +24,14 @@ $(document).ready(function() {
 	    onHide: function(h) {
             h.o.remove(); // remove overlay
             h.w.fadeOut(100); // hide window 
-            $("$jqmdialog").html('');
+            $("#jqmdialog").html('');
         }
     });
 	
+	$("#dialogform").ajaxForm({
+		target: '#results'
+	});
+			
 	$.listen('click', '.deleteitem', function(){return false;});
 	$.listen('dblclick','.deleteitem', function(){	
 		var url = $(this).attr("href");

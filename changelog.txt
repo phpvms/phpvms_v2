@@ -10,29 +10,49 @@ Next Build (the V1 build!)
   New Stuff/Changes
   * New Admin panel, sidebar with integrated help, cleaner design
   * API Documentation (http://www.phpvms.net/docs/api) for plug-ins
+  * Public Pilot profile is available
   * Deleting schedule now asks "Are you sure?"
+  * Admin can edit profile fields of a user
+  * Added link to latest PIREP RSS feed in admin panel
+  * Map size can be changed (see below "Additional Settings")
   
   Fixes
   * Updated framework
-  * Code streamlining
+  * Code streamlining (massive!)
   * MySQLi blocker bug fixed; allowed back as an option in the installer
-  * Javasc
+  * Javascript listeners replaced/streamlined
+  * Google map lat/long is centered when route is shown
 
   Update Queries:
   	ALTER TABLE `phpvms_airports` ADD `hub` SMALLINT NOT NULL ;
+	
 	ALTER TABLE `phpvms_pilots` ADD `hub` VARCHAR( 4 ) NOT NULL AFTER `location` ;
+	
 	ALTER TABLE `phpvms_customfields` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT 'y',
 		CHANGE `showonregister` `showonregister` SMALLINT NOT NULL DEFAULT 'y';
+		
 	ALTER TABLE `phpvms_pilots` CHANGE `confirmed` `confirmed` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
 		CHANGE `retired` `retired` SMALLINT NOT NULL DEFAULT 'y';
+		
 	ALTER TABLE `phpvms_pages` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT '0';
+	
 	ALTER TABLE `phpvms_settings` CHANGE `core` `core` SMALLINT NOT NULL;
+	
+	
+  Additional Settings:
+   The following can be added to your core/local.config.php to over-ride the default values:
+   Add them at the end, before the ?> tags. local.config.php is not over-written during
+	updates
+	
+   // Change the side of the Google Map which shows
+   $Config['MAP_WIDTH'] = '600px';
+   $Config['MAP_HEIGHT'] = '400px';
 
 Build 304
 
   New Stuff
   * Officially sync'd with Codon framework (www.nsslive.net/codon)
-  * Added license information to source files (GPL'd)
+  * Added license information to source files
   * Pilot profile shows PIREPs for that pilot
   * Ranks are edit-able
   * Images for Ranks - in the options, enter the URL to the image, full or the

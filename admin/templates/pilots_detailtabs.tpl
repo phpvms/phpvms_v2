@@ -24,3 +24,7 @@
 	</div>
 </div>
 </div>
+
+<script type="text/javascript">
+$("#tabcontainer > ul").tabs();
+</script>

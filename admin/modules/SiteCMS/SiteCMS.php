@@ -30,6 +30,10 @@ class SiteCMS
 			case 'viewpages':
 				Template::Set('sidebar', 'sidebar_pages.tpl');
 				break;
+				
+			case 'addpageform': 
+				Template::Set('sidebar', 'sidebar_addpage.tpl');
+				break;
 		}
 	}
 	
@@ -66,7 +70,7 @@ class SiteCMS
 				break;
 				
 			case 'viewpages':
-			
+						
 				/* This is the actual adding page process 
 				 */
 				if(Vars::POST('action') == 'addpage')
@@ -87,6 +91,12 @@ class SiteCMS
 				{
 					$this->EditPageForm();
 					return;
+				}
+				elseif(Vars::GET('action') == 'deletepage')
+				{
+					$pageid = Vars::GET('pageid');
+					
+					SiteData::DeletePage($pageid);
 				}
 				
 				

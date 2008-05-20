@@ -27,7 +27,8 @@ foreach($allpages as $page)
 	<td align="center"><?=$page->postedby; ?></td>
 	<td align="center"><?=$page->postdate; ?></td>
 	<td align="center"><?=$page->filename; ?></td>
-	<td align="center"><a href="?admin=viewpages&action=editpage&pageid=<?=$page->pageid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a></td>
+	<td align="center"><a href="?admin=viewpages&action=editpage&pageid=<?=$page->pageid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a> 
+	<a href="?admin=viewpages&action=deletepage&pageid=<?=$page->pageid;?>" class="confirm"><img src="lib/images/delete.gif" alt="delete" /></a> </td>
 </tr>
 <?php
 }

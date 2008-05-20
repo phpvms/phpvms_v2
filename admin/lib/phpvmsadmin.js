@@ -32,6 +32,26 @@ $(document).ready(function() {
 		target: '#results'
 	});
 			
+	//$.listen('click', '.confirm', function() { return false; });
+	$.listen('click', '.confirm', function()
+	{
+		var url = $(this).attr("href");
+		
+		$.prompt('Are you sure?', {
+			buttons: { Yes: true, Cancel: false },
+			callback: function(v,m)
+			{
+				if(v == true)
+				{
+					//$("#bodytext").load(url);
+					alert ('ok');
+				}
+			}			
+		});
+		
+		return false;
+	});
+	
 	$.listen('click', '.deleteitem', function(){return false;});
 	$.listen('dblclick','.deleteitem', function(){	
 		var url = $(this).attr("href");

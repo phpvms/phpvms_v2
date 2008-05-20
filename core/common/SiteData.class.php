@@ -96,18 +96,34 @@ class SiteData
 		else $enabled = 0;
 		
 		//$filename .= '.html';
-		$postedby = Auth::Username();
+		$postedby = Auth::DisplayName();
+		
+		if(DB::get_row('SELECT * FROM '.TABLE_PREFIX."pages WHERE pagename='$title'"))
+		{
+			return false;
+		}
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pages (pagename, filename, postedby, postdate, public, enabled)
 					VALUES ('$title', '$filename', '$postedby', NOW(), $public, $enabled)";
 					
 		$ret = DB::query($sql);
 		
-		DB::debug();
 		if(!$ret)
 			return false;
 			
 		return self::EditPageFile($filename, $content);
+	}
+	
+	function DeletePage($pageid)
+	{
+	
+		$info = self::GetPageData($pageid);
+		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'pages WHERE pageid='.$pageid;
+		
+		@unlink(PAGES_PATH . '/' . $info->filename . PAGE_EXT); 
+		
+		DB::query($sql);		
 	}
 	
 	function GetPageContent($filename)

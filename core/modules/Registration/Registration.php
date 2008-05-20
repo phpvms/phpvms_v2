@@ -17,7 +17,7 @@
  * @package module_registration
  */
  
-class Registration extends ModuleBase
+class Registration
 {
 	function HTMLHead()
 	{

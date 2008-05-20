@@ -44,10 +44,7 @@
 define('SITE_ROOT', dirname(__FILE__));
 include 'core/codon.config.php';
 
-ksort($ACTIVE_MODULES); 
-
-//load our modules
-MainController::loadModules($ACTIVE_MODULES);
+MainController::loadModulesFromPath(MODULES_PATH);
 
 $BaseTemplate = new TemplateSet;
 

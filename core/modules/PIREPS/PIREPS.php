@@ -17,7 +17,7 @@
  * @package module_pireps
  */
  
-class PIREPS extends ModuleBase
+class PIREPS
 {
 	public $pirep;
 	

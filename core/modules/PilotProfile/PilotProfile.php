@@ -17,7 +17,7 @@
  * @package module_pilotprofile
  */
  
-class PilotProfile extends ModuleBase
+class PilotProfile
 {
 	function Controller()
 	{

@@ -18,19 +18,15 @@
  */
  
 
-class Pages extends ModuleBase
+class Pages
 {
 	
 
 	function NavBar()
 	{
-		
-		
 		Template::Set('allpages', SiteData::GetAllPages(true));
-		Template::Show('pages_items.tpl');	
-		
+		Template::Show('pages_items.tpl');
 	}	
-	
 	
 	function Controller()
 	{

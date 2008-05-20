@@ -17,7 +17,7 @@
  * @package module_login
  */
  
-class Login extends ModuleBase
+class Login
 {
 		
 	function Controller()

@@ -17,7 +17,7 @@
  * @package module_contact
  */
 
-class Contact extends ModuleBase
+class Contact
 {
 
 	function Controller()

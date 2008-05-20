@@ -60,7 +60,8 @@ if(!Auth::UserInGroup('Administrators'))
 $skin = 'admin';
 
 Template::SetTemplatePath(ADMIN_PATH . '/templates');
-MainController::loadModules($ADMIN_MODULES);
+
+MainController::loadModulesFromPath(ADMIN_PATH.'/modules');
 
 $BaseTemplate = new TemplateSet;
 

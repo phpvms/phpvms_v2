@@ -17,8 +17,7 @@
  * @package module_schedules
  */
  
-
-class Schedules extends ModuleBase
+class Schedules
 {
 	function Controller()
 	{

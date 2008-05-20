@@ -43,6 +43,29 @@ class MainController
 	public static $DB;
 	public static $activeModule;
 	
+	public static function loadModulesFromPath($path)
+	{
+		$dh = opendir($path);
+		$modules = array();
+				
+		while (($file = readdir($dh)) !== false) 
+		{
+		    if($file != "." && $file != "..") 
+		    {
+		    	if(is_dir($path.'/'.$file))
+		    	{
+					$fullpath = $path . '/' . $file . '/' . $file . '.php';
+					if(file_exists($fullpath))
+						$modules[$file] = $fullpath;
+				}
+		    }
+		}
+		
+		closedir($dh);		
+
+		self::loadModules($modules);
+	}
+	
 	public static function loadModules(&$ModuleList)
 	{
 		global $ACTIVE_MODULES;

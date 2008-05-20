@@ -33,26 +33,4 @@ include COMMON_PATH . '/UserGroups.class.php';
 
 include COMMON_PATH . '/GoogleChart.class.php';
 include COMMON_PATH . '/GoogleMap.class.php';
-
-// These are the core modules
-//	Module/Folder_Name => Name of Controller file
-$ACTIVE_MODULES['Login'] = MODULES_PATH . '/Login/Login.php';
-$ACTIVE_MODULES['PilotProfile'] = MODULES_PATH . '/PilotProfile/PilotProfile.php';
-$ACTIVE_MODULES['Registration'] = MODULES_PATH . '/Registration/Registration.php';
-$ACTIVE_MODULES['Frontpage'] = MODULES_PATH . '/Frontpage/Frontpage.php';
-$ACTIVE_MODULES['Schedules'] = MODULES_PATH . '/Schedules/Schedules.php';
-$ACTIVE_MODULES['Pages'] = MODULES_PATH . '/Pages/Pages.php';
-$ACTIVE_MODULES['Pilots'] = MODULES_PATH . '/Pilots/Pilots.php';
-$ACTIVE_MODULES['PIREPS'] = MODULES_PATH . '/PIREPS/PIREPS.php';
-$ACTIVE_MODULES['Contact'] = MODULES_PATH . '/Contact/Contact.php';
-
-// Determine our administration modules
-$ADMIN_MODULES['Dashboard'] = ADMIN_PATH . '/modules/Dashboard/DashboardAdmin.php';
-$ADMIN_MODULES['SiteCMS'] = ADMIN_PATH . '/modules/SiteCMS/SiteCMS.php';
-$ADMIN_MODULES['PilotAdmin'] = ADMIN_PATH . '/modules/PilotAdmin/PilotAdmin.php';
-$ADMIN_MODULES['PIREPAdmin'] = ADMIN_PATH . '/modules/PIREPAdmin/PIREPAdmin.php';
-$ADMIN_MODULES['PilotRanking'] = ADMIN_PATH . '/modules/PilotRanking/RankingAdmin.php';
-$ADMIN_MODULES['OperationsAdmin'] = ADMIN_PATH . '/modules/OperationsAdmin/OperationsAdmin.php';
-$ADMIN_MODULES['SettingsAdmin'] = ADMIN_PATH . '/modules/Settings/Settings.php';
-
 ?>

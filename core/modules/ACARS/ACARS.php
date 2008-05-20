@@ -17,7 +17,7 @@
  * @package module_acars
  */
 
-class ACARS extends ModuleBase
+class ACARS
 {
 		
 	function Controller()

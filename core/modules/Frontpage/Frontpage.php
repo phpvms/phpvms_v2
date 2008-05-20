@@ -18,7 +18,7 @@
 
 include dirname(__FILE__) . '/News.php';
 
-class Frontpage extends ModuleBase
+class Frontpage
 {
 	function Controller()
 	{

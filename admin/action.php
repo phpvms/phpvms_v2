@@ -50,7 +50,7 @@ if(!Auth::LoggedIn() && !Auth::UserInGroup('Administrators'))
 define('ADMIN_PANEL', true);
 
 Template::SetTemplatePath(ADMIN_PATH . '/templates');
-MainController::loadModules($ADMIN_MODULES);
+MainController::loadModulesFromPath(ADMIN_PATH.'/modules');
 
 MainController::RunAllActions();
 

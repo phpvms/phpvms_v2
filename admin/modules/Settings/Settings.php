@@ -17,7 +17,7 @@
  * @package module_admin_settings
  */
  
-class SettingsAdmin
+class Settings
 {	
 
 	function HTMLHead()

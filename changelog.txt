@@ -15,6 +15,7 @@ Next Build (the V1 build!)
   * Admin can edit profile fields of a user
   * Added link to latest PIREP RSS feed in admin panel
   * Map size can be changed (see below "Additional Settings")
+  * Pages enable/disable, public/private options
   
   Fixes
   * Updated framework
@@ -22,6 +23,7 @@ Next Build (the V1 build!)
   * MySQLi blocker bug fixed; allowed back as an option in the installer
   * Javascript listeners replaced/streamlined
   * Google map lat/long is centered when route is shown
+  * If a page isn't there (physically), error is properly displayed
 
   Update Queries:
   	ALTER TABLE `phpvms_airports` ADD `hub` SMALLINT NOT NULL ;

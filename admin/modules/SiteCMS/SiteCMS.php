@@ -103,6 +103,8 @@ class SiteCMS
 	{
 		$title = Vars::POST('pagename');
 		$content = $_POST['content'];
+		$public = ($_POST['public'] == 'true') ? true : false;
+		$enabled = ($_POST['enabled'] == 'true') ? true : false;
 		
 		if(!$title)
 		{
@@ -111,7 +113,7 @@ class SiteCMS
 			return;
 		}
 		
-		if(!SiteData::AddPage($title, $content))
+		if(!SiteData::AddPage($title, $content, $public, $enabled))
 		{
 			if(DB::$errno == 1062)
 			{
@@ -133,8 +135,10 @@ class SiteCMS
 	{
 		$pageid = Vars::POST('pageid');
 		$content = $_POST['content']; // Vars::POST('content'); // WE want this raw
+		$public = ($_POST['public'] == 'true') ? true : false;
+		$enabled = ($_POST['enabled'] == 'true') ? true : false;
 		
-		if(!SiteData::EditFile($pageid, $content))
+		if(!SiteData::EditFile($pageid, $content, $public, $enabled))
 		{
 			Template::Set('message', 'There was an error saving content');
 			Template::Show('core_error.tpl');

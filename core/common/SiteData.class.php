@@ -44,16 +44,24 @@ class SiteData
 		return DB::query($sql);
 	}
 	
-	function GetAllPages($onlyenabled=false)
+	function GetAllPages($onlyenabled=false, $onlypublic=true)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pages";
 		
 		if($onlyenabled == true)
 		{
 			$sql .= ' WHERE enabled=1';
+			
+			if($onlypublic == true)
+			{
+				$sql.= ' AND public=1';
+			}
+			
 		}
 		
-		return DB::get_results($sql);
+		$ret = DB::get_results($sql);
+		//DB::debug();
+		return $ret;
 	}
 	
 	function GetPageData($pageid)
@@ -62,7 +70,7 @@ class SiteData
 		return DB::get_row($sql);
 	}
 	
-	function AddPage($title, $content)
+	function AddPage($title, $content, $public=true, $enabled=true)
 	{
 		$filename = strtolower($title);
 	
@@ -81,13 +89,21 @@ class SiteData
 		//take out any slashes
 		$filename = preg_replace('/(\/|\\\)++/', '', $filename);
 		
+		if($public == true) $public = 1;
+		else $public = 0;
+		
+		if($enabled == true) $enabled = 1;
+		else $enabled = 0;
+		
 		//$filename .= '.html';
 		$postedby = Auth::Username();
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."pages (pagename, filename, postedby, postdate)
-					VALUES ('$title', '$filename', '$postedby', NOW())";
+		$sql = "INSERT INTO ".TABLE_PREFIX."pages (pagename, filename, postedby, postdate, public, enabled)
+					VALUES ('$title', '$filename', '$postedby', NOW(), $public, $enabled)";
 					
 		$ret = DB::query($sql);
+		
+		DB::debug();
 		if(!$ret)
 			return false;
 			
@@ -99,24 +115,43 @@ class SiteData
 		// Round-about way, I know. But it's in the name of security. If they're giving a
 		//	bogus name, then it won't find it. 
 		
-		$sql = 'SELECT pagename, filename FROM '.TABLE_PREFIX.'pages WHERE filename=\''.$filename.'\'';
+		$sql = 'SELECT pagename, filename 
+					FROM '.TABLE_PREFIX.'pages 
+					WHERE filename=\''.$filename.'\'';
 		$row = DB::get_row($sql);
 	
-		if(!$row) return;
+		if(!$row) return ;
 		
 		//run output buffering, so we can parse any PHP in there
+		if(!file_exists(PAGES_PATH . '/' . $row->filename . PAGE_EXT))
+		{
+			return;
+		}
 		
 		ob_start();
 		include PAGES_PATH . '/' . $row->filename . PAGE_EXT; 
 		$row->content = ob_get_contents();
 		ob_end_clean();
 		
+	
 		return $row;
 	}
 	
-	function EditFile($pageid, $content)
+	function EditFile($pageid, $content, $public, $enabled)
 	{
 		$pagedata = SiteData::GetPageData($pageid);
+		
+		if($public == true) $public = 1;
+		else $public = 0;
+		
+		if($enabled == true) $enabled = 1;
+		else $enabled = 0;
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'pages 
+				  SET public='.$public.', enabled='.$enabled.'
+				  WHERE pageid='.$pageid;
+		
+		DB::query($sql);
 		
 		if(self::EditPageFile($pagedata->filename, stripslashes($content)))
 		{

@@ -20,11 +20,10 @@
 
 class Pages
 {
-	
-
 	function NavBar()
 	{
-		Template::Set('allpages', SiteData::GetAllPages(true));
+		
+		Template::Set('allpages', SiteData::GetAllPages(true, !Auth::$loggedin));
 		Template::Show('pages_items.tpl');
 	}	
 	

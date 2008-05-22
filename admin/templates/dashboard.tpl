@@ -1,4 +1,4 @@
-<h3>Welcome <?=Auth::$userinfo->firstname .' '. Auth::$userinfo->lastname;?></h3>
+<h3>Administration Panel</h3>
 <?php
 MainController::Run('Dashboard', 'CheckInstallFolder');
 MainController::Run('Dashboard', 'CheckForUpdates');

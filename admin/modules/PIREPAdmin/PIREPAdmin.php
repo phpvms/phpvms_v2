@@ -66,8 +66,20 @@ class PIREPAdmin
 				break;
 				
 			case 'viewpending':
+				
+				$hub = Vars::GET('hub');
+				
 				Template::Set('title', 'Pending Reports');
-				Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));				
+				
+				if($hub != '')
+				{
+					Template::Set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $hub));
+				}
+				else
+				{
+					Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
+				}
+					
 				Template::Show('pireps_list.tpl');
 				
 				break;

@@ -8,6 +8,8 @@ phpVMS Build Changelog:
 Next Build (the V1 build!)
 
   New Stuff/Changes
+  
+  * Updated framework
   * New Admin panel, sidebar with integrated help, cleaner design
   * API Documentation (http://www.phpvms.net/docs/api) for plug-ins
   * Public Pilot profile is available
@@ -16,16 +18,14 @@ Next Build (the V1 build!)
   * Added link to latest PIREP RSS feed in admin panel
   * Map size can be changed (see below "Additional Settings")
   * Pages enable/disable, public/private options
-  
-  Fixes
-  * Updated framework
+  * Admin panel sidebar shows some more stats
   * Code streamlining (massive!)
   * MySQLi blocker bug fixed; allowed back as an option in the installer
-  * Javascript listeners replaced/streamlined
   * Google map lat/long is centered when route is shown
   * If a page isn't there (physically), error is properly displayed
 
   Update Queries:
+  
   	ALTER TABLE `phpvms_airports` ADD `hub` SMALLINT NOT NULL ;
 	
 	ALTER TABLE `phpvms_pilots` ADD `hub` VARCHAR( 4 ) NOT NULL AFTER `location` ;
@@ -39,7 +39,6 @@ Next Build (the V1 build!)
 	ALTER TABLE `phpvms_pages` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT '0';
 	
 	ALTER TABLE `phpvms_settings` CHANGE `core` `core` SMALLINT NOT NULL;
-	
 	
   Additional Settings:
    The following can be added to your core/local.config.php to over-ride the default values:

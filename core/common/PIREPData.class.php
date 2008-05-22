@@ -52,6 +52,18 @@ class PIREPData
 
 		return DB::get_results($sql);
 	}
+	
+	function GetAllReportsFromHub($accept=0, $hub)
+	{
+		$sql = "SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					FROM ".TABLE_PREFIX."pilots u, ".TABLE_PREFIX."pireps p
+					WHERE p.pilotid=u.pilotid AND p.accepted=$accept
+						AND u.hub='$hub'";
+
+		return DB::get_results($sql);	
+	}
 
 	/**
 	 * Get the latest reports that have been submitted, 
@@ -198,6 +210,7 @@ class PIREPData
 
 		return DB::get_results($sql);
 	}
+	
 
 	/**
 	 * Get all of the comments for a pilot report

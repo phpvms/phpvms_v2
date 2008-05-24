@@ -14,8 +14,6 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package phpvms
- * @subpackage phpvms_api
  */
  
 class Auth  

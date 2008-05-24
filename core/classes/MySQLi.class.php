@@ -34,7 +34,7 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.nsslive.net/codon
  * @license BSD License
- * @package codon_core
+ * @package codon
  */
 /**
   * MySQLi implementation for ezSQL

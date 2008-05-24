@@ -64,7 +64,6 @@ class Dashboard
 		}
 	}
 
-
 	/**
 	 * Show the notification that an update is available
 	 */
@@ -73,8 +72,10 @@ class Dashboard
 		if(NOTIFY_UPDATE == true)
 		{
 			$postversion = @file_get_contents('http://www.phpvms.net/version.php');
-
-			if(trim($postversion) != PHPVMS_VERSION && $postversion !== false)
+			$postversion = str_replace('.', '', $postversion);
+			$currversion = str_replace('.', '', PHPVMS_VERSION);
+			
+			if($currversion < $postversion)
 			{
 				Template::Set('message', 'An update for phpVMS is available!');
 				Template::Show('core_error.tpl');

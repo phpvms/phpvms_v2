@@ -13,8 +13,6 @@
  * @author Nabeel Shahzad 
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
- * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package module_login
  */
  
 class Login

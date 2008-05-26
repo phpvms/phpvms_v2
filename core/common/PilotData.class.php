@@ -94,6 +94,16 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
+	
+	function GetLatestPilots($count=10)
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots 
+					ORDER BY pilotid DESC
+					LIMIT '.$count;
+	
+		return DB::get_results($sql);
+	}
+	
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */

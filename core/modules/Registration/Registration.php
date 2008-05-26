@@ -105,6 +105,20 @@ class Registration
 				RegistrationData::SendEmailConfirm($email, $firstname, $lastname);
 				Template::Show('registration_sentconfirmation.tpl');
 			}
+			
+			
+			$rss = new RSSFeed('Latest Pilot Registrations', SITE_URL, 'The latest pilot registrations');
+			$allpilots = PilotData::GetLatestPilots();
+			
+			foreach($allpilots as $pilot)
+			{
+				$rss->AddItem('Pilot '.PilotData::GetPilotCode($pilot->code, $pilot->pilotid)
+								. ' ('.$pilot->firstname .' ' . $pilot->lastname.')', 
+					SITE_URL.'/admin/index.php?admin=pendingpilots','','');
+			}
+		
+		
+			$rss->BuildFeed(LIB_PATH.'/rss/latestpilots.rss');
 		}
 	}
 

@@ -3,6 +3,9 @@
 <head>
 <title><?=$title;?></title>
 
+<link rel="alternate" href="<?=SITE_URL?>/lib/rss/latestpireps.rss" title="latest pilot reports" type="application/rss+xml" />
+<link rel="alternate" href="<?=SITE_URL?>/lib/rss/latestpilots.rss" title="latest pilot registrations" type="application/rss+xml" />
+
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/admin/styles.css" type="text/css" />
 <?php
 Template::Show('core_javascript.tpl');

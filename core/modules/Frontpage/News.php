@@ -19,11 +19,11 @@
 class News
 {
 	// This function gets called directly in the template
-	function ShowNewsFront()
+	function ShowNewsFront($count=5)
 	{
 		
 		$sql = 'SELECT id, subject, body, postedby, UNIX_TIMESTAMP(postdate) AS postdate
-				 FROM ' . TABLE_PREFIX .'news ORDER BY postdate DESC LIMIT 5';
+				 FROM ' . TABLE_PREFIX .'news ORDER BY postdate DESC LIMIT '.$count;
 		
 		$res = DB::get_results($sql);
 		

@@ -183,7 +183,7 @@ CREATE TABLE `phpvms_settings` (
 	`name` varchar(25) NOT NULL default '',
 	`value` varchar(150) NOT NULL default '',
 	`descrip` varchar(150) NOT NULL default '',
-	`core` smallint(6) NOT NULL default '0',
+	`core` smallint(6) NOT NULL default '1',
 	PRIMARY KEY  (`id`),
 	UNIQUE KEY `name` (`name`)
 )ENGINE=INNODB;

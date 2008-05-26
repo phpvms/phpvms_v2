@@ -4,7 +4,7 @@
 	// Show the News module, call the function ShowNewsFront
 	//	This is in the modules/Frontpage folder
 	
-	News::ShowNewsFront();
+	News::ShowNewsFront(5);
 ?>
 </div>
 <div id="sidebar">
@@ -13,5 +13,7 @@
 	<?php MainController::Run('PIREPS', 'RecentFrontPage', 5); ?>
 
 	<h3>Newest Pilots</h3>
-	<p>List 'em here</p>
+	
+	<?php MainController::Run('Pilots', 'RecentFrontPage', 5); ?>
+	
 </div>

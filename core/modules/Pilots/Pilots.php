@@ -40,4 +40,13 @@ class Pilots
 				break;
 		}
 	}
+	
+	function RecentFrontPage($count = 5)
+	{
+		Template::Set('pilots', PilotData::GetLatestPilots($count));
+		
+		echo 'test';
+		
+		Template::Show('frontpage_recentpilots.tpl');
+	}
 }

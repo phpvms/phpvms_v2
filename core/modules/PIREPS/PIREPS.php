@@ -173,9 +173,9 @@ class PIREPS
 		
 		foreach($reports as $report)
 		{
-			$rss->AddItem('Report #'.$report->id.' - '.$report->depicao.' to '.$report->arricao, 
+			$rss->AddItem('Report #'.$report->pirepid.' - '.$report->depicao.' to '.$report->arricao, 
 							SITE_URL.'/admin/index.php?admin=viewpending','', 
-							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid));;
+							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid) . " ($report->firstname $report->lastname)");
 		}
 		
 		

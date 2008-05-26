@@ -5,24 +5,28 @@
 
 phpVMS Build Changelog:
 
-Next Build (the V1 build!)
+Build 320 (the V1 build!)
 
   New Stuff/Changes
   
-  * Updated framework
-  * New Admin panel, sidebar with integrated help, cleaner design
-  * API Documentation (http://www.phpvms.net/docs/api) for plug-ins
-  * Public Pilot profile is available
-  * Deleting schedule now asks "Are you sure?"
-  * Admin can edit profile fields of a user
-  * Added link to latest PIREP RSS feed in admin panel
+  * Updated framework.
+  * New Admin panel, sidebar with integrated help, cleaner design.
+  * Aiports can be selected as hubs.
+  * Pilot selects hub on registration (admin can change).
+  * Admin viewing PIREP can see PIREPs only on their hub.
+  * API Documentation (http://www.phpvms.net/docs/api) for plug-ins.
+  * Public Pilot profile is available.
+  * Deleting schedule now asks "Are you sure?".
+  * Admin can edit profile fields of a user.
+  * User edit tabs fixed up
+  * Added link to latest PIREP RSS feed in admin panel.
   * Map size can be changed (see below "Additional Settings")
-  * Pages enable/disable, public/private options
-  * Admin panel sidebar shows some more stats
-  * Code streamlining (massive!)
-  * MySQLi blocker bug fixed; allowed back as an option in the installer
-  * Google map lat/long is centered when route is shown
-  * If a page isn't there (physically), error is properly displayed
+  * Pages enable/disable, public/private options.
+  * Admin panel sidebar shows some more stats.
+  * Code streamlining (massive!).
+  * MySQLi blocker bug fixed; allowed back as an option in the installer.
+  * Google map lat/long is centered when route is shown.
+  * If a page isn't there (physically), error is properly displayed.
 
   Update Queries:
   
@@ -30,11 +34,11 @@ Next Build (the V1 build!)
 	
 	ALTER TABLE `phpvms_pilots` ADD `hub` VARCHAR( 4 ) NOT NULL AFTER `location` ;
 	
-	ALTER TABLE `phpvms_customfields` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT 'y',
-		CHANGE `showonregister` `showonregister` SMALLINT NOT NULL DEFAULT 'y';
+	ALTER TABLE `phpvms_customfields` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT '1',
+		CHANGE `showonregister` `showonregister` SMALLINT NOT NULL DEFAULT '1';
 		
 	ALTER TABLE `phpvms_pilots` CHANGE `confirmed` `confirmed` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
-		CHANGE `retired` `retired` SMALLINT NOT NULL DEFAULT 'y';
+		CHANGE `retired` `retired` SMALLINT NOT NULL DEFAULT '0';
 		
 	ALTER TABLE `phpvms_pages` CHANGE `public` `public` SMALLINT NOT NULL DEFAULT '0';
 	

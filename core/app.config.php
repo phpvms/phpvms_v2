@@ -15,6 +15,12 @@ $Config['PILOTID_OFFSET'] = 0; // Start the Pilot's ID from 1000
 $Config['MAP_WIDTH'] = '600px';
 $Config['MAP_HEIGHT'] = '400px';
 
+// Advanced options
+$Config['TEMPLATE_USE_CACHE'] = false;
+$Config['TEMPLATE_CACHE_EXPIRE'] = '24';
+$Config['DBASE_USE_CACHE'] = false;
+$Config['CACHE_PATH'] = SITE_ROOT . '/core/cache';
+
 // Common Classes
 include COMMON_PATH . '/Auth.class.php';
 include COMMON_PATH . '/ACARSData.class.php';
@@ -33,4 +39,6 @@ include COMMON_PATH . '/UserGroups.class.php';
 
 include COMMON_PATH . '/GoogleChart.class.php';
 include COMMON_PATH . '/GoogleMap.class.php';
+
+
 ?>

@@ -5,7 +5,7 @@
 
 phpVMS Build Changelog:
 
-Build 320 (the V1 build!)
+Build 321 (the V1 build!)
 
   New Stuff/Changes
   
@@ -27,6 +27,7 @@ Build 320 (the V1 build!)
   * MySQLi blocker bug fixed; allowed back as an option in the installer.
   * Google map lat/long is centered when route is shown.
   * If a page isn't there (physically), error is properly displayed.
+  * Installer fixes
 
   Update Queries:
   

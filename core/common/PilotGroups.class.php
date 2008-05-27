@@ -60,7 +60,7 @@ class PilotGroups
 		if($groupidorname == '') return false;
 		
 		// If group name is given, get the group ID
-		if(preg_match('`^[0-9]+$`',$groupid) != true)
+		if(!is_numeric($groupidorname))
 		{
 			$groupidorname = self::GetGroupID($groupidorname);
 		}
@@ -77,7 +77,7 @@ class PilotGroups
 	function CheckUserInGroup($pilotid, $groupid)
 	{
 		
-		if(preg_match('`^[0-9]+$`',$groupid) != true)
+		if(!is_numeric($groupidorname))
 		{
 			$groupid = self::GetGroupID($groupid);
 		}
@@ -116,7 +116,7 @@ class PilotGroups
 		$pilotid = DB::escape($pilotid);
 		$groupid = DB::escape($groupid);
 		
-		if(preg_match('`^[0-9]+$`',$groupid) != true)
+		if(!is_numeric($groupidorname))
 		{
 			$groupid = self::GetGroupID($groupid);
 		}

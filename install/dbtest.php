@@ -1,6 +1,6 @@
 <?php
 
-include 'bootloader.inc.php';
+include 'loader.inc.php';
 
 if(!DB::init($_POST['DBASE_TYPE']))
 {

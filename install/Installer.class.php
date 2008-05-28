@@ -175,7 +175,7 @@ class Installer
 		// add the user
 
 		if(!RegistrationData::AddUser($_POST['firstname'], $_POST['lastname'],
-				$_POST['email'], $_POST['vacode'], '', $_POST['password'], PILOT_ACCEPTED))
+				$_POST['email'], $_POST['vacode'], '', '', $_POST['password'], PILOT_ACCEPTED))
 		{
 			self::$error = DB::$error;
 			return false;

@@ -83,7 +83,7 @@ CREATE TABLE `phpvms_ranks` (
 	UNIQUE KEY `rank` (`rank`)
 )ENGINE=INNODB;
 
-INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire', 0);
+INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire','', 0);
 
 CREATE TABLE `phpvms_pilots` (
 	`pilotid` int(11) NOT NULL auto_increment,

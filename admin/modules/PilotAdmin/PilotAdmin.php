@@ -121,6 +121,8 @@ class PilotAdmin
 				{
 					case 'approvepilot':
 						PilotData::AcceptPilot(Vars::POST('id'));
+						RanksData::CalculatePilotRanks();
+						
 						break;
 					case 'rejectpilot':
 						PilotData::RejectPilot(Vars::POST('id'));

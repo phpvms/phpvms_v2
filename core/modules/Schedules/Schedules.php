@@ -33,14 +33,23 @@ class Schedules
 				$this->ShowSchedules();
 				
 				break;
+				
+			case 'searchschedules':
+			
+			
+				//Template::Show('schedule_searchform
+				break;
 		}	
 	}
 	
 	function ShowSchedules()
 	{
 		$depapts = SchedulesData::GetDepartureAirports();
-				
+		$equip = OperationsData::GetAllAircraft();
+		
 		Template::Set('depairports', $depapts);
+		Template::Set('equipment', $equip);
+		
 		Template::Show('schedule_searchform.tpl');
 		
 		// Show the routes. Remote this to not show them.

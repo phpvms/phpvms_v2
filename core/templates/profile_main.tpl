@@ -26,7 +26,8 @@
 			<a href="?page=viewpireps">View my PIREPs</a><br />
 			<a href="?page=routesmap">View a map of all my flights</a><br />
 			<a href="?page=filepirep">File a Pilot Report</a><br />
-			<a href="?page=schedules">View Flight Schedules</a> - Choose a flight
+			<a href="?page=schedules">View Flight Schedules</a>
+			<a href="?page=searchschedules">Search Flights</a>
 		</div>
 	</p>
 	<?php

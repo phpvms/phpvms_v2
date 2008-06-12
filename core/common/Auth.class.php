@@ -92,6 +92,7 @@ class Auth
 	{
 		if(!self::LoggedIn()) return false;
 		
+		if(!self::$usergroups) self::$usergroups = array();
 		foreach(self::$usergroups as $group)
 		{
 			if($group->name == $groupname)

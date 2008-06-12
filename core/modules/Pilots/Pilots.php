@@ -45,8 +45,6 @@ class Pilots
 	{
 		Template::Set('pilots', PilotData::GetLatestPilots($count));
 		
-		echo 'test';
-		
 		Template::Show('frontpage_recentpilots.tpl');
 	}
 }

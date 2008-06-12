@@ -5,6 +5,7 @@
 <select id="depicao" name="depicao">
 <option value="">Select All</option>
 <?php
+if(!$depairports) $depairports = array();
 foreach($depairports as $airport)
 {
 	echo '<option value="'.$airport->icao.'">'.$airport->icao.' ('.$airport->name.')</option>';
@@ -12,20 +13,21 @@ foreach($depairports as $airport)
 ?>
 	
 </select>  
-<!--
-<strong>Arrival Airports</strong>
 
-<select id="arricao" name="arricao">
-	<option value="">Select a departure airport</option>
-	<?=$depairports; ?>
-</select>  
-</p>
 <p><strong>Select equipment: </strong> (optional): 
 <select id="equipment" name="equipment">
 	<option value="">Select equipment</option>
-	<?=$depairports; ?>
+<?php
+
+if(!$equipment) $equipment = array();
+foreach($equipment as $equip)
+{
+	echo '<option value="'.$equip->id.'">'.$equip->name.'</option>';
+}
+
+?>
 </select> 
--->
+
 <input type="hidden" name="action" value="findflight" />
 <input type="submit" name="submit" value="Find Flights" />
 </p>

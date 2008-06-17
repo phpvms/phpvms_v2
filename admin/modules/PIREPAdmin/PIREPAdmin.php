@@ -63,6 +63,7 @@ class PIREPAdmin
 				Template::Set('descrip', 'These pilot reports are from the past 48 hours');
 				
 				Template::Show('pireps_list.tpl');
+				
 				break;
 				
 			case 'viewpending':
@@ -147,7 +148,7 @@ class PIREPAdmin
 		if(intval($pirep_details->accepted) == PIREP_ACCEPTED) return;
 	
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
-		PilotData::UpdateFlightData(Auth::$userinfo->pilotid, $pirep_details->flighttime);	
+		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime);	
 	}
 	
 	/**
@@ -167,13 +168,13 @@ class PIREPAdmin
 		// If it was previously accepted, subtract the flight data
 		if(intval($pirep_details->accepted) == PIREP_ACCEPTED)
 		{
-			PilotData::UpdateFlightData(Auth::$userinfo->pilotid, -1 * floatval($pirep->flighttime), -1);
+			PilotData::UpdateFlightData($pirep_details->pilotid, -1 * floatval($pirep->flighttime), -1);
 		}
 		
 		// Send comment for rejection	
 		if($comment != '')
 		{
-			$commenter = Auth::$userinfo->pilotid;
+			$commenter = Auth::$userinfo->pilotid; // The person logged in commented
 			PIREPData::AddComment($pirepid, $commenter, $comment);
 			
 			// Send them an email

@@ -166,7 +166,7 @@ class PIREPData
 	 */
 	function GetReportDetails($pirepid)
 	{
-		$sql = 'SELECT u.firstname, u.lastname, u.email, u.rank,
+		$sql = 'SELECT u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,

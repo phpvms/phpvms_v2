@@ -17,7 +17,8 @@ Next Build
   * Added "Aircraft" field to schedule search options
   * Login error fixed
   * Pilot registration messes up ranks fixed
-
+  * Flight hours not adding properly bug fix
+  
 Build 321 (the V1 build!)
 
   New Stuff/Changes

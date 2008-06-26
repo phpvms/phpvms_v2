@@ -250,7 +250,8 @@ class UserGroups
 			$groupidorname = $this->GetGroupID($groupidorname);
 		}
 		
-		$sql = 'INSERT INTO '.APP_TABLE_PREFIX.'usergroups (userid, groupid) VALUES ('.$userid.', '.$groupidorname.')';
+		$sql = 'INSERT INTO '.APP_TABLE_PREFIX.'usergroups (userid, groupid) 
+					VALUES ('.$userid.', '.$groupidorname.')';
 		
 		return DB::query($sql);
 	}

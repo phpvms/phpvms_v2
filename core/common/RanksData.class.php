@@ -51,6 +51,7 @@ class RanksData
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."ranks 
 					WHERE minhours>$hours ORDER BY minhours ASC LIMIT 1";
+		
 		return DB::get_row($sql);
 	}
 	

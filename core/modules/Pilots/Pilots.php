@@ -26,9 +26,21 @@ class Pilots
 		{
 			case 'pilots':
 			
-				Template::Set('allpilots', PilotData::GetAllPilotsDetailed());
+			
+				// Get all of our hubs, and list pilots by hub
 				
-				Template::Show('pilots_list.tpl');
+				$allhubs = OperationsData::GetAllHubs();
+				
+				if(!$allhubs) $allhubs = array();
+				
+				foreach($allhubs as $hub)
+				{
+					Template::Set('title', $hub->name);
+					Template::Set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
+										
+					Template::Show('pilots_list.tpl');
+				}
+				
 				break;
 				
 			case 'pilotreports':

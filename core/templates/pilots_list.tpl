@@ -1,4 +1,4 @@
-<h3>All Pilots</h3>
+<h3><?=$title?></h3>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>

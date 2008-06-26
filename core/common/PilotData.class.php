@@ -51,6 +51,19 @@ class PilotData
 	}
 	
 	/**
+	 * Get all the pilots on a certain hub
+	 */
+	function GetAllPilotsByHub($hub)
+	{
+		$sql = "SELECT p.*, r.rankimage FROM ".TABLE_PREFIX."pilots p, ".TABLE_PREFIX."ranks r
+					WHERE r.rank = p.rank AND hub='$hub'
+					ORDER BY totalhours DESC";					
+					
+		return DB::get_results($sql);
+	}
+	
+	
+	/**
 	 * Return the pilot's code (ie DVA1031), using
 	 * the code and their DB ID
 	 */

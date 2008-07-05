@@ -1,6 +1,6 @@
 CREATE TABLE `phpvms_airlines` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
-	`code` VARCHAR( 3 ) NOT NULL ,
+	`code` VARCHAR( 5 ) NOT NULL ,
 	`name` VARCHAR( 30 ) NOT NULL ,
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `code` (`code`)
@@ -90,7 +90,7 @@ CREATE TABLE `phpvms_pilots` (
 	`firstname` varchar(25) NOT NULL default '',
 	`lastname` varchar(25) NOT NULL default '',
 	`email` varchar(32) NOT NULL default '',
-	`code` varchar(3) NOT NULL default '',
+	`code` varchar(5) NOT NULL default '',
 	`location` varchar(32) NOT NULL default '',
 	`hub` varchar(4) NOT NULL default '',
 	`password` varchar(32) NOT NULL default '',
@@ -140,7 +140,7 @@ CREATE TABLE `phpvms_pirepcomments` (
 CREATE TABLE `phpvms_customfields` (
 	`fieldid` INT NOT NULL AUTO_INCREMENT ,
 	`title` VARCHAR( 25 ) NOT NULL ,
-	`fieldname` VARCHAR( 25 ) NOT NULL ,
+	`fieldname` VARCHAR( 75 ) NOT NULL ,
 	`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
 	`public` smallint(6) NOT NULL default '0',
 	`showonregister` smallint(6) NOT NULL default '0',

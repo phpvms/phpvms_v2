@@ -116,7 +116,7 @@ class PilotGroups
 		$pilotid = DB::escape($pilotid);
 		$groupid = DB::escape($groupid);
 		
-		if(!is_numeric($groupidorname))
+		if(!is_numeric($groupid))
 		{
 			$groupid = self::GetGroupID($groupid);
 		}

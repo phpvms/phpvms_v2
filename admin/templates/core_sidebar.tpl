@@ -1,0 +1,1 @@
+<div id="sidecolumn"><?=$sidebar?></div>

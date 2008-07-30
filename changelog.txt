@@ -12,24 +12,41 @@ phpVMS - Virtual Airline Administration Software
 
 Build Changelog:
 
-Next Build
+Build 340 (RC-1 aka "Almost There")
 
-  * Clean URLs
+  * Clean URLs implemented
+  * Set Google Map type (See Notes)
   * Pilot ranks are updated on PIREP accept
   * Schedule distance properly saved/displayed
+  * Schedule listing shows airport name with ICAO on default
   * Option to show Leg in schedule (See Notes)
   * "False alarm" errors in updates/changes fixes
   * Code field expanded
-  * Airports listed by hub
+  * Airports/Pilots listed by hub
   * Added "Aircraft" field to schedule search options
+  * Added "Distance" to schedule search
+  * Added "Arrival Airport" to schedule search
+  * Unnecessary AJAX removed from "File PIREP"
+  * PIREP comments can be viewed by admin
   * Login error fixed
   * Pilot registration messes up ranks fixed
-  * Flight hours not adding properly bug fix
+  * Flight hours not adding properly bug fixed
   
-  Notes:
-   To disable the flight leg text to show, to your local.config.php add:
+  Notes: (All these options go in local.config.php to change from default)
+  -----
+   To stop the flight leg text from showing, add:
    
-   Config::Set('SHOW_LEG_TEXT', false);
+   		Config::Set('SHOW_LEG_TEXT', false);
+   		
+   To use a different map type (default is G_PHYSICAL_MAP). Valid types 
+    are G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_PHYSICAL_MAP
+   
+   		Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
+   		
+   You can also change the line color on the map using: (default is red)
+   
+   		Config::Set('MAP_LINE_COLOR', '#ff0000');   		
+   	
   
 Build 321 (the V1 build!)
 

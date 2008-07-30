@@ -1,4 +1,4 @@
-<?php 
+<?php
 if($title!='')
 	echo "<h3>$title</h3>";
 ?>
@@ -8,14 +8,14 @@ if(!$pireps)
 {
 	echo '<p>No reports have been found</p>';
 	return;
-}	
+}
 ?>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
 	<th>Pilot</th>
 	<th>Flight Number</th>
-	<th>Departure</th>	
+	<th>Departure</th>
 	<th>Arrival</th>
 	<th>Flight Time</th>
 	<th>Submitted</th>
@@ -33,7 +33,11 @@ foreach($pireps as $report)
 	<td align="center"><?=$report->depicao; ?></td>
 	<td align="center"><?=$report->arricao; ?></td>
 	<td align="center"><?=$report->flighttime; ?></td>
-	<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?>
+	<td align="center">
+		<?=date(DATE_FORMAT, $report->submitdate); ?><br />
+		<a id="dialog" class="jqModal"
+			href="action.php?admin=viewcomments&pirepid=<?=$report->pirepid;?>">View Comments</a>
+		<br />
 		<?php
 
 		if($report->accepted == PIREP_ACCEPTED)
@@ -48,13 +52,13 @@ foreach($pireps as $report)
 		?>
 	</td>
 	<td align="center">
-		<a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepirep" 
+		<a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepirep"
 			id="<?=$report->pirepid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
 		<br />
-		<a id="dialog" class="jqModal" 
+		<a id="dialog" class="jqModal"
 			href="action.php?admin=rejectpirep&pirepid=<?=$report->pirepid;?>"><img src="lib/images/reject.gif" alt="Reject" /></a>
 		<br />
-		<a id="dialog" class="jqModal" 
+		<a id="dialog" class="jqModal"
 			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
 	</td>
 </tr>

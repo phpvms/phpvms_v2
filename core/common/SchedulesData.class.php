@@ -99,11 +99,15 @@ class SchedulesData
 	{
 		if($type == '')
 			$type = '>';
-			
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules
-					WHERE distance '.$type.' '.$distance.'
-					ORDER BY depicao DESC';
 		
+		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM phpvms_schedules AS s
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+					WHERE s.distance '.$type.' '.$distance.'
+						ORDER BY s.depicao DESC';
+	
 		if($limit != '')
 			$sql .= ' LIMIT ' . $limit;
 		
@@ -131,7 +135,14 @@ class SchedulesData
 	function GetSchedules($limit='')
 	{
 		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
+		
+		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM phpvms_schedules AS s
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+					ORDER BY s.depicao DESC';
 		
 		if($limit != '')
 			$sql .= ' LIMIT ' . $limit;

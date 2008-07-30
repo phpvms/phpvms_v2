@@ -24,16 +24,16 @@ foreach($schedules as $sched)
 {
 ?>
 <tr id="row<?=$sched->id?>">
-	<td><?php echo $sched->code . $sched->flightnum; ?></td>
-	<td><?=$sched->depicao; ?>(<?=$sched->deptime;?>)</td>
-	<td><?=$sched->arricao; ?>(<?=$sched->arrtime;?>)</td>
+	<td align="center"><?php echo $sched->code . $sched->flightnum; ?></td>
+	<td align="center"><?=$sched->depicao; ?> (<?=$sched->deptime;?>)</td>
+	<td align="center"><?=$sched->arricao; ?> (<?=$sched->arrtime;?>)</td>
 	<td align="center"><?=$sched->aircraft; ?></td>
 	<td align="center"><?=$sched->distance; ?></td>
 	<td align="center"><?=$sched->timesflown; ?></td>
 	<td align="center">
 		<a href="?admin=editschedule&id=<?=$sched->id;?>"><img src="lib/images/edit.gif" alt="Edit Schedule" /></a>
 		<br />
-        <a href="action.php?admin=<?=Vars::GET('admin'); ?>" 
+        <a href="action.php?admin=<?=Vars::GET('admin'); ?>"
 			class="deleteitem" action="deleteschedule"
 			id="<?=$sched->id;?>"><img src="lib/images/delete.gif" alt="Delete" /></a>
 	</td>

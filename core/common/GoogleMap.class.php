@@ -10,7 +10,7 @@
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
  *   View license.txt in the root, or visit http://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- * @author Nabeel Shahzad 
+ * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
@@ -27,6 +27,7 @@ class GoogleMap
 	public $mapcenter_long = -78.50;
 	
 	public $maptype = 'G_NORMAL_MAP';
+	public $linecolor = '#ff0000';
 	
 	/**
 	 * Set the enter point of the map
@@ -34,7 +35,7 @@ class GoogleMap
 	function CenterMap($lat, $long)
 	{
 		$this->mapcenter_lat = $lat;
-		$this->mapcenter_long = $long;		
+		$this->mapcenter_long = $long;
 	}
 	
 	function AddPoint($lat, $long, $descrip)
@@ -48,24 +49,24 @@ map.addOverlay(marker);
 		array_push($this->points, $bubble);
 	}
 	
-	/** 
+	/**
 	 * This forms one polyline, simple, with the coordinates of
 	 * where it starts, and where it ends. Ultimately goes to
 	 * AddPolyline, but an easier way of calling it
 	 */
 	function AddPolylineFromTo($deplat, $deplong, $arrlat, $arrlong)
-	{		
-		$this->AddPolyline(array(array($deplat, $deplong), array($arrlat, $arrlong)));	
+	{
+		$this->AddPolyline(array(array($deplat, $deplong), array($arrlat, $arrlong)));
 	}
 	
 	/**
 	 * Passed as array:
 	 * array ([0] => array([0]=>lat, [1]=>long)
 	 *		  [1] => array([0]=>lat, [1]=>long)
-	 * 
+	 *
 	 * Have as many sets as you want, this will form one
 	 * polyline
-	 * 
+	 *
 	 * $set[0] = array(44.47, 117.50);
 	 * $set[1] = array(46.48, 100.47);
 	 * $map->AddPolyline($set);
@@ -112,7 +113,7 @@ function createMarker(point, number)
 		
 		foreach($this->points as $point)
 		{
-			echo $point;	
+			echo $point;
 		}
 
 
@@ -130,12 +131,12 @@ echo 'var polyOptions = {geodesic:true};
 ';
 				//print_r($points);
 			}
-			echo '], "#ff0000", 5, 1, polyOptions);
+			echo '], "'.$this->linecolor.'", 2, 1, polyOptions);
 map.addOverlay(polyline'.$count.');
 ';
-		$count++;			
+		$count++;
 		}
-	echo '  
+	echo '
 //]]>
 </script>';
 	}

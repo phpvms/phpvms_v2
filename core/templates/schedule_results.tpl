@@ -20,8 +20,9 @@ if(!$allroutes)
 <?php
 foreach($allroutes as $route)
 {
-	if(Config::Get('SHOW_LEG_TEXT') == true)
-		$leg = ($route->leg=='' || $route->leg == '0')?'':'Leg '.$route->leg;
+	if(Config::Get('SHOW_LEG_TEXT') == true // Want it to show
+			&& $route->leg != '' && $route->leg != '0') // And it isn't blank or 0
+		$leg = 'Leg '.$route->leg;
 	else
 		$leg = '';
 ?>

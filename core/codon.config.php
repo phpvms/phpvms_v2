@@ -64,6 +64,7 @@ include CLASS_PATH . '/MainController.class.php';
 include CLASS_PATH . '/SessionManager.class.php';
 include CLASS_PATH . '/Template.class.php';
 include CLASS_PATH . '/TemplateSet.class.php';
+include CLASS_PATH . '/Util.class.php';
 include CLASS_PATH . '/Vars.class.php';
 
 Template::SetTemplatePath(TEMPLATES_PATH);

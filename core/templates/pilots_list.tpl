@@ -3,7 +3,7 @@
 <thead>
 <tr>
 	<th>Pilot ID</th>
-	<th>Name</th>	
+	<th>Name</th>
 	<th>Rank</th>
 	<th>Flights</th>
 	<th>Hours</th>
@@ -15,7 +15,7 @@ foreach($allpilots as $pilot)
 {
 ?>
 <tr>
-	<td><a href="?page=pilotreports&pilotid=<?=$pilot->pilotid?>">
+	<td><a href="<?=SITE_URL?>/index.php/Pilots/reports/<?=$pilot->pilotid?>">
 			<?=PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?></a>
 	</td>
 	<td><?=$pilot->firstname.' '.$pilot->lastname?></td>

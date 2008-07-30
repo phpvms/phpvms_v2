@@ -61,7 +61,10 @@ class PilotProfile extends CodonModule
 				Template::Show('profile_main.tpl');
 				break;
 				
-			case 'pilotprofile':
+			/*
+			 * View a different pilot's profile
+			 */
+			case 'view':
 			
 				$pilotid = $this->get->pilotid;
 				

@@ -45,6 +45,7 @@ class PIREPS extends CodonModule
 				
 				break;
 			
+			case 'view':
 			case 'viewreport':
 			
 				$pirepid = $this->get->id;

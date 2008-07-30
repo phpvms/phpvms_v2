@@ -41,7 +41,7 @@ class Pilots extends CodonModule
 				
 				break;
 				
-			case 'pilotreports':
+			case 'reports':
 			
 				$id = $this->get->pilotid;
 				

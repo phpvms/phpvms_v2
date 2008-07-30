@@ -106,6 +106,13 @@ class PIREPAdmin extends CodonModule
 				
 				break;
 				
+			case 'viewcomments':
+				
+				Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
+				Template::Show('pireps_comments.tpl');
+				
+				break;
+				
 			case 'addcomment':
 				Template::Set('pirepid', $this->get->pirepid);
 				
@@ -124,6 +131,8 @@ class PIREPAdmin extends CodonModule
 		
 		PIREPData::AddComment($pirepid, $commenter, $comment);
 		
+		DB::debug();
+		
 		// Send them an email
 		Template::Set('firstname', $pirep_details->firstname);
 		Template::Set('lastname', $pirep_details->lastname);
@@ -131,6 +140,8 @@ class PIREPAdmin extends CodonModule
 		
 		$message = Template::GetTemplate('email_commentadded.tpl', true);
 		Util::SendEmail($pirep_details->email, 'Comment Added', $message);
+		
+		
 	}
 	
 	/**

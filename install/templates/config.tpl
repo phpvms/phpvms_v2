@@ -25,5 +25,11 @@ Config::Set('PAGE_EXT', '.htm'); // The page extension
 Config::Set('MAP_WIDTH', '600px');
 Config::Set('MAP_HEIGHT', '400px');
 
+/*
+ * Valid types are G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_PHYSICAL_MAP
+ */
+Config::Set('MAP_TYPE', 'G_SATELLITE_MAP');
+Config::Set('MAP_LINE_COLOR', '#ff0000');
+
 Config::Set('DEBUG_MODE', false);
 ?>

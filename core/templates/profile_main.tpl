@@ -4,7 +4,7 @@
 	<p>
 	Welcome back <?php echo $userinfo->firstname . ' ' . $userinfo->lastname; ?> (<strong><?=$pilotcode;?></strong>)!
 	<br />
-	Your latest flight was <a href="?page=viewreport&pirepid=<?=$report->pirepid?>"><?=$report->code . $report->flightnum; ?></a>
+	Your latest flight was <a href="<?=SITE_URL?>/index.php/pireps/view/<?=$report->pirepid?>"><?=$report->code . $report->flightnum; ?></a>
 
 	<?php
 	if($nextrank)

@@ -171,8 +171,12 @@ class SchedulesData
 				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',
 				'$deptime', '$arrtime', '$flighttime')";
 		
-		return DB::query($sql);
-
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 
 	/**
@@ -192,7 +196,12 @@ class SchedulesData
 						arrtime='$arrtime', flighttime='$flighttime'
 					WHERE id=$scheduleid";
 
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 
 	/**
@@ -202,7 +211,12 @@ class SchedulesData
 	{
 		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules WHERE id='.$scheduleid;
 
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 }
 

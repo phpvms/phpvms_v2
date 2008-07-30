@@ -10,11 +10,11 @@
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
  *   View license.txt in the root, or visit http://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- * @author Nabeel Shahzad 
+ * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- */ 
+ */
 
 class SettingsData
 {
@@ -28,12 +28,10 @@ class SettingsData
 	 */
 	function GetAllFields()
 	{
-		$ret =  DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
-		
-		return $ret;
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
 	}
 	
-	/** 
+	/**
 	 * Add a custom field to be used in a profile
 	 */
 	function AddField($title, $fieldtype, $public, $showinregistration)
@@ -60,14 +58,12 @@ class SettingsData
 		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (title, fieldname, type, public, showonregister)
 					VALUES ('$title', '$fieldname', '$fieldtype', $public, $showinregistration)";
 		
-		$res = DB::query($sql);	
+		$res = DB::query($sql);
 		
-		if(!$res && DB::$errno !=0)
-		{			
+		if(DB::errno() != 0)
 			return false;
-		}
-		
-		return true;		
+			
+		return true;
 	}
 	/**
 	 * Save site settings
@@ -77,7 +73,7 @@ class SettingsData
 	 * @param boolean $core Whether it's "vital" to the engine or not. Bascially blocks deletion
 	 */
 	function SaveSetting($name, $value, $descrip='', $core=false)
-	{		
+	{
 		if(is_bool($value))
 		{
 			if($value == true)
@@ -93,14 +89,14 @@ class SettingsData
 		//see if it's an update
 		if($core == true)
 			$core = 't';
-		else	
+		else
 			$core = 'f';
 			
 		$name = strtoupper(DB::escape($name));
 		$value = DB::escape($value);
 		$descrip = DB::escape($descrip);
 		
-		/*$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core) 
+		/*$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core)
 					VALUES (\''.$name.'\', \''.$value.'\', \''.$descrip.'\', \''. $core.'\')';
 		
 		$res = DB::query($sql);
@@ -109,23 +105,23 @@ class SettingsData
 		{*/
 			//update
 			// don't change CORE status on update
-			$sql = 'UPDATE ' . TABLE_PREFIX . 'settings 
+			$sql = 'UPDATE ' . TABLE_PREFIX . 'settings
 						SET value=\''.$value.'\' WHERE name=\''.$name.'\'';
 			
-			$res = DB::query($sql);			
-		//}		
+			$res = DB::query($sql);
+		//}
 		
-		if(!$res && DB::$errno !=0)
-		{			
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
 			return false;
-		}
-		
-		return true;			
+			
+		return true;
 	}
 
 	/**
 	 * See if the setting is part of the core
-	 */	
+	 */
 	function IsCoreSetting($setting_name)
 	{
 		$sql = 'SELECT core FROM ' . TABLE_PREFIX .'settings WHERE name=\''.$setting_name.'\'';
@@ -140,7 +136,7 @@ class SettingsData
 			return true;
 		}
 		
-		return false;		
+		return false;
 	}
 	
 	function DeleteField($id)
@@ -149,32 +145,13 @@ class SettingsData
 
 		$res = DB::query($sql);
 		
-		if(!$res && DB::$errno !=0)
-		{			
+		if(DB::errno() != 0)
 			return false;
-		}
+			
+		return true;
 
-		return true;	
-
-		//TODO: delete all of the field values! 
+		//TODO: delete all of the field values!
 		//$sql = 'DELETE FROM '.TABLE_PREFIX.'
 	}
-	
-	/**
-	 * Delete a setting
-		
-	function DeleteSetting($setting_name)
-	{
-		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'settings WHERE name=\''.$setting_name.'\'';
-		$res = DB::query($sql);
-		
-		if($res || $this->db->errno == 0)
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	 */
 }
 ?>

@@ -59,14 +59,24 @@ class SiteData
 		$sql = 'INSERT INTO ' . TABLE_PREFIX . "news (subject, body, postdate, postedby)
 					VALUES ('$subject', '$body', NOW(), '$postedby')";
 					
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	function DeleteItem($id)
 	{
 		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'news WHERE id='.$id;
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	function GetAllPages($onlyenabled=false, $onlypublic=true)
@@ -84,14 +94,13 @@ class SiteData
 			
 		}
 		
-		$ret = DB::get_results($sql);
-		//DB::debug();
-		return $ret;
+		return DB::get_results($sql);
 	}
 	
 	function GetPageData($pageid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pages WHERE pageid='.$pageid;
+		
 		return DB::get_row($sql);
 	}
 	
@@ -133,7 +142,7 @@ class SiteData
 					
 		$ret = DB::query($sql);
 		
-		if(!$ret)
+		if(DB::errno() != 0)
 			return false;
 			
 		return self::EditPageFile($filename, $content);
@@ -148,7 +157,12 @@ class SiteData
 		
 		@unlink(PAGES_PATH . '/' . $info->filename . PAGE_EXT);
 		
-		DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	function GetPageContent($filename)
@@ -174,7 +188,6 @@ class SiteData
 		$row->content = ob_get_contents();
 		ob_end_clean();
 		
-	
 		return $row;
 	}
 	

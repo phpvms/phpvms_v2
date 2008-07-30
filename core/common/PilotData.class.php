@@ -129,9 +129,12 @@ class PilotData
 			
 		$sql .= 'WHERE pilotid='.$pilotid;
 		
-		$ret = DB::query($sql);
+		$res = DB::query($sql);
 		
-		return $ret;
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -152,7 +155,12 @@ class PilotData
 		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
 					WHERE pilotid='.$pilotid;
 
-		DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -162,9 +170,12 @@ class PilotData
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET lastlogin=NOW() WHERE pilotid=$pilotid";
 		
-		$ret = DB::query($sql);
+		$res = DB::query($sql);
 		
-		return $ret;
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -176,7 +187,12 @@ class PilotData
 					SET totalhours=totalhours+$flighttime, totalflights=totalflights+$numflights
 					WHERE pilotid=$pilotid";
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -189,7 +205,12 @@ class PilotData
 					SET totalhours=$flighttime, totalflights=$numflights
 					WHERE pilotid=$pilotid";
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**

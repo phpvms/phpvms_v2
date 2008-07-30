@@ -10,7 +10,7 @@
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
  *   View license.txt in the root, or visit http://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- * @author Nabeel Shahzad 
+ * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
@@ -23,20 +23,25 @@ class PilotGroups
 	 */
 	function GetAllGroups()
 	{
-		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups 
+		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups
 						ORDER BY name ASC';
 		
 		return DB::get_results($query);
-	}	
+	}
 	
 	/**
 	 * Add a group
 	 */
 	function AddGroup($groupname)
 	{
-		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name) VALUES ('$groupname')";	
+		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name) VALUES ('$groupname')";
 		
-		return DB::query($query);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -44,7 +49,7 @@ class PilotGroups
 	 */
 	function GetGroupID($groupname)
 	{
-		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups 
+		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups
 					WHERE name=\''.$groupname.'\'';
 		
 		$res = DB::get_row($query);
@@ -65,10 +70,15 @@ class PilotGroups
 			$groupidorname = self::GetGroupID($groupidorname);
 		}
 		
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (pilotid, groupid) 
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (pilotid, groupid)
 					VALUES ('.$pilotid.', '.$groupidorname.')';
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -88,7 +98,7 @@ class PilotGroups
 					
 		if(!DB::get_row($query))
 			return false;
-		else	
+		else
 			return true;
 	}
 	
@@ -124,22 +134,27 @@ class PilotGroups
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers
 					WHERE pilotid='.$pilotid.' AND groupid='.$groupid;
 		
-		return DB::query($sql);
-	}	
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
 	
 	/**
 	 * Remove a group
-	 */	
+	 */
 	function RemoveGroup($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		
 		//delete from groups table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'groups WHERE groupid='.$groupid;	
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'groups WHERE groupid='.$groupid;
 		DB::query($sql);
 				
 		//delete from usergroups table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE groupid='.$groupid;	
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE groupid='.$groupid;
 		DB::query($sql);
 	}
 	

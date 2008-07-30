@@ -10,7 +10,7 @@
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
  *   View license.txt in the root, or visit http://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- * @author Nabeel Shahzad 
+ * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
@@ -32,7 +32,7 @@ class OperationsData
 	 */
 	function GetAllHubs()
 	{
-		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1 
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1
 								ORDER BY icao ASC');
 	}
 	
@@ -57,7 +57,7 @@ class OperationsData
 	 */
 	function GetAircraftInfo($id)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);	
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);
 	}
 	
 	/**
@@ -70,7 +70,12 @@ class OperationsData
 		
 		$sql = "INSERT INTO " .TABLE_PREFIX."airlines (code, name) VALUES ('$code', '$name')";
 		
-		return DB::query($sql);	
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -84,8 +89,12 @@ class OperationsData
 		$sql = "INSERT INTO " . TABLE_PREFIX . "aircraft (icao, name, fullname, range, weight, cruise)
 					VALUES ('$icao', '$name', '$fullname', '$range', '$weight', '$cruise')";
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
 		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -98,7 +107,12 @@ class OperationsData
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft SET icao='$icao', name='$name', fullname='$fullname',
 					range='$range', weight='$weight', cruise='$cruise' WHERE id=$id";
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -117,7 +131,12 @@ class OperationsData
 		$sql = "INSERT INTO " . TABLE_PREFIX ."airports (icao, name, country, lat, lng, hub)
 					VALUES ('$icao', '$name', '$country', $lat, $long, $hub)";
 
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 
 	/**
@@ -134,7 +153,12 @@ class OperationsData
 					SET name='$name', country='$country', lat=$lat, lng=$long, hub=$hub
 					WHERE icao='$icao'";
 
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -143,6 +167,6 @@ class OperationsData
 	function GetAirportInfo($icao)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
-	}	
+	}
 }
 ?>

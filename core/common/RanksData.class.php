@@ -10,7 +10,7 @@
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
  *   View license.txt in the root, or visit http://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- * @author Nabeel Shahzad 
+ * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
@@ -26,7 +26,7 @@ class RanksData
 	 */
 	function GetRankInfo($rankid)
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks 
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks
 				WHERE rankid='.$rankid;
 		
 		return DB::get_row($sql);
@@ -39,7 +39,7 @@ class RanksData
 	function GetAllRanks()
 	{
 		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
-					FROM ' .TABLE_PREFIX.'ranks r 
+					FROM ' .TABLE_PREFIX.'ranks r
 					ORDER BY r.minhours ASC';
 		return DB::get_results($sql);
 	}
@@ -49,7 +49,7 @@ class RanksData
 	 */
 	function GetNextRank($hours)
 	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."ranks 
+		$sql = "SELECT * FROM ".TABLE_PREFIX."ranks
 					WHERE minhours>$hours ORDER BY minhours ASC LIMIT 1";
 		
 		return DB::get_row($sql);
@@ -63,11 +63,10 @@ class RanksData
 	{
 		$hours = intval($hours);
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."ranks (rank, rankimage, minhours) 
+		$sql = "INSERT INTO ".TABLE_PREFIX."ranks (rank, rankimage, minhours)
 					VALUES('$title', '$imageurl', '$hours')";
 		
 		$ret = DB::query($sql);
-		
 		
 		if(DB::$errno == 1062)
 		{
@@ -85,11 +84,16 @@ class RanksData
 	 */
 	function UpdateRank($rankid, $title, $minhours, $imageurl)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."ranks 
+		$sql = "UPDATE ".TABLE_PREFIX."ranks
 					SET rank='$title', rankimage='$imageurl', minhours='$minhours'
 					WHERE rankid=$rankid";
 		
-		DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	/**
@@ -115,8 +119,8 @@ class RanksData
 				}
 			}
 			
-			$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
-						SET rank="'.$last_rank.'" 
+			$sql = 'UPDATE '.TABLE_PREFIX.'pilots
+						SET rank="'.$last_rank.'"
 						WHERE pilotid='.$pilot->pilotid;
 			
 			DB::query($sql);

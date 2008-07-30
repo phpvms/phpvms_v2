@@ -20,7 +20,10 @@ if(!$allroutes)
 <?php
 foreach($allroutes as $route)
 {
-	$leg = ($route->leg=='' || $route->leg == '0')?'':'Leg '.$route->leg;
+	if(Config::Get('SHOW_LEG_TEXT') == true)
+		$leg = ($route->leg=='' || $route->leg == '0')?'':'Leg '.$route->leg;
+	else
+		$leg = '';
 ?>
 <tr>
 	<td><?=$route->code . $route->flightnum; ?> <?=$leg?></td>

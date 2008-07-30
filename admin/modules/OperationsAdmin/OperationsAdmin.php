@@ -378,7 +378,7 @@ class OperationsAdmin extends CodonModule
 		if(!SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
 										$distance, $deptime, $arrtime, $flighttime))
 		{
-            Template::Set('message', 'There was an error adding the schedule');
+            Template::Set('message', 'There was an error adding the schedule: '.DB::error());
 			Template::Show('core_error.tpl');
 			return;
 		}
@@ -414,7 +414,7 @@ class OperationsAdmin extends CodonModule
 		if(!SchedulesData::EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
 										$distance, $deptime, $arrtime, $flighttime))
 		{
-			Template::Set('message', 'There was an error editing the schedule');
+			Template::Set('message', 'There was an error editing the schedule: '.DB::error());
 			Template::Show('core_error.tpl');
 			return;
 		}

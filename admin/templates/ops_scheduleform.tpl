@@ -51,7 +51,7 @@
 		echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao.' ('.$airport->name.')</option>';
 	}
 	?>
-	</select>  
+	</select>
 </dd>
 <dt>Arrival Airport: </dt>
 <dd><select name="arricao">
@@ -81,12 +81,15 @@
 <dt>Arrival Time: </dt>
 <dd><input type="text" name="arrtime" value="<?=$schedule->arrtime?>" /></dd>
 
+<dt>Distance: </dt>
+<dd><input type="text" name="distance" value="<?=$schedule->distance?>" /></dd>
+
 <dt>Flight Time: </dt>
 <dd><input type="text" name="flighttime" value="<?=$schedule->flighttime?>" /></dd>
 
 <dt>Equipment: </dt>
 <dd><select name="aircraft">
-	<?php 
+	<?php
 	foreach($allaircraft as $aircraft)
 	{
 		if($aircraft->name == $schedule->aircraft)

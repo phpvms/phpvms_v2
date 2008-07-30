@@ -14,14 +14,22 @@ Build Changelog:
 
 Next Build
 
-  * Pretty URLs :)
+  * Clean URLs
   * Pilot ranks are updated on PIREP accept
+  * Schedule distance properly saved/displayed
+  * Option to show Leg in schedule (See Notes)
+  * "False alarm" errors in updates/changes fixes
   * Code field expanded
   * Airports listed by hub
   * Added "Aircraft" field to schedule search options
   * Login error fixed
   * Pilot registration messes up ranks fixed
   * Flight hours not adding properly bug fix
+  
+  Notes:
+   To disable the flight leg text to show, to your local.config.php add:
+   
+   Config::Set('SHOW_LEG_TEXT', false);
   
 Build 321 (the V1 build!)
 
@@ -69,8 +77,8 @@ Build 321 (the V1 build!)
 	updates
 	
    // Change the side of the Google Map which shows
-   $Config['MAP_WIDTH'] = '600px';
-   $Config['MAP_HEIGHT'] = '400px';
+   Config::Set('MAP_WIDTH', '600px');
+   Config::Set('MAP_HEIGHT', '400px');
 
 Build 304
 
@@ -98,10 +106,11 @@ Build 304
   * CSS bug with huge gap fixed on some forms
   
   Settings Added:
-  
-  $Config['PILOTID_OFFSET'] - Add/Set this in your local.config.php; i.e a setting
-	of 1000 will start your pilot ID at 1000. This only affects the views. Default
-	is 0.
+   
+  Add/Set this in your local.config.php; i.e a setting of 1000 will 
+   start your pilot ID at 1000. This only affects the views. Default is 0:
+		
+		Config::Set('PILOTID_OFFSET', 0);
 	
   Update Queries (Replace phpvms_ with your table prefix)
   

@@ -10,7 +10,7 @@
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
  *   View license.txt in the root, or visit http://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- * @author Nabeel Shahzad 
+ * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
@@ -32,14 +32,14 @@ class RegistrationData
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'customfields
 					WHERE showonregister=1';
 		
-		return DB::get_results($sql);		
+		return DB::get_results($sql);
 	}
 	
 	/**
 	 * Add a  User
 	 */
 	function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=0)
-	{		
+	{
 		//Set the password, add some salt
 		$salt = md5(date('His'));
 		$password = md5($password . $salt);
@@ -51,21 +51,22 @@ class RegistrationData
 		$lastname = ucwords($lastname);
 		//Add this stuff in
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email, 
+		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email,
 					code, location, hub, password, salt, confirmed)
-				  VALUES ('$firstname', '$lastname', '$email', '$code', 
+				  VALUES ('$firstname', '$lastname', '$email', '$code',
 							'$location', '$hub', '$password', '$salt', $confirm)";
 		
 		$res = DB::query($sql);
 		
-		if(!$res)
+		if(DB::errno() != 0)
 		{
-			if(DB::$errno == 1062)
+			if(DB::errno() == 1062)
 			{
 				self::$error = 'This email address is already registered';
-				
 				return false;
 			}
+			
+			return false;
 		}
 		
 		//Grab the new pilotid, we need it to insert those "custom fields"
@@ -73,7 +74,7 @@ class RegistrationData
 		$fields = self::GetCustomFields();
 					
 		//Get customs fields
-		if(!$fields) 
+		if(!$fields)
 			return true;
 			
 		foreach($fields as $field)
@@ -81,7 +82,7 @@ class RegistrationData
 			$value = Vars::POST($field->fieldname);
 		
 			if($value != '')
-			{	
+			{
 				$sql = "INSERT INTO ".TABLE_PREFIX."fieldvalues (fieldid, pilotid, value)
 							VALUES ($field->fieldid, $pilotid, '$value')";
 											
@@ -101,7 +102,13 @@ class RegistrationData
 		self::$salt = $salt;
 		
 		$sql = "UPDATE " . TABLE_PREFIX ."pilots SET password='$password', salt='$salt', confirmed='y' WHERE pilotid=$pilotid";
-		return DB::query($sql);		
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	function SendEmailConfirm($email, $firstname, $lastname, $newpw='')
@@ -119,8 +126,8 @@ class RegistrationData
 				
 		$message = Template::GetTemplate('email_registered.tpl', true);
 				
-		//email them the confirmation            
-		Util::SendEmail($email, $subject, $message);		
+		//email them the confirmation
+		Util::SendEmail($email, $subject, $message);
 	}
 	
 	function ValidateConfirm()
@@ -130,11 +137,9 @@ class RegistrationData
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET confirmed=1, retired=0 WHERE salt='$confid'";
 		$res = DB::query($sql);
 		
-		if(DB::$errno !=0)
-		{
+		if(DB::errno() != 0)
 			return false;
-		}
-		
+			
 		return true;
 	}
 }

@@ -55,11 +55,11 @@ class ACARSData extends CodonModule
 							'$phase')";
 			
 			$res = DB::query($sql);
-			
-			if(!$res)
-			{
 		
-			}
+			if(DB::errno() != 0)
+				return false;
+			
+			return true;
 		}
 		else
 		{

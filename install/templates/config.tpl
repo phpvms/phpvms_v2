@@ -17,5 +17,6 @@ define('DBASE_TYPE', '$DBASE_TYPE');
 define('TABLE_PREFIX', '$TABLE_PREFIX');
 
 define('SITE_URL', 'http://$SITE_URL');
-$Config['PILOTID_OFFSET'] = 0; // This is where to start the pilot ID from
+
+Config::Add('PILOTID_OFFSET', 0); // This is where to start the pilot ID from
 ?>

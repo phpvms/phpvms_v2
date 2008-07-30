@@ -146,7 +146,7 @@ class SiteData
 		
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'pages WHERE pageid='.$pageid;
 		
-		@unlink(PAGES_PATH . '/' . $info->filename . PAGE_EXT);
+		@unlink(PAGES_PATH . '/' . $info->filename . Config::Get('PAGE_EXT'));
 		
 		DB::query($sql);
 	}
@@ -164,13 +164,13 @@ class SiteData
 		if(!$row) return ;
 		
 		//run output buffering, so we can parse any PHP in there
-		if(!file_exists(PAGES_PATH . '/' . $row->filename . PAGE_EXT))
+		if(!file_exists(PAGES_PATH . '/' . $row->filename .  Config::Get('PAGE_EXT')))
 		{
 			return;
 		}
 		
 		ob_start();
-		include PAGES_PATH . '/' . $row->filename . PAGE_EXT;
+		include PAGES_PATH . '/' . $row->filename .  Config::Get('PAGE_EXT');
 		$row->content = ob_get_contents();
 		ob_end_clean();
 		
@@ -207,7 +207,7 @@ class SiteData
 	function EditPageFile($filename, $content)
 	{
 		//create the file
-		$filename = PAGES_PATH . '/' . $filename . PAGE_EXT;
+		$filename = PAGES_PATH . '/' . $filename .  Config::Get('PAGE_EXT');
 		$fp = fopen($filename, 'w');
 		
 		if(!$fp)

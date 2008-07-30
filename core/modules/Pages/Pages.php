@@ -29,14 +29,13 @@ class Pages extends CodonModule
 	function Controller()
 	{
 
-		if($this->get->page == 'content' && isset($_GET['p']))
+		if($this->get->page == 'content' && isset($this->get->p))
 		{
 			// Page here is the filename, but we don't call it in directly
 			//	for security reasons
 			
-			$page = $this->get->page;
+			$content = SiteData::GetPageContent($this->get->p);
 			
-			$content = SiteData::GetPageContent($page);
 			if(!$content)
 			{
 				Template::Show('pages_notfound.tpl');

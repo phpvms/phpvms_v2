@@ -1,5 +1,7 @@
 <?php
 
+Config::Add('PILOTID_OFFSET', 0);
+
 Config::Add('PIREP_PENDING', 0);
 Config::Add('PIREP_ACCEPTED', 1);
 Config::Add('PIREP_REJECTED', 2);

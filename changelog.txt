@@ -12,6 +12,36 @@ phpVMS - Virtual Airline Administration Software
 
 Build Changelog:
 
+
+Next Build:
+
+	* (Admin) Custom fields can now be added into PIREPS
+	* (Admin) "View details" link on PIREP
+	* PIREP report page reorganized, shows additional fields
+
+Notes:
+	Run the following queries for an update
+
+	CREATE TABLE `phpvms_pirepfields` (
+		`fieldid` INT NOT NULL AUTO_INCREMENT ,
+		`title` VARCHAR( 25 ) NOT NULL ,
+		`name` VARCHAR( 25 ) NOT NULL ,
+		PRIMARY KEY ( `fieldid` )
+		UNIQUE KEY `name` (`name`)
+	) ENGINE = INNODB; 
+	
+	CREATE TABLE `phpvms_pirepvalues` (
+		`id` INT NOT NULL AUTO_INCREMENT ,
+		`fieldid` INT NOT NULL ,
+		`pirepid` INT NOT NULL ,
+		`value` VARCHAR( 50 ) NOT NULL ,
+		PRIMARY KEY ( `id` ),
+		FOREIGN KEY (`fieldid`) REFERENCES phpvms_pirepfields(`fieldid`) ON DELETE CASCADE,
+		FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON DELETE CASCADE
+	) ENGINE=INNODB;
+
+
+
 Build 340 (RC-1 aka "Almost There")
 
   * Clean URLs implemented

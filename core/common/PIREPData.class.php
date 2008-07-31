@@ -265,6 +265,98 @@ class PIREPData
 			
 		return true;
 	}
+	
+	
+	function GetAllFields()
+	{
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'pirepfields');
+	}
+	
+	/**
+	 * Get all of the "cusom fields" for a pirep
+	 */
+	function GetFieldData($pirepid)
+	{
+		$sql = 'SELECT f.title, f.name, v.value
+					FROM '.TABLE_PREFIX.'pirepfields f
+					LEFT JOIN '.TABLE_PREFIX.'pirepvalues v
+						ON f.fieldid=v.fieldid AND v.pirepid='.$pirepid;
+					
+		return DB::get_results($sql);
+	}
+	
+	/**
+	 * Add a custom field to be used in a PIREP
+	 */
+	function AddField($title)
+	{
+		$fieldname = str_replace(' ', '_', $title);
+		$fieldname = strtoupper($fieldname);
+				
+		$sql = "INSERT INTO " . TABLE_PREFIX ."pirepfields (title, name)
+					VALUES ('$title', '$fieldname')";
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+	/**
+	 * Save PIREP fields
+	 */
+	function SaveFields($pirepid, $list)
+	{
+		$allfields = self::GetAllFields();
+		
+		if(!$allfields) return true;
+			
+		foreach($allfields as $field)
+		{
+			// See if that value already exists
+			$sql = 'SELECT id FROM '.TABLE_PREFIX.'pirepvalues
+						WHERE fieldid='.$field->fieldid.' AND pirepid='.$pirepid;
+			$res = DB::get_row($sql);
+
+			$fieldname =str_replace(' ', '_', $field->name);
+			$value = $list[$fieldname];
+				
+			// if it exists
+			if($res)
+			{
+				$sql = 'UPDATE '.TABLE_PREFIX.'pirepvalues
+							SET value="'.$value.'"
+							WHERE fieldid='.$field->fieldid.' AND pirepid='.$pirepid;
+			}
+			else
+			{
+				$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
+							(fieldid, pirepid, value)
+							VALUES ($field->fieldid, $pirepid, '$value')";
+			}
+			
+			DB::query($sql);
+		}
+		
+		return true;
+	}
+		
+	function DeleteField($id)
+	{
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'pirepfields WHERE fieldid='.$id;
+
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+
+		//TODO: delete all of the field values!
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'
+	}
 
 }
 

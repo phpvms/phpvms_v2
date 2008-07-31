@@ -7,7 +7,7 @@ if($message!='')
 <form action="<?=SITE_URL?>/index.php/pireps/mine" method="post">
 <dl>
 	<dt>Pilot:</dt>
-	<dd><strong><?=$pilot;?></strong> (<?=$pilotcode ?>)</dd>
+	<dd><strong><?=Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;?></strong></dd>
 	
 	<dt>Select Airline:</dt>
 	<dd>
@@ -16,7 +16,9 @@ if($message!='')
 		<?php
 		foreach($allairlines as $airline)
 		{
-			echo '<option value="'.$airline->code.'">'.$airline->name.'</option>';
+			$sel = ($_POST['code'] == $airline->code)?'selected':'';
+				
+			echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->name.'</option>';
 		}
 		?>
 		</select>
@@ -33,7 +35,9 @@ if($message!='')
 			<?php
 			foreach($allairports as $airport)
 			{
-				echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
+				$sel = ($_POST['depairport'] == $airport->icao)?'selected':'';
+				
+				echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao . ' - '.$airport->name .'</option>';
 			}
 			?>
 		</select>
@@ -43,12 +47,14 @@ if($message!='')
 	<dt>Select Arrival Airport:</dt>
 	<dd>
 		<div id="arrairport">
-		<select id="arricao" name="depicao">
+		<select id="arricao" name="arricao">
 			<option value="">Select an arrival airport</option>
 			<?php
 			foreach($allairports as $airport)
 			{
-				echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
+				$sel = ($_POST['arricao'] == $airport->icao)?'selected':'';
+				
+				echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao . ' - '.$airport->name .'</option>';
 			}
 			?>
 		</select>
@@ -62,18 +68,32 @@ if($message!='')
 		<?php
 		foreach($allaircraft as $aircraft)
 		{
-			echo '<option value="'.$aircraft->name.'">'.$aircraft->name.'</option>';
+			$sel = ($_POST['aircraft'] == $aircraft->name)?'selected':'';
+			
+			echo '<option value="'.$aircraft->name.'" '.$sel.'>'.$aircraft->name.'</option>';
 		}
 		?>
 		</select>
 	</dd>
+
+	<?php
+	// List all of the custom PIREP fields
+	if(!$pirepfields) $pirepfields = array();
+	foreach($pirepfields as $field)
+	{
+	?>
+		<dt><?=$field->title ?></dt>
+		<dd><input type="text" name="<?=$field->name ?>" value="<?=$_POST[$field->name] ?>" /></dd>
+	<?php
+	}
+	?>
 	
 	<dt>Flight Time</dt>
-	<dd><input type="text" name="flighttime" />
+	<dd><input type="text" name="flighttime" value="<?=$_POST['flighttime'] ?>" />
 		<p>Enter as hours - "5.5" is five and a half hours</p></dd>
 		
 	<dt>Comment</dt>
-	<dd><textarea name="comment" style="width: 100%"></textarea></dd>
+	<dd><textarea name="comment" style="width: 100%"><?=$_POST['flighttime'] ?></textarea></dd>
 	
 	<dt></dt>
 	<dd><input type="submit" name="submit_pirep" value="File Flight Report" /></dd>

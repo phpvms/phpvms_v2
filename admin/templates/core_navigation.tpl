@@ -31,6 +31,7 @@
 	<ul>
 		<li><a href="?admin=settings">General Settings</a></li>
 		<li><a href="?admin=customfields">Profile Fields</a></li>
+		<li><a href="?admin=pirepfields">PIREP Fields</a></li>
 		<li><a href="?admin=pilotranks">Pilot Ranks</a></li>
 		<li><a href="?admin=about">About phpVMS</a></li>
 	</ul>

@@ -6,6 +6,24 @@ CREATE TABLE `phpvms_airlines` (
 	UNIQUE KEY `code` (`code`)
 )ENGINE=INNODB;
 
+CREATE TABLE `phpvms_pirepfields` (
+	`fieldid` INT NOT NULL AUTO_INCREMENT ,
+	`title` VARCHAR( 25 ) NOT NULL ,
+	`name` VARCHAR( 25 ) NOT NULL ,
+	PRIMARY KEY ( `fieldid` )
+	UNIQUE KEY `name` (`name`)
+) ENGINE = INNODB; 
+
+CREATE TABLE `phpvms_pirepvalues` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`fieldid` INT NOT NULL ,
+	`pirepid` INT NOT NULL ,
+	`value` VARCHAR( 50 ) NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	FOREIGN KEY (`fieldid`) REFERENCES phpvms_pirepfields(`fieldid`) ON DELETE CASCADE,
+	FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON DELETE CASCADE
+)ENGINE=INNODB;
+
 CREATE TABLE `phpvms_aircraft` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`icao` VARCHAR( 4 ) NOT NULL,

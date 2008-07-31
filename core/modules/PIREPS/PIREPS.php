@@ -32,8 +32,8 @@ class PIREPS extends CodonModule
 				{
 					if(!$this->SubmitPIREP())
 					{
-						Template::Show('pirep_new.tpl');
-						return;
+						$this->FilePIREPForm();
+						return false;
 					}
 				}
 				
@@ -58,6 +58,7 @@ class PIREPS extends CodonModule
 				}
 
 				Template::Set('pirep', $pirep);
+				Template::Set('fields', PIREPData::GetFieldData($pirepid));
 				Template::Set('comments', PIREPData::GetComments($pirepid));
 												
 				Template::Show('pirep_viewreport.tpl');
@@ -92,13 +93,8 @@ class PIREPS extends CodonModule
 				
 			case 'filepirep':
 				
-				Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
-				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-				Template::Set('allairports', OperationsData::GetAllAirports());
-				Template::Set('allairlines', OperationsData::GetAllAirlines());
-				Template::Set('allaircraft', OperationsData::GetAllAircraft());
+				$this->FilePIREPForm();
 				
-				Template::Show('pirep_new.tpl');
 				break;
 				
 			case 'getdeptapts':
@@ -149,6 +145,18 @@ class PIREPS extends CodonModule
 		}
 	}
 	
+	function FilePIREPForm()
+	{
+		Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
+		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+		Template::Set('pirepfields', PIREPData::GetAllFields());
+		Template::Set('allairports', OperationsData::GetAllAirports());
+		Template::Set('allairlines', OperationsData::GetAllAirlines());
+		Template::Set('allaircraft', OperationsData::GetAllAircraft());
+		
+		Template::Show('pirep_new.tpl');
+	}
+	
 	function SubmitPIREP()
 	{
 		$pilotid = Auth::$userinfo->pilotid;
@@ -163,6 +171,15 @@ class PIREPS extends CodonModule
 		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
+			Template::Show('core_error.tpl');
+		
+			return false;
+		}
+		
+		if($depicao == $arricao)
+		{
+			Template::Set('message', 'The departure airport is the same as the arrival airport!');
+			Template::Show('core_error.tpl');
 			return false;
 		}
 		
@@ -172,6 +189,9 @@ class PIREPS extends CodonModule
 			return false;
 		}
 		
+		$pirepid = DB::$insert_id;
+		
+		PIREPData::SaveFields($pirepid, $_POST);
 		
 		// Load PIREP into RSS feed
 		$reports = PIREPData::GetRecentReportsByCount(10);

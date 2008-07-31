@@ -142,15 +142,15 @@ class OperationsAdmin extends CodonModule
 				*/
 				switch($this->post->action)
 				{
-					case 'addaircraft':
+					case 'addairport':
 						
-						$this->AddAircraft();
+						$this->AddAirport();
 						
 						break;
 					
-					case 'editaircraft':
+					case 'editairport':
 						
-						$this->EditAircraft();
+						$this->EditAirport();
 						
 						break;
 				}
@@ -260,7 +260,7 @@ class OperationsAdmin extends CodonModule
 		if($icao == '' || $name == '' || $fullname == '')
 		{
 			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			return;
 		}
 		
@@ -288,11 +288,13 @@ class OperationsAdmin extends CodonModule
 		$lat = $this->post->lat;
 		$long = $this->post->long;
 		$hub = $this->post->hub;
+		
+		echo 'i am here';
 
 		if($icao == '' || $name == '' || $country == '' || $lat == '' || $long == '')
 		{
 			Template::Set('message', 'Some fields were blank!');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			return;
 		}
 

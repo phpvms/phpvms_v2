@@ -13,12 +13,8 @@ if(!$pireps)
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
-	<th>Pilot</th>
-	<th>Flight Number</th>
-	<th>Departure</th>
-	<th>Arrival</th>
-	<th>Flight Time</th>
-	<th>Submitted</th>
+	<th>PIREP Information</th>
+	<th>Details</th>
 	<th>Options (* for double click)</th>
 </tr>
 </thead>
@@ -28,13 +24,20 @@ foreach($pireps as $report)
 {
 ?>
 <tr>
-	<td align="center"><a href="?admin=viewpilots&action=viewoptions&pilotid=<?=$report->pilotid;?>"><?=$report->firstname .' ' . $report->lastname?></a></td>
-	<td align="center"><?=$report->code . $report->flightnum; ?></td>
-	<td align="center"><?=$report->depicao; ?></td>
-	<td align="center"><?=$report->arricao; ?></td>
-	<td align="center"><?=$report->flighttime; ?></td>
 	<td align="center">
-		<?=date(DATE_FORMAT, $report->submitdate); ?><br />
+		<a href="?admin=viewpilots&action=viewoptions&pilotid=<?=$report->pilotid;?>"><?=$report->firstname .' ' . $report->lastname?></a><br />
+		<strong>Flight: <?=$report->code . $report->flightnum; ?></strong><br />
+		<strong>Departure: </strong><?=$report->depicao; ?><br />
+		<strong>Arrival: </strong><?=$report->arricao; ?><br />
+		<strong>Flight Time: </strong><?=$report->flighttime; ?><br />
+		<strong>Submitted: </strong><?=date(DATE_FORMAT, $report->submitdate); ?><br />
+	</td>
+	<td>
+	<?php
+		
+	?>
+	
+	</td>
 		<a id="dialog" class="jqModal"
 			href="action.php?admin=viewcomments&pirepid=<?=$report->pirepid;?>">View Comments</a>
 		<br />

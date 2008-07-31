@@ -34,6 +34,7 @@ class PIREPData
 
 		return DB::get_results($sql);
 	}
+	
 
 	/**
 	 * Get all of the reports by the accepted status. Use the

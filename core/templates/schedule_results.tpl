@@ -14,6 +14,7 @@ if(!$allroutes)
 	<th>Departure Time</th>
 	<th>Arrival Time</th>
 	<th>Distance</th>
+	<th>Options</th>
 </tr>
 </thead>
 <tbody>
@@ -33,6 +34,8 @@ foreach($allroutes as $route)
 	<td><?=$route->deptime;?></td>
 	<td><?=$route->arrtime;?></td>
 	<td><?=$route->distance;?></td>
+	<td><a id="<?=$route->id; ?>" class="addbid" href="<?=SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+	</td>
 </tr>
 <?php
 }

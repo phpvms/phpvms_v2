@@ -60,7 +60,7 @@ class Profile extends CodonModule
 
 				Template::Show('profile_main.tpl');
 				break;
-				
+								
 			/*
 			 * View a different pilot's profile
 			 */

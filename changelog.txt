@@ -17,10 +17,12 @@ Next Build:
 
 	* (Admin) Custom fields can now be added into PIREPS
 	* (Admin) "View details" link on PIREP
+	* Added flight queue/bid feature
 	* PIREP report page reorganized, shows additional fields
 
 Notes:
-	Run the following queries for an update
+	Run the following queries for an update (replace the phpvms_ with
+		your table prefix, if it's different)
 
 	CREATE TABLE `phpvms_pirepfields` (
 		`fieldid` INT NOT NULL AUTO_INCREMENT ,
@@ -40,7 +42,15 @@ Notes:
 		FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON DELETE CASCADE
 	) ENGINE=INNODB;
 
-
+	CREATE TABLE `phpvms_bids` (
+		`bidid` INT NOT NULL AUTO_INCREMENT ,
+		`pilotid` int(11) NOT NULL default '0',
+		`routeid` int(11) NOT NULL default '0',
+		PRIMARY KEY ( `id` )
+		FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE,
+		FOREIGN KEY (`routeid`) REFERENCES phpvms_schedules(`id`) ON DELETE CASCADE
+	) ENGINE = INNODB; 
+	
 
 Build 340 (RC-1 aka "Almost There")
 

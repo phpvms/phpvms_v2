@@ -24,6 +24,8 @@ class SchedulesData
 	 */
 	function GetSchedule($id)
 	{
+		$id = DB::escape($id);
+		
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.$id;
 
 		return DB::get_row($sql);
@@ -36,6 +38,8 @@ class SchedulesData
 	 */
 	function GetDepartureAirports($airlinecode='')
 	{
+		$airlinecode = DB::escape($airlinecode);
+		
 		$sql = 'SELECT DISTINCT s.depicao AS icao, a.name
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
 					WHERE s.depicao = a.icao ';
@@ -56,6 +60,8 @@ class SchedulesData
 	 */
 	function GetArrivalAiports($depicao, $airlinecode='')
 	{
+		$depicao = DB::escape($depicao);
+		
 		$sql = 'SELECT DISTINCT s.arricao AS icao, a.name
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
 					WHERE s.arricao = a.icao ';
@@ -73,6 +79,8 @@ class SchedulesData
 	 */
 	function GetRoutesWithDeparture($depicao, $limit='')
 	{
+		$depicao = DB::escape($depicao);
+		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules AS s
@@ -85,6 +93,8 @@ class SchedulesData
 	
 	function GetRoutesWithArrival($arricao, $limit='')
 	{
+		$arricao = DB::escape($arricao);
+		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM phpvms_schedules AS s
@@ -97,6 +107,9 @@ class SchedulesData
 	
 	function GetSchedulesByDistance($distance, $type, $limit='')
 	{
+		$distance = DB::escape($distance);
+		$limit = DB::escape($limit);
+		
 		if($type == '')
 			$type = '>';
 		
@@ -119,6 +132,9 @@ class SchedulesData
 	 */
 	function GetSchedulesByEquip($ac, $limit='')
 	{
+		$ac = DB::escape($ac);
+		$limit = DB::escape($limit);
+		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules
 					WHERE aircraft = \''.$ac.'\'
 					ORDER BY depicao DESC';
@@ -135,7 +151,7 @@ class SchedulesData
 	function GetSchedules($limit='')
 	{
 		
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules ORDER BY depicao DESC';
+		$limit = DB::escape($limit);
 		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
@@ -156,20 +172,17 @@ class SchedulesData
 	function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route,
 		$aircraft, $distance, $deptime, $arrtime, $flighttime)
 	{
-		/*
-			id
-			code
-			flightnum
-			depicao
-			arricao
-			route
-			aircraft
-			distance
-			deptime
-			arrtime
-			flighttime
-			timesflown
-		*/
+		$code = DB::escape($code);
+		$flightnum = DB::escape($flightnum);
+		$leg = DB::escape($leg);
+		$depicao = DB::escape($depicao);
+		$arricao = DB::escape($arricao);
+		$route = DB::escape($route);
+		$aircraft = DB::escape($aircraft);
+		$distance = DB::escape($distance);
+		$deptime = DB::escape($deptime);
+		$arrtime = DB::escape($arrtime);
+		$flighttime = DB::escape($flighttime);
 		
 		if($leg == '') $leg = 1;
 		$deptime = strtoupper($deptime);
@@ -196,10 +209,23 @@ class SchedulesData
 	function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
 				$aircraft, $distance, $deptime, $arrtime, $flighttime)
 	{
-        if($leg == '') $leg = 1;
+
+		$scheduleid = DB::escape($scheduleid);
+		$code = DB::escape($code);
+		$flightnum = DB::escape($flightnum);
+		$leg = DB::escape($leg);
+		$depicao = DB::escape($depicao);
+		$arricao = DB::escape($arricao);
+		$route = DB::escape($route);
+		$aircraft = DB::escape($aircraft);
+		$distance = DB::escape($distance);
+		$deptime = DB::escape($deptime);
+		$arrtime = DB::escape($arrtime);
+		$flighttime = DB::escape($flighttime);
+		
+		if($leg == '') $leg = 1;
 		$deptime = strtoupper($deptime);
 		$arrtime = strtoupper($arrtime);
-
 
 		$sql = "UPDATE " . TABLE_PREFIX ."schedules SET code='$code', flightnum='$flightnum', leg='$leg',
 						depicao='$depicao', arricao='$arricao',
@@ -220,9 +246,82 @@ class SchedulesData
 	 */
 	function DeleteSchedule($scheduleid)
 	{
+		$scheduleid = DB::escape($scheduleid);
 		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules WHERE id='.$scheduleid;
 
 		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+	
+	/**
+	 * Get a specific bid with route information
+	 *
+	 * @param unknown_type $bidid
+	 * @return unknown
+	 */
+	function GetBid($bidid)
+	{
+		$bidid = DB::escape($bidid);
+		$sql = 'SELECT s.*, b.bidid
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b
+					WHERE b.routeid = s.id AND b.bidid='.$bidid;
+		
+		return DB::get_row($sql);
+	}
+	
+	/**
+	 * Get all of the bids for a pilot
+	 *
+	 * @param unknown_type $pilotid
+	 * @return unknown
+	 */
+	function GetBids($pilotid)
+	{
+		$pilotid = DB::escape($pilotid);
+		$sql = 'SELECT s.*, b.bidid
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b
+					WHERE b.routeid = s.id AND b.pilotid='.$pilotid;
+		
+		return DB::get_results($sql);
+	}
+		
+	function AddBid($pilotid, $routeid)
+	{
+		$pilotid = DB::escape($pilotid);
+		$routeid = DB::escape($routeid);
+		
+		if(DB::get_row('SELECT bidid FROM '.TABLE_PREFIX.'bids
+				WHERE pilotid='.$pilotid.' AND routeid='.$routeid))
+		{
+			return;
+		}
+			
+		$pilotid = DB::escape($pilotid);
+		$routeid = DB::escape($routeid);
+		
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'bids (pilotid, routeid)
+					VALUES ('.$pilotid.', '.$routeid.')';
+		
+		DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+	function RemoveBid($bidid)
+	{
+		$bidid = DB::escape($bidid);
+		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids WHERE bidid='.$bidid;
+		
+		DB::query($sql);
 		
 		if(DB::errno() != 0)
 			return false;

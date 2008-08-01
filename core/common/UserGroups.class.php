@@ -33,6 +33,8 @@ class UserGroups
 	 // store in the session
 	function GetAllUserPermissions($userid)
 	{
+		$userid = DB::escape($userid);
+		
 		$sql = "SELECT p.categoryid, p.perms
 				FROM " . APP_TABLE_PREFIX."permissions p, " . APP_TABLE_PREFIX ."users u
 				WHERE u.groupid = p.groupid
@@ -64,6 +66,8 @@ class UserGroups
 	
 	function GetGroupName($groupid)
 	{
+		$groupid = DB::escape($groupid);
+		
 		$sql = 'SELECT name FROM ' . APP_TABLE_PREFIX .'groups
 				 WHERE id='.$groupid;
 		
@@ -73,6 +77,8 @@ class UserGroups
 		
 	function GetPermissionsForGroup($groupid, &$perms)
 	{
+		$groupid = DB::escape($groupid);
+		
 		$sql = 'SELECT g.groupstype AS type, p.id, p.groupid, p.categoryid, p.perms
 				 FROM ' . APP_TABLE_PREFIX . 'permissions p, ' . APP_TABLE_PREFIX . 'groups g
 				 WHERE p.groupid=g.id';
@@ -204,6 +210,9 @@ class UserGroups
 	
 	function AddUser($displayname, $username, $password, $enabled=true)
 	{
+		$displayname = DB::escape($displayname);
+		$username = DB::escape($username);
+		
 		$salt =  self::CreateSalt();
 		$password = md5($password . $salt);
 		
@@ -229,6 +238,8 @@ class UserGroups
 	
 	function AddGroup($groupname, $type)
 	{
+		$groupname = DB::escape($groupname);
+		
 		if($type != 'a' || $type != 'd')
 			$type = 'd';
 					

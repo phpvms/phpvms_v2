@@ -1,5 +1,4 @@
 <h3>File a Flight Report</h3>
-
 <?php
 if($message!='')
 	echo '<div id="error">'.$message.'</div>';
@@ -16,7 +15,7 @@ if($message!='')
 		<?php
 		foreach($allairlines as $airline)
 		{
-			$sel = ($_POST['code'] == $airline->code)?'selected':'';
+			$sel = ($_POST['code'] == $airline->code || $bid->code == $airline->code)?'selected':'';
 				
 			echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->name.'</option>';
 		}
@@ -25,7 +24,7 @@ if($message!='')
 	</dd>
 	
 	<dt>Enter Flight Number:</dt>
-	<dd><input type="text" name="flightnum" /></dd>
+	<dd><input type="text" name="flightnum" value="<?=$bid->flightnum?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>
@@ -35,7 +34,7 @@ if($message!='')
 			<?php
 			foreach($allairports as $airport)
 			{
-				$sel = ($_POST['depairport'] == $airport->icao)?'selected':'';
+				$sel = ($_POST['depairport'] == $airport->icao || $bid->depicao == $airport->icao)?'selected':'';
 				
 				echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao . ' - '.$airport->name .'</option>';
 			}
@@ -52,7 +51,7 @@ if($message!='')
 			<?php
 			foreach($allairports as $airport)
 			{
-				$sel = ($_POST['arricao'] == $airport->icao)?'selected':'';
+				$sel = ($_POST['arricao'] == $airport->icao || $bid->arricao == $airport->icao)?'selected':'';
 				
 				echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao . ' - '.$airport->name .'</option>';
 			}

@@ -44,14 +44,15 @@ Config::Set('URL_REWRITE', array('default'=>array('module', 'page'),
 								 'Pages'=>array('module', 'page'),
 								 'PIREPS'=>array('module', 'page', 'id', 'icao'),
 								 'Pilots'=>array('module', 'page', 'pilotid'),
-								 'PilotProfile'=>array('module', 'page', 'pilotid')
+								 'Profile'=>array('module', 'page', 'pilotid'),
+								 'Schedules'=>array('module', 'page', 'id')
 								));
 								
 /**
  * Constants
  */
 
-define('PHPVMS_VERSION', '1.0.340');
+define('PHPVMS_VERSION', '1.0.349');
 
 define('PIREP_PENDING', 0);
 define('PIREP_ACCEPTED', 1);

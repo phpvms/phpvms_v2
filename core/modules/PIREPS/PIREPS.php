@@ -150,6 +150,7 @@ class PIREPS extends CodonModule
 		Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
 		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 		Template::Set('pirepfields', PIREPData::GetAllFields());
+		Template::Set('bid', SchedulesData::GetBid($this->get->id)); // get the bid info
 		Template::Set('allairports', OperationsData::GetAllAirports());
 		Template::Set('allairlines', OperationsData::GetAllAirlines());
 		Template::Set('allaircraft', OperationsData::GetAllAircraft());

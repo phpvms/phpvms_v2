@@ -57,6 +57,8 @@ class OperationsData
 	 */
 	function GetAircraftInfo($id)
 	{
+		$id = DB::escape($id);
+		
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);
 	}
 	
@@ -65,8 +67,9 @@ class OperationsData
 	 */
 	function AddAirline($code, $name)
 	{
-	
+		
 		$code = strtoupper($code);
+		$name = DB::escape($name);
 		
 		$sql = "INSERT INTO " .TABLE_PREFIX."airlines (code, name) VALUES ('$code', '$name')";
 		

@@ -34,11 +34,32 @@ class Schedules extends CodonModule
 				$this->ShowSchedules();
 				
 				break;
+
+			// View bids for the pilot
+			case 'bids':
 				
-			case 'search':
+				if(!Auth::LoggedIn()) return;
 			
-			
-				//Template::Show('schedule_searchform
+				$this->ShowBids();
+		
+				break;
+				
+			case 'addbid':
+				
+				if(!Auth::LoggedIn()) return;
+				
+				$routeid = $this->post->id;
+				
+				SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
+				
+				break;
+				
+			case 'removebid':
+				
+				if(!Auth::LoggedIn()) return;
+				
+				SchedulesData::RemoveBid($this->post->id);
+				
 				break;
 		}
 	}
@@ -92,6 +113,13 @@ class Schedules extends CodonModule
 		/*DB::debug();*/
 		
 		Template::Show('schedule_results.tpl');
+	}
+	
+	
+	function ShowBids()
+	{
+		Template::Set('bids', SchedulesData::GetBids(Auth::$userinfo->pilotid));
+		Template::Show('schedule_bids.tpl');
 	}
 }
 

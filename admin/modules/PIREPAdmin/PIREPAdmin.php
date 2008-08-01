@@ -160,7 +160,8 @@ class PIREPAdmin extends CodonModule
 	
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
-		RanksData::CalculatePilotRanks();
+		//RanksData::CalculatePilotRanks();
+		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 	}
 	
 	/**
@@ -183,7 +184,8 @@ class PIREPAdmin extends CodonModule
 			PilotData::UpdateFlightData($pirep_details->pilotid, -1 * floatval($pirep->flighttime), -1);
 		}
 		
-		RanksData::CalculatePilotRanks();
+		//RanksData::CalculatePilotRanks();
+		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 		
 		// Send comment for rejection
 		if($comment != '')

@@ -1,6 +1,6 @@
 <h3>Registration</h3>
 <p>Welcome to the registration form for <?php echo SITE_NAME; ?>. After you register, you will be notified by a staff member about your membership.</p>
-<form method="post" action="index.php?page=register">
+<form method="post" action="<?=SITE_URL?>/index.php/Registration">
 <dl>
 	<dt>First Name:</dt>
 	<dd><input type="text" name="firstname" value="<?=Vars::POST('firstname');?>" />
@@ -34,7 +34,7 @@
 		{
 			echo '<option value="'.$airline->code.'">'.$airline->name.'</option>';
 		}
-		?>	
+		?>
 		</select>
 	</dd>
 	
@@ -46,7 +46,7 @@
 		{
 			echo '<option value="'.$hub->icao.'">'.$hub->icao.' - ' . $hub->name .'</option>';
 		}
-		?>	
+		?>
 		</select>
 	</dd>
 	

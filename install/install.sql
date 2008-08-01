@@ -6,24 +6,6 @@ CREATE TABLE `phpvms_airlines` (
 	UNIQUE KEY `code` (`code`)
 )ENGINE=INNODB;
 
-CREATE TABLE `phpvms_pirepfields` (
-	`fieldid` INT NOT NULL AUTO_INCREMENT ,
-	`title` VARCHAR( 25 ) NOT NULL ,
-	`name` VARCHAR( 25 ) NOT NULL ,
-	PRIMARY KEY ( `fieldid` )
-	UNIQUE KEY `name` (`name`)
-) ENGINE = INNODB; 
-
-CREATE TABLE `phpvms_pirepvalues` (
-	`id` INT NOT NULL AUTO_INCREMENT ,
-	`fieldid` INT NOT NULL ,
-	`pirepid` INT NOT NULL ,
-	`value` VARCHAR( 50 ) NOT NULL ,
-	PRIMARY KEY ( `id` ),
-	FOREIGN KEY (`fieldid`) REFERENCES phpvms_pirepfields(`fieldid`) ON DELETE CASCADE,
-	FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON DELETE CASCADE
-)ENGINE=INNODB;
-
 CREATE TABLE `phpvms_aircraft` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`icao` VARCHAR( 4 ) NOT NULL,
@@ -194,6 +176,33 @@ CREATE TABLE `phpvms_groupmembers` (
 	FOREIGN KEY (`groupid`) REFERENCES phpvms_groups(`groupid`) ON DELETE CASCADE,
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE
 )ENGINE=INNODB;
+
+CREATE TABLE `phpvms_pirepfields` (
+	`fieldid` INT NOT NULL AUTO_INCREMENT ,
+	`title` VARCHAR( 25 ) NOT NULL ,
+	`name` VARCHAR( 25 ) NOT NULL ,
+	PRIMARY KEY ( `fieldid` )
+	UNIQUE KEY `name` (`name`)
+) ENGINE = INNODB; 
+
+CREATE TABLE `phpvms_pirepvalues` (
+	`id` INT NOT NULL AUTO_INCREMENT ,
+	`fieldid` INT NOT NULL ,
+	`pirepid` INT NOT NULL ,
+	`value` VARCHAR( 50 ) NOT NULL ,
+	PRIMARY KEY ( `id` ),
+	FOREIGN KEY (`fieldid`) REFERENCES phpvms_pirepfields(`fieldid`) ON DELETE CASCADE,
+	FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON DELETE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE `phpvms_bids` (
+	`bidid` INT NOT NULL AUTO_INCREMENT ,
+	`pilotid` int(11) NOT NULL default '0',
+	`routeid` int(11) NOT NULL default '0',
+	PRIMARY KEY ( `id` )
+	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE,
+	FOREIGN KEY (`routeid`) REFERENCES phpvms_schedules(`id`) ON DELETE CASCADE
+) ENGINE = INNODB; 
 
 CREATE TABLE `phpvms_settings` (
 	`id` int(11) NOT NULL auto_increment,

@@ -126,6 +126,26 @@ class RanksData
 			DB::query($sql);
 		}
 	}
+	
+	function CalculateUpdatePilotRank($pilotid)
+	{
+		$allranks = self::GetAllRanks();
+		$pilot = PilotData::GetPilotData($pilotid);
+		
+		foreach($allranks as $rank)
+		{
+			if(intval($pilot->totalhours) >= intval($rank->minhours))
+			{
+				$last_rank = $rank->rank;
+			}
+		}
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'pilots
+					SET rank="'.$last_rank.'"
+					WHERE pilotid='.$pilot->pilotid;
+		
+		DB::query($sql);
+	}
 }
 
 ?>

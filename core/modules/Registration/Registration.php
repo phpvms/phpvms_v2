@@ -35,7 +35,7 @@ class Registration extends CodonModule
 		 */
 		
 		switch($this->get->page)
-		{			
+		{
 			case '':
 			
 				if(Auth::LoggedIn()) // Make sure they don't over-ride it
@@ -46,7 +46,7 @@ class Registration extends CodonModule
 				Template::Set('allairlines', OperationsData::GetAllAirlines());
 				Template::Set('allhubs', OperationsData::GetAllHubs());
 				
-				if(isset($_POST['submit_register']))
+				if(isset($this->post->submit_register))
 				{
 					$this->ProcessRegistration();
 				}
@@ -93,7 +93,6 @@ class Registration extends CodonModule
 			$location = $this->post->location;
 			$hub = $this->post->hub;
 			$password = $this->post->password1;
-			
 			
 			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $hub, $password) == false)
 			{

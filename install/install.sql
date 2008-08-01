@@ -157,7 +157,7 @@ CREATE TABLE `phpvms_pirepcomments` (
 
 CREATE TABLE `phpvms_customfields` (
 	`fieldid` INT NOT NULL AUTO_INCREMENT ,
-	`title` VARCHAR( 25 ) NOT NULL ,
+	`title` VARCHAR( 75 ) NOT NULL ,
 	`fieldname` VARCHAR( 75 ) NOT NULL ,
 	`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
 	`public` smallint(6) NOT NULL default '0',

@@ -35,24 +35,8 @@ class Registration extends CodonModule
 		 */
 		
 		switch($this->get->page)
-		{
-			/*
-			case 'confirm':
-
-				if(RegistrationData::ValidateConfirm())
-				{
-					Template::Show('registration_complete.tpl');
-				}
-				else
-				{
-					//TODO: error template, notify admin
-					DB::debug();
-				}
-
-				break;
-			*/
-			
-			case 'register':
+		{			
+			case '':
 			
 				if(Auth::LoggedIn()) // Make sure they don't over-ride it
 					break;
@@ -73,6 +57,22 @@ class Registration extends CodonModule
 					
 				//$this->ProcessRegistration();
 				break;
+				
+			/*
+			case 'confirm':
+
+				if(RegistrationData::ValidateConfirm())
+				{
+					Template::Show('registration_complete.tpl');
+				}
+				else
+				{
+					//TODO: error template, notify admin
+					DB::debug();
+				}
+
+				break;
+			*/
 		}
 	}
 	

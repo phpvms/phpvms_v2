@@ -13,12 +13,13 @@ phpVMS - Virtual Airline Administration Software
 Build Changelog:
 
 
-Next Build:
+Build 350 "Skoshi Tiger"
 
 	* (Admin) Custom fields can now be added into PIREPS
 	* (Admin) "View details" link on PIREP
 	* Added flight queue/bid feature
 	* PIREP report page reorganized, shows additional fields
+	* Contact, Live Map removed for now (Will be re-added)
 
 Notes:
 	Run the following queries for an update (replace the phpvms_ with
@@ -52,7 +53,7 @@ Notes:
 	) ENGINE = INNODB; 
 	
 
-Build 340 (RC-1 aka "Almost There")
+Build 340 "Top of Descent"
 
   * Clean URLs implemented
   * Set Google Map type (See Notes)

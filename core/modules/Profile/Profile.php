@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class PilotProfile extends CodonModule
+class Profile extends CodonModule
 {
 	function Controller()
 	{

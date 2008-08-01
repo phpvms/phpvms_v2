@@ -19,8 +19,8 @@
 	</p>
 	<p>
 		<strong>Profile Options</strong><br /><br />
-			<a href="<?=SITE_URL ?>/index.php/pilotprofile/editprofile">Edit My Profile</a><br />
-			<a href="<?=SITE_URL ?>/index.php/pilotprofile/changepassword">Change my Password</a> <br />
+			<a href="<?=SITE_URL ?>/index.php/profile/editprofile">Edit My Profile</a><br />
+			<a href="<?=SITE_URL ?>/index.php/profile/changepassword">Change my Password</a> <br />
 		<br />
 		<strong>Flight Operations</strong><br /><br />
 			<a href="<?=SITE_URL?>/index.php/pireps/mine">View my PIREPs</a><br />

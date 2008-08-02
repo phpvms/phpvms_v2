@@ -13,7 +13,7 @@ phpVMS - Virtual Airline Administration Software
 Build Changelog:
 
 
-Build 350 "Skoshi Tiger"
+Build 352 "Skoshi Tiger"
 
 	* (Admin) Custom fields can now be added into PIREPS
 	* (Admin) "View details" link on PIREP

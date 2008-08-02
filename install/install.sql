@@ -182,7 +182,7 @@ CREATE TABLE `phpvms_pirepfields` (
 	`title` VARCHAR( 25 ) NOT NULL ,
 	`name` VARCHAR( 25 ) NOT NULL ,
 	`type` VARCHAR (25) NOT NULL,
-	`values` TEXT NOT NULL,
+	`options` TEXT NOT NULL,
 	PRIMARY KEY ( `fieldid` ),
 	UNIQUE KEY `name` (`name`)
 ) ENGINE = INNODB; 

@@ -216,9 +216,7 @@ class Settings extends CodonModule
 			return;
 		}
 		
-		$title = $this->post->title;
-		
-		if(PIREPData::AddField($title))
+		if(PIREPData::AddField($this->post->title, $this->post->type, $this->post->values))
 		{
 			Template::Set('message', 'PIREP field added!');
 			Template::Show('core_success.tpl');

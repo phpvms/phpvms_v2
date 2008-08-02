@@ -289,14 +289,32 @@ class PIREPData
 	/**
 	 * Add a custom field to be used in a PIREP
 	 */
-	function AddField($title)
+	function AddField($title, $type='', $values='')
 	{
-		$fieldname = str_replace(' ', '_', $title);
-		$fieldname = strtoupper($fieldname);
+		$fieldname = strtoupper(str_replace(' ', '_', $title));
+		//$values = DB::escape($values);
 				
-		$sql = "INSERT INTO " . TABLE_PREFIX ."pirepfields (title, name)
-					VALUES ('$title', '$fieldname')";
+		$sql = "INSERT INTO " . TABLE_PREFIX ."pirepfields (title, name, type, options)
+					VALUES ('$title', '$fieldname', '$type', '$values')";
+	
+		$res = DB::query($sql);
 		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+	/**
+	 * Edit the field
+	 */
+	function EditField($id, $title, $type='', $values='')
+	{
+		$fieldname = strtoupper(str_replace(' ', '_', $title));
+		
+		$sql = "UPDATE ".TABLE_PREFIX."pirepfields 
+				SET (title='$title',name='$fieldname', type='$type', values='$values')";
+				
 		$res = DB::query($sql);
 		
 		if(DB::errno() != 0)

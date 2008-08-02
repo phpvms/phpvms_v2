@@ -82,7 +82,36 @@ if($message!='')
 	{
 	?>
 		<dt><?=$field->title ?></dt>
-		<dd><input type="text" name="<?=$field->name ?>" value="<?=$_POST[$field->name] ?>" /></dd>
+		<dd>
+		<?php
+		
+		// Determine field by the type
+		
+		if($field->type == '' || $field->type == 'text')
+		{
+		?>
+			<input type="text" name="<?=$field->name ?>" value="<?=$_POST[$field->name] ?>" />
+		<?php
+		} 
+		elseif($field->type == 'textarea')
+		{
+			echo '<textarea name="'.$field->name.'">'.$field->values.'</textarea>';
+		}
+		elseif($field->type == 'dropdown')
+		{
+			$values = explode(',', $field->options);
+			
+			echo '<select name="'.$field->name.'">';
+			foreach($values as $value)
+			{
+				$value = trim($value);
+				echo '<option value="'.$value.'">'.$value.'</option>';
+			}
+			echo '</select>';		
+		}
+		?>
+		
+		</dd>
 	<?php
 	}
 	?>

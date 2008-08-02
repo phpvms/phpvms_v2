@@ -4,7 +4,17 @@
 <dl>
 	<dt>Field Name</dt>
 	<dd><input type="text" name="title" value="" /></dd>
-		
+	
+	<dt>Field Type</dt>
+	<dd><select name="type">
+		<option value="text">Text field</option>
+		<option value="textarea">Text area</option>
+		<option value="dropdown">Dropdown</option>
+		</select>
+	
+	<dt>Field Values (separate multiples with a comma)</dt>
+	<dd><input type="text" name="values" value="" /></dd>
+	
 	<dt></dt>
 	<dd><input type="hidden" name="action" value="addfield" />
 		<input type="submit" name="submit" value="Add Field" /></dd>

@@ -26,8 +26,7 @@
 			<a href="<?=SITE_URL?>/index.php/pireps/mine">View my PIREPs</a><br />
 			<a href="<?=SITE_URL?>/index.php/pireps/routesmap">View a map of all my flights</a><br />
 			<a href="<?=SITE_URL?>/index.php/pireps/filepirep">File a Pilot Report</a><br />
-			<a href="<?=SITE_URL?>/index.php/Schedules/view">View Flight Schedules</a>
-			<a href="<?=SITE_URL?>/index.php/Schedules/search">Search Flights</a><br />
+			<a href="<?=SITE_URL?>/index.php/Schedules/view">View Flight Schedules</a><br />
 			<a href="<?=SITE_URL?>/index.php/Schedules/bids">View my flight bids</a>
 	</p>
 	</div>

@@ -12,6 +12,14 @@ phpVMS - Virtual Airline Administration Software
 
 Build Changelog:
 
+Next Build:
+
+  * PIREP fields can have different types
+  Notes
+  -----
+	ALTER TABLE `phpvms_pirepfields` ADD `type` VARCHAR( 25 ) NOT NULL ,
+		ADD `options` TEXT NOT NULL ; 
+
 
 Build 352 "Skoshi Tiger"
 

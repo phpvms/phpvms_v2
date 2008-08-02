@@ -15,6 +15,9 @@ Build Changelog:
 Next Build:
 
   * PIREP fields can have different types
+  * Schedules can be imported from CSV file
+  
+  
   Notes
   -----
 	ALTER TABLE `phpvms_pirepfields` ADD `type` VARCHAR( 25 ) NOT NULL ,

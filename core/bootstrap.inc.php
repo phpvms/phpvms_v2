@@ -6,9 +6,9 @@ function pre_module_load()
 	if(ADMIN_PANEL == true && ADMIN_PANEL != 'ADMIN_PANEL')
 	{
 		MainController::$ModuleList = array();
-		Config::Set('RUN_SINGLE_MODULE', false, true);
-		Config::Set('DEFAULT_MODULE', '', true);
-		Config::Set('URL_REWRITE', array());
+		//Config::Set('RUN_SINGLE_MODULE', false, true);
+		Config::Set('DEFAULT_MODULE', 'Dashboard', true);
+		//Config::Set('URL_REWRITE', array());
 	}
 	
 	if(!file_exists(CORE_PATH.'/local.config.php')|| filesize(CORE_PATH.'/local.config.php') == 0)

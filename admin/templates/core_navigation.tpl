@@ -1,13 +1,13 @@
 <li><a href="?admin=">Dashboard</a></li>
 <li><a href="#">Site</a>
 	<ul>
-		<li><a href="?admin=viewnews">Site News</a></li>
-		<li><a href="?admin=viewpages">Site Pages</a></li>
+		<li><a href="<?SITE_URL ?>/admin/index.php/sitecms/viewnews">Site News</a></li>
+		<li><a href="<?SITE_URL ?>/admin/index.php/sitecms/viewpages">Site Pages</a></li>
 	</ul>
 </li>
 <li><a href="?admin=airlines">Operations</a>
 	 <ul>
-		<li><a href="?admin=airlines">1. Airlines</a></li>
+		<li><a href="<?SITE_URL ?>/admin/index.php/operationsadmin/airlines">1. Airlines</a></li>
 		<li><a href="?admin=aircraft">2. Aircraft</a></li>
 		<li><a href="?admin=airports">3. Airports</a></li>
 		<li><a href="?admin=schedules">4. Flight Schedules</a></li>

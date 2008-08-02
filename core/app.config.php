@@ -39,15 +39,25 @@ Config::Set('DEFAULT_MODULE', 'Frontpage');
 Config::Set('MODULES_AUTOLOAD', true);
 Config::Set('ACTIVE_MODULES', array());
 
-Config::Set('URL_REWRITE', array('default'=>array('module', 'page'),
-								 'Login'=>array('module', 'page', 'redir'),
-								 'Logout'=>array('module', 'page', 'redir'),
-								 'Pages'=>array('module', 'page'),
-								 'PIREPS'=>array('module', 'page', 'id', 'icao'),
-								 'Pilots'=>array('module', 'page', 'pilotid'),
-								 'Profile'=>array('module', 'page', 'pilotid'),
-								 'Schedules'=>array('module', 'page', 'id')
+Config::Set('URL_REWRITE', array (	'default'=>array('module', 'page'),
+									'Login'=>array('module', 'page', 'redir'),
+								 	'Logout'=>array('module', 'page', 'redir'),
+									'Pages'=>array('module', 'page'),
+									'PIREPS'=>array('module', 'page', 'id', 'icao'),
+									'Pilots'=>array('module', 'page', 'pilotid'),
+									'Profile'=>array('module', 'page', 'pilotid'),
+									'Schedules'=>array('module', 'page', 'id')
+									));
+
+// define rewrite rules for the admin panel
+if(ADMIN_PANEL == true && ADMIN_PANEL != 'ADMIN_PANEL')
+{
+	Config::Set('URL_REWRITE',  array('default'=>array('module', 'page')
 								));
+								
+	Config::Set('DEFAULT_MODULE', 'Dashboard', true);
+	Config::Set('RUN_SINGLE_MODULE', true, true);
+}
 								
 /**
  * Constants

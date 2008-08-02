@@ -11,7 +11,7 @@ if(!$userinfo)
 
 <p>
 <strong>Pilot ID: </strong><?=PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid); ?><br />
-<strong>Rank: </strong><img src="<?=$userinfo->rankimage?>" alt="<?=$userinfo->rank;?>" /> <br />
+<strong>Rank: </strong><img src="<?=RanksData::GetRankImage($userinfo->rank)?>" alt="<?=$userinfo->rank;?>" /> <br />
 <strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
 <strong>Total Hours: </strong><?=$userinfo->totalhours?>
 </p>

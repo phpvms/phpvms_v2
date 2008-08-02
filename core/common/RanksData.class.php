@@ -44,6 +44,12 @@ class RanksData
 		return DB::get_results($sql);
 	}
 	
+	function GetRankImage($rank)
+	{
+		$sql = 'SELECT rankimage FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
+		return DB::get_var($sql);
+	}
+	
 	/**
 	 * Give the number of hours, return the next rank
 	 */

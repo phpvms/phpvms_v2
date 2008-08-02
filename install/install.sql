@@ -181,7 +181,7 @@ CREATE TABLE `phpvms_pirepfields` (
 	`fieldid` INT NOT NULL AUTO_INCREMENT ,
 	`title` VARCHAR( 25 ) NOT NULL ,
 	`name` VARCHAR( 25 ) NOT NULL ,
-	PRIMARY KEY ( `fieldid` )
+	PRIMARY KEY ( `fieldid` ),
 	UNIQUE KEY `name` (`name`)
 ) ENGINE = INNODB; 
 
@@ -199,7 +199,7 @@ CREATE TABLE `phpvms_bids` (
 	`bidid` INT NOT NULL AUTO_INCREMENT ,
 	`pilotid` int(11) NOT NULL default '0',
 	`routeid` int(11) NOT NULL default '0',
-	PRIMARY KEY ( `id` )
+	PRIMARY KEY ( `bidid` ),
 	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON DELETE CASCADE,
 	FOREIGN KEY (`routeid`) REFERENCES phpvms_schedules(`id`) ON DELETE CASCADE
 ) ENGINE = INNODB; 

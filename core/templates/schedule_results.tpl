@@ -14,7 +14,11 @@ if(!$allroutes)
 	<th>Departure Time</th>
 	<th>Arrival Time</th>
 	<th>Distance</th>
+	<?php if (Auth::LoggedIn())
+	{ ?>
 	<th>Options</th>
+	<?php
+	} ?>
 </tr>
 </thead>
 <tbody>
@@ -34,7 +38,11 @@ foreach($allroutes as $route)
 	<td><?=$route->deptime;?></td>
 	<td><?=$route->arrtime;?></td>
 	<td><?=$route->distance;?></td>
+	<?php if (Auth::LoggedIn())
+	{ ?>
 	<td><a id="<?=$route->id; ?>" class="addbid" href="<?=SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+	<?php
+	} ?>
 	</td>
 </tr>
 <?php

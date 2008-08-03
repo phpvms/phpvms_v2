@@ -13,6 +13,14 @@
 <?php
 foreach($allpilots as $pilot)
 {
+	/*
+	 * To include additional fields,  uncomment this next line
+	 * and then you can use the fields - $fields->VATSIM_ID for
+	 * instance. your field name in all caps, and spaces replaced by 
+	 * an underscore
+	 */
+	//$fields = PilotData::GetFieldData($pilot->pilotid);
+	
 ?>
 <tr>
 	<td><a href="<?=SITE_URL?>/index.php/Pilots/reports/<?=$pilot->pilotid?>">

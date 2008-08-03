@@ -2,7 +2,14 @@
 <?php
 MainController::Run('Dashboard', 'CheckInstallFolder');
 MainController::Run('Dashboard', 'CheckForUpdates');
-
-echo '<p><strong>Pilot Reports for the Past Week</strong></p>';
-StatsData::ShowReportCounts();
 ?>
+<p><strong>Pilot Reports for the Past Week</strong></p>
+
+<div id="reportcounts">Loading chart...</div>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#reportcounts").sparkline(<?=$reportcounts; ?>, {width: '90%', height: '150px'});
+
+});
+</script>

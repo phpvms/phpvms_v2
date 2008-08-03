@@ -111,6 +111,19 @@ class PIREPData
 		$row = DB::get_row($sql);
 		return $row->count;
 	}
+	
+	/**
+	 * Get the number of reports on a certain date, for a certain route
+	 */
+	function GetReportCountForRoute($code, $flightnum, $date)
+	{
+		$sql = "SELECT COUNT(*) AS count FROM ".TABLE_PREFIX."pireps
+					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME($date))
+						AND code='$code' AND flightnum='$flightnum'";
+
+		$row = DB::get_row($sql);
+		return $row->count;
+	}
 
 	/**
 	 * Get the number of reports for the last x  number of days
@@ -377,6 +390,45 @@ class PIREPData
 		//$sql = 'DELETE FROM '.TABLE_PREFIX.'
 	}
 
+	
+/**
+	 * Show the graph of the past week's reports. Outputs the
+	 *	image unless $ret == true
+	 */
+	function ShowReportCounts($ret=false)
+	{
+		// Recent PIREP #'s
+		$max = 0;
+		$data = '[';
+
+		// This is for the past 7 days
+		for($i=-7;$i<=0;$i++)
+		{
+			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
+			$count = PIREPData::GetReportCount($date);
+
+			//array_push($data, intval($count));
+			//$label .= date('m/d', $date) .'|';
+			$data.=$count.',';
+			if($count > $max)
+				$max = $count;
+		}
+		
+		$data = substr($data, 0, strlen($data)-1);
+		$data .= ']';
+		
+		return $data;
+		/*$chart = new googleChart($data);
+		$chart->dimensions = '700x200';
+		$chart->setLabelsMinMax($max,'left');
+		$chart->setLabels($label,'bottom');
+
+		if($ret == true)
+			return $chart->draw(false);
+		else
+			echo '<img src="'.$chart->draw(false).'" align="center" />';*/
+	}
+	
 }
 
 ?>

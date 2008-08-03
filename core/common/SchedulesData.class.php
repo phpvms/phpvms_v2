@@ -31,6 +31,20 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
+	function GetScheduleDetailed($id)
+	{
+		$limit = DB::escape($limit);
+		
+		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM phpvms_schedules AS s
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+					WHERE s.id='.$id;
+			
+		return DB::get_row($sql);
+	}
+	
 	/**
 	 * Return all the airports by depature, which have a schedule, for
 	 *	a certain airline. If the airline
@@ -327,6 +341,66 @@ class SchedulesData
 			return false;
 			
 		return true;
+	}
+	
+	function GetScheduleFlownCounts($code, $flightnum, $days=30)
+	{
+		$max = 0;
+		$data = '[';
+		//$days = $days * -1;
+
+		// turn on cacheing:
+		
+		DB::enableCache();
+		// This is for the past 7 days
+		for($i=-30;$i<=0;$i++)
+		{
+			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
+			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $date);
+			//DB::debug();
+
+			//array_push($data, intval($count));
+			//$label .= date('m/d', $date) .'|';
+			$data.=$count.',';
+			if($count > $max)
+				$max = $count;
+		}
+		
+		DB::disableCache();
+		
+		$data = substr($data, 0, strlen($data)-1);
+		$data .= ']';
+		
+		return $data;
+	}
+	
+	/**
+	 * Show the graph of the past week's reports. Outputs the
+	 *	image unless $ret == true
+	 */
+	function ShowReportCounts()
+	{
+		// Recent PIREP #'s
+		$max = 0;
+		$data = '[';
+
+		// This is for the past 7 days
+		for($i=-7;$i<=0;$i++)
+		{
+			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
+			$count = PIREPData::GetReportCount($date);
+
+			//array_push($data, intval($count));
+			//$label .= date('m/d', $date) .'|';
+			$data.=$count.',';
+			if($count > $max)
+				$max = $count;
+		}
+		
+		$data = substr($data, 0, strlen($data)-1);
+		$data .= ']';
+		
+		return $data;
 	}
 }
 

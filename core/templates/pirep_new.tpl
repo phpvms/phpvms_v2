@@ -24,7 +24,7 @@ if($message!='')
 	</dd>
 	
 	<dt>Enter Flight Number:</dt>
-	<dd><input type="text" name="flightnum" value="<?=$bid->flightnum?>" /></dd>
+	<dd><input type="text" name="flightnum" value="<?=$bid->flightnum?><?=$_POST['flightnum'] ?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>

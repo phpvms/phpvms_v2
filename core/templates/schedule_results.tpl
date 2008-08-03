@@ -11,8 +11,8 @@ if(!$allroutes)
 	<th>Flight Number</th>
 	<th>Route</th>
 	<th>Aircraft</th>
-	<th>Departure Time</th>
-	<th>Arrival Time</th>
+	<th>Departure</th>
+	<th>Arrival</th>
 	<th>Distance</th>
 	<?php if (Auth::LoggedIn())
 	{ ?>
@@ -32,7 +32,7 @@ foreach($allroutes as $route)
 		$leg = '';
 ?>
 <tr>
-	<td><?=$route->code . $route->flightnum; ?> <?=$leg?></td>
+	<td><a href="<?=SITE_URL?>/index.php/schedules/details/<?=$route->id?>"><?=$route->code . $route->flightnum; ?> <?=$leg?></a></td>
 	<td align="center"><?=$route->depname?> (<?=$route->depicao; ?>) to <?=$route->arrname?> (<?=$route->arricao; ?>)</td>
 	<td align="center"><?=$route->aircraft; ?></td>
 	<td><?=$route->deptime;?></td>

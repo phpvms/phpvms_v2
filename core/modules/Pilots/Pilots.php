@@ -34,6 +34,8 @@ class Pilots extends CodonModule
 				foreach($allhubs as $hub)
 				{
 					Template::Set('title', $hub->name);
+					Template::Set('icao', $hub->icao);
+					
 					Template::Set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
 										
 					Template::Show('pilots_list.tpl');

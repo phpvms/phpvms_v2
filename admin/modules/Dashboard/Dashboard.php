@@ -41,6 +41,8 @@ class Dashboard extends CodonModule
 
 				/* Dashboard.tpl calls the functions below
 				*/
+				
+				Template::Set('reportcounts', PIREPData::ShowReportCounts());
 				Template::Show('dashboard.tpl');
 
                 /*Template::Set('allpilots', PilotData::GetPendingPilots());

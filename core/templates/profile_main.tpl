@@ -4,9 +4,12 @@
 	<p>
 	Welcome back <?php echo $userinfo->firstname . ' ' . $userinfo->lastname; ?> (<strong><?=$pilotcode;?></strong>)!
 	<br />
-	Your latest flight was <a href="<?=SITE_URL?>/index.php/pireps/view/<?=$report->pirepid?>"><?=$report->code . $report->flightnum; ?></a>
-
 	<?php
+	if($report)
+	{ ?>
+		Your latest flight was <a href="<?=SITE_URL?>/index.php/pireps/view/<?=$report->pirepid?>"><?=$report->code . $report->flightnum; ?></a>
+	<?php
+	}
 	if($nextrank)
 	{
 	?>
@@ -27,17 +30,17 @@
 			<a href="<?=SITE_URL?>/index.php/pireps/routesmap">View a map of all my flights</a><br />
 			<a href="<?=SITE_URL?>/index.php/pireps/filepirep">File a Pilot Report</a><br />
 			<a href="<?=SITE_URL?>/index.php/Schedules/view">View Flight Schedules</a><br />
-			<a href="<?=SITE_URL?>/index.php/Schedules/bids">View my flight bids</a>
-	</p>
+			<a href="<?=SITE_URL?>/index.php/Schedules/bids">View my flight bids</a><br />
+		<br />
+		<strong>Your Stats</strong>
+			<p> <strong>Rank: </strong><?=$userinfo->rank;?> <br />
+				<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
+				<strong>Total Hours: </strong><?=$userinfo->totalhours?></p>
+		
+			<!--<strong>Pilot Reports</strong>
+			<p><?php //StatsData::PilotPIREPStats($userinfo->pilotid, 50); ?></p>-->
+			
+		</p>
 	</div>
-</div>
-<div id="sidebar">
-	<h3>Your Stats</h3>
-	<p> <strong>Rank: </strong><?=$userinfo->rank;?> <br />
-		<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
-		<strong>Total Hours: </strong><?=$userinfo->totalhours?></p>
-
-	<strong>Aircraft Flown</strong>
-	<p><?php StatsData::PilotAircraftFlownGraph($userinfo->pilotid); ?></p>
 </div>
 <br />

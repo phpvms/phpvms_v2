@@ -62,7 +62,7 @@ class PIREPS extends CodonModule
 				Template::Set('comments', PIREPData::GetComments($pirepid));
 												
 				Template::Show('pirep_viewreport.tpl');
-				Template::Show('pirep_map.tpl');
+				Template::Show('route_map.tpl');
 				break;
 			
 			/* Show map with all of their routes

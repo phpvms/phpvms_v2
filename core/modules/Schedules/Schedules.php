@@ -24,7 +24,7 @@ class Schedules extends CodonModule
 		{
 			case '':
 			case 'view':
-				
+								
 				if($this->post->action == 'findflight')
 				{
 					$this->FindFlight();
@@ -33,6 +33,20 @@ class Schedules extends CodonModule
 				
 				$this->ShowSchedules();
 				
+				break;
+				
+			case 'detail':
+			case 'details':
+				
+				$scheddata = SchedulesData::GetScheduleDetailed($this->get->id);
+				
+				Template::Set('schedule', $scheddata);
+				Template::Set('scheddata', SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum, 30)); // past 30 days
+				
+				Template::Show('schedule_details.tpl');
+				Template::Show('route_map.tpl');
+				
+			
 				break;
 
 			// View bids for the pilot

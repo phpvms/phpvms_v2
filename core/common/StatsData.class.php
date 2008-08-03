@@ -61,39 +61,5 @@ class StatsData
 		else
 			echo '<img src="'.$chart->draw(false).'" align="center" />';
 	}
-
-	/**
-	 * Show the graph of the past week's reports. Outputs the
-	 *	image unless $ret == true
-	 */
-	function ShowReportCounts($ret=false)
-	{
-		// Recent PIREP #'s
-		$max = 0;
-		$data = array();
-
-		// This is for the past 7 days
-		for($i=-7;$i<=0;$i++)
-		{
-			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
-			$count = PIREPData::GetReportCount($date);
-
-			array_push($data, intval($count));
-			$label .= date('m/d', $date) .'|';
-
-			if($count > $max)
-				$max = $count;
-		}
-
-		$chart = new googleChart($data);
-		$chart->dimensions = '700x200';
-		$chart->setLabelsMinMax($max,'left');
-		$chart->setLabels($label,'bottom');
-
-		if($ret == true)
-			return $chart->draw(false);
-		else
-			echo '<img src="'.$chart->draw(false).'" align="center" />';
-	}
 }
 ?>

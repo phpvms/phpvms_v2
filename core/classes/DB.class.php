@@ -133,6 +133,23 @@ class DB
 		return true;
 	}
 	
+	public function setCacheDir($dir)
+	{
+		self::$DB->cache_dir = $dir;
+	}
+	
+	public function enableCache()
+	{
+		self::$DB->cache_query = true;
+		self::$DB->use_disk_cache = true;
+	}
+	
+	public function disableCache()
+	{
+		self::$DB->cache_query = false;
+		self::$DB->use_disk_cache = false;
+	}
+	
 	/**
 	 * Connect to database
 	 *

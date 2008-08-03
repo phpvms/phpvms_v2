@@ -76,10 +76,10 @@ class ezSQLcore
 	public $errno			  = null;
 	protected $col_info         = null;
 	protected $captured_errors  = array();
-	protected $cache_dir        = false;
-	protected $cache_queries    = false;
-	protected $cache_inserts    = false;
-	protected $use_disk_cache   = false;
+	public $cache_dir        = false;
+	public $cache_queries    = false;
+	public $cache_inserts    = false;
+	public $use_disk_cache   = false;
 	protected $cache_timeout    = 24; // hours
 	
 	protected $get_col_info = false;

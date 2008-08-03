@@ -68,6 +68,18 @@ class Installer
 			$message = 'core/pages is writeable!';
 		}
 		
+		if(!is_writeable(CORE_PATH .'/cache'))
+		{
+			$noerror = false;
+			$type = 'error';
+			$message = 'core/cache is not writeable';
+		}
+		else
+		{
+			$type = 'success';
+			$message = 'core/cache is writeable!';
+		}
+		
 		Template::Set('pagesdir', '<div id="'.$type.'">'.$message.'</div>');	
 		
 		return $noerror;

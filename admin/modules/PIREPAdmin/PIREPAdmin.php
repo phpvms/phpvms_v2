@@ -130,8 +130,6 @@ class PIREPAdmin extends CodonModule
 		
 		PIREPData::AddComment($pirepid, $commenter, $comment);
 		
-		DB::debug();
-		
 		// Send them an email
 		Template::Set('firstname', $pirep_details->firstname);
 		Template::Set('lastname', $pirep_details->lastname);
@@ -159,6 +157,7 @@ class PIREPAdmin extends CodonModule
 	
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
+		//DB::debug();
 		//RanksData::CalculatePilotRanks();
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 	}

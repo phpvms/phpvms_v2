@@ -80,6 +80,7 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {
 	DB::init(DBASE_TYPE);
 	DB::$table_prefix = TABLE_PREFIX;
+	DB::setCacheDir(CACHE_PATH);
 	
 	if(Config::Get('DEBUG_MODE') == true)
 		DB::show_errors();

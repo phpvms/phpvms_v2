@@ -12,11 +12,13 @@ phpVMS - Virtual Airline Administration Software
 
 Build Changelog:
 
-Next Build:
+Build 356:
 
-  * PIREP fields can have different types
-  * Schedules can be imported from CSV file
-  
+  * PIREP fields can have different types (text, textarea, dropdown)
+  * Added separate schedule detail page
+  * Replaced Google Charts with JS based charting
+  * Moved pilot stats
+  * Bunch of bug fixes (too many to remember...)
   
   Notes
   -----

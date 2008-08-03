@@ -18,7 +18,7 @@
  */
  
 
-class OperationsAdmin extends CodonModule
+class Operations extends CodonModule
 {
 	function HTMLHead()
 	{

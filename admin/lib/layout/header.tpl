@@ -6,7 +6,7 @@
 <link rel="alternate" href="<?=SITE_URL?>/lib/rss/latestpireps.rss" title="latest pilot reports" type="application/rss+xml" />
 <link rel="alternate" href="<?=SITE_URL?>/lib/rss/latestpilots.rss" title="latest pilot registrations" type="application/rss+xml" />
 
-<link rel="stylesheet" href="<?=SITE_URL?>/lib/skins/admin/styles.css" type="text/css" />
+<link rel="stylesheet" href="<?=SITE_URL?>/admin/lib/layout/styles.css" type="text/css" />
 <?php
 Template::Show('core_javascript.tpl');
 ?>
@@ -19,7 +19,7 @@ Template::Show('core_javascript.tpl');
 <div id="container">
 
 <div id="topsection">
-	<img src="<?=SITE_URL?>/lib/skins/admin/images/logo.jpg" alt="header graphic" style="float: left;" />
+	<img src="<?=SITE_URL?>/admin/lib/layout/images/logo.jpg" alt="header graphic" style="float: left;" />
 	<div id="nav">
 		<ul class="nav">
 		<?php

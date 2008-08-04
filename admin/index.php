@@ -63,11 +63,11 @@ MainController::loadModules($modules);
 $BaseTemplate = new TemplateSet;
 
 //load the main skin
-$settings_file = SITE_ROOT . '/admin/lib/admin/admin.php';
+$settings_file = SITE_ROOT . '/admin/lib/layout/admin.php';
 if(file_exists($settings_file))
 	include $settings_file;
 	
-$BaseTemplate->template_path = SITE_ROOT . '/admin/lib/admin';
+$BaseTemplate->template_path = SITE_ROOT . '/admin/lib/layout';
 $BaseTemplate->Set('title', SITE_NAME);
 
 Template::Set('MODULE_NAV_INC', $NAVBAR);

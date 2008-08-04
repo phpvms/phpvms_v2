@@ -62,13 +62,12 @@ MainController::loadModules($modules);
 
 $BaseTemplate = new TemplateSet;
 
-$skin = 'admin';
 //load the main skin
-$settings_file = SITE_ROOT . '/lib/skins/'.$skin.'/'.$skin.'.php';
+$settings_file = SITE_ROOT . '/admin/lib/admin/admin.php';
 if(file_exists($settings_file))
 	include $settings_file;
 	
-$BaseTemplate->template_path = SITE_ROOT . '/lib/skins/'.$skin;
+$BaseTemplate->template_path = SITE_ROOT . '/admin/lib/admin';
 $BaseTemplate->Set('title', SITE_NAME);
 
 Template::Set('MODULE_NAV_INC', $NAVBAR);

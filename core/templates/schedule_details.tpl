@@ -10,10 +10,14 @@ if($schedule->route!='')
 <?php
 }?>
 <br />
+<strong>Weather Information</strong>
+<div id="<?=$schedule->depicao ?>" class="metar">Getting current METAR information for <?=$schedule->depicao ?></div>
+<div id="<?=$schedule->arricao ?>" class="metar">Getting current METAR information for <?=$schedule->arricao ?></div>
+<br />
 <strong>Schedule Frequency</strong>
 <div id="schedgraph" align="center">Loading graph....</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function()
-{	$("#schedgraph").sparkline(<?=$scheddata; ?>, {width: '90%', height: '150px'}); });
+{	$("#schedgraph").sparkline(<?=$scheddata; ?>, {width: '90%', height: '75px'}); });
 </script>

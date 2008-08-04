@@ -21,3 +21,4 @@
 	
 	$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
 ?>
+<br />

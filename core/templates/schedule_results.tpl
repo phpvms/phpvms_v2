@@ -14,11 +14,7 @@ if(!$allroutes)
 	<th>Departure</th>
 	<th>Arrival</th>
 	<th>Distance</th>
-	<?php if (Auth::LoggedIn())
-	{ ?>
 	<th>Options</th>
-	<?php
-	} ?>
 </tr>
 </thead>
 <tbody>
@@ -32,15 +28,17 @@ foreach($allroutes as $route)
 		$leg = '';
 ?>
 <tr>
-	<td><a href="<?=SITE_URL?>/index.php/schedules/details/<?=$route->id?>"><?=$route->code . $route->flightnum; ?> <?=$leg?></a></td>
+	<td nowrap><a href="<?=SITE_URL?>/index.php/schedules/details/<?=$route->id?>"><?=$route->code . $route->flightnum; ?> <?=$leg?></a></td>
 	<td align="center"><?=$route->depname?> (<?=$route->depicao; ?>) to <?=$route->arrname?> (<?=$route->arricao; ?>)</td>
 	<td align="center"><?=$route->aircraft; ?></td>
 	<td><?=$route->deptime;?></td>
 	<td><?=$route->arrtime;?></td>
 	<td><?=$route->distance;?></td>
+	<td nowrap>
+	<a href="<?=SITE_URL?>/index.php/schedules/details/<?=$route->id?>">View Details</a><br />
 	<?php if (Auth::LoggedIn())
 	{ ?>
-	<td><a id="<?=$route->id; ?>" class="addbid" href="<?=SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+	<a id="<?=$route->id; ?>" class="addbid" href="<?=SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
 	<?php
 	} ?>
 	</td>

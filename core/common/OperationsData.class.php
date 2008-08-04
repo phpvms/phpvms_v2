@@ -152,7 +152,7 @@ class OperationsData
 		else
 			$hub = 0;
 
-		$sql = "UPDATE " . TABLE_PREFIX ."airports
+		$sql = "UPDATE " . TABLE_PREFIX . "airports
 					SET name='$name', country='$country', lat=$lat, lng=$long, hub=$hub
 					WHERE icao='$icao'";
 

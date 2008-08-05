@@ -25,10 +25,34 @@ class SchedulesData
 	function GetSchedule($id)
 	{
 		$id = DB::escape($id);
-		
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.$id;
-
+		
 		return DB::get_row($sql);
+	}
+	
+	function GetScheduleByFlight($code, $flightnum)
+	{
+		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM '.TABLE_PREFIX.'schedules AS s
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+					WHERE s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum.'\'';
+		
+		return DB::get_row($sql);
+	}
+	
+	function IncrementFlownCount($code, $flightnum)
+	{
+		$sql = 'UPDATE '.TABLE_PREFIX.'schedules SET timesflown=timesflown+1
+					WHERE code=\''.$code.'\' AND flightnum=\''.$flightnum.'\'';
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
 	}
 	
 	function GetScheduleDetailed($id)
@@ -37,11 +61,11 @@ class SchedulesData
 		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM phpvms_schedules AS s
+					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 					WHERE s.id='.$id;
-			
+		
 		return DB::get_row($sql);
 	}
 	
@@ -50,13 +74,18 @@ class SchedulesData
 	 *	a certain airline. If the airline
 	 * @return object_array
 	 */
-	function GetDepartureAirports($airlinecode='')
+	function GetDepartureAirports($airlinecode='', $onlyenabled=false)
 	{
 		$airlinecode = DB::escape($airlinecode);
 		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+		
 		$sql = 'SELECT DISTINCT s.depicao AS icao, a.name
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
-					WHERE s.depicao = a.icao ';
+					WHERE s.depicao = a.icao '.$enabled;
 					
 		if($airlinecode != '')
 			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
@@ -72,13 +101,18 @@ class SchedulesData
 	 *	is optional, otherwise it returns all of the airports.
 	 * @return database object
 	 */
-	function GetArrivalAiports($depicao, $airlinecode='')
+	function GetArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
 	{
 		$depicao = DB::escape($depicao);
 		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+		
 		$sql = 'SELECT DISTINCT s.arricao AS icao, a.name
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
-					WHERE s.arricao = a.icao ';
+					WHERE s.arricao = a.icao '.$enabled;
 
 		if($airlinecode != '')
 			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
@@ -91,48 +125,63 @@ class SchedulesData
 	/**
 	 * Return all of the routes give the departure airport
 	 */
-	function GetRoutesWithDeparture($depicao, $limit='')
+	function GetRoutesWithDeparture($depicao, $onlyenabled=true, $limit='')
 	{
 		$depicao = DB::escape($depicao);
 		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+			
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-					WHERE s.depicao=\''.$depicao.'\'';
+					WHERE s.depicao=\''.$depicao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
 	}
 	
-	function GetRoutesWithArrival($arricao, $limit='')
+	function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
 	{
 		$arricao = DB::escape($arricao);
 		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+			
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM phpvms_schedules AS s
+					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-					WHERE s.arricao=\''.$arricao.'\'';
+					WHERE s.arricao=\''.$arricao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
 	}
 	
-	function GetSchedulesByDistance($distance, $type, $limit='')
+	function GetSchedulesByDistance($distance, $type, $onlyenabled=true, $limit='')
 	{
 		$distance = DB::escape($distance);
 		$limit = DB::escape($limit);
 		
 		if($type == '')
 			$type = '>';
+			
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
 		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM phpvms_schedules AS s
+					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-					WHERE s.distance '.$type.' '.$distance.'
+					WHERE s.distance '.$type.' '.$distance.' '.$enabled.'
 						ORDER BY s.depicao DESC';
 	
 		if($limit != '')
@@ -144,13 +193,18 @@ class SchedulesData
 	/**
 	 * Search schedules by the equipment type
 	 */
-	function GetSchedulesByEquip($ac, $limit='')
+	function GetSchedulesByEquip($ac, $onlyenabled = true, $limit='')
 	{
 		$ac = DB::escape($ac);
 		$limit = DB::escape($limit);
 		
+		if($onlyenabled)
+			$enabled = 'AND enabled=1';
+		else
+			$enabled = '';
+		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules
-					WHERE aircraft = \''.$ac.'\'
+					WHERE aircraft = \''.$ac.'\' '.$enabled.'
 					ORDER BY depicao DESC';
 		
 		if($limit != '')
@@ -162,16 +216,22 @@ class SchedulesData
 	/**
 	 * Get all the schedules, $limit is the number to return
 	 */
-	function GetSchedules($limit='')
+	function GetSchedules($limit='', $onlyenabled=true)
 	{
 		
 		$limit = DB::escape($limit);
 		
+		if($onlyenabled)
+			$enabled = 'WHERE s.enabled=1';
+		else
+			$enabled = '';
+		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM phpvms_schedules AS s
+					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+					'.$enabled.'
 					ORDER BY s.depicao DESC';
 		
 		if($limit != '')
@@ -184,7 +244,7 @@ class SchedulesData
 	 * Add a schedule
 	 */
 	function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route,
-		$aircraft, $distance, $deptime, $arrtime, $flighttime)
+		$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled = true)
 	{
 		$code = DB::escape($code);
 		$flightnum = DB::escape($flightnum);
@@ -197,17 +257,25 @@ class SchedulesData
 		$deptime = DB::escape($deptime);
 		$arrtime = DB::escape($arrtime);
 		$flighttime = DB::escape($flighttime);
+		$notes = DB::escape($notes);
 		
 		if($leg == '') $leg = 1;
 		$deptime = strtoupper($deptime);
 		$arrtime = strtoupper($arrtime);
 		
-		if($depicao == $arricao) return;
+		if($depicao == $arricao) return false;
+		if(self::GetScheduleByFlight($code,$flightnum)) return false; // flight with same num/code already exists
+		
+		
+		if($enabled == true)
+			$enabled = 1;
+		else
+			$enabled = 0;
 		
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
-				(code, flightnum, leg, depicao, arricao, route, aircraft, distance, deptime, arrtime, flighttime)
+				(code, flightnum, leg, depicao, arricao, route, aircraft, distance, deptime, arrtime, flighttime, notes, enabled)
 				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',
-				'$deptime', '$arrtime', '$flighttime')";
+				'$deptime', '$arrtime', '$flighttime', '$notes', $enabled)";
 		
 		$res = DB::query($sql);
 		
@@ -221,7 +289,7 @@ class SchedulesData
 	 * Edit a schedule
 	 */
 	function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
-				$aircraft, $distance, $deptime, $arrtime, $flighttime)
+				$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled=true)
 	{
 
 		$scheduleid = DB::escape($scheduleid);
@@ -236,15 +304,21 @@ class SchedulesData
 		$deptime = DB::escape($deptime);
 		$arrtime = DB::escape($arrtime);
 		$flighttime = DB::escape($flighttime);
+		$notes = DB::escape($notes);
 		
 		if($leg == '') $leg = 1;
 		$deptime = strtoupper($deptime);
 		$arrtime = strtoupper($arrtime);
 
+		if($enabled == true)
+			$enabled = 1;
+		else
+			$enabled = 0;
+			
 		$sql = "UPDATE " . TABLE_PREFIX ."schedules SET code='$code', flightnum='$flightnum', leg='$leg',
 						depicao='$depicao', arricao='$arricao',
 						route='$route', aircraft='$aircraft', distance='$distance', deptime='$deptime',
-						arrtime='$arrtime', flighttime='$flighttime'
+						arrtime='$arrtime', flighttime='$flighttime', notes='$notes', enabled=$enabled
 					WHERE id=$scheduleid";
 
 		$res = DB::query($sql);

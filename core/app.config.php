@@ -52,9 +52,6 @@ Config::Set('URL_REWRITE', array(	'default'=>array('module', 'page'),
 /**
  * Constants
  */
-
-define('PHPVMS_VERSION', '1.0.356');
-
 define('PIREP_PENDING', 0);
 define('PIREP_ACCEPTED', 1);
 define('PIREP_REJECTED', 2);

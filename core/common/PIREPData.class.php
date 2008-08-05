@@ -154,8 +154,8 @@ class PIREPData
 					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN phpvms_airports AS dep ON dep.icao = p.depicao
-						INNER JOIN phpvms_airports AS arr ON arr.icao = p.arricao
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
 					WHERE p.pilotid=u.pilotid AND p.pilotid='.intval($pilotid).'
 					ORDER BY p.submitdate DESC';
 
@@ -186,8 +186,8 @@ class PIREPData
 					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN phpvms_airports AS dep ON dep.icao = p.depicao
-						INNER JOIN phpvms_airports AS arr ON arr.icao = p.arricao
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		return DB::get_row($sql);
@@ -325,7 +325,7 @@ class PIREPData
 	{
 		$fieldname = strtoupper(str_replace(' ', '_', $title));
 		
-		$sql = "UPDATE ".TABLE_PREFIX."pirepfields 
+		$sql = "UPDATE ".TABLE_PREFIX."pirepfields
 				SET (title='$title',name='$fieldname', type='$type', values='$values')";
 				
 		$res = DB::query($sql);

@@ -12,6 +12,23 @@ phpVMS - Virtual Airline Administration Software
 
 Build Changelog:
 
+Build 1.0.361
+
+  * Schedule importer (yay!)
+  * CSV Template included 
+  * Notes and enabled option field added to schedules
+  * PIREPs check for route existence before submitting
+  * "Times flown" for schedules now updated on PIREP submit
+  * Update script test in this build
+  * Some file organization, admin panel skin moved
+  * Bug fixes
+  
+  Notes:
+  -----
+  * Run the update script in install/update.php
+  * IMPORTANT: core_javascript.tpl has been renamed to core_htmlhead.tpl
+  		Correct this in your skin if you're not using a default!
+
 Build 356:
 
   * PIREP fields can have different types (text, textarea, dropdown)

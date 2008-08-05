@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="<?=SITE_URL?>/admin/lib/layout/styles.css" type="text/css" />
 <?php
-Template::Show('core_javascript.tpl');
+Template::Show('core_htmlhead.tpl');
 ?>
 </head>
 	

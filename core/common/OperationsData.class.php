@@ -62,6 +62,11 @@ class OperationsData
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);
 	}
 	
+	function GetAirline($code)
+	{
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines WHERE code=\''.$code.'\'');
+	}
+	
 	/**
 	 * Add an airline
 	 */

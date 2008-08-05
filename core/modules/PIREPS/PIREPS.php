@@ -32,6 +32,7 @@ class PIREPS extends CodonModule
 				{
 					if(!$this->SubmitPIREP())
 					{
+						Template::Show('core_error.tpl');
 						$this->FilePIREPForm();
 						return false;
 					}
@@ -172,15 +173,18 @@ class PIREPS extends CodonModule
 		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
-			Template::Show('core_error.tpl');
+			return false;
+		}
 		
+		if(!SchedulesData::GetScheduleByFlight($code, $flightnum))
+		{
+			Template::Set('message', 'The flight code and number you entered is not a valid route!');
 			return false;
 		}
 		
 		if($depicao == $arricao)
 		{
 			Template::Set('message', 'The departure airport is the same as the arrival airport!');
-			Template::Show('core_error.tpl');
 			return false;
 		}
 		
@@ -193,6 +197,9 @@ class PIREPS extends CodonModule
 		$pirepid = DB::$insert_id;
 		
 		PIREPData::SaveFields($pirepid, $_POST);
+	
+		// Update the flown count for that route
+		SchedulesData::IncrementFlownCount($code, $flightnum);
 		
 		// Load PIREP into RSS feed
 		$reports = PIREPData::GetRecentReportsByCount(10);

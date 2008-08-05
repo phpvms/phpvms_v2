@@ -38,14 +38,14 @@ class Profile extends CodonModule
 				}
 
 				/*
-				 * This is from /PilotProfile/editprofile
+				 * This is from /profile/editprofile
 				 */
 				if($this->post->action == 'saveprofile')
 				{
 					$this->SaveProfile();
 				}
 				
-				/* this comes from ?page=changepassword
+				/* this comes from /profile/changepassword
 				*/
 				if($this->post->action == 'changepassword')
 				{

@@ -7,7 +7,7 @@
 <link rel="stylesheet" media="all" type="text/css" href="<?=SITE_URL?>/lib/skins/crystalsidebar/styles.css" />
 
 <?php
-	Template::Show('core_javascript.tpl');
+	Template::Show('core_htmlhead.tpl');
 ?>
 
 </head>
@@ -21,7 +21,7 @@
 	
 	<div id="topNav">
 		<ul class="nav">
-			<?php 
+			<?php
 				Template::Show('core_navigation.tpl');
 			?>
 		</ul>

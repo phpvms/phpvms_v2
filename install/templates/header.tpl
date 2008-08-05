@@ -55,11 +55,11 @@ $("#dbcheck").bind('click', function()
 </head>
 <body>
 
-<table width="560px" align="center" style="border: 1px solid #999999">
+<table width="560px" align="center" style="border: 1px solid #999999; padding-bottom: 10px;">
 <tr>
-<td align="center">
-	<img src="lib/logo.jpg" />
-</td>
+	<td align="center">
+		<img src="lib/logo.jpg" />
+	</td>
 </tr>
 <tr>
-<td align="center">
+	<td>

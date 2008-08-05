@@ -10,6 +10,12 @@ class Installer
 	{
 		$noerror = true;
 		$version = phpversion();
+		$wf = array();
+		
+		// These needa be writable
+		$wf[] = 'core/pages';
+		$wf[] = 'core/cache';
+		$wf[] = 'lib/rss';
 		
 		// Check the PHP version
 		if(substr($version, 0, 1) != '5')
@@ -17,7 +23,7 @@ class Installer
 			$noerror = false;
 			$type = 'error';
 			$message = 'You need to run PHP 5 (your version: '.$version.')';
-		}	
+		}
 		else
 		{
 			$type = 'success';
@@ -25,8 +31,6 @@ class Installer
 		}
 		
 		Template::Set('phpversion', '<div id="'.$type.'">'.$message.'</div>');
-		
-		
 		
 		// Check if core/site_config.inc.php is writeable
 		if(!file_exists(CORE_PATH .'/local.config.php'))
@@ -39,7 +43,7 @@ class Installer
 			}
 		}
 		else
-		{		
+		{
 			if(!is_writeable(CORE_PATH .'/local.config.php'))
 			{
 				$noerror = false;
@@ -55,32 +59,26 @@ class Installer
 		
 		Template::Set('configfile', '<div id="'.$type.'">'.$message.'</div>');
 		
-		
-		if(!is_writeable(CORE_PATH .'/pages'))
+		// Check all of the folders for writable permissions
+		foreach($wf as $folder)
 		{
-			$noerror = false;
-			$type = 'error';
-			$message = 'core/pages is not writeable';
-		}
-		else
-		{
-			$type = 'success';
-			$message = 'core/pages is writeable!';
-		}
-		
-		if(!is_writeable(CORE_PATH .'/cache'))
-		{
-			$noerror = false;
-			$type = 'error';
-			$message = 'core/cache is not writeable';
-		}
-		else
-		{
-			$type = 'success';
-			$message = 'core/cache is writeable!';
+			if(!is_writeable(SITE_ROOT.'/'.$folder))
+			{
+				$noerror = false;
+				$type = 'error';
+				$message = $folder.' is not writeable';
+			}
+			else
+			{
+				$type = 'success';
+				$message = $folder.' is writeable!';
+			}
+			
+			$status.='<div id="'.$type.'">'.$message.'</div>';
 		}
 		
-		Template::Set('pagesdir', '<div id="'.$type.'">'.$message.'</div>');	
+		Template::Set('dirstatus', $status);
+		//Template::Set('pagesdir', '<div id="'.$type.'">'.$message.'</div>');
 		
 		return $noerror;
 	}
@@ -110,7 +108,7 @@ class Installer
 		fclose($fp);
 		
 		return true;
-	}	
+	}
 	
 	function AddTables()
 	{
@@ -161,9 +159,9 @@ class Installer
 				if(DB::$errno == 1050)
 					continue;
 				$sql = '';
-			}	
+			}
 			else
-			{	
+			{
 				$sql.=$str;
 			}
 		}
@@ -173,8 +171,8 @@ class Installer
 	
 	function SiteSetup()
 	{
-		/*$_POST['SITE_NAME'] == '' || $_POST['firstname'] == '' || $_POST['lastname'] == '' 
-					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == '' 
+		/*$_POST['SITE_NAME'] == '' || $_POST['firstname'] == '' || $_POST['lastname'] == ''
+					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == ''
 					|| $_POST['vacode'] == ''*/
 					
 		// first add the airline

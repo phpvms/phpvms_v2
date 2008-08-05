@@ -213,10 +213,9 @@ class Operations extends CodonModule
 						break;
 				}
 			
-				Template::Set('schedules', SchedulesData::GetSchedules());
+				Template::Set('schedules', SchedulesData::GetSchedules('', false));
 				Template::Show('ops_schedules.tpl');
-				
-				//$this->AddScheduleForm();
+
 				break;
 		}
 	}
@@ -272,11 +271,10 @@ class Operations extends CodonModule
 				Template::Set('message', 'There was an error adding the aircraft');
 
 			Template::Show('core_error.tpl');
-			return;
+			return false;
 		}
 
 		Template::Set('message', 'The aircraft has been added');
-
 		Template::Show('core_success.tpl');
 	}
 	
@@ -366,6 +364,8 @@ class Operations extends CodonModule
 		$deptime = $this->post->deptime;
 		$arrtime =$this->post->arrtime;
 		$flighttime = $this->post->flighttime;
+		$notes = $this->post->notes;
+		$enabled = (isset($_POST['enabled'])) ? true : false;
 
 		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
 			|| $depicao == '' || $arricao == '')
@@ -378,7 +378,7 @@ class Operations extends CodonModule
 
 		//Add it in
 		if(!SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
-										$distance, $deptime, $arrtime, $flighttime))
+										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled))
 		{
             Template::Set('message', 'There was an error adding the schedule: '.DB::error());
 			Template::Show('core_error.tpl');
@@ -403,7 +403,9 @@ class Operations extends CodonModule
 		$deptime = $this->post->deptime;
 		$arrtime =$this->post->arrtime;
 		$flighttime = $this->post->flighttime;
-
+		$notes = $this->post->notes;
+		$enabled = (isset($_POST['enabled'])) ? true : false;
+		
 		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
 			|| $depicao == '' || $arricao == '')
 		{
@@ -414,7 +416,7 @@ class Operations extends CodonModule
 		}
 
 		if(!SchedulesData::EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
-										$distance, $deptime, $arrtime, $flighttime))
+										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled))
 		{
 			Template::Set('message', 'There was an error editing the schedule: '.DB::error());
 			Template::Show('core_error.tpl');

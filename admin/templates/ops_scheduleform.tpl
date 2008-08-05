@@ -123,6 +123,17 @@
 	</td>
 </tr>
 <tr>
+	<td valign="top">Notes</td>
+	<td><textarea name="notes" style="width: 60%; height: 150px"><?=$schedule->notes?></textarea>
+	</td>
+</tr>
+<tr>
+	<td valign="top">Enabled?</td>
+	<?php $checked = ($schedule->enabled==1)?'CHECKED':''; ?>
+	<td><input type="checkbox" id="enabled" name="enabled" <?=$checked ?> /></td>
+	</td>
+</tr>
+<tr>
 	<td></td>
 	<td><input type="hidden" name="action" value="<?=$action?>" />
 		<input type="hidden" name="id" value="<?=$schedule->id?>" />

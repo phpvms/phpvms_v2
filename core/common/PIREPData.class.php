@@ -348,28 +348,19 @@ class PIREPData
 		foreach($allfields as $field)
 		{
 			// See if that value already exists
-			$sql = 'SELECT id FROM '.TABLE_PREFIX.'pirepvalues
+			/*$sql = 'SELECT id FROM '.TABLE_PREFIX.'pirepvalues
 						WHERE fieldid='.$field->fieldid.' AND pirepid='.$pirepid;
-			$res = DB::get_row($sql);
+			$res = DB::get_row($sql);*/
 
 			$fieldname =str_replace(' ', '_', $field->name);
 			$value = $list[$fieldname];
 				
-			// if it exists
-			if($res)
-			{
-				$sql = 'UPDATE '.TABLE_PREFIX.'pirepvalues
-							SET value="'.$value.'"
-							WHERE fieldid='.$field->fieldid.' AND pirepid='.$pirepid;
-			}
-			else
-			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
-							(fieldid, pirepid, value)
-							VALUES ($field->fieldid, $pirepid, '$value')";
-			}
-			
+			$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
+						(fieldid, pirepid, value)
+						VALUES ($field->fieldid, $pirepid, '$value')";
+						
 			DB::query($sql);
+			//DB::debug();
 		}
 		
 		return true;

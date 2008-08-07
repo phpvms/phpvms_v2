@@ -14,6 +14,7 @@ $(document).ready(function() {
 				target: '#bodytext',
 				success: function() 
 				{
+					$('#jqmdialog').jqmAddTrigger('.jqModal');
 					$('#bodytext').fadeIn('slow');
 					$('#jqmdialog').jqmHide();
 				}

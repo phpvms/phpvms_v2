@@ -51,6 +51,18 @@ foreach($pireps as $report)
 			}
 		}
 		?>
+		<?php 
+
+		if($report->accepted == PIREP_ACCEPTED)
+			echo '<div id="success">Accepted</div>';
+		elseif($report->accepted == PIREP_REJECTED)
+			echo '<div id="error">Rejected</div>';
+		elseif($report->accepted == PIREP_PENDING)
+			echo '<div id="error">Approval Pending</div>';
+		elseif($report->accepted == PIREP_INPROGRESS)
+			echo '<div id="error">Flight in Progress</div>';
+		
+		?>
 	</td>
 	<td align="center">
 		<a id="dialog" class="jqModal"
@@ -64,18 +76,6 @@ foreach($pireps as $report)
 		<br />
 		<a id="dialog" class="jqModal"
 			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
-		<?php 
-
-		if($report->accepted == PIREP_ACCEPTED)
-			echo '<div id="success">Accepted</div>';
-		elseif($report->accepted == PIREP_REJECTED)
-			echo '<div id="error">Rejected</div>';
-		elseif($report->accepted == PIREP_PENDING)
-			echo '<div id="error">Approval Pending</div>';
-		elseif($report->accepted == PIREP_INPROGRESS)
-			echo '<div id="error">Flight in Progress</div>';
-		
-		?>
 	</td>
 </tr>
 <?php

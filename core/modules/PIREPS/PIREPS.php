@@ -162,13 +162,13 @@ class PIREPS extends CodonModule
 	function SubmitPIREP()
 	{
 		$pilotid = Auth::$userinfo->pilotid;
-		$code = Vars::POST('code');
-		$flightnum = Vars::POST('flightnum');
-		$depicao = Vars::POST('depicao');
-		$arricao = Vars::POST('arricao');
-		$aircraft = Vars::POST('aircraft');
-		$flighttime = Vars::POST('flighttime');
-		$comment = Vars::POST('comment');
+		$code = $this->post->code;
+		$flightnum = $this->post->flightnum;
+		$depicao = $this->post->depicao;
+		$arricao = $this->post->arricao;
+		$aircraft = $this->post->aircraft;
+		$flighttime = $this->post->flighttime;
+		$comment = $this->post->comment;
 				
 		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
 		{
@@ -188,6 +188,12 @@ class PIREPS extends CodonModule
 			return false;
 		}
 		
+		if(!is_numeric($flighttime) && !is_float($flightnum))
+		{
+			Template::Set('message', 'The flight time has to be a number!');
+			return false;
+		}
+		
 		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
@@ -200,6 +206,12 @@ class PIREPS extends CodonModule
 	
 		// Update the flown count for that route
 		SchedulesData::IncrementFlownCount($code, $flightnum);
+		
+		// delete the bid, if the value for it is set
+		if($this->post->bid != '')
+		{
+			SchedulesData::RemoveBid($this->post->bid);
+		}
 		
 		// Load PIREP into RSS feed
 		$reports = PIREPData::GetRecentReportsByCount(10);

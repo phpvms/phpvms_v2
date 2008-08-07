@@ -77,6 +77,11 @@ class Import extends CodonModule
 					$flighttime = $fields[10];
 					$notes = $fields[11];
 					
+					if($code=='')
+					{
+						continue;
+					}
+					
 					// Check the code:
 					if(!OperationsData::GetAirline($code))
 					{

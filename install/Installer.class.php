@@ -196,12 +196,12 @@ class Installer
 
 		if(!PilotGroups::AddUsertoGroup($pilotdata->pilotid, 'Administrators'))
 		{
-			DB::debug();
 			self::$error = DB::$error;
 			return false;
 		}
 		
 		SettingsData::SaveSetting('SITE_NAME', $_POST['SITE_NAME']);
+		SettingsData::SaveSetting('ADMIN_EMAIL', $_POST['email']);
 		
 		return true;
 		

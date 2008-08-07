@@ -59,7 +59,7 @@ class StatsData
 		if($ret == true)
 			return $chart->draw(false);
 		else
-			echo '<img src="'.$chart->draw(false).'" align="center" />';
+			echo '<img src="'.$chart->draw(false).'" />';
 	}
 }
 ?>

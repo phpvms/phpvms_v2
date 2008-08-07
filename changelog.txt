@@ -12,7 +12,22 @@ phpVMS - Virtual Airline Administration Software
 
 Build Changelog:
 
-Build 1.0.361
+Next Build 
+
+  * Bid deleted on PIREP submit
+  * PIREP fields properly show in admin panel
+  * Default skin tweaks
+  * Profile stats back (to be expanded)
+  * PIREP submit form fixes
+  * Registration code tidied up
+  * Admin panel JS error fixed
+  
+  Notes
+  -----
+  Run the updater (install/update.php)
+ 
+
+Build 1.0.361 (RC2)
 
   * Schedule importer (yay!)
   * CSV Template included 
@@ -35,7 +50,7 @@ Build 356:
   * Added separate schedule detail page
   * Replaced Google Charts with JS based charting
   * Moved pilot stats
-  * Bunch of bug fixes (too many to remember...)
+  * Bunch of bug fixes
   
   Notes
   -----
@@ -43,7 +58,7 @@ Build 356:
 		ADD `options` TEXT NOT NULL ; 
 
 
-Build 352 "Skoshi Tiger"
+Build 352 "Skoshi Tiger" (RC1)
 
 	* (Admin) Custom fields can now be added into PIREPS
 	* (Admin) "View details" link on PIREP

@@ -21,7 +21,7 @@ CREATE TABLE `phpvms_aircraft` (
 CREATE TABLE `phpvms_airports` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`icao` VARCHAR( 5 ) NOT NULL,
-	`name` VARCHAR( 75 ) NOT NULL,
+	`name` text NOT NULL,
 	`country` VARCHAR( 50 ) NOT NULL,
 	`lat` FLOAT( 10 ) NOT NULL,
 	`lng` FLOAT( 10 ) NOT NULL,
@@ -45,6 +45,7 @@ CREATE TABLE `phpvms_schedules` (
 	`flighttime` int(11) NOT NULL default '0',
 	`timesflown` int(11) NOT NULL default '0',
     `notes` TEXT NOT NULL,
+	`enabled` smallint(6) NOT NULL default '1',
 	PRIMARY KEY  (`id`),
 	INDEX `depicao` (`depicao`),
 	INDEX `flightnum` (`flightnum`),
@@ -194,8 +195,7 @@ CREATE TABLE `phpvms_pirepvalues` (
 	`pirepid` INT NOT NULL ,
 	`value` VARCHAR( 50 ) NOT NULL ,
 	PRIMARY KEY ( `id` ),
-	FOREIGN KEY (`fieldid`) REFERENCES phpvms_pirepfields(`fieldid`) ON DELETE CASCADE,
-	FOREIGN KEY (`pirepid`) REFERENCES phpvms_pireps(`pirepid`) ON DELETE CASCADE
+	FOREIGN KEY (`fieldid`) REFERENCES phpvms_pirepfields(`fieldid`) ON DELETE CASCADE
 )ENGINE=INNODB;
 
 CREATE TABLE `phpvms_bids` (

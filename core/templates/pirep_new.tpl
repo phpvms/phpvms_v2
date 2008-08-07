@@ -34,7 +34,7 @@ if($message!='')
 			<?php
 			foreach($allairports as $airport)
 			{
-				$sel = ($_POST['depairport'] == $airport->icao || $bid->depicao == $airport->icao)?'selected':'';
+				$sel = ($_POST['depicao'] == $airport->icao || $bid->depicao == $airport->icao)?'selected':'';
 				
 				echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao . ' - '.$airport->name .'</option>';
 			}
@@ -118,13 +118,17 @@ if($message!='')
 	
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" value="<?=$_POST['flighttime'] ?>" />
-		<p>Enter as hours - "5.5" is five and a half hours</p></dd>
+		<p>Enter as hours - "5.3" is five hours and thirty minutes</p></dd>
 		
 	<dt>Comment</dt>
-	<dd><textarea name="comment" style="width: 100%"><?=$_POST['flighttime'] ?></textarea></dd>
+	<dd><textarea name="comment" style="width: 100%"><?=$_POST['comment'] ?></textarea></dd>
 	
 	<dt></dt>
-	<dd><input type="submit" name="submit_pirep" value="File Flight Report" /></dd>
+	<dd><?php 
+			$bidid = ($bid)?$bid->bidid:$_POST['bid'];
+		?>
+		<input type="hidden" name="bid" value="<?=$bidid ?>" />
+		<input type="submit" name="submit_pirep" value="File Flight Report" /></dd>
 </dl>
 
 </form>

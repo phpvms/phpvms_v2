@@ -18,8 +18,11 @@
 		hours left until your promotion to <?=$nextrank->rank?>
 	<?php
 	}
-	?>
-	</p>
+	?>	<br />
+		<p style="float: right;"><?php StatsData::PilotAircraftFlownGraph($userinfo->pilotid); ?></p>
+		<strong>Your Rank: </strong><?=$userinfo->rank;?> <br />
+		<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
+		<strong>Total Hours: </strong><?=$userinfo->totalhours?>
 	<p>
 		<strong>Profile Options</strong><br /><br />
 			<a href="<?=SITE_URL ?>/index.php/profile/editprofile">Edit My Profile</a><br />
@@ -30,16 +33,7 @@
 			<a href="<?=SITE_URL?>/index.php/pireps/routesmap">View a map of all my flights</a><br />
 			<a href="<?=SITE_URL?>/index.php/pireps/filepirep">File a Pilot Report</a><br />
 			<a href="<?=SITE_URL?>/index.php/Schedules/view">View Flight Schedules</a><br />
-			<a href="<?=SITE_URL?>/index.php/Schedules/bids">View my flight bids</a><br />
-		<br />
-		<strong>Your Stats</strong>
-			<p> <strong>Rank: </strong><?=$userinfo->rank;?> <br />
-				<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
-				<strong>Total Hours: </strong><?=$userinfo->totalhours?></p>
-		
-			<!--<strong>Pilot Reports</strong>
-			<p><?php //StatsData::PilotPIREPStats($userinfo->pilotid, 50); ?></p>-->
-			
+			<a href="<?=SITE_URL?>/index.php/Schedules/bids">View my flight bids</a><br />			
 		</p>
 	</div>
 </div>

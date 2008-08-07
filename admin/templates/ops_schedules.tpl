@@ -32,10 +32,12 @@ foreach($schedules as $sched)
 	<td align="center"><?=$sched->timesflown; ?></td>
 	<td align="center">
 		<a href="?admin=editschedule&id=<?=$sched->id;?>"><img src="lib/images/edit.gif" alt="Edit Schedule" /></a>
-		<br />
-        <a href="action.php?admin=<?=Vars::GET('admin'); ?>"
+	<?php
+	/*
+	  <a href="action.php?admin=<?=Vars::GET('admin'); ?>"
 			class="deleteitem" action="deleteschedule"
 			id="<?=$sched->id;?>"><img src="lib/images/delete.gif" alt="Delete" /></a>
+	 */ ?>
 	</td>
 </tr>
 <?php

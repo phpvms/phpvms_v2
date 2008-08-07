@@ -21,24 +21,15 @@
 define('ADMIN_PANEL', true);
 include '../core/codon.config.php';
 
-define('UPDATE_VERSION', '1.0.361');
+define('UPDATE_VERSION', '1.0.362');
 
 // Check versions for mismatch, unless ?force is passed
-
-if(!isset($_GET['force']))
-{
-	if(PHPVMS_VERSION == UPDATE_VERSION)
-	{
-		echo 'You already have updated! Please delete this /install folder';
-		exit;
-	}
-}
-
 $sql = array();
 
 // Table changes, other SQL updates
 $sql[] = 'ALTER TABLE `phpvms_schedules` ADD `notes` TEXT NOT NULL';
 $sql[] = 'ALTER TABLE `phpvms_schedules` ADD `enabled` INT NOT NULL DEFAULT \'1\'';
+$sql[] = 'ALTER TABLE `phpvms_airports` CHANGE `name` `name` TEXT NOT NULL;';
 
 // Version update
 $sql[] = 'UPDATE `phpvms_settings` SET value=\''.UPDATE_VERSION.'\' WHERE name=\'PHPVMS_VERSION\'';
@@ -46,6 +37,16 @@ $sql[] = 'UPDATE `phpvms_settings` SET value=\''.UPDATE_VERSION.'\' WHERE name=\
 
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 Template::Show('header.tpl');
+
+if(!isset($_GET['force']))
+{
+	if(PHPVMS_VERSION == UPDATE_VERSION)
+	{
+		echo '<p>You already have updated! Please delete this /install folder.<br /><br />
+				To force the update to run again, click: <a href="update.php?force">update.php?force</a></p>';
+		exit;
+	}
+}
 // Do the queries:
 echo "Starting the update...<br />
 	  Running SQL table updates...<br />";
@@ -56,7 +57,7 @@ foreach($sql as $query)
 	$query = str_replace('phpvms_', TABLE_PREFIX, $query);
 	DB::query($query);
 	
-	if(DB::errno() != 0)
+	if(DB::errno() != 0 && DB::errno() != 1060)
 	{
 		echo '<p style="border-top: solid 1px #000; border-bottom: solid 1px #000; padding: 5px;">
 				There was an error, with the following message: <br /><br />
@@ -68,8 +69,8 @@ foreach($sql as $query)
 	}
 }
 
-echo '<strong>Update completed!</strong>
-		If there were any errors, please correct them, and re-run the update using: <a href="update.php?force">update.php?force</a>';
+echo '<p><strong>Update completed!</strong><br />
+		If there were any errors, please correct them, and re-run the update using: <a href="update.php?force">update.php?force</a></p>';
 
 Template::Show('footer.tpl');
 ?>

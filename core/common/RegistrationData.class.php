@@ -38,7 +38,7 @@ class RegistrationData
 	/**
 	 * Add a  User
 	 */
-	function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=0)
+	function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=false)
 	{
 		//Set the password, add some salt
 		$salt = md5(date('His'));
@@ -50,6 +50,11 @@ class RegistrationData
 		$firstname = ucwords($firstname);
 		$lastname = ucwords($lastname);
 		//Add this stuff in
+		
+		if($confirm == true)
+			$confirm = 1;
+		else
+			$confirm = 0;
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email,
 					code, location, hub, password, salt, confirmed)

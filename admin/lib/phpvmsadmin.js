@@ -1,10 +1,5 @@
 $(document).ready(function() {
- 	
-	$.listen('dblclick','#jqmdialog', function()
-	{
-		return false;
-	});
-	
+ 		
     // Show dialog box
 	$('#jqmdialog').jqm({
 	    ajax:'@href',
@@ -15,6 +10,7 @@ $(document).ready(function() {
 				success: function() 
 				{
 					$('#jqmdialog').jqmAddTrigger('.jqModal');
+					$.listen('dblclick','.jqModal', function() { return false; });
 					$('#bodytext').fadeIn('slow');
 					$('#jqmdialog').jqmHide();
 				}
@@ -78,6 +74,7 @@ $(document).ready(function() {
 	});
     
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
+    $.listen('dblclick','.jqModal', function() { return false; });
 		
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult'
@@ -159,4 +156,6 @@ $(document).ready(function() {
 		
 		return false;
 	});
+	
+	new nicEditor({iconsPath : '../lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
 });

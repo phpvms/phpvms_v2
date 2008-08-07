@@ -13,11 +13,11 @@
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.listen-min.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/suckerfish.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.impromptu.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/js/nicEdit.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/js/jqModal.css" type="text/css" />
 <link rel="stylesheet" href="<?=SITE_URL?>/lib/css/phpvms.css" type="text/css" />
-
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?=SITE_URL?>/lib/rss/latestpireps.rss">
 

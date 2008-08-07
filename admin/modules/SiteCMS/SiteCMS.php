@@ -23,16 +23,23 @@ class SiteCMS extends CodonModule
 	{
 		switch($this->get->admin)
 		{
+			case 'addnews':
 			case 'viewnews':
+				
 				Template::Set('sidebar', 'sidebar_news.tpl');
+				
 				break;
 			
 			case 'viewpages':
+				
 				Template::Set('sidebar', 'sidebar_pages.tpl');
+				
 				break;
 				
 			case 'addpageform':
+				
 				Template::Set('sidebar', 'sidebar_addpage.tpl');
+				
 				break;
 		}
 	}

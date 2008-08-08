@@ -22,7 +22,7 @@ class SchedulesData
 	/**
 	 * Return information about a schedule (pass the ID)
 	 */
-	function GetSchedule($id)
+	public function GetSchedule($id)
 	{
 		$id = DB::escape($id);
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.$id;
@@ -30,7 +30,7 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
-	function GetScheduleByFlight($code, $flightnum)
+	public function GetScheduleByFlight($code, $flightnum)
 	{
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
@@ -42,7 +42,7 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
-	function IncrementFlownCount($code, $flightnum)
+	public function IncrementFlownCount($code, $flightnum)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'schedules SET timesflown=timesflown+1
 					WHERE code=\''.$code.'\' AND flightnum=\''.$flightnum.'\'';
@@ -55,7 +55,7 @@ class SchedulesData
 		return true;
 	}
 	
-	function GetScheduleDetailed($id)
+	public function GetScheduleDetailed($id)
 	{
 		$limit = DB::escape($limit);
 		
@@ -74,7 +74,7 @@ class SchedulesData
 	 *	a certain airline. If the airline
 	 * @return object_array
 	 */
-	function GetDepartureAirports($airlinecode='', $onlyenabled=false)
+	public function GetDepartureAirports($airlinecode='', $onlyenabled=false)
 	{
 		$airlinecode = DB::escape($airlinecode);
 		
@@ -101,7 +101,7 @@ class SchedulesData
 	 *	is optional, otherwise it returns all of the airports.
 	 * @return database object
 	 */
-	function GetArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
+	public function GetArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
 	{
 		$depicao = DB::escape($depicao);
 		
@@ -125,7 +125,7 @@ class SchedulesData
 	/**
 	 * Return all of the routes give the departure airport
 	 */
-	function GetRoutesWithDeparture($depicao, $onlyenabled=true, $limit='')
+	public function GetRoutesWithDeparture($depicao, $onlyenabled=true, $limit='')
 	{
 		$depicao = DB::escape($depicao);
 		
@@ -144,7 +144,7 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
-	function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
+	public function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
 	{
 		$arricao = DB::escape($arricao);
 		
@@ -163,7 +163,7 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
-	function GetSchedulesByDistance($distance, $type, $onlyenabled=true, $limit='')
+	public function GetSchedulesByDistance($distance, $type, $onlyenabled=true, $limit='')
 	{
 		$distance = DB::escape($distance);
 		$limit = DB::escape($limit);
@@ -193,7 +193,7 @@ class SchedulesData
 	/**
 	 * Search schedules by the equipment type
 	 */
-	function GetSchedulesByEquip($ac, $onlyenabled = true, $limit='')
+	public function GetSchedulesByEquip($ac, $onlyenabled = true, $limit='')
 	{
 		$ac = DB::escape($ac);
 		$limit = DB::escape($limit);
@@ -216,7 +216,7 @@ class SchedulesData
 	/**
 	 * Get all the schedules, $limit is the number to return
 	 */
-	function GetSchedules($limit='', $onlyenabled=true)
+	public function GetSchedules($limit='', $onlyenabled=true)
 	{
 		
 		$limit = DB::escape($limit);
@@ -243,8 +243,8 @@ class SchedulesData
 	/**
 	 * Add a schedule
 	 */
-	function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route,
-		$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled = true)
+	public function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route,
+				$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled = true)
 	{
 		$code = DB::escape($code);
 		$flightnum = DB::escape($flightnum);
@@ -288,7 +288,7 @@ class SchedulesData
 	/**
 	 * Edit a schedule
 	 */
-	function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
+	public function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
 				$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled=true)
 	{
 
@@ -332,7 +332,7 @@ class SchedulesData
 	/**
 	 * Delete a schedule
 	 */
-	function DeleteSchedule($scheduleid)
+	public function DeleteSchedule($scheduleid)
 	{
 		$scheduleid = DB::escape($scheduleid);
 		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules WHERE id='.$scheduleid;
@@ -352,7 +352,7 @@ class SchedulesData
 	 * @param unknown_type $bidid
 	 * @return unknown
 	 */
-	function GetBid($bidid)
+	public function GetBid($bidid)
 	{
 		$bidid = DB::escape($bidid);
 		$sql = 'SELECT s.*, b.bidid
@@ -368,7 +368,7 @@ class SchedulesData
 	 * @param unknown_type $pilotid
 	 * @return unknown
 	 */
-	function GetBids($pilotid)
+	public function GetBids($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
 		$sql = 'SELECT s.*, b.bidid
@@ -378,7 +378,7 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 		
-	function AddBid($pilotid, $routeid)
+	public function AddBid($pilotid, $routeid)
 	{
 		$pilotid = DB::escape($pilotid);
 		$routeid = DB::escape($routeid);
@@ -403,7 +403,7 @@ class SchedulesData
 		return true;
 	}
 	
-	function RemoveBid($bidid)
+	public function RemoveBid($bidid)
 	{
 		$bidid = DB::escape($bidid);
 		
@@ -417,7 +417,7 @@ class SchedulesData
 		return true;
 	}
 	
-	function GetScheduleFlownCounts($code, $flightnum, $days=30)
+	public function GetScheduleFlownCounts($code, $flightnum, $days=30)
 	{
 		$max = 0;
 		$data = '[';
@@ -452,7 +452,7 @@ class SchedulesData
 	 * Show the graph of the past week's reports. Outputs the
 	 *	image unless $ret == true
 	 */
-	function ShowReportCounts()
+	public function ShowReportCounts()
 	{
 		// Recent PIREP #'s
 		$max = 0;
@@ -477,5 +477,4 @@ class SchedulesData
 		return $data;
 	}
 }
-
 ?>

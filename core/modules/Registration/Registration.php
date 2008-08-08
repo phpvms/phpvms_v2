@@ -43,7 +43,7 @@ class Registration extends CodonModule
 					
 					
 				Template::Set('extrafields', RegistrationData::GetCustomFields());
-				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('allairlines', OperationsData::GetAllAirlines(true));
 				Template::Set('allhubs', OperationsData::GetAllHubs());
 				
 				if(isset($this->post->submit_register))
@@ -113,7 +113,7 @@ class Registration extends CodonModule
 			{
 				$rss->AddItem('Pilot '.PilotData::GetPilotCode($pilot->code, $pilot->pilotid)
 								. ' ('.$pilot->firstname .' ' . $pilot->lastname.')',
-					SITE_URL.'/admin/index.php?admin=pendingpilots','','');
+								SITE_URL.'/admin/index.php?admin=pendingpilots','','');
 			}
 		
 		

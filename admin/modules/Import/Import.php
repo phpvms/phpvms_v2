@@ -83,7 +83,7 @@ class Import extends CodonModule
 					}
 					
 					// Check the code:
-					if(!OperationsData::GetAirline($code))
+					if(!OperationsData::GetAirlineByCode($code))
 					{
 						echo "Airline with code $code does not exist! Skipping...<br />";
 						continue;

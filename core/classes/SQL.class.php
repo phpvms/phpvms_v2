@@ -65,27 +65,27 @@ define('EZSQL_CORE_ERROR','ezSQLcore can not be used by itself (it is designed f
 class ezSQLcore
 {
 	
-	protected $trace            = false;  // same as $debug_all
-	protected $debug_all        = false;  // same as $trace
-	protected $debug_called     = false;
-	protected $vardump_called   = false;
-	protected $show_errors      = true;
-	protected $num_queries      = 0;
-	protected $last_query       = null;
+	public $trace            = false;  // same as $debug_all
+	public $debug_all        = false;  // same as $trace
+	public $debug_called     = false;
+	public $vardump_called   = false;
+	public $show_errors      = true;
+	public $num_queries      = 0;
+	public $last_query       = null;
 	public $error		      = null;
 	public $errno			  = null;
-	protected $col_info         = null;
-	protected $captured_errors  = array();
+	public $col_info         = null;
+	public $captured_errors  = array();
 	public $cache_dir        = false;
 	public $cache_queries    = false;
 	public $cache_inserts    = false;
 	public $use_disk_cache   = false;
-	protected $cache_timeout    = 24; // hours
+	public $cache_timeout    = 24; // hours
 	
-	protected $get_col_info = false;
+	public $get_col_info = false;
 	
 	// == TJH == default now needed for echo of debug function
-	protected $debug_echo_is_on = true;
+	public $debug_echo_is_on = true;
 	
 	/*
 	 *  Error Handling

@@ -32,7 +32,7 @@ class Auth
 	 * @param 
 	 * @return 
 	 */
-	function StartAuth() 
+	public function StartAuth() 
 	{	
 		self::$init = true;
 		
@@ -59,7 +59,7 @@ class Auth
 	/**
 	 * Return the current pilot's ID
 	 */
-	function PilotID()
+	public function PilotID()
 	{
 		return self::$userinfo->pilotid;
 	}
@@ -67,7 +67,7 @@ class Auth
 	/**
 	 * Get their firstname/last name
 	 */
-	function DisplayName()
+	public function DisplayName()
 	{
 		return self::$userinfo->firstname . ' ' . self::$userinfo->lastname;
 	}
@@ -75,7 +75,7 @@ class Auth
 	/**
 	 * Return true/false if they're logged in or not
 	 */
-	function LoggedIn()
+	public function LoggedIn()
 	{
 		if(self::$init == false)
 		{
@@ -88,7 +88,7 @@ class Auth
 	/**
 	 * See if a use is in a given group
 	 */
-	function UserInGroup($groupname)
+	public function UserInGroup($groupname)
 	{
 		if(!self::LoggedIn()) return false;
 		
@@ -105,7 +105,7 @@ class Auth
 	/**
 	 * Log the user in
 	 */
-	function ProcessLogin($emailaddress, $password)
+	public function ProcessLogin($emailaddress, $password)
 	{
 		$emailaddress = DB::escape($emailaddress);
 		$password = DB::escape($password);
@@ -126,7 +126,6 @@ class Auth
 				
 		if($hash == $userinfo->password)
 		{	
-		
 			self::$userinfo =  $userinfo;
 
 			SessionManager::AddData('loggedin', 'true');	
@@ -147,7 +146,7 @@ class Auth
 	/**
 	 * Log them out
 	 */	
-	function LogOut()
+	public function LogOut()
 	{
 		SessionManager::AddData('loggedin', false);
 		SessionManager::AddData('userinfo', '');

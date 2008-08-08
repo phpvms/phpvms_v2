@@ -44,6 +44,7 @@ class Settings extends CodonModule
 		switch($this->get->admin)
 		{
 			case 'settings':
+				
 				switch(Vars::POST('action'))
 				{
 					case 'addsetting':
@@ -68,10 +69,21 @@ class Settings extends CodonModule
 				
 			case 'addpirepfield':
 				
+				Template::Set('title', 'Add PIREP Field');
+				Template::Set('action', 'addfield');
 				Template::Show('settings_addpirepfield.tpl');
 				
 				break;
 				
+			case 'editpirepfield':
+				
+				Template::Set('title', 'Edit PIREP Field');
+				Template::Set('action', 'savefields');
+				Template::Set('field', PIREPData::GetFieldInfo($this->get->id));
+				
+				Template::Show('settings_addpirepfield.tpl');
+				
+				break;
 				
 			case 'pirepfields':
 				
@@ -155,15 +167,17 @@ class Settings extends CodonModule
 		else
 			$showinregistration = false;
 		
-		if(SettingsData::AddField($title, $fieldtype, $public, $showinregistration))
-		{
-			Template::Set('message', 'Settings were saved!');
-			Template::Show('core_success.tpl');
-		}
-		else
+		$ret = SettingsData::AddField($title, $fieldtype, $public, $showinregistration);
+		
+		if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error saving the settings: ' . DB::error());
 			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'Settings were saved!');
+			Template::Show('core_success.tpl');
 		}
 	}
 	
@@ -176,15 +190,16 @@ class Settings extends CodonModule
 	{
 		$id = DB::escape($this->post->id);
 		
-		if(SettingsData::DeleteField($id) == true)
-		{
-			Template::Set('message', 'The field was deleted');
-			Template::Show('core_success.tpl');
-		}
-		else
+		$ret = SettingsData::DeleteField($id) == true;
+		if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error deleting the field: ' . DB::error());
 			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'The field was deleted');
+			Template::Show('core_success.tpl');
 		}
 	}
 	
@@ -216,38 +231,59 @@ class Settings extends CodonModule
 			return;
 		}
 		
-		if(PIREPData::AddField($this->post->title, $this->post->type, $this->post->values))
+		$ret = PIREPData::AddField($this->post->title, $this->post->type, $this->post->options);
+		
+		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'PIREP field added!');
-			Template::Show('core_success.tpl');
+			Template::Set('message', 'There was an error saving the field: ' . DB::error());
+			Template::Show('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'There was an error saving the field: ' . DB::error());
-			Template::show('core_error.tpl');
+			Template::Set('message', 'PIREP field added!');
+			Template::Show('core_success.tpl');
 		}
 	}
 	
 	function PIREP_SaveFields()
 	{
 		
-		print_r($_POST);
+		if($this->post->title == '')
+		{
+			Template::Set('message', 'The title cannot be blank');
+			Template::Show('core_error.tpl');
+			return false;
+		}
 		
+		$res = PIREPData::EditField($this->post->fieldid, $this->post->title, $this->post->type, $this->post->options);
+		
+		if(DB::errno() != 0)
+		{
+			Template::Set('message', 'There was an error saving the field');
+			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'Field saved!');
+			Template::Show('core_success.tpl');
+		}		
 	}
 	
 	function PIREP_DeleteField()
 	{
 		$id = DB::escape($this->post->id);
 		
-		if(PIREPData::DeleteField($id) == true)
-		{
-			Template::Set('message', 'The field was deleted');
-			Template::Show('core_success.tpl');
-		}
-		else
+		$ret = PIREPData::DeleteField($id);
+		
+		if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error deleting the field: ' . DB::$err);
 			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'The field was deleted');
+			Template::Show('core_success.tpl');
 		}
 	}
 }

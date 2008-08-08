@@ -76,17 +76,13 @@ class Vars
 	
 	public static function URLRewrite($parameters)
 	{
-		
-		self::$rewrite_rules = new stdClass;
-		self::$rewrite_rules->default = new stdClass;
-		
-		
 		// Parse any ? rules
 		$url = substr($_SERVER['REQUEST_URI'],
 				strpos($_SERVER['REQUEST_URI'], '?')+1, strlen($_SERVER['REQUEST_URI']));
-				
+		
+		
 		if($url == $_SERVER['REQUEST_URI'])
-		{
+		{ // no extra $_GET parameters
 			$get_extra = array();
 		}
 		else
@@ -102,7 +98,7 @@ class Vars
 		
 		// Now parse any other matches
 		
-		//if(!is_array($parameters) || !$parameters) return false;
+		if(!is_array($parameters)) return false;
 		
 		/*
 		 * This matches something like:
@@ -130,6 +126,9 @@ class Vars
 		preg_match($pattern, $preg_match, $matches);
 		
 		// Loop through each match
+		self::$rewrite_rules = new stdClass;
+		self::$rewrite_rules->default = new stdClass;
+		
 		// check if this is numeric or not
 		if((array_keys($parameters) !== range(0, count($parameters) - 1)))
 		{
@@ -189,6 +188,17 @@ class Vars
 	public static function cleaned(&$V)
 	{
 		return htmlspecialchars(addslashes(stripslashes($V)));
+	}
+	
+	/**
+	 * Sanitize $var for XSS, JS, and HTML.
+	 * 
+	 * @param Mixed $var - variable to sanitize  
+	 * @return a sanitized variable filtered for XSS and any blacklisted javascript/html tags
+	 */
+	public static function Filter($var) {
+		$filter = new InputFilter;
+		return $filter->process(self::cleaned($var));
 	}
 	
 	public static function Request($name)

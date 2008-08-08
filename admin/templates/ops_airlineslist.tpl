@@ -10,10 +10,9 @@ if(!$allairlines)
 <thead>
 <tr>
 	<th>Code</th>
-	<th>Name</th>	
-	<?php
-		//<th>Options</th>
-	?>
+	<th>Name</th>
+	<th>Enabled</th>
+	<th>Options</th>
 </tr>
 </thead>
 <tbody>
@@ -24,10 +23,11 @@ foreach($allairlines as $airline)
 <tr>
 	<td align="center"><?=$airline->code; ?></td>
 	<td align="center"><?=$airline->name; ?></td>
-	<?php	/*<td align="center">
+	<td align="center"><?php echo ($airline->enabled == 1) ? 'Yes' : 'No'; ?></td>
+	<td align="center">
 	<a id="dialog" class="jqModal" href="action.php?admin=editairline&id=<?=$airline->id;?>">
-		<img src="lib/images/options.gif" alt="Options" /></a>
-	</td>*/ ?>
+		<img src="lib/images/edit.gif" alt="Edit" /></a>
+	</td>
 </tr>
 <?php
 }

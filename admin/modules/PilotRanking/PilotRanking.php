@@ -53,7 +53,7 @@ class PilotRanking extends CodonModule
 			case 'editrank':
 				Template::Set('title', 'Edit Rank');
 				Template::Set('action', 'editrank');
-				Template::Set('rank', RanksData::GetRankInfo(Vars::GET('rankid')));
+				Template::Set('rank', RanksData::GetRankInfo($this->get->rankid));
 				
 				Template::Show('ranks_rankform.tpl');
 				break;
@@ -87,18 +87,18 @@ class PilotRanking extends CodonModule
 		{
 			Template::Set('message', 'The hours must be a number');
 			Template::Show('core_error.tpl');
+			return;
 		}
 		
-		if(!RanksData::AddRank($minhours, $rank, $imageurl))
+		$ret = RanksData::AddRank($minhours, $rank, $imageurl);
+	
+		if(DB::errno() != 0)
 		{
-			if(DB::errno() != 0)
-			{
-				Template::Set('message', 'Error adding the rank: '. DB::error());
-				Template::Show('core_error.tpl');
-				return;
-			}
+			Template::Set('message', 'Error adding the rank: '. DB::error());
+			Template::Show('core_error.tpl');
+			return;
 		}
-		DB::debug();
+		
 		Template::Set('message', 'Rank Added!');
 		Template::Show('core_success.tpl');
 	}
@@ -121,16 +121,16 @@ class PilotRanking extends CodonModule
 		{
 			Template::Set('message', 'The hours must be a number');
 			Template::Show('core_error.tpl');
+			return;
 		}
 		
-		if(!RanksData::UpdateRank($rankid, $rank, $minhours, $imageurl))
+		$ret = RanksData::UpdateRank($rankid, $rank, $minhours, $imageurl);
+		
+		if(DB::errno() != 0)
 		{
-			if(DB::errno() != 0)
-			{
-				Template::Set('message', 'Error updating the rank: '.DB::error());
-				Template::Show('core_error.tpl');
-				return;
-			}
+			Template::Set('message', 'Error updating the rank: '.DB::error());
+			Template::Show('core_error.tpl');
+			return;
 		}
 		
 		Template::Set('message', 'Rank Added!');

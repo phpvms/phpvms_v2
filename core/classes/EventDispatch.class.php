@@ -39,13 +39,18 @@
 
 class EventDispatch
 {
-
+	public static $listeners;
 	public static $lastevent;
+	
+	public static function addListener($module_name, $event_list='')
+	{
+		self::$listeners[$modulename] = $event_list;
+	}
 	
 	/**
 	 * Dispatch an event to the modules, will call the
 	 *  modules with the EventListener() function.
-	 * 
+	 *
 	 * @see http://www.nsslive.net/codon/docs/events
 	 * @param string $eventname
 	 * @param string $origin
@@ -72,17 +77,20 @@ class EventDispatch
 		}
 		
 		// Load each module and call the EventListen function
-		foreach(MainController::$ModuleList as $ModuleName => $ModuleController)
+		foreach(self::$listners as $ModuleName => $Events)
 		{
 			$ModuleName = strtoupper($ModuleName);
 			global $$ModuleName;
 			
 			if(method_exists($$ModuleName, 'EventListener'))
 			{
-				self::$lastevent = $eventname;
-				
-				//@todo depreciated, replace
-				return call_user_method_array('EventListener',  $$ModuleName, $params);
+				// Run if no specific events specified, or if the eventname is there
+				if(!$Events || in_array($eventname, $Events))
+				{
+					self::$lastevent = $eventname;
+					//@todo depreciated, replace
+					return call_user_method_array('EventListener',  $$ModuleName, $params);
+				}
 			}
 		}
 		

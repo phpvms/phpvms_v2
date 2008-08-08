@@ -77,6 +77,8 @@ class Dashboard extends CodonModule
 			$postversion = str_replace('.', '', $postversion);
 			$currversion = str_replace('.', '', PHPVMS_VERSION);
 			
+			echo $currversion;
+			
 			if($currversion < $postversion)
 			{
 				Template::Set('message', 'An update for phpVMS is available!');

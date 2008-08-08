@@ -23,7 +23,7 @@ class StatsData
 	 *  by a certain pilot. Outputs image, unless $ret == true,
 	 * 	then it returns the URL.
 	 */
-	function PilotAircraftFlownGraph($pilotid, $ret = false)
+	public function PilotAircraftFlownGraph($pilotid, $ret = false)
 	{
 		//Select aircraft types
 		$sql = 'SELECT aircraft, COUNT(aircraft) count

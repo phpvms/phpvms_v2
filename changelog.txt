@@ -16,12 +16,16 @@ Next Build
 
   * Bid deleted on PIREP submit
   * PIREP fields properly show in admin panel
+  * PIREP fields can be edited
+  * Airlines can be enabled/disabled (not deleted)
+  * Airline names/ICAO can be changed
   * WYSIWYG editor for News and Pages
   * Default skin tweaks
   * Profile stats back (to be expanded)
   * PIREP submit form fixes
   * Registration code tidied up
   * Admin panel JS error fixed
+  * Bug fixes
   
   Notes
   -----

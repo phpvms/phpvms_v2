@@ -38,5 +38,5 @@
 	</ul>
 </li>
 <?=$MODULE_NAV_INC;?>
-<li><a href="<?=SITE_URL?>/Login/logout">Log Out</a></li>
+<li><a href="<?=SITE_URL?>/index.php/Login/logout">Log Out</a></li>
 <li><a href="<?=SITE_URL?>/index.php">Goto Site</a></li>

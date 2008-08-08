@@ -21,7 +21,7 @@ class PilotGroups
 	/**
 	 * Get all of the groups
 	 */
-	function GetAllGroups()
+	public function GetAllGroups()
 	{
 		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups
 						ORDER BY name ASC';
@@ -32,7 +32,7 @@ class PilotGroups
 	/**
 	 * Add a group
 	 */
-	function AddGroup($groupname)
+	public function AddGroup($groupname)
 	{
 		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name) VALUES ('$groupname')";
 		
@@ -47,7 +47,7 @@ class PilotGroups
 	/**
 	 * Get a group ID, given the name
 	 */
-	function GetGroupID($groupname)
+	public function GetGroupID($groupname)
 	{
 		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups
 					WHERE name=\''.$groupname.'\'';
@@ -60,7 +60,7 @@ class PilotGroups
 	/**
 	 * Add a user to a group, either supply the group ID or the name
 	 */
-	function AddUsertoGroup($pilotid, $groupidorname)
+	public function AddUsertoGroup($pilotid, $groupidorname)
 	{
 		if($groupidorname == '') return false;
 		
@@ -84,7 +84,7 @@ class PilotGroups
 	/**
 	 * Check if a user is in a group, pass the name or the id
 	 */
-	function CheckUserInGroup($pilotid, $groupid)
+	public function CheckUserInGroup($pilotid, $groupid)
 	{
 		
 		if(!is_numeric($groupidorname))
@@ -105,7 +105,7 @@ class PilotGroups
 	/**
 	 * The a users groups (pass their database ID)
 	 */
-	function GetUserGroups($pilotid)
+	public function GetUserGroups($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
 		
@@ -121,7 +121,7 @@ class PilotGroups
 	/**
 	 * Remove a user from a group (pass the ID or the name)
 	 */
-	function RemoveUserFromGroup($pilotid, $groupid)
+	public function RemoveUserFromGroup($pilotid, $groupid)
 	{
 		$pilotid = DB::escape($pilotid);
 		$groupid = DB::escape($groupid);
@@ -145,7 +145,7 @@ class PilotGroups
 	/**
 	 * Remove a group
 	 */
-	function RemoveGroup($groupid)
+	public function RemoveGroup($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		
@@ -157,7 +157,5 @@ class PilotGroups
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE groupid='.$groupid;
 		DB::query($sql);
 	}
-	
 }
-
 ?>

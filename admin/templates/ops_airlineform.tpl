@@ -7,6 +7,10 @@
 <dt>Airline Name</dt>
 <dd><input name="name" type="text" value="<?=$airline->name; ?>" /></dd>
 
+<dt>Enabled?</dt>
+<dd><?php $checked = ($airline->enabled==1)?'CHECKED':''; ?>
+	<input name="enabled" type="checkbox" <?=$checked ?> /></dd>
+
 <dt></dt>
 <dd><input type="hidden" name="id" value="<?=$airline->id;?>" />
 	<input type="hidden" name="action" value="<?=$action;?>" />

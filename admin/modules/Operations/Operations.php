@@ -79,6 +79,17 @@ class Operations extends CodonModule
 				Template::Show('ops_airlineform.tpl');
 				break;
 				
+			case 'editairline':
+				
+				
+				Template::Set('title', 'Edit Airline');
+				Template::Set('action', 'editairline');
+				Template::Set('airline', OperationsData::GetAirlineByID($this->get->id));
+				
+				Template::Show('ops_airlineform.tpl');
+				
+				break;
+				
 			
 			/**
 			 * These are the main form
@@ -89,6 +100,10 @@ class Operations extends CodonModule
 				if($this->post->action == 'addairline')
 				{
 					$this->AddAirline();
+				}
+				if($this->post->action == 'editairline')
+				{
+					$this->EditAirline();
 				}
 				
 				Template::Set('allairlines', OperationsData::GetAllAirlines());
@@ -156,6 +171,7 @@ class Operations extends CodonModule
 				}
 								
 				Template::Set('airports', OperationsData::GetAllAirports());
+				
 				Template::Show('ops_airportlist.tpl');
 				
 				break;
@@ -231,10 +247,19 @@ class Operations extends CodonModule
 			Template::Show('core_error.tpl');
 			return;
 		}
-	
-		if(!OperationsData::AddAirline($code, $name))
+		
+		if(OperationsData::GetAirlineByCode($code))
 		{
-			if(DB::$errno == 1062) // Duplicate entry
+			Template::Set('message', 'An airline with this code already exists!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		OperationsData::AddAirline($code, $name);
+		
+		if(DB::errno() != 0)
+		{
+			if(DB::errno() == 1062) // Duplicate entry
 				Template::Set('message', 'This airline has already been added');
 			else
 				Template::Set('message', 'There was an error adding the airline');
@@ -244,6 +269,44 @@ class Operations extends CodonModule
 		}
 
 		Template::Set('message', 'Airline has been added!');
+		Template::Show('core_success.tpl');
+	}
+	
+	function EditAirline()
+	{
+		$id = $this->post->id;
+		$code = $this->post->code;
+		$name = $this->post->name;
+		
+		if($code == '' || $name == '')
+		{
+			Template::Set('message', 'Code and name cannot be blank');
+			Template::Show('core_error.tpl');
+		}
+		
+		$prevairline = OperationsData::GetAirlineByCode($code);
+		if($prevairline && $prevairline->id != $id)
+		{
+			Template::Set('message', 'This airline with this code already exists!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		if(isset($_POST['enabled']))
+			$enabled = true;
+		else
+			$enabled = false;
+			
+		OperationsData::EditAirline($id, $code, $name, $enabled);
+		
+		if(DB::errno() != 0)
+		{
+			Template::Set('message', 'There was an error editing the airline');
+			Template::Show('core_error.tpl');
+			return false;
+		}
+
+		Template::Set('message', 'The airline has been edited');
 		Template::Show('core_success.tpl');
 	}
 			
@@ -263,7 +326,9 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		if(!OperationsData::AddAircaft($icao, $name, $fullname, $range, $weight, $cruise))
+		OperationsData::AddAircaft($icao, $name, $fullname, $range, $weight, $cruise);
+		
+		if(DB::errno() != 0)
 		{
 			if(DB::$errno == 1062) // Duplicate entry
 				Template::Set('message', 'This aircraft already exists');
@@ -286,8 +351,6 @@ class Operations extends CodonModule
 		$lat = $this->post->lat;
 		$long = $this->post->long;
 		$hub = $this->post->hub;
-		
-		echo 'i am here';
 
 		if($icao == '' || $name == '' || $country == '' || $lat == '' || $long == '')
 		{
@@ -301,7 +364,9 @@ class Operations extends CodonModule
 		else
 			$hub = false;
 	
-		if(!OperationsData::AddAirport($icao, $name, $country, $lat, $long, $hub))
+		OperationsData::AddAirport($icao, $name, $country, $lat, $long, $hub);
+		
+		if(DB::errno() != 0)
 		{
 			if(DB::$errno == 1062) // Duplicate entry
 				Template::Set('message', 'This airport has already been added');
@@ -338,7 +403,9 @@ class Operations extends CodonModule
 		else
 			$hub = false;
 
-		if(!OperationsData::EditAirport($icao, $name, $country, $lat, $long, $hub))
+		OperationsData::EditAirport($icao, $name, $country, $lat, $long, $hub);
+		
+		if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error adding the airport: '.DB::$error);
 
@@ -352,7 +419,6 @@ class Operations extends CodonModule
 	
 	function AddSchedule()
 	{
-		
 		$code = $this->post->code;
 		$flightnum = $this->post->flightnum;
 		$leg = $this->post->leg;
@@ -377,8 +443,10 @@ class Operations extends CodonModule
 		}
 
 		//Add it in
-		if(!SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
-										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled))
+		SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
+										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled);
+										
+		if(DB::errno() != 0)
 		{
             Template::Set('message', 'There was an error adding the schedule: '.DB::error());
 			Template::Show('core_error.tpl');
@@ -410,13 +478,15 @@ class Operations extends CodonModule
 			|| $depicao == '' || $arricao == '')
 		{
 			Template::Set('message', 'All of the fields must be filled out');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 
 			return;
 		}
 
-		if(!SchedulesData::EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
-										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled))
+		SchedulesData::EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
+										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled);
+										
+		if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error editing the schedule: '.DB::error());
 			Template::Show('core_error.tpl');
@@ -431,7 +501,9 @@ class Operations extends CodonModule
 	{
 		$id = $this->post->id;
 		
-        if(!SchedulesData::DeleteSchedule($id))
+		SchedulesData::DeleteSchedule($id);
+		
+        if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error deleting the schedule');
 			Template::Show('core_error.tpl');
@@ -459,7 +531,9 @@ class Operations extends CodonModule
 			return;
 		}
 
-		if(!OperationsData::EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise))
+		OperationsData::EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise);
+		
+		if(DB::errno() != 0)
 		{
 			Template::Set('message', 'There was an error editing the aircraft');
             Template::Show('core_error.tpl');

@@ -19,7 +19,7 @@
 class ACARSData extends CodonModule
 {
 	
-	function InsertData()
+	public function InsertData()
 	{
 		$pilotid = Vars::GET('pnumber');
 		
@@ -90,7 +90,7 @@ class ACARSData extends CodonModule
 	}
 	
 	//TODO: convert this cutoff time into a SETTING parameter, in minutes
-	function GetACARSData($cutofftime = 1)
+	public function GetACARSData($cutofftime = 1)
 	{
 		//cutoff time in days
 		if($cutofftime == '')
@@ -101,7 +101,5 @@ class ACARSData extends CodonModule
 					
 		return DB::get_results($sql);
 	}
-	
 }
-
 ?>

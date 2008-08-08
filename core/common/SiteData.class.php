@@ -19,7 +19,7 @@
 class SiteData
 {
 	
-	function loadSiteSettings()
+	public function loadSiteSettings()
 	{
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'settings';
 		$all_settings = DB::get_results($sql);
@@ -46,13 +46,13 @@ class SiteData
 		}
 	}
 
-	function GetAllNews()
+	public function GetAllNews()
 	{
 		return DB::get_results('SELECT id, subject, body, UNIX_TIMESTAMP(postdate) as postdate, postedby
 									FROM ' . TABLE_PREFIX.'news ORDER BY postdate DESC');
 	}
 	
-	function AddNewsItem($subject, $body)
+	public function AddNewsItem($subject, $body)
 	{
 		$postedby = Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;
 		
@@ -67,7 +67,7 @@ class SiteData
 		return true;
 	}
 	
-	function DeleteItem($id)
+	public function DeleteItem($id)
 	{
 		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'news WHERE id='.$id;
 		
@@ -79,7 +79,7 @@ class SiteData
 		return true;
 	}
 	
-	function GetAllPages($onlyenabled=false, $onlypublic=true)
+	public function GetAllPages($onlyenabled=false, $onlypublic=true)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pages";
 		
@@ -97,14 +97,14 @@ class SiteData
 		return DB::get_results($sql);
 	}
 	
-	function GetPageData($pageid)
+	public function GetPageData($pageid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pages WHERE pageid='.$pageid;
 		
 		return DB::get_row($sql);
 	}
 	
-	function AddPage($title, $content, $public=true, $enabled=true)
+	public function AddPage($title, $content, $public=true, $enabled=true)
 	{
 		$filename = strtolower($title);
 	
@@ -148,7 +148,7 @@ class SiteData
 		return self::EditPageFile($filename, $content);
 	}
 	
-	function DeletePage($pageid)
+	public function DeletePage($pageid)
 	{
 	
 		$info = self::GetPageData($pageid);
@@ -165,7 +165,7 @@ class SiteData
 		return true;
 	}
 	
-	function GetPageContent($filename)
+	public function GetPageContent($filename)
 	{
 		// Round-about way, I know. But it's in the name of security. If they're giving a
 		//	bogus name, then it won't find it.
@@ -191,7 +191,7 @@ class SiteData
 		return $row;
 	}
 	
-	function EditFile($pageid, $content, $public, $enabled)
+	public function EditFile($pageid, $content, $public, $enabled)
 	{
 		$pagedata = SiteData::GetPageData($pageid);
 		
@@ -217,7 +217,7 @@ class SiteData
 		}
 	}
 	
-	function EditPageFile($filename, $content)
+	public function EditPageFile($filename, $content)
 	{
 		//create the file
 		$filename = PAGES_PATH . '/' . $filename . PAGE_EXT;
@@ -235,7 +235,7 @@ class SiteData
 		}
 	}
 	
-	function GetAvailableSkins()
+	public function GetAvailableSkins()
 	{
 		$skins = array();
 		$skins_dir = SITE_ROOT . '/lib/skins';
@@ -263,3 +263,4 @@ class SiteData
 		return $skins;
 	}
 }
+?>

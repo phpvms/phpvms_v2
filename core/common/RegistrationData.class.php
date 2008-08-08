@@ -26,7 +26,7 @@ class RegistrationData
 	 * Get all of the custom fields that will show up
 	 *	during the registration
 	 */
-	function GetCustomFields()
+	public function GetCustomFields()
 	{
 		
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'customfields
@@ -38,7 +38,7 @@ class RegistrationData
 	/**
 	 * Add a  User
 	 */
-	function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=false)
+	public function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=false)
 	{
 		//Set the password, add some salt
 		$salt = md5(date('His'));
@@ -98,7 +98,7 @@ class RegistrationData
 		return true;
 	}
 	
-	function ChangePassword($pilotid, $newpassword)
+	public function ChangePassword($pilotid, $newpassword)
 	{
 		$salt = md5(date('His'));
 
@@ -116,7 +116,7 @@ class RegistrationData
 		return true;
 	}
 	
-	function SendEmailConfirm($email, $firstname, $lastname, $newpw='')
+	public function SendEmailConfirm($email, $firstname, $lastname, $newpw='')
 	{
 		/*$firstname = Vars::POST('firstname');
 		$lastname = Vars::POST('lastname');
@@ -135,7 +135,7 @@ class RegistrationData
 		Util::SendEmail($email, $subject, $message);
 	}
 	
-	function ValidateConfirm()
+	public function ValidateConfirm()
 	{
 		$confid = Vars::GET('confirmid');
 	
@@ -148,5 +148,4 @@ class RegistrationData
 		return true;
 	}
 }
-
 ?>

@@ -120,12 +120,12 @@ class PilotAdmin extends CodonModule
                 switch($this->post->action)
                 {
 					case 'approvepilot':
-						PilotData::AcceptPilot(Vars::POST('id'));
+						PilotData::AcceptPilot($this->post->id);
 						RanksData::CalculatePilotRanks();
 						
 						break;
 					case 'rejectpilot':
-						PilotData::RejectPilot(Vars::POST('id'));
+						PilotData::RejectPilot($this->post->id);
 						break;
 				}
 
@@ -199,16 +199,22 @@ class PilotAdmin extends CodonModule
 		if($name == '')
 		{
 			Template::Set('message', 'You must enter a name!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+			$ret = PilotGroups::AddGroup($name);
+			
+		if(DB::errno() != 0)
+		{
+			Template::Set('message', 'There was an error!');
+			Template::Show('core_error.tpl');
 		}
 		else
 		{
-			if(PilotGroups::AddGroup($name))
-				Template::Set('message', 'The group "'.$name.'" has been added');
-			else
-				Template::Set('message', 'There was an error!');
-		}
-		
-		Template::Show('core_message.tpl');
+			Template::Set('message', 'The group "'.$name.'" has been added');
+			Template::Show('core_success.tpl');
+		}		
 	}
 	
 	function AddPilotToGroup()
@@ -219,32 +225,41 @@ class PilotAdmin extends CodonModule
 		if(PilotGroups::CheckUserInGroup($pilotid, $groupname))
 		{
 			Template::Set('message', 'This user is already in this group!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$ret = PilotGroups::AddUsertoGroup($pilotid, $groupname);
+		
+		if(DB::errno() != 0 )
+		{
+			Template::Set('message', 'There was an error adding this user');
+			Template::Show('core_error.tpl');
 		}
 		else
 		{
-			if(PilotGroups::AddUsertoGroup($pilotid, $groupname))
-				Template::Set('message', 'User has been added to the group!');
-			else
-				Template::Set('message', 'There was an error adding this user');
-		}
-		
-		Template::Show('core_message.tpl');
-		
+			Template::Set('message', 'User has been added to the group!');
+			Template::Show('core_success.tpl');
+		}		
 	}
 	
 	function RemovePilotGroup()
 	{
 		$pilotid = $this->post->pilotid;
 		$groupid = $this->post->groupid;
-					
-		if(PilotGroups::RemoveUserFromGroup($pilotid, $groupid))
+		
+		PilotGroups::RemoveUserFromGroup($pilotid, $groupid);
+		
+		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'Removed');
+			Template::Set('message', 'There was an error removing');
+			Template::Show('core_error.tpl');
 		}
 		else
-			Template::Set('message', 'There was an error removing');
-			
-		Template::Show('core_message.tpl');
+		{
+			Template::Set('message', 'Removed');
+			Template::Show('core_success.tpl');
+		}
 	}
 	
 	function ShowGroups()
@@ -275,13 +290,18 @@ class PilotAdmin extends CodonModule
 			return;
 		}
 		
-		if(RegistrationData::ChangePassword($this->post->pilotid, $password1))
-			Template::Set('message', 'Password has been successfully changed');
-		else
+		RegistrationData::ChangePassword($this->post->pilotid, $password1);
+		
+		if(DB::errno() != 0)
+		{
 			Template::Set('message', 'There was an error, administrator has been notified');
-			
-		Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'Password has been successfully changed');
+			Template::Show('core_success.tpl');
+		}
 	}
 }
-
 ?>

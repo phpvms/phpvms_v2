@@ -22,7 +22,7 @@ class PilotData
 	 * Get all the pilots, or the pilots who's last names start
 	 * with the letter
 	 */
-	function GetAllPilots($letter='')
+	public function GetAllPilots($letter='')
 	{
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'pilots ';
 		
@@ -37,7 +37,7 @@ class PilotData
 	/**
 	 * Get all the detailed pilot's information
 	 */
-	function GetAllPilotsDetailed($start='', $limit=20)
+	public function GetAllPilotsDetailed($start='', $limit=20)
 	{
 	
 		$sql = 'SELECT p.*, r.rankimage FROM '.TABLE_PREFIX.'pilots p, '.TABLE_PREFIX.'ranks r
@@ -53,7 +53,7 @@ class PilotData
 	/**
 	 * Get all the pilots on a certain hub
 	 */
-	function GetAllPilotsByHub($hub)
+	public function GetAllPilotsByHub($hub)
 	{
 		$sql = "SELECT p.*, r.rankimage FROM ".TABLE_PREFIX."pilots p, ".TABLE_PREFIX."ranks r
 					WHERE r.rank = p.rank AND hub='$hub'
@@ -67,7 +67,7 @@ class PilotData
 	 * Return the pilot's code (ie DVA1031), using
 	 * the code and their DB ID
 	 */
-	function GetPilotCode($code, $pilotid)
+	public function GetPilotCode($code, $pilotid)
 	{
 		$pilotid = $pilotid + PILOTID_OFFSET;
 		return $code . str_pad($pilotid, 4, '0', STR_PAD_LEFT);
@@ -76,7 +76,7 @@ class PilotData
 	/**
 	 * The the basic pilot information
 	 */
-	function GetPilotData($pilotid)
+	public function GetPilotData($pilotid)
 	{
 		$sql = 'SELECT *, UNIX_TIMESTAMP(lastlogin) as lastlogin
 					FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
@@ -87,7 +87,7 @@ class PilotData
 	/**
 	 * Get a pilot's information by email
 	 */
-	function GetPilotByEmail($email)
+	public function GetPilotByEmail($email)
 	{
 		$sql = 'SELECT * FROM '. TABLE_PREFIX.'pilots WHERE email=\''.$email.'\'';
 		return DB::get_row($sql);
@@ -96,7 +96,7 @@ class PilotData
 	/**
 	 * Get the list of all the pending pilots
 	 */
-	function GetPendingPilots($count='')
+	public function GetPendingPilots($count='')
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots WHERE confirmed='.PILOT_PENDING;
 
@@ -107,8 +107,7 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
-	
-	function GetLatestPilots($count=10)
+	public function GetLatestPilots($count=10)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
 					ORDER BY pilotid DESC
@@ -120,7 +119,7 @@ class PilotData
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
-	function SaveProfile($pilotid, $email, $location, $hub='')
+	public function SaveProfile($pilotid, $email, $location, $hub='')
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location' ";
 		
@@ -140,7 +139,7 @@ class PilotData
 	/**
 	 * Accept the pilot (allow them into the system)
 	 */
-	function AcceptPilot($pilotid)
+	public function AcceptPilot($pilotid)
 	{
 		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_ACCEPTED.'
 					WHERE pilotid='.$pilotid;
@@ -150,7 +149,7 @@ class PilotData
 	/**
 	 * Reject a pilot
 	 */
-    function RejectPilot($pilotid)
+   	public function RejectPilot($pilotid)
 	{
 		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
 					WHERE pilotid='.$pilotid;
@@ -166,7 +165,7 @@ class PilotData
 	/**
 	 * Update the login time
 	 */
-	function UpdateLogin($pilotid)
+	public function UpdateLogin($pilotid)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET lastlogin=NOW() WHERE pilotid=$pilotid";
 		
@@ -181,7 +180,7 @@ class PilotData
 	/**
 	 * After a PIREP been accepted, update their statistics
 	 */
-	function UpdateFlightData($pilotid, $flighttime, $numflights=1)
+	public function UpdateFlightData($pilotid, $flighttime, $numflights=1)
 	{
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
 					SET totalhours=totalhours+$flighttime, totalflights=totalflights+$numflights
@@ -199,7 +198,7 @@ class PilotData
 	 * Don't update the pilot's flight data, but just replace it
 	 * 	with the values given
 	 */
-	function ReplaceFlightData($pilotid, $flighttime, $numflights)
+	public function ReplaceFlightData($pilotid, $flighttime, $numflights)
 	{
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
 					SET totalhours=$flighttime, totalflights=$numflights
@@ -216,7 +215,7 @@ class PilotData
 	/**
 	 * Save the custom fields. Usually just pass the $_POST
 	 */
-	function SaveFields($pilotid, $list)
+	public function SaveFields($pilotid, $list)
 	{
 		$allfields = RegistrationData::GetCustomFields();
 		
@@ -253,7 +252,7 @@ class PilotData
 	/**
 	 * Get all of the "cusom fields" for a pilot
 	 */
-	function GetFieldData($pilotid, $inclprivate=false)
+	public function GetFieldData($pilotid, $inclprivate=false)
 	{
 		$sql = 'SELECT f.title, f.fieldname, v.value
 					FROM '.TABLE_PREFIX.'customfields f
@@ -269,7 +268,7 @@ class PilotData
 	/**
 	 * Get the groups a pilot is in
 	 */
-	function GetPilotGroups($pilotid)
+	public function GetPilotGroups($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
 		
@@ -282,5 +281,4 @@ class PilotData
 		return $ret;
 	}
 }
-
 ?>

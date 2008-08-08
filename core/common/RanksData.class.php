@@ -18,13 +18,12 @@
 
 class RanksData
 {
-	
 	static $lasterror;
 	
 	/**
 	 * Return information about the rank, given the ID
 	 */
-	function GetRankInfo($rankid)
+	public function GetRankInfo($rankid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks
 				WHERE rankid='.$rankid;
@@ -36,7 +35,7 @@ class RanksData
 	 * Returns all the ranks, and the total number of pilots
 	 * on each rank
 	 */
-	function GetAllRanks()
+	public function GetAllRanks()
 	{
 		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
 					FROM ' .TABLE_PREFIX.'ranks r
@@ -44,7 +43,7 @@ class RanksData
 		return DB::get_results($sql);
 	}
 	
-	function GetRankImage($rank)
+	public function GetRankImage($rank)
 	{
 		$sql = 'SELECT rankimage FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
 		return DB::get_var($sql);
@@ -53,7 +52,7 @@ class RanksData
 	/**
 	 * Give the number of hours, return the next rank
 	 */
-	function GetNextRank($hours)
+	public function GetNextRank($hours)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."ranks
 					WHERE minhours>$hours ORDER BY minhours ASC LIMIT 1";
@@ -65,7 +64,7 @@ class RanksData
 	 * Add a ranking. This will automatically call
 	 * CalculatePilotRanks() at the end
 	 */
-	function AddRank($hours, $title, $imageurl)
+	public function AddRank($hours, $title, $imageurl)
 	{
 		$hours = intval($hours);
 		
@@ -88,7 +87,7 @@ class RanksData
 	/**
 	 * Update a certain rank
 	 */
-	function UpdateRank($rankid, $title, $minhours, $imageurl)
+	public function UpdateRank($rankid, $title, $minhours, $imageurl)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."ranks
 					SET rank='$title', rankimage='$imageurl', minhours='$minhours'
@@ -108,7 +107,7 @@ class RanksData
 	 *  for that rank level, then make $last_rank that text. At the
 	 *  end, update that
 	 */
-	function CalculatePilotRanks()
+	public function CalculatePilotRanks()
 	{
 		$pilots = PilotData::GetAllPilots();
 		$allranks = self::GetAllRanks();
@@ -133,7 +132,7 @@ class RanksData
 		}
 	}
 	
-	function CalculateUpdatePilotRank($pilotid)
+	public function CalculateUpdatePilotRank($pilotid)
 	{
 		$allranks = self::GetAllRanks();
 		$pilot = PilotData::GetPilotData($pilotid);
@@ -153,5 +152,4 @@ class RanksData
 		DB::query($sql);
 	}
 }
-
 ?>

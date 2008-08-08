@@ -2,6 +2,7 @@ CREATE TABLE `phpvms_airlines` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`code` VARCHAR( 5 ) NOT NULL ,
 	`name` VARCHAR( 30 ) NOT NULL ,
+	`enabled` smallint(6) NOT NULL default '1',
 	PRIMARY KEY ( `id` ),
 	UNIQUE KEY `code` (`code`)
 )ENGINE=INNODB;

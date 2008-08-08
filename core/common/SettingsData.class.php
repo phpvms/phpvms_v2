@@ -18,7 +18,7 @@
 
 class SettingsData
 {
-	function GetAllSettings()
+	public function GetAllSettings()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
 	}
@@ -26,7 +26,7 @@ class SettingsData
 	/**
 	 * Return all of the custom fields data
 	 */
-	function GetAllFields()
+	public function GetAllFields()
 	{
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
 	}
@@ -34,7 +34,7 @@ class SettingsData
 	/**
 	 * Add a custom field to be used in a profile
 	 */
-	function AddField($title, $fieldtype, $public, $showinregistration)
+	public function AddField($title, $fieldtype, $public, $showinregistration)
 	{
 		/*$fieldname = Vars::POST('fieldname');
 		$fieldtype = Vars::POST('fieldtype');
@@ -65,6 +65,7 @@ class SettingsData
 			
 		return true;
 	}
+	
 	/**
 	 * Save site settings
 	 *
@@ -72,7 +73,7 @@ class SettingsData
 	 * @param string $value Value of the setting
 	 * @param boolean $core Whether it's "vital" to the engine or not. Bascially blocks deletion
 	 */
-	function SaveSetting($name, $value, $descrip='', $core=false)
+	public function SaveSetting($name, $value, $descrip='', $core=false)
 	{
 		if(is_bool($value))
 		{
@@ -122,7 +123,7 @@ class SettingsData
 	/**
 	 * See if the setting is part of the core
 	 */
-	function IsCoreSetting($setting_name)
+	public function IsCoreSetting($setting_name)
 	{
 		$sql = 'SELECT core FROM ' . TABLE_PREFIX .'settings WHERE name=\''.$setting_name.'\'';
 		$res = DB::get_row($sql);
@@ -139,7 +140,7 @@ class SettingsData
 		return false;
 	}
 	
-	function DeleteField($id)
+	public function DeleteField($id)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$id;
 

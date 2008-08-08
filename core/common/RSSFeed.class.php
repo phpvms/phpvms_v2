@@ -20,7 +20,7 @@ class RSSFeed
 {
 	var $feed_contents;
 	
-	function RSSFeed($title='', $url='', $description = '')
+	public function RSSFeed($title='', $url='', $description = '')
 	{
 		
 		$last_build_date = $this->LastBuildDate();
@@ -35,7 +35,7 @@ class RSSFeed
 	/* Two ways to add to the main feed, overloaded depending on 
 		what was passed
 	*/
-	function AddItem($title, $link, $guid='', $description)
+	public function AddItem($title, $link, $guid='', $description)
 	{
 		$last_build_date = $this->LastBuildDate();
 			
@@ -53,12 +53,12 @@ class RSSFeed
 							 . '</item>';		
 	}
 	
-	function LastBuildDate()
+	public function LastBuildDate()
 	{
 		return date('D, d M Y H:i:s T');
 	}
 	
-	function BuildFeed($filepath)
+	public function BuildFeed($filepath)
 	{
 		$fp = fopen($filepath, 'w');
 		if(!$fp) return false;
@@ -77,5 +77,4 @@ class RSSFeed
 		return true;
 	}
 }
-  
 ?>

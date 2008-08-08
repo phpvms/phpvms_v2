@@ -162,7 +162,7 @@ class MainController
 				}
 		    }
 		}
-				
+		
 		closedir($dh);
 
 		return $modules;
@@ -187,21 +187,20 @@ class MainController
 		{
 			//formulate proper module path
 			//$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
-			
+					
 			if(file_exists($ModuleController))
 			{
 				include_once $ModuleController;
-	
+				
 				if(class_exists($ModuleName))
 				{
 					$ModuleName = strtoupper($ModuleName);
 					global $$ModuleName;
 					
 					self::$activeModule = $ModuleName;
-					//self::$ModuleList[] = $ModuleName;
 				
 					$$ModuleName = new $ModuleName();
-										
+					
 					$$ModuleName->init($ModuleName); // Call the parent constructor
 					
 					//"Magic function" for the main navigation
@@ -240,7 +239,7 @@ class MainController
 		if($module_priority!='')
 		{
 			$PModule = strtoupper(stripslashes($module_priority));
-						
+			
 			//make sure the module exists, it's not just some bogus
 			// name they passed in
 			/*if(self::valid_module($PModule))
@@ -267,11 +266,9 @@ class MainController
 				self::$stop_execute = false;
 				return true;
 			}
-			
-			
+							
 			self::Run($ModuleName, 'Controller');
 		}
-		
 	}
 	
 	/**
@@ -287,7 +284,7 @@ class MainController
 	{
 		$ModuleName = strtoupper($ModuleName);
 		global $$ModuleName;
-
+		
 		// have a reference to the self
 		if(!is_object($$ModuleName) || ! method_exists($$ModuleName, $MethodName))
 		{
@@ -336,8 +333,7 @@ class MainController
 	 */
 	protected static function valid_module($Module)
 	{
-		/*echo '<pre>';print_r(self::$ModuleList);echo '</pre>';
-		if(self::$ModuleList[$Module] != '')*/
+		if(self::$ModuleList[$Module] != '')
 			return true;
 	}
 	

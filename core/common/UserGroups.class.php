@@ -18,9 +18,9 @@
   
 class UserGroups
 {
-	var $user_permissions;
+	public $user_permissions;
 		
-	function CreateSalt()
+	public function CreateSalt()
 	{
 		return md5(uniqid(rand()));
 	}
@@ -31,16 +31,16 @@ class UserGroups
 	 
 	 //load a comprehensive list of user permissions
 	 // store in the session
-	function GetAllUserPermissions($userid)
+	public function GetAllUserPermissions($userid)
 	{
 		$userid = DB::escape($userid);
 		
 		$sql = "SELECT p.categoryid, p.perms
-				FROM " . APP_TABLE_PREFIX."permissions p, " . APP_TABLE_PREFIX ."users u
+				FROM " . TABLE_PREFIX."permissions p, " . TABLE_PREFIX ."users u
 				WHERE u.groupid = p.groupid
 					AND u.id=$userid";
 					
-		$res = DB::get_results($sql, ARRAY_A);
+		$res = DB::get_results($sql);
 		
 		if(!$res)
 		{
@@ -51,28 +51,27 @@ class UserGroups
 		$permissions_list = array();
 		foreach($res as $permlist)
 		{
-			$permissions_list[$permlist['categoryid']] = $permlist['perms'];
+			$permissions_list[$permlist->categoryid] = $permlist->perms;
 		}
 		
 		return $permissions_list;
 	}
 	
-	function GetAllUsers()
+	public function GetAllUsers()
 	{
 		return DB::get_results('SELECT id, displayname, username, groupid, allowremote, lastlogin
-										FROM '.APP_TABLE_PREFIX.'users
+										FROM '.TABLE_PREFIX.'users
 										ORDER BY username ASC');
 	}
 	
-	function GetGroupName($groupid)
+	public function GetGroupName($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		
-		$sql = 'SELECT name FROM ' . APP_TABLE_PREFIX .'groups
+		$sql = 'SELECT name FROM ' . TABLE_PREFIX .'groups
 				 WHERE id='.$groupid;
 		
-		$name = DB::get_row($sql, ARRAY_A);
-		return $name['name'];
+		return DB::get_var($sql);
 	}
 		
 	function GetPermissionsForGroup($groupid, &$perms)
@@ -80,7 +79,7 @@ class UserGroups
 		$groupid = DB::escape($groupid);
 		
 		$sql = 'SELECT g.groupstype AS type, p.id, p.groupid, p.categoryid, p.perms
-				 FROM ' . APP_TABLE_PREFIX . 'permissions p, ' . APP_TABLE_PREFIX . 'groups g
+				 FROM ' . TABLE_PREFIX . 'permissions p, ' . TABLE_PREFIX . 'groups g
 				 WHERE p.groupid=g.id';
 		
 		if( is_numeric($groupid))
@@ -88,19 +87,19 @@ class UserGroups
 		else
 			$sql .= 'g.name=\''.$groupid.'\'';
 							
-		$perms = DB::get_results($sql, ARRAY_A);
+		$perms = DB::get_results($sql);
 		
 		if(!$perms)
 			return false;
 					
-		return $perms[0]['groupstype'];
+		return $perms[0]->groupstype;
 	}
 	
 	function ChangePermissions($permid, $newperm)
 	{
 		$newperm = $this->ConvertPermissionsToInt($newperm);
 		
-		$sql = 'UPDATE ' . APP_TABLE_PREFIX . 'permissions
+		$sql = 'UPDATE ' . TABLE_PREFIX . 'permissions
 				 SET perms=\''.$newperm.'\'
 				 WHERE id='.$permid;
 	
@@ -114,7 +113,7 @@ class UserGroups
 	
 	function RemovePermissions($permid)
 	{
-		$sql = 'DELETE FROM ' . APP_TABLE_PREFIX . 'permissions
+		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'permissions
 				 WHERE id='.$permid;
 		
 		$res = DB::query($sql);
@@ -127,7 +126,7 @@ class UserGroups
 	
 	function GetAllGroups()
 	{
-		$query = 'SELECT * FROM ' . APP_TABLE_PREFIX .'groups
+		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups
 					ORDER BY name ASC';
 		
 		return DB::get_results($query);
@@ -135,7 +134,7 @@ class UserGroups
 	
 	function GetGroupID($groupname)
 	{
-		$query = 'SELECT id FROM ' . APP_TABLE_PREFIX .'groups
+		$query = 'SELECT id FROM ' . TABLE_PREFIX .'groups
 					WHERE name=\''.$groupname.'\'';
 		
 		$res = DB::get_row($query);
@@ -146,7 +145,7 @@ class UserGroups
 	function GetUserInfo($username)
 	{
 		$username = DB::escape($username);
-		$query = 'SELECT * FROM ' . APP_TABLE_PREFIX .'users
+		$query = 'SELECT * FROM ' . TABLE_PREFIX .'users
 					WHERE username=\''.$username.'\'';
 		
 		return DB::get_results($query);
@@ -155,7 +154,7 @@ class UserGroups
 	function CheckUserInGroup($userid, $groupid)
 	{
 		$query = 'SELECT g.id
-				   FROM '.APP_TABLE_PREFIX.'usergroups g
+				   FROM '.TABLE_PREFIX.'usergroups g
 				   WHERE  g.userid='.$userid.' AND g.groupid='.$groupid;
 		
 		return DB::get_row($query);
@@ -165,7 +164,7 @@ class UserGroups
 	{
 		$groupid = DB::escape($groupid);
 		
-		$query = 'SELECT * FROM ' . APP_TABLE_PREFIX . 'groups WHERE ';
+		$query = 'SELECT * FROM ' . TABLE_PREFIX . 'groups WHERE ';
 		
 		if(is_numeric($groupid))
 			$query .= 'id='.$groupid;
@@ -181,10 +180,10 @@ class UserGroups
 		
 		//multiple groups list
 		$query = 'SELECT u.id, u.displayname, u.username
-					FROM '.APP_TABLE_PREFIX.'users u, '.APP_TABLE_PREFIX.'usergroups g
+					FROM '.TABLE_PREFIX.'users u, '.TABLE_PREFIX.'usergroups g
 					WHERE g.groupid='.$groupid.' AND g.userid = u.id';
 	
-		return DB::get_results($query, ARRAY_A);
+		return DB::get_results($query);
 	}
 	
 	function RemoveGroup($groupid)
@@ -192,19 +191,19 @@ class UserGroups
 		$groupid = DB::escape($groupid);
 		
 		//delete from groups table
-		$sql = 'DELETE FROM '.APP_TABLE_PREFIX.'groups WHERE id='.$groupid;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'groups WHERE id='.$groupid;
 		DB::query($sql);
 		
 		//delete from permissions table
-		$sql = 'DELETE FROM '.APP_TABLE_PREFIX.'permissions WHERE groupid='.$groupid;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'permissions WHERE groupid='.$groupid;
 		DB::query($sql);
 		
 		//delete from usergroups table
-		$sql = 'DELETE FROM '.APP_TABLE_PREFIX.'usergroups WHERE groupid='.$groupid;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'usergroups WHERE groupid='.$groupid;
 		DB::query($sql);
 		
 		//delete from application permissions table
-		$sql = 'DELETE FROM '.APP_TABLE_PREFIX.'appperms WHERE groupid='.$groupid;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'appperms WHERE groupid='.$groupid;
 		DB::query($sql);
 	}
 	
@@ -224,7 +223,7 @@ class UserGroups
 			$enabled = 'f';
 		}
 		
-		$sql = "INSERT INTO " . APP_TABLE_PREFIX ."users
+		$sql = "INSERT INTO " . TABLE_PREFIX ."users
 						(displayname, username, password, salt, allowremote)
 				VALUES ('$displayname','$username', '$password','$salt', '$enabled')";
 		
@@ -243,7 +242,7 @@ class UserGroups
 		if($type != 'a' || $type != 'd')
 			$type = 'd';
 					
-		$query = "INSERT INTO " . APP_TABLE_PREFIX . "groups (name, groupstype) VALUES ('$groupname', '$type')";
+		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name, groupstype) VALUES ('$groupname', '$type')";
 		
 		$res = DB::query($sql);
 		
@@ -255,7 +254,7 @@ class UserGroups
 	
 	function AddPermissions($groupid, $catid, $perm)
 	{
-		$sql = "INSERT INTO " . APP_TABLE_PREFIX ."permissions
+		$sql = "INSERT INTO " . TABLE_PREFIX ."permissions
 					(groupid, categoryid, perms) VALUES ('$groupid', '$catid', '$perm')";
 	
 		$res = DB::query($sql);
@@ -305,7 +304,7 @@ class UserGroups
 	
 	function SaveGroupType($groupid, $type)
 	{
-		$sql = 'UPDATE '. APP_TABLE_PREFIX .'groups SET groupstype=\''.$type.'\' WHERE id='.$groupid;
+		$sql = 'UPDATE '. TABLE_PREFIX .'groups SET groupstype=\''.$type.'\' WHERE id='.$groupid;
 		
 		$res = DB::query($sql);
 		
@@ -318,7 +317,7 @@ class UserGroups
 	function UpdateGroups(&$userlist, $groupid)
 	{
 		//form our query:
-		$sql = 'UPDATE ' . APP_TABLE_PREFIX .'users SET groupid='.$groupid. ' WHERE ';
+		$sql = 'UPDATE ' . TABLE_PREFIX .'users SET groupid='.$groupid. ' WHERE ';
 	
 		$total = count($userlist);
 		for($i=0;$i<$total;$i++)
@@ -338,7 +337,7 @@ class UserGroups
 	
 	function DeleteUser($userid)
 	{
-		$sql = "DELETE FROM " . APP_TABLE_PREFIX . "users WHERE id=$userid";
+		$sql = "DELETE FROM " . TABLE_PREFIX . "users WHERE id=$userid";
 				
 		$res = DB::query($sql);
 		

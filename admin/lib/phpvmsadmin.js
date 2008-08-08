@@ -157,5 +157,8 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	new nicEditor({iconsPath : '../lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
+	if(document.getElementById('editor'))
+	{
+		new nicEditor({iconsPath : '../lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
+	}
 });

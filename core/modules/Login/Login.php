@@ -41,6 +41,7 @@ class Login extends CodonModule
 					Template::Show('login_form.tpl');
 				}
 				
+				
 				break;
 				
 			case 'logout':
@@ -147,8 +148,10 @@ class Login extends CodonModule
 							
 				PilotData::UpdateLogin(SessionManager::GetValue('userinfo', 'pilotid'));
 				
-				Template::Set('redir', SITE_URL . '/' . Vars::POST('redir'));
+				Template::Set('redir', SITE_URL . '/' . $this->post->redir);
 				Template::Show('login_complete.tpl');
+				
+				CodonEvent::Dispatch('login_success', 'Login');
 			}
 			
 			return;

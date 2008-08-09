@@ -25,6 +25,7 @@ Next Build
   * PIREP submit form fixes
   * Registration code tidied up
   * Admin panel JS error fixed
+  * Pages visibility bug fixed
   * Bug fixes
   
   Notes

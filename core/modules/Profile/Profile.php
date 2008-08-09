@@ -57,8 +57,10 @@ class Profile extends CodonModule
 				Template::Set('nextrank', RanksData::GetNextRank(Auth::$userinfo->totalhours));
 				Template::Set('userinfo', Auth::$userinfo);
 
-
 				Template::Show('profile_main.tpl');
+				
+				CodonEvent::Dispatch('profile_viewed', 'Profile');
+				
 				break;
 								
 			/*

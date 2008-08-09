@@ -21,9 +21,9 @@ class Pages extends CodonModule
 {
 	function NavBar()
 	{
-		if(ADMIN_PANEL != true && ADMIN_PANEL != 'ADMIN_PANEL')
+		if(ADMIN_PANEL !== true)
 		{
-			Template::Set('allpages', SiteData::GetAllPages(true, !Auth::$loggedin));
+			Template::Set('allpages', SiteData::GetAllPages(true, Auth::$loggedin));
 			Template::Show('pages_items.tpl');
 		}
 	}

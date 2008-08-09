@@ -64,7 +64,14 @@ class Schedules extends CodonModule
 				
 				$routeid = $this->post->id;
 				
+				if(CodonEvent::Dispatch('bid_preadd', 'Schedules', $routeid)==false)
+				{
+					return;
+				}
+				
 				SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
+				
+				CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
 				
 				break;
 				

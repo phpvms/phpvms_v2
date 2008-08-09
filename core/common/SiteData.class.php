@@ -79,7 +79,7 @@ class SiteData
 		return true;
 	}
 	
-	public function GetAllPages($onlyenabled=false, $onlypublic=true)
+	public function GetAllPages($onlyenabled=false, $loggedin=false)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pages";
 		
@@ -87,7 +87,7 @@ class SiteData
 		{
 			$sql .= ' WHERE enabled=1';
 			
-			if($onlypublic == true)
+			if($loggedin == false)
 			{
 				$sql.= ' AND public=1';
 			}

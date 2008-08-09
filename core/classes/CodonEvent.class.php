@@ -37,14 +37,15 @@
  * @package codon_core
  */
 
-class EventDispatch
+class CodonEvent
 {
 	public static $listeners;
 	public static $lastevent;
+	public static $stopList = array();
 	
 	public static function addListener($module_name, $event_list='')
 	{
-		self::$listeners[$modulename] = $event_list;
+		self::$listeners[$module_name] = $event_list;
 	}
 	
 	/**
@@ -77,25 +78,50 @@ class EventDispatch
 		}
 		
 		// Load each module and call the EventListen function
-		foreach(self::$listners as $ModuleName => $Events)
+		foreach(self::$listeners as $ModuleName => $Events)
 		{
+			echo $ModuleName;
 			$ModuleName = strtoupper($ModuleName);
 			global $$ModuleName;
 			
-			if(method_exists($$ModuleName, 'EventListener'))
+			// Run if no specific events specified, or if the eventname is there
+			if(!$Events || in_array($eventname, $Events))
 			{
-				// Run if no specific events specified, or if the eventname is there
-				if(!$Events || in_array($eventname, $Events))
+				self::$lastevent = $eventname;
+				MainController::Run($ModuleName, 'EventListener', $params);
+				
+				if(self::$stopList[$eventname] == true)
 				{
-					self::$lastevent = $eventname;
-					//@todo depreciated, replace
-					return call_user_method_array('EventListener',  $$ModuleName, $params);
+					unset(self::$stopList[$eventname]);
+					return false;
 				}
+				
+				return true;
 			}
 		}
 		
 		return true;
 	}
+	
+	public function CheckStop($eventname)
+	{
+		if(self::$stopList[$eventname] == true)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+		}
+	}
+	
+	public function Stop($eventname='')
+	{
+		if($eventname!='')
+			self::$stopList[$eventname] = true;
+		else
+			self::$stopList[self::$lastevent] = true;
+	}
 }
-
 ?>

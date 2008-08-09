@@ -94,6 +94,11 @@ class Registration extends CodonModule
 			$hub = $this->post->hub;
 			$password = $this->post->password1;
 			
+			if(CodonEvent::Dispatch('registration_precomplete', 'Registration', $_POST) == false)
+			{
+				return false;
+			}
+			
 			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $hub, $password) == false)
 			{
 				Template::Set('error', RegistrationData::$error);
@@ -105,6 +110,7 @@ class Registration extends CodonModule
 				Template::Show('registration_sentconfirmation.tpl');
 			}
 			
+			CodonEvent::Dispatch('registration_complete', 'Registration');			
 			
 			$rss = new RSSFeed('Latest Pilot Registrations', SITE_URL, 'The latest pilot registrations');
 			$allpilots = PilotData::GetLatestPilots();

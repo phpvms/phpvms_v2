@@ -55,11 +55,11 @@ define('LIB_PATH', SITE_ROOT.'/lib');
 // Include all dependencies
 include CLASS_PATH . '/Config.class.php';
 include CLASS_PATH . '/CodonAJAX.class.php';
+include CLASS_PATH . '/CodonEvent.class.php';
 include CLASS_PATH . '/CodonForm.class.php';
 include CLASS_PATH . '/CodonModule.class.php';
 include CLASS_PATH . '/DB.class.php';
 include CLASS_PATH . '/Debug.class.php';
-include CLASS_PATH . '/EventDispatch.class.php';
 include CLASS_PATH . '/MainController.class.php';
 include CLASS_PATH . '/SessionManager.class.php';
 include CLASS_PATH . '/Template.class.php';

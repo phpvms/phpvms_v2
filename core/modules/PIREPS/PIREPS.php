@@ -32,7 +32,6 @@ class PIREPS extends CodonModule
 				{
 					if(!$this->SubmitPIREP())
 					{
-						Template::Show('core_error.tpl');
 						$this->FilePIREPForm();
 						return false;
 					}
@@ -173,39 +172,51 @@ class PIREPS extends CodonModule
 		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
+			Template::Show('core_error.tpl');
 			return false;
 		}
 		
 		if(!SchedulesData::GetScheduleByFlight($code, $flightnum))
 		{
 			Template::Set('message', 'The flight code and number you entered is not a valid route!');
+			Template::Show('core_error.tpl');
 			return false;
 		}
 		
 		if($depicao == $arricao)
 		{
 			Template::Set('message', 'The departure airport is the same as the arrival airport!');
+			Template::Show('core_error.tpl');
 			return false;
 		}
 		
 		if(!is_numeric($flighttime) && !is_float($flightnum))
 		{
 			Template::Set('message', 'The flight time has to be a number!');
+			Template::Show('core_error.tpl');
 			return false;
+		}
+		
+		if(CodonEvent::Dispatch('pirep_prefile', 'PIREPS', $_POST) == false)
+		{
+			return false;	
 		}
 		
 		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
+			Template::Show('core_error.tpl');
 			return false;
 		}
 		
 		$pirepid = DB::$insert_id;
-		
 		PIREPData::SaveFields($pirepid, $_POST);
 	
 		// Update the flown count for that route
 		SchedulesData::IncrementFlownCount($code, $flightnum);
+		
+		// Call the event
+		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);	
 		
 		// delete the bid, if the value for it is set
 		if($this->post->bid != '')

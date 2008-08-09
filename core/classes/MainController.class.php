@@ -288,7 +288,7 @@ class MainController
 		// have a reference to the self
 		if(!is_object($$ModuleName) || ! method_exists($$ModuleName, $MethodName))
 		{
-			return false;
+			return;
 		}
 			
 		// if there are parameters added, then call the function

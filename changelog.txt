@@ -10,9 +10,7 @@ phpVMS - Virtual Airline Administration Software
 		http://creativecommons.org/licenses/by-nc-sa/3.0/
 ---
 
-Build Changelog:
-
-Next Build 
+Build 370 (Release!)
 
   * Bid deleted on PIREP submit
   * PIREP fields properly show in admin panel

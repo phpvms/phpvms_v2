@@ -21,7 +21,7 @@
 define('ADMIN_PANEL', true);
 include '../core/codon.config.php';
 
-define('UPDATE_VERSION', '1.0.365');
+define('UPDATE_VERSION', '1.0.370');
 
 // Check versions for mismatch, unless ?force is passed
 $sql = array();

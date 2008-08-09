@@ -80,6 +80,9 @@ class PIREPS extends CodonModule
 				
 				$map = new GoogleMap;
 				
+				$map->maptype = Config::Get('MAP_TYPE');
+				$map->linecolor = Config::Get('MAP_LINE_COLOR');
+				
 				foreach($pireps as $pirep)
 				{
 					$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
@@ -87,7 +90,7 @@ class PIREPS extends CodonModule
 					$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
 				}
 				
-				$map->ShowMap();
+				$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
 				
 				break;
 				

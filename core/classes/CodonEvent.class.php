@@ -109,11 +109,8 @@ class CodonEvent
 		{
 			return false;
 		}
-		else
-		{
-			return true;
-		}
-		}
+		
+		return true;
 	}
 	
 	public function Stop($eventname='')

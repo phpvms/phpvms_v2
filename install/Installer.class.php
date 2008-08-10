@@ -60,6 +60,7 @@ class Installer
 		Template::Set('configfile', '<div id="'.$type.'">'.$message.'</div>');
 		
 		// Check all of the folders for writable permissions
+		$status = '';
 		foreach($wf as $folder)
 		{
 			if(!is_writeable(SITE_ROOT.'/'.$folder))
@@ -77,7 +78,7 @@ class Installer
 			$status.='<div id="'.$type.'">'.$message.'</div>';
 		}
 		
-		Template::Set('dirstatus', $status);
+		Template::Set('directories', $status);
 		//Template::Set('pagesdir', '<div id="'.$type.'">'.$message.'</div>');
 		
 		return $noerror;

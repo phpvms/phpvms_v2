@@ -248,9 +248,10 @@ class PIREPData
 					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW())";
 
 		$ret = DB::query($sql);
+		$pirepid = DB::$insert_id;
 
 		// Add the comment if its not blank
-		if($comment!='')
+		if($comment!='') 
 		{
 			$pirepid = DB::$insert_id;
 
@@ -261,6 +262,7 @@ class PIREPData
 
 		}
 
+		DB::$insert_id = $pirepid;
 		return true;
 	}
 
@@ -367,12 +369,11 @@ class PIREPData
 			$fieldname =str_replace(' ', '_', $field->name);
 			$value = $list[$fieldname];
 				
-			$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
+			$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues 
 						(fieldid, pirepid, value)
 						VALUES ($field->fieldid, $pirepid, '$value')";
 						
 			DB::query($sql);
-			//DB::debug();
 		}
 		
 		return true;

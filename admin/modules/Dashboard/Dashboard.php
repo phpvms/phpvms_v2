@@ -73,14 +73,17 @@ class Dashboard extends CodonModule
 	{
 		if(NOTIFY_UPDATE == true)
 		{
-			$postversion = @file_get_contents('http://www.phpvms.net/version.php');
+			$postversion = @file_get_contents('http://www.phpvms.net/extern/version.php');
 			$postversion = str_replace('.', '', $postversion);
 			$currversion = str_replace('.', '', PHPVMS_VERSION);
 			
 			if($currversion < $postversion)
 			{
-				Template::Set('message', 'An update for phpVMS is available!');
+				Template::Set('message', 'An update for phpVMS is available! See the "Latest News" below');
 				Template::Show('core_error.tpl');
+				
+				$updatenews = @file_get_contents('http://www.phpvms.net/extern/news.php');
+				echo $updatenews;
 			}
 		}
 	}

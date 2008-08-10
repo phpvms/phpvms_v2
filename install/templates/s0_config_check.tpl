@@ -16,7 +16,7 @@
 
 <tr>
 	<td valign="top"><strong>Directories and Files: </strong></td>
-	<td><?=$dirstatus;?></td>
+	<td><?=$directories;?></td>
 </tr>
 
 <tr>

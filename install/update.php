@@ -21,16 +21,13 @@
 define('ADMIN_PANEL', true);
 include '../core/codon.config.php';
 
-define('UPDATE_VERSION', '1.0.370');
+define('UPDATE_VERSION', '1.0.371');
 
 // Check versions for mismatch, unless ?force is passed
 $sql = array();
 
 // Table changes, other SQL updates
-$sql[] = 'ALTER TABLE `phpvms_schedules` ADD `notes` TEXT NOT NULL';
-$sql[] = 'ALTER TABLE `phpvms_schedules` ADD `enabled` INT NOT NULL DEFAULT \'1\'';
-$sql[] = 'ALTER TABLE `phpvms_airports` CHANGE `name` `name` TEXT NOT NULL;';
-$sql[] = "ALTER TABLE `phpvms_airlines` ADD `enabled` INT NOT NULL DEFAULT '1'";
+$sql[] = '';
 
 // Version update
 $sql[] = 'UPDATE `phpvms_settings` SET value=\''.UPDATE_VERSION.'\' WHERE name=\'PHPVMS_VERSION\'';

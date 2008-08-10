@@ -30,14 +30,16 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
-	public function GetScheduleByFlight($code, $flightnum)
+	public function GetScheduleByFlight($code, $flightnum, $leg=1)
 	{
+		if($leg == '') $leg = 1;
+		
 		$sql = 'SELECT s.*, dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-					WHERE s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum.'\'';
+					WHERE s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum.'\' AND s.leg=\''.$leg.'\'';
 		
 		return DB::get_row($sql);
 	}
@@ -264,7 +266,7 @@ class SchedulesData
 		$arrtime = strtoupper($arrtime);
 		
 		if($depicao == $arricao) return false;
-		if(self::GetScheduleByFlight($code,$flightnum)) return false; // flight with same num/code already exists
+		if(self::GetScheduleByFlight($code,$flightnum, $leg)) return false; // flight with same num/code already exists
 		
 		
 		if($enabled == true)

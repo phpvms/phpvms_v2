@@ -11,7 +11,7 @@
 <tbody>
 	<tr>
 		<td align="left" width="33%" nowrap>
-			<strong>Flight: </strong><?=$pirep->code . $report->flightnum; ?><br />
+			<strong>Flight: </strong><?=$pirep->code . $pirep->flightnum; ?><br />
 			<strong>Departure Airport: </strong><?=$pirep->depname?> (<?=$pirep->depicao; ?>)<br />
 			<strong>Arrival Airport: </strong><?=$pirep->arrname?> (<?=$pirep->arricao; ?>)<br />
 			<strong>Flight Time: </strong> <?=$pirep->flighttime; ?><br />

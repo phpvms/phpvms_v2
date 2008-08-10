@@ -10,6 +10,13 @@ phpVMS - Virtual Airline Administration Software
 		http://creativecommons.org/licenses/by-nc-sa/3.0/
 ---
 
+Build 371
+
+  * A few template errors fixed
+  * Flight leg taken into account on checking schedule
+  * Updater improved
+  * PIREP field insertion bug fixed
+
 Build 370 (Release!)
 
   * Bid deleted on PIREP submit

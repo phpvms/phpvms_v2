@@ -3,7 +3,7 @@
 MainController::Run('Dashboard', 'CheckInstallFolder');
 MainController::Run('Dashboard', 'CheckForUpdates');
 ?>
-<p><strong>Pilot Reports for the Past Week</strong></p>
+<h3>Pilot Reports for the Past Week</h3>
 
 <div id="reportcounts">Loading chart...</div>
 <script type="text/javascript">

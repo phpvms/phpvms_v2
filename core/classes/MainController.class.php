@@ -108,6 +108,12 @@ class MainController
 			{
 				Config::Add('RUN_MODULE', $module);
 			}
+			
+			// Make sure it's valid,  ya know.. then throw the invalid page (basically 404 S.O.L.)
+			if(!isset(self::$ModuleList[Config::Get('RUN_MODULE')]))
+			{
+				Template::Show('core_invalid_module.tpl');
+			}
 		}
 				
 		Config::LoadSettings();
@@ -288,7 +294,7 @@ class MainController
 		// have a reference to the self
 		if(!is_object($$ModuleName) || ! method_exists($$ModuleName, $MethodName))
 		{
-			return;
+			return false;
 		}
 			
 		// if there are parameters added, then call the function

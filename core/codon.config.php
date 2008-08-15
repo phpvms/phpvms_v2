@@ -58,6 +58,7 @@ include CLASS_PATH . '/CodonAJAX.class.php';
 include CLASS_PATH . '/CodonEvent.class.php';
 include CLASS_PATH . '/CodonForm.class.php';
 include CLASS_PATH . '/CodonModule.class.php';
+include CLASS_PATH . '/CodonWebService.class.php';
 include CLASS_PATH . '/DB.class.php';
 include CLASS_PATH . '/Debug.class.php';
 include CLASS_PATH . '/MainController.class.php';
@@ -75,6 +76,7 @@ include CORE_PATH . '/local.config.php';
 
 set_error_handler('CatchPHPError');
 error_reporting(Config::Get('ERROR_LEVEL'));
+Debug::$debug_enabled = Config::Get('DEBUG_MODE');
 
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {

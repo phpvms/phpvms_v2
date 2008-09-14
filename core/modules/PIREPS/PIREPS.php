@@ -166,6 +166,7 @@ class PIREPS extends CodonModule
 		$pilotid = Auth::$userinfo->pilotid;
 		$code = $this->post->code;
 		$flightnum = $this->post->flightnum;
+		$leg = $this->post->leg;
 		$depicao = $this->post->depicao;
 		$arricao = $this->post->arricao;
 		$aircraft = $this->post->aircraft;
@@ -179,7 +180,7 @@ class PIREPS extends CodonModule
 			return false;
 		}
 		
-		if(!SchedulesData::GetScheduleByFlight($code, $flightnum))
+		if(!SchedulesData::GetScheduleByFlight($code, $flightnum, $leg))
 		{
 			Template::Set('message', 'The flight code and number you entered is not a valid route!');
 			Template::Show('core_error.tpl');

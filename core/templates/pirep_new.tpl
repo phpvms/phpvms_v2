@@ -23,8 +23,9 @@ if($message!='')
 		</select>
 	</dd>
 	
-	<dt>Enter Flight Number:</dt>
-	<dd><input type="text" name="flightnum" value="<?=$bid->flightnum?><?=$_POST['flightnum'] ?>" /></dd>
+	<dt>Enter Flight Number and Leg:</dt>
+	<dd><input type="text" name="flightnum" value="<?=$bid->flightnum?><?=$_POST['flightnum'] ?>" />
+		<input type="text" name="leg" value="<?=$bid->leg?><?=$_POST['leg'] ?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>

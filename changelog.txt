@@ -16,6 +16,9 @@ Build 371
   * Flight leg taken into account on checking schedule
   * Updater improved
   * PIREP field insertion bug fixed
+  * Registration anomolies
+  * Required fields for registration marked with *
+  * PIREP submission fixed (missing flight leg)
 
 Build 370 (Release!)
 

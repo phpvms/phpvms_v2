@@ -46,7 +46,7 @@ class Registration extends CodonModule
 				Template::Set('allairlines', OperationsData::GetAllAirlines(true));
 				Template::Set('allhubs', OperationsData::GetAllHubs());
 				
-				if(isset($this->post->submit_register))
+				if(isset($_POST['submit']))
 				{
 					$this->ProcessRegistration();
 				}

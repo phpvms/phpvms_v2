@@ -101,13 +101,12 @@ CREATE TABLE `phpvms_pilots` (
 	`lastlogin` date NOT NULL default '0000-00-00',
 	`totalflights` int(11) NOT NULL default '0',
 	`totalhours` float NOT NULL default '0',
-	`rank` varchar(32) NOT NULL default 'New Hire',
+	`rank` varchar(32) NOT NULL default '',
 	`confirmed`smallint(6) NOT NULL default '0',
 	`retired` smallint(6) NOT NULL default '0',
 	PRIMARY KEY  (`pilotid`),
 	UNIQUE KEY `email` (`email`),
-	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
-	FOREIGN KEY (`rank`) REFERENCES phpvms_ranks(`rank`) ON UPDATE CASCADE
+	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 
 CREATE TABLE `phpvms_pireps` (

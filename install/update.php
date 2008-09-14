@@ -27,10 +27,10 @@ define('UPDATE_VERSION', '1.0.371');
 $sql = array();
 
 // Table changes, other SQL updates
-$sql[] = '';
+$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pilots` DROP INDEX `rank`';
 
 // Version update
-$sql[] = 'UPDATE `phpvms_settings` SET value=\''.UPDATE_VERSION.'\' WHERE name=\'PHPVMS_VERSION\'';
+$sql[] = 'UPDATE `'.TABLE_PREFIX.'settings` SET value=\''.UPDATE_VERSION.'\' WHERE name=\'PHPVMS_VERSION\'';
 
 
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');

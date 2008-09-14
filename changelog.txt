@@ -19,6 +19,7 @@ Build 371
   * Registration anomolies
   * Required fields for registration marked with *
   * PIREP submission fixed (missing flight leg)
+  * Ranking fixes
 
 Build 370 (Release!)
 

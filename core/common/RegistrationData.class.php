@@ -95,6 +95,8 @@ class RegistrationData
 			}
 		}
 		
+		RanksData::CalculateUpdatePilotRank($pilotid);
+		
 		return true;
 	}
 	

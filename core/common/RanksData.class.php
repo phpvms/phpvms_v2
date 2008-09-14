@@ -94,10 +94,11 @@ class RanksData
 					WHERE rankid=$rankid";
 		
 		$res = DB::query($sql);
-		
+	
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		self::CalculatePilotRanks();
 		return true;
 	}
 	

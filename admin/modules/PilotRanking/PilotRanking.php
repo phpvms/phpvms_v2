@@ -22,13 +22,13 @@ class PilotRanking extends CodonModule
 
 	function HTMLHead()
 	{
-	
 		if($this->get->admin == 'pilotranks'
 			|| $this->get->admin == 'calculateranks')
 		{
 			Template::Set('sidebar', 'sidebar_ranks.tpl');
 		}
 	}
+	
 	function Controller()
 	{
 		switch($this->post->action)

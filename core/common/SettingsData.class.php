@@ -31,6 +31,12 @@ class SettingsData
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
 	}
 	
+	
+	public function GetField($fieldid)
+	{
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$fieldid);
+	}
+	
 	/**
 	 * Add a custom field to be used in a profile
 	 */
@@ -57,6 +63,38 @@ class SettingsData
 		
 		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (title, fieldname, type, public, showonregister)
 					VALUES ('$title', '$fieldname', '$fieldtype', $public, $showinregistration)";
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+/**
+	 * Add a custom field to be used in a profile
+	 */
+	public function EditField($fieldid, $title, $fieldtype, $public, $showinregistration)
+	{		
+		$fieldname = str_replace(' ', '_', $title);
+		$fieldname = strtoupper($fieldname);
+		
+		//Check, set up like this on purpose to default "safe" values
+		if($public == true)
+			$public = 1;
+		else
+			$public = 0;
+		
+		if($showinregistration == true)
+			$showinregistration = 1;
+		else
+			$showinregistration = 0;
+		
+		$sql = "UPDATE " . TABLE_PREFIX ."customfields 
+					SET title='$title', fieldname='$fieldname', type='$type', 
+						public=$public, showonregister=$showinregistration	
+					WHERE fieldid=$fieldid";
 		
 		$res = DB::query($sql);
 		

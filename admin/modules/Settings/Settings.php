@@ -64,7 +64,21 @@ class Settings extends CodonModule
 			 
 			// Show the popup
 			case 'addfield':
+				
+				Template::Set('title', 'Add Field');
+				Template::Set('action', 'addfield');
+				
 				Template::Show('settings_addcustomfield.tpl');
+				break;
+				
+			case 'editfield':
+				
+				Template::Set('title', 'Edit Field');
+				Template::Set('action', 'savefield');
+				Template::Set('field', SettingsData::GetField($this->get->id));
+				
+				Template::Show('settings_addcustomfield.tpl');
+				
 				break;
 				
 			case 'addpirepfield':
@@ -110,7 +124,7 @@ class Settings extends CodonModule
 		
 				switch(Vars::POST('action'))
 				{
-					case 'savefields':
+					case 'savefield':
 						$this->SaveFields();
 						break;
 						
@@ -183,7 +197,39 @@ class Settings extends CodonModule
 	
 	function SaveFields()
 	{
-		print_r($_POST);
+	if($this->post->title == '')
+		{
+			echo 'No field name entered!';
+			return;
+		}
+		
+		$title = $this->post->title;
+		$fieldtype = $this->post->fieldtype;
+		$public = $this->post->public;
+		$showinregistration = $this->post->showinregistration;
+		
+		if($public == 'yes')
+			$public = true;
+		else
+			$public = false;
+			
+		if($showinregistration == 'yes')
+			$showinregistration = true;
+		else
+			$showinregistration = false;
+		
+		$ret = SettingsData::EditField($this->post->fieldid, $title, $fieldtype, $public, $showinregistration);
+		
+		if(DB::errno() != 0)
+		{
+			Template::Set('message', 'There was an error saving the settings: ' . DB::error());
+			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'Settings were saved!');
+			Template::Show('core_success.tpl');
+		}
 	}
 	
 	function DeleteField()

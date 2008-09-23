@@ -5,6 +5,9 @@ if(GOOGLE_KEY!='') {
 <?php
 }
 ?>
+
+<link rel="stylesheet" media="all" type="text/css" href="<?=SITE_URL?>/lib/css/phpvms.css" />
+
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.form.js"></script>
 <script type="text/javascript" src="<?=SITE_URL?>/lib/js/jquery.sparklines.js"></script>

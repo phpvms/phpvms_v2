@@ -1,54 +1,41 @@
-<h3>View Pilot Report</h3>
-
-<table id="tabledlist" class="tablesorter">
-<thead>
-<tr>
-	<th>Flight Information</th>
-	<th>Additional Details</th>
-	<th>Status</th>
-</tr>
-</thead>
-<tbody>
+<h3>Flight <?=$pirep->code . $pirep->flightnum; ?></h3>
+<table width="100%">
 	<tr>
-		<td align="left" width="33%" nowrap>
-			<strong>Flight: </strong><?=$pirep->code . $pirep->flightnum; ?><br />
-			<strong>Departure Airport: </strong><?=$pirep->depname?> (<?=$pirep->depicao; ?>)<br />
-			<strong>Arrival Airport: </strong><?=$pirep->arrname?> (<?=$pirep->arricao; ?>)<br />
-			<strong>Flight Time: </strong> <?=$pirep->flighttime; ?><br />
-			<strong>Date Submitted: </strong> <?=date(DATE_FORMAT, $pirep->submitdate);?><br />
-		</td>
-		<td align="left" width="33%">
-			<?php
-			if(!$fields)
-			{
-				echo 'No additional data found';
-			}
-			else
-			{
-				foreach ($fields as $field)
-				{
-			?>		<strong><?=$field->title ?>:</strong> <?=$field->value ?><br />
-			<?php
-				}
-			}
-			?>
-			
-		</td>
-		<td align="center">
-		<?php
-			if($pirep->accepted == PIREP_ACCEPTED)
-				echo '<div id="success">Accepted</div>';
-			elseif($pirep->accepted == PIREP_REJECTED)
-				echo '<div id="error">Rejected</div>';
-			elseif($pirep->accepted == PIREP_PENDING)
-				echo '<div id="error">Approval Pending</div>';
-			elseif($pirep->accepted == PIREP_INPROGRESS)
-				echo '<div id="error">Flight in Progress</div>';
-		?>
-	</td>
+		<td><strong>Departure Airport: </strong><br />
+			<?=$pirep->depname?> (<?=$pirep->depicao; ?>)</td>
+		<td><strong>Arrival Airport: </strong><br />
+			<?=$pirep->arrname?> (<?=$pirep->arricao; ?>)</td>
 	</tr>
-</tbody>
 </table>
+
+<h3>Flight Details</h3>
+<?php
+	if($pirep->accepted == PIREP_ACCEPTED)
+		echo '<div id="success">Accepted</div>';
+	elseif($pirep->accepted == PIREP_REJECTED)
+		echo '<div id="error">Rejected</div>';
+	elseif($pirep->accepted == PIREP_PENDING)
+		echo '<div id="error">Approval Pending</div>';
+	elseif($pirep->accepted == PIREP_INPROGRESS)
+		echo '<div id="error">Flight in Progress</div>';
+?>
+						
+<strong>Flight Time: </strong> <?=$pirep->flighttime; ?><br />
+<strong>Date Submitted: </strong> <?=date(DATE_FORMAT, $pirep->submitdate);?><br />
+<?php
+if(!$fields)
+{
+	//echo 'No additional data found';
+}
+else
+{
+	foreach ($fields as $field)
+	{
+?>		<strong><?=$field->title ?>:</strong> <?=$field->value ?><br />
+<?php
+	}
+}
+?>
 <?php
 if($comments)
 {

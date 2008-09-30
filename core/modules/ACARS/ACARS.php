@@ -19,16 +19,39 @@
 class ACARS extends CodonModule
 {
 		
-	function Controller()
+	public function Controller()
 	{
-			
-			if($this->get->page == 'acars')
-			{
+		switch($this->get->page)		
+		{
+			case '':
+			case 'viewmap':
 				
-				//show the el-mapo
+				// fancy
 				
-			}
-		
+				// Show the main ACARS map with all the positions, etc
+				Template::Set('acarsdata', ACARSData::GetACARSData(500));
+				Template::Show('acarsmap.tpl');
+				
+				break;
+				
+			// default handles the connectors as plugins
+			default:
+				
+				if(file_exists(CORE_PATH.'/modules/ACARS/'.$this->get->page.'.php'))
+				{
+					include_once CORE_PATH.'/modules/ACARS/'.$this->get->page.'.php';
+					return;
+				}
+				
+				
+				
+				break;	
+		}
+	}
+	
+	public function viewMap()
+	{
+	
 	}
 }
 

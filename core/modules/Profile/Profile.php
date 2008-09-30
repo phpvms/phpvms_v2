@@ -69,6 +69,11 @@ class Profile extends CodonModule
 			case 'view':
 			
 				$pilotid = $this->get->pilotid;
+	
+				if(preg_match('/^([A-Za-z]{3})(\d*)/', $pilotid, $matches) > 0)
+				{
+					$pilotid = $matches[2];
+				}
 				
 				$userinfo = PilotData::GetPilotData($pilotid);
 								

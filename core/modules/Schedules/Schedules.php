@@ -18,6 +18,24 @@
  
 class Schedules extends CodonModule
 {
+	
+	public $gMap;
+	
+	public function __construct()
+	{
+		$this->gMap = new GoogleMapAPI('routemap', 'phpVMS');
+		$this->gMap->setAPIKey(GOOGLE_KEY);
+	}
+	
+	public function HTMLHead()
+	{
+		if($this->get->page == 'detail' || $this->get->page == 'details')
+		{
+			$this->gMap->printHeaderJS();
+    		$this->gMap->printMapJS();			
+		}
+	}
+	
 	function Controller()
 	{
 		switch($this->get->page)
@@ -38,7 +56,13 @@ class Schedules extends CodonModule
 			case 'detail':
 			case 'details':
 				
-				$scheddata = SchedulesData::GetScheduleDetailed($this->get->id);
+				$routeid = $this->get->id;
+				if(preg_match('/^([A-Za-z]{3})(\d*)/', $routeid, $matches) > 0)
+				{
+					$routeid = $matches[2];
+				}
+				
+				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 				
 				Template::Set('schedule', $scheddata);
 				Template::Set('scheddata', SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum, 30)); // past 30 days

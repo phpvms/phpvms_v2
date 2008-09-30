@@ -19,85 +19,124 @@
 class ACARSData extends CodonModule
 {
 	
-	public function InsertData()
+	public static $lasterror;
+	public static $fields = array('pilotid', 'flightnum', 'pilotname', 
+								   'aircraft', 'lat', 'lng', 'heading', 
+								   'alt', 'gs', 'depicao', 'depapt', 'arricao', 
+								   'arrapt', 'deptime', 'arrtime', 'distremain', 
+								   'phasedetail', 'online', 'messagelog');
+	
+	public function UpdateFlightData($data)
 	{
-		$pilotid = Vars::GET('pnumber');
-		
-		if($pilotid == '')
-			return;
-			
-		$lat = Vars::GET('lat');
-		$long = Vars::GET('long');
-		$gs = Vars::GET('GS');
-		$alt = Vars::GET('Alt');
-		$IATA = Vars::GET('IATA');
-		$depAptICAO = Vars::GET('depaptICAO');
-		$depApt = Vars::GET('depapt');
-		$disDepApt = Vars::GET('disdepapt');
-		$timeDepApt = Vars::GET('timedepapt');
-		$destAptICAO = Vars::GET('destaptICAO');
-		$destApt = Vars::GET('destapt');
-		$disDestApt = Vars::GET('disdestapt');
-		$timeDestApt = Vars::GET('timedestapt');
-		$phase = Vars::GET('detailph');
-			
-		$existing = DB::get_row('SELECT id FROM '.TABLE_PREFIX.'acarspos WHERE pilot_num="'.$pilotid.'"');
-		
-		//Do results, do a clean insert
-		if(!$existing)
+		if(!is_array($data))
 		{
-			//argh, i hate using double quotes. but its a long query =\
-			
-			$sql = "INSERT INTO ".TABLE_PREFIX."acarsdata (pilot_num, lat, lon, gs, alt, IATA, depaptICAO, depapt,
-						disDepApt, timeDepApt, destAptICAO, destApt, disDestApt, timeDestApt, phase)
-					VALUES('$pilotid', '$lat', '$long', $gs, $alt, '$IATA', '$depAptICAO', '$depApt',
-							$disDepApt, $timeDepApt, '$destAptICAO', '$destApt', $disDestApt, '$timeDestApt',
-							'$phase')";
-			
-			$res = DB::query($sql);
-		
-			if(DB::errno() != 0)
-				return false;
-			
-			return true;
+			self::$lasterror = 'Data not array';
+			return false;
 		}
-		else
+		
+
+		// make sure at least the vitals we need are there:
+		if($data['pilotid'] == '')
 		{
-			//do an update
+			self::$lasterror = 'No pilot ID specified';
+			return false;
+		}
+		
+		/*if($data['flightnum'] == '')
+		{
+			self::$lasterror = 'No flight number';
+			return false;
+		}*/
+
+		/*// first see if we exist:
+		$exist = DB::get_row('SELECT id FROM '.TABLE_PREFIX.'acarsdata WHERE pilotid=\''.$data['pilotid'].'\'');
+		
+		if($exist)
+		{ // update
 			
-			$rowid = $existing->id;
-			$sql = "UPDATE ".TABLE_PREFIX."acarsdata SET pilot_num='$pilotid', lat='$lat', lon='$lon', gs=$gs,
-						alt=$alt, IATA='$IATA', depAptICAO='$depAptICAO', depApt='$depApt,
-						disDepApt=$disDepApt, timeDepApt='timeDepApt, destAptICAO='$destAptICAO',
-						destApt='$destApt', disDestApt=$disDestApt, timeDestApt=$timeDestApt, phase=$phase
-					  WHERE id=".$rowid;
-					
-			$res = DB::query($sql);
-			
-			if(!$res)
+			$upd = '';
+			// form the query
+			foreach(self::$fields as $field)
 			{
-				//error out?
-				
-				//verbose for now
-				
+				// append the message log
+				if($field == 'messagelog')
+				{
+					$upd.='messagelog=CONCAT(messagelog, \''.$data['field'].'\'), ';
+				}
+				else 
+				{
+					// update only the included fields
+					if(!isset($data[$field]))
+					{
+						continue;
+					}
+					
+					// field=\'value\',
+					$upd.=$field.'=\''.$data[$field].'\', ';
+				}
 			}
 			
+			// remove the extra , 
+			//$upd = substr($upd, 0, strlen($upd)-1);
+			$upd.='lastupdate=NOW() ';
+
+			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata SET '.$upd.' WHERE pilotid=\''.$data['pilotid'].'\'';
+			DB::query($query);
 		}
+		else
+		{*/
+			// insert
+			
+			// form array with $ins[column]=value and then
+			//	give it to quick_insert to finish
+			$ins = array();
+			$fields='';
+			$values='';
+			foreach(self::$fields as $field)
+			{
+				// field=\'value\',
+				// add only fields which are present
+				if(!isset($data[$field]))
+				{
+					continue;
+				}
+				
+				$ins[$field] = $data[$field];
+				$fields.=$field.',';
+				
+				/*if(is_numeric($data[$field]))
+				{
+					$values.=$data[$field].', ';
+				}
+				else 
+				{*/
+					$values .= '\''.$data[$field].'\', ';
+				//}
+			}
+			
+			// last set
+			$fields .=' lastupdate ';
+			$values .= ' NOW()';
+			
+			$query = 'INSERT INTO '.TABLE_PREFIX.'acarsdata ('.$fields.') VALUES ('.$values.')';
 		
-		// be verbose about any output for now
+			DB::query($query);
+			
+		//}
 		
-		DB::debug();
+		return true;
 	}
 	
+	
 	//TODO: convert this cutoff time into a SETTING parameter, in minutes
-	public function GetACARSData($cutofftime = 1)
+	public function GetACARSData($cutofftime = '')
 	{
 		//cutoff time in days
 		if($cutofftime == '')
-			$cutofftime = 1;
+			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'acarsdata
-					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' DAYS) <= last_update';
+					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= lastupdate';
 					
 		return DB::get_results($sql);
 	}

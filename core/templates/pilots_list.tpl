@@ -14,13 +14,19 @@
 foreach($allpilots as $pilot)
 {
 	/*
-	 * To include additional fields,  uncomment this next line
-	 * and then you can use the fields - $fields->VATSIM_ID for
-	 * instance. your field name in all caps, and spaces replaced by 
-	 * an underscore
-	 */
+	* To include additional fields,  uncomment the following lines
+	*  	set $fieldname to the desired field name (all caps, and spaces
+	*	replaced by an underscore), and use the result in $value.
+	*/
+
+	//$fieldname = "VATSIM_ID";
+	//$value = "";
 	//$fields = PilotData::GetFieldData($pilot->pilotid);
-	
+	//foreach($fields as $f) {
+	//	if ($f->fieldname==$fieldname) {
+	//		$value = $f->value;
+	//	}
+	//}
 ?>
 <tr>
 	<td><a href="<?=SITE_URL?>/index.php/Pilots/reports/<?=$pilot->pilotid?>">

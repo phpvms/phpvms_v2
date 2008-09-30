@@ -1,3 +1,29 @@
+ CREATE TABLE `phpvms_acarsdata` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`pilotid` VARCHAR( 11 ) NOT NULL ,
+	`flightnum` VARCHAR( 11 ) NOT NULL ,
+	`pilotname` VARCHAR( 100 ) NOT NULL ,
+	`aircraft` VARCHAR( 12 ) NOT NULL ,
+	`lat` VARCHAR( 15 ) NOT NULL ,
+	`lng` VARCHAR( 15 ) NOT NULL ,
+	`heading` SMALLINT NOT NULL ,
+	`alt` VARCHAR( 6 ) NOT NULL ,
+	`gs` INT NOT NULL ,
+	`depicao` VARCHAR( 4 ) NOT NULL ,
+	`depapt` VARCHAR( 255 ) NOT NULL ,
+	`arricao` VARCHAR( 4 ) NOT NULL ,
+	`arrapt` TEXT NOT NULL ,
+	`deptime` TIME NOT NULL ,
+	`arrtime` TIME NOT NULL ,
+	`distremain` VARCHAR( 6 ) NOT NULL ,
+	`phasedetail` VARCHAR( 255 ) NOT NULL ,
+	`online` VARCHAR( 10 ) NOT NULL ,
+	`messagelog` TEXT NOT NULL,
+	`lastupdate` DATETIME NOT NULL,
+	PRIMARY KEY ( `id` ) ,
+	INDEX ( `pilotid` )
+)ENGINE=INNODB; 
+
 CREATE TABLE `phpvms_airlines` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`code` VARCHAR( 5 ) NOT NULL ,

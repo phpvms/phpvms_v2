@@ -1,0 +1,42 @@
+============ NEW REQUEST ======================
+array (
+  'lat' => '41.060398',
+  'long' => '-73.701698',
+  'GS' => '0',
+  'Alt' => '439',
+  'IATA' => 'VMA200',
+  'pnumber' => 'VMA0001',
+  'depaptICAO' => 'KHPN',
+  'destaptICAO' => 'KALB',
+  'Ph' => '1',
+  'detailph' => '1',
+  'cargo' => '0',
+  'Regist' => 'NONE',
+  'Online' => 'No',
+  'module' => 'ACARS',
+  'page' => 'fsacars',
+  'redir' => '',
+  'id' => '',
+  'icao' => '',
+  'pilotid' => '',
+)
+Received STATUS message
+Data is ARRAY
+NULL
+Table 'nssliven_phpvms.phpvms_phpvms_acarsdata' doesn't exist
+<blockquote><font color=800080 face=arial size=2><b>ezSQL</b> (v2.03) <b>Debug..</b></font><p>
+<font face=arial size=2 color=000099><b>Last Error --</b> [<font color=000000><b>Table 'nssliven_phpvms.phpvms_phpvms_acarsdata' doesn't exist (1146)</b></font>]<p><font face=arial size=2 color=000099><b>Query</b> [4] <b>--</b> [<font color=000000><b>INSERT  INTO phpvms_phpvms_acarsdata (pilotid,flightnum,pilotname,aircraft,lat,lng,heading,alt,gs,depicao,depapt,arricao,arrapt,deptime,arrtime,distremain,phasedetail,online,messagelog,lastupdate) VALUES ('','','','','','','','','','','','','','','','','','','',NOW())</b></font>]</font><p><font face=arial size=2 color=000099><b>Query Result..</b></font><blockquote><font face=arial size=2>No Results</font></blockquote></blockquote><font size=1 face=arial color=000000>If ezSQL has helped <a href="https://www.paypal.com/xclick/business=justin%40justinvincent.com&item_name=ezSQL&no_note=1&tax=0" style="color: 0000CC;">make a donation!?</a> &nbsp;&nbsp;<!--[ go on! you know you want to! ]--></font><hr noshade color=dddddd size=1>
+============ NEW REQUEST ======================
+array (
+  'acarsid' => '0',
+  'reg' => 'VMA200',
+  'module' => 'ACARS',
+  'page' => 'fsacars',
+  'redir' => '',
+  'id' => '',
+  'icao' => '',
+  'pilotid' => '',
+)
+============ NEW REQUEST ======================
+array (
+)

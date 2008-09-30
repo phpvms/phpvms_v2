@@ -155,7 +155,7 @@ class PIREPS extends CodonModule
 		Template::Set('pirepfields', PIREPData::GetAllFields());
 		Template::Set('bid', SchedulesData::GetBid($this->get->id)); // get the bid info
 		Template::Set('allairports', OperationsData::GetAllAirports());
-		Template::Set('allairlines', OperationsData::GetAllAirlines());
+		Template::Set('allairlines', OperationsData::GetAllAirlines(true));
 		Template::Set('allaircraft', OperationsData::GetAllAircraft());
 		
 		Template::Show('pirep_new.tpl');
@@ -203,7 +203,7 @@ class PIREPS extends CodonModule
 		
 		if(CodonEvent::Dispatch('pirep_prefile', 'PIREPS', $_POST) == false)
 		{
-			return false;	
+			return false;
 		}
 		
 		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment))
@@ -220,7 +220,7 @@ class PIREPS extends CodonModule
 		SchedulesData::IncrementFlownCount($code, $flightnum);
 		
 		// Call the event
-		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);	
+		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);
 		
 		// delete the bid, if the value for it is set
 		if($this->post->bid != '')

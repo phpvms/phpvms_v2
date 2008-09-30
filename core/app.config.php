@@ -21,6 +21,11 @@ Config::Set('MAP_HEIGHT', '400px');
 Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
 
+// ACARS options
+
+// Hours, flights to show on the ACARS
+Config::Set('ACARS_LIVE_TIME', 24); 
+
 // Debug mode is off by default
 Config::Set('DEBUG_MODE', true);
 Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
@@ -42,12 +47,12 @@ Config::Set('ACTIVE_MODULES', array());
 Config::Set('URL_REWRITE', array(	'default'=>array('module', 'page'),
 									'Login'=>array('module', 'page', 'redir'),
 								 	'Logout'=>array('module', 'page', 'redir'),
-									 'Pages'=>array('module', 'page'),
-									 'PIREPS'=>array('module', 'page', 'id', 'icao'),
-									 'Pilots'=>array('module', 'page', 'pilotid'),
-									 'Profile'=>array('module', 'page', 'pilotid'),
-									 'Schedules'=>array('module', 'page', 'id')
-								));
+									'Pages'=>array('module', 'page'),
+									'PIREPS'=>array('module', 'page', 'id', 'icao'),
+									'Pilots'=>array('module', 'page', 'pilotid'),
+									'Profile'=>array('module', 'page', 'pilotid'),
+									'Schedules'=>array('module', 'page', 'id'),
+									'ACARS'=>array('module', 'page')));
 							
 /**
  * Constants

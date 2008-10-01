@@ -73,6 +73,7 @@ CREATE TABLE `phpvms_schedules` (
 	`timesflown` int(11) NOT NULL default '0',
     `notes` TEXT NOT NULL,
 	`enabled` smallint(6) NOT NULL default '1',
+	`log` TEXT NOT NULL,
 	PRIMARY KEY  (`id`),
 	INDEX `depicao` (`depicao`),
 	INDEX `flightnum` (`flightnum`),

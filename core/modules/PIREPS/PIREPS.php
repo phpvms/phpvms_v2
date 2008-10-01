@@ -206,7 +206,7 @@ class PIREPS extends CodonModule
 			return false;
 		}
 		
-		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment))
+		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment, $log))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
 			Template::Show('core_error.tpl');

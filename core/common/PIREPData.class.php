@@ -243,6 +243,17 @@ class PIREPData
 	 */
 	public function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment='')
 	{
+		
+		$data = array('pilotid'=>'',
+					  'code'=>'',
+					  'flightnum'=>'',
+					  'depicao'=>'',
+					  'arricao'=>'',
+					  'aircraft'=>'',
+					  'flighttime'=>'',
+					  'submitdate'=>'',
+					  'log'=>'');
+		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
 					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate)
 					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW())";
@@ -251,7 +262,7 @@ class PIREPData
 		$pirepid = DB::$insert_id;
 
 		// Add the comment if its not blank
-		if($comment!='') 
+		if($comment!='')
 		{
 			$pirepid = DB::$insert_id;
 
@@ -303,7 +314,7 @@ class PIREPData
 	
 	public function GetFieldInfo($id)
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pirepfields 
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pirepfields
 					WHERE fieldid='.$id;
 		
 		return DB::get_row($sql);
@@ -339,7 +350,7 @@ class PIREPData
 		$fieldname = strtoupper(str_replace(' ', '_', $title));
 		
 		$sql = "UPDATE ".TABLE_PREFIX."pirepfields
-					SET title='$title',name='$fieldname', type='$type', options='$values' 
+					SET title='$title',name='$fieldname', type='$type', options='$values'
 					WHERE fieldid=$id";
 				
 		$res = DB::query($sql);
@@ -369,7 +380,7 @@ class PIREPData
 			$fieldname =str_replace(' ', '_', $field->name);
 			$value = $list[$fieldname];
 				
-			$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues 
+			$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
 						(fieldid, pirepid, value)
 						VALUES ($field->fieldid, $pirepid, '$value')";
 						

@@ -12,6 +12,7 @@ phpVMS - Virtual Airline Administration Software
 
 Build 371
 
+  * FSACARS status updates and PIREPS support
   * A few template errors fixed
   * Flight leg taken into account on checking schedule
   * Updater improved
@@ -20,6 +21,7 @@ Build 371
   * Required fields for registration marked with *
   * PIREP submission fixed (missing flight leg)
   * Ranking fixes
+  * Pages check for permission to view
 
 Build 370 (Release!)
 

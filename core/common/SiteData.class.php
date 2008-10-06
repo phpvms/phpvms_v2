@@ -104,6 +104,13 @@ class SiteData
 		return DB::get_row($sql);
 	}
 	
+	public function GetPageDataByName($pagename)
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pages WHERE filename=\''.$pagename.'\'';
+		
+		return DB::get_row($sql);
+	}
+	
 	public function AddPage($title, $content, $public=true, $enabled=true)
 	{
 		$filename = strtolower($title);

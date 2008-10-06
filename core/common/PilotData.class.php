@@ -266,6 +266,22 @@ class PilotData
 	}
 	
 	/**
+	 * Get the field value for a pilot
+	 */
+	public function GetFieldValue($pilotid, $title)
+	{
+		$sql = 'SELECT v.value
+					FROM '.TABLE_PREFIX.'customfields f
+					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
+						ON f.fieldid=v.fieldid AND v.pilotid='.$pilotid.'
+							AND f.title=\''.$title.'\'';
+			
+		$res = DB::get_row($sql);
+		return $res->value;
+	}
+	
+	
+	/**
 	 * Get the groups a pilot is in
 	 */
 	public function GetPilotGroups($pilotid)

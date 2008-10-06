@@ -35,7 +35,15 @@ class Pages extends CodonModule
 			// Page here is the filename, but we don't call it in directly
 			//	for security reasons
 			
-			$page = $this->get->page;
+			$page = DB::escape($this->get->page);
+			
+			$pageinfo = SiteData::GetPageData($page);
+			
+			if($pageinfo->public == 0 && Auth::LoggedIn() == false)
+			{
+				Template::Show('pages_nopermission.tpl');
+				return;
+			}
 			
 			$content = SiteData::GetPageContent($page);
 			if(!$content)

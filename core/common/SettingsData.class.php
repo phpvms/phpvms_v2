@@ -36,7 +36,7 @@ class SettingsData
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$fieldid);
 	}
-	
+		
 	/**
 	 * Add a custom field to be used in a profile
 	 */
@@ -76,7 +76,7 @@ class SettingsData
 	 * Add a custom field to be used in a profile
 	 */
 	public function EditField($fieldid, $title, $fieldtype, $public, $showinregistration)
-	{		
+	{
 		$fieldname = str_replace(' ', '_', $title);
 		$fieldname = strtoupper($fieldname);
 		
@@ -91,9 +91,9 @@ class SettingsData
 		else
 			$showinregistration = 0;
 		
-		$sql = "UPDATE " . TABLE_PREFIX ."customfields 
-					SET title='$title', fieldname='$fieldname', type='$type', 
-						public=$public, showonregister=$showinregistration	
+		$sql = "UPDATE " . TABLE_PREFIX ."customfields
+					SET title='$title', fieldname='$fieldname', type='$type',
+						public=$public, showonregister=$showinregistration
 					WHERE fieldid=$fieldid";
 		
 		$res = DB::query($sql);

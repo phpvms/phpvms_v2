@@ -13,20 +13,17 @@
 <?php
 foreach($allpilots as $pilot)
 {
-	/*
-	* To include additional fields,  uncomment the following lines
-	*  	set $fieldname to the desired field name (all caps, and spaces
-	*	replaced by an underscore), and use the result in $value.
-	*/
+	/* 
+		To include a custom field, use the following example:
 
-	//$fieldname = "VATSIM_ID";
-	//$value = "";
-	//$fields = PilotData::GetFieldData($pilot->pilotid);
-	//foreach($fields as $f) {
-	//	if ($f->fieldname==$fieldname) {
-	//		$value = $f->value;
-	//	}
-	//}
+		<td>
+			<?php echo PilotData::GetFieldValue($pilot->pilotid, 'VATSIM ID'); ?>
+		</td>
+
+		For instance, if you added a field called "IVAO Callsign":
+
+			echo PilotData::GetFieldValue($pilot->pilotid, 'IVAO Callsign');		
+	 */
 ?>
 <tr>
 	<td><a href="<?=SITE_URL?>/index.php/Pilots/reports/<?=$pilot->pilotid?>">

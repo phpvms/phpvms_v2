@@ -40,8 +40,7 @@ $(document).ready(function() {
 			{
 				if(v == true)
 				{
-					//$("#bodytext").load(url);
-					alert ('ok');
+					$("#bodytext").load(url);
 				}
 			}			
 		});

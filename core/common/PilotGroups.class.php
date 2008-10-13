@@ -36,8 +36,8 @@ class PilotGroups
 	{
 		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name) VALUES ('$groupname')";
 		
-		$res = DB::query($sql);
-		
+		$res = DB::query($query);
+				
 		if(DB::errno() != 0)
 			return false;
 			

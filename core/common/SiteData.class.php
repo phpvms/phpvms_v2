@@ -46,6 +46,12 @@ class SiteData
 		}
 	}
 
+	public function GetNewsItem($id)
+	{
+		return DB::get_row('SELECT *, UNIX_TIMESTAMP(postdate) AS postdate 
+									FROM '.TABLE_PREFIX.'news WHERE id='.$id);
+	}
+	
 	public function GetAllNews()
 	{
 		return DB::get_results('SELECT id, subject, body, UNIX_TIMESTAMP(postdate) as postdate, postedby
@@ -54,11 +60,29 @@ class SiteData
 	
 	public function AddNewsItem($subject, $body)
 	{
+		$subject = DB::escape($subject);
+		$body = DB::escape($body);
 		$postedby = Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;
 		
 		$sql = 'INSERT INTO ' . TABLE_PREFIX . "news (subject, body, postdate, postedby)
 					VALUES ('$subject', '$body', NOW(), '$postedby')";
 					
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+	public function EditNewsItem($id, $subject, $body)
+	{
+		$subject = DB::escape($subject);
+		$body = DB::escape($body);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'news SET subject=\''.$subject.'\', body=\''.$body.'\' 
+					WHERE id='.$id;
+		
 		$res = DB::query($sql);
 		
 		if(DB::errno() != 0)

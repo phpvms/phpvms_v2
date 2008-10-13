@@ -50,14 +50,35 @@ class SiteCMS extends CodonModule
 		{
 			case 'viewnews':
 			
-				if(isset($this->post->addnews))
+				switch ($this->post->action)
 				{
-					$this->AddNewsItem();
-				}
+					case 'addnews':
 				
-				if($this->post->action == 'deleteitem')
-				{
-					$this->DeleteNewsItem();
+						$this->AddNewsItem();
+						
+						break;
+						
+					case 'editnews':
+						
+						$res = SiteData::EditNewsItem($this->post->id, $this->post->subject, $this->post->body);
+						
+						if($res == false)
+						{
+							Template::Set('message', 'There was an error editing the news item: '.DB::error());
+							Template::Show('core_error.tpl');
+						}
+						else
+						{
+							Template::Set('message', 'News edited successfully!');
+							Template::Show('core_success.tpl');
+						}						
+						break;
+						
+					case 'deleteitem':
+						
+						$this->DeleteNewsItem();
+						
+						break;
 				}
 				
 				$this->ViewNews();
@@ -65,7 +86,20 @@ class SiteCMS extends CodonModule
 				break;
 				
 			case 'addnews':
+				Template::Set('title', 'Add News');
+				Template::Set('action', 'addnews');
+				
 				Template::Show('news_additem.tpl');
+				break; 
+				
+			case 'editnews':
+				
+				Template::Set('title', 'Edit News');
+				Template::Set('action', 'editnews');
+				Template::Set('newsitem', SiteData::GetNewsItem($this->get->id));
+				
+				Template::Show('news_additem.tpl');
+				
 				break;
 			
 			case 'addpageform':
@@ -214,6 +248,13 @@ class SiteCMS extends CodonModule
 		}
 		
 		Template::Show('core_message.tpl');
+	}
+	
+	function EditNewsItem()
+	{
+		
+		
+		
 	}
 	
 	function DeleteNewsItem()

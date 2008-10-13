@@ -25,6 +25,14 @@ $(document).ready(function() {
         }
     });
 	
+	$("#form").ajaxForm({
+		target: '#bodytext',
+		success: function() 
+		{
+			$('#bodytext').fadeIn('slow');
+		}
+	});
+	
 	$("#dialogform").ajaxForm({
 		target: '#results'
 	});

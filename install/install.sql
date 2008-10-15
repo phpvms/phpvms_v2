@@ -148,12 +148,12 @@ CREATE TABLE `phpvms_pireps` (
 	`distance` SMALLINT NOT NULL ,
 	`submitdate` DATETIME NOT NULL ,
 	`accepted` SMALLINT NOT NULL ,
+	`log` TEXT NOT NULL ,
 	PRIMARY KEY ( `pirepid` ),
 	INDEX `code` (`code`),
 	INDEX `pilotid` (`pilotid`),
 	FOREIGN KEY (`code`) REFERENCES phpvms_airlines(`code`) ON UPDATE CASCADE,
-	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`aircraft`) REFERENCES phpvms_aircraft(`name`) ON UPDATE CASCADE
+	FOREIGN KEY (`pilotid`) REFERENCES phpvms_pilots(`pilotid`) ON UPDATE CASCADE ON DELETE CASCADE
 )ENGINE=INNODB;
 
 CREATE TABLE `phpvms_pirepcomments` (

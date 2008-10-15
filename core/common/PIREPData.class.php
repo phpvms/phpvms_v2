@@ -241,7 +241,7 @@ class PIREPData
 	/**
 	 * File a PIREP
 	 */
-	public function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment='')
+	public function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment='', $log='')
 	{
 		
 		$data = array('pilotid'=>'',
@@ -254,9 +254,10 @@ class PIREPData
 					  'submitdate'=>'',
 					  'log'=>'');
 		
+		$log = DB::escape($log);
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
-					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate)
-					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW())";
+					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, log)
+					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW(), '$log')";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;

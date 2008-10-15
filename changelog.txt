@@ -22,6 +22,14 @@ Build 371
   * PIREP submission fixed (missing flight leg)
   * Ranking fixes
   * Pages check for permission to view
+  * Added statistical functionality:
+  		StatsData::TotalFlights();
+  		StatsData::TotalHours();
+  		StatsData::PilotCount();
+  		
+  		Example:
+  
+  		<p>This VA has a total of <?=StatsData::TotalFlights();?> flights</p>
 
 Build 370 (Release!)
 

@@ -18,6 +18,32 @@
  
 class StatsData
 {
+	
+	/**
+	 * Get the total number of hours flown by pilots
+	 */
+	public function TotalHours()
+	{
+		$sql = 'SELECT SUM(totalhours) AS total FROM '.TABLE_PREFIX.'pilots';
+		$res = DB::get_row($sql);
+		return $res->total;
+	}
+	
+	public function TotalFlights()
+	{
+		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pireps';
+		$res = DB::get_row($sql);
+		return $res->total;
+	}
+	
+	public function PilotCount()
+	{
+		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pilots';
+		$res = DB::get_row($sql);
+		return $res->total;
+	}
+	
+	
 	/**
 	 * Show pie chart for all of the aircraft flown
 	 *  by a certain pilot. Outputs image, unless $ret == true,

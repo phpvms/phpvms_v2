@@ -62,7 +62,6 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
-	
 	/**
 	 * Return the pilot's code (ie DVA1031), using
 	 * the code and their DB ID
@@ -151,8 +150,10 @@ class PilotData
 	 */
    	public function RejectPilot($pilotid)
 	{
-		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
-					WHERE pilotid='.$pilotid;
+		/*$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
+					WHERE pilotid='.$pilotid;*/
+		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
 
 		$res = DB::query($sql);
 		

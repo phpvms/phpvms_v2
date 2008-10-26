@@ -64,14 +64,27 @@ $flightcargo = array('Pax', 'Cargo');
 	// PIREP being filed
 	if($_GET['pilotnumber'] != '' && $_GET['dur'] != '' && $_GET['len'] != '')
 	{
-		
 		// see if they are a valid pilot:
 		preg_match('/^([A-Za-z]{2,3})(\d*)', $_GET['pilotnumber'], $matches);
+		$pilotid = $matches[2];
 		
-		if(!($pilot = PilotData::GetPilotData($matches[2])))
+		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
 			return;
 		}
+		
+		// match up the flight info
+		preg_match('/^([A-Za-z]{2,3})(\d*)', $_GET['callsign'], $matches);
+		$code = $matches[1];
+		$flightnum = $matches[2];
+		$depicao = $_GET['depart'];
+		$arricao = $_GET['arrival'];
+		$aircraft = $_GET['equipment'];
+		$flighttime = $_GET['duration'];
+		$comment = "";
+		$log = $_GET['log'];
+		
+		PIREPData::FileReport($pilotid, $code,$flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment, $log);
 	}
 	
 echo 'OK';

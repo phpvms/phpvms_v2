@@ -40,7 +40,8 @@ class PilotData
 	public function GetAllPilotsDetailed($start='', $limit=20)
 	{
 	
-		$sql = 'SELECT p.*, r.rankimage FROM '.TABLE_PREFIX.'pilots p, '.TABLE_PREFIX.'ranks r
+		$sql = 'SELECT p.*, r.rankimage 
+					FROM '.TABLE_PREFIX.'pilots p, '.TABLE_PREFIX.'ranks r
 					WHERE r.rank = p.rank
 					ORDER BY totalhours DESC';
 		
@@ -102,7 +103,6 @@ class PilotData
 		if($count!='')
 			$sql .= ' LIMIT '.intval($count);
 
-			
 		return DB::get_results($sql);
 	}
 	

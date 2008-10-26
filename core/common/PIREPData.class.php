@@ -241,25 +241,37 @@ class PIREPData
 	/**
 	 * File a PIREP
 	 */
-	public function FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment='', $log='')
+	public function FileReport($pirepdata)
 	{
 		
-		$data = array('pilotid'=>'',
+		/*$pirepdata = array('pilotid'=>'',
 					  'code'=>'',
 					  'flightnum'=>'',
+					  'leg'=>'',
 					  'depicao'=>'',
 					  'arricao'=>'',
 					  'aircraft'=>'',
 					  'flighttime'=>'',
 					  'submitdate'=>'',
-					  'log'=>'');
+					  'comment'=>'',
+					  'log'=>'');*/
 		
-		$log = DB::escape($log);
-		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
+		if($pirepdata['leg'] == '') $pirepdata['leg'] = 1;
+		$pirepdata['log'] = DB::escape($pirepdata['log']);
+		
+		# Remove the comment field, since it doesn't exist
+		# 	in the PIREPs table.
+		$comment = escape($pirepdata['comment']);
+		unset($pirepdata['comment']);
+		
+		#replaced
+		/*$sql = "INSERT INTO ".TABLE_PREFIX."pireps
 					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, log)
 					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW(), '$log')";
 
-		$ret = DB::query($sql);
+		$ret = DB::query($sql);*/
+		
+		DB::quick_insert('pireps', $pirepdata);
 		$pirepid = DB::$insert_id;
 
 		// Add the comment if its not blank
@@ -308,7 +320,8 @@ class PIREPData
 		$sql = 'SELECT f.title, f.name, v.value
 					FROM '.TABLE_PREFIX.'pirepfields f
 					LEFT JOIN '.TABLE_PREFIX.'pirepvalues v
-						ON f.fieldid=v.fieldid AND v.pirepid='.$pirepid;
+						ON f.fieldid=v.fieldid 
+							AND v.pirepid='.intval($pirepid);
 					
 		return DB::get_results($sql);
 	}

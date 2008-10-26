@@ -24,8 +24,8 @@ class SchedulesData
 	 */
 	public function GetSchedule($id)
 	{
-		$id = DB::escape($id);
-		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.$id;
+		#$id = DB::escape($id);
+		$sql = 'SELECT * FROM '. TABLE_PREFIX.'schedules WHERE id='.intval($id);
 		
 		return DB::get_row($sql);
 	}
@@ -39,7 +39,9 @@ class SchedulesData
 					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-					WHERE s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum.'\' AND s.leg=\''.$leg.'\'';
+					WHERE s.code=\''.$code.'\' 
+						AND s.flightnum=\''.$flightnum.'\'
+						AND s.leg=\''.$leg.'\'';
 		
 		return DB::get_row($sql);
 	}

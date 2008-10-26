@@ -48,7 +48,7 @@ class ACARSData extends CodonModule
 			return false;
 		}*/
 
-		/*// first see if we exist:
+		// first see if we exist:
 		$exist = DB::get_row('SELECT id FROM '.TABLE_PREFIX.'acarsdata WHERE pilotid=\''.$data['pilotid'].'\'');
 		
 		if($exist)
@@ -84,7 +84,7 @@ class ACARSData extends CodonModule
 			DB::query($query);
 		}
 		else
-		{*/
+		{
 			// insert
 			
 			// form array with $ins[column]=value and then
@@ -122,7 +122,7 @@ class ACARSData extends CodonModule
 		
 			DB::query($query);
 			
-		//}
+		}
 		
 		return true;
 	}

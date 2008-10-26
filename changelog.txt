@@ -16,6 +16,7 @@ Build 371
   * A few template errors fixed
   * Flight leg taken into account on checking schedule
   * Updater improved
+  * Pilot deleted if registration is rejected
   * PIREP field insertion bug fixed
   * Registration anomolies
   * Required fields for registration marked with *

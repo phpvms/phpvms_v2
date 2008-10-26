@@ -205,8 +205,21 @@ class PIREPS extends CodonModule
 		{
 			return false;
 		}
+	
+		# form the fields to submit
+		$data = array('pilotid'=>$pilotid,
+					  'code'=>$code,
+					  'flightnum'=>$flightnum,
+					  'leg'=>$leg,
+					  'depicao'=>$depicao,
+					  'arricao'=>$arricao,
+					  'aircraft'=>$aircraft,
+					  'flighttime'=>$flighttime,
+					  'submitdate'=>'NOW()',
+					  'comment'=>$comment);
 		
-		if(!PIREPData::FileReport($pilotid, $code, $flightnum, $depicao, $arricao, $aircraft, $flighttime, $comment, $log))
+		//if(!PIREPData::FileReport($pilotid, $code, $flightnum, $leg, $depicao, $arricao, $aircraft, $flighttime, $comment, $log))
+		if(!PIREPData::FileReport($data))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
 			Template::Show('core_error.tpl');
@@ -216,19 +229,19 @@ class PIREPS extends CodonModule
 		$pirepid = DB::$insert_id;
 		PIREPData::SaveFields($pirepid, $_POST);
 	
-		// Update the flown count for that route
+		# Update the flown count for that route
 		SchedulesData::IncrementFlownCount($code, $flightnum);
 		
-		// Call the event
+		# Call the event
 		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);
 		
-		// delete the bid, if the value for it is set
+		# Delete the bid, if the value for it is set
 		if($this->post->bid != '')
 		{
 			SchedulesData::RemoveBid($this->post->bid);
 		}
 		
-		// Load PIREP into RSS feed
+		# Load PIREP into RSS feed
 		$reports = PIREPData::GetRecentReportsByCount(10);
 		$rss = new RSSFeed('Latest Pilot Reports', SITE_URL, 'The latest pilot reports');
 		
@@ -236,7 +249,8 @@ class PIREPS extends CodonModule
 		{
 			$rss->AddItem('Report #'.$report->pirepid.' - '.$report->depicao.' to '.$report->arricao,
 							SITE_URL.'/admin/index.php?admin=viewpending','',
-							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid) . " ($report->firstname $report->lastname)");
+							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid) 
+							. " ($report->firstname $report->lastname)");
 		}
 		
 		$rss->BuildFeed(LIB_PATH.'/rss/latestpireps.rss');

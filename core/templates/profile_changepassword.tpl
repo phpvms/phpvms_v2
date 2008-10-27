@@ -1,5 +1,5 @@
 <h3>Change Password</h3>
-<form action="<?=SITE_URL?>/index.php/PilotProfile" method="post">
+<form action="<?=SITE_URL?>/index.php/profile" method="post">
 <dl>
 
 	<dt>Enter your new password</dt>

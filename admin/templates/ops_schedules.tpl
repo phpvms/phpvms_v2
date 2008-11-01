@@ -24,7 +24,7 @@ foreach($schedules as $sched)
 {
 ?>
 <tr id="row<?=$sched->id?>">
-	<td align="center"><?php echo $sched->code . $sched->flightnum; ?></td>
+	<td align="center"><?php echo $sched->code . $sched->flightnum; ?> (L<?-$sched->leg?>)</td>
 	<td align="center"><?=$sched->depicao; ?> (<?=$sched->deptime;?>)</td>
 	<td align="center"><?=$sched->arricao; ?> (<?=$sched->arrtime;?>)</td>
 	<td align="center"><?=$sched->aircraft; ?></td>

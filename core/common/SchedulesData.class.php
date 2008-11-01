@@ -41,7 +41,9 @@ class SchedulesData
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 					WHERE s.code=\''.$code.'\' 
 						AND s.flightnum=\''.$flightnum.'\'
-						AND s.leg=\''.$leg.'\'';
+						AND s.leg='.$leg;
+						
+		//$sql = "SELECT * FROM phpvms_schedules WHERE code='$code' AND flightnum='$flightnum' AND leg='$leg'";
 		
 		return DB::get_row($sql);
 	}

@@ -27,6 +27,13 @@ class PIREPS extends CodonModule
 			case '':
 			case 'mine':
 			case 'viewpireps':
+			
+				if(!Auth::LoggedIn())
+				{
+					Template::Set('message', 'You are not logged in!');
+					Template::Show('core_error.tpl');
+					return;
+				}
 				
 				if(isset($_POST['submit_pirep']))
 				{
@@ -40,7 +47,6 @@ class PIREPS extends CodonModule
 				// Show PIREPs filed
 							
 				Template::Set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
-				
 				Template::Show('pireps_viewall.tpl');
 				
 				break;
@@ -100,6 +106,7 @@ class PIREPS extends CodonModule
 				
 				break;
 				
+			# These next two are accessed via AJAX
 			case 'getdeptapts':
 				
 				$code = $this->get->id;

@@ -1,3 +1,14 @@
+function formInit()
+{
+    $("#form").ajaxForm({
+		target: '#bodytext',
+		success: function() 
+		{
+			$('#bodytext').fadeIn('slow');
+			formInit();
+		}
+	});
+}
 $(document).ready(function() {
  		
     // Show dialog box
@@ -25,13 +36,7 @@ $(document).ready(function() {
         }
     });
 	
-	$("#form").ajaxForm({
-		target: '#bodytext',
-		success: function() 
-		{
-			$('#bodytext').fadeIn('slow');
-		}
-	});
+	formInit();
 	
 	$("#dialogform").ajaxForm({
 		target: '#results'

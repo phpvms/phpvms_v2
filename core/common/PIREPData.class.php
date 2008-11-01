@@ -91,7 +91,8 @@ class PIREPData
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+					FROM '.TABLE_PREFIX.'pilots u, 
+						 '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid
 						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate
 					ORDER BY p.submitdate DESC';
@@ -261,26 +262,26 @@ class PIREPData
 		
 		# Remove the comment field, since it doesn't exist
 		# 	in the PIREPs table.
-		$comment = escape($pirepdata['comment']);
-		unset($pirepdata['comment']);
+		$comment = DB::escape($pirepdata['comment']);
+		//@unset($pirepdata['comment']);
 		
 		#replaced
-		/*$sql = "INSERT INTO ".TABLE_PREFIX."pireps
+		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
 					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, log)
-					VALUES ($pilotid, '$code', '$flightnum', '$depicao', '$arricao', '$aircraft', '$flighttime', NOW(), '$log')";
+					VALUES ($pirepdata[pilotid], '$pirepdata[code]', '$pirepdata[flightnum]', 
+							'$pirepdata[depicao]', '$pirepdata[arricao]', '$pirepdata[aircraft]', 
+							'$pirepdata[flighttime]', NOW(), '$pirepdata[log]')";
 
-		$ret = DB::query($sql);*/
-		
-		DB::quick_insert('pireps', $pirepdata);
+		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
 
 		// Add the comment if its not blank
-		if($comment!='')
+		if($comment != '')
 		{
 			$pirepid = DB::$insert_id;
 
 			$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
-						VALUES ($pirepid, $pilotid, '$comment', NOW())";
+					VALUES ($pirepid, $pirepdata[pilotid], '$pirepdata[comment]', NOW())";
 
 			$ret = DB::query($sql);
 

@@ -27,18 +27,18 @@ define('UPDATE_VERSION', '1.0.384');
 $sql = array();
 
 # Table changes, other SQL updates
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pilots` DROP INDEX `rank`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pireps` ADD `log` TEXT NOT NULL';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pireps` DROP FOREIGN KEY `phpvms_pireps_ibfk_1`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pireps` DROP INDEX `code`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pireps` DROP FOREIGN KEY `phpvms_pireps_ibfk_3`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pireps` DROP INDEX `aircraft`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'pireps` DROP INDEX `flightnum`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'schedules` DROP FOREIGN KEY `phpvms_schedules_ibfk_2`';
-$sql[] = 'ALTER TABLE `'.TABLE_PREFIX.'schedules` DROP INDEX `aircraft`';
+$sql[] = 'ALTER TABLE `phpvms_pilots` DROP INDEX `rank`';
+$sql[] = 'ALTER TABLE `phpvms_pireps` ADD `log` TEXT NOT NULL';
+$sql[] = 'ALTER TABLE `phpvms_pireps` DROP FOREIGN KEY `phpvms_pireps_ibfk_1`';
+$sql[] = 'ALTER TABLE `phpvms_pireps` DROP INDEX `code`';
+$sql[] = 'ALTER TABLE `phpvms_pireps` DROP FOREIGN KEY `phpvms_pireps_ibfk_3`';
+$sql[] = 'ALTER TABLE `phpvms_pireps` DROP INDEX `aircraft`';
+$sql[] = 'ALTER TABLE `phpvms_pireps` DROP INDEX `flightnum`';
+$sql[] = 'ALTER TABLE `phpvms_schedules` DROP FOREIGN KEY `phpvms_schedules_ibfk_2`';
+$sql[] = 'ALTER TABLE `phpvms_schedules` DROP INDEX `aircraft`';
 
 # Version update
-$sql[] = 'UPDATE `'.TABLE_PREFIX.'settings` 
+$sql[] = 'UPDATE `phpvms_settings` 
 			SET value=\''.UPDATE_VERSION.'\' WHERE name=\'PHPVMS_VERSION\'';
 
 

@@ -168,7 +168,9 @@ class PilotData
 	 */
 	public function UpdateLogin($pilotid)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."pilots SET lastlogin=NOW() WHERE pilotid=$pilotid";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots 
+					SET lastlogin=NOW() 
+					WHERE pilotid=$pilotid";
 		
 		$res = DB::query($sql);
 		
@@ -232,13 +234,17 @@ class PilotData
 			$res = DB::get_row($sql);
 
 			$fieldname =str_replace(' ', '_', $field->fieldname);
+			
+			if(!isset($list[$fieldname]))
+				continue;
+				
 			$value = $list[$fieldname];
 				
 			// if it exists
 			if($res)
 			{
 				$sql = 'UPDATE '.TABLE_PREFIX.'fieldvalues
-						SET value="'.$value.'" WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
+							SET value="'.$value.'" WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
 			}
 			else
 			{
@@ -273,12 +279,12 @@ class PilotData
 	 */
 	public function GetFieldValue($pilotid, $title)
 	{
-		$sql = 'SELECT v.value
-					FROM '.TABLE_PREFIX.'customfields f
-					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
-						ON f.fieldid=v.fieldid AND v.pilotid='.$pilotid.'
-							AND f.title=\''.$title.'\'';
-			
+		$sql = "SELECT v.value 
+					FROM phpvms_customfields f, phpvms_fieldvalues v 
+					WHERE f.fieldid=v.fieldid 
+						AND f.title='$title' 
+						AND v.pilotid=$pilotid";
+						
 		$res = DB::get_row($sql);
 		return $res->value;
 	}

@@ -23,8 +23,8 @@
 	<dt>Show During Registration</dt>
 	<dd>
 		<select name="showinregistration">
-		<option value="yes" <?php if($field->showinregistration == 0) echo 'selected'; ?>>Yes</option>
-		<option value="no" <?php if($field->showinregistration == 0) echo 'selected'; ?>>No</option>
+		<option value="yes" <?php if($field->showonregister == 1) echo 'selected'; ?>>Yes</option>
+		<option value="no" <?php if($field->showonregister == 0) echo 'selected'; ?>>No</option>
 		</select>
 	</dd>
 	

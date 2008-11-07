@@ -10,16 +10,16 @@ phpVMS - Virtual Airline Administration Software
 		http://creativecommons.org/licenses/by-nc-sa/3.0/
 ---
 
-Build 371
+Next Build
 
-  * FSACARS status updates and PIREPS support
-  * A few template errors fixed
+  * FSACARS status updates and PIREPS support (thanks to Roger from www.fspaintshop.com for the icons!)
+  * Schedules results improved (schedule_results.tpl), update to this!
   * Flight leg taken into account on checking schedule
-  * Updater improved
+  * Profile editing bugs fixed
+  * Page deletes actually work (woo)
   * Pilot deleted if registration is rejected
   * PIREP field insertion bug fixed
-  * Registration anomolies
-  * Required fields for registration marked with *
+  * Registration anomolies (required fields marked with *)
   * PIREP submission fixed (missing flight leg)
   * Ranking fixes
   * Pages check for permission to view
@@ -31,6 +31,12 @@ Build 371
   		Example:
   
   		<p>This VA has a total of <?=StatsData::TotalFlights();?> flights</p>
+  		
+  * New setting added: UNIT
+  
+		Config::Set('UNITS', 'mi'); // Your units: mi or km
+		
+		Add it to your local.config.php
 
 Build 370 (Release!)
 

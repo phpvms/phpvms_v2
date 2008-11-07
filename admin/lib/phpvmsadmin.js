@@ -9,6 +9,19 @@ function formInit()
 		}
 	});
 }
+
+function reloadGroups()
+{
+    // Binding the AJAX call clicks
+	$.listen('click','.pilotgroupajax', function() {
+		return false; // cancel the single click event
+	});
+	
+	$.listen('dblclick','.pilotgroupajax', function() {
+		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")}, function() { reloadGroups(); });
+	});
+}
+
 $(document).ready(function() {
  		
     // Show dialog box
@@ -37,6 +50,7 @@ $(document).ready(function() {
     });
 	
 	formInit();
+	reloadGroups();
 	
 	$("#dialogform").ajaxForm({
 		target: '#results'
@@ -116,14 +130,7 @@ $(document).ready(function() {
 	
 	$("ul.nav").superfish();
 	
-	// Binding the AJAX call clicks
-	$.listen('click','.pilotgroupajax', function() {
-		return false; // cancel the single click event
-	});
 	
-	$.listen('dblclick','.pilotgroupajax', function() {
-		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")});
-	});
 		
 	//Tablize any lists
 	$("#tabledlist").tablesorter();

@@ -1,6 +1,6 @@
 <h3>Site Settings</h3>
 <p>Select available site options from this page. Don't forget to save!</p>
-<form id="form" method="post" action="index.php?admin=settings">
+<form id="form" method="post" action="action.php?admin=settings">
 
 <table id="tabledlist" class="tablesorter">
 <thead>

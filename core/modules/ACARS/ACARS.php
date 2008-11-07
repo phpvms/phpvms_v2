@@ -29,7 +29,7 @@ class ACARS extends CodonModule
 				// fancy
 				
 				// Show the main ACARS map with all the positions, etc
-				Template::Set('acarsdata', ACARSData::GetACARSData(500));
+				Template::Set('acarsdata', ACARSData::GetACARSData(5000));
 				Template::Show('acarsmap.tpl');
 				
 				break;

@@ -21,6 +21,7 @@ define('SITE_URL', 'http://$SITE_URL');
 Config::Set('PILOTID_OFFSET', 0); // This is where to start the pilot ID from
 Config::Set('SHOW_LEG_TEXT', true); // Show the leg text or not
 Config::Set('PAGE_EXT', '.htm'); // The page extension
+Config::Set('UNITS', 'mi'); // Your units: mi or km
 
 Config::Set('MAP_WIDTH', '600px');
 Config::Set('MAP_HEIGHT', '400px');

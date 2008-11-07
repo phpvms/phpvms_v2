@@ -45,8 +45,6 @@ class Auth
 			
 			self::$userinfo = PilotData::GetPilotData(self::$pilotid);
 			
-			//print_r(self::$userinfo);
-			//print_r(self::$usergroups);
 			return true;
 		}
 		else

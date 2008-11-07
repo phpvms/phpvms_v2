@@ -20,6 +20,7 @@
 	`online` VARCHAR( 10 ) NOT NULL ,
 	`messagelog` TEXT NOT NULL,
 	`lastupdate` DATETIME NOT NULL,
+	`client` VARCHAR( 15 ) NOT NULL,
 	PRIMARY KEY ( `id` ) ,
 	INDEX ( `pilotid` )
 )ENGINE=INNODB; 

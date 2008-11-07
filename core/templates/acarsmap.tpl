@@ -12,7 +12,19 @@
 	
 	foreach($acarsdata as $data)
 	{
-		$map->addMarkerIcon(SITE_URL.'/lib/images/icon_acarsflight.gif', '', 0, 0, 10, 10);
+		// Use red for on ground, green for in air
+		
+		if($data->phasedetail != 'Boarding' && $data->phasedetail != 'Taxiing'
+			&& $data->phasedetail != 'FSACARS Closed' && $data->phasedetail != 'Taxiiing to gate'
+			&& $data->phasedetail != 'Landed' && $data->phasedetail != 'Arrived')
+		{
+			$map->addMarkerIcon(SITE_URL.'/lib/images/inair.png');//, '', 0, 0, 0, 0);
+		}
+		else
+		{
+			$map->addMarkerIcon(SITE_URL.'/lib/images/onground.png');//, '', 0, 0, 0, 0);
+		}
+		
 		$map->addMarkerByCoords($data->lng, $data->lat, '', "$data->pilotid (Route $data->flightnum)<br />$data->depapt ($data->depicao) to $data->arrapt ($data->arricao)");
 		
 		$row .= "<tr>

@@ -26,11 +26,13 @@ class RegistrationData
 	 * Get all of the custom fields that will show up
 	 *	during the registration
 	 */
-	public function GetCustomFields()
+	public function GetCustomFields($getall=false)
 	{
 		
-		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'customfields
-					WHERE showonregister=1';
+		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'customfields';
+		
+		if($getall == false)
+			$sql .=' WHERE showonregister=1';
 		
 		return DB::get_results($sql);
 	}

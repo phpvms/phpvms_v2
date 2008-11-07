@@ -1,5 +1,5 @@
 <h3>Edit Profile</h3>
-<form action="<?=SITE_URL?>/index.php/PilotProfile" method="post">
+<form action="<?=SITE_URL?>/index.php/profile" method="post">
 <dl>
 	<dt>Name</dt>
 	<dd><?=$userinfo->firstname . ' ' . $userinfo->lastname?></dd>

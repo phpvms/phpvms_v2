@@ -43,6 +43,9 @@ class Profile extends CodonModule
 				if($this->post->action == 'saveprofile')
 				{
 					$this->SaveProfile();
+					
+					Template::Set('message', 'Profile saved!');
+					Template::Show('core_success.tpl');
 				}
 				
 				/* this comes from /profile/changepassword
@@ -50,6 +53,9 @@ class Profile extends CodonModule
 				if($this->post->action == 'changepassword')
 				{
 					$this->ChangePassword();
+					
+					Template::Set('message', 'Password changed!');
+					Template::Show('core_success.tpl');
 				}
 
 				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
@@ -117,19 +123,16 @@ class Profile extends CodonModule
 	function SaveProfile()
 	{
 		$userinfo = Auth::$userinfo;
-
-		// save basic fields
-		$email = $this->post->email;
-		$location = $this->post->location;
-
+		
 		//TODO: check email validity
-		if($email == '')
+		if($this->post->email == '')
 		{
 			return;
 		}
 
-		PilotData::SaveProfile(Auth::$pilotid, $email, $location);
+		PilotData::SaveProfile(Auth::$pilotid, $this->post->email, $this->post->location);
 		PilotData::SaveFields(Auth::$pilotid, $_POST);
+		
 	}
 
 	function ChangePassword()

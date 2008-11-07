@@ -52,7 +52,8 @@ $flightcargo = array('Pax', 'Cargo');
 						'arrtime'=>'',
 						'distremain'=>$_GET['disdestapt'],
 						'phasedetail'=>$phase_detail[$_GET['detailph']],
-						'online'=>$_GET['Online']);
+						'online'=>$_GET['Online'],
+						'client'=>'FSACARS');
 
 		ob_start();
 		ACARSData::UpdateFlightData($fields);

@@ -14,6 +14,7 @@
 Config::Set('PAGE_EXT', '.htm');
 Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
 Config::Set('SHOW_LEG_TEXT', true);
+Config::Set('UNITS', 'mi'); // Your units: mi or km
 
 // Google Map Options
 Config::Set('MAP_WIDTH', '600px');

@@ -218,15 +218,17 @@ class PilotData
 	 */
 	public function SaveFields($pilotid, $list)
 	{
-		$allfields = RegistrationData::GetCustomFields();
-		
+		$allfields = RegistrationData::GetCustomFields(true);
 		
 		if(!$allfields)
 			return true;
 			
 		foreach($allfields as $field)
 		{
-			$sql = 'SELECT id FROM '.TABLE_PREFIX.'fieldvalues WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
+			$sql = 'SELECT id FROM '.TABLE_PREFIX.'fieldvalues 
+						WHERE fieldid='.$field->fieldid.' 
+							AND pilotid='.$pilotid;
+							
 			$res = DB::get_row($sql);
 
 			$fieldname =str_replace(' ', '_', $field->fieldname);

@@ -14,10 +14,10 @@
 	
 	$map = new GoogleMapAPI('routemap', 'phpVMS');
 	
-	$map->addMarkerIcon(SITE_URL.'/lib/images/icon_origin.gif', '', 0, 0, 10, 10);
+	$map->addMarkerIcon(SITE_URL.'/lib/images/icon_origin.gif'); //, '', 0, 0, 10, 10);
 	$map->addMarkerByCoords($mapdata->deplong, $mapdata->deplat, '', "$mapdata->depname ($mapdata->depicao)");
 	
-	$map->addMarkerIcon(SITE_URL.'/lib/images/icon_arrival.gif', 0, 0, 10, 10);
+	$map->addMarkerIcon(SITE_URL.'/lib/images/towerarrival.png'); //, 0, 0, 40, 40);
 	$map->addMarkerByCoords($mapdata->arrlong, $mapdata->arrlat, '', "$mapdata->arrname ($mapdata->arricao)");
 	
 	

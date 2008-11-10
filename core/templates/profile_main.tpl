@@ -22,7 +22,8 @@
 		<p style="float: right;"><?php StatsData::PilotAircraftFlownGraph($userinfo->pilotid); ?></p>
 		<strong>Your Rank: </strong><?=$userinfo->rank;?> <br />
 		<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
-		<strong>Total Hours: </strong><?=$userinfo->totalhours?>
+		<strong>Total Hours: </strong><?=$userinfo->totalhours?><br />
+		<strong>Total Money: </strong>$<?=$userinfo->totalpay ?>
 	<p>
 		<strong>Profile Options</strong><br /><br />
 			<a href="<?=SITE_URL ?>/index.php/profile/editprofile">Edit My Profile</a><br />

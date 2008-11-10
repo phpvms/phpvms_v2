@@ -23,7 +23,6 @@ include '../core/codon.config.php';
 
 define('UPDATE_VERSION', '1.0.384');
 
-# Check versions for mismatch, unless ?force is passed
 $sql = array();
 
 # Table changes, other SQL updates
@@ -36,6 +35,8 @@ $sql[] = 'ALTER TABLE `phpvms_pireps` DROP INDEX `aircraft`';
 $sql[] = 'ALTER TABLE `phpvms_pireps` DROP INDEX `flightnum`';
 $sql[] = 'ALTER TABLE `phpvms_schedules` DROP FOREIGN KEY `phpvms_schedules_ibfk_2`';
 $sql[] = 'ALTER TABLE `phpvms_schedules` DROP INDEX `aircraft`';
+$sql[] = 'ALTER TABLE `phpvms_pilots` ADD `totalpay` FLOAT NOT NULL DEFAULT \'0\' AFTER `totalhours`';
+$sql[] = 'ALTER TABLE `phpvms_ranks` ADD `payrate` FLOAT NOT NULL DEFAULT \'0\'';
 
 # Version update
 $sql[] = 'UPDATE `phpvms_settings` 
@@ -45,6 +46,7 @@ $sql[] = 'UPDATE `phpvms_settings`
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 Template::Show('header.tpl');
 
+# Check versions for mismatch, unless ?force is passed
 if(!isset($_GET['force']))
 {
 	if(PHPVMS_VERSION == UPDATE_VERSION)

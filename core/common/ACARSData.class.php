@@ -80,7 +80,9 @@ class ACARSData extends CodonModule
 			//$upd = substr($upd, 0, strlen($upd)-1);
 			$upd.='lastupdate=NOW() ';
 
-			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata SET '.$upd.' WHERE pilotid=\''.$data['pilotid'].'\'';
+			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata 
+						SET '.$upd.' WHERE pilotid=\''.$data['pilotid'].'\'';
+						
 			DB::query($query);
 		}
 		else

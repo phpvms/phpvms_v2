@@ -79,7 +79,8 @@ class PilotData
 	public function GetPilotData($pilotid)
 	{
 		$sql = 'SELECT *, UNIX_TIMESTAMP(lastlogin) as lastlogin
-					FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
+					FROM '.TABLE_PREFIX.'pilots 
+					WHERE pilotid='.$pilotid;
 		
 		return DB::get_row($sql);
 	}
@@ -89,7 +90,10 @@ class PilotData
 	 */
 	public function GetPilotByEmail($email)
 	{
-		$sql = 'SELECT * FROM '. TABLE_PREFIX.'pilots WHERE email=\''.$email.'\'';
+		$sql = 'SELECT * 
+				FROM '. TABLE_PREFIX.'pilots 
+				WHERE email=\''.$email.'\'';
+				
 		return DB::get_row($sql);
 	}
 
@@ -201,10 +205,11 @@ class PilotData
 	 * Don't update the pilot's flight data, but just replace it
 	 * 	with the values given
 	 */
-	public function ReplaceFlightData($pilotid, $flighttime, $numflights)
+	public function ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay)
 	{
+		
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=$flighttime, totalflights=$numflights
+					SET totalhours=$flighttime, totalflights=$numflights, totalpay=$totalpay
 					WHERE pilotid=$pilotid";
 		
 		$res = DB::query($sql);
@@ -213,6 +218,37 @@ class PilotData
 			return false;
 			
 		return true;
+	}
+	
+	/**
+	 * Update a pilot's pay. Pass the pilot ID, and the number of
+	 * hours they are being paid for
+	 */
+	function UpdatePilotPay($pilotid, $flighthours)
+	{
+		
+		$sql = 'SELECT payrate 
+					FROM '.TABLE_PREFIX.'ranks r, '.TABLE_PREFIX.'pilots p 
+					WHERE p.rank=r.rank 
+						AND p.pilotid='.$pilotid;
+						
+		$payrate = DB::get_row($sql);
+		$payrate = $payrate->payrate;
+		
+		$payupdate = floatval($flighthours * $payrate);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
+					SET totalpay=totalpay+'.$payupdate.'
+					WHERE pilotid='.$pilotid;
+					
+		DB::query($sql);
+		DB::debug();
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+		
 	}
 	
 	/**
@@ -288,7 +324,6 @@ class PilotData
 		$res = DB::get_row($sql);
 		return $res->value;
 	}
-	
 	
 	/**
 	 * Get the groups a pilot is in

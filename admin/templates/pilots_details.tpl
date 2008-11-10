@@ -56,6 +56,9 @@
 	<dt>Total Hours</dt>
 	<dd><input type="text" name="totalhours" value="<?=$pilotinfo->totalhours;?>" /></dd>
 	
+	<dt>Total Pay</dt>
+	<dd><input type="text" name="totalpay" value="<?=$pilotinfo->totalpay;?>" /></dd>
+	
 <?php
 if($customfields)
 {

@@ -36,6 +36,9 @@ class Operations extends CodonModule
 			case 'schedules':
 				Template::Set('sidebar', 'sidebar_schedules.tpl');
 				break;
+			case 'editschedule':
+				Template::Set('sidebar', 'sidebar_editschedule.tpl');
+				break;
 		}
 	}
 

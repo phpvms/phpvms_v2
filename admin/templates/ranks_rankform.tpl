@@ -7,6 +7,11 @@
 	<dt>Minimum Hours</dt>
 	<dd><input name="minhours" type="text" value="<?=$rank->minhours;?>" /></dd>
 	
+	<dt>Pay Rate</dt>
+	<dd><input name="payrate" type="text" value="<?=$rank->payrate;?>" />
+		<p>Enter the hourly pay rate for this rank</p>
+	</dd>
+	
 	<dt>Image URL</dt>
 	<dd><input name="rankimage" type="text" value="<?=$rank->rankimage;?>" />
 		<p>Enter the full URL, or path from root to the image</p>

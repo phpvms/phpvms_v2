@@ -110,11 +110,12 @@ CREATE TABLE `phpvms_ranks` (
 	`rank` varchar(32) NOT NULL default '',
 	`rankimage` TEXT NOT NULL ,
 	`minhours` smallint(6) NOT NULL default '0',
+	`payrate` float NOT NULL default '0',
 	PRIMARY KEY  (`rankid`),
 	UNIQUE KEY `rank` (`rank`)
 )ENGINE=INNODB;
 
-INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire','', 0);
+INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire','', 0, 10.0);
 
 CREATE TABLE `phpvms_pilots` (
 	`pilotid` int(11) NOT NULL auto_increment,
@@ -129,6 +130,7 @@ CREATE TABLE `phpvms_pilots` (
 	`lastlogin` date NOT NULL default '0000-00-00',
 	`totalflights` int(11) NOT NULL default '0',
 	`totalhours` float NOT NULL default '0',
+	`totalpay` float NOT NULL default '0',
 	`rank` varchar(32) NOT NULL default '',
 	`confirmed`smallint(6) NOT NULL default '0',
 	`retired` smallint(6) NOT NULL default '0',

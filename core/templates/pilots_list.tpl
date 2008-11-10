@@ -26,7 +26,7 @@ foreach($allpilots as $pilot)
 	 */
 ?>
 <tr>
-	<td><a href="<?=SITE_URL?>/index.php/Pilots/reports/<?=$pilot->pilotid?>">
+	<td><a href="<?=SITE_URL?>/index.php/profile/view/<?=$pilot->pilotid?>">
 			<?=PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?></a>
 	</td>
 	<td><?=$pilot->firstname.' '.$pilot->lastname?></td>

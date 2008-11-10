@@ -53,7 +53,7 @@ Config::Set('URL_REWRITE', array(	'default'=>array('module', 'page'),
 									'Pilots'=>array('module', 'page', 'pilotid'),
 									'Profile'=>array('module', 'page', 'pilotid'),
 									'Schedules'=>array('module', 'page', 'id'),
-									'ACARS'=>array('module', 'page')));
+									'ACARS'=>array('module', 'page', 'action')));
 							
 /**
  * Constants

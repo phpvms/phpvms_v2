@@ -22,10 +22,9 @@ function reloadGroups()
 	});
 }
 
-$(document).ready(function() {
- 		
-    // Show dialog box
-	$('#jqmdialog').jqm({
+function dialogInit()
+{
+    $('#jqmdialog').jqm({
 	    ajax:'@href',
 		onLoad: function(h) 
 		{
@@ -46,9 +45,16 @@ $(document).ready(function() {
             h.o.remove(); // remove overlay
             h.w.fadeOut(100); // hide window 
             $("#jqmdialog").html('');
+            dialogInit();
         }
     });
+}
+
+$(document).ready(function() {
+ 		
+    // Show dialog box
 	
+	dialogInit();
 	formInit();
 	reloadGroups();
 	

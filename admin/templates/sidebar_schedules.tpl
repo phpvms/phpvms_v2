@@ -5,5 +5,5 @@
 	</span></li>
 </ul>
 <h3>Help</h3>
-<p>These are all the schedules your airlines currently server. When you add a schedule, you can add it on a per-airline basis.</p>
+<p>These are all the schedules your airlines currently serve. When you add a schedule, you can add it on a per-airline basis.</p>
 <p>Notes can be used to add schedule frequency, or any other related information.</p>

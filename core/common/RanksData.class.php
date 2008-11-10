@@ -26,7 +26,7 @@ class RanksData
 	public function GetRankInfo($rankid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks
-				WHERE rankid='.$rankid;
+					WHERE rankid='.$rankid;
 		
 		return DB::get_row($sql);
 	}
@@ -64,12 +64,13 @@ class RanksData
 	 * Add a ranking. This will automatically call
 	 * CalculatePilotRanks() at the end
 	 */
-	public function AddRank($hours, $title, $imageurl)
+	public function AddRank($title, $minhours, $imageurl, $payrate)
 	{
-		$hours = intval($hours);
+		$minhours = intval($minhours);
+		$payrate = floatval($payrate);
 		
-		$sql = "INSERT INTO ".TABLE_PREFIX."ranks (rank, rankimage, minhours)
-					VALUES('$title', '$imageurl', '$hours')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."ranks (rank, rankimage, minhours, payrate)
+					VALUES('$title', '$imageurl', '$minhours', $payrate)";
 		
 		$ret = DB::query($sql);
 		
@@ -87,14 +88,35 @@ class RanksData
 	/**
 	 * Update a certain rank
 	 */
-	public function UpdateRank($rankid, $title, $minhours, $imageurl)
+	public function UpdateRank($rankid, $title, $minhours, $imageurl, $payrate)
 	{
+		$minhours = intval($minhours);
+		$payrate = floatval($payrate);
+		
 		$sql = "UPDATE ".TABLE_PREFIX."ranks
-					SET rank='$title', rankimage='$imageurl', minhours='$minhours'
+					SET rank='$title', rankimage='$imageurl', minhours='$minhours', payrate=$payrate
 					WHERE rankid=$rankid";
 		
 		$res = DB::query($sql);
 	
+		if(DB::errno() != 0)
+			return false;
+		
+		self::CalculatePilotRanks();
+		return true;
+	}
+	
+	/**
+	 * Delete a rank, and then recalculate
+	 */
+	 
+	public function DeleteRank($rankid)
+	{
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'ranks 
+					WHERE rankid='.$rankid;
+					
+		DB::query($sql);
+		
 		if(DB::errno() != 0)
 			return false;
 		

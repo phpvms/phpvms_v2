@@ -39,6 +39,14 @@ class PilotRanking extends CodonModule
 			case 'editrank':
 				$this->EditRank();
 				break;
+				
+			case 'deleterank':
+				
+				$ret = RanksData::DeleteRank($this->post->id);
+				
+				Template::Set('message', 'Rank deleted!');
+				Template::Show('core_success.tpl');
+				break;
 		}
 		
 		switch($this->get->admin)
@@ -72,25 +80,22 @@ class PilotRanking extends CodonModule
 	
 	function AddRank()
 	{
-		$minhours = $this->post->minhours;
-		$rank = $this->post->rank;
-		$imageurl = $this->post->imageurl;
 		
-		if($minhours == '' || $rank == '')
+		if($this->post->minhours == '' || $this->post->rank == '')
 		{
 			Template::Set('message', 'Hours and Rank must be blank');
 			Template::Show('core_error.tpl');
 			return;
 		}
 		
-		if(!is_numeric($minhours))
+		if(!is_numeric($this->post->minhours))
 		{
 			Template::Set('message', 'The hours must be a number');
 			Template::Show('core_error.tpl');
 			return;
 		}
 		
-		$ret = RanksData::AddRank($minhours, $rank, $imageurl);
+		$ret = RanksData::AddRank($this->post->rank, $this->post->minhours, $this->post->imageurl, $this->post->payrate);
 	
 		if(DB::errno() != 0)
 		{
@@ -105,26 +110,22 @@ class PilotRanking extends CodonModule
 	
 	function EditRank()
 	{
-		$rankid = $this->post->rankid;
-		$minhours = $this->post->minhours;
-		$rank = $this->post->rank;
-		$imageurl = $this->post->rankimage;
-		
-		if($minhours == '' || $rank == '')
+		if($this->post->minhours == '' || $this->post->rank == '')
 		{
 			Template::Set('message', 'Hours and Rank must be blank');
 			Template::Show('core_error.tpl');
 			return;
 		}
 		
-		if(!is_numeric($minhours))
+		if(!is_numeric($this->post->minhours))
 		{
 			Template::Set('message', 'The hours must be a number');
 			Template::Show('core_error.tpl');
 			return;
 		}
 		
-		$ret = RanksData::UpdateRank($rankid, $rank, $minhours, $imageurl);
+		$ret = RanksData::UpdateRank($this->post->rankid, $this->post->rank, 
+								$this->post->minhours, $this->post->rankimage, $this->post->payrate);
 		
 		if(DB::errno() != 0)
 		{

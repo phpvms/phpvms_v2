@@ -92,10 +92,11 @@ class PilotAdmin extends CodonModule
 						
 						$flighttime = $this->post->totalhours;
 						$numflights = $this->post->totalflights;
+						$totalpay = $this->post->totalpay;
 						
 						// save all their profile stuff
 						PilotData::SaveProfile($pilotid, $email , $location, $hub);
-						PilotData::ReplaceFlightData($pilotid, $flighttime, $numflights);
+						PilotData::ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay);
 						PilotData::SaveFields($pilotid, $_POST);
 						
 						Template::Set('message', 'Profile updated successfully');

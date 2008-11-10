@@ -13,6 +13,7 @@ phpVMS - Virtual Airline Administration Software
 Next Build
 
   * FSACARS status updates and PIREPS support (thanks to Roger from www.fspaintshop.com for the icons!)
+  * Pilot pay! Pay rate adjustable to the rank
   * Schedules results improved (schedule_results.tpl), update to this!
   * Flight leg taken into account on checking schedule
   * Profile editing bugs fixed
@@ -21,7 +22,7 @@ Next Build
   * PIREP field insertion bug fixed
   * Registration anomolies (required fields marked with *)
   * PIREP submission fixed (missing flight leg)
-  * Ranking fixes
+  * Ranking fixes (ranks can be deleted)
   * Pages check for permission to view
   * Added statistical functionality:
   		StatsData::TotalFlights();

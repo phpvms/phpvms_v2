@@ -159,6 +159,9 @@ class PIREPAdmin extends CodonModule
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
 		//DB::debug();
 		//RanksData::CalculatePilotRanks();
+		
+		PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
+		
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 	}
 	

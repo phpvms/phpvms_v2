@@ -23,7 +23,7 @@ class ACARSData extends CodonModule
 	public static $fields = array('pilotid', 'flightnum', 'pilotname', 
 								   'aircraft', 'lat', 'lng', 'heading', 
 								   'alt', 'gs', 'depicao', 'depapt', 'arricao', 
-								   'arrapt', 'deptime', 'arrtime', 'distremain', 
+								   'arrapt', 'deptime', 'arrtime', 'distremain', 'timeremaining',
 								   'phasedetail', 'online', 'messagelog');
 	
 	public function UpdateFlightData($data)

@@ -242,7 +242,6 @@ class PilotData
 					WHERE pilotid='.$pilotid;
 					
 		DB::query($sql);
-		DB::debug();
 		
 		if(DB::errno() != 0)
 			return false;

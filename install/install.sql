@@ -16,6 +16,7 @@
 	`deptime` TIME NOT NULL ,
 	`arrtime` TIME NOT NULL ,
 	`distremain` VARCHAR( 6 ) NOT NULL ,
+	`timeremaining` VARCHAR ( 6 ) NOT NULL ,
 	`phasedetail` VARCHAR( 255 ) NOT NULL ,
 	`online` VARCHAR( 10 ) NOT NULL ,
 	`messagelog` TEXT NOT NULL,

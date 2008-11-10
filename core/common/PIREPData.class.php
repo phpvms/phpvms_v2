@@ -267,10 +267,10 @@ class PIREPData
 		
 		#replaced
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
-					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, log)
+					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, accepted, log)
 					VALUES ($pirepdata[pilotid], '$pirepdata[code]', '$pirepdata[flightnum]', 
 							'$pirepdata[depicao]', '$pirepdata[arricao]', '$pirepdata[aircraft]', 
-							'$pirepdata[flighttime]', NOW(), '$pirepdata[log]')";
+							'$pirepdata[flighttime]', NOW(), ".PIREP_PENDING.", '$pirepdata[log]')";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;

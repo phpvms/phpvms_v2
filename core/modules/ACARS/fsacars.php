@@ -27,7 +27,7 @@
  *	unless debug = true in the function below
  */
  
-
+writedebug($_SERVER['QUERY_STRING']);
 ##################################
 
 function writedebug($msg)
@@ -40,6 +40,7 @@ function writedebug($msg)
 	$fp = fopen('/home/nssliven/public_html/phpvms/test/core/modules/ACARS/log.txt', 'a+');
 	$msg .= '
 ';
+	
 	fwrite($fp, $msg, strlen($msg));
 	
 	fclose($fp);
@@ -64,7 +65,8 @@ switch($_GET['action'])
 	
 	case 'acars':
 	
-		writedebug("ACARS UPDATE");
+		writedebug('ACARS UPDATE');
+		writedebug(print_r($_GET, true));
 
 		$pilotid = $_GET['pilotnumber'];
 		
@@ -73,7 +75,7 @@ switch($_GET['action'])
 		
 		ob_start();
 		ACARSData::UpdateFlightData($fields);
-		echo DB::err();
+		
 		$cont = ob_get_clean();
 		
 		ob_end_clean();
@@ -85,27 +87,46 @@ switch($_GET['action'])
 	# Position Update
 	case 'status':
 	
-		writedebug("STATUS UPDATE");
+		writedebug('STATUS UPDATE');
+		writedebug(print_r($_GET, true));
+		
+		if($_GET['detailph']=='')
+		{
+			# Vary our detail phase based on the general phase
+			#	if none is supplied
+			
+			if($_GET['Ph'] == 1)
+				$_GET['detailph'] = 1;
+			elseif($_GET['Ph'] == 2)
+				$_GET['detailph'] = 3;
+			elseif($_GET['Ph'] == 3)
+				$_GET['detailph'] = 5;
+			elseif($_GET['Ph'] == 4)
+				$_GET['detailph'] = 9;
+			else
+				$_GET['detailph'] = 1;
+		}
 		
 		$fields = array('pilotid'=>$_GET['pnumber'],
-					'flightnum'=>$_GET['IATA'],
-					'pilotname'=>'',
-					'aircraft'=>$_GET[''],
-					'lat'=>$_GET['lat'],
-					'lng'=>$_GET['long'],
-					'heading'=>'',
-					'alt'=>$_GET['Alt'],
-					'gs'=>$_GET['GS'],
-					'depicao'=>$_GET['depaptICAO'],
-					'depapt'=>$_GET['depapt'],
-					'arricao'=>$_GET['destaptICAO'],
-					'arrapt'=>$_GET['destapt'],
-					'deptime'=>'',
-					'arrtime'=>'',
-					'distremain'=>$_GET['disdestapt'],
-					'phasedetail'=>$phase_detail[$_GET['detailph']],
-					'online'=>$_GET['Online'],
-					'client'=>'FSACARS');
+						'flightnum'=>$_GET['IATA'],
+						'pilotname'=>'',
+						'aircraft'=>$_GET[''],
+						'lat'=>$_GET['lat'],
+						'lng'=>$_GET['long'],
+						'heading'=>'',
+						'alt'=>$_GET['Alt'],
+						'gs'=>$_GET['GS'],
+						'depicao'=>$_GET['depaptICAO'],
+						'depapt'=>$_GET['depapt'],
+						'arricao'=>$_GET['destaptICAO'],
+						'arrapt'=>$_GET['destapt'],
+						'deptime'=>'',
+						'arrtime'=>'',
+						'distremain'=>$_GET['disdestapt'],
+						'timeremaining'=>$_GET['timedestapt'],
+						'phasedetail'=>$phase_detail[$_GET['detailph']],
+						'online'=>$_GET['Online'],
+						'client'=>'FSACARS');
 
 		ob_start();
 		
@@ -122,11 +143,15 @@ switch($_GET['action'])
 	case 'pirep':
 
 		writedebug("PIREP FILE");
+		writedebug(print_r($_GET, true));
 			
+		$log = explode('*', $_GET['log']);
+	
 		// see if they are a valid pilot:
-		preg_match('/^([A-Za-z]{2,3})(\d*)', $_GET['pilotnumber'], $matches);
+		preg_match('/^.*:([A-Za-z]{2,3})(\d*)/', $log[2], $matches);
 		$pilotid = $matches[2];
 		
+		echo $pilotid;
 		/*if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
 			return;
@@ -156,6 +181,7 @@ switch($_GET['action'])
 					'log'=>$log);
 		
 		$res = PIREPData::FileReport($data);
+		DB::debug();
 		if(!$res)
 			writedebug(DB::err());
 			

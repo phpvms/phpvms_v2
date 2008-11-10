@@ -2,14 +2,12 @@
 <?php
 
 	$map = new GoogleMapAPI('acarsmap', 'phpVMS');
-	
-	//$map->addPolyLineByCoords($mapdata->deplong, $mapdata->deplat, $mapdata->arrlong, $mapdata->arrlat, Config::Get('MAP_LINE_COLOR'), 5, 50);
-
 
 	$map->setHeight(Config::Get('MAP_HEIGHT'));
 	$map->setWidth(Config::Get('MAP_WIDTH'));
 	$map->setMapType(Config::Get('MAP_TYPE'));
 	
+	$i=0;
 	foreach($acarsdata as $data)
 	{
 		// Use red for on ground, green for in air
@@ -18,25 +16,29 @@
 			&& $data->phasedetail != 'FSACARS Closed' && $data->phasedetail != 'Taxiiing to gate'
 			&& $data->phasedetail != 'Landed' && $data->phasedetail != 'Arrived')
 		{
-			$map->addMarkerIcon(SITE_URL.'/lib/images/inair.png');//, '', 0, 0, 0, 0);
+			$map->addMarkerIcon(SITE_URL.'/lib/images/inair.png');
 		}
 		else
 		{
-			$map->addMarkerIcon(SITE_URL.'/lib/images/onground.png');//, '', 0, 0, 0, 0);
+			$map->addMarkerIcon(SITE_URL.'/lib/images/onground.png');
 		}
 		
 		$map->addMarkerByCoords($data->lng, $data->lat, '', "$data->pilotid (Route $data->flightnum)<br />$data->depapt ($data->depicao) to $data->arrapt ($data->arricao)");
+	
+		//<td><a href=\"".SITE_URL."/index.php/profile/view/$data->pilotid\">$data->pilotid</a></td>	
 		
 		$row .= "<tr>
-					<td><a href=\"".SITE_URL."/index.php/profile/view/$data->pilotid\">$data->pilotid</a></td>
+					<td><a href=\"javascript:myclick($i)\">$data->pilotid</a></td>	
 					<td>$data->flightnum</td>
 					<td>$data->depapt ($data->depicao)</td>
 					<td>$data->arrapt ($data->arricao)</td>
 					<td>$data->phasedetail</td>
 					<td>$data->alt</td>
 					<td>$data->gs</td>
-					<td>$data->distremain nm</td>
+					<td>$data->distremain ($data->timeremaining min)</td>
 				</tr>";
+		
+		$i++;
 	}
 
 	$map->setAPIKey(GOOGLE_KEY);

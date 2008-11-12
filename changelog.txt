@@ -13,6 +13,9 @@ phpVMS - Virtual Airline Administration Software
 Next Build
 
   * FSACARS status updates and PIREPS support (thanks to Roger from www.fspaintshop.com for the icons!)
+  * FSACARS configuration file automatically generated, specific to pilot (update your profile_main.tpl)
+  * ACARS API so ACARS programs can be integrated
+  * XML interface for custom applications (ACARS, flight data)
   * Pilot pay! Pay rate adjustable to the rank
   * Schedules results improved (schedule_results.tpl), update to this!
   * Flight leg taken into account on checking schedule

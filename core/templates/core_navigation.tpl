@@ -18,6 +18,7 @@ else
 }
 ?>
 <li><a href="<?=SITE_URL ?>/index.php/pilots">Pilots</a></li>
+<li><a href="<?=SITE_URL ?>/index.php/acars">Live Map</a></li>
 <?=$MODULE_NAV_INC;?>
 <?php//<li><a href="?page=acars">Live Map</a></li>
 ?>

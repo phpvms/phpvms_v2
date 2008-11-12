@@ -23,6 +23,9 @@ class ACARS extends CodonModule
 	{
 		switch($this->get->page)		
 		{
+			#
+			# Just view the generic ACARS map
+			#
 			case '':
 			case 'viewmap':
 				
@@ -34,13 +37,12 @@ class ACARS extends CodonModule
 				
 				break;
 				
-			case 'acarsdata':
-			
-				header("Content-type: text/xml"); 
-				echo ACARSData::GenerateXML();
-				
-				break;
-				
+					
+			#
+			# Output the FSACARS config file from the template
+			#	Tell the browser its <code>.ini for the airline that
+			#	 the pilot is registered to
+			#
 			case 'fsacarsconfig':
 				
 				if(!Auth::LoggedIn())
@@ -53,6 +55,7 @@ class ACARS extends CodonModule
 				Template::Set('userinfo', Auth::$userinfo);
 				$fsacars_config = Template::GetTemplate('fsacars_config.tpl', true);
 				
+				# Set the headers so the browser things a file is being sent
 				header('Content-Type: text/plain');
 				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'.ini"');
 				header('Content-Length: ' . strlen($fsacars_config));
@@ -68,16 +71,8 @@ class ACARS extends CodonModule
 					return;
 				}
 				
-				
-				
 				break;	
 		}
 	}
-		
-	public function viewMap()
-	{
-	
-	}
 }
-
 ?>

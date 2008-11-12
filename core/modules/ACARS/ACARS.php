@@ -29,10 +29,35 @@ class ACARS extends CodonModule
 				// fancy
 				
 				// Show the main ACARS map with all the positions, etc
-				Template::Set('acarsdata', ACARSData::GetACARSData(5000));
+				Template::Set('acarsdata', ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME')));
 				Template::Show('acarsmap.tpl');
 				
 				break;
+				
+			case 'acarsdata':
+			
+				header("Content-type: text/xml"); 
+				echo ACARSData::GenerateXML();
+				
+				break;
+				
+			case 'fsacarsconfig':
+				
+				if(!Auth::LoggedIn())
+				{
+					echo 'You are not logged in!';
+					break;
+				}
+				
+				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+				Template::Set('userinfo', Auth::$userinfo);
+				$fsacars_config = Template::GetTemplate('fsacars_config.tpl', true);
+				
+				header('Content-Type: text/plain');
+				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'.ini"');
+				header('Content-Length: ' . strlen($fsacars_config));
+				
+				echo $fsacars_config;
 				
 			// default handles the connectors as plugins
 			default:
@@ -48,7 +73,7 @@ class ACARS extends CodonModule
 				break;	
 		}
 	}
-	
+		
 	public function viewMap()
 	{
 	

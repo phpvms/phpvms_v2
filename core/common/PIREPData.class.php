@@ -28,7 +28,7 @@ class PIREPData
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
-						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid LIMIT '.$start.', '.$count;
 
@@ -45,7 +45,7 @@ class PIREPData
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
-						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 
@@ -56,7 +56,7 @@ class PIREPData
 	{
 		$sql = "SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
-						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM ".TABLE_PREFIX."pilots u, ".TABLE_PREFIX."pireps p
 					WHERE p.pilotid=u.pilotid AND p.accepted=$accept
 						AND u.hub='$hub'";
@@ -74,7 +74,7 @@ class PIREPData
 
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid
 					ORDER BY p.submitdate DESC
@@ -90,7 +90,7 @@ class PIREPData
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, 
 						 '.TABLE_PREFIX.'pireps p
 					WHERE p.pilotid=u.pilotid
@@ -153,7 +153,7 @@ class PIREPData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
@@ -185,7 +185,7 @@ class PIREPData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted
+					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
@@ -197,11 +197,18 @@ class PIREPData
 	/**
 	 * Get the latest reports for a pilot
 	 */
-	public function GetLastReports($pilotid, $count = 1)
+	public function GetLastReports($pilotid, $count = 1, $status='')
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
-					WHERE pilotid='.intval($pilotid).'
-					ORDER BY submitdate DESC
+					WHERE pilotid='.intval($pilotid);
+					
+		# Check it via the status
+		if($status != '')
+		{
+			$sql .= ' AND accepted='.$status;
+		}
+		
+		$sql .=' ORDER BY submitdate DESC
 					LIMIT '.intval($count);
 
 		if($count == 1)
@@ -260,6 +267,11 @@ class PIREPData
 		if($pirepdata['leg'] == '') $pirepdata['leg'] = 1;
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		
+		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
+		{
+			return false;
+		}
+		
 		# Remove the comment field, since it doesn't exist
 		# 	in the PIREPs table.
 		$comment = DB::escape($pirepdata['comment']);
@@ -281,7 +293,7 @@ class PIREPData
 			$pirepid = DB::$insert_id;
 
 			$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
-					VALUES ($pirepid, $pirepdata[pilotid], '$pirepdata[comment]', NOW())";
+						VALUES ($pirepid, $pirepdata[pilotid], '$pirepdata[comment]', NOW())";
 
 			$ret = DB::query($sql);
 
@@ -289,6 +301,24 @@ class PIREPData
 
 		DB::$insert_id = $pirepid;
 		return true;
+	}
+	
+	/** 
+	 * Append to a flight report's log
+	 */
+	 
+	public function AppendToLog($pirepid, $log)
+	{
+		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
+					SET log = CONCAT(log, \''.$log.'\')
+					WHERE pirepid='.$pirepid;
+					
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;		
 	}
 
 	/**

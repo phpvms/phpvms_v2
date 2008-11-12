@@ -16,18 +16,17 @@ Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
 Config::Set('SHOW_LEG_TEXT', true);
 Config::Set('UNITS', 'mi'); // Your units: mi or km
 
-// Google Map Options
+# Google Map Options
 Config::Set('MAP_WIDTH', '600px');
 Config::Set('MAP_HEIGHT', '400px');
 Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
 
-// ACARS options
+# ACARS options
+# Minutes, flights to show on the ACARS
+Config::Set('ACARS_LIVE_TIME', 5000); 
 
-// Hours, flights to show on the ACARS
-Config::Set('ACARS_LIVE_TIME', 24); 
-
-// Debug mode is off by default
+# Debug mode is off by default
 Config::Set('DEBUG_MODE', true);
 Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
 

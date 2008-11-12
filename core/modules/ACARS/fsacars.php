@@ -30,6 +30,13 @@
 writedebug($_SERVER['QUERY_STRING']);
 ##################################
 
+$val = SessionManager::GetData('test');
+if($val == '')
+{
+	SessionManager::AddData('test', rand());
+}
+
+writedebug($val);
 function writedebug($msg)
 {
 	$debug = true;
@@ -61,7 +68,11 @@ $flightcargo = array('Pax', 'Cargo');
 
 switch($_GET['action'])
 {
+	#
 	# ACARS status change message
+	#	Code is here but currently not implemented
+	#	or tested
+	#
 	
 	case 'acars':
 	
@@ -84,7 +95,9 @@ switch($_GET['action'])
 		
 		break;
 	
+	#
 	# Position Update
+	#
 	case 'status':
 	
 		writedebug('STATUS UPDATE');
@@ -92,8 +105,8 @@ switch($_GET['action'])
 		
 		if($_GET['detailph']=='')
 		{
-			# Vary our detail phase based on the general phase
-			#	if none is supplied
+			# Vary our detail phase based on the general phase if none is supplied
+			#	Depending on the FSACARs version
 			
 			if($_GET['Ph'] == 1)
 				$_GET['detailph'] = 1;
@@ -130,16 +143,18 @@ switch($_GET['action'])
 
 		ob_start();
 		
-			ACARSData::UpdateFlightData($fields);
-			$cont = ob_get_clean();
+		ACARSData::UpdateFlightData($fields);
+		$cont = ob_get_clean();
 			
 		ob_end_clean();
 		
 		writedebug($cont);
 		
 		break;
-		
-	# File the PIREP	
+	
+	#
+	# File the PIREP
+	#
 	case 'pirep':
 
 		writedebug("PIREP FILE");
@@ -147,43 +162,61 @@ switch($_GET['action'])
 			
 		$log = explode('*', $_GET['log']);
 	
-		// see if they are a valid pilot:
+		# see if they are a valid pilot:
 		preg_match('/^.*:([A-Za-z]{2,3})(\d*)/', $log[2], $matches);
 		$pilotid = $matches[2];
-		
-		echo $pilotid;
-		/*if(!($pilot = PilotData::GetPilotData($pilotid)))
+
+		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
 			return;
-		}*/
+		}
 		
 		// match up the flight info
 		preg_match('/^([A-Za-z]{2,3})(\d*)', $_GET['callsign'], $matches);
 		$code = $matches[1];
 		$flightnum = $matches[2];
-		$depicao = $_GET['depart'];
-		$arricao = $_GET['arrival'];
+		$depicao = $_GET['origin'];
+		$arricao = $_GET['dest'];
 		$aircraft = $_GET['equipment'];
 		$flighttime = $_GET['duration'];
 		$comment = '';
 		$log = $_GET['log'];
 		
 		$data = array('pilotid'=>$pilotid,
-					'code'=>$code,
-					'flightnum'=>$flightnum,
-					'leg'=>$leg,
-					'depicao'=>$depicao,
-					'arricao'=>$arricao,
-					'aircraft'=>$aircraft,
-					'flighttime'=>$flighttime,
-					'submitdate'=>'NOW()',
-					'comment'=>$comment,
-					'log'=>$log);
+						'code'=>$code,
+						'flightnum'=>$flightnum,
+						'leg'=>$leg,
+						'depicao'=>$depicao,
+						'arricao'=>$arricao,
+						'aircraft'=>$aircraft,
+						'flighttime'=>$flighttime,
+						'submitdate'=>'NOW()',
+						'comment'=>$comment);
 		
-		$res = PIREPData::FileReport($data);
-		DB::debug();
+		
+		if($_GET['more'] == '1')
+		{
+			#
+			# We have more coming to the log
+			#
+			
+			$report = PIREPData::GetLastReports($pilotid, 1);
+			PIREPData::AppendToLog($report->pirepid, $_GET['log']);	
+		}
+		else
+		{
+			#
+			# Check if anything was in the log
+			#	If not, then it probably wasn't a multi-chunk, so
+			#	 just pull it straight from the query string
+			#	Otherwise, pull the full-text from the session
+			#
+							
+			$res = PIREPData::FileReport($data);
+		}
+		
 		if(!$res)
-			writedebug(DB::err());
+			writedebug(DB::error());
 			
 		echo 'OK';
 		break;

@@ -22,17 +22,43 @@ if(!$pireps)
 <?php
 foreach($pireps as $report)
 {
+	if($report->accepted == PIREP_ACCEPTED)
+		$class = 'success';
+	else
+		$class = 'error';
 ?>
-<tr>
-	<td align="left" valign="top">
+
+<tr class="<?=$class?>">
+	<td align="left" valign="top" width="10%" nowrap>
 		<a href="?admin=viewpilots&action=viewoptions&pilotid=<?=$report->pilotid;?>"><?=$report->firstname .' ' . $report->lastname?></a><br />
-		<strong>Flight: <?=$report->code . $report->flightnum; ?></strong><br />
-		<strong>Departure: </strong><?=$report->depicao; ?><br />
-		<strong>Arrival: </strong><?=$report->arricao; ?><br />
-		<strong>Flight Time: </strong><?=$report->flighttime; ?><br />
-		<strong>Submitted: </strong><?=date(DATE_FORMAT, $report->submitdate); ?><br />
+		<strong>Flight: <?=$report->code . $report->flightnum; ?></strong> - 
+					<?=date(DATE_FORMAT, $report->submitdate); ?><br />
+		Dep/Arr: <?=$report->depicao; ?>/<?=$report->arricao; ?><br />
+		Flight Time: <?=$report->flighttime; ?><br />
+		<strong>Current Status:	</strong>
+			<?php 
+			
+			if($report->accepted == PIREP_ACCEPTED)
+				echo 'Accepted';
+			elseif($report->accepted == PIREP_REJECTED)
+				echo 'Rejected';
+			elseif($report->accepted == PIREP_PENDING)
+				echo 'Approval Pending';
+			elseif($report->accepted == PIREP_INPROGRESS)
+				echo 'In Progress';
+			
+			?><br />
+		<?php
+		if($report->log != '')
+		{
+		?>
+			<a id="dialog" class="jqModal"
+				href="action.php?admin=viewlog&pirepid=<?=$report->pirepid;?>">View Log Details</a>
+		<?php
+		}
+		?>
 	</td>
-	<td align="left" valign="top">
+	<td align="left" valign="top" >
 	<?php
 		// Get the additional fields
 		//	I know, badish place to put it, but it's pulled per-PIREP
@@ -51,20 +77,8 @@ foreach($pireps as $report)
 			}
 		}
 		?>
-		<?php 
-
-		if($report->accepted == PIREP_ACCEPTED)
-			echo '<div id="success">Accepted</div>';
-		elseif($report->accepted == PIREP_REJECTED)
-			echo '<div id="error">Rejected</div>';
-		elseif($report->accepted == PIREP_PENDING)
-			echo '<div id="error">Approval Pending</div>';
-		elseif($report->accepted == PIREP_INPROGRESS)
-			echo '<div id="error">Flight in Progress</div>';
-		
-		?>
 	</td>
-	<td align="center">
+	<td align="center" width="10%" nowrap>
 		<a id="dialog" class="jqModal"
 			href="action.php?admin=viewcomments&pirepid=<?=$report->pirepid;?>">View Comments</a>
 		<br />

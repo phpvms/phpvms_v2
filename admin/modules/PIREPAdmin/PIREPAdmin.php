@@ -112,6 +112,13 @@ class PIREPAdmin extends CodonModule
 				
 				break;
 				
+			case 'viewlog':
+				
+				Template::Set('report', PIREPData::GetReportDetails($this->get->pirepid));
+				Template::Show('pirep_log.tpl');
+				
+				break;
+				
 			case 'addcomment':
 				Template::Set('pirepid', $this->get->pirepid);
 				

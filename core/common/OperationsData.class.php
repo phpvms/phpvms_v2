@@ -204,5 +204,28 @@ class OperationsData
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
 	}
+	
+	/**
+	 * Retrieve Airport Information
+	 */
+	 
+	public function RetrieveAirportInfo($icao)
+	{
+		$url = 'http://ws.geonames.org/search?maxRows=1&featureCode=AIRP&q=';
+		
+		$reader = simplexml_load_file($url.$icao);
+		if($reader->totalResultsCount == 0 || !$reader)
+		{
+			return false;
+		}
+		else
+		{
+			// Add the AP
+			OperationsData::AddAirport($icao, $reader->geoname->name, $reader->geoname->countryName,
+					$reader->geoname->lat, $reader->geoname->lng, false);
+		}
+		
+		return self::GetAirportInfo($icao);
+	}
 }
 ?>

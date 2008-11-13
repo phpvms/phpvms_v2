@@ -38,10 +38,18 @@ class XML extends CodonModule
 			#
 			# Get XML-ized output for the flight plan (dept/arr)
 			#
-			case 'flightdata':
+			case 'flightinfo':
 				
 				header('Content-type: text/xml');
-				$flightnum = $_GET['route'];
+				
+				echo $this->GetFlightInformationXML();
+				break;
+				
+			case 'routeinfo':
+				
+				header('Content-type: text/xml');
+				
+				echo $this->GetRouteInformationXML();
 				
 				break;
 			
@@ -127,6 +135,64 @@ class XML extends CodonModule
 		
 		return $output;
 		
+	}
+	
+	public function GetFlightInformationXML()
+	{
+		$route = $_GET['route'];
+				
+		preg_match('/^([A-Za-z]{2,3})(\d*)/', $route, $matches);
+		$code = $matches[1];
+		$flightnum = $matches[2];
+		$flightinfo = SchedulesData::GetScheduleByFlight($code, $flightnum);
+		
+		if(!$flightinfo)
+			return;
+		
+		$output ='<flightinfo>';
+		
+		# Departure information
+		$output .="<departure icao=\"{$flightinfo->depicao}\" name=\"{$flightinfo->depname}\" lat=\"{$flightinfo->deplat}\" lng=\"{$flightinfo->deplong}\"></departure>";
+	
+		# Arrival information	
+		$output .="<arrival icao=\"{$flightinfo->arricao}\" name=\"{$flightinfo->arrname}\" lat=\"{$flightinfo->arrlat}\" lng=\"{$flightinfo->arrlong}\"></arrival>";	
+	
+		$output .='</flightinfo>';
+		
+		return $output;	
+	}
+	
+	public function GetRouteInformationXML()
+	{
+		$depicao = $_GET['depicao'];
+		$arricao = $_GET['arricao'];
+		
+		if($depicao == '' || $arricao == '')
+			return;
+		
+		$depinfo = OperationsData::GetAirportInfo($depicao);
+		if(!$depinfo)
+		{
+			$depinfo = OperationsData::RetrieveAirportInfo($depicao);
+		}
+		
+		$arrinfo = OperationsData::GetAirportInfo($arricao);
+		if(!$arrinfo)
+		{
+			$arrinfo = OperationsData::RetrieveAirportInfo($arricao);
+		}
+		
+		$output ='<flightinfo>';
+		
+		# Departure information
+		$output .="<departure icao=\"{$depinfo->icao}\" name=\"{$depinfo->name}\" country=\"{$depinfo->country}\" lat=\"{$depinfo->lat}\" lng=\"{$depinfo->lng}\"></departure>";
+		
+		# Arrival information	
+		$output .="<arrival icao=\"{$arrinfo->icao}\" name=\"{$arrinfo->name}\" country=\"{$arrinfo->country}\" lat=\"{$arrinfo->lat}\" lng=\"{$arrinfo->lng}\"></arrival>";	
+		
+		$output .='</flightinfo>';
+		
+		return $output;	
 	}
 }
 

@@ -162,15 +162,19 @@ switch($_GET['action'])
 			
 		$log = explode('*', $_GET['log']);
 	
+		
 		# see if they are a valid pilot:
-		preg_match('/^.*:([A-Za-z]{2,3})(\d*)/', $log[2], $matches);
+		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
+		print_r($matches);
 		$pilotid = $matches[2];
 
+		echo $pilotid;
 		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
 			return;
 		}
 		
+		print_r($pilot);
 		// match up the flight info
 		preg_match('/^([A-Za-z]{2,3})(\d*)', $_GET['callsign'], $matches);
 		$code = $matches[1];
@@ -191,7 +195,8 @@ switch($_GET['action'])
 						'aircraft'=>$aircraft,
 						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
-						'comment'=>$comment);
+						'comment'=>$comment,
+						'log'=>$log);
 		
 		
 		if($_GET['more'] == '1')

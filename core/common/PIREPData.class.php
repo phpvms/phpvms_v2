@@ -310,7 +310,7 @@ class PIREPData
 	public function AppendToLog($pirepid, $log)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
-					SET log = CONCAT(log, \''.$log.'\')
+					SET `log` = CONCAT(`log`, \''.$log.'\')
 					WHERE pirepid='.$pirepid;
 					
 		$res = DB::query($sql);

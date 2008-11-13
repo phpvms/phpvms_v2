@@ -1,5 +1,6 @@
 
 
+ALTER TABLE `phpvms_pilots` DROP FOREIGN KEY `phpvms_pilots_ibfk_2`;
 ALTER TABLE `phpvms_pilots` DROP INDEX `rank`;
 ALTER TABLE `phpvms_pireps` ADD `log` TEXT NOT NULL;
 ALTER TABLE `phpvms_pireps` DROP FOREIGN KEY `phpvms_pireps_ibfk_1`;

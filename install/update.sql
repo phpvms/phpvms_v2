@@ -1,5 +1,4 @@
 
-
 ALTER TABLE `phpvms_pilots` DROP FOREIGN KEY `phpvms_pilots_ibfk_2`;
 ALTER TABLE `phpvms_pilots` DROP INDEX `rank`;
 ALTER TABLE `phpvms_pireps` ADD `log` TEXT NOT NULL;
@@ -40,6 +39,5 @@ CREATE TABLE `phpvms_acarsdata` (
 	PRIMARY KEY ( `id` ) ,
 	INDEX ( `pilotid` )
 )ENGINE=INNODB; 
-
 
 ALTER TABLE `phpvms_acarsdata` ADD `timeremaining` VARCHAR( 6 ) NOT NULL AFTER `deptime`';

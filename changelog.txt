@@ -10,17 +10,17 @@ phpVMS - Virtual Airline Administration Software
 		http://creativecommons.org/licenses/by-nc-sa/3.0/
 ---
 
-Next Build
+Build 400 (Version 1.1.400)
 
   * FSACARS status updates and PIREPS support (thanks to Roger from www.fspaintshop.com for the icons!)
   * FSACARS configuration file automatically generated, specific to pilot (update your profile_main.tpl)
-  * ACARS API so ACARS programs can be integrated
-  * XML interface for custom applications (ACARS, flight data)
-  * Pilot pay! Pay rate adjustable to the rank
+  * ACARS API so ACARS programs can be integrated through ACARS plugin
+  * XML interface for custom applications (ACARS, flight data) and other data
+  * Pilot pay! Pay rate adjustable to the rank (shows up in profile_main.tpl)
   * Schedules results improved (schedule_results.tpl), update to this!
   * Flight leg taken into account on checking schedule
   * Profile editing bugs fixed
-  * Page deletes actually work (woo)
+  * Page deletes actually work (woo!)
   * Pilot deleted if registration is rejected
   * PIREP field insertion bug fixed
   * Registration anomolies (required fields marked with *)

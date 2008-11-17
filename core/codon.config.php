@@ -72,7 +72,7 @@ Template::SetTemplatePath(TEMPLATES_PATH);
 MainController::loadCommonFolder();
 
 include CORE_PATH . '/app.config.php';
-include CORE_PATH . '/local.config.php';
+@include CORE_PATH . '/local.config.php';
 
 set_error_handler('CatchPHPError');
 error_reporting(Config::Get('ERROR_LEVEL'));

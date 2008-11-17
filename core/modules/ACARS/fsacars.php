@@ -30,12 +30,6 @@
 writedebug($_SERVER['QUERY_STRING']);
 ##################################
 
-$val = SessionManager::GetData('test');
-if($val == '')
-{
-	SessionManager::AddData('test', rand());
-}
-
 writedebug($val);
 function writedebug($msg)
 {
@@ -162,41 +156,28 @@ switch($_GET['action'])
 			
 		$log = explode('*', $_GET['log']);
 	
-		
 		# see if they are a valid pilot:
 		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
-		print_r($matches);
 		$pilotid = $matches[2];
 
-		echo $pilotid;
 		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
 			return;
 		}
 		
-		print_r($pilot);
-		// match up the flight info
-		preg_match('/^([A-Za-z]{2,3})(\d*)', $_GET['callsign'], $matches);
-		$code = $matches[1];
-		$flightnum = $matches[2];
-		$depicao = $_GET['origin'];
-		$arricao = $_GET['dest'];
-		$aircraft = $_GET['equipment'];
-		$flighttime = $_GET['duration'];
-		$comment = '';
-		$log = $_GET['log'];
-		
+		$flightnum = str_replace('Flight IATA:', '', $log[1]);
+			
 		$data = array('pilotid'=>$pilotid,
-						'code'=>$code,
+						'code'=>$matches[1],
 						'flightnum'=>$flightnum,
 						'leg'=>$leg,
-						'depicao'=>$depicao,
-						'arricao'=>$arricao,
-						'aircraft'=>$aircraft,
-						'flighttime'=>$flighttime,
+						'depicao'=>$_GET['origin'],
+						'arricao'=>$_GET['dest'],
+						'aircraft'=>$_GET['equipment'],
+						'flighttime'=>$_GET['duration'],
 						'submitdate'=>'NOW()',
 						'comment'=>$comment,
-						'log'=>$log);
+						'log'=> $_GET['log']);
 		
 		
 		if($_GET['more'] == '1')
@@ -216,7 +197,7 @@ switch($_GET['action'])
 			#	 just pull it straight from the query string
 			#	Otherwise, pull the full-text from the session
 			#
-							
+			
 			$res = PIREPData::FileReport($data);
 		}
 		

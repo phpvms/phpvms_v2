@@ -20,7 +20,7 @@
 # phpVMS Updater 
 
 define('ADMIN_PANEL', true);
-define('UPDATE_VERSION', '<<UPDATE>>');
+define('UPDATE_VERSION', '1.1.<<REVISION>>');
 
 ######################################
 ###

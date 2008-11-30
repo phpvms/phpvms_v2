@@ -10,6 +10,18 @@ phpVMS - Virtual Airline Administration Software
 		http://creativecommons.org/licenses/by-nc-sa/3.0/
 ---
 
+Build <<REVISION>> (Version 1.1.<<REVISION>>)
+
+  * Bug fixes for servers with short_open_tags off
+  * ACARS map shows the proper map type/centers according to settings
+  * Bids are removed now when PIREP is done through ACARS
+  * Updates to the updater, will automatically put new options in your local config
+  * Added options (place in your core/local.config.php), if they are not there
+  
+		# These are the default center points to the map
+		Config::Set('MAP_CENTER_LAT', '45.484400');
+		Config::Set('MAP_CENTER_LNG', '-62.334821');
+	
 Build 400 (Version 1.1.400)
 
   * FSACARS status updates and PIREPS support (thanks to Roger from www.fspaintshop.com for the icons!)

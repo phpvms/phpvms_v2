@@ -41,3 +41,6 @@ CREATE TABLE `phpvms_acarsdata` (
 )ENGINE=INNODB; 
 
 ALTER TABLE `phpvms_acarsdata` ADD `timeremaining` VARCHAR( 6 ) NOT NULL AFTER `deptime`';
+
+
+UPDATE `phpvms_settings` SET value='1.1.400' WHERE name='PHPVMS_VERSION';

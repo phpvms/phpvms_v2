@@ -26,8 +26,6 @@
  * Most of these are in your local.config.php already
  *
  */
- 
-ini_set('short_open_tag', '1');
 
 Config::Set('PAGE_EXT', '.htm');
 Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
@@ -39,6 +37,8 @@ Config::Set('MAP_WIDTH', '600px');
 Config::Set('MAP_HEIGHT', '400px');
 Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
+Config::Set('MAP_CENTER_LAT', '45.484400');
+Config::Set('MAP_CENTER_LNG', '-62.334821');
 
 # ACARS options
 # Minutes, flights to show on the ACARS
@@ -85,5 +85,3 @@ define('PIREP_INPROGRESS', 3);
 define('PILOT_PENDING', 0);
 define('PILOT_ACCEPTED', 1);
 define('PILOT_REJECTED', 2);
-
-?>

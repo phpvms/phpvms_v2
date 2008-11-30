@@ -23,14 +23,23 @@ Config::Set('SHOW_LEG_TEXT', true); // Show the leg text or not
 Config::Set('PAGE_EXT', '.htm'); // The page extension
 Config::Set('UNITS', 'mi'); // Your units: mi or km
 
-Config::Set('MAP_WIDTH', '600px');
-Config::Set('MAP_HEIGHT', '400px');
+# Google Map Options
 
 /*
  * Valid types are G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_PHYSICAL_MAP
  */
-Config::Set('MAP_TYPE', 'G_SATELLITE_MAP');
+Config::Set('MAP_WIDTH', '600px');
+Config::Set('MAP_HEIGHT', '400px');
+Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
+Config::Set('MAP_CENTER_LAT', '45.484400');
+Config::Set('MAP_CENTER_LNG', '-62.334821');
 
+# ACARS options
+# Minutes, flights to show on the ACARS
+# Default is 720 minutes (12 hours)
+Config::Set('ACARS_LIVE_TIME', 720); 
+
+# Debug mode is off by default
 Config::Set('DEBUG_MODE', false);
-?>
+Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);

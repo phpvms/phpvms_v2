@@ -34,7 +34,7 @@ Build 400 (Version 1.1.400)
   		
   		Example:
   
-  		<p>This VA has a total of <?=StatsData::TotalFlights();?> flights</p>
+  		<p>This VA has a total of <?php echo StatsData::TotalFlights();?> flights</p>
   		
   * New setting added: UNIT
   

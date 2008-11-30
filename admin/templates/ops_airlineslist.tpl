@@ -21,11 +21,11 @@ foreach($allairlines as $airline)
 {
 ?>
 <tr>
-	<td align="center"><?=$airline->code; ?></td>
-	<td align="center"><?=$airline->name; ?></td>
+	<td align="center"><?php echo $airline->code; ?></td>
+	<td align="center"><?php echo $airline->name; ?></td>
 	<td align="center"><?php echo ($airline->enabled == 1) ? 'Yes' : 'No'; ?></td>
 	<td align="center">
-	<a id="dialog" class="jqModal" href="action.php?admin=editairline&id=<?=$airline->id;?>">
+	<a id="dialog" class="jqModal" href="action.php?admin=editairline&id=<?php echo $airline->id;?>">
 		<img src="lib/images/edit.gif" alt="Edit" /></a>
 	</td>
 </tr>

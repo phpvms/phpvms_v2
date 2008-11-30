@@ -1,4 +1,4 @@
-<h3><?=$title?></h3>
+<h3><?php echo $title?></h3>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
@@ -26,13 +26,13 @@ foreach($allpilots as $pilot)
 	 */
 ?>
 <tr>
-	<td><a href="<?=SITE_URL?>/index.php/profile/view/<?=$pilot->pilotid?>">
-			<?=PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?></a>
+	<td><a href="<?php echo SITE_URL?>/index.php/profile/view/<?php echo $pilot->pilotid?>">
+			<?php echo PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?></a>
 	</td>
-	<td><?=$pilot->firstname.' '.$pilot->lastname?></td>
-	<td><img src="<?=$pilot->rankimage?>" alt="<?=$pilot->rank;?>" /></td>
-	<td><?=$pilot->totalflights?></td>
-	<td><?=$pilot->totalhours?></td>
+	<td><?php echo $pilot->firstname.' '.$pilot->lastname?></td>
+	<td><img src="<?php echo $pilot->rankimage?>" alt="<?php echo $pilot->rank;?>" /></td>
+	<td><?php echo $pilot->totalflights?></td>
+	<td><?php echo $pilot->totalhours?></td>
 </tr>
 <?php
 }

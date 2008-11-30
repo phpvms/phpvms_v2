@@ -122,9 +122,10 @@ class TemplateSet
 	//get the actual template text
 	public function GetTemplate($tpl_name, $ret=false)
 	{
+		
 		/* See if the file has been over-rided in the skin directory
 		 */
-		 
+		 		 
 		if(!defined('ADMIN_PANEL'))
 		{
 			if(file_exists(SKINS_PATH . '/' . $tpl_name))
@@ -151,7 +152,7 @@ class TemplateSet
 		ob_end_clean();
 		
 		//dont return, just output
-		if($ret == false)
+		if($ret==false)
 			echo $cont;
 		else
 			return $cont;

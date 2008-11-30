@@ -33,12 +33,12 @@ foreach($allpilots as $pilot)
 {
 ?>
 <tr>
-	<td><a href="index.php?admin=viewpilots&action=viewoptions&pilotid=<?=$pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
-	<td align="center"><?=$pilot->email; ?></td>
-	<td align="center"><?=$pilot->location; ?></td>
-	<td align="center"><?=$pilot->totalflights; ?></td>
-	<td align="center"><?=$pilot->totalhours; ?></td>
-	<td align="center"><a href="index.php?admin=viewpilots&action=viewoptions&pilotid=<?=$pilot->pilotid;?>"><img src="lib/images/options.gif" alt="Options" /></a></td>
+	<td><a href="index.php?admin=viewpilots&action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
+	<td align="center"><?php echo $pilot->email; ?></td>
+	<td align="center"><?php echo $pilot->location; ?></td>
+	<td align="center"><?php echo $pilot->totalflights; ?></td>
+	<td align="center"><?php echo $pilot->totalhours; ?></td>
+	<td align="center"><a href="index.php?admin=viewpilots&action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><img src="lib/images/options.gif" alt="Options" /></a></td>
 </tr>
 <?php
 }

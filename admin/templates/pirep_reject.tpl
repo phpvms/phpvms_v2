@@ -3,7 +3,7 @@
 <form id="form" action="action.php?admin=viewpending" method="post">
 <textarea name="comment" style="width: 90%;"></textarea>
 
-<input type="hidden" name="pirepid" value="<?=$pirepid;?>" />
+<input type="hidden" name="pirepid" value="<?php echo $pirepid;?>" />
 <input type="hidden" name="action" value="rejectpirep" />
 <input type="submit" name="submit" value="Reject this Report" />
 <input type="button" name="close" value="Cancel" class="jqmClose" />

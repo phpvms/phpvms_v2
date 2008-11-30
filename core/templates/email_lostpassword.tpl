@@ -1,8 +1,8 @@
 Dear <?php echo $firstname .' '. $lastname; ?>,
 
-Your password was reset, it is: <?=$newpw?>
+Your password was reset, it is: <?php echo $newpw?>
 
 You can login with this new password and change it.
 
 Thanks!
-<?=SITE_NAME?> Staff
+<?php echo SITE_NAME?> Staff

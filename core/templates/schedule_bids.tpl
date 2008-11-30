@@ -28,15 +28,15 @@ foreach($bids as $bid)
 	else
 		$leg = '';
 ?>
-<tr id="bid<?=$bid->bidid ?>">
-	<td><?=$bid->code . $bid->flightnum; ?> <?=$leg?></td>
-	<td align="center"><?=$bid->depicao; ?> to <?=$bid->arricao; ?></td>
-	<td align="center"><?=$bid->aircraft; ?></td>
-	<td><?=$bid->deptime;?></td>
-	<td><?=$bid->arrtime;?></td>
-	<td><?=$bid->distance;?></td>
-	<td><a href="<?=SITE_URL?>/index.php/PIREPS/filepirep/<?=$bid->bidid ?>/">File PIREP</a><br />
-		<a id="<?=$bid->bidid; ?>" class="deleteitem" href="<?=SITE_URL?>/action.php/Schedules/removebid/">Remove Bid *</a>
+<tr id="bid<?php echo $bid->bidid ?>">
+	<td><?php echo $bid->code . $bid->flightnum; ?> <?php echo $leg?></td>
+	<td align="center"><?php echo $bid->depicao; ?> to <?php echo $bid->arricao; ?></td>
+	<td align="center"><?php echo $bid->aircraft; ?></td>
+	<td><?php echo $bid->deptime;?></td>
+	<td><?php echo $bid->arrtime;?></td>
+	<td><?php echo $bid->distance;?></td>
+	<td><a href="<?php echo SITE_URL?>/index.php/PIREPS/filepirep/<?php echo $bid->bidid ?>/">File PIREP</a><br />
+		<a id="<?php echo $bid->bidid; ?>" class="deleteitem" href="<?php echo SITE_URL?>/action.php/Schedules/removebid/">Remove Bid *</a>
 	</td>
 </tr>
 <?php

@@ -14,8 +14,8 @@ else
 	foreach($pilotgroups as $group)
 	{
 ?>
-	<dt><?=$group->name;?></dt>
-	<dd><a href="action.php?admin=viewpilots" pilotid="<?=$pilotid;?>" action="removegroup" id="<?=$group->groupid;?>" class="pilotgroupajax">Remove</a></dd>
+	<dt><?php echo $group->name;?></dt>
+	<dd><a href="action.php?admin=viewpilots" pilotid="<?php echo $pilotid;?>" action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax">Remove</a></dd>
 	
 <?php
 	}
@@ -48,7 +48,7 @@ if($total == 0)
 		</select></dd>
 
 	<dt></dt>
-	<dd><input type="hidden" name="pilotid" value="<?=$pilotid;?>" />
+	<dd><input type="hidden" name="pilotid" value="<?php echo $pilotid;?>" />
 		<input type="hidden" name="action" value="addgroup" />
 		<input type="submit" name="submit" value="Add to Group" /></dd>
 </dl>

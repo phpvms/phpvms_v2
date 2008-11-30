@@ -80,6 +80,7 @@ class CodonEvent
 		// Load each module and call the EventListen function
 		foreach(self::$listeners as $ModuleName => $Events)
 		{
+			echo $ModuleName;
 			$ModuleName = strtoupper($ModuleName);
 			global $$ModuleName;
 			

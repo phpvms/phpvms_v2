@@ -9,7 +9,7 @@ MainController::Run('Dashboard', 'CheckForUpdates');
 <script type="text/javascript">
 $(document).ready(function()
 {
-	$("#reportcounts").sparkline(<?=$reportcounts; ?>, {width: '90%', height: '150px'});
+	$("#reportcounts").sparkline(<?php echo $reportcounts; ?>, {width: '90%', height: '150px'});
 
 });
 </script>

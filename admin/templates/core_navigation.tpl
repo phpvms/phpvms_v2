@@ -37,6 +37,6 @@
 		<li><a href="?admin=about">About phpVMS</a></li>
 	</ul>
 </li>
-<?=$MODULE_NAV_INC;?>
-<li><a href="<?=SITE_URL?>/index.php/Login/logout">Log Out</a></li>
-<li><a href="<?=SITE_URL?>/index.php">Goto Site</a></li>
+<?php echo $MODULE_NAV_INC;?>
+<li><a href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></li>
+<li><a href="<?php echo SITE_URL?>/index.php">Goto Site</a></li>

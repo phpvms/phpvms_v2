@@ -18,7 +18,7 @@
 	</tr>
 	<tr>
 		<td><strong>* Database Name: </strong></td>
-		<td><input type="text" id="DBASE_NAME" name="DBASE_NAME" value="<?=$_POST['DBASE_NAME']?>" /></td>	
+		<td><input type="text" id="DBASE_NAME" name="DBASE_NAME" value="<?php echo $_POST['DBASE_NAME']?>" /></td>	
 	</tr>
 	<tr>
 		<td><strong>* Database Server: </strong></td>
@@ -26,11 +26,11 @@
 	</tr>
 		<tr>
 		<td width="1px" nowrap><strong>* Database Username: </strong></td>
-		<td><input type="text" id="DBASE_USER" name="DBASE_USER" value="<?=$_POST['DBASE_USER']?>" /></td>
+		<td><input type="text" id="DBASE_USER" name="DBASE_USER" value="<?php echo $_POST['DBASE_USER']?>" /></td>
 	</tr>
 	<tr>
 		<td><strong>* Database Password: </strong></td>
-		<td><input type="text" id="DBASE_PASS" name="DBASE_PASS" value="<?=$_POST['DBASE_PASS']?>" /></td>	
+		<td><input type="text" id="DBASE_PASS" name="DBASE_PASS" value="<?php echo $_POST['DBASE_PASS']?>" /></td>	
 	</tr>
 	<tr>
 		<td><strong>* Database Type: </strong></td>

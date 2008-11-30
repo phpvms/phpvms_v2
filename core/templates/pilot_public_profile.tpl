@@ -7,13 +7,13 @@ if(!$userinfo)
 }
 ?>
 
-<h3>Profile For <?=$userinfo->firstname . ' ' . $userinfo->lastname?></h3>
+<h3>Profile For <?php echo $userinfo->firstname . ' ' . $userinfo->lastname?></h3>
 
 <p>
-<strong>Pilot ID: </strong><?=PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid); ?><br />
-<strong>Rank: </strong><img src="<?=RanksData::GetRankImage($userinfo->rank)?>" alt="<?=$userinfo->rank;?>" /> <br />
-<strong>Total Flights: </strong><?=$userinfo->totalflights?><br />
-<strong>Total Hours: </strong><?=$userinfo->totalhours?>
+<strong>Pilot ID: </strong><?php echo PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid); ?><br />
+<strong>Rank: </strong><img src="<?php echo RanksData::GetRankImage($userinfo->rank)?>" alt="<?php echo $userinfo->rank;?>" /> <br />
+<strong>Total Flights: </strong><?php echo $userinfo->totalflights?><br />
+<strong>Total Hours: </strong><?php echo $userinfo->totalhours?>
 </p>
 <p>
 <?php

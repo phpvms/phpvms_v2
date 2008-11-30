@@ -19,27 +19,27 @@
 	</tr>
 	<tr>
 		<td><strong>* Site Name: </strong></td>
-		<td><input type="text" name="SITE_NAME" value="<?=$_POST['SITE_NAME']?>" /></td>
+		<td><input type="text" name="SITE_NAME" value="<?php echo $_POST['SITE_NAME']?>" /></td>
 	</tr>
 	
 	<tr>
 		<td><strong>* Your First Name </strong></td>
-		<td><input type="text" name="firstname" value="<?=$_POST['firstname']?>" /></td>	
+		<td><input type="text" name="firstname" value="<?php echo $_POST['firstname']?>" /></td>	
 	</tr>
 	
 	<tr>
 		<td width="1px" nowrap><strong>* Your Last Name: </strong></td>
-		<td><input type="text" name="lastname" value="<?=$_POST['lastname']; ?>" /></td>	
+		<td><input type="text" name="lastname" value="<?php echo $_POST['lastname']; ?>" /></td>	
 	</tr>
 	
 	<tr>
 		<td><strong>* Email: </strong></td>
-		<td><input type="text" name="email" value="<?=$_POST['email']?>" /></td>
+		<td><input type="text" name="email" value="<?php echo $_POST['email']?>" /></td>
 	</tr>
 	
 	<tr>
 		<td><strong>* Password: </strong></td>
-		<td><input type="text" name="password" value="<?=$_POST['password']?>" /></td>
+		<td><input type="text" name="password" value="<?php echo $_POST['password']?>" /></td>
 	</tr>
 	
 	<tr>
@@ -54,7 +54,7 @@
 	
 	<tr>
 		<td width="1px" nowrap><strong>* Your Virtual Airline: </strong></td>
-		<td><input type="text" name="vaname" value="<?=$_POST['vaname']?>" /></td>
+		<td><input type="text" name="vaname" value="<?php echo $_POST['vaname']?>" /></td>
 	</tr>
 	<tr>
 		<td></td>
@@ -63,7 +63,7 @@
 	
 	<tr>
 		<td width="1px" nowrap><strong>* Your Airline's Code: </strong></td>
-		<td><input type="text" name="vacode" value="<?=$_POST['vacode']?>" /></td>
+		<td><input type="text" name="vacode" value="<?php echo $_POST['vacode']?>" /></td>
 	</tr>
 	
 	<tr>

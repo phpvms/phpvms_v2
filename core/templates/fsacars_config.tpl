@@ -1,25 +1,25 @@
 [Log]
-Log=<?=SITE_URL?>/action.php/ACARS/fsacars/pirep
+Log=<?php echo SITE_URL?>/action.php/ACARS/fsacars/pirep
 Mail=
-URL=<?=SITE_URL?>/action.php/ACARS/fsacars
+URL=<?php echo SITE_URL?>/action.php/ACARS/fsacars
 passwd=
 [FSacars]
-CompanyICAO=<?=$userinfo->code?>
+CompanyICAO=<?php echo $userinfo->code?>
 
-CompanyName=<?=SITE_NAME?>
+CompanyName=<?php echo SITE_NAME?>
 
-CompanySite=<?=SITE_URL?>
+CompanySite=<?php echo SITE_URL?>
 
 UnitSystem=GB
 Remarks=RMK/
 UseLocal=0
-PilotNumber=<?=$pilotcode?>
+PilotNumber=<?php echo $pilotcode?>
 
 CompanyIATA=FLIGHT #
 CallsignUses=
-AcarsSite=<?=SITE_URL?>/action.php/ACARS/fsacars/acars
-StatusSite=<?=SITE_URL?>/action.php/ACARS/fsacars/status
-FPSite=<?=SITE_URL?>/action.php/ACARS/fsacars/flightplan
+AcarsSite=<?php echo SITE_URL?>/action.php/ACARS/fsacars/acars
+StatusSite=<?php echo SITE_URL?>/action.php/ACARS/fsacars/status
+FPSite=<?php echo SITE_URL?>/action.php/ACARS/fsacars/flightplan
 AcarsUplinkResetSite=
 AcarsUplinkSite=
 Antic=

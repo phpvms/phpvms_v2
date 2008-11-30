@@ -132,13 +132,12 @@ class CodonAJAX
 	public static function LoadContent($url_params, $div_update)
 	{
 		if(substr($url_params, 0, 1) != '/') $url_params = '/'.$url_params;
-		?>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$.get("action.php<?=$url_params ?>", function(data){$("#<?=$div_update?>").html(data)});
-			});
-		</script>
-		<?
+		
+		echo '<script type="text/javascript">
+				$(document).ready(function(){
+					$.get("action.php'.$url_params.'", function(data){$("#'.$div_update.'").html(data)});
+				});
+			</script>';
 	}
 }
 ?>

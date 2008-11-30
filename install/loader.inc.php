@@ -4,9 +4,10 @@
  *  "Boot" file includes our basic "needs" for the installer
  */
 
-define('SITE_ROOT', str_replace('/install', '', dirname(__FILE__)));
-define('CORE_PATH', SITE_ROOT . '/core');
-define('CLASS_PATH', CORE_PATH . '/classes');
+define('SITE_ROOT', str_replace('install', '', dirname(__FILE__)));
+define('CORE_PATH', SITE_ROOT . 'core/');
+define('CLASS_PATH', CORE_PATH . 'classes/');
+
 
 if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.config.php') == 0)
 {

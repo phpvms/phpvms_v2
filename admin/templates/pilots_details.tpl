@@ -1,7 +1,7 @@
 <form id="dialogform" action="action.php?admin=viewpilots" method="post">
 <dl> 
 	<dt>Email Address</dt>
-	<dd><input type="text" name="email" value="<?=$pilotinfo->email;?>" /></dd>
+	<dd><input type="text" name="email" value="<?php echo $pilotinfo->email;?>" /></dd>
 
 	<dt>Airline</dt>
 	
@@ -24,7 +24,7 @@
 	</dd>
 	
 	<dt>Location</dt>
-	<dd><input type="text" name="location" value="<?=$pilotinfo->location==''?'-':$pilotinfo->location;?>" /></dd>
+	<dd><input type="text" name="location" value="<?php echo $pilotinfo->location==''?'-':$pilotinfo->location;?>" /></dd>
 	
 	<dt>Hub</dt>
 	<dd>
@@ -45,19 +45,19 @@
 	</dd>
 	
 	<dt>Current Rank</dt>
-	<dd><?=$pilotinfo->rank;?></dd>
+	<dd><?php echo $pilotinfo->rank;?></dd>
 
 	<dt>Last Login</dt>
 	<dd><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></dd>
 
 	<dt>Total Flights</dt>
-	<dd><input type="text" name="totalflights" value="<?=$pilotinfo->totalflights;?>" /></dd>
+	<dd><input type="text" name="totalflights" value="<?php echo $pilotinfo->totalflights;?>" /></dd>
 
 	<dt>Total Hours</dt>
-	<dd><input type="text" name="totalhours" value="<?=$pilotinfo->totalhours;?>" /></dd>
+	<dd><input type="text" name="totalhours" value="<?php echo $pilotinfo->totalhours;?>" /></dd>
 	
 	<dt>Total Pay</dt>
-	<dd><input type="text" name="totalpay" value="<?=$pilotinfo->totalpay;?>" /></dd>
+	<dd><input type="text" name="totalpay" value="<?php echo $pilotinfo->totalpay;?>" /></dd>
 	
 <?php
 if($customfields)
@@ -65,15 +65,15 @@ if($customfields)
 	foreach($customfields as $field)
 	{
 ?>
-	<dt><?=$field->title;?></dt>
-	<dd><input type="text" name="<?=$field->fieldname?>" value="<?=$field->value?>" /></dd>
+	<dt><?php echo $field->title;?></dt>
+	<dd><input type="text" name="<?php echo $field->fieldname?>" value="<?php echo $field->value?>" /></dd>
 <?php
 	}
 }
 ?>	
 	<dt></dt>
 	<dd>
-		<input type="hidden" name="pilotid" value="<?=$pilotinfo->pilotid;?>" />
+		<input type="hidden" name="pilotid" value="<?php echo $pilotinfo->pilotid;?>" />
 		<input type="hidden" name="action" value="saveprofile" />
 		<input type="submit" name="submit" value="Save Changes" />
 		<div id="results"></div>

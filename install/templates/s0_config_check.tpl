@@ -6,17 +6,17 @@
 </tr>
 <tr>
 	<td><strong>PHP Version (5 required) </strong></td>
-	<td><?=$phpversion;?></td>
+	<td><?php echo $phpversion;?></td>
 </tr>
 
 <tr>
 	<td><strong>Site Configuration File </strong></td>
-	<td><?=$configfile;?></td>
+	<td><?php echo $configfile;?></td>
 </tr>
 
 <tr>
 	<td valign="top"><strong>Directories and Files: </strong></td>
-	<td><?=$directories;?></td>
+	<td><?php echo $directories;?></td>
 </tr>
 
 <tr>

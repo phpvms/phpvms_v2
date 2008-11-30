@@ -1,10 +1,10 @@
 <h3>Edit Profile</h3>
-<form action="<?=SITE_URL?>/index.php/profile" method="post">
+<form action="<?php echo SITE_URL?>/index.php/profile" method="post">
 <dl>
 	<dt>Name</dt>
-	<dd><?=$userinfo->firstname . ' ' . $userinfo->lastname?></dd>
+	<dd><?php echo $userinfo->firstname . ' ' . $userinfo->lastname?></dd>
 	<dt>Email Address</dt>
-	<dd><input type="text" name="email" value="<?=$userinfo->email;?>" />
+	<dd><input type="text" name="email" value="<?php echo $userinfo->email;?>" />
 		<?php
 			if($email_error == true)
 				echo '<p class="error">Please enter your email address</p>';
@@ -12,7 +12,7 @@
 	</dd>
 	
 	<dt>Location</dt>
-	<dd><input type="text" name="location" value="<?=$userinfo->location?>" />
+	<dd><input type="text" name="location" value="<?php echo $userinfo->location?>" />
 		<?php
 			if($location_error == true)
 				echo '<p class="error">Please enter your location</p>';

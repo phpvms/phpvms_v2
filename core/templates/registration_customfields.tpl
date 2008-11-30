@@ -7,7 +7,7 @@ if($extrafields)
 	{
 ?>
 	<dt><?php echo $field->title; ?></dt>
-	<dd><input type="text" name="<?=$field->fieldname; ?>" value="<?= Vars::POST($field->fieldname);?>" /></dd>
+	<dd><input type="text" name="<?php echo $field->fieldname; ?>" value="<?php echo  Vars::POST($field->fieldname);?>" /></dd>
 <?php
 	}
 }

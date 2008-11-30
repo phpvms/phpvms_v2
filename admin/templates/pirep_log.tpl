@@ -1,4 +1,4 @@
-<h2>Log for <?=$report->pirepid?></h2>
+<h2>Log for <?php echo $report->pirepid?></h2>
 <div style="overflow: scroll; height: 300px">
 <?php
 # Simple, each line of the log ends with *

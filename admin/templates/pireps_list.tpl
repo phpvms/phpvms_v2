@@ -2,7 +2,7 @@
 if($title!='')
 	echo "<h3>$title</h3>";
 ?>
-<p><?=$descrip;?></p>
+<p><?php echo $descrip;?></p>
 <?php
 if(!$pireps)
 {
@@ -28,13 +28,13 @@ foreach($pireps as $report)
 		$class = 'error';
 ?>
 
-<tr class="<?=$class?>">
+<tr class="<?php echo $class?>">
 	<td align="left" valign="top" width="10%" nowrap>
-		<a href="?admin=viewpilots&action=viewoptions&pilotid=<?=$report->pilotid;?>"><?=$report->firstname .' ' . $report->lastname?></a><br />
-		<strong>Flight: <?=$report->code . $report->flightnum; ?></strong> - 
-					<?=date(DATE_FORMAT, $report->submitdate); ?><br />
-		Dep/Arr: <?=$report->depicao; ?>/<?=$report->arricao; ?><br />
-		Flight Time: <?=$report->flighttime; ?><br />
+		<a href="?admin=viewpilots&action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a><br />
+		<strong>Flight: <?php echo $report->code . $report->flightnum; ?></strong> - 
+					<?php echo date(DATE_FORMAT, $report->submitdate); ?><br />
+		Dep/Arr: <?php echo $report->depicao; ?>/<?php echo $report->arricao; ?><br />
+		Flight Time: <?php echo $report->flighttime; ?><br />
 		<strong>Current Status:	</strong>
 			<?php 
 			
@@ -53,7 +53,7 @@ foreach($pireps as $report)
 		{
 		?>
 			<a id="dialog" class="jqModal"
-				href="action.php?admin=viewlog&pirepid=<?=$report->pirepid;?>">View Log Details</a>
+				href="action.php?admin=viewlog&pirepid=<?php echo $report->pirepid;?>">View Log Details</a>
 		<?php
 		}
 		?>
@@ -72,7 +72,7 @@ foreach($pireps as $report)
 		{
 			foreach ($fields as $field)
 			{
-		?>		<strong><?=$field->title ?>:</strong> <?=$field->value ?><br />
+		?>		<strong><?php echo $field->title ?>:</strong> <?php echo $field->value ?><br />
 		<?php
 			}
 		}
@@ -80,16 +80,16 @@ foreach($pireps as $report)
 	</td>
 	<td align="center" width="10%" nowrap>
 		<a id="dialog" class="jqModal"
-			href="action.php?admin=viewcomments&pirepid=<?=$report->pirepid;?>">View Comments</a>
+			href="action.php?admin=viewcomments&pirepid=<?php echo $report->pirepid;?>">View Comments</a>
 		<br />
-		<a href="action.php?admin=<?=Vars::GET('admin'); ?>" action="approvepirep"
-			id="<?=$report->pirepid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
-		<br />
-		<a id="dialog" class="jqModal"
-			href="action.php?admin=rejectpirep&pirepid=<?=$report->pirepid;?>"><img src="lib/images/reject.gif" alt="Reject" /></a>
+		<a href="action.php?admin=<?php echo Vars::GET('admin'); ?>" action="approvepirep"
+			id="<?php echo $report->pirepid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
 		<br />
 		<a id="dialog" class="jqModal"
-			href="action.php?admin=addcomment&pirepid=<?=$report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
+			href="action.php?admin=rejectpirep&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/reject.gif" alt="Reject" /></a>
+		<br />
+		<a id="dialog" class="jqModal"
+			href="action.php?admin=addcomment&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
 	</td>
 </tr>
 <?php
@@ -102,7 +102,7 @@ foreach($pireps as $report)
 if($paginate)
 {
 ?>
-<a href="?admin=<?=$admin?>&start=<?=$start?>">Next Page</a></a>
+<a href="?admin=<?php echo $admin?>&start=<?php echo $start?>">Next Page</a></a>
 <?php
 }
 ?>

@@ -25,13 +25,13 @@ foreach($allaircraft as $aircraft)
 {
 ?>
 <tr>
-	<td align="center"><?=$aircraft->icao; ?></td>
-	<td align="center"><?=$aircraft->name; ?></td>
-	<td align="center"><?=$aircraft->fullname; ?></td>
-	<td align="center"><?=$aircraft->range; ?></td>
-	<td align="center"><?=$aircraft->weight; ?></td>
-	<td align="center"><?=$aircraft->cruise; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editaircraft&id=<?=$aircraft->id;?>"><img src="lib/images/options.gif" alt="Options" /></a></td>
+	<td align="center"><?php echo $aircraft->icao; ?></td>
+	<td align="center"><?php echo $aircraft->name; ?></td>
+	<td align="center"><?php echo $aircraft->fullname; ?></td>
+	<td align="center"><?php echo $aircraft->range; ?></td>
+	<td align="center"><?php echo $aircraft->weight; ?></td>
+	<td align="center"><?php echo $aircraft->cruise; ?></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editaircraft&id=<?php echo $aircraft->id;?>"><img src="lib/images/options.gif" alt="Options" /></a></td>
 </tr>
 <?php
 }

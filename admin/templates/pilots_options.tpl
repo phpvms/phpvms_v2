@@ -9,7 +9,7 @@
 	<dd><input type="password" name="password2" /></dd>
 	
 	<dt></dt>
-	<dd><input type="hidden" name="pilotid" value="<?=Vars::GET('pilotid');?>" />
+	<dd><input type="hidden" name="pilotid" value="<?php echo Vars::GET('pilotid');?>" />
 		<input type="hidden" name="action" value="changepassword" />
 		<input type="submit" name="submit" value="Change Password" /></dd>
 </dl>

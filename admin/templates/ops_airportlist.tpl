@@ -24,12 +24,12 @@ foreach($airports as $airport)
 {
 ?>
 <tr>
-	<td align="center"><?=$airport->icao; ?></td>
-	<td align="center"><?=$airport->name; ?></td>
-	<td align="center"><?=$airport->country; ?></td>
-	<td align="center"><?=$airport->lat; ?></td>
-	<td align="center"><?=$airport->lng; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editairport&icao=<?=$airport->icao?>"><img src="lib/images/edit.gif" alt="Edit" /></a></td>
+	<td align="center"><?php echo $airport->icao; ?></td>
+	<td align="center"><?php echo $airport->name; ?></td>
+	<td align="center"><?php echo $airport->country; ?></td>
+	<td align="center"><?php echo $airport->lat; ?></td>
+	<td align="center"><?php echo $airport->lng; ?></td>
+	<td align="center"><a id="dialog" class="jqModal" href="action.php?admin=editairport&icao=<?php echo $airport->icao?>"><img src="lib/images/edit.gif" alt="Edit" /></a></td>
 </tr>
 <?php
 }

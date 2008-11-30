@@ -3,7 +3,7 @@
 	<li><span class="file">
 	<a href="?admin=viewpending">View all</a></span></li>
 	<li><span class="file">
-	<a href="?admin=viewpending&hub=<?=Auth::$userinfo->hub?>">View my hub (<?=Auth::$userinfo->hub?>)</a>
+	<a href="?admin=viewpending&hub=<?php echo Auth::$userinfo->hub?>">View my hub (<?php echo Auth::$userinfo->hub?>)</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

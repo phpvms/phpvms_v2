@@ -1,9 +1,9 @@
 <h3>Registration</h3>
 <p>Welcome to the registration form for <?php echo SITE_NAME; ?>. After you register, you will be notified by a staff member about your membership.</p>
-<form method="post" action="<?=SITE_URL?>/index.php/Registration">
+<form method="post" action="<?php echo SITE_URL?>/index.php/Registration">
 <dl>
 	<dt>* First Name:</dt>
-	<dd><input type="text" name="firstname" value="<?=Vars::POST('firstname');?>" />
+	<dd><input type="text" name="firstname" value="<?php echo Vars::POST('firstname');?>" />
 		<?php
 			if($firstname_error == true)
 				echo '<p class="error">Please enter your first name</p>';
@@ -11,7 +11,7 @@
 	</dd>
 	
 	<dt>* Last Name:</dt>
-	<dd><input type="text" name="lastname" value="<?=Vars::POST('lastname');?>" />
+	<dd><input type="text" name="lastname" value="<?php echo Vars::POST('lastname');?>" />
 		<?php
 			if($lastname_error == true)
 				echo '<p class="error">Please enter your last name</p>';
@@ -19,7 +19,7 @@
 	</dd>
 	
 	<dt>* Email Address</dt>
-	<dd><input type="text" name="email" value="<?=Vars::POST('email');?>" />
+	<dd><input type="text" name="email" value="<?php echo Vars::POST('email');?>" />
 		<?php
 			if($email_error == true)
 				echo '<p class="error">Please enter your email address</p>';
@@ -51,7 +51,7 @@
 	</dd>
 	
 	<dt>* Location</dt>
-	<dd><input type="text" name="location" value="<?=Vars::POST('location');?>" />
+	<dd><input type="text" name="location" value="<?php echo Vars::POST('location');?>" />
 		<?php
 			if($location_error == true)
 				echo '<p class="error">Please enter your location</p>';

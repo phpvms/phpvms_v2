@@ -1,3 +1,3 @@
 <?php
-echo '<div id="error" class="<?=$class;?>">'.$message.'</div>';
+echo '<div id="error" class="'.$class.'">'.$message.'</div>';
 ?>

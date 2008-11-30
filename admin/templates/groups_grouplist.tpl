@@ -20,8 +20,8 @@ foreach($allgroups as $group)
 {
 ?>
 <tr>
-	<td align="center"><?=$group->name; ?></td>
-	<td align="center"><?=$group->groupid; ?></td>
+	<td align="center"><?php echo $group->name; ?></td>
+	<td align="center"><?php echo $group->groupid; ?></td>
 	<td align="center">
 	<?php
 	if($group->name!='Administrators')

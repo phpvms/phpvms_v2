@@ -3,10 +3,10 @@
 if($message!='')
 	echo '<div id="error">'.$message.'</div>';
 ?>
-<form action="<?=SITE_URL?>/index.php/pireps/mine" method="post">
+<form action="<?php echo SITE_URL?>/index.php/pireps/mine" method="post">
 <dl>
 	<dt>Pilot:</dt>
-	<dd><strong><?=Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;?></strong></dd>
+	<dd><strong><?php echo Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;?></strong></dd>
 	
 	<dt>Select Airline:</dt>
 	<dd>
@@ -24,8 +24,8 @@ if($message!='')
 	</dd>
 	
 	<dt>Enter Flight Number and Leg:</dt>
-	<dd><input type="text" name="flightnum" value="<?=$bid->flightnum?><?=$_POST['flightnum'] ?>" />
-		<input type="text" name="leg" value="<?=$bid->leg?><?=$_POST['leg'] ?>" /></dd>
+	<dd><input type="text" name="flightnum" value="<?php echo $bid->flightnum?><?php echo $_POST['flightnum'] ?>" />
+		<input type="text" name="leg" value="<?php echo $bid->leg?><?php echo $_POST['leg'] ?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>
@@ -82,7 +82,7 @@ if($message!='')
 	foreach($pirepfields as $field)
 	{
 	?>
-		<dt><?=$field->title ?></dt>
+		<dt><?php echo $field->title ?></dt>
 		<dd>
 		<?php
 		
@@ -91,7 +91,7 @@ if($message!='')
 		if($field->type == '' || $field->type == 'text')
 		{
 		?>
-			<input type="text" name="<?=$field->name ?>" value="<?=$_POST[$field->name] ?>" />
+			<input type="text" name="<?php echo $field->name ?>" value="<?php echo $_POST[$field->name] ?>" />
 		<?php
 		} 
 		elseif($field->type == 'textarea')
@@ -118,17 +118,17 @@ if($message!='')
 	?>
 	
 	<dt>Flight Time</dt>
-	<dd><input type="text" name="flighttime" value="<?=$_POST['flighttime'] ?>" />
+	<dd><input type="text" name="flighttime" value="<?php echo $_POST['flighttime'] ?>" />
 		<p>Enter as hours - "5.3" is five hours and thirty minutes</p></dd>
 		
 	<dt>Comment</dt>
-	<dd><textarea name="comment" style="width: 100%"><?=$_POST['comment'] ?></textarea></dd>
+	<dd><textarea name="comment" style="width: 100%"><?php echo $_POST['comment'] ?></textarea></dd>
 	
 	<dt></dt>
 	<dd><?php 
 			$bidid = ($bid)?$bid->bidid:$_POST['bid'];
 		?>
-		<input type="hidden" name="bid" value="<?=$bidid ?>" />
+		<input type="hidden" name="bid" value="<?php echo $bidid ?>" />
 		<input type="submit" name="submit_pirep" value="File Flight Report" /></dd>
 </dl>
 

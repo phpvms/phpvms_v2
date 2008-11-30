@@ -1,9 +1,9 @@
-<h3><?=$title ?></h3>
+<h3><?php echo $title ?></h3>
 <p>Add a custom field, that a registrar can fill out on registration, or an admin can add information to.</p>
 <form id="form" method="post" action="action.php?admin=customfields">
 <dl>
 	<dt>Title</dt>
-	<dd><input type="text" name="title" value="<?=$field->title ?>" /></dd>
+	<dd><input type="text" name="title" value="<?php echo $field->title ?>" /></dd>
 	
 	<dt>Field Type</dt>
 	<dd>
@@ -29,8 +29,8 @@
 	</dd>
 	
 	<dt></dt>
-	<dd><input type="hidden" name="fieldid" value="<?=$field->fieldid ?>" />
-		<input type="hidden" name="action" value="<?=$action ?>" />
-		<input type="submit" name="submit" value="<?=$title ?>" /></dd>
+	<dd><input type="hidden" name="fieldid" value="<?php echo $field->fieldid ?>" />
+		<input type="hidden" name="action" value="<?php echo $action ?>" />
+		<input type="submit" name="submit" value="<?php echo $title ?>" /></dd>
 </dl>
 </form>

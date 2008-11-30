@@ -21,7 +21,7 @@ foreach($allfields as $field)
 {
 ?>
 <tr>
-	<td align="center"><?=$field->title;?></td>
+	<td align="center"><?php echo $field->title;?></td>
 	<td align="center">
 	<?php
 		if($field->type == '')
@@ -43,10 +43,10 @@ foreach($allfields as $field)
 	?>
 	</td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=editpirepfield&id=<?=$field->fieldid;?>">
+		<a id="dialog" class="jqModal" href="action.php?admin=editpirepfield&id=<?php echo $field->fieldid;?>">
 			<img src="lib/images/edit.gif" alt="Edit" /></a><br />
 			
-		<a href="action.php?admin=pirepfields" action="deletefield" id="<?=$field->fieldid;?>" class="ajaxcall">
+		<a href="action.php?admin=pirepfields" action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">
 			<img src="lib/images/delete.gif" alt="Delete" /></a>
 	</td>
 </tr>

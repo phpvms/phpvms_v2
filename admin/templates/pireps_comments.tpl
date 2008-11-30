@@ -8,9 +8,9 @@ if(!$comments)
 foreach($comments as $comment)
 {
 ?>
-<p>Posted by <?=$comment->firstname. ' '. $comment->lastname ?> on <?=date(DATE_FORMAT, $comment->postdate);?>
+<p>Posted by <?php echo $comment->firstname. ' '. $comment->lastname ?> on <?php echo date(DATE_FORMAT, $comment->postdate);?>
 <br />
-<?=$comment->comment; ?>
+<?php echo $comment->comment; ?>
 </p>
 <hr>
 <?php

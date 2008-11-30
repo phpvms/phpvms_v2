@@ -23,25 +23,25 @@ foreach($allroutes as $route)
 		$leg = '';
 	
 	/*
-	<?=$route->depname?> (<?=$route->depicao; ?>) to <?=$route->arrname?> (<?=$route->arricao; ?>) <br />
+	<?php echo $route->depname?> (<?php echo $route->depicao; ?>) to <?php echo $route->arrname?> (<?php echo $route->arricao; ?>) <br />
 	*/
 ?>
 <tr>
 	<td nowrap>
-		<a href="<?=SITE_URL?>/index.php/schedules/details/<?=$route->id?>"><?=$route->code . $route->flightnum?> <?=$leg?> <?='('.$route->depicao.' - '.$route->arricao.')'?></a>
+		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>"><?php echo $route->code . $route->flightnum?> <?php echo $leg?> <?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
 		<br />
 		
-		<strong>Departure: </strong><?=$route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?=$route->arrtime;?><br />
-		<strong>Equipment: </strong><?=$route->aircraft; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong>Distance: </strong><?=$route->distance . Config::Get('UNITS');?>
+		<strong>Departure: </strong><?php echo $route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?php echo $route->arrtime;?><br />
+		<strong>Equipment: </strong><?php echo $route->aircraft; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong>Distance: </strong><?php echo $route->distance . Config::Get('UNITS');?>
 		<br />
 		<?php echo ($route->route=='')?'':'<strong>Route: </strong>'.$route->route.'<br />' ?>
 		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.$route->notes.'<br />' ?>
 	</td>
 	<td nowrap>
-		<a href="<?=SITE_URL?>/index.php/schedules/details/<?=$route->id?>">View Details</a><br />
+		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>">View Details</a><br />
 		<?php if (Auth::LoggedIn())
 		{ ?>
-		<a id="<?=$route->id; ?>" class="addbid" href="<?=SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+		<a id="<?php echo $route->id; ?>" class="addbid" href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
 		<?php
 		} ?>
 	</td>

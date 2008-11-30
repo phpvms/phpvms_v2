@@ -1,3 +1,3 @@
 <div id="messagebox">
-<?=$message;?>
+<?php echo $message;?>
 </div>

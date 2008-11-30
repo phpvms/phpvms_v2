@@ -1,18 +1,18 @@
-<h3>Flight <?=$pirep->code . $pirep->flightnum; ?></h3>
+<h3>Flight <?php echo $pirep->code . $pirep->flightnum; ?></h3>
 <table width="100%">
 	<tr>
 		<td><strong>Departure Airport: </strong><br />
-			<?=$pirep->depname?> (<?=$pirep->depicao; ?>)</td>
+			<?php echo $pirep->depname?> (<?php echo $pirep->depicao; ?>)</td>
 		<td><strong>Arrival Airport: </strong><br />
-			<?=$pirep->arrname?> (<?=$pirep->arricao; ?>)</td>
+			<?php echo $pirep->arrname?> (<?php echo $pirep->arricao; ?>)</td>
 
 	</tr>
 	
 	<tr>
 		<td valign="top">
 		<h3>Flight Details</h3>							
-		<strong>Flight Time: </strong> <?=$pirep->flighttime; ?><br />
-		<strong>Date Submitted: </strong> <?=date(DATE_FORMAT, $pirep->submitdate);?><br />
+		<strong>Flight Time: </strong> <?php echo $pirep->flighttime; ?><br />
+		<strong>Date Submitted: </strong> <?php echo date(DATE_FORMAT, $pirep->submitdate);?><br />
 		<?php
 		if(!$fields)
 		{
@@ -22,7 +22,7 @@
 		{
 			foreach ($fields as $field)
 			{
-		?>		<strong><?=$field->title ?>:</strong> <?=$field->value ?><br />
+		?>		<strong><?php echo $field->title ?>:</strong> <?php echo $field->value ?><br />
 		<?php
 			}
 		}
@@ -69,8 +69,8 @@ if($comments)
 	{
 ?>
 	<tr>
-		<td width="15%" nowrap><?=$comment->firstname . ' ' .$comment->lastname?></td>
-		<td align="left"><?=$comment->comment?></td>
+		<td width="15%" nowrap><?php echo $comment->firstname . ' ' .$comment->lastname?></td>
+		<td align="left"><?php echo $comment->comment?></td>
 	</tr>
 <?php
 	}

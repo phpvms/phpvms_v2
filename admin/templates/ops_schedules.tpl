@@ -23,20 +23,20 @@ if(!$schedules)
 foreach($schedules as $sched)
 {
 ?>
-<tr id="row<?=$sched->id?>">
+<tr id="row<?php echo $sched->id?>">
 	<td align="center"><?php echo $sched->code . $sched->flightnum; ?> (L<?-$sched->leg?>)</td>
-	<td align="center"><?=$sched->depicao; ?> (<?=$sched->deptime;?>)</td>
-	<td align="center"><?=$sched->arricao; ?> (<?=$sched->arrtime;?>)</td>
-	<td align="center"><?=$sched->aircraft; ?></td>
-	<td align="center"><?=$sched->distance; ?></td>
-	<td align="center"><?=$sched->timesflown; ?></td>
+	<td align="center"><?php echo $sched->depicao; ?> (<?php echo $sched->deptime;?>)</td>
+	<td align="center"><?php echo $sched->arricao; ?> (<?php echo $sched->arrtime;?>)</td>
+	<td align="center"><?php echo $sched->aircraft; ?></td>
+	<td align="center"><?php echo $sched->distance; ?></td>
+	<td align="center"><?php echo $sched->timesflown; ?></td>
 	<td align="center">
-		<a href="?admin=editschedule&id=<?=$sched->id;?>"><img src="lib/images/edit.gif" alt="Edit Schedule" /></a>
+		<a href="?admin=editschedule&id=<?php echo $sched->id;?>"><img src="lib/images/edit.gif" alt="Edit Schedule" /></a>
 	<?php
 	/*
-	  <a href="action.php?admin=<?=Vars::GET('admin'); ?>"
+	  <a href="action.php?admin=<?php echo Vars::GET('admin'); ?>"
 			class="deleteitem" action="deleteschedule"
-			id="<?=$sched->id;?>"><img src="lib/images/delete.gif" alt="Delete" /></a>
+			id="<?php echo $sched->id;?>"><img src="lib/images/delete.gif" alt="Delete" /></a>
 	 */ ?>
 	</td>
 </tr>

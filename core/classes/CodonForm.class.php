@@ -215,10 +215,10 @@ class CodonForm
 		<script type="text/javascript">
 		$(document).ready(function(){
 		$(".codonform").ajaxForm({
-			target: "<?=$this->options['updatediv'] ?>"
+			target: "<?php echo $this->options['updatediv'] ?>"
 			<?php
 			if($callback != ''){ ?>,
-			success: function(){ <?=$this->options['callback']; ?>();
+			success: function(){ <?php echo $this->options['callback']; ?>();
 			<?php
 				if($this->options['closemodal'] == true)
 				{

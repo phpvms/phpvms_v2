@@ -1,8 +1,8 @@
-Dear <?=$firstname. ' ' .$lastname?>,
+Dear <?php echo $firstname. ' ' .$lastname?>,
 
 A comment has been added to your flight report.
 To view it, visit:
-<?=SITE_URL;?>/index.php/pireps/view/<?=$pirepid;?>
+<?php echo SITE_URL;?>/index.php/pireps/view/<?php echo $pirepid;?>
 
 Thanks!
-The <?=SITE_NAME;?> Team
+The <?php echo SITE_NAME;?> Team

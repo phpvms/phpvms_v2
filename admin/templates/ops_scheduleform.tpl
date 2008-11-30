@@ -1,5 +1,5 @@
 <div id="wrapper">
-<h3><?=$title?></h3>
+<h3><?php echo $title?></h3>
 <?php
 //id="form"
 ?>
@@ -29,12 +29,12 @@
 <tr>
 	<td><strong>Flight Number:</strong></td>
 	<td>
-		<input type="text" name="flightnum" value="<?=$schedule->flightnum;?>" />
+		<input type="text" name="flightnum" value="<?php echo $schedule->flightnum;?>" />
 	</td>
 </tr>
 <tr>
 	<td valign="top"><strong>Leg:</strong></td>
-	<td><input type="text" name="leg" value="<?=$schedule->leg;?>" />
+	<td><input type="text" name="leg" value="<?php echo $schedule->leg;?>" />
 		<p>Blank will default to "1"</p>
 	</td>
 </tr>
@@ -82,23 +82,23 @@
 </tr>
 <tr>
 	<td valign="top"><strong>Departure Time:</strong> </td>
-	<td><input type="text" name="deptime" value="<?=$schedule->deptime?>" />
+	<td><input type="text" name="deptime" value="<?php echo $schedule->deptime?>" />
 		<p>Time can be entered in any format</p>
 	</td>
 </tr>
 <tr>
 	<td valign="top"><strong>Arrival Time:</strong> </td>
-	<td><input type="text" name="arrtime" value="<?=$schedule->arrtime?>" />
+	<td><input type="text" name="arrtime" value="<?php echo $schedule->arrtime?>" />
 		<p>Time can be entered in any format</p>
 	</td>
 </tr>
 <tr>
 	<td><strong>Distance:</strong> </td>
-	<td><input type="text" name="distance" value="<?=$schedule->distance?>" /></td>
+	<td><input type="text" name="distance" value="<?php echo $schedule->distance?>" /></td>
 </tr>
 <tr>
 	<td><strong>Flight Time:</strong> </td>
-	<td><input type="text" name="flighttime" value="<?=$schedule->flighttime?>" /></td>
+	<td><input type="text" name="flighttime" value="<?php echo $schedule->flighttime?>" /></td>
 </tr>
 <tr>
 	<td><strong>Equipment: </strong></td>
@@ -119,25 +119,25 @@
 </tr>
 <tr>
 	<td valign="top"><strong>Route (optional)</strong></td>
-	<td><textarea name="route" style="width: 60%; height: 150px"><?=$schedule->route?></textarea>
+	<td><textarea name="route" style="width: 60%; height: 150px"><?php echo $schedule->route?></textarea>
 	</td>
 </tr>
 <tr>
 	<td valign="top"><strong>Notes</strong></td>
-	<td><textarea name="notes" style="width: 60%; height: 150px"><?=$schedule->notes?></textarea>
+	<td><textarea name="notes" style="width: 60%; height: 150px"><?php echo $schedule->notes?></textarea>
 	</td>
 </tr>
 <tr>
 	<td valign="top"><strong>Enabled?</strong></td>
 	<?php $checked = ($schedule->enabled==1)?'CHECKED':''; ?>
-	<td><input type="checkbox" id="enabled" name="enabled" <?=$checked ?> /></td>
+	<td><input type="checkbox" id="enabled" name="enabled" <?php echo $checked ?> /></td>
 	</td>
 </tr>
 <tr>
 	<td></td>
-	<td><input type="hidden" name="action" value="<?=$action?>" />
-		<input type="hidden" name="id" value="<?=$schedule->id?>" />
-		<input type="submit" name="submit" value="<?=$title?>" /> <input type="submit" class="jqmClose" value="Close" />
+	<td><input type="hidden" name="action" value="<?php echo $action?>" />
+		<input type="hidden" name="id" value="<?php echo $schedule->id?>" />
+		<input type="submit" name="submit" value="<?php echo $title?>" /> <input type="submit" class="jqmClose" value="Close" />
 	</td>
 </tr>
 </table>

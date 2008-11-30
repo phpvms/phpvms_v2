@@ -36,8 +36,7 @@ class Pages extends CodonModule
 			//	for security reasons
 			
 			$page = DB::escape($this->get->page);
-			
-			$pageinfo = SiteData::GetPageData($page);
+			$pageinfo = SiteData::GetPageDataByName($page);
 			
 			if($pageinfo->public == 0 && Auth::LoggedIn() == false)
 			{

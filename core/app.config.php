@@ -26,6 +26,8 @@
  * Most of these are in your local.config.php already
  *
  */
+ 
+ini_set('short_open_tag', '1');
 
 Config::Set('PAGE_EXT', '.htm');
 Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000

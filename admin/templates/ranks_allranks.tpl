@@ -16,14 +16,14 @@ foreach($ranks as $rank)
 {
 ?>
 <tr>
-	<td align="center"><?=$rank->rank; ?></td>
-	<td align="center"><?=$rank->minhours; ?></td>
-	<td align="center"><?=$rank->payrate; ?></td>
-	<td align="center"><?=$rank->totalpilots; ?></td>
+	<td align="center"><?php echo $rank->rank; ?></td>
+	<td align="center"><?php echo $rank->minhours; ?></td>
+	<td align="center"><?php echo $rank->payrate; ?></td>
+	<td align="center"><?php echo $rank->totalpilots; ?></td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=editrank&rankid=<?=$rank->rankid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
+		<a id="dialog" class="jqModal" href="action.php?admin=editrank&rankid=<?php echo $rank->rankid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
 		
-		<a href="action.php?admin=pilotranks" action="deleterank" id="<?=$rank->rankid;?>" class="ajaxcall">
+		<a href="action.php?admin=pilotranks" action="deleterank" id="<?php echo $rank->rankid;?>" class="ajaxcall">
 			<img src="lib/images/delete.gif" alt="Delete" /></a></td>
 	</td>
 </tr>

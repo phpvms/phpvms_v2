@@ -1,5 +1,5 @@
 <h3>PIREPs List</h3>
-<p><?=$descrip;?></p>
+<p><?php echo $descrip;?></p>
 <?php
 if(!$pireps)
 {
@@ -26,13 +26,13 @@ foreach($pireps as $report)
 ?>
 <tr>
 	<td align="center">
-		<a href="<?=SITE_URL?>/index.php/pireps/view/<?=$report->pirepid?>"><?=$report->code . $report->flightnum; ?></a>
+		<a href="<?php echo SITE_URL?>/index.php/pireps/view/<?php echo $report->pirepid?>"><?php echo $report->code . $report->flightnum; ?></a>
 	</td>
-	<td align="center"><?=$report->depicao; ?></td>
-	<td align="center"><?=$report->arricao; ?></td>
-	<td align="center"><?=$report->aircraft; ?></td>
-	<td align="center"><?=$report->flighttime; ?></td>
-	<td align="center"><?=date(DATE_FORMAT, $report->submitdate); ?>
+	<td align="center"><?php echo $report->depicao; ?></td>
+	<td align="center"><?php echo $report->arricao; ?></td>
+	<td align="center"><?php echo $report->aircraft; ?></td>
+	<td align="center"><?php echo $report->flighttime; ?></td>
+	<td align="center"><?php echo date(DATE_FORMAT, $report->submitdate); ?>
 		
 	</td>
 	<td align="center">

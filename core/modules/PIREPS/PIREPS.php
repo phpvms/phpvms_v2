@@ -225,7 +225,6 @@ class PIREPS extends CodonModule
 					  'submitdate'=>'NOW()',
 					  'comment'=>$comment);
 		
-		//if(!PIREPData::FileReport($pilotid, $code, $flightnum, $leg, $depicao, $arricao, $aircraft, $flighttime, $comment, $log))
 		if(!PIREPData::FileReport($data))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
@@ -235,9 +234,6 @@ class PIREPS extends CodonModule
 		
 		$pirepid = DB::$insert_id;
 		PIREPData::SaveFields($pirepid, $_POST);
-	
-		# Update the flown count for that route
-		SchedulesData::IncrementFlownCount($code, $flightnum);
 		
 		# Call the event
 		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);
@@ -247,20 +243,7 @@ class PIREPS extends CodonModule
 		{
 			SchedulesData::RemoveBid($this->post->bid);
 		}
-		
-		# Load PIREP into RSS feed
-		$reports = PIREPData::GetRecentReportsByCount(10);
-		$rss = new RSSFeed('Latest Pilot Reports', SITE_URL, 'The latest pilot reports');
-		
-		foreach($reports as $report)
-		{
-			$rss->AddItem('Report #'.$report->pirepid.' - '.$report->depicao.' to '.$report->arricao,
-							SITE_URL.'/admin/index.php?admin=viewpending','',
-							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid) 
-							. " ($report->firstname $report->lastname)");
-		}
-		
-		$rss->BuildFeed(LIB_PATH.'/rss/latestpireps.rss');
+	
 		return true;
 	}
 	

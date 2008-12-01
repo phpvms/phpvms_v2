@@ -300,7 +300,30 @@ class PIREPData
 		}
 
 		DB::$insert_id = $pirepid;
+		
+		# Do other assorted tasks that are along with a PIREP filing
+		# Update the flown count for that route
+		SchedulesData::IncrementFlownCount($code, $flightnum);
+		self::UpdatePIREPFeed();
+		
 		return true;
+	}
+	
+	public function UpdatePIREPFeed()
+	{
+		# Load PIREP into RSS feed
+		$reports = PIREPData::GetRecentReportsByCount(10);
+		$rss = new RSSFeed('Latest Pilot Reports', SITE_URL, 'The latest pilot reports');
+		
+		foreach($reports as $report)
+		{
+			$rss->AddItem('Report #'.$report->pirepid.' - '.$report->depicao.' to '.$report->arricao,
+							SITE_URL.'/admin/index.php?admin=viewpending','',
+							'Filed by '.PilotData::GetPilotCode($report->code, $report->pilotid) 
+							. " ($report->firstname $report->lastname)");
+		}
+		
+		$rss->BuildFeed(LIB_PATH.'/rss/latestpireps.rss');
 	}
 	
 	/** 

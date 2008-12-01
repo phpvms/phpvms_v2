@@ -60,7 +60,7 @@ class ACARSData extends CodonModule
 				// append the message log
 				if($field == 'messagelog')
 				{
-					$upd.='messagelog=CONCAT(messagelog, \''.$data['field'].'\'), ';
+					$upd.='messagelog=CONCAT(messagelog, \''.DB::escape($data['field']).'\'), ';
 				}
 				else 
 				{
@@ -71,7 +71,7 @@ class ACARSData extends CodonModule
 					}
 					
 					// field=\'value\',
-					$upd.=$field.'=\''.$data[$field].'\', ';
+					$upd.=$field.'=\''.DB::escape($data[$field]).'\', ';
 				}
 			}
 			
@@ -128,6 +128,32 @@ class ACARSData extends CodonModule
 		return true;
 	}
 	
+	/**
+	 * Handle PIREP filing functions
+	 */
+	public function FilePIREP($pilotid, $data)
+	{
+		if(!is_array($data)) {
+			self::$lasterror = 'PIREP data must be array';
+			return false;
+		}
+		
+		$ret = PIREPData::FileReport($data);
+		
+		if(!$ret)
+			return false;
+			
+		# Close out a bid if it exists
+		$bidid = SchedulesData::GetBid($pilotid, $data['code'], $data['flightnum']);
+		
+		if($bidid)
+		{
+			SchedulesData::RemoveBid($bidid->bidid);
+		}
+		
+		return true;
+	}
+	
 	
 	//TODO: convert this cutoff time into a SETTING parameter, in minutes
 	public function GetACARSData($cutofftime = '')
@@ -142,4 +168,3 @@ class ACARSData extends CodonModule
 		return DB::get_results($sql);
 	}
 }
-?>

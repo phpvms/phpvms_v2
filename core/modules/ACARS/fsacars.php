@@ -51,6 +51,7 @@ function writedebug($msg)
 	
 # Our flight phase constants
 #	Don't change the order, the key is the # given by FSACARS
+
 $phase_short = array('null', 'Boarding', 'Departing', 'Cruise', 'Arrived');
 
 $phase_detail = array('FSACARS Closed', 'Boarding', 'Taxiing', 'Takeoff', 'Climbing',
@@ -198,7 +199,7 @@ switch($_GET['action'])
 			#	Otherwise, pull the full-text from the session
 			#
 			
-			$res = PIREPData::FileReport($data);
+			$ret = ACARSData::FilePIREP($pilotid, $data);
 		}
 		
 		if(!$res)

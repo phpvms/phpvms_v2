@@ -388,15 +388,14 @@ class SchedulesData
 	 * Get find a bid for the pilot based on ID,
 	 *	the airline code for the flight, and the flight number
 	 */
-	public function GetBid($pilotid, $code, $flightnum)
+	public function GetBidWithRoute($pilotid, $code, $flightnum)
 	{
 		$sql = 'SELECT b.bidid 
 					FROM '.TABLE_PREFIX.'bids b, '.TABLE_PREFIX.'schedules s
 					WHERE b.pilotid='.$pilotid.' AND b.routeid=s.id
-						AND s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum,.'\'';
+						AND s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum.'\'';
 		
 		return DB::get_row($sql);
-		
 	}
 	
 	

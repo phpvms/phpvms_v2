@@ -158,7 +158,7 @@ class ACARSData extends CodonModule
 		
 		# Close out a bid if it exists
 		#
-		$bidid = SchedulesData::GetBid($pilotid, $data['code'], $data['flightnum']);
+		$bidid = SchedulesData::GetBidWithRoute($pilotid, $data['code'], $data['flightnum']);
 		
 		if($bidid)
 		{

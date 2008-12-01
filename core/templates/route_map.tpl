@@ -12,6 +12,7 @@
 	$centerlong = ($mapdata->deplong + $mapdata->arrlong) / 2;
 
 	$map = new GoogleMapAPI('routemap', 'phpVMS');
+	$map->sidebar=false;
 	
 	$map->addMarkerIcon(SITE_URL.'/lib/images/towerdeparture.png'); //, '', 0, 0, 10, 10);
 	$map->addMarkerByCoords($mapdata->deplong, $mapdata->deplat, '', "$mapdata->depname ($mapdata->depicao)");

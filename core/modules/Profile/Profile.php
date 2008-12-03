@@ -102,6 +102,7 @@ class Profile extends CodonModule
 
 				Template::Set('userinfo', Auth::$userinfo);
 				Template::Set('customfields', PilotData::GetFieldData(Auth::$pilotid, true));
+				Template::Set('countries', Countries::getAllCountries());
 
 				Template::Show('profile_edit.tpl');
 				break;

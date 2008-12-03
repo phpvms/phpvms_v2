@@ -22,21 +22,21 @@ class StatsData
 	/**
 	 * Get the total number of hours flown by pilots
 	 */
-	public function TotalHours()
+	public static function TotalHours()
 	{
 		$sql = 'SELECT SUM(totalhours) AS total FROM '.TABLE_PREFIX.'pilots';
 		$res = DB::get_row($sql);
 		return $res->total;
 	}
 	
-	public function TotalFlights()
+	public static function TotalFlights()
 	{
 		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pireps';
 		$res = DB::get_row($sql);
 		return $res->total;
 	}
 	
-	public function PilotCount()
+	public static function PilotCount()
 	{
 		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pilots';
 		$res = DB::get_row($sql);
@@ -49,7 +49,7 @@ class StatsData
 	 *  by a certain pilot. Outputs image, unless $ret == true,
 	 * 	then it returns the URL.
 	 */
-	public function PilotAircraftFlownGraph($pilotid, $ret = false)
+	public static function PilotAircraftFlownGraph($pilotid, $ret = false)
 	{
 		//Select aircraft types
 		$sql = 'SELECT aircraft, COUNT(aircraft) count

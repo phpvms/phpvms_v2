@@ -18,7 +18,7 @@
  
 class XML extends CodonModule
 {
-	public function Controller()
+	public static function Controller()
 	{
 		switch($this->get->request)
 		{
@@ -59,7 +59,7 @@ class XML extends CodonModule
 	/**
 	 * This generates the XML for the live ACARS map
 	 */
-	public function GenerateACARSMapXML()
+	public static function GenerateACARSMapXML()
 	{
 		$output = '';
 		$flights = ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME'));
@@ -137,7 +137,7 @@ class XML extends CodonModule
 		
 	}
 	
-	public function GetFlightInformationXML()
+	public static function GetFlightInformationXML()
 	{
 		$route = $_GET['route'];
 				
@@ -162,7 +162,7 @@ class XML extends CodonModule
 		return $output;	
 	}
 	
-	public function GetRouteInformationXML()
+	public static function GetRouteInformationXML()
 	{
 		$depicao = $_GET['depicao'];
 		$arricao = $_GET['arricao'];

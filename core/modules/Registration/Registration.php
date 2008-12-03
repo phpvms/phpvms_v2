@@ -45,6 +45,7 @@ class Registration extends CodonModule
 				Template::Set('extrafields', RegistrationData::GetCustomFields());
 				Template::Set('allairlines', OperationsData::GetAllAirlines(true));
 				Template::Set('allhubs', OperationsData::GetAllHubs());
+				Template::Set('countries', Countries::getAllCountries());
 				
 				if(isset($_POST['submit']))
 				{

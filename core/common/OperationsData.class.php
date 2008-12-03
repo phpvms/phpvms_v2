@@ -22,7 +22,7 @@ class OperationsData
 	 * Get all aircraft from database
 	 */
 	
-	public function GetAllAirlines($onlyenabled=false)
+	public static function GetAllAirlines($onlyenabled=false)
 	{
 		if($onlyenabled) $where = 'WHERE enabled=1';
 		else $where = '';
@@ -33,7 +33,7 @@ class OperationsData
 	/**
 	 * Get all of the hubs
 	 */
-	public function GetAllHubs()
+	public static function GetAllHubs()
 	{
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1
 								ORDER BY icao ASC');
@@ -42,7 +42,7 @@ class OperationsData
 	/**
 	 * Get all of the aircraft
 	 */
-	public function GetAllAircraft()
+	public static function GetAllAircraft()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft ORDER BY icao ASC');
 	}
@@ -50,7 +50,7 @@ class OperationsData
 	/**
 	 * Get all of the airports
 	 */
-	public function GetAllAirports()
+	public static function GetAllAirports()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports ORDER BY icao ASC');
 	}
@@ -58,19 +58,19 @@ class OperationsData
 	/**
 	 * Get information about a specific aircraft
 	 */
-	public function GetAircraftInfo($id)
+	public static function GetAircraftInfo($id)
 	{
 		$id = DB::escape($id);
 		
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);
 	}
 	
-	public function GetAirlineByCode($code)
+	public static function GetAirlineByCode($code)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines WHERE code=\''.$code.'\'');
 	}
 	
-	public function GetAirlineByID($id)
+	public static function GetAirlineByID($id)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines WHERE id=\''.$id.'\'');
 	}
@@ -78,7 +78,7 @@ class OperationsData
 	/**
 	 * Add an airline
 	 */
-	public function AddAirline($code, $name)
+	public static function AddAirline($code, $name)
 	{
 		
 		$code = strtoupper($code);
@@ -94,7 +94,7 @@ class OperationsData
 		return true;
 	}
 	
-	public function EditAirline($id, $code, $name, $enabled=true)
+	public static function EditAirline($id, $code, $name, $enabled=true)
 	{
 		$code = DB::escape($code);
 		$name = DB::escape($name);
@@ -117,7 +117,7 @@ class OperationsData
 	/**
 	 * Add an aircraft
 	 */
-	public function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
+	public static function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
 		$name = strtoupper($name);
@@ -136,7 +136,7 @@ class OperationsData
 	/**
 	 * Edit an aircraft
 	 */
-	public function EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise)
+	public static function EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
 
@@ -154,7 +154,7 @@ class OperationsData
 	/**
 	 * Add an airport
 	 */
-	public function AddAirport($icao, $name, $country, $lat, $long, $hub)
+	public static function AddAirport($icao, $name, $country, $lat, $long, $hub)
 	{
 	
 		$icao = strtoupper($icao);
@@ -178,7 +178,7 @@ class OperationsData
 	/**
 	 * Edit the airport
 	 */
-	public function EditAirport($icao, $name, $country, $lat, $long, $hub)
+	public static function EditAirport($icao, $name, $country, $lat, $long, $hub)
 	{
         if($hub == true)
 			$hub = 1;
@@ -200,7 +200,7 @@ class OperationsData
 	/**
 	 * Get information about an airport
 	 */
-	public function GetAirportInfo($icao)
+	public static function GetAirportInfo($icao)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
 	}
@@ -209,7 +209,7 @@ class OperationsData
 	 * Retrieve Airport Information
 	 */
 	 
-	public function RetrieveAirportInfo($icao)
+	public static function RetrieveAirportInfo($icao)
 	{
 		$url = 'http://ws.geonames.org/search?maxRows=1&featureCode=AIRP&q=';
 		
@@ -228,4 +228,3 @@ class OperationsData
 		return self::GetAirportInfo($icao);
 	}
 }
-?>

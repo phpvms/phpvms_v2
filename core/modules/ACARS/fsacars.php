@@ -33,12 +33,12 @@ writedebug($_SERVER['QUERY_STRING']);
 writedebug($val);
 function writedebug($msg)
 {
-	$debug = true;
+	$debug = Config::Get('FSACARS_DEBUG');
 	
 	if(!$debug)
 		return;
-		
-	$fp = fopen('/home/nssliven/public_html/phpvms/test/core/modules/ACARS/log.txt', 'a+');
+	
+	$fp = fopen(CORE_PATH.'/modules/ACARS/log.txt', 'a+');
 	$msg .= '
 ';
 	

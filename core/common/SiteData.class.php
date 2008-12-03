@@ -19,7 +19,7 @@
 class SiteData
 {
 	
-	public function loadSiteSettings()
+	public static function loadSiteSettings()
 	{
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'settings';
 		$all_settings = DB::get_results($sql);
@@ -46,19 +46,19 @@ class SiteData
 		}
 	}
 
-	public function GetNewsItem($id)
+	public static function GetNewsItem($id)
 	{
 		return DB::get_row('SELECT *, UNIX_TIMESTAMP(postdate) AS postdate 
 									FROM '.TABLE_PREFIX.'news WHERE id='.$id);
 	}
 	
-	public function GetAllNews()
+	public static function GetAllNews()
 	{
 		return DB::get_results('SELECT id, subject, body, UNIX_TIMESTAMP(postdate) as postdate, postedby
 									FROM ' . TABLE_PREFIX.'news ORDER BY postdate DESC');
 	}
 	
-	public function AddNewsItem($subject, $body)
+	public static function AddNewsItem($subject, $body)
 	{
 		$subject = DB::escape($subject);
 		$body = DB::escape($body);
@@ -75,7 +75,7 @@ class SiteData
 		return true;
 	}
 	
-	public function EditNewsItem($id, $subject, $body)
+	public static function EditNewsItem($id, $subject, $body)
 	{
 		$subject = DB::escape($subject);
 		$body = DB::escape($body);
@@ -91,7 +91,7 @@ class SiteData
 		return true;
 	}
 	
-	public function DeleteItem($id)
+	public static function DeleteItem($id)
 	{
 		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'news WHERE id='.$id;
 		
@@ -103,7 +103,7 @@ class SiteData
 		return true;
 	}
 	
-	public function GetAllPages($onlyenabled=false, $loggedin=false)
+	public static function GetAllPages($onlyenabled=false, $loggedin=false)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pages";
 		
@@ -121,21 +121,21 @@ class SiteData
 		return DB::get_results($sql);
 	}
 	
-	public function GetPageData($pageid)
+	public static function GetPageData($pageid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pages WHERE pageid='.$pageid;
 		
 		return DB::get_row($sql);
 	}
 	
-	public function GetPageDataByName($pagename)
+	public static function GetPageDataByName($pagename)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pages WHERE filename=\''.$pagename.'\'';
 		
 		return DB::get_row($sql);
 	}
 	
-	public function AddPage($title, $content, $public=true, $enabled=true)
+	public static function AddPage($title, $content, $public=true, $enabled=true)
 	{
 		$filename = strtolower($title);
 	
@@ -179,7 +179,7 @@ class SiteData
 		return self::EditPageFile($filename, $content);
 	}
 	
-	public function DeletePage($pageid)
+	public static function DeletePage($pageid)
 	{
 	
 		$info = self::GetPageData($pageid);
@@ -196,7 +196,7 @@ class SiteData
 		return true;
 	}
 	
-	public function GetPageContent($filename)
+	public static function GetPageContent($filename)
 	{
 		// Round-about way, I know. But it's in the name of security. If they're giving a
 		//	bogus name, then it won't find it.
@@ -222,7 +222,7 @@ class SiteData
 		return $row;
 	}
 	
-	public function EditFile($pageid, $content, $public, $enabled)
+	public static function EditFile($pageid, $content, $public, $enabled)
 	{
 		$pagedata = SiteData::GetPageData($pageid);
 		
@@ -248,7 +248,7 @@ class SiteData
 		}
 	}
 	
-	public function EditPageFile($filename, $content)
+	public static function EditPageFile($filename, $content)
 	{
 		//create the file
 		$filename = PAGES_PATH . '/' . $filename . PAGE_EXT;
@@ -266,7 +266,7 @@ class SiteData
 		}
 	}
 	
-	public function GetAvailableSkins()
+	public static function GetAvailableSkins()
 	{
 		$skins = array();
 		$skins_dir = SITE_ROOT . '/lib/skins';

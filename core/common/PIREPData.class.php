@@ -24,7 +24,7 @@ class PIREPData
 	 * only want to return the latest n number of reports, use
 	 * GetRecentReportsByCount()
 	 */
-	public function GetAllReports($start=0, $count=20)
+	public static function GetAllReports($start=0, $count=20)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
@@ -41,7 +41,7 @@ class PIREPData
 	 * constants:
 	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
 	 */
-	public function GetAllReportsByAccept($accept=0)
+	public static function GetAllReportsByAccept($accept=0)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
@@ -52,7 +52,7 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 	
-	public function GetAllReportsFromHub($accept=0, $hub)
+	public static function GetAllReportsFromHub($accept=0, $hub)
 	{
 		$sql = "SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
@@ -68,7 +68,7 @@ class PIREPData
 	 * Get the latest reports that have been submitted,
 	 * return the last 10 by default
 	 */
-	public function GetRecentReportsByCount($count = 10)
+	public static function GetRecentReportsByCount($count = 10)
 	{
 		if($count == '') $count = 10;
 
@@ -86,7 +86,7 @@ class PIREPData
 	/**
 	 * Get the latest reports by n number of days
 	 */
-	public function GetRecentReports($days=2)
+	public static function GetRecentReports($days=2)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
@@ -104,7 +104,7 @@ class PIREPData
 	 * Get the number of reports on a certain date
 	 *  Pass unix timestamp for the date
 	 */
-	public function GetReportCount($date)
+	public static function GetReportCount($date)
 	{
 		$sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'pireps
 					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME('.$date.'))';
@@ -116,7 +116,7 @@ class PIREPData
 	/**
 	 * Get the number of reports on a certain date, for a certain route
 	 */
-	public function GetReportCountForRoute($code, $flightnum, $date)
+	public static function GetReportCountForRoute($code, $flightnum, $date)
 	{
 		$sql = "SELECT COUNT(*) AS count FROM ".TABLE_PREFIX."pireps
 					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME($date))
@@ -131,7 +131,7 @@ class PIREPData
 	 * Returns 1 row for every day, with the total number of
 	 * reports per day
 	 */
-	public function GetCountsForDays($days = 7)
+	public static function GetCountsForDays($days = 7)
 	{
 		$sql = 'SELECT DISTINCT(DATE(submitdate)) AS submitdate,
 					(SELECT COUNT(*) FROM '.TABLE_PREFIX.'pireps WHERE DATE(submitdate)=DATE(p.submitdate)) AS count
@@ -144,7 +144,7 @@ class PIREPData
 	 * Get all of the reports for a pilot. Pass the pilot id
 	 * The ID is their database ID number, not their airline ID number
 	 */
-	public function GetAllReportsForPilot($pilotid)
+	public static function GetAllReportsForPilot($pilotid)
 	{
 		/*$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
 					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
@@ -168,7 +168,7 @@ class PIREPData
 	 * constants:
 	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
 	 */
-	public function ChangePIREPStatus($pirepid, $status)
+	public static function ChangePIREPStatus($pirepid, $status)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
 					SET accepted='.$status.' WHERE pirepid='.$pirepid;
@@ -179,7 +179,7 @@ class PIREPData
 	/**
 	 * Get all of the details for a PIREP, including lat/long of the airports
 	 */
-	public function GetReportDetails($pirepid)
+	public static function GetReportDetails($pirepid)
 	{
 		$sql = 'SELECT u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
@@ -197,7 +197,7 @@ class PIREPData
 	/**
 	 * Get the latest reports for a pilot
 	 */
-	public function GetLastReports($pilotid, $count = 1, $status='')
+	public static function GetLastReports($pilotid, $count = 1, $status='')
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
 					WHERE pilotid='.intval($pilotid);
@@ -222,7 +222,7 @@ class PIREPData
 	 * constants:
 	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED, PIREP_INPROGRESS
 	 */
-	public function GetReportsByAcceptStatus($pilotid, $accept=0)
+	public static function GetReportsByAcceptStatus($pilotid, $accept=0)
 	{
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
@@ -235,7 +235,7 @@ class PIREPData
 	/**
 	 * Get all of the comments for a pilot report
 	 */
-	public function GetComments($pirepid)
+	public static function GetComments($pirepid)
 	{
 		$sql = 'SELECT c.comment, UNIX_TIMESTAMP(c.postdate) as postdate,
 						p.firstname, p.lastname
@@ -249,7 +249,7 @@ class PIREPData
 	/**
 	 * File a PIREP
 	 */
-	public function FileReport($pirepdata)
+	public static function FileReport($pirepdata)
 	{
 		
 		/*$pirepdata = array('pilotid'=>'',
@@ -309,7 +309,7 @@ class PIREPData
 		return true;
 	}
 	
-	public function UpdatePIREPFeed()
+	public static function UpdatePIREPFeed()
 	{
 		# Load PIREP into RSS feed
 		$reports = PIREPData::GetRecentReportsByCount(10);
@@ -330,7 +330,7 @@ class PIREPData
 	 * Append to a flight report's log
 	 */
 	 
-	public function AppendToLog($pirepid, $log)
+	public static function AppendToLog($pirepid, $log)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
 					SET `log` = CONCAT(`log`, \''.$log.'\')
@@ -347,7 +347,7 @@ class PIREPData
 	/**
 	 * Add a comment to the flight report
 	 */
-	public function AddComment($pirepid, $commenter, $comment)
+	public static function AddComment($pirepid, $commenter, $comment)
 	{
 		$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
 					VALUES ($pirepid, $commenter, '$comment', NOW())";
@@ -361,7 +361,7 @@ class PIREPData
 	}
 	
 	
-	public function GetAllFields()
+	public static function GetAllFields()
 	{
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'pirepfields');
 	}
@@ -369,7 +369,7 @@ class PIREPData
 	/**
 	 * Get all of the "cusom fields" for a pirep
 	 */
-	public function GetFieldData($pirepid)
+	public static function GetFieldData($pirepid)
 	{
 		$sql = 'SELECT f.title, f.name, v.value
 					FROM '.TABLE_PREFIX.'pirepfields f
@@ -380,7 +380,7 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 	
-	public function GetFieldInfo($id)
+	public static function GetFieldInfo($id)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pirepfields
 					WHERE fieldid='.$id;
@@ -391,7 +391,7 @@ class PIREPData
 	/**
 	 * Add a custom field to be used in a PIREP
 	 */
-	public function AddField($title, $type='', $values='')
+	public static function AddField($title, $type='', $values='')
 	{
 		$fieldname = strtoupper(str_replace(' ', '_', $title));
 		//$values = DB::escape($values);
@@ -413,7 +413,7 @@ class PIREPData
 	/**
 	 * Edit the field
 	 */
-	public function EditField($id, $title, $type, $values='')
+	public static function EditField($id, $title, $type, $values='')
 	{
 		$fieldname = strtoupper(str_replace(' ', '_', $title));
 		
@@ -432,7 +432,7 @@ class PIREPData
 	/**
 	 * Save PIREP fields
 	 */
-	public function SaveFields($pirepid, $list)
+	public static function SaveFields($pirepid, $list)
 	{
 		$allfields = self::GetAllFields();
 		
@@ -458,7 +458,7 @@ class PIREPData
 		return true;
 	}
 		
-	public function DeleteField($id)
+	public static function DeleteField($id)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'pirepfields WHERE fieldid='.$id;
 
@@ -478,7 +478,7 @@ class PIREPData
 	 * Show the graph of the past week's reports. Outputs the
 	 *	image unless $ret == true
 	 */
-	public function ShowReportCounts($ret=false)
+	public static function ShowReportCounts($ret=false)
 	{
 		// Recent PIREP #'s
 		$max = 0;

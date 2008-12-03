@@ -74,7 +74,7 @@ class DB
 	 *
 	 * @return object
 	 */
-	public function getInstance()
+	public static function getInstance()
 	{
 		return self::$DB;
 	}
@@ -133,18 +133,18 @@ class DB
 		return true;
 	}
 	
-	public function setCacheDir($dir)
+	public static function setCacheDir($dir)
 	{
 		self::$DB->cache_dir = $dir;
 	}
 	
-	public function enableCache()
+	public static function enableCache()
 	{
 		self::$DB->cache_query = true;
 		self::$DB->use_disk_cache = true;
 	}
 	
-	public function disableCache()
+	public static function disableCache()
 	{
 		self::$DB->cache_query = false;
 		self::$DB->use_disk_cache = false;

@@ -26,7 +26,7 @@ class ACARSData extends CodonModule
 								   'arrapt', 'deptime', 'arrtime', 'distremain', 'timeremaining',
 								   'phasedetail', 'online', 'messagelog');
 	
-	public function UpdateFlightData($data)
+	public static function UpdateFlightData($data)
 	{
 		if(!is_array($data))
 		{
@@ -131,7 +131,7 @@ class ACARSData extends CodonModule
 	/**
 	 * Handle PIREP filing functions
 	 */
-	public function FilePIREP($pilotid, $data)
+	public static function FilePIREP($pilotid, $data)
 	{
 		if(!is_array($data)) {
 			self::$lasterror = 'PIREP data must be array';
@@ -170,7 +170,7 @@ class ACARSData extends CodonModule
 	
 	
 	//TODO: convert this cutoff time into a SETTING parameter, in minutes
-	public function GetACARSData($cutofftime = '')
+	public static function GetACARSData($cutofftime = '')
 	{
 		//cutoff time in days
 		if($cutofftime == '')

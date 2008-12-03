@@ -99,6 +99,8 @@ class PilotAdmin extends CodonModule
 						PilotData::ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay);
 						PilotData::SaveFields($pilotid, $_POST);
 						
+						RanksData::CalculateUpdatePilotRank($pilotid);
+						
 						Template::Set('message', 'Profile updated successfully');
 						Template::Show('core_success.tpl');
 						

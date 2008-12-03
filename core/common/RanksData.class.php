@@ -23,7 +23,7 @@ class RanksData
 	/**
 	 * Return information about the rank, given the ID
 	 */
-	public function GetRankInfo($rankid)
+	public static function GetRankInfo($rankid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks
 					WHERE rankid='.$rankid;
@@ -35,7 +35,7 @@ class RanksData
 	 * Returns all the ranks, and the total number of pilots
 	 * on each rank
 	 */
-	public function GetAllRanks()
+	public static function GetAllRanks()
 	{
 		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
 					FROM ' .TABLE_PREFIX.'ranks r
@@ -43,7 +43,7 @@ class RanksData
 		return DB::get_results($sql);
 	}
 	
-	public function GetRankImage($rank)
+	public static function GetRankImage($rank)
 	{
 		$sql = 'SELECT rankimage FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
 		return DB::get_var($sql);
@@ -52,7 +52,7 @@ class RanksData
 	/**
 	 * Give the number of hours, return the next rank
 	 */
-	public function GetNextRank($hours)
+	public static function GetNextRank($hours)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."ranks
 					WHERE minhours>$hours ORDER BY minhours ASC LIMIT 1";
@@ -64,7 +64,7 @@ class RanksData
 	 * Add a ranking. This will automatically call
 	 * CalculatePilotRanks() at the end
 	 */
-	public function AddRank($title, $minhours, $imageurl, $payrate)
+	public static function AddRank($title, $minhours, $imageurl, $payrate)
 	{
 		$minhours = intval($minhours);
 		$payrate = floatval($payrate);
@@ -88,7 +88,7 @@ class RanksData
 	/**
 	 * Update a certain rank
 	 */
-	public function UpdateRank($rankid, $title, $minhours, $imageurl, $payrate)
+	public static function UpdateRank($rankid, $title, $minhours, $imageurl, $payrate)
 	{
 		$minhours = intval($minhours);
 		$payrate = floatval($payrate);
@@ -110,7 +110,7 @@ class RanksData
 	 * Delete a rank, and then recalculate
 	 */
 	 
-	public function DeleteRank($rankid)
+	public static function DeleteRank($rankid)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'ranks 
 					WHERE rankid='.$rankid;
@@ -130,7 +130,7 @@ class RanksData
 	 *  for that rank level, then make $last_rank that text. At the
 	 *  end, update that
 	 */
-	public function CalculatePilotRanks()
+	public static function CalculatePilotRanks()
 	{
 		$pilots = PilotData::GetAllPilots();
 		$allranks = self::GetAllRanks();
@@ -155,7 +155,7 @@ class RanksData
 		}
 	}
 	
-	public function CalculateUpdatePilotRank($pilotid)
+	public static function CalculateUpdatePilotRank($pilotid)
 	{
 		$allranks = self::GetAllRanks();
 		$pilot = PilotData::GetPilotData($pilotid);

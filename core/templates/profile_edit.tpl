@@ -12,7 +12,19 @@
 	</dd>
 	
 	<dt>Location</dt>
-	<dd><input type="text" name="location" value="<?php echo $userinfo->location?>" />
+	<dd><select name="location">
+		<?php
+		foreach($countries as $countryCode=>$countryName)
+		{
+			if($userinfo->location == $countryCode)
+				$sel = 'selected="selected"';
+			else	
+				$sel = '';
+			
+			echo '<option value="'.$countryCode.'" '.$sel.'>'.$countryName.'</option>';
+		}
+		?>
+		</select>
 		<?php
 			if($location_error == true)
 				echo '<p class="error">Please enter your location</p>';

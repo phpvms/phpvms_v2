@@ -20,7 +20,7 @@ class UserGroups
 {
 	public $user_permissions;
 		
-	public function CreateSalt()
+	public static function CreateSalt()
 	{
 		return md5(uniqid(rand()));
 	}
@@ -31,7 +31,7 @@ class UserGroups
 	 
 	 //load a comprehensive list of user permissions
 	 // store in the session
-	public function GetAllUserPermissions($userid)
+	public static function GetAllUserPermissions($userid)
 	{
 		$userid = DB::escape($userid);
 		
@@ -57,14 +57,14 @@ class UserGroups
 		return $permissions_list;
 	}
 	
-	public function GetAllUsers()
+	public static function GetAllUsers()
 	{
 		return DB::get_results('SELECT id, displayname, username, groupid, allowremote, lastlogin
 										FROM '.TABLE_PREFIX.'users
 										ORDER BY username ASC');
 	}
 	
-	public function GetGroupName($groupid)
+	public static function GetGroupName($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		

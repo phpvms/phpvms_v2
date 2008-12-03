@@ -18,7 +18,7 @@
 
 class SettingsData
 {
-	public function GetAllSettings()
+	public static function GetAllSettings()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
 	}
@@ -26,13 +26,13 @@ class SettingsData
 	/**
 	 * Return all of the custom fields data
 	 */
-	public function GetAllFields()
+	public static function GetAllFields()
 	{
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
 	}
 	
 	
-	public function GetField($fieldid)
+	public static function GetField($fieldid)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$fieldid);
 	}
@@ -40,7 +40,7 @@ class SettingsData
 	/**
 	 * Add a custom field to be used in a profile
 	 */
-	public function AddField($title, $fieldtype, $public, $showinregistration)
+	public static function AddField($title, $fieldtype, $public, $showinregistration)
 	{
 		/*$fieldname = Vars::POST('fieldname');
 		$fieldtype = Vars::POST('fieldtype');
@@ -75,7 +75,7 @@ class SettingsData
 /**
 	 * Add a custom field to be used in a profile
 	 */
-	public function EditField($fieldid, $title, $fieldtype, $public, $showinregistration)
+	public static function EditField($fieldid, $title, $fieldtype, $public, $showinregistration)
 	{
 		$fieldname = str_replace(' ', '_', $title);
 		$fieldname = strtoupper($fieldname);
@@ -111,7 +111,7 @@ class SettingsData
 	 * @param string $value Value of the setting
 	 * @param boolean $core Whether it's "vital" to the engine or not. Bascially blocks deletion
 	 */
-	public function SaveSetting($name, $value, $descrip='', $core=false)
+	public static function SaveSetting($name, $value, $descrip='', $core=false)
 	{
 		if(is_bool($value))
 		{
@@ -161,7 +161,7 @@ class SettingsData
 	/**
 	 * See if the setting is part of the core
 	 */
-	public function IsCoreSetting($setting_name)
+	public static function IsCoreSetting($setting_name)
 	{
 		$sql = 'SELECT core FROM ' . TABLE_PREFIX .'settings WHERE name=\''.$setting_name.'\'';
 		$res = DB::get_row($sql);
@@ -178,7 +178,7 @@ class SettingsData
 		return false;
 	}
 	
-	public function DeleteField($id)
+	public static function DeleteField($id)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$id;
 

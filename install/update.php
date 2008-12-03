@@ -102,14 +102,22 @@ function add_to_config($name, $value)
 	}
 	
 	$config = $config ."
-Config::Set('$name', '$value');";
+Config::Set('$name', ";
+
+	if($value == true)
+		$config .= "true";
+	elseif($value == false)
+		$config .= "false";
+	else
+		$config .="'$value'";
+	
+	$config .=");";
 
 	file_put_contents(CORE_PATH.'/local.config.php', $config);
 }
 
 // Do the queries:
-echo "Starting the update...<br />
-	  Running SQL table updates...<br />";
+echo 'Starting the update...<br />';
 
 
 # Do updates based on version
@@ -124,10 +132,13 @@ switch(PHPVMS_VERSION)
 		
 	case '1.1.400':
 	
+		sql_file_update(SITE_ROOT . '/install/update.sql');
+		
 		echo 'Adding some options to your config file...';
 		
 		add_to_config('MAP_CENTER_LAT', '45.484400');
 		add_to_config('MAP_CENTER_LNG', '-62.334821');
+		add_to_config('FSACARS_DEBUG', false);
 		
 		break;
 }

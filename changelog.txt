@@ -12,15 +12,25 @@ phpVMS - Virtual Airline Administration Software
 
 Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
+  * Dynamic signatures generated, to use on forums, etc.
   * Bug fixes for servers with short_open_tags off
   * ACARS map shows the proper map type/centers according to settings
+  * Admin edit of profile didn't recalculate for new rank
   * Bids are removed now when PIREP is done through ACARS
   * Updates to the updater, will automatically put new options in your local config
-  * Added options (place in your core/local.config.php), if they are not there
+  
+  Added options (place in your core/local.config.php), if they are not there
   
 		# These are the default center points to the map
 		Config::Set('MAP_CENTER_LAT', '45.484400');
 		Config::Set('MAP_CENTER_LNG', '-62.334821');
+	
+  Template Changes (use WinMerge to see changes):
+  
+	registration_mainform.tpl
+	profile_edit.tpl
+	pilots_list.tpl
+	
 	
 Build 400 (Version 1.1.400)
 

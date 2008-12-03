@@ -36,7 +36,7 @@ class OperationsData
 	public static function GetAllHubs()
 	{
 		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1
-								ORDER BY icao ASC');
+									ORDER BY icao ASC');
 	}
 	
 	/**
@@ -44,7 +44,8 @@ class OperationsData
 	 */
 	public static function GetAllAircraft()
 	{
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft ORDER BY icao ASC');
+		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft 
+									ORDER BY icao ASC');
 	}
 	
 	/**
@@ -52,7 +53,8 @@ class OperationsData
 	 */
 	public static function GetAllAirports()
 	{
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports ORDER BY icao ASC');
+		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports 
+									ORDER BY icao ASC');
 	}
 	
 	/**
@@ -62,12 +64,14 @@ class OperationsData
 	{
 		$id = DB::escape($id);
 		
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft WHERE id='.$id);
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft 
+								WHERE id='.$id);
 	}
 	
 	public static function GetAirlineByCode($code)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines WHERE code=\''.$code.'\'');
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
+								WHERE code=\''.$code.'\'');
 	}
 	
 	public static function GetAirlineByID($id)
@@ -117,13 +121,15 @@ class OperationsData
 	/**
 	 * Add an aircraft
 	 */
-	public static function AddAircaft($icao, $name, $fullname, $range, $weight, $cruise)
+	public static function AddAircaft($icao, $name, $fullname, $registration, $downloadlink, $imagelink, $range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
 		$name = strtoupper($name);
 		
-		$sql = "INSERT INTO " . TABLE_PREFIX . "aircraft (icao, name, fullname, range, weight, cruise)
-					VALUES ('$icao', '$name', '$fullname', '$range', '$weight', '$cruise')";
+		$sql = "INSERT INTO " . TABLE_PREFIX . "aircraft 
+						(icao, name, fullname, registration, downloadlink, imagelink, range, weight, cruise)
+					VALUES ('$icao', '$name', '$fullname', '$registration', '$downloadlink', '$imagelink',
+								'$range', '$weight', '$cruise')";
 		
 		$res = DB::query($sql);
 		
@@ -136,11 +142,13 @@ class OperationsData
 	/**
 	 * Edit an aircraft
 	 */
-	public static function EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise)
+	public static function EditAircraft($id, $icao, $name, $fullname, $registration, $downloadlink, $imagelink,
+								$range, $weight, $cruise)
 	{
 		$icao = strtoupper($icao);
 
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft SET icao='$icao', name='$name', fullname='$fullname',
+					registration='$registration', downloadlink='$downloadlink', imagelink='$imagelink',
 					range='$range', weight='$weight', cruise='$cruise' WHERE id=$id";
 		
 		$res = DB::query($sql);

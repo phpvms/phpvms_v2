@@ -11,8 +11,9 @@ if(!$allaircraft)
 <thead>
 <tr>
 	<th>ICAO</th>
-	<th>Name</th>	
+	<th>Name/Type</th>	
 	<th>Full Name</th>
+	<th>Registration</th>
 	<th>Range</th>
 	<th>Weight</th>
 	<th>Cruise</th>
@@ -28,6 +29,7 @@ foreach($allaircraft as $aircraft)
 	<td align="center"><?php echo $aircraft->icao; ?></td>
 	<td align="center"><?php echo $aircraft->name; ?></td>
 	<td align="center"><?php echo $aircraft->fullname; ?></td>
+	<td align="center"><?php echo $aircraft->registration; ?></td>
 	<td align="center"><?php echo $aircraft->range; ?></td>
 	<td align="center"><?php echo $aircraft->weight; ?></td>
 	<td align="center"><?php echo $aircraft->cruise; ?></td>

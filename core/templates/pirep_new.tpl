@@ -70,7 +70,7 @@ if($message!='')
 		{
 			$sel = ($_POST['aircraft'] == $aircraft->name)?'selected':'';
 			
-			echo '<option value="'.$aircraft->name.'" '.$sel.'>'.$aircraft->name.'</option>';
+			echo '<option value="'.$aircraft->name.'" '.$sel.'>'.$aircraft->name.' - '.$aircraft->registration.'</option>';
 		}
 		?>
 		</select>

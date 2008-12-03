@@ -100,6 +100,7 @@ class PilotAdmin extends CodonModule
 						PilotData::SaveFields($pilotid, $_POST);
 						
 						RanksData::CalculateUpdatePilotRank($pilotid);
+						PilotData::GenerateSignature($pilotid);
 						
 						Template::Set('message', 'Profile updated successfully');
 						Template::Show('core_success.tpl');

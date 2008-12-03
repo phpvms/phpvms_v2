@@ -111,7 +111,7 @@
 			else
 				$sel = '';
 	
-			echo '<option value="'.$aircraft->name.'" '.$sel.'>'.$aircraft->name.' ('.$aircraft->icao.')</option>';
+			echo '<option value="'.$aircraft->id.'" '.$sel.'>'.$aircraft->name.' ('.$aircraft->registration.')</option>';
 		}
 		?>
 		</select>

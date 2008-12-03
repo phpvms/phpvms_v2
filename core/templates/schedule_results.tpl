@@ -32,7 +32,7 @@ foreach($allroutes as $route)
 		<br />
 		
 		<strong>Departure: </strong><?php echo $route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?php echo $route->arrtime;?><br />
-		<strong>Equipment: </strong><?php echo $route->aircraft; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong>Distance: </strong><?php echo $route->distance . Config::Get('UNITS');?>
+		<strong>Equipment: </strong><?php echo $route->aircraft; ?> (<?php echo $route->registration;?>)  <strong>Distance: </strong><?php echo $route->distance . Config::Get('UNITS');?>
 		<br />
 		<?php echo ($route->route=='')?'':'<strong>Route: </strong>'.$route->route.'<br />' ?>
 		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.$route->notes.'<br />' ?>

@@ -12,7 +12,9 @@ phpVMS - Virtual Airline Administration Software
 
 Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
-  * Dynamic signatures generated, to use on forums, etc.
+  * Aircraft registration options added
+  * Routes can be assigned specific aircraft/registration
+  * Dynamic signatures generated, to use on forums, etc
   * Bug fixes for servers with short_open_tags off
   * ACARS map shows the proper map type/centers according to settings
   * Admin edit of profile didn't recalculate for new rank
@@ -30,6 +32,7 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
 	registration_mainform.tpl
 	profile_edit.tpl
 	pilots_list.tpl
+	pirep_new.tpl
 	
 	
 Build 400 (Version 1.1.400)

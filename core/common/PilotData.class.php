@@ -339,5 +339,112 @@ class PilotData
 		
 		return $ret;
 	}
+	
+	/**
+	 * This generates the forum signature of a pilot which
+	 *  can be used wherever. It's dynamic, and adjusts it's
+	 *  size, etc based on the background image.
+	 * 
+	 * Each image is output into the /lib/signatures directory,
+	 *  and is named by the pilot code+number (ie, VMA0001.png)
+	 * 
+	 * This is called whenever a PIREP is accepted by an admin,
+	 *  as not to burden a server with image generation
+	 * 
+	 * Also requires GD to be installed on the server
+	 */
+	 
+	public function GenerateSignature($pilotid)
+	{
+		$pilot = self::GetPilotData($pilotid);
+		$pilotcode = self::GetPilotCode($pilot->code, $pilot->pilotid);
+		
+		# Configure what we want to show on each line
+		$output = array();
+		$output[] = $pilotcode.' '. $pilot->firstname.' '.$pilot->lastname;
+		$output[] = $pilot->rank.', '.$pilot->hub;
+		$output[] = 'Total Flights: ' . $pilot->totalflights;
+		$output[] = 'Total Hours: ' . $pilot->totalhours;
+		$output[] = 'Total Earnings: $' . $pilot->totalpay;
+		
+		# Load up our image
+		$img = imagecreatefrompng(SITE_ROOT.'/lib/signatures/background.png');
+		$height = imagesy($img);
+		$width = imagesx($img);
+			
+		$textcolor = imagecolorallocate($img, 0, 0, 0);
+		$font = 3; // Set the font-size
+		
+		$xoffset = 10; # How many pixels, from left, to start
+		$yoffset = 10; # How many pixels, from top, to start
+		
+		# The line height of each item to fit nicely, dynamic
+		$stepsize = imagefontheight($font);
+		$fontwidth = imagefontwidth($font);
+		
+		imageantialias($img, true);
+		
+		$currline = $yoffset;
+		foreach($output as $line)
+		{
+			imagestring($img, $font, $xoffset, $currline, $line, $textcolor);
+			$currline+=$stepsize;
+		}
+		
+		# Add the country flag, line it up with the first line, which is the
+		#	pilot code/name
+		$country = strtolower($pilot->location);
+		$flagimg = imagecreatefrompng(SITE_ROOT.'/lib/images/countries/'.$country.'.png');
+		$ret = imagecopy($img, $flagimg, strlen($output[0])*$fontwidth+20, 
+							($yoffset+($stepsize/2)-5.5), 0, 0, 16, 11);
+		
+		#
+		#  DO NOT remove this, as per the phpVMS license
+		$font = 1;
+		$text = 'powered by phpvms, '. SITE_NAME.' ';
+		imagestring($img, $font, $width-(strlen($text)*imagefontwidth($font)), 
+					$height-imagefontheight($font), $text, $textcolor);
+	
+		imagepng($img, SITE_ROOT.'/lib/signatures/'.$pilotcode.'.png', 1);
+		imagedestroy($img);
+	}
+	
+	/*public function GenerateSignatureOld($pilotid)
+	{
+		$pilot = self::GetPilotData($pilotid);
+		
+		# Configure what we want to show on each line
+		$output = array();
+		$output[] = $pilot->firstname.' '.$pilot->lastname;
+		$output[] = $pilot->rank;
+		$output[] = 'Total Flights: ' . $pilot->totalflights;
+		
+		# Load up our image
+		$img = imagecreatefrompng(SITE_ROOT.'/lib/signatures/background.png');
+		$height = imagesy($img);
+		$width = imagesx($img);
+		
+		$xoffset = 10; # How many pixels, from left, to start
+		$yoffset = 10; # How many pixels, from top, to start
+		
+		# The line height of each item to fit nicely, dynamic
+		$stepsize = ($height - $yoffset) / count($output);
+		
+		imageantialias($img, true);
+		
+		$textcolor = imagecolorallocate($img, 0, 0, 0);
+		$font = 3;
+		
+		foreach($output as $line)
+		{
+			imagestring($img, $font, $xoffset, $yoffset, $line, $textcolor);
+			
+			$yoffset+=$stepsize;
+			
+		}
+		
+		imagepng($img, SITE_ROOT.'/lib/signatures/'.$pilotid.'.png', 1);
+		imagedestroy($img);
+	}*/
 }
 ?>

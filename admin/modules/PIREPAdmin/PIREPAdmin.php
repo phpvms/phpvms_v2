@@ -168,6 +168,7 @@ class PIREPAdmin extends CodonModule
 		//RanksData::CalculatePilotRanks();
 		
 		PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
+		PilotData::GenerateSignature($pirep_details->pilotid);
 		
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 	}

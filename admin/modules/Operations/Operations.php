@@ -314,22 +314,17 @@ class Operations extends CodonModule
 	}
 			
 	function AddAircraft()
-	{
-		$name = $this->post->name;
-		$icao = $this->post->icao;
-		$fullname = $this->post->fullname;
-		$range = $this->post->range;
-		$weight = $this->post->weight;
-		$cruise = $this->post->cruise;
-		
-		if($icao == '' || $name == '' || $fullname == '')
+	{		
+		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == '')
 		{
 			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
 			Template::Show('core_error.tpl');
 			return;
 		}
 		
-		OperationsData::AddAircaft($icao, $name, $fullname, $range, $weight, $cruise);
+		OperationsData::AddAircaft($this->post->icao, $this->post->name, $this->post->fullname, 
+					$this->post->registration, $this->post->downloadlink, $this->post->imagelink,
+					$this->post->range, $this->post->weight, $this->post->cruise);
 		
 		if(DB::errno() != 0)
 		{
@@ -519,22 +514,23 @@ class Operations extends CodonModule
 
 	function EditAircraft()
 	{
-		$id = $this->post->id;
-		$name = $this->post->name;
-		$icao = $this->post->icao;
-		$fullname = $this->post->fullname;
-		$range = $this->post->range;
-		$weight = $this->post->weight;
-		$cruise = $this->post->cruise;
+		if($this->post->id == '')
+		{
+			Template::Set('message', 'Invalid ID specified');
+			Template::Show('core_error.tpl');
+			return;
+		}
 		
-		if($icao == '' || $name == '' || $fullname == '')
+		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == '')
 		{
 			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
 			Template::Show('core_error.tpl');
 			return;
 		}
 
-		OperationsData::EditAircraft($id, $icao, $name, $fullname, $range, $weight, $cruise);
+		OperationsData::EditAircraft($this->post->id, $this->post->icao, $this->post->name, 
+					$this->post->fullname, $this->post->registration, $this->post->downloadlink,
+					$this->post->imagelink, $this->post->range, $this->post->weight, $this->post->cruise);
 		
 		if(DB::errno() != 0)
 		{

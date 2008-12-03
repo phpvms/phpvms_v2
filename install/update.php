@@ -126,8 +126,8 @@ echo 'Starting the update...<br />';
 switch(PHPVMS_VERSION)
 {
 	case '1.0.370': # Update to 1.1.400
+	
 		sql_file_update(SITE_ROOT . '/install/update_400.sql');
-		
 		add_to_config('UNITS', 'mi');
 		
 	case '1.1.400':
@@ -138,7 +138,8 @@ switch(PHPVMS_VERSION)
 		
 		add_to_config('MAP_CENTER_LAT', '45.484400');
 		add_to_config('MAP_CENTER_LNG', '-62.334821');
-		add_to_config('FSACARS_DEBUG', false);
+		add_to_config('ACARS_DEBUG', false);
+		add_to_config('SIGNATURE_SHOW_EARNINGS', true);
 		
 		break;
 }

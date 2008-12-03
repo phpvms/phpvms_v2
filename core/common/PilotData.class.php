@@ -365,7 +365,11 @@ class PilotData
 		$output[] = $pilot->rank.', '.$pilot->hub;
 		$output[] = 'Total Flights: ' . $pilot->totalflights;
 		$output[] = 'Total Hours: ' . $pilot->totalhours;
-		$output[] = 'Total Earnings: $' . $pilot->totalpay;
+		
+		if(Config::Get('SIGNATURE_SHOW_EARNINGS') == true)
+		{
+			$output[] = 'Total Earnings: $' . $pilot->totalpay;
+		}
 		
 		# Load up our image
 		$img = imagecreatefrompng(SITE_ROOT.'/lib/signatures/background.png');

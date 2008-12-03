@@ -41,9 +41,14 @@ Config::Set('MAP_CENTER_LAT', '45.484400');
 Config::Set('MAP_CENTER_LNG', '-62.334821');
 
 # ACARS options
-# Minutes, flights to show on the ACARS
-# Default is 720 minutes (12 hours)
+#  Minutes, flights to show on the ACARS
+#  Default is 720 minutes (12 hours)
 Config::Set('ACARS_LIVE_TIME', 720); 
+Config::Set('ACARS_DEBUG', false);
+
+# Options for the signature that's generated 
+Config::Set('SIGNATURE_SHOW_EARNINGS', true);
+
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', true);

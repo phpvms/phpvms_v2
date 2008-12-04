@@ -43,6 +43,12 @@ Config::Set('ACARS_DEBUG', false);
 
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
+Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
+
+# Avatar information
+Config::Set('AVATAR_FILE_SIZE', 50000); 
+Config::Set('AVATAR_MAX_WIDTH', 80);
+Config::Set('AVATAR_MAX_HEIGHT', 80);
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', false);

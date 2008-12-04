@@ -101,17 +101,25 @@ function add_to_config($name, $value)
 		return false;
 	}
 	
-	$config = $config ."
+	if($name == 'BLANK')
+	{
+		$config = $config.'
+';
+	}
+	else 
+	{
+		$config = $config ."
 Config::Set('$name', ";
 
-	if($value == true)
-		$config .= "true";
-	elseif($value == false)
-		$config .= "false";
-	else
-		$config .="'$value'";
-	
-	$config .=");";
+		if($value == true)
+			$config .= "true";
+		elseif($value == false)
+			$config .= "false";
+		else
+			$config .="'$value'";
+		
+		$config .=");";
+	}
 
 	file_put_contents(CORE_PATH.'/local.config.php', $config);
 }
@@ -140,6 +148,12 @@ switch(PHPVMS_VERSION)
 		add_to_config('MAP_CENTER_LNG', '-62.334821');
 		add_to_config('ACARS_DEBUG', false);
 		add_to_config('SIGNATURE_SHOW_EARNINGS', true);
+		add_to_config('SIGNATURE_SHOW_RANK_IMAGE', true);
+		add_to_config('BLANK', '');
+		add_to_config('AVATAR_FILE_SIZE', 50000);
+		add_to_config('AVATAR_MAX_WIDTH', 80);
+		add_to_config('AVATAR_MAX_HEIGHT', 80);
+		
 		
 		break;
 }

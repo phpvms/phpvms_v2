@@ -52,6 +52,12 @@ define('COMMON_PATH', CORE_PATH . '/common');
 define('PAGES_PATH', CORE_PATH . '/pages');
 define('LIB_PATH', SITE_ROOT.'/lib');
 
+$version = phpversion();
+if(substr($version, 0, 1) != '5')
+{
+	die('You are not running PHP 5+');
+}
+
 // Include all dependencies
 include CLASS_PATH . '/Config.class.php';
 include CLASS_PATH . '/CodonAJAX.class.php';

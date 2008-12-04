@@ -39,11 +39,10 @@ class PilotData
 	 */
 	public static function GetAllPilotsDetailed($start='', $limit=20)
 	{
-	
 		$sql = 'SELECT p.*, r.rankimage 
 					FROM '.TABLE_PREFIX.'pilots p, '.TABLE_PREFIX.'ranks r
 					WHERE r.rank = p.rank
-					ORDER BY totalhours DESC';
+						ORDER BY totalhours DESC';
 		
 		if($start!='')
 			$sql .= ' LIMIT '.$start.','.$limit;
@@ -52,13 +51,24 @@ class PilotData
 	}
 	
 	/**
+	 * Get a pilot's avatar
+	 */
+	public static function GetPilotAvatar($pilotid)
+	{
+		$pilot = self::GetPilotData($pilotid);
+		$link = SITE_URL.'/lib/avatars/'.$pilot->code.$pilot->pilotid.'.'.$pilot->ext;
+		return $link;
+	}
+	
+	/**
 	 * Get all the pilots on a certain hub
 	 */
 	public static function GetAllPilotsByHub($hub)
 	{
-		$sql = "SELECT p.*, r.rankimage FROM ".TABLE_PREFIX."pilots p, ".TABLE_PREFIX."ranks r
-					WHERE r.rank = p.rank AND hub='$hub'
-					ORDER BY totalhours DESC";
+		$sql = "SELECT p.*, r.rankimage 
+					FROM ".TABLE_PREFIX."pilots p
+					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
+					AND p.hub='$hub'";
 					
 		return DB::get_results($sql);
 	}
@@ -77,10 +87,11 @@ class PilotData
 	 * The the basic pilot information
 	 */
 	public static function GetPilotData($pilotid)
-	{
-		$sql = 'SELECT *, UNIX_TIMESTAMP(lastlogin) as lastlogin
-					FROM '.TABLE_PREFIX.'pilots 
-					WHERE pilotid='.$pilotid;
+	{					
+		$sql = "SELECT p.*, r.rankimage 
+					FROM ".TABLE_PREFIX."pilots p
+					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
+						AND p.pilotid='$pilotid'";
 		
 		return DB::get_row($sql);
 	}
@@ -137,6 +148,49 @@ class PilotData
 			return false;
 			
 		return true;
+	}
+	
+	/**
+	 * Save avatars
+	 */
+	public static function SaveAvatar($code, $pilotid, $_FILES)
+	{
+		# Check the proper file size
+		#  Ignored for now since there is a resize
+		/*if ($_FILES['avatar']['size'] > Config::Get('AVATAR_FILE_SIZE'))
+		{
+			return false;
+		}*/
+		
+		# Create the image so we can convert it to PNG
+		if($_FILES['avatar']['type'] == 'image/gif')
+		{
+			$img = imagecreatefromgif($_FILES['file']['tmp_name']);
+		}
+		elseif($_FILES['avatar']['type'] == 'image/jpeg' 
+				|| $_FILES['avatar']['type'] == 'image/pjpeg')
+		{
+			$img = imagecreatefromjpeg($_FILES['avatar']['tmp_name']);
+		}
+		elseif($_FILES['avatar']['type'] == 'image/png')
+		{
+			$img = imagecreatefrompng($_FILES['avatar']['tmp_name']);
+		}
+		
+		# Resize it
+		$height = imagesy($img);
+		$width = imagesx($img);
+		
+		$new_width = Config::Get('AVATAR_MAX_WIDTH');
+		$new_height = floor( $height * ( Config::Get('AVATAR_MAX_HEIGHT') / $width ) );
+		
+		$avatarimg = imagecreatetruecolor($new_width, $new_height);
+		imagecopyresized($avatarimg, $img, 0,0,0,0,$new_width, $new_height, $width, $height);
+		
+		# Output the file, to /lib/avatar/pilotcode.png
+		$pilotCode = self::GetPilotCode($code, $pilotid);
+		imagepng($avatarimg, SITE_ROOT.AVATAR_PATH.'/'.$pilotCode.'.png');
+		imagedestroy($img);
 	}
 	
 	/**
@@ -226,7 +280,6 @@ class PilotData
 	 */
 	function UpdatePilotPay($pilotid, $flighthours)
 	{
-		
 		$sql = 'SELECT payrate 
 					FROM '.TABLE_PREFIX.'ranks r, '.TABLE_PREFIX.'pilots p 
 					WHERE p.rank=r.rank 
@@ -332,7 +385,7 @@ class PilotData
 		$pilotid = DB::escape($pilotid);
 		
 		$sql = 'SELECT g.groupid, g.name
-					FROM ' . TABLE_PREFIX . 'groupmembers u, ' . TABLE_PREFIX . 'groups g
+					FROM ' . TABLE_PREFIX . 'groupmembers u,'.TABLE_PREFIX.'groups g
 					WHERE u.pilotid='.$pilotid.' AND g.groupid=u.groupid';
 		
 		$ret = DB::get_results($sql);
@@ -372,7 +425,7 @@ class PilotData
 		}
 		
 		# Load up our image
-		$img = imagecreatefrompng(SITE_ROOT.'/lib/signatures/background.png');
+		$img = imagecreatefrompng(SITE_ROOT.SIGNATURE_PATH.'/background.png');
 		$height = imagesy($img);
 		$width = imagesx($img);
 			
@@ -401,6 +454,29 @@ class PilotData
 		$flagimg = imagecreatefrompng(SITE_ROOT.'/lib/images/countries/'.$country.'.png');
 		$ret = imagecopy($img, $flagimg, strlen($output[0])*$fontwidth+20, 
 							($yoffset+($stepsize/2)-5.5), 0, 0, 16, 11);
+							
+		# Add the Rank image
+		if(Config::Get('SIGNATURE_SHOW_RANK_IMAGE') == true)
+		{
+			$ext = substr($pilot->rankimage, strlen($pilot->rankimage)-3, 3);
+		
+			# Get the rank image type, just jpg, gif or png
+			if($ext == 'png')
+				$rankimg = imagecreatefrompng($pilot->rankimage);
+			elseif($ext == 'gif')
+				$rankimg = imagecreatefromgif($pilot->rankimage);
+			else	
+				$rankimg = imagecreatefromjpg($pilot->rankimage);
+				
+			if(!$rankimg) { echo '';}
+			else 
+			{		
+				$r_width = imagesx($rankimg);
+				$r_height = imagesy($rankimg);
+				
+				imagecopy($img, $rankimg, $width-$r_width-$xoffset, $yoffset, 0, 0, $r_width, $r_height);
+			}
+		}	
 		
 		#
 		#  DO NOT remove this, as per the phpVMS license
@@ -409,7 +485,7 @@ class PilotData
 		imagestring($img, $font, $width-(strlen($text)*imagefontwidth($font)), 
 					$height-imagefontheight($font), $text, $textcolor);
 	
-		imagepng($img, SITE_ROOT.'/lib/signatures/'.$pilotcode.'.png', 1);
+		imagepng($img, SITE_ROOT.SIGNATURE_PATH.'/'.$pilotcode.'.png', 1);
 		imagedestroy($img);
 	}
 	

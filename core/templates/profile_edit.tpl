@@ -56,10 +56,11 @@
 			else
 			{
 		?>
-			<img src="<?php	echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" /></dd>
+			<img src="<?php	echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" />
 		<?php
 		}
 		?>
+	</dd>
 	<dt></dt>
 	<dd><input type="hidden" name="action" value="saveprofile" />
 		<input type="submit" name="submit" value="Save Changes" /></dd>

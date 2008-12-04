@@ -14,26 +14,24 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
   * Aircraft registration options added
   * Routes can be assigned specific aircraft/registration
-  * Pilot avatars
+  * Pilot avatars added, with sizing options
+  * Pilot country with flag images added
   * Dynamic signatures generated, to use on forums, etc
   * Bug fixes for servers with short_open_tags off
   * ACARS map shows the proper map type/centers according to settings
   * Admin edit of profile didn't recalculate for new rank
   * Bids are removed now when PIREP is done through ACARS
   * Updates to the updater, will automatically put new options in your local config
-  
-  Added options (place in your core/local.config.php), if they are not there
-  
-		# These are the default center points to the map
-		Config::Set('MAP_CENTER_LAT', '45.484400');
-		Config::Set('MAP_CENTER_LNG', '-62.334821');
-	
+  	
   Template Changes (use WinMerge to see changes):
   
 	registration_mainform.tpl
+	profile_main.tpl
 	profile_edit.tpl
+	pilot_public_profile.tpl
 	pilots_list.tpl
 	pirep_new.tpl
+	pirep_viewreport.tpl (reorganized)
 	
 	
 Build 400 (Version 1.1.400)

@@ -111,10 +111,13 @@ function add_to_config($name, $value)
 		$config = $config ."
 Config::Set('$name', ";
 
-		if($value == true)
-			$config .= "true";
-		elseif($value == false)
-			$config .= "false";
+		if(is_bool($value))
+		{
+			if($value === true)
+				$config .= "true";
+			elseif($value === false)
+				$config .= "false";
+		}
 		else
 			$config .="'$value'";
 		
@@ -131,33 +134,26 @@ echo 'Starting the update...<br />';
 # Do updates based on version
 #	But cascade the updates
 
-switch(PHPVMS_VERSION)
-{
-	case '1.0.370': # Update to 1.1.400
-	
+	if(PHPVMS_VERSION == '1.0.370')
+	{
 		sql_file_update(SITE_ROOT . '/install/update_400.sql');
 		add_to_config('UNITS', 'mi');
-		
-	case '1.1.400':
+	}
 	
-		sql_file_update(SITE_ROOT . '/install/update.sql');
-		
-		echo 'Adding some options to your config file...';
-		
-		add_to_config('MAP_CENTER_LAT', '45.484400');
-		add_to_config('MAP_CENTER_LNG', '-62.334821');
-		add_to_config('ACARS_DEBUG', false);
-		add_to_config('SIGNATURE_SHOW_EARNINGS', true);
-		add_to_config('SIGNATURE_SHOW_RANK_IMAGE', true);
-		add_to_config('BLANK', '');
-		add_to_config('AVATAR_FILE_SIZE', 50000);
-		add_to_config('AVATAR_MAX_WIDTH', 80);
-		add_to_config('AVATAR_MAX_HEIGHT', 80);
-		
-		
-		break;
-}
-
+	sql_file_update(SITE_ROOT . '/install/update.sql');
+	
+	echo 'Adding some options to your config file...';
+	
+	add_to_config('MAP_CENTER_LAT', '45.484400');
+	add_to_config('MAP_CENTER_LNG', '-62.334821');
+	add_to_config('ACARS_DEBUG', false);
+	add_to_config('SIGNATURE_SHOW_EARNINGS', true);
+	add_to_config('SIGNATURE_SHOW_RANK_IMAGE', true);
+	add_to_config('BLANK', '');
+	add_to_config('AVATAR_FILE_SIZE', 50000);
+	add_to_config('AVATAR_MAX_WIDTH', 80);
+	add_to_config('AVATAR_MAX_HEIGHT', 80);
+	
 # Final version update
 $sql = 'UPDATE `phpvms_settings` 
 			SET value=\''.UPDATE_VERSION.'\' 

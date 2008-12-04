@@ -456,17 +456,17 @@ class PilotData
 							($yoffset+($stepsize/2)-5.5), 0, 0, 16, 11);
 							
 		# Add the Rank image
-		if(Config::Get('SIGNATURE_SHOW_RANK_IMAGE') == true)
+		if(Config::Get('SIGNATURE_SHOW_RANK_IMAGE') == true && $pilot->rankimage!='')
 		{
 			$ext = substr($pilot->rankimage, strlen($pilot->rankimage)-3, 3);
 		
 			# Get the rank image type, just jpg, gif or png
 			if($ext == 'png')
-				$rankimg = imagecreatefrompng($pilot->rankimage);
+				$rankimg = @imagecreatefrompng($pilot->rankimage);
 			elseif($ext == 'gif')
-				$rankimg = imagecreatefromgif($pilot->rankimage);
+				$rankimg = @imagecreatefromgif($pilot->rankimage);
 			else	
-				$rankimg = imagecreatefromjpg($pilot->rankimage);
+				$rankimg = @imagecreatefromjpg($pilot->rankimage);
 				
 			if(!$rankimg) { echo '';}
 			else 

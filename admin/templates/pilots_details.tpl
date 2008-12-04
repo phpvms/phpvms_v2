@@ -1,5 +1,21 @@
 <form id="dialogform" action="action.php?admin=viewpilots" method="post">
 <dl> 
+	<dt>Avatar</dt>
+		<dd><?php
+		$pilotcode = PilotData::GetPilotCode($pilotinfo->code, $pilotinfo->pilotid);
+			
+		if(!file_exists(SITE_ROOT.AVATAR_PATH.'/'.$pilotcode.'.png'))
+		{
+			echo 'None selected';
+		}
+		else
+		{
+		?>
+			<img src="<?php	echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" />
+		<?php
+		}
+		?>
+	</dd>
 	<dt>Email Address</dt>
 	<dd><input type="text" name="email" value="<?php echo $pilotinfo->email;?>" /></dd>
 

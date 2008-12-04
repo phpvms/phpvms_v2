@@ -14,6 +14,7 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
   * Aircraft registration options added
   * Routes can be assigned specific aircraft/registration
+  * Pilot avatars
   * Dynamic signatures generated, to use on forums, etc
   * Bug fixes for servers with short_open_tags off
   * ACARS map shows the proper map type/centers according to settings

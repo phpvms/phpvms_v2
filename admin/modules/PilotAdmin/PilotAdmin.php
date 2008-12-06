@@ -85,22 +85,19 @@ class PilotAdmin extends CodonModule
 						
 					case 'saveprofile':
 						
-						$pilotid = $this->post->pilotid;
-						$email = $this->post->email;
-						$location = $this->post->location;
-						$hub = $this->post->hub;
+						# Save their profile
+						PilotData::ChangeName($this->post->pilotid, $this->post->firstname, $this->post->lastname);
 						
-						$flighttime = $this->post->totalhours;
-						$numflights = $this->post->totalflights;
-						$totalpay = $this->post->totalpay;
+						PilotData::SaveProfile($this->post->pilotid, $this->post->email , 
+													$this->post->location, $this->post->hub);
+													
+						PilotData::ReplaceFlightData($this->post->pilotid, $this->post->totalhours, 
+														$this->post->totalflights, $this->post->totalpay);
+														
+						PilotData::SaveFields($this->post->pilotid, $_POST);
 						
-						// save all their profile stuff
-						PilotData::SaveProfile($pilotid, $email , $location, $hub);
-						PilotData::ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay);
-						PilotData::SaveFields($pilotid, $_POST);
-						
-						RanksData::CalculateUpdatePilotRank($pilotid);
-						PilotData::GenerateSignature($pilotid);
+						RanksData::CalculateUpdatePilotRank($this->post->pilotid);
+						PilotData::GenerateSignature($this->post->pilotid);
 						
 						Template::Set('message', 'Profile updated successfully');
 						Template::Show('core_success.tpl');

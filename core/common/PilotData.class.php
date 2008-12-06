@@ -131,6 +131,37 @@ class PilotData
 	}
 	
 	/**
+	 * Change a pilot's name. This is separate because this is an
+	 *  admin-only operation (strictly speaking), and isn't included
+	 *  in a normal change of a pilot's profile (whereas SaveProfile
+	 *  only changes minute information
+	 */
+	 
+	public static function ChangeName($pilotid, $firstname, $lastname)
+	{
+		# Non-blank
+		if($pilotid=='' || $firstname == '' || $lastname == '')
+		{
+			return false;
+		}			
+		
+		# Clean up for DB
+		$firstname = DB::escape($firstname);
+		$lastname = DB::escape($lastname);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
+					SET firstname=\''.$firstname.'\', lastname=\''.$lastname.'\'
+					WHERE pilotid='.intval($pilotid);
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
+	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
 	public static function SaveProfile($pilotid, $email, $location, $hub='')

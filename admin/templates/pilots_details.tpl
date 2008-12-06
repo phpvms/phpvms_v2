@@ -16,6 +16,14 @@
 		}
 		?>
 	</dd>
+	
+	<dt>First Name</dt>
+	<dd><input type="text" name="firstname" value="<?php echo $pilotinfo->firstname;?>" /></dd>
+	
+	<dt>Last Name</dt>
+	<dd><input type="text" name="lastname" value="<?php echo $pilotinfo->lastname;?>" /></dd>
+	
+	
 	<dt>Email Address</dt>
 	<dd><input type="text" name="email" value="<?php echo $pilotinfo->email;?>" /></dd>
 

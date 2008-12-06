@@ -49,6 +49,20 @@ class OperationsData
 	}
 	
 	/**
+	 * Get an aircraft according to registration
+	 */
+	public static function GetAircraftByReg($registration)
+	{
+		$registration = DB::escape(strtoupper($registration));
+		
+		$sql = 'SELECT * 
+					FROM ' . TABLE_PREFIX .'aircraft 
+					WHERE registration=\''.$registration.'\'';
+								
+		return DB::get_results($sql);
+	}
+	
+	/**
 	 * Get all of the airports
 	 */
 	public static function GetAllAirports()
@@ -123,8 +137,9 @@ class OperationsData
 	 */
 	public static function AddAircaft($icao, $name, $fullname, $registration, $downloadlink, $imagelink, $range, $weight, $cruise)
 	{
-		$icao = strtoupper($icao);
-		$name = strtoupper($name);
+		$icao = DB::escape(strtoupper($icao));
+		$name = DB::escape(strtoupper($name));
+		$registration = DB::escape(strtoupper($registration));
 		
 		$sql = "INSERT INTO " . TABLE_PREFIX . "aircraft 
 						(icao, name, fullname, registration, downloadlink, imagelink, range, weight, cruise)
@@ -145,7 +160,9 @@ class OperationsData
 	public static function EditAircraft($id, $icao, $name, $fullname, $registration, $downloadlink, $imagelink,
 								$range, $weight, $cruise)
 	{
-		$icao = strtoupper($icao);
+		$icao = DB::escape(strtoupper($icao));
+		$name = DB::escape(strtoupper($name));
+		$registration = DB::escape(strtoupper($registration));
 
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft SET icao='$icao', name='$name', fullname='$fullname',
 					registration='$registration', downloadlink='$downloadlink', imagelink='$imagelink',

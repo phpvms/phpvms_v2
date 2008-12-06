@@ -136,8 +136,12 @@ class Import extends CodonModule
 						
 					}
 					
+					// Check the aircraft
+					$aircraft = OperationsData::GetAircraftByReg($aircraft);
+					$ac = $aircraft->id;
+					
 					$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
-										$route, $aircraft, $distance, $deptime, $arrtime, $flighttime, $notes);
+										$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);
 					
 					if($val === false)
 					{

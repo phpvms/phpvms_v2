@@ -62,6 +62,16 @@ class PilotAdmin extends CodonModule
 						return;
 				
 						break;
+						
+					case 'deletepilot':
+						$pilotid = $this->post->pilotid;
+						
+						PilotData::DeletePilot($pilotid);
+						
+						Template::Set('message', 'Pilot has been deleted!');
+						Template::Show('core_success.tpl');
+						
+						break;
 				/* These are reloaded into the #pilotgroups ID
 					so the entire groups list is refreshed
 					*/

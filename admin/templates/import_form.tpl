@@ -8,6 +8,7 @@ must be done:</p>
 	<li>You can leave out the header, but if it is there, <strong>check off the box</strong></li>
 	<li>All of the columns can be there, but only the route, leg, distance, and flighttime can be blank</li>
 	<li>Routes which already exist (based on the code and flight number) will not be re-added</li>
+	<li>Aircraft must be added by registration</li>
 </ol>
 
 <form enctype="multipart/form-data" action="?admin=processimport" method="post">

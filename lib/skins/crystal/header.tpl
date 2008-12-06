@@ -1,4 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+/**
+ * 
+ * STOP!!!!!!!!
+ * 
+ * 
+ * 
+ * 
+ * Are you editing the crystal skin directly?
+ * DON'T
+ * 
+ * Copy and rename the crystal folder. Otherwise it'll get 
+ * overwritten in an update.
+ * 
+ * Also, READ THE DOCS
+ * 
+ *   http://www.phpvms.net/docs/skinning
+ * 
+ */
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

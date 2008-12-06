@@ -242,14 +242,32 @@ class PilotData
 		/*$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
 					WHERE pilotid='.$pilotid;*/
 		
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
-
-		$res = DB::query($sql);
+		return self::DeletePilot($pilotid);
+	}
+	
+	public static function DeletePilot($pilotid)
+	{
+		$sql = array();
+	
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'acarsdata WHERE pilotid='.$pilotid;
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'bids WHERE pilotid='.$pilotid;
+		# These delete on cascade
+		//$sql[] = 'DELETE FROM '.TABLE_PREFIX.'fieldvalues WHERE pilotid='.$pilotid;
+		//$sql[] = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE pilotid='.$pilotid;
+		//$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pirepcomments WHERE pilotid='.$pilotid;
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pireps WHERE pilotid='.$pilotid;
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
+		
+		foreach($sql as $query)
+		{
+			$res = DB::query($query);
+		}
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
 		return true;
+		
 	}
 	
 	/**

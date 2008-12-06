@@ -248,8 +248,7 @@ ALTER TABLE `phpvms_groupmembers`
   ADD CONSTRAINT `phpvms_groupmembers_ibfk_2` FOREIGN KEY (`pilotid`) REFERENCES `phpvms_pilots` (`pilotid`) ON DELETE CASCADE;
 
 ALTER TABLE `phpvms_pilots`
-  ADD CONSTRAINT `phpvms_pilots_ibfk_1` FOREIGN KEY (`code`) REFERENCES `phpvms_airlines` (`code`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `phpvms_pilots_ibfk_2` FOREIGN KEY (`rank`) REFERENCES `phpvms_ranks` (`rank`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `phpvms_pilots_ibfk_1` FOREIGN KEY (`code`) REFERENCES `phpvms_airlines` (`code`) ON UPDATE CASCADE;
 
 ALTER TABLE `phpvms_pirepcomments`
   ADD CONSTRAINT `phpvms_pirepcomments_ibfk_1` FOREIGN KEY (`pirepid`) REFERENCES `phpvms_pireps` (`pirepid`) ON DELETE CASCADE ON UPDATE CASCADE;

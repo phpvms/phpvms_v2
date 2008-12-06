@@ -23,6 +23,12 @@ class SettingsData
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
 	}
 	
+	public static function GetSetting($name)
+	{
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'settings 
+					WHERE name=\''.$name.'\'');
+	}
+	
 	/**
 	 * Return all of the custom fields data
 	 */
@@ -34,7 +40,8 @@ class SettingsData
 	
 	public static function GetField($fieldid)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$fieldid);
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields 
+								WHERE fieldid='.$fieldid);
 	}
 		
 	/**

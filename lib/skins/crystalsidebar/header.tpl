@@ -25,7 +25,6 @@
 				Template::Show('core_navigation.tpl');
 			?>
 		</ul>
-	</div>1`
-	
+	</div>	
 	<div id="bodytext">
 	<div id="results"></div>

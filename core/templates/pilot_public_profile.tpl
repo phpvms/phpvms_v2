@@ -14,8 +14,7 @@ $pilotcode = PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid);
 		<td align="center">
 			<img src="<?php echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" /> 
 			<br /><br />
-			<img src="<?php echo RanksData::GetRankImage($userinfo->rank)?>" 
-							alt="<?php echo $userinfo->rank;?>" />
+			<img src="<?php echo $userinfo->rankimage?>"  alt="<?php echo $userinfo->rank;?>" />
 		
 		</td>		
 		<td valign="top">

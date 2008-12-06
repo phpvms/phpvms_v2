@@ -21,7 +21,8 @@
 		{
 			
 			echo '<tr>
-					<td width="15%" nowrap><strong>'.$setting->friendlyname . '</strong></td>';
+					<td width="15%" nowrap>
+						<strong>'.$setting->friendlyname.'</strong></td>';
 			
 			switch($setting->name)
 			{
@@ -33,21 +34,20 @@
 				case 'CURRENT_SKIN':
 				
 					$skins = SiteData::GetAvailableSkins();
-					//$skin = SettingsData::GetField('CURRENT_SKIN');
+					$skin = SettingsData::GetSetting('CURRENT_SKIN');
+					
 					echo '<td>
 						<SELECT name="CURRENT_SKIN">';
 						
 						$tot = count($skins);
 						for($i=0;$i<$tot;$i++)
 						{
-							$sel = (CURRENT_SKIN == $skins[$i])? 'selected' : '';
+							$sel = ($skin->value == $skins[$i])? 'selected' : '';
 							echo '<option value="'.$skins[$i].'" '. $sel . '>'.$skins[$i].'</option>';
 						}
    
 					echo '</SELECT>
-						  
-						  </td>';
-						 //<p>'.$setting->descrip.'</p>
+						 </td>';
 					break;
 					
 				default:

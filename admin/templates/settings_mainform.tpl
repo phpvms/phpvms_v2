@@ -33,7 +33,7 @@
 				case 'CURRENT_SKIN':
 				
 					$skins = SiteData::GetAvailableSkins();
-   
+					//$skin = SettingsData::GetField('CURRENT_SKIN');
 					echo '<td>
 						<SELECT name="CURRENT_SKIN">';
 						
@@ -41,7 +41,6 @@
 						for($i=0;$i<$tot;$i++)
 						{
 							$sel = (CURRENT_SKIN == $skins[$i])? 'selected' : '';
-   
 							echo '<option value="'.$skins[$i].'" '. $sel . '>'.$skins[$i].'</option>';
 						}
    

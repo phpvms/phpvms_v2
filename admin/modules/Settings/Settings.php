@@ -52,6 +52,7 @@ class Settings extends CodonModule
 						break;
 					case 'savesettings':
 						$this->SaveSettings();
+						
 						break;
 				}
 				
@@ -152,6 +153,8 @@ class Settings extends CodonModule
 			
 			$value = DB::escape($value);
 			SettingsData::SaveSetting($name, $value, '', false);
+			
+			DB::debug();
 		}
 		
 		Template::Set('message', 'Settings were saved!');

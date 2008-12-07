@@ -70,9 +70,7 @@ class PilotData
 					LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 					AND p.hub='$hub'";
 					
-		$ret = DB::get_results($sql);
-		DB::debug();
-		return $ret;
+		return DB::get_results($sql);
 	}
 	
 	/**

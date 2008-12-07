@@ -134,7 +134,7 @@ echo 'Starting the update...<br />';
 # Do updates based on version
 #	But cascade the updates
 
-	if(PHPVMS_VERSION == '1.0.370')
+	if(PHPVMS_VERSION != '1.1.400')
 	{
 		sql_file_update(SITE_ROOT . '/install/update_400.sql');
 		add_to_config('UNITS', 'mi');

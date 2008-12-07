@@ -41,8 +41,15 @@ class Pilots extends CodonModule
 					Template::Show('pilots_list.tpl');
 				}
 				
+				$nohub = PilotData::GetAllPilotsByHub('');
+				if(!$nohub)
+				{
+					break;
+				}
+				
 				Template::Set('title', 'No Hub');
-				Template::Set('allpilots', PilotData::GetAllPilotsByHub(''));
+				Template::Set('icao', '');
+				Template::Set('allpilots', $nohub);
 				Template::Show('pilots_list.tpl');
 				
 				break;

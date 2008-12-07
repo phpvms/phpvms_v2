@@ -82,7 +82,7 @@ class Profile extends CodonModule
 				}
 				
 				$userinfo = PilotData::GetPilotData($pilotid);
-								
+				
 				Template::Set('userinfo', $userinfo);
 				Template::Set('allfields', PilotData::GetFieldData($pilotid, false));
 				Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));

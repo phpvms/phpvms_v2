@@ -12,9 +12,9 @@ $pilotcode = PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid);
 <table>
 	<tr>
 		<td align="center">
-			<img src="<?php echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" /> 
+			<img src="<?php echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" alt="No Avatar" /> 
 			<br /><br />
-			<img src="<?php echo $userinfo->rankimage?>"  alt="<?php echo $userinfo->rank;?>" />
+			<img src="<?php echo $userinfo->rankimage?>"  alt="" />
 		
 		</td>		
 		<td valign="top">

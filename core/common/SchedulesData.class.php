@@ -391,9 +391,12 @@ class SchedulesData
 	public static function GetBid($bidid)
 	{
 		$bidid = DB::escape($bidid);
-		$sql = 'SELECT s.*, b.bidid
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b
-					WHERE b.routeid = s.id AND b.bidid='.$bidid;
+		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+						'.TABLE_PREFIX.'aircraft a
+					WHERE b.routeid = s.id 
+							AND s.aircraft=a.id
+							AND b.bidid='.$bidid;
 		
 		return DB::get_row($sql);
 	}
@@ -407,9 +410,12 @@ class SchedulesData
 	public static function GetBids($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
-		$sql = 'SELECT s.*, b.bidid
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b
-					WHERE b.routeid = s.id AND b.pilotid='.$pilotid;
+		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+						'.TABLE_PREFIX.'aircraft a
+					WHERE b.routeid = s.id 
+						AND s.aircraft=a.id
+						AND b.pilotid='.$pilotid;
 		
 		return DB::get_results($sql);
 	}

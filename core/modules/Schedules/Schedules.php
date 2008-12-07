@@ -94,6 +94,7 @@ class Schedules extends CodonModule
 				}
 				
 				SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
+				DB::debug();
 				
 				CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
 				

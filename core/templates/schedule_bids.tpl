@@ -31,7 +31,7 @@ foreach($bids as $bid)
 <tr id="bid<?php echo $bid->bidid ?>">
 	<td><?php echo $bid->code . $bid->flightnum; ?> <?php echo $leg?></td>
 	<td align="center"><?php echo $bid->depicao; ?> to <?php echo $bid->arricao; ?></td>
-	<td align="center"><?php echo $bid->aircraft; ?></td>
+	<td align="center"><?php echo $bid->aircraft; ?> (<?php echo $bid->registration?>)</td>
 	<td><?php echo $bid->deptime;?></td>
 	<td><?php echo $bid->arrtime;?></td>
 	<td><?php echo $bid->distance;?></td>

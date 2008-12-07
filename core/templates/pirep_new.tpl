@@ -66,9 +66,10 @@ if($message!='')
 		<select name="aircraft" id="aircraft">
 			<option value="">Select the aircraft of this flight</option>
 		<?php
+		
 		foreach($allaircraft as $aircraft)
 		{
-			$sel = ($_POST['aircraft'] == $aircraft->name)?'selected':'';
+			$sel = ($_POST['aircraft'] == $aircraft->name || $bid->registration == $aircraft->registration)?'selected':'';
 			
 			echo '<option value="'.$aircraft->name.'" '.$sel.'>'.$aircraft->name.' - '.$aircraft->registration.'</option>';
 		}

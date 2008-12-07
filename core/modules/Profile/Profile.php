@@ -136,7 +136,6 @@ class Profile extends CodonModule
 		PilotData::SaveFields(Auth::$pilotid, $_POST);
 		
 		PilotData::SaveAvatar($userinfo->code, $userinfo->pilotid, $_FILES);
-		
 	}
 
 	function ChangePassword()

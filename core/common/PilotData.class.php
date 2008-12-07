@@ -40,9 +40,9 @@ class PilotData
 	public static function GetAllPilotsDetailed($start='', $limit=20)
 	{
 		$sql = 'SELECT p.*, r.rankimage 
-					FROM '.TABLE_PREFIX.'pilots p, '.TABLE_PREFIX.'ranks r
-					WHERE r.rank = p.rank
-						ORDER BY totalhours DESC';
+					FROM '.TABLE_PREFIX.'pilots p
+					LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rank = p.rank
+					ORDER BY totalhours DESC';
 		
 		if($start!='')
 			$sql .= ' LIMIT '.$start.','.$limit;
@@ -67,10 +67,12 @@ class PilotData
 	{
 		$sql = "SELECT p.*, r.rankimage 
 					FROM ".TABLE_PREFIX."pilots p
-					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
+					LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 					AND p.hub='$hub'";
 					
-		return DB::get_results($sql);
+		$ret = DB::get_results($sql);
+		DB::debug();
+		return $ret;
 	}
 	
 	/**
@@ -90,7 +92,7 @@ class PilotData
 	{					
 		$sql = "SELECT p.*, r.rankimage 
 					FROM ".TABLE_PREFIX."pilots p
-					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
+					LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 						AND p.pilotid='$pilotid'";
 		
 		return DB::get_row($sql);
@@ -166,7 +168,8 @@ class PilotData
 	 */
 	public static function SaveProfile($pilotid, $email, $location, $hub='')
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."pilots SET email='$email', location='$location' ";
+		$sql = "UPDATE ".TABLE_PREFIX."pilots 
+					SET email='$email', location='$location' ";
 		
 		if($hub!= '')
 			$sql.=", hub='$hub' ";
@@ -381,7 +384,8 @@ class PilotData
 			if($res)
 			{
 				$sql = 'UPDATE '.TABLE_PREFIX.'fieldvalues
-							SET value="'.$value.'" WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
+							SET value="'.$value.'" 
+							WHERE fieldid='.$field->fieldid.' AND pilotid='.$pilotid;
 			}
 			else
 			{

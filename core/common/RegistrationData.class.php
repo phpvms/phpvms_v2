@@ -98,6 +98,7 @@ class RegistrationData
 		}
 		
 		RanksData::CalculateUpdatePilotRank($pilotid);
+		PilotData::GenerateSignature($pilotid);
 		
 		return true;
 	}

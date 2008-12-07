@@ -67,7 +67,7 @@ class PilotData
 	{
 		$sql = "SELECT p.*, r.rankimage 
 					FROM ".TABLE_PREFIX."pilots p
-					LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
+					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 					AND p.hub='$hub'";
 					
 		return DB::get_results($sql);

@@ -6,6 +6,7 @@
 			<?php echo $pirep->firstname.' '.$pirep->lastname?></a></li>
 	<li><strong>Departure Airport: </strong><?php echo $pirep->depname?> (<?php echo $pirep->depicao; ?>)</li>
 	<li><strong>Arrival Airport: </strong><?php echo $pirep->arrname?> (<?php echo $pirep->arricao; ?>)</li>
+	<li><strong>Aircraft: </strong><?php echo $pirep->aircraft . " ($pirep->registration)"?></li>
 	<li><strong>Flight Time: </strong> <?php echo $pirep->flighttime; ?></li>
 	<li><strong>Date Submitted: </strong> <?php echo date(DATE_FORMAT, $pirep->submitdate);?></li>
 	<li><strong>Status: </strong>

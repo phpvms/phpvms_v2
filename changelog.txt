@@ -12,6 +12,18 @@ phpVMS - Virtual Airline Administration Software
 
 Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
+  * Basic stats in Admin Panel
+  * View only active/inactive schedules
+  * PIREP table fixed (major bug fix)
+  
+  Templates Changes:
+	pirep_new.tpl - the Aircraft option field value has changed
+			MAKE SURE YOU CHANGE THIS or else your PIREPS will fail
+	pireps_viewall.tpl - Aircraft registration added to list
+	pirep_viewreport.tpl - Aircraft added to view
+
+Build 437 (Version 1.1.437)
+
   * Aircraft registration options added
   * Routes can be assigned specific aircraft/registration
   * Pilot avatars added, with sizing options

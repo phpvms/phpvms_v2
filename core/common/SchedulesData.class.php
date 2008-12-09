@@ -269,6 +269,20 @@ class SchedulesData
 	}
 	
 	/**
+	 * This gets all of the schedules which are disabled
+	 */
+	public static function GetInactiveSchedules()
+	{
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration
+					FROM '.TABLE_PREFIX.'schedules s
+						INNER JOIN '.TABLE_PREFIX.'aircraft ON a.id=s.aircraft
+					WHERE s.enabled=0;
+					ORDER BY s.flightnum ASC';
+					
+		return DB::get_results($sql);
+	}
+	
+	/**
 	 * Add a schedule
 	 */
 	public static function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route,

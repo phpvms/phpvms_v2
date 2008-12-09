@@ -29,6 +29,9 @@ class StatsData
 		return $res->total;
 	}
 	
+	/**
+	 * Get the total number of flights flown
+	 */
 	public static function TotalFlights()
 	{
 		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pireps';
@@ -36,6 +39,9 @@ class StatsData
 		return $res->total;
 	}
 	
+	/**
+	 * Get the total number of pilots
+	 */
 	public static function PilotCount()
 	{
 		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pilots';
@@ -43,6 +49,65 @@ class StatsData
 		return $res->total;
 	}
 	
+	/**
+	 * Get the current aircraft usage
+	 */
+	public static function AircraftUsage()
+	{
+		$sql = 'SELECT a.name AS aircraft, a.registration, 
+						COUNT(p.flighttime) AS hours, COUNT(p.distance) AS distance
+					FROM '.TABLE_PREFIX.'pireps p
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON p.aircraft = a.id
+					GROUP BY p.aircraft';
+		
+		return DB::get_results($sql);
+		DB::debug();
+		return $ret;
+	}
+	
+	/**
+	 * Show pie chart for all of the aircraft flown
+	 *  by a certain pilot. Outputs image, unless $ret == true,
+	 * 	then it returns the URL.
+	 */
+	public static function AircraftFlownGraph($ret = false)
+	{
+		//Select aircraft types
+		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count
+					FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
+					WHERE p.aircraft = a.id
+					GROUP BY a.name';
+		
+		$stats = DB::get_results($sql);
+		
+		if(!$stats)
+		{
+			return;
+		}
+		
+		$data = '';
+		$labels = '';
+		foreach($stats as $stat)
+		{
+			if($stat->aircraft == '') continue;
+			
+			$data .= $stat->count . ',';
+			$labels .= $stat->aircraft.'|';
+		}
+		
+		// remove that final lone char
+		$data = substr($data, 0, strlen($data)-1);
+		$labels = substr($labels, 0, strlen($labels)-1);
+		
+		$chart = new googleChart($data, 'pie');
+		$chart->dimensions = '350x200';
+		$chart->setLabels($labels);
+		
+		if($ret == true)
+			return $chart->draw(false);
+		else
+			echo '<img src="'.$chart->draw(false).'" />';
+	}
 	
 	/**
 	 * Show pie chart for all of the aircraft flown
@@ -52,11 +117,11 @@ class StatsData
 	public static function PilotAircraftFlownGraph($pilotid, $ret = false)
 	{
 		//Select aircraft types
-		$sql = 'SELECT aircraft, COUNT(aircraft) count
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE pilotid='.$pilotid.'
-					GROUP BY aircraft';
-
+		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count
+					FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
+					WHERE p.aircraft = a.id AND pilotid='.intval($pilotid).'
+					GROUP BY a.name';
+		
 		$stats = DB::get_results($sql);
 
 		if(!$stats)

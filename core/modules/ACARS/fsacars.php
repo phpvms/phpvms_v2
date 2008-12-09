@@ -89,6 +89,35 @@ switch($_GET['action'])
 		writedebug($cont);
 		
 		break;
+		
+	case 'schedules':
+	
+		$allschedules = SchedulesData::GetSchedules('', true);
+		$date=date('Ymd');
+		foreach($allschedules as $route)
+		{
+echo "OK
+$route->depicao
+$route->arricao
+
+$route->route
+$route->aircraft
+
+$date
+$route->flightnum
+$route->registration
+$route->code
+$route->route
+
+
+
+
+
+";
+			
+		}
+	
+		break;
 	
 	#
 	# Position Update

@@ -27,9 +27,11 @@ class PIREPData
 	public static function GetAllReports($start=0, $count=20)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+						a.name as aircraft, a.registration,
 						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid LIMIT '.$start.', '.$count;
 
 		return DB::get_results($sql);
@@ -44,9 +46,11 @@ class PIREPData
 	public static function GetAllReportsByAccept($accept=0)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+						a.name as aircraft, a.registration,
 						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 
 		return DB::get_results($sql);
@@ -55,9 +59,11 @@ class PIREPData
 	public static function GetAllReportsFromHub($accept=0, $hub)
 	{
 		$sql = "SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+						a.name as aircraft, a.registration,
 						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM ".TABLE_PREFIX."pilots u, ".TABLE_PREFIX."pireps p
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.accepted=$accept
 						AND u.hub='$hub'";
 
@@ -73,9 +79,11 @@ class PIREPData
 		if($count == '') $count = 10;
 
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+					   a.name as aircraft, a.registration,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid
 					ORDER BY p.submitdate DESC
 					LIMIT '.intval($count);
@@ -89,10 +97,11 @@ class PIREPData
 	public static function GetRecentReports($days=2)
 	{
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, p.aircraft,
+					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+					   a.name as aircraft, a.registration,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
-					FROM '.TABLE_PREFIX.'pilots u, 
-						 '.TABLE_PREFIX.'pireps p
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid
 						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate
 					ORDER BY p.submitdate DESC';
@@ -152,11 +161,13 @@ class PIREPData
 		$sql = 'SELECT p.pirepid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
+					    p.code, p.flightnum, p.depicao, p.arricao, 
+						a.name as aircraft, a.registration, p.flighttime,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.pilotid='.intval($pilotid).'
 					ORDER BY p.submitdate DESC';
 
@@ -184,11 +195,13 @@ class PIREPData
 		$sql = 'SELECT u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.aircraft, p.flighttime,
+					   p.code, p.flightnum, p.depicao, p.arricao, 
+					   a.name as aircraft, a.registration, p.flighttime,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
+						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		return DB::get_row($sql);

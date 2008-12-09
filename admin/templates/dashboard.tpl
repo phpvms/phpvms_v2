@@ -13,3 +13,17 @@ $(document).ready(function()
 
 });
 </script>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+			<h3>VA Stats:</h3>
+			<strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?><br />
+			<strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?><br />
+			<strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?><br />
+		</td>
+		<td>
+			<?php echo StatsData::AircraftFlownGraph();?>
+		</td>
+	</tr>
+</table>

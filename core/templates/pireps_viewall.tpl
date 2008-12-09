@@ -30,7 +30,7 @@ foreach($pireps as $report)
 	</td>
 	<td align="center"><?php echo $report->depicao; ?></td>
 	<td align="center"><?php echo $report->arricao; ?></td>
-	<td align="center"><?php echo $report->aircraft; ?></td>
+	<td align="center"><?php echo $report->aircraft . " ($report->registration)"; ?></td>
 	<td align="center"><?php echo $report->flighttime; ?></td>
 	<td align="center"><?php echo date(DATE_FORMAT, $report->submitdate); ?>
 		

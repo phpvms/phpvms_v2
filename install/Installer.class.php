@@ -207,5 +207,85 @@ class Installer
 		return true;
 		
 	}
+	
+	function sql_file_update($filename)
+	{
+		# Table changes, other SQL updates
+		$sql_file = file_get_contents($filename);
+		
+		for($i=0;$i<strlen($sql_file);$i++)
+		{
+			$str = $sql_file{$i};
+			
+			if($str == ';')
+			{
+				$sql.=$str;
+				
+				$sql = str_replace('phpvms_', TABLE_PREFIX, $sql);
+				
+				DB::query($sql);
+				
+				if(DB::errno() != 0 && DB::errno() != 1060)
+				{
+					echo '<p style="border-top: solid 1px #000; border-bottom: solid 1px #000; padding: 5px;">
+							There was an error, with the following message: <br /><br />
+							<span style="margin: 10px;"><i>"'.DB::error().' ('.DB::errno().')"</i></span><br /><br />
+							On the following query: <br /><br />
+							<span style="margin: 10px;"><i>'.$sql.'</i></span><br /><br />
+							Try running it manually<br />
+							</p>';
+				}
+				
+				$sql = '';
+			}
+			else
+			{
+				$sql.=$str;
+			}
+		}
+		
+	}
+	
+	/**
+	 * Add an entry into the local.config.php file
+	 */
+	function add_to_config($name, $value)
+	{
+		$config = file_get_contents(CORE_PATH.'/local.config.php');
+		
+		# Replace the closing PHP tag, don't need a closing tag
+		$config = str_replace('?>', '', $config);
+		
+		# If it exists, don't add it
+		if(strpos($config, $name) !== false)
+		{
+			return false;
+		}
+		
+		if($name == 'BLANK')
+		{
+			$config = $config.'
+					';
+		}
+		else 
+		{
+			$config = $config ."
+					Config::Set('$name', ";
+			
+			if(is_bool($value))
+			{
+				if($value === true)
+					$config .= "true";
+				elseif($value === false)
+					$config .= "false";
+			}
+			else
+				$config .="'$value'";
+			
+			$config .=");";
+		}
+		
+		file_put_contents(CORE_PATH.'/local.config.php', $config);
+	}
+	
 }
-?>

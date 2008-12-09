@@ -28,6 +28,7 @@
 		<li><a href="?admin=pilotgroups">Pilot Groups</a></li>
 	</ul>
 </li>
+<li><a href="?admin=reports">Reports</a></li>
 <li><a href="#">Settings</a>
 	<ul>
 		<li><a href="?admin=settings">General Settings</a></li>

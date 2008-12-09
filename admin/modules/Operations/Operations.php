@@ -33,6 +33,8 @@ class Operations extends CodonModule
 			case 'airports':
 				Template::Set('sidebar', 'sidebar_airports.tpl');
 				break;
+			case 'activeschedules':
+			case 'inactiveschedules':
 			case 'schedules':
 				Template::Set('sidebar', 'sidebar_schedules.tpl');
 				break;
@@ -71,7 +73,6 @@ class Operations extends CodonModule
 				Template::Show('ops_aircraftform.tpl');
 				
 				break;
-
 			
 			/* Aircraft Operations
 			 */
@@ -208,6 +209,8 @@ class Operations extends CodonModule
 
 				break;
 
+			case 'activeschedules':
+			case 'inactiveschedules':
 			case 'schedules':
 
 				/* These are loaded in popup box */
@@ -232,7 +235,17 @@ class Operations extends CodonModule
 						break;
 				}
 			
-				Template::Set('schedules', SchedulesData::GetSchedules('', false));
+				if($this->get->admin == 'schedules' || $this->get->admin == 'activeschedules')
+				{
+					Template::Set('title', 'Viewing Active Schedules');
+					Template::Set('schedules', SchedulesData::GetSchedules('', true));
+				}
+				else
+				{
+					Template::Set('title', 'Viewing Inactive Schedules');
+					Template::Set('schedules', SchedulesData::GetInactiveSchedules());
+				}
+				
 				Template::Show('ops_schedules.tpl');
 
 				break;
@@ -543,4 +556,3 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 }
-?>

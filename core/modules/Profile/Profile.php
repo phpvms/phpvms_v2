@@ -86,6 +86,7 @@ class Profile extends CodonModule
 				Template::Set('userinfo', $userinfo);
 				Template::Set('allfields', PilotData::GetFieldData($pilotid, false));
 				Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+				Template::Set('pilotcode', PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid));
 				
 				Template::Show('pilot_public_profile.tpl');
 				Template::Show('pireps_viewall.tpl');

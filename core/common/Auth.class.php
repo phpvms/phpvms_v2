@@ -43,7 +43,7 @@ class Auth
 			self::$usergroups = SessionManager::GetData('usergroups');
 			self::$pilotid = self::$userinfo->pilotid;
 			
-			if(!self::$userinfo)
+			//if(!self::$userinfo)
 				self::$userinfo = PilotData::GetPilotData(self::$pilotid);
 			
 			return true;

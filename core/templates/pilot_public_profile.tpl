@@ -5,8 +5,6 @@ if(!$userinfo)
 	echo '<h3>This pilot does not exist!</h3>';
 	return;
 }
-
-$pilotcode = PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid);
 ?>
 <h3>Profile For <?php echo $userinfo->firstname . ' ' . $userinfo->lastname?></h3>
 <table>

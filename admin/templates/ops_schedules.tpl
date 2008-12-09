@@ -1,8 +1,8 @@
-<h3>Schedules</h3>
+<h3><?php echo $title?></h3>
 <?php
 if(!$schedules)
 {
-	echo '<p id="error">No schedules have been added</p>';
+	echo '<p id="error">No schedules exist</p>';
 	return;
 }
 ?>

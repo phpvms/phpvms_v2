@@ -71,7 +71,7 @@ if($message!='')
 		{
 			$sel = ($_POST['aircraft'] == $aircraft->name || $bid->registration == $aircraft->registration)?'selected':'';
 			
-			echo '<option value="'.$aircraft->name.'" '.$sel.'>'.$aircraft->name.' - '.$aircraft->registration.'</option>';
+			echo '<option value="'.$aircraft->id.'" '.$sel.'>'.$aircraft->name.' - '.$aircraft->registration.'</option>';
 		}
 		?>
 		</select>

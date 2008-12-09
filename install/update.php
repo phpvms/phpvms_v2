@@ -73,9 +73,15 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('AVATAR_MAX_WIDTH', 80);
 		Installer::add_to_config('AVATAR_MAX_HEIGHT', 80);
 	}
+	elseif($version < 11441)
+	{
+		Installer::sql_file_update(SITE_ROOT . '/install/update_11441.sql');
+	}
 	else
 	{
-	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
+		Installer::add_to_config('PAGE_ENCODING', 'ISO-8859-1', 'This is the page encoding');
+		Installer::add_to_config('PILOTID_LENGTH', 4, 'This is the length of the pilot ID. including leading zeros');
+		Installer::add_to_config('SIGNATURE_TEXT_COLOR', '#FFF');
 	}
 	
 # Final version update

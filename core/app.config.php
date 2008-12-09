@@ -30,8 +30,12 @@
 define('SIGNATURE_PATH', '/lib/signatures');
 define('AVATAR_PATH', '/lib/avatars');
 
+# Page encoding options
+Config::Set('PAGE_ENCODING', 'ISO-8859-1');
+
 Config::Set('PAGE_EXT', '.htm');
 Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
+Config::Set('PILOTID_LENGTH', 4);
 Config::Set('SHOW_LEG_TEXT', true);
 Config::Set('UNITS', 'mi'); // Your units: mi or km
 
@@ -50,6 +54,7 @@ Config::Set('ACARS_LIVE_TIME', 720);
 Config::Set('ACARS_DEBUG', false);
 
 # Options for the signature that's generated 
+Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
 

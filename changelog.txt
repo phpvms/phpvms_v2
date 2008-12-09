@@ -12,6 +12,17 @@ phpVMS - Virtual Airline Administration Software
 
 Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
+  * Added page encoding option
+  * Added option for changing pilot ID length
+  * Added option to change signature text color
+  
+ Template Changes:
+ 
+	core_htmlhead.tpl - added page encoding meta tag
+  
+  
+Build 441 (Version 1.1.441)
+
   * Basic stats in Admin Panel
   * View only active/inactive schedules
   * PIREP table fixed (major bug fix)

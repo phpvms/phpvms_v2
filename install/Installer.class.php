@@ -249,7 +249,7 @@ class Installer
 	/**
 	 * Add an entry into the local.config.php file
 	 */
-	function add_to_config($name, $value)
+	function add_to_config($name, $value, $comment='')
 	{
 		$config = file_get_contents(CORE_PATH.'/local.config.php');
 		
@@ -282,7 +282,9 @@ class Installer
 			else
 				$config .="'$value'";
 			
-			$config .=");";
+			$config .="); ";
+			if($comment!='')
+				$config .='//'.$comment;
 		}
 		
 		file_put_contents(CORE_PATH.'/local.config.php', $config);

@@ -481,7 +481,8 @@ class PilotData
 		$height = imagesy($img);
 		$width = imagesx($img);
 			
-		$textcolor = imagecolorallocate($img, 0, 0, 0);
+		sscanf($color, Config::Get('SIGNATURE_TEXT_COLOR'));
+		$textcolor = imagecolorallocate($img, abs(255-$color[0]), abs(255-$color[1]), abs(255-$color[2]));
 		$font = 3; // Set the font-size
 		
 		$xoffset = 10; # How many pixels, from left, to start

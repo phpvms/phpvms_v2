@@ -177,6 +177,7 @@ class PilotAdmin extends CodonModule
 		Template::Set('pilotinfo', PilotData::GetPilotData($pilotid));
 		Template::Set('customfields', PilotData::GetFieldData($pilotid, true));
 		Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+		Template::Set('countries', Countries::getAllCountries());
 		
 		$this->SetGroupsData($pilotid);
 		

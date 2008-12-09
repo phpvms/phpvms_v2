@@ -48,7 +48,20 @@
 	</dd>
 	
 	<dt>Location</dt>
-	<dd><input type="text" name="location" value="<?php echo $pilotinfo->location==''?'-':$pilotinfo->location;?>" /></dd>
+	<dd><select name="location">
+			<?php
+			foreach($countries as $countryCode=>$countryName)
+			{
+				if($pilotinfo->location == $countryCode)
+					$sel = 'selected="selected"';
+				else	
+					$sel = '';
+				
+				echo '<option value="'.$countryCode.'" '.$sel.'>'.$countryName.'</option>';
+			}
+					?>
+		</select>
+	</dd>
 	
 	<dt>Hub</dt>
 	<dd>

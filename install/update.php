@@ -25,9 +25,6 @@ include dirname(__FILE__).'/Installer.class.php';
 # phpVMS Updater 
 define('UPDATE_VERSION', '1.1.<<REVISION>>');
 define('REVISION', '<<REVISION>>');
-define('CURRVERSION', intval(str_replace('.', '', PHPVMS_VERSION))); 
-define('UPDATENODOTS', intval(str_replace('.', '', UPDATE_VERSION)));
-
 
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 Template::Show('header.tpl');
@@ -53,30 +50,32 @@ echo 'Starting the update...<br />';
 # Do updates based on version
 #	But cascade the updates
 
-	if(CURRVERSION < 11400)
+	$version = intval(str_replace('.', '', PHPVMS_VERSION));
+	echo $version;
+	if($version  < 11400)
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_400.sql');
 		Installer::add_to_config('UNITS', 'mi');
 	}
-	elseif(CURRVERSION >  11400)
+	elseif($version <  11428)
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_437.sql');
 		
 		echo 'Adding some options to your config file...';
 		
-		add_to_config('MAP_CENTER_LAT', '45.484400');
-		add_to_config('MAP_CENTER_LNG', '-62.334821');
-		add_to_config('ACARS_DEBUG', false);
-		add_to_config('SIGNATURE_SHOW_EARNINGS', true);
-		add_to_config('SIGNATURE_SHOW_RANK_IMAGE', true);
-		add_to_config('BLANK', '');
-		add_to_config('AVATAR_FILE_SIZE', 50000);
-		add_to_config('AVATAR_MAX_WIDTH', 80);
-		add_to_config('AVATAR_MAX_HEIGHT', 80);
+		Installer::add_to_config('MAP_CENTER_LAT', '45.484400');
+		Installer::add_to_config('MAP_CENTER_LNG', '-62.334821');
+		Installer::add_to_config('ACARS_DEBUG', false);
+		Installer::add_to_config('SIGNATURE_SHOW_EARNINGS', true);
+		Installer::add_to_config('SIGNATURE_SHOW_RANK_IMAGE', true);
+		Installer::add_to_config('BLANK', '');
+		Installer::add_to_config('AVATAR_FILE_SIZE', 50000);
+		Installer::add_to_config('AVATAR_MAX_WIDTH', 80);
+		Installer::add_to_config('AVATAR_MAX_HEIGHT', 80);
 	}
-	elseif(CURRVERSION < UPDATENODOTS)
+	else
 	{
-		echo 'run update';
+	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 	}
 	
 # Final version update

@@ -4,7 +4,7 @@ Mail=
 URL=<?php echo SITE_URL?>/action.php/ACARS/fsacars
 passwd=
 [FSacars]
-CompanyICAO=<?php echo $userinfo->code?>
+CompanyICAO=
 
 CompanyName=<?php echo SITE_NAME?>
 

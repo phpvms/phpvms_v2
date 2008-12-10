@@ -124,7 +124,7 @@ class ACARSData extends CodonModule
 			DB::query($query);
 			
 		}
-		
+		//DB::debug();		
 		return true;
 	}
 	
@@ -176,9 +176,12 @@ class ACARSData extends CodonModule
 		if($cutofftime == '')
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
+		
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'acarsdata
 					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= lastupdate';
 		
 		return DB::get_results($sql);
+		DB::debug();
+		return $ret;
 	}
 }

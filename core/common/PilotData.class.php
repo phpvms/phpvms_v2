@@ -509,7 +509,8 @@ class PilotData
 							($yoffset+($stepsize/2)-5.5), 0, 0, 16, 11);
 							
 		# Add the Rank image
-		if(Config::Get('SIGNATURE_SHOW_RANK_IMAGE') == true && $pilot->rankimage!='')
+		if(Config::Get('SIGNATURE_SHOW_RANK_IMAGE') == true && $pilot->rankimage!=''
+				&& file_exists($pilot->rankimage))
 		{
 			$ext = substr($pilot->rankimage, strlen($pilot->rankimage)-3, 3);
 		

@@ -199,6 +199,7 @@ class Operations extends CodonModule
 
 				Template::Set('title', 'Edit Schedule');
 				Template::Set('schedule', SchedulesData::GetSchedule($id));
+				
 				Template::Set('action', 'editschedule');
 
                 Template::Set('allairlines', OperationsData::GetAllAirlines());
@@ -328,9 +329,10 @@ class Operations extends CodonModule
 			
 	function AddAircraft()
 	{		
-		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == '')
+		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == ''
+			|| $this->post->registration == '')
 		{
-			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
+			Template::Set('message', 'You must enter the ICAO, name, full name and the registration.');
 			Template::Show('core_error.tpl');
 			return;
 		}
@@ -534,9 +536,10 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == '')
+		if($this->post->icao == '' || $this->post->name == '' 
+			|| $this->post->fullname == '' || $this->post->registration == '')
 		{
-			Template::Set('message', 'You must enter the ICAO, Name, and Full name');
+			Template::Set('message', 'You must enter the ICAO, name, full name, and registration');
 			Template::Show('core_error.tpl');
 			return;
 		}

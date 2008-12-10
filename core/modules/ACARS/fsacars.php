@@ -147,7 +147,7 @@ $route->route
 		$fields = array('pilotid'=>$_GET['pnumber'],
 						'flightnum'=>$_GET['IATA'],
 						'pilotname'=>'',
-						'aircraft'=>$_GET[''],
+						'aircraft'=>$_GET['Regist'],
 						'lat'=>$_GET['lat'],
 						'lng'=>$_GET['long'],
 						'heading'=>'',
@@ -167,6 +167,8 @@ $route->route
 
 		ob_start();
 		
+		writedebug($fields);
+		
 		ACARSData::UpdateFlightData($fields);
 		$cont = ob_get_clean();
 			
@@ -184,31 +186,25 @@ $route->route
 		writedebug("PIREP FILE");
 		writedebug(print_r($_GET, true));
 			
-		$log = explode('*', $_GET['log']);
+		
 	
 		# see if they are a valid pilot:
 		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
+		$code = $matches[1];
 		$pilotid = $matches[2];
 
 		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
+			writedebug('INVALID PID');
 			return;
 		}
-		
-		$flightnum = str_replace('Flight IATA:', '', $log[1]);
-			
-		$data = array('pilotid'=>$pilotid,
-						'code'=>$matches[1],
-						'flightnum'=>$flightnum,
-						'leg'=>$leg,
-						'depicao'=>$_GET['origin'],
-						'arricao'=>$_GET['dest'],
-						'aircraft'=>$_GET['equipment'],
-						'flighttime'=>$_GET['duration'],
-						'submitdate'=>'NOW()',
-						'comment'=>$comment,
-						'log'=> $_GET['log']);
-		
+				
+		#
+		# Check if anything was in the log
+		#	If not, then it probably wasn't a multi-chunk, so
+		#	 just pull it straight from the query string
+		#	Otherwise, pull the full-text from the session
+		#
 		
 		if($_GET['more'] == '1')
 		{
@@ -218,18 +214,57 @@ $route->route
 			
 			$report = PIREPData::GetLastReports($pilotid, 1);
 			PIREPData::AppendToLog($report->pirepid, $_GET['log']);	
+			echo 'OK';
+			return;
 		}
-		else
+		
+		# Full PIREP, run with it
+		
+		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
+		$code = $matches[1];
+		
+		$log = explode('*', $_GET['log']);
+		$total = count($log);
+		
+		# Find where flight iata is
+		for($i=0;$i<$total; $i++)
 		{
-			#
-			# Check if anything was in the log
-			#	If not, then it probably wasn't a multi-chunk, so
-			#	 just pull it straight from the query string
-			#	Otherwise, pull the full-text from the session
-			#
-			
-			$ret = ACARSData::FilePIREP($pilotid, $data);
+			if(strstr($log[$i], 'Flight IATA') === false)
+			{
+				continue;
+			}
+			else
+			{
+				$pos = $i;
+				break;
+			}
 		}
+		
+		# extract the code and flight number
+		$flightnum = str_replace('Flight IATA:', '', $log[$pos]);
+		preg_match('/^([A-Za-z]*)(\d*)/', $flightnum, $matches);
+		$code = $matches[1];
+		$flightnum = $matches[2];
+		
+		# Get our aircraft
+		$ac = OperationsData::GetAircraftByReg($_GET['reg']);
+	
+		$data = array('pilotid'=>$pilotid,
+						'code'=>$code,
+						'flightnum'=>$flightnum,
+						'leg'=>$leg,
+						'depicao'=>$_GET['origin'],
+						'arricao'=>$_GET['dest'],
+						'aircraft'=>$ac->id,
+						'flighttime'=>$_GET['duration'],
+						'submitdate'=>'NOW()',
+						'comment'=>$comment,
+						'log'=> $_GET['log']);
+			
+		writedebug($data);
+		
+		$ret = ACARSData::FilePIREP($pilotid, $data);
+		
 		
 		if(!$res)
 			writedebug(DB::error());

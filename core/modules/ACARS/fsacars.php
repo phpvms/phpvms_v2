@@ -186,8 +186,6 @@ $route->route
 		writedebug("PIREP FILE");
 		writedebug(print_r($_GET, true));
 			
-		
-	
 		# see if they are a valid pilot:
 		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
 		$code = $matches[1];
@@ -226,7 +224,7 @@ $route->route
 		$log = explode('*', $_GET['log']);
 		$total = count($log);
 		
-		# Find where flight iata is
+		# Find where flight IATA is
 		for($i=0;$i<$total; $i++)
 		{
 			if(strstr($log[$i], 'Flight IATA') === false)
@@ -240,15 +238,64 @@ $route->route
 			}
 		}
 		
-		# extract the code and flight number
+		# Extract the code and flight number
 		$flightnum = str_replace('Flight IATA:', '', $log[$pos]);
 		preg_match('/^([A-Za-z]*)(\d*)/', $flightnum, $matches);
 		$code = $matches[1];
 		$flightnum = $matches[2];
 		
 		# Get our aircraft
-		$ac = OperationsData::GetAircraftByReg($_GET['reg']);
-	
+		$reg = trim($_GET['reg']);
+		$ac = OperationsData::GetAircraftByReg($reg);
+		
+		# Do some cleanup
+		$_GET['origin'] = DB::escape($_GET['origin']);
+		$_GET['dest'] = DB::escape($_GET['dest']);
+		
+		# Get schedule info, using minimal information
+		#	Check if they forgot the flight code
+		if($code == '')
+		{
+			# Find a flight using just the flight code
+			$sched = SchedulesData::FindFlight($matches[2]);
+		
+			# Can't do it. They completely screwed this up
+			if(!$sched)
+			{
+				DB::debug();
+				return;
+			}
+			
+			$code = $sched->code;
+			$flightnum = $sched->flightnum;
+			$leg = $sched->leg;
+			/*$depicao = $sched->depicao;
+			$arricao = $sched->arricao;*/
+			
+			if($_GET['origin'] != $sched->depicao
+				|| $_GET['dest'] != $sched->arricao)
+			{
+				$comment = 'phpVMS Message: Arrival or Departure does not match schedule';
+			}
+		}
+			
+		
+		# Make sure airports exist:
+		#  If not, add them.
+		if(!OperationsData::GetAirportInfo($_GET['origin']))
+		{
+			OperationsData::RetrieveAirportInfo($_GET['origin']);
+		}
+		
+		if(!OperationsData::GetAirportInfo($_GET['dest']))
+		{
+			OperationsData::RetrieveAirportInfo($_GET['dest']);
+		}
+		
+		
+		# Convert the time to xx.xx 
+		$flighttime = str_replace(':', '.', $_GET['duration']);
+		
 		$data = array('pilotid'=>$pilotid,
 						'code'=>$code,
 						'flightnum'=>$flightnum,
@@ -256,15 +303,15 @@ $route->route
 						'depicao'=>$_GET['origin'],
 						'arricao'=>$_GET['dest'],
 						'aircraft'=>$ac->id,
-						'flighttime'=>$_GET['duration'],
+						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
 						'comment'=>$comment,
 						'log'=> $_GET['log']);
 			
 		writedebug($data);
-		
+		print_r($data);
+			
 		$ret = ACARSData::FilePIREP($pilotid, $data);
-		
 		
 		if(!$res)
 			writedebug(DB::error());
@@ -272,5 +319,3 @@ $route->route
 		echo 'OK';
 		break;
 }
-
-?>

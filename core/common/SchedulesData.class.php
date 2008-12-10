@@ -51,11 +51,25 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
+	public static function FindFlight($flightnum, $depicao='')
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules
+					WHERE flightnum=\''.$flightnum.'\' ';
+					
+		if($depicao != '')
+		{
+			$sql .= 'AND depicao=\''.$depicao.'\'';
+		}
+		
+		return DB::get_row($sql);		
+	}
+	
 	public static function IncrementFlownCount($code, $flightnum)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'schedules 
 					SET timesflown=timesflown+1
-					WHERE code=\''.$code.'\' AND flightnum=\''.$flightnum.'\'';
+					WHERE code=\''.$code.'\' 
+						AND flightnum=\''.$flightnum.'\'';
 		
 		$res = DB::query($sql);
 		

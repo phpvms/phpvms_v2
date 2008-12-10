@@ -1,4 +1,4 @@
-<h3>Airport's List</h3>
+<h3>Airports List</h3>
 <p>The airports that are currently served are listed here.</p>
 <?php
 if(!$airports)
@@ -25,7 +25,7 @@ foreach($airports as $airport)
 ?>
 <tr>
 	<td align="center"><?php echo $airport->icao; ?></td>
-	<td align="center"><?php echo $airport->name; ?></td>
+	<td ><?php echo $airport->name; ?></td>
 	<td align="center"><?php echo $airport->country; ?></td>
 	<td align="center"><?php echo $airport->lat; ?></td>
 	<td align="center"><?php echo $airport->lng; ?></td>

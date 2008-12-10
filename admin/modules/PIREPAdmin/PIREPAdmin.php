@@ -69,6 +69,11 @@ class PIREPAdmin extends CodonModule
 				
 				$hub = $this->get->hub;
 				
+				if($this->post->action == 'editpirep')
+				{
+					$this->EditPIREP();
+				}
+				
 				Template::Set('title', 'Pending Reports');
 				
 				if($hub != '')
@@ -103,6 +108,20 @@ class PIREPAdmin extends CodonModule
 				Template::Set('pireps', $allreports);
 				Template::Show('pireps_list.tpl');
 				
+				break;
+				
+			case 'editpirep':
+			
+				Template::Set('pirep', PIREPData::GetReportDetails($this->get->pirepid));
+				Template::Set('allairlines', OperationsData::GetAllAirlines());
+				Template::Set('allairports', OperationsData::GetAllAirports());
+				Template::Set('allaircraft', OperationsData::GetAllAircraft());
+				Template::Set('fielddata', PIREPData::GetFieldData($this->get->pirepid));
+				Template::Set('pirepfields', PIREPData::GetAllFields());
+				Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
+				
+				Template::Show('pirep_edit.tpl');
+			
 				break;
 				
 			case 'viewcomments':
@@ -210,6 +229,54 @@ class PIREPAdmin extends CodonModule
 			$message = Template::GetTemplate('email_commentadded.tpl', true);
 			Util::SendEmail($pirep_details->email, 'Comment Added', $message);
 		}
+	}
+	
+	public function EditPIREP()
+	{
+		$pirepid = $this->post->pirepid;
+		$code = $this->post->code;
+		$flightnum = $this->post->flightnum;
+		$leg = $this->post->leg;
+		$depicao = $this->post->depicao;
+		$arricao = $this->post->arricao;
+		$aircraft = $this->post->aircraft;
+		$flighttime = $this->post->flighttime;
+		$comment = $this->post->comment;
+				
+		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
+		{
+			Template::Set('message', 'You must fill out all of the required fields!');
+			Template::Show('core_error.tpl');
+			return false;
+		}
+			
+		if($depicao == $arricao)
+		{
+			Template::Set('message', 'The departure airport is the same as the arrival airport!');
+			Template::Show('core_error.tpl');
+			return false;
+		}		
+		
+		# form the fields to submit
+		$data = array('pilotid'=>$pilotid,
+					  'code'=>$code,
+					  'flightnum'=>$flightnum,
+					  'leg'=>$leg,
+					  'depicao'=>$depicao,
+					  'arricao'=>$arricao,
+					  'aircraft'=>$aircraft,
+					  'flighttime'=>$flighttime);
+		
+		if(!PIREPData::UpdateFlightReport($pirepid, $data))
+		{
+			Template::Set('message', 'There was an error adding your PIREP');
+			Template::Show('core_error.tpl');
+			return false;
+		}
+		
+		PIREPData::SaveFields($pirepid, $_POST);
+			
+		return true;
 	}
 }
 

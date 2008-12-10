@@ -162,7 +162,7 @@ class PIREPData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					    p.code, p.flightnum, p.depicao, p.arricao, 
-						a.name as aircraft, a.registration, p.flighttime,
+						a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
 					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
@@ -192,16 +192,16 @@ class PIREPData
 	 */
 	public static function GetReportDetails($pirepid)
 	{
-		$sql = 'SELECT u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-					   p.code, p.flightnum, p.depicao, p.arricao, 
-					   a.name as aircraft, a.registration, p.flighttime,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+					    p.code, p.flightnum, p.depicao, p.arricao, 
+					    a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
+					    p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		return DB::get_row($sql);
@@ -258,7 +258,7 @@ class PIREPData
 
 		return DB::get_results($sql);
 	}
-
+	
 	/**
 	 * File a PIREP
 	 */
@@ -304,7 +304,6 @@ class PIREPData
 		if($comment != '')
 		{
 			$pirepid = DB::$insert_id;
-
 			$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
 						VALUES ($pirepid, $pirepdata[pilotid], '$pirepdata[comment]', NOW())";
 
@@ -318,6 +317,38 @@ class PIREPData
 		# Update the flown count for that route
 		SchedulesData::IncrementFlownCount($code, $flightnum);
 		self::UpdatePIREPFeed();
+		
+		return true;
+	}
+	
+	public static function UpdateFlightReport($pirepid, $pirepdata)
+	{		
+		/*$pirepdata = array('pilotid'=>'',
+					  'code'=>'',
+					  'flightnum'=>'',
+					  'leg'=>'',
+					  'depicao'=>'',
+					  'arricao'=>'',
+					  'aircraft'=>'',
+					  'flighttime'=>'',
+					  'submitdate'=>'',
+					  'comment'=>'',
+					  'log'=>'');*/
+		
+		if($pirepdata['leg'] == '') $pirepdata['leg'] = 1;		
+		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
+		{
+			return false;
+		}
+		
+		
+		$sql = "UPDATE ".TABLE_PREFIX."pireps SET
+						code='$pirepdata[code]', flightnum='$pirepdata[flightnum]',
+						depicao='$pirepdata[depicao]', arricao='$pirepdata[arricao]', 
+						aircraft='$pirepdata[aircraft]', flighttime='$pirepdata[flighttime]'
+					WHERE pirepid=$pirepid";
+
+		$ret = DB::query($sql);
 		
 		return true;
 	}
@@ -401,6 +432,14 @@ class PIREPData
 		return DB::get_row($sql);
 	}
 	
+	public static function GetFieldValue($fieldid, $pirepid)
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pirepvalues
+					WHERE fieldid='.$fieldid.' AND pirepid='.$pirepid;
+		
+		$ret = DB::get_row($sql);
+		return $ret->value;
+	}
 	/**
 	 * Add a custom field to be used in a PIREP
 	 */
@@ -454,16 +493,26 @@ class PIREPData
 		foreach($allfields as $field)
 		{
 			// See if that value already exists
-			/*$sql = 'SELECT id FROM '.TABLE_PREFIX.'pirepvalues
+			$sql = 'SELECT id FROM '.TABLE_PREFIX.'pirepvalues
 						WHERE fieldid='.$field->fieldid.' AND pirepid='.$pirepid;
-			$res = DB::get_row($sql);*/
+			$res = DB::get_row($sql);
 
 			$fieldname =str_replace(' ', '_', $field->name);
 			$value = $list[$fieldname];
-				
-			$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
+			
+			if($res)
+			{
+				$sql = 'UPDATE '.TABLE_PREFIX."pirepvalues
+							SET value='$value'
+							WHERE fieldid=$field->fieldid
+								AND pirepid=$pirepid";
+			}
+			else
+			{		
+				$sql = "INSERT INTO ".TABLE_PREFIX."pirepvalues
 						(fieldid, pirepid, value)
 						VALUES ($field->fieldid, $pirepid, '$value')";
+			}
 						
 			DB::query($sql);
 		}

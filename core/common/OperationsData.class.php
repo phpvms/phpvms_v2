@@ -59,7 +59,7 @@ class OperationsData
 					FROM ' . TABLE_PREFIX .'aircraft 
 					WHERE registration=\''.$registration.'\'';
 								
-		return DB::get_results($sql);
+		return DB::get_row($sql);
 	}
 	
 	/**

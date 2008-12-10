@@ -83,6 +83,8 @@ foreach($pireps as $report)
 		<a id="dialog" class="jqModal"
 			href="action.php?admin=viewcomments&pirepid=<?php echo $report->pirepid;?>">View Comments</a>
 		<br />
+		<a href="index.php?admin=editpirep&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
+		<br />	
 		<a href="action.php?admin=<?php echo Vars::GET('admin'); ?>" action="approvepirep"
 			id="<?php echo $report->pirepid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
 		<br />
@@ -91,6 +93,7 @@ foreach($pireps as $report)
 		<br />
 		<a id="dialog" class="jqModal"
 			href="action.php?admin=addcomment&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
+			
 	</td>
 </tr>
 <?php

@@ -75,19 +75,19 @@ echo 'Starting the update...<br />';
 	}
 	elseif($version < 11441)
 	{
-		Installer::sql_file_update(SITE_ROOT . '/install/update_11441.sql');
+		Installer::sql_file_update(SITE_ROOT . '/install/update_441.sql');
 	}
 	else
 	{
+		
 		Installer::add_to_config('PAGE_ENCODING', 'ISO-8859-1', 'This is the page encoding');
 		Installer::add_to_config('PILOTID_LENGTH', 4, 'This is the length of the pilot ID. including leading zeros');
 		Installer::add_to_config('SIGNATURE_TEXT_COLOR', '#FFF');
 		Installer::add_to_config('SIGNATURE_SHOW_COPYRIGHT', true);
 		
-		$allpilots = PilotData::GetAllPilots();
-		
-		echo "Generating signatures<br />";
-		
+		# Update signatures for everyone
+		$allpilots = PilotData::GetAllPilots();		
+		echo "Generating signatures<br />";		
 		foreach($allpilots as $pilot)
 		{
 			echo "Generating signature for $pilot->firstname $pilot->lastname<br />";

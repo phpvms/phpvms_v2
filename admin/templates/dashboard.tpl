@@ -18,9 +18,15 @@ $(document).ready(function()
 	<tr>
 		<td valign="top">
 			<h3>VA Stats:</h3>
-			<strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?><br />
-			<strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?><br />
-			<strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?><br />
+			<ul>
+				<li><strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?></li>
+				<li><strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?></li>
+				<li><strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?></li>
+			</ul>
+			<h3>Site Maintenance</h3>
+			<ul>
+				<li><a href="?admin=resetsignatures">Reset Signatures</a></li>
+			</ul>
 		</td>
 		<td>
 			<?php echo StatsData::AircraftFlownGraph();?>

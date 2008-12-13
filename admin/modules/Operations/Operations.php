@@ -455,13 +455,18 @@ class Operations extends CodonModule
 			return;
 		}
 
-		//Add it in
-		SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
+		# Make sure it's a valid leg
+		if($leg == '' || $leg == '0')
+			$leg = 1;
+			
+			
+		# Add it in
+		$ret = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
 										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled);
-										
-		if(DB::errno() != 0)
+			
+		if(DB::errno() != 0 && $ret == false)
 		{
-            Template::Set('message', 'There was an error adding the schedule: '.DB::error());
+            Template::Set('message', 'There was an error adding the schedule, already exists DB error: '.DB::error());
 			Template::Show('core_error.tpl');
 			return;
 		}

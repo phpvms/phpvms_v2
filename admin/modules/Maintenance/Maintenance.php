@@ -14,35 +14,32 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @package module_admin_sitecms
  */
- 
-class Reports extends CodonModule
+
+class Maintenance extends CodonModule
 {
-	function HTMLHead()
+	
+	public function HTMLHead()
 	{
-		switch($this->get->admin)
-		{
-			case 'reports':
-					
-				Template::Set('sidebar', 'sidebar_reports.tpl');
-				
-				break;
-		}
+		Template::Set('sidebar', '<h3>Maintanence</h3>From here you can perform site maintenance');		
 	}
 	
-	
-	function Controller()
+	public function Controller()
 	{
-		switch($this->get->admin)
-		{
-			case 'reports':
+		
+		if($this->get->admin == 'resetsignatures')
+		{			
+			$allpilots = PilotData::GetAllPilots();
 			
-				Template::Set('acstats', StatsData::AircraftUsage());
-				Template::Set('toproutes', StatsData::TopRoutes());
-				Template::Show('reports_main.tpl');
-				
-				break;
+			echo '<h3>Regenerating signatures</h3>Generating signatures<br />';
+			
+			foreach($allpilots as $pilot)
+			{
+				echo "Generating signature for $pilot->firstname $pilot->lastname<br />";
+				PilotData::GenerateSignature($pilot->pilotid);
+			}
+			
+			echo "Done";
 		}
 	}
 }

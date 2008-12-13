@@ -129,7 +129,7 @@
 </tr>
 <tr>
 	<td valign="top"><strong>Enabled?</strong></td>
-	<?php $checked = ($schedule->enabled==1)?'CHECKED':''; ?>
+	<?php $checked = ($schedule->enabled==1 || !$schedule)?'CHECKED':''; ?>
 	<td><input type="checkbox" id="enabled" name="enabled" <?php echo $checked ?> /></td>
 	</td>
 </tr>

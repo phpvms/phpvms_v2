@@ -40,6 +40,20 @@ class StatsData
 	}
 	
 	/**
+	 * Get the top routes
+	 */
+	 
+	public function TopRoutes()
+	{
+		$sql = 'SELECT * 
+					FROM '.TABLE_PREFIX.'schedules
+					ORDER BY timesflown DESC
+					LIMIT 10';
+		
+		return DB::get_results($sql);
+	}
+	
+	/**
 	 * Get the total number of pilots
 	 */
 	public static function PilotCount()

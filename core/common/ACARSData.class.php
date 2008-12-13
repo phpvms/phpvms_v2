@@ -176,12 +176,14 @@ class ACARSData extends CodonModule
 		if($cutofftime == '')
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
+		$cutofftime = $cutofftime / 12;
+		
 		
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'acarsdata
 					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= lastupdate';
 		
 		return DB::get_results($sql);
-		DB::debug();
+		
 		return $ret;
 	}
 }

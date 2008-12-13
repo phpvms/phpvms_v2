@@ -16,6 +16,8 @@ class Installer
 		$wf[] = 'core/pages';
 		$wf[] = 'core/cache';
 		$wf[] = 'lib/rss';
+		$wf[] = 'lib/avatars';
+		$wf[] = 'lib/signatures';
 		
 		// Check the PHP version
 		if(substr($version, 0, 1) != '5')

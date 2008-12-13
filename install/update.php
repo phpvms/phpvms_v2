@@ -83,6 +83,16 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('PILOTID_LENGTH', 4, 'This is the length of the pilot ID. including leading zeros');
 		Installer::add_to_config('SIGNATURE_TEXT_COLOR', '#FFF');
 		Installer::add_to_config('SIGNATURE_SHOW_COPYRIGHT', true);
+		
+		$allpilots = PilotData::GetAllPilots();
+		
+		echo "Generating signatures<br />";
+		
+		foreach($allpilots as $pilot)
+		{
+			echo "Generating signature for $pilot->firstname $pilot->lastname<br />";
+			PilotData::GenerateSignature($pilot->pilotid);
+		}
 	}
 	
 # Final version update

@@ -15,6 +15,10 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
   * Added page encoding option
   * Added option for changing pilot ID length
   * Added option to change signature text color
+  * Admin can edit PIREPS
+  * FSACARS bug fixes
+  * Admin panel styles cleaned up
+  * Bug fixes
   
  Template Changes:
  

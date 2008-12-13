@@ -18,7 +18,11 @@ define('TABLE_PREFIX', '$TABLE_PREFIX');
 
 define('SITE_URL', 'http://$SITE_URL');
 
+# Page encoding options
+Config::Set('PAGE_ENCODING', 'ISO-8859-1');
+
 Config::Set('PILOTID_OFFSET', 0); // This is where to start the pilot ID from
+Config::Set('PILOTID_LENGTH', 4); // The length of PID, including 0's
 Config::Set('SHOW_LEG_TEXT', true); // Show the leg text or not
 Config::Set('PAGE_EXT', '.htm'); // The page extension
 Config::Set('UNITS', 'mi'); // Your units: mi or km
@@ -42,8 +46,10 @@ Config::Set('ACARS_LIVE_TIME', 720);
 Config::Set('ACARS_DEBUG', false);
 
 # Options for the signature that's generated 
+Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
+Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);
 
 # Avatar information
 Config::Set('AVATAR_FILE_SIZE', 50000); 

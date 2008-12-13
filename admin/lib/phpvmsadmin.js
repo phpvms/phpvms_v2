@@ -75,6 +75,8 @@ $(document).ready(function() {
 	formInit();
 	reloadGroups();
 	
+	$(".tablesorter").tablesorter(); 
+	
 	$("#dialogform").ajaxForm({
 		target: '#results'
 	});

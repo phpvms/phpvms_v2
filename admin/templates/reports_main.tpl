@@ -79,7 +79,7 @@
 		<tr>
 			<th>Route</th>
 			<th>Times Flown</th>
-			<th></th>
+			
 		</tr>
 		</thead>
 		<tbody>
@@ -90,7 +90,13 @@
 				<tr>
 				<td><?php echo $route->code.$route->flightnum." ($route->depicao to $route->arricao)"?>
 				</td>
-				<td><?php echo $route->timesflown?></td>
+				<td valign="top"><strong><?php echo $route->timesflown?></strong>
+					<span class="flownchart" style="margin-top: 15px; margin-left: 4px;">
+						<?php 
+							$tot = $route->timesflown*10;
+							echo ($tot+10).', '.$tot.','.($tot-2)?>
+					</span>
+				</td>
 				</tr>
 			<?php
 			}?>
@@ -100,3 +106,9 @@
 	</tr>
 </tbody>
 </table>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.flownchart').sparkline('html', { type:'bullet'});
+});
+</script>

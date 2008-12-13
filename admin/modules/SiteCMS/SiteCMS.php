@@ -183,6 +183,7 @@ class SiteCMS extends CodonModule
 			return;
 		}
 		
+		$content = stripslashes($content);
 		if(!SiteData::AddPage($title, $content, $public, $enabled))
 		{
 			if(DB::$errno == 1062)

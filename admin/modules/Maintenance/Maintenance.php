@@ -21,7 +21,10 @@ class Maintenance extends CodonModule
 	
 	public function HTMLHead()
 	{
-		Template::Set('sidebar', '<h3>Maintanence</h3>From here you can perform site maintenance');		
+		if($this->get->admin == 'resetsignatures')
+		{
+			Template::Set('sidebar', '<h3>Maintanence</h3>From here you can perform site maintenance');		
+		}
 	}
 	
 	public function Controller()

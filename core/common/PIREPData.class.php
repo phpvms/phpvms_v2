@@ -31,7 +31,7 @@ class PIREPData
 						a.name as aircraft, a.registration,
 						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid LIMIT '.$start.', '.$count;
 
 		return DB::get_results($sql);

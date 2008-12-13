@@ -181,16 +181,18 @@ class SchedulesData
 		else
 			$enabled = '';
 			
-		$sql = 'SELECT s.*, , a.name as aircraft, a.registration,
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s,  '.TABLE_PREFIX.'aircraft a
+					FROM '.TABLE_PREFIX.'schedules s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.arricao=\''.$arricao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
+		DB::debug();
+		return $ret;
 	}
 	
 	public static function GetSchedulesByDistance($distance, $type, $onlyenabled=true, $limit='')
@@ -209,7 +211,7 @@ class SchedulesData
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules AS s, '.TABLE_PREFIX.'aircraft a
+					FROM '.TABLE_PREFIX.'schedules AS s
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft

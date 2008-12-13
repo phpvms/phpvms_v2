@@ -57,6 +57,7 @@ Config::Set('ACARS_DEBUG', false);
 Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
+Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);
 
 # Avatar information
 Config::Set('AVATAR_FILE_SIZE', 50000);

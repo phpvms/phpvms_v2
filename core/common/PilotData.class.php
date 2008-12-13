@@ -532,13 +532,16 @@ class PilotData
 			}
 		}	
 		
-		#
-		#  DO NOT remove this, as per the phpVMS license
-		$font = 1;
-		$text = 'powered by phpvms, '. SITE_NAME.' ';
-		imagestring($img, $font, $width-(strlen($text)*imagefontwidth($font)), 
-					$height-imagefontheight($font), $text, $textcolor);
-	
+		if(Config::Get('SIGNATURE_SHOW_COPYRIGHT') == true)
+		{
+			#
+			#  DO NOT remove this, as per the phpVMS license
+			$font = 1;
+			$text = 'powered by phpvms, '. SITE_NAME.' ';
+			imagestring($img, $font, $width-(strlen($text)*imagefontwidth($font)), 
+						$height-imagefontheight($font), $text, $textcolor);
+		}
+		
 		imagepng($img, SITE_ROOT.SIGNATURE_PATH.'/'.$pilotcode.'.png', 1);
 		imagedestroy($img);
 	}
@@ -581,4 +584,3 @@ class PilotData
 		imagedestroy($img);
 	}*/
 }
-?>

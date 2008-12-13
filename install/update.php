@@ -82,6 +82,7 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('PAGE_ENCODING', 'ISO-8859-1', 'This is the page encoding');
 		Installer::add_to_config('PILOTID_LENGTH', 4, 'This is the length of the pilot ID. including leading zeros');
 		Installer::add_to_config('SIGNATURE_TEXT_COLOR', '#FFF');
+		Installer::add_to_config('SIGNATURE_SHOW_COPYRIGHT', true);
 	}
 	
 # Final version update

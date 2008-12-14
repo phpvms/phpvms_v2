@@ -16,14 +16,14 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
   * Added option for changing pilot ID length
   * Added option to change signature text color
   * Admin can edit PIREPS
+  * Some admin reports added
   * FSACARS bug fixes
   * Admin panel styles cleaned up
-  * Bug fixes
+  * Bug fixes (alot of em!)
   
  Template Changes:
  
 	core_htmlhead.tpl - added page encoding meta tag
-  
   
 Build 441 (Version 1.1.441)
 

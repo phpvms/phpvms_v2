@@ -9,7 +9,13 @@ body
 
 div
 {
-	font-size: 14px;
+	font-size:8pt;
+	color: #3D3D3D;
+}
+
+div.outlined
+{
+	margin-bottom: 7px;
 }
 
 table
@@ -21,7 +27,7 @@ table.tablesorter input
 {
 	width: 300px;
 	padding: 3px;
-	border: solid 1px #7094FF;
+	font-size: 8pt;
 	background: #FFFFFF;
 }
 
@@ -117,6 +123,8 @@ img
 	text-align: center;
 	width: auto;
 }
+
+
 
 #container
 {
@@ -329,12 +337,6 @@ h1
 	padding-top: 3px;
 }
 
-h3
-{
-	padding-top: 3px;
-}
-
-
 .disabled
 {
 	background: #f8f8f9;
@@ -382,10 +384,20 @@ h3
 	padding-left: 7px;
 }
 
+#sidecolumn h3
+{
+	background-color: #F8F8F9 ;
+	background-image: none;
+	border: none;
+	padding: 4px 4px 4px 2px;
+}
+
+
 #sidecolumn p
 {
-	margin-left: 0px;
+	padding-left: 4px;
 }
+
 #leftcolumn
 {
 	float: left;
@@ -531,13 +543,20 @@ h3
 	font-family: Verdana;
 	color: #06F;
 	font-size: 14px;
-	margin-bottom: 3px;
-	padding: 4px;
-	padding-left: 0px;
+	margin-bottom: 7px;
+	padding: 8px;
+	padding-left: 4px;
 	margin-top: 0px;
-	/*border-bottom: 1px dashed #CCCCCC;*/
+	border-bottom: 1px solid #333;
+	background:#E6EEEE url(images/navbar.jpg);
 }
 
+h3 span
+{
+	clear: both;
+	font-size: 8pt;
+	color: #3D3D3D;
+}
 
 /* moodalbox CSS */
 

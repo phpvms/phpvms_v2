@@ -34,7 +34,8 @@ class StatsData
 	 */
 	public static function TotalFlights()
 	{
-		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pireps';
+		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pireps
+					WHERE accepted='.PIREP_ACCEPTED;
 		$res = DB::get_row($sql);
 		return $res->total;
 	}

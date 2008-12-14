@@ -242,6 +242,7 @@ class SchedulesData
 					WHERE a.name=\''.$ac.'\' 
 						AND a.id=s.aircraft
 					'.$enabled.'
+					GROUP BY a.name
 					ORDER BY s.depicao DESC';
 		
 		if($limit != '')

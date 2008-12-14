@@ -356,7 +356,6 @@ h1
 	float: left;
 	padding-left: 3px;
 	padding-top: 8px;
-	border-right: solid 1px #7b9ebd;
 	background: #f8f8f9;
 	margin-top: -4px;
 	margin-right: 5px;
@@ -452,16 +451,15 @@ dd input
 
 #footer
 {
-	/*border-top: solid 1px #7b9ebd;*/
+	border-top: solid 1px #7b9ebd;
 	margin: 0 auto;
 	width: 100%;
 	text-align: right;
-	padding-top:2px;
+	padding-top:10px;
 	padding-bottom:2px;
 	overflow: hidden;
-	background: url(images/bottombg.jpg) repeat-y;
 	font-family: Verdana, Arial, sans-serif;
-	font-size: 10px;
+	font-size: 8px;
 	color:#333;
 	font-weight:bold;
 }
@@ -657,10 +655,10 @@ div#mb_caption
     margin-left: -300px;
     width: 600px;
     
-    background-color: #EEE;
+    background-color: #B3D9FF;
     color: #333;
-    border: 1px solid black;
-    padding: 12px;
+    border: 5px solid black;
+    padding: 8px;
 	text-align: left;
 }
 

@@ -20,7 +20,7 @@ class PIREPAdmin extends CodonModule
 {
 	function HTMLHead()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'viewpending': case 'viewrecent': case 'viewall':
 				Template::Set('sidebar', 'sidebar_pirep_pending.tpl');
@@ -47,7 +47,7 @@ class PIREPAdmin extends CodonModule
 		}
 		
 		// Views
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'rejectpirep':
 
@@ -65,6 +65,7 @@ class PIREPAdmin extends CodonModule
 				
 				break;
 				
+			case '':
 			case 'viewpending':
 				
 				$hub = $this->get->hub;

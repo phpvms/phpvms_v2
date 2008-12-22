@@ -1,5 +1,5 @@
 <h3>Edit Page</h3>
-<form action="index.php?admin=viewpages" method="post">
+<form action="<?php echo SITE_URL?>/admin/index.php/sitecms/viewpages" method="post">
 
 <p><strong>Page name: </strong>
 <?php

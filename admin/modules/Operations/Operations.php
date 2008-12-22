@@ -22,7 +22,7 @@ class Operations extends CodonModule
 {
 	function HTMLHead()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'airlines':
 				Template::Set('sidebar', 'sidebar_airlines.tpl');
@@ -33,6 +33,7 @@ class Operations extends CodonModule
 			case 'airports':
 				Template::Set('sidebar', 'sidebar_airports.tpl');
 				break;
+			case 'addschedule':
 			case 'activeschedules':
 			case 'inactiveschedules':
 			case 'schedules':
@@ -46,7 +47,7 @@ class Operations extends CodonModule
 
 	function Controller()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			
 			/**
@@ -236,7 +237,7 @@ class Operations extends CodonModule
 						break;
 				}
 			
-				if($this->get->admin == 'schedules' || $this->get->admin == 'activeschedules')
+				if($this->get->page == 'schedules' || $this->get->page == 'activeschedules')
 				{
 					Template::Set('title', 'Viewing Active Schedules');
 					Template::Set('schedules', SchedulesData::GetSchedules('', true));

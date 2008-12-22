@@ -3,7 +3,7 @@
 if($message!='')
 	echo '<div id="error">'.$message.'</div>';
 ?>
-<form action="?admin=viewpending" method="post">
+<form action="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending" method="post">
 <dl>
 	<dt>Pilot:</dt>
 	<dd><strong><?php echo $pirep->firstname . ' ' . $pirep->lastname;?></strong></dd>

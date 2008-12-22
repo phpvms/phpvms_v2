@@ -1,4 +1,3 @@
-<h4>Pilot Groups</h4>
 <?php
 if(!$pilotgroups)
 {
@@ -7,23 +6,33 @@ if(!$pilotgroups)
 else
 {
 ?>
-<dl>
-<dt>Group Name</dt>
-<dd><strong>Options</strong></dd>
+<table id="tabledlist" class="tablesorter">
+<thead>
+	<tr>
+		<th>Group Name</th>	
+		<th>Options</th>
+	</tr>
+</thead>
+<tbody>
+
 <?php 
 	foreach($pilotgroups as $group)
 	{
 ?>
-	<dt><?php echo $group->name;?></dt>
-	<dd><a href="action.php?admin=viewpilots" pilotid="<?php echo $pilotid;?>" action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax">Remove</a></dd>
+	<tr>
+		<td><?php echo $group->name;?></td>
+		<td><a href="action.php?admin=viewpilots" pilotid="<?php echo $pilotid;?>" 
+				action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax">Remove</a></td>
+	</tr>		
 	
 <?php
 	}
 }
 ?>
-</dl>
+</tbody>
+</table>
 <div style="clear: both;"></div>
-<h4>Add to Group</h3>
+<h3>Add to Group</h3>
 
 <?php 
 $total = count($freegroups);

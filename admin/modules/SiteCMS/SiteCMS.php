@@ -21,7 +21,7 @@ class SiteCMS extends CodonModule
 {
 	function HTMLHead()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'addnews':
 			case 'viewnews':
@@ -32,22 +32,6 @@ class SiteCMS extends CodonModule
 			
 			case 'viewpages':
 			
-				if($this->get->action == 'deletepage')
-				{
-					$pageid = $this->get->pageid;
-					
-					if(SiteData::DeletePage($pageid) == false)
-					{
-						Template::Set('message', 'There was an error deleting the page!');
-						Template::Show('core_error.tpl');
-					}
-					else
-					{
-						Template::Set('message', 'The page was deleted');
-						Template::Show('core_success.tpl');
-					}
-				}
-				
 				Template::Set('sidebar', 'sidebar_pages.tpl');
 				
 				break;
@@ -62,8 +46,25 @@ class SiteCMS extends CodonModule
 	
 	function Controller()
 	{
-		switch($this->get->admin)
+		
+		switch($this->get->page)
 		{
+			case 'deletepage':
+				$pageid = $this->get->pageid;
+				
+				if(SiteData::DeletePage($pageid) == false)
+				{
+					Template::Set('message', 'There was an error deleting the page!');
+					Template::Show('core_error.tpl');
+				}
+				else
+				{
+					Template::Set('message', 'The page was deleted');
+					Template::Show('core_success.tpl');
+				}
+				
+				break;
+				
 			case 'viewnews':
 			
 				switch ($this->post->action)

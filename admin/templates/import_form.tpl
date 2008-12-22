@@ -11,7 +11,7 @@ must be done:</p>
 	<li>Aircraft must be added by registration</li>
 </ol>
 
-<form enctype="multipart/form-data" action="?admin=processimport" method="post">
+<form enctype="multipart/form-data" action="<?php echo SITE_URL?>/admin/index.php/import/processimport" method="post">
 Choose your import file (*.csv): <input name="uploadedfile" type="file" /><br />
 <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 <div style="margin-left: 195px;">

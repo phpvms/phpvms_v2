@@ -19,10 +19,11 @@
 class Import extends CodonModule
 {
 	function HTMLHead()
-	{
-		switch($this->get->admin)
+	{		
+		switch($this->get->page)
 		{
-			case 'import':
+			case '':
+			default:
 			case 'processimport':
 				
 				Template::Set('sidebar', 'sidebar_import.tpl');
@@ -34,15 +35,25 @@ class Import extends CodonModule
 	function Controller()
 	{
 		
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
-			case 'import':
+			default:
+			case '':
 				
 				Template::Show('import_form.tpl');
 				
 				break;
 				
 			case 'processimport':
+				
+				echo '<h3>Processing Import</h3>';
+				
+				if(!file_exists($_FILES['uploadedfile']['tmp_name']))
+				{
+					Template::Set('message', 'File upload failed!');
+					Template::Show('core_error.tpl');
+					return;
+				}
 				
 				echo '<p><strong>DO NOT REFRESH OR STOP THIS PAGE</strong></p>';
 				

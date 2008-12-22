@@ -66,7 +66,7 @@ Config::Set('AVATAR_MAX_HEIGHT', 80);
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', true);
-Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
+Config::Set('ERROR_LEVEL', E_ALL);
 
 /**
  * Advanced options, don't edit unless you
@@ -77,12 +77,31 @@ Config::Set('TEMPLATE_USE_CACHE', false);
 Config::Set('TEMPLATE_CACHE_EXPIRE', '24');
 Config::Set('DBASE_USE_CACHE', false);
 Config::Set('CACHE_PATH', SITE_ROOT . '/core/cache');
-Config::Set('RUN_SINGLE_MODULE', true);
-Config::Set('DEFAULT_MODULE', 'Frontpage');
-Config::Set('MODULES_AUTOLOAD', true);
-Config::Set('ACTIVE_MODULES', array());
 
-Config::Set('URL_REWRITE', array(	'default'=>array('module', 'page'),
+if(ADMIN_PANEL == true && defined('ADMIN_PANEL'))
+{	
+	Template::SetTemplatePath(SITE_ROOT.'/admin/templates');
+	
+	Config::Set('RUN_SINGLE_MODULE', true);
+	Config::Set('MODULES_PATH', SITE_ROOT.'/admin/modules');
+	Config::Set('DEFAULT_MODULE', 'Dashboard');
+	Config::Set('MODULES_AUTOLOAD', true);
+	Config::Set('ACTIVE_MODULES', array());
+	Config::Set('URL_REWRITE', array('default'=>array('module', 'page')
+									 ));	
+}
+else 
+{	
+	Template::SetTemplatePath(SITE_ROOT.'/core/templates');
+	
+	Config::Set('RUN_SINGLE_MODULE', true);
+	Config::Set('MODULES_PATH', SITE_ROOT.'/core/modules');
+	Config::Set('DEFAULT_MODULE', 'Frontpage');
+	Config::Set('MODULES_AUTOLOAD', true);
+	Config::Set('ACTIVE_MODULES', array());
+
+	Config::Set('URL_REWRITE', array(	
+									'default'=>array('module', 'page'),
 									'Login'=>array('module', 'page', 'redir'),
 								 	'Logout'=>array('module', 'page', 'redir'),
 									'Pages'=>array('module', 'page'),
@@ -92,6 +111,7 @@ Config::Set('URL_REWRITE', array(	'default'=>array('module', 'page'),
 									'Schedules'=>array('module', 'page', 'id'),
 									'ACARS'=>array('module', 'page', 'action'),
 									'XML'=>array('module', 'request')));
+}
 							
 /**
  * Constants

@@ -45,12 +45,12 @@ ini_set('display_errors', 'on');
 define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
 define('CLASS_PATH', CORE_PATH . '/classes');
-define('MODULES_PATH', CORE_PATH . '/modules');
 define('TEMPLATES_PATH', CORE_PATH . '/templates');
 define('CACHE_PATH', CORE_PATH . '/cache');
 define('COMMON_PATH', CORE_PATH . '/common');
 define('PAGES_PATH', CORE_PATH . '/pages');
 define('LIB_PATH', SITE_ROOT.'/lib');
+
 
 $version = phpversion();
 if(substr($version, 0, 1) != '5')
@@ -74,13 +74,15 @@ include CLASS_PATH . '/TemplateSet.class.php';
 include CLASS_PATH . '/Util.class.php';
 include CLASS_PATH . '/Vars.class.php';
 
-Template::SetTemplatePath(TEMPLATES_PATH);
-MainController::loadCommonFolder();
+Config::Set('MODULES_PATH', CORE_PATH . '/modules');
+Config::Set('MODULES_AUTOLOAD', true);
 
 include CORE_PATH . '/app.config.php';
 @include CORE_PATH . '/local.config.php';
 
-set_error_handler('CatchPHPError');
+MainController::loadCommonFolder();
+
+//set_error_handler('CatchPHPError');
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
 
@@ -89,6 +91,7 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 	DB::init(DBASE_TYPE);
 	DB::$table_prefix = TABLE_PREFIX;
 	DB::setCacheDir(CACHE_PATH);
+	DB::$DB->debug_all = false;
 	
 	if(Config::Get('DEBUG_MODE') == true)
 		DB::show_errors();
@@ -105,7 +108,7 @@ include CORE_PATH.'/bootstrap.inc.php';
 
 if(function_exists('pre_module_load'))
 	pre_module_load();
-	
+
 MainController::loadEngineTasks();
 
 if(function_exists('post_module_load'))

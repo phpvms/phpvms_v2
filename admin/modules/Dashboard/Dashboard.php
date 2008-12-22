@@ -26,8 +26,7 @@ class Dashboard extends CodonModule
 {
 	function HTMLHead()
 	{
-		if($_GET['admin'] == '')
-			Template::Set('sidebar', 'sidebar_dashboard.tpl');
+		Template::Set('sidebar', 'sidebar_dashboard.tpl');
 	}
 	
 	function Controller()
@@ -35,9 +34,9 @@ class Dashboard extends CodonModule
 		/*
 		 * Check for updates
 		 */
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
-			case '':
+			default:
 
 				/* Dashboard.tpl calls the functions below
 				*/

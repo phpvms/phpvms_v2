@@ -12,6 +12,10 @@ phpVMS - Virtual Airline Administration Software
 
 Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
+  * Backend optimizations
+
+Build 458 (Version 1.1.458)
+
   * Added page encoding option
   * Added option for changing pilot ID length
   * Added option to change signature text color

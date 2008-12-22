@@ -1,6 +1,6 @@
 <h3>Reject PIREP</h3>
 <p>Please enter a comment for why you are rejecting this report. It'll be entered in the comments for the report. You do have the option later on to accept this report.</p>
-<form id="form" action="action.php?admin=viewpending" method="post">
+<form id="form" action="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewpending" method="post">
 <textarea name="comment" style="width: 90%;"></textarea>
 
 <input type="hidden" name="pirepid" value="<?php echo $pirepid;?>" />

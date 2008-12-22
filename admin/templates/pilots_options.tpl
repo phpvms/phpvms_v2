@@ -1,9 +1,9 @@
 <?php
 $pilotid = Vars::GET('pilotid');
 ?>
-<h4>Reset Pilot Password</h4>
+<h3>Reset Pilot Password</h3>
 <p>If someone has forgetten their password and it needs to be reset. </p>
-<form id="pilotoptionchangepass" action="action.php?admin=viewpilots" method="post">
+<form id="pilotoptionchangepass" action="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" method="post">
 <dl>
 	<dt>Enter new password</dt>
 	<dd><input type="password" name="password1" /></dd>
@@ -20,8 +20,8 @@ $pilotid = Vars::GET('pilotid');
 <?php
 if($pilotid != Auth::$userinfo->pilotid)
 {?>
-<h4>Delete Pilot</h4>
-<form id="deletepilot" action="index.php?admin=viewpilots" method="post">
+<h3>Delete Pilot</h3>
+<form id="deletepilot" action="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots" method="post">
 <dl>	
 	<dt></dt>
 	<dd><input type="hidden" name="pilotid" value="<?php echo $pilotid;?>" />

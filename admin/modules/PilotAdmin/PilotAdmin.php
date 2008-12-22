@@ -22,7 +22,7 @@ class PilotAdmin extends CodonModule
 
 	function HTMLHead()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'viewpilots':
 				Template::Set('sidebar', 'sidebar_pilots.tpl');
@@ -39,7 +39,7 @@ class PilotAdmin extends CodonModule
 	function Controller()
 	{
 
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'viewpilots':
 
@@ -146,7 +146,7 @@ class PilotAdmin extends CodonModule
 			
 			case 'pilotgroups':
 			
-				if(Vars::POST('action') == 'addgroup')
+				if($this->post->action == 'addgroup')
 				{
 					$this->AddGroup();
 				}

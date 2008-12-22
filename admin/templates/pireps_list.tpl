@@ -30,7 +30,7 @@ foreach($pireps as $report)
 
 <tr class="<?php echo $class?>">
 	<td align="left" valign="top" width="10%" nowrap>
-		<a href="?admin=viewpilots&action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a><br />
+		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a><br />
 		<strong>Flight: <?php echo $report->code . $report->flightnum; ?></strong> - 
 					<?php echo date(DATE_FORMAT, $report->submitdate); ?><br />
 		Dep/Arr: <?php echo $report->depicao; ?>/<?php echo $report->arricao; ?><br />
@@ -53,7 +53,7 @@ foreach($pireps as $report)
 		{
 		?>
 			<a id="dialog" class="jqModal"
-				href="action.php?admin=viewlog&pirepid=<?php echo $report->pirepid;?>">View Log Details</a>
+				href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $report->pirepid;?>">View Log Details</a>
 		<?php
 		}
 		?>
@@ -81,18 +81,23 @@ foreach($pireps as $report)
 	</td>
 	<td align="center" width="10%" nowrap>
 		<a id="dialog" class="jqModal"
-			href="action.php?admin=viewcomments&pirepid=<?php echo $report->pirepid;?>">View Comments</a>
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
+				View Comments</a>
 		<br />
-		<a href="index.php?admin=editpirep&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.gif" alt="Edit" /></a>
 		<br />	
-		<a href="action.php?admin=<?php echo Vars::GET('admin'); ?>" action="approvepirep"
-			id="<?php echo $report->pirepid;?>" class="ajaxcall"><img src="lib/images/accept.gif" alt="Accept" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="approvepirep"
+			id="<?php echo $report->pirepid;?>" class="ajaxcall">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/accept.gif" alt="Accept" /></a>
 		<br />
 		<a id="dialog" class="jqModal"
-			href="action.php?admin=rejectpirep&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/reject.gif" alt="Reject" /></a>
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/rejectpirep?pirepid=<?php echo $report->pirepid;?>">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.gif" alt="Reject" /></a>
 		<br />
 		<a id="dialog" class="jqModal"
-			href="action.php?admin=addcomment&pirepid=<?php echo $report->pirepid;?>"><img src="lib/images/addcomment.gif" alt="Add Comment" /></a>
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/addcomment?pirepid=<?php echo $report->pirepid;?>">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.gif" alt="Add Comment" /></a>
 			
 	</td>
 </tr>

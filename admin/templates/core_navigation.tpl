@@ -1,31 +1,31 @@
-<li><a href="?admin=">Dashboard</a></li>
+<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard">Dashboard</a></li>
 <li><a href="#">Site</a>
 	<ul>
-		<li><a href="?admin=viewnews">Site News</a></li>
-		<li><a href="?admin=viewpages">Site Pages</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/sitecms/viewnews">Site News</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/sitecms/viewpages">Site Pages</a></li>
 	</ul>
 </li>
 <li><a href="?admin=airlines">Operations</a>
 	 <ul>
-		<li><a href="?admin=airlines">1. Airlines</a></li>
-		<li><a href="?admin=aircraft">2. Aircraft</a></li>
-		<li><a href="?admin=airports">3. Airports</a></li>
-		<li><a href="?admin=schedules">4. Flight Schedules</a></li>
-		<li><a href="?admin=import">Import Schedules</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/operations/airlines">1. Airlines</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/operations/aircraft">2. Aircraft</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/operations/airports">3. Airports</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/operations/schedules">4. Flight Schedules</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/import">Import Schedules</a></li>
 	</ul>
 </li>
 <li><a href="#">PIREPs</a>
 	<ul>
-		<li><a href="?admin=viewpending">View Pending</a></li>
-		<li><a href="?admin=viewrecent">View Recent Reports</a></li>
-		<li><a href="?admin=viewall">View All Reports</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending">View Pending</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewrecent">View Recent Reports</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewall">View All Reports</a></li>
 	</ul>
 </li>
 <li><a href="#">Pilots</a>
 	<ul>
-		<li><a href="?admin=pendingpilots">Pending Registrations</a></li>
-		<li><a href="?admin=viewpilots">View Registered Pilots</a></li>
-		<li><a href="?admin=pilotgroups">Pilot Groups</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/pendingpilots">Pending Registrations</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots">View Registered Pilots</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/pilotgroups">Pilot Groups</a></li>
 	</ul>
 </li>
 <li><a href="?admin=reports">Reports</a></li>

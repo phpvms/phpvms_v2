@@ -56,9 +56,8 @@ if(!Auth::UserInGroup('Administrators'))
 	die('Unauthorized access!');
 }
 
-Template::SetTemplatePath(dirname(__FILE__).'/templates');
-$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');
-MainController::loadModules($modules);
+//$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');
+//MainController::loadModules($modules);
 
 $BaseTemplate = new TemplateSet;
 
@@ -70,13 +69,12 @@ if(file_exists($settings_file))
 $BaseTemplate->template_path = SITE_ROOT . '/admin/lib/layout';
 $BaseTemplate->Set('title', SITE_NAME);
 
-Template::Set('MODULE_NAV_INC', $NAVBAR);
-Template::Set('MODULE_HEAD_INC', $HTMLHead);
-
+Template::Set('MODULE_NAV_INC', $_GLOBALS['NAVBAR']);
+Template::Set('MODULE_HEAD_INC', $_GLOBALS['HTMLHead']);
 
 $BaseTemplate->Show('header.tpl');
 
-MainController::RunAllActions();
+MainController::RunAllActions(Config::Get('RUN_MODULE'));
 
 $BaseTemplate->Show('footer.tpl');
  

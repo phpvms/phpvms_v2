@@ -1,5 +1,5 @@
 <h3><?php echo $title;?></h3>
-<form id="form" action="action.php?admin=airlines" method="post">
+<form id="form" action="<?php echo SITE_URL?>/admin/action.php/operations/airlines" method="post">
 <dl>
 <dt>Airline Code</dt>
 <dd><input name="code" type="text" value="<?php echo $airline->code; ?>" /></dd>

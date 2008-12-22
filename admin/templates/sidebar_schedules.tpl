@@ -1,13 +1,13 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-		<a href="?admin=addschedule">Add Schedule</a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/operations/addschedule">Add Schedule</a>
 	</span></li>
 	<li><span class="file">
-		<a href="?admin=activeschedules">View Active Schedule</a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/operations/activeschedules">View Active Schedule</a>
 	</span></li>
 	<li><span class="file">
-		<a href="?admin=inactiveschedules">View Inactive Schedules</a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/operations/inactiveschedules">View Inactive Schedules</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

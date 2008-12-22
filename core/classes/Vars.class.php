@@ -47,6 +47,7 @@ class Vars
 	public static $request;
 	
 	public static $rewrite_rules;
+	public static $matches;
 	
 	/**
 	 * Set the $post and $get variables, since they will
@@ -80,7 +81,6 @@ class Vars
 		$url = substr($_SERVER['REQUEST_URI'],
 				strpos($_SERVER['REQUEST_URI'], '?')+1, strlen($_SERVER['REQUEST_URI']));
 		
-		
 		if($url == $_SERVER['REQUEST_URI'])
 		{ // no extra $_GET parameters
 			$get_extra = array();
@@ -98,40 +98,57 @@ class Vars
 		
 		// Now parse any other matches
 		
-		if(!is_array($parameters)) return false;
+		if(!is_array($parameters))
+		{
+			return false;
+		}
 		
+		# There was a better way to do this
+		#	Die regular expressions, die!
 		/*
 		 * This matches something like:
 		 * /home/url, home/url, home/url, /home/url/
 		 * /?([a-zA-Z0-9]+)/?([a-zA-Z0-9]+)/?
-		 */
-		$pattern = '/\/?';
-		$len = count($parameters);
+		 
+		//$pattern = '/\/?';
+		//$len = 5;//count($parameters);
 		for ($i=0;$i<$len;$i++)
 		{
 			$pattern .= '([a-zA-Z0-9]*)\/?'; // tack on one for each param
 		}
 		
 		$pattern .= '/i';
-		$params = explode('.php/', $_SERVER['REQUEST_URI']);
 		
-		// Get the part after the .php/
+		$pattern = '/(\w*\/?)';
+		*/
+		
+		# Replace backslashes with forward slashes
+		$URL = str_replace('\\', '/', $_SERVER['REQUEST_URI']);
+		
+		# Get everything after the .php/ and before the ?
+		$params = explode('.php/', $URL);
 		$preg_match = $params[1];
+		
+		$params = explode('?', $preg_match);
+		$preg_match = $params[0];
 		
 		if($preg_match == '')
 			return true; // nothing behind there
 			
 		// Match the pattern
 		$matches = '';
-		preg_match($pattern, $preg_match, $matches);
+		//preg_match($pattern, $preg_match, $matches);
+		
+		$matches = explode('/', $preg_match);
+		self::$matches = $matches;
 		
 		// Loop through each match
 		self::$rewrite_rules = new stdClass;
 		self::$rewrite_rules->default = new stdClass;
 		
-		// check if this is numeric or not
+		/*// check if this is numeric or not
 		if((array_keys($parameters) !== range(0, count($parameters) - 1)))
-		{
+		{*/
 			foreach ($parameters as $pkey=>$pvalue)
 			{
 				if(is_array($parameters[$pkey]))
@@ -145,16 +162,16 @@ class Vars
 						$name = $parameters[$pkey][$i];
 						$temp = $matches[$i+1];
 						
-						self::$rewrite_rules->$index->$name=$matches[$i+1];
-						$_GET[$name]=$matches[$i+1];
+						self::$rewrite_rules->$index->$name=$matches[$i];
+						$_GET[$name]=$matches[$i];
 					}
 				}
-				else
+				/*else
 				{
 					$index = 'default';
 					self::$rewrite_rules->$index->$pvalue=$matches[$pkey+1];
 					$_GET[$pvalue] = $matches[$pkey+1];
-				}
+				}*/
 				
 				// Write the extra _GET parameters on
 				foreach($get_extra as $key=>$value)
@@ -162,8 +179,8 @@ class Vars
 					self::$rewrite_rules->$index->$key = $value;
 				}
 			}
-		}
-		else
+		//}
+		/*else
 		{
 			self::$rewrite_rules->default = new stdClass;
 			
@@ -175,12 +192,12 @@ class Vars
 				self::$rewrite_rules->default->$name = $matches[$i+1];
 				$_GET[$name] = $matches[$i+1];
 				
-				/*foreach($get_extra as $key=>$value)
+				foreach($get_extra as $key=>$value)
 				{
 					self::$rewrite_rules->default->$key = $value;
-				}*/
+				}
 			}
-		}
+		}*/
 						
 		return true;
 	}

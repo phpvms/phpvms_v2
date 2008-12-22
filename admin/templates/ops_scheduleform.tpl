@@ -3,7 +3,7 @@
 <?php
 //id="form"
 ?>
-<form action="?admin=schedules" method="post">
+<form action="<?php echo SITE_URL?>/admin/index.php/operations/schedules" method="post">
 <table width="100%">
 <tr>
 	<td valign="top"><strong>Code: </strong></td>

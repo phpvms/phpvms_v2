@@ -50,8 +50,8 @@ if(!Auth::LoggedIn() && !Auth::UserInGroup('Administrators'))
         die('Unauthorized access!');
 
 Template::SetTemplatePath(dirname(__FILE__).'/templates');
-$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');
-MainController::loadModules($modules);
+//$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');
+//MainController::loadModules($modules);
 
 MainController::RunAllActions();
 

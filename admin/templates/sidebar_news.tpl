@@ -1,7 +1,7 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-		<a href="index.php?admin=addnews">Add News</a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/addnews">Add News</a>
 	</span></li>
 </ul>
 

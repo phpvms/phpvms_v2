@@ -25,8 +25,8 @@ foreach($allnews as $news)
 	<td align="center"><?php echo $news->postedby;?></td>
 	<td align="center"><?php echo date(DATE_FORMAT, $news->postdate);?></td>
 	<td align="center">
-		<a href="index.php?admin=editnews&id=<?php echo $news->id;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
-		<a href="action.php?admin=viewnews" action="deleteitem" id="<?php echo $news->id;?>" class="ajaxcall"><img src="lib/images/delete.gif" alt="Delete" /></a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/editnews?id=<?php echo $news->id;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/sitecms/viewnews" action="deleteitem" id="<?php echo $news->id;?>" class="ajaxcall"><img src="lib/images/delete.gif" alt="Delete" /></a>
 	</td>
 </tr>
 <?php

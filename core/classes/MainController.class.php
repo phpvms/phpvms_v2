@@ -47,40 +47,44 @@ class MainController
 	public static function loadEngineTasks()
 	{
 		Vars::URLRewrite(Config::Get('URL_REWRITE'));
-		
+		Vars::setParameters();
+		ob_end_clean();
 		/**
 		 * load the modules from the modules, or the list.
 		 */
 		$modules = array();
-		
+				
 		if(Config::Get('MODULES_AUTOLOAD') == true)
 		{
-			$modules = self::getModulesFromPath(MODULES_PATH);
+			$modules = self::getModulesFromPath(Config::Get('MODULES_PATH'));
 		}
-		
-		$module_list = Config::Get('ACTIVE_MODULES');
-		$count = count($module_list);
-		if($count > 0)
+		else 
 		{
+			if(!is_array(Config::Get('MODULE_LIST')))
+			{
+				die('No modules defined');
+			}
+			
 			// If they specified the list, build it:
 			$list = array();
-			for($i=0; $i<$count; $i++)
+			//for($i=0; $i<$count; $i++)
 			foreach($module_list as $key => $value)
 			{
+				# If they provide just a list, or include the entire path
+				#	in Name=>Path format
 				if(is_numeric($key))
 				{
-					$path = MODULES_PATH . '/' . $module_list[$key] . '/' . $module_list[$i] .'.php';
+					$path = Config::Get('MODULE_PATH') . '/' . $module_list[$key] . '/' . $module_list[$i] .'.php';
 					$modules[$module_list[$i]] = $path;
 				}
 				else
 				{
-					$modules[$key] = MODULES_PATH . '/' . $value;
+					$modules[$key] = Config::Get('MODULE_PATH') . '/' . $value;
 				}
 			}
+			
 		}
-		
-		self::loadModules($modules);
-					
+							
 		/*if(Config::Get('RUN_SINGLE_MODULE') == true
 			&& in_array('modules', Config::Get('URL_REWRITE')) == false)
 		{
@@ -102,20 +106,23 @@ class MainController
 									Please correct this in app.config.php', E_USER_ERROR);
 				}
 				
-				Config::Add('RUN_MODULE', Config::Get('DEFAULT_MODULE'));
+				Config::Set('RUN_MODULE', strtoupper(Config::Get('DEFAULT_MODULE')));
 			}
 			else
 			{
-				Config::Add('RUN_MODULE', $module);
+				Config::Set('RUN_MODULE', strtoupper($module));
 			}
 			
+			
 			// Make sure it's valid,  ya know.. then throw the invalid page (basically 404 S.O.L.)
-			if(!isset(self::$ModuleList[Config::Get('RUN_MODULE')]))
+			/*if(!isset(self::$ModuleList[Config::Get('RUN_MODULE')]))
 			{
+				echo 'Missing '.Config::Get('RUN_MODULE');
 				Template::Show('core_invalid_module.tpl');
-			}
+			}*/
 		}
-				
+		
+		self::loadModules($modules);
 		Config::LoadSettings();
 	}
 	
@@ -124,21 +131,17 @@ class MainController
 	 */
 	public static function loadCommonFolder()
 	{
-		$dh = opendir(COMMON_PATH);
-		$modules = array();
-				
-		while (($file = readdir($dh)) !== false)
+		$files = scandir(COMMON_PATH);
+
+		foreach($files as $file)
 		{
-		    if($file != "." && $file != "..")
-		    {
-		    	if(substr($file, strlen($file)-4, 4) == '.php')
-		    	{
-					include_once COMMON_PATH.'/'.$file;
-				}
-		    }
+    		//if(is_file(COMMON_PATH.'/'.$file))
+    		//if(strpos($file, '.php') !== false)
+    		
+    		# strstr() won out to be the fastest
+    		if(strstr($file, '.php') !== false)
+				include_once COMMON_PATH.'/'.$file;
 		}
-		
-		closedir($dh);
 	}
 	
 	/**
@@ -162,15 +165,15 @@ class MainController
 					
 					if(file_exists($fullpath))
 					{
+						$file = strtoupper($file);
 						$modules[$file] = $fullpath;
 					}
 						
 				}
 		    }
 		}
-		
+				
 		closedir($dh);
-
 		return $modules;
 	}
 	
@@ -181,13 +184,12 @@ class MainController
 	 */
 	public static function loadModules(&$ModuleList)
 	{
+		ob_end_clean();
 		global $NAVBAR;
 		global $HTMLHead;
 		
 		self::$ModuleList = $ModuleList;
-		
-		Vars::setParameters();
-		
+			
 		//load each module and initilize
 		foreach(self::$ModuleList as $ModuleName => $ModuleController)
 		{
@@ -206,29 +208,42 @@ class MainController
 					self::$activeModule = $ModuleName;
 				
 					$$ModuleName = new $ModuleName();
-					
 					$$ModuleName->init($ModuleName); // Call the parent constructor
 					
-					//"Magic function" for the main navigation
-					if(method_exists($$ModuleName, 'NavBar'))
+					if(Config::Get('RUN_MODULE') == $ModuleName)
 					{
-						ob_start();
-						$$ModuleName->NavBar();
-						$NAVBAR .= ob_get_clean();
-						ob_end_clean();
+						# Skip it for now, run it last since it's the active
+						#	one, and may overwrite
+						continue;
 					}
-					
-					//Another magic function
-					if(method_exists($$ModuleName, 'HTMLHead'))
+					else
 					{
 						ob_start();
-						$$ModuleName->HTMLHead();
+						self::Run($ModuleName, 'NavBar');
+						$NAVBAR .= ob_get_clean();
+						//ob_end_clean();
+						
+						//ob_start();
+						self::Run($ModuleName, 'HTMLHead');
 						$HTMLHead .= ob_get_clean();
+						
 						ob_end_clean();
 					}
 				}
 			}
 		}
+		
+		# Run the init tasks
+		ob_start();
+		self::Run(Config::Get('RUN_MODULE'), 'NavBar');
+		$NAVBAR .= ob_get_clean();
+		//ob_end_clean();
+		
+		//ob_start();
+		self::Run(Config::Get('RUN_MODULE'), 'HTMLHead');
+		$HTMLHead .= ob_get_clean();
+		
+		ob_end_clean();
 	}
 	
 	/**
@@ -240,7 +255,33 @@ class MainController
 	 */
 	public static function RunAllActions($module_priority='')
 	{
-		//priority with specific module, call the rest later
+		if(Config::Get('RUN_SINGLE_MODULE') === true)
+		{
+			self::Run(Config::Get('RUN_MODULE'), 'Controller');
+		}
+		else
+		{
+			//check if a module is defined
+			foreach(self::$ModuleList as $ModuleName => $ModuleController)
+			{
+				//skip over it if we called it already
+				if($ModuleName == $PModule)
+					continue;
+					
+				// Check if a module has called stop, if it has then abort
+				if(self::$stop_execute == true)
+				{
+					self::$stop_execute = false;
+					return true;
+				}
+				
+				self::Run($ModuleName, 'Controller');
+			}
+		}
+		
+		return;
+			
+		/*//priority with specific module, call the rest later
 		$PModule = '';
 		if($module_priority!='')
 		{
@@ -248,8 +289,8 @@ class MainController
 			
 			//make sure the module exists, it's not just some bogus
 			// name they passed in
-			/*if(self::valid_module($PModule))
-			{*/
+			//if(self::valid_module($PModule))
+			//{
 				//it's valid, so do all the stuff for it
 				self::Run($PModule, 'Controller');
 				self::$activeModule = $PModule;
@@ -257,24 +298,7 @@ class MainController
 			
 			if(Config::Get('RUN_SINGLE_MODULE') == true)
 				return true;
-		}
-		
-		//check if a module is defined
-		foreach(self::$ModuleList as $ModuleName => $ModuleController)
-		{
-			//skip over it if we called it already
-			if($ModuleName == $PModule)
-				continue;
-				
-			// Check if a module has called stop, if it has then abort
-			if(self::$stop_execute == true)
-			{
-				self::$stop_execute = false;
-				return true;
-			}
-							
-			self::Run($ModuleName, 'Controller');
-		}
+		}*/		
 	}
 	
 	/**
@@ -352,5 +376,4 @@ class MainController
 	{
 		return self::$ModuleList;
 	}
-}
-?>
+}	

@@ -1,7 +1,7 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-		<a id="dialog" class="jqModal" href="action.php?admin=addairport">Add a new Airport</a>
+		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/operations/addairport">Add a new Airport</a>
 	</span>
 	</li>
 	

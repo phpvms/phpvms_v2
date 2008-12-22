@@ -73,8 +73,9 @@ class TemplateSet
 		if(!is_object($value) && strstr($value, '.'))
 		{
 			if(file_exists($this->template_path . '/' . $value))
+			{
 				$value = $this->GetTemplate($value, true);
-			
+			}
 		}
 		
 		$this->vars[$name] = $value;
@@ -122,10 +123,8 @@ class TemplateSet
 	//get the actual template text
 	public function GetTemplate($tpl_name, $ret=false)
 	{
-		
 		/* See if the file has been over-rided in the skin directory
 		 */
-		 		 
 		if(!defined('ADMIN_PANEL'))
 		{
 			if(file_exists(SKINS_PATH . '/' . $tpl_name))
@@ -145,7 +144,7 @@ class TemplateSet
 		}
 			
 		extract($this->vars, EXTR_OVERWRITE);
-
+		
 		ob_start();
 		include $tpl_path; 
 		$cont = ob_get_contents();

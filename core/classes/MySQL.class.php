@@ -131,7 +131,7 @@ class ezSQL_mysql extends ezSQLcore
 
 		if(!@mysql_select_db($dbname,$this->dbh))
 		{
-			$this->register_error($mysql_error($this->dbh), mysql_errno($this->dbh));
+			$this->register_error(mysql_error($this->dbh), mysql_errno($this->dbh));
 			return false;
 		}
 		else

@@ -1,11 +1,11 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-		<a href="?admin=addpageform">Add Page</a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/addpageform">Add Page</a>
 	</span></li>
 	
 	<li><span class="file">
-		<a href="?admin=viewpages">View Pages</a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/viewpages">View Pages</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

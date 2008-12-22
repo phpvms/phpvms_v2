@@ -1,6 +1,6 @@
 <h3><?php echo $title?></h3>
 
-<form action="index.php?admin=viewnews" method="post">
+<form action="<?php echo SITE_URL?>/admin/index.php/sitecms/viewnews" method="post">
 <p><strong>Subject: </strong><input type="text" name="subject" value="<?php echo $newsitem->subject?>" /></p>
 	<p>
 	<strong>News Text: </strong><br />

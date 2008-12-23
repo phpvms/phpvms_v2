@@ -75,12 +75,14 @@ $(document).ready(function() {
 	formInit();
 	reloadGroups();
 	
+	$("#menu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
+	
 	$(".tablesorter").tablesorter(); 
 	
 	$("#dialogform").ajaxForm({
 		target: '#results'
 	});
-			
+	
 	//$.listen('click', '.confirm', function() { return false; });
 	$.listen('click', '.confirm', function()
 	{

@@ -1,9 +1,9 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-	<a href="?admin=viewpending">View all</a></span></li>
+	<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending">View all</a></span></li>
 	<li><span class="file">
-	<a href="?admin=viewpending&hub=<?php echo Auth::$userinfo->hub?>">View my hub (<?php echo Auth::$userinfo->hub?>)</a>
+	<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending?hub=<?php echo Auth::$userinfo->hub?>">View my hub (<?php echo Auth::$userinfo->hub?>)</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

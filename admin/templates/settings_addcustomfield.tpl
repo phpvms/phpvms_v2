@@ -1,6 +1,6 @@
 <h3><?php echo $title ?></h3>
 <p>Add a custom field, that a registrar can fill out on registration, or an admin can add information to.</p>
-<form id="form" method="post" action="action.php?admin=customfields">
+<form id="form" method="post" action="<?php echo SITE_URL?>/admin/action.php/settings/customfields">
 <dl>
 	<dt>Title</dt>
 	<dd><input type="text" name="title" value="<?php echo $field->title ?>" /></dd>

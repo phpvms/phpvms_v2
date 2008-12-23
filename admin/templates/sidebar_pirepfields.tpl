@@ -1,7 +1,7 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-		<a id="dialog" class="jqModal" href="action.php?admin=addpirepfield">Add a Custom Field</a>
+		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/settings/addpirepfield">Add a Custom Field</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

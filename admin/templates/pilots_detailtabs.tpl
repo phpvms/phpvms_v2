@@ -1,7 +1,7 @@
 <div id="wrapper">
 <h3><?php echo $pilotinfo->firstname . ' ' . $pilotinfo->lastname; ?></h3>
 <div id="dialogresult"></div>
-<div id="tabcontainer" style="float: left">
+<div id="tabcontainer" style="float: left; width: 100%">
 	<ul>
 		<li><a href="#pilotdetails"><span>Pilot Details</span></a></li>
 		<li><a href="#pilotgroups"><span>Pilot Groups</span></a></li>

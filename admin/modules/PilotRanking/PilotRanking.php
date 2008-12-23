@@ -22,8 +22,8 @@ class PilotRanking extends CodonModule
 
 	function HTMLHead()
 	{
-		if($this->get->admin == 'pilotranks'
-			|| $this->get->admin == 'calculateranks')
+		if($this->get->page == 'pilotranks'
+			|| $this->get->page == 'calculateranks')
 		{
 			Template::Set('sidebar', 'sidebar_ranks.tpl');
 		}
@@ -49,7 +49,7 @@ class PilotRanking extends CodonModule
 				break;
 		}
 		
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'addrank':
 				Template::Set('title', 'Add Rank');
@@ -69,6 +69,8 @@ class PilotRanking extends CodonModule
 			case 'calculateranks':
 				RanksData::CalculatePilotRanks();
 				// no break, show the ranks again
+				
+			case '':
 			case 'pilotranks':
 				
 				Template::Set('ranks', RanksData::GetAllRanks());

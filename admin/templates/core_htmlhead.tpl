@@ -1,6 +1,5 @@
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/ui.tabs.min.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/ui.tabs.ext.pack.js"></script>
+<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.dimensions.pack.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.form.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jqModal.js"></script>

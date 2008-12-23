@@ -84,7 +84,7 @@ foreach($pireps as $report)
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
 				View Comments</a>
 		<br />
-		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
+		<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.gif" alt="Edit" /></a>
 		<br />	
 		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="approvepirep"

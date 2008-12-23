@@ -326,12 +326,7 @@ class SchedulesData
 		{
 			return false;
 		}
-		
-		if(self::GetScheduleByFlight($code,$flightnum, $leg)) 
-		{
-			return false; // flight with same num/code already exists
-		}
-		
+			
 		
 		if($enabled == true)
 			$enabled = 1;

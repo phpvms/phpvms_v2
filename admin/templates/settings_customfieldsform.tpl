@@ -22,11 +22,15 @@ foreach($allfields as $field)
 <tr>
 	<td align="center"><?php echo $field->title;?></td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=editfield&id=<?php echo $field->fieldid;?>">
+		<a id="dialog" class="jqModal" 
+				href="<?php echo SITE_URL?>/admin/action.php/settings/editfield?id=<?php echo $field->fieldid;?>">
 			<img src="lib/images/edit.gif" alt="Edit" /></a>
 			
-		<a href="action.php?admin=customfields" action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">
-			<img src="lib/images/delete.gif" alt="Delete" /></a></td>
+		<a href="<?php echo SITE_URL?>/admin/action.php/settings/customfields" 
+				action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">
+			<img src="lib/images/delete.gif" alt="Delete" />
+		</a>
+	</td>
 </tr>
 <?php
 }

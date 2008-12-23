@@ -127,6 +127,11 @@ class SiteCMS extends CodonModule
 				Template::Show('pages_editpage.tpl');
 				break;
 				
+			case 'editpage':
+				
+				$this->EditPageForm();
+				
+				break;
 			case 'viewpages':
 						
 				/* This is the actual adding page process

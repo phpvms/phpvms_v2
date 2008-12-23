@@ -152,8 +152,23 @@ class Import extends CodonModule
 					$aircraft = OperationsData::GetAircraftByReg($aircraft);
 					$ac = $aircraft->id;
 					
-					$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
+					
+					# Check if the schedule exists:
+					if(($schedinfo = self::GetScheduleByFlight($code, $flightnum, $leg)))
+					{
+						# Update the schedule instead
+						$val = SchedulesData::EditSchedule($schedinfo->id, $code, $flightnum, $leg, $depicao, 
+									$arricao, $route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);
+					
+					}
+					else
+					{
+						# Add it
+					
+						$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
 										$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);
+										
+					}
 					
 					if($val === false)
 					{

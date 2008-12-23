@@ -133,6 +133,12 @@ if($message!='')
 	<dt>Comments</dt>
 	<dd>
 		<?php
+		if(!$comments)
+		{
+			echo '<p>No comments</p>';
+			$comments=array();
+		}
+		
 		foreach($comments as $comment)
 		{?>
 			<p><?php echo $comment->comment; ?></p>

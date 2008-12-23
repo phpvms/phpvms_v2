@@ -22,7 +22,7 @@ class Settings extends CodonModule
 
 	function HTMLHead()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'settings':
 				Template::Set('sidebar', 'sidebar_settings.tpl');
@@ -41,11 +41,12 @@ class Settings extends CodonModule
 	function Controller()
 	{
 	
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
+			case '':
 			case 'settings':
 				
-				switch(Vars::POST('action'))
+				switch($this->post->action)
 				{
 					case 'addsetting':
 						$this->AddSetting();

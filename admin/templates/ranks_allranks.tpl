@@ -21,9 +21,9 @@ foreach($ranks as $rank)
 	<td align="center"><?php echo $rank->payrate; ?></td>
 	<td align="center"><?php echo $rank->totalpilots; ?></td>
 	<td align="center">
-		<a id="dialog" class="jqModal" href="action.php?admin=editrank&rankid=<?php echo $rank->rankid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
+		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/settings/editrank?rankid=<?php echo $rank->rankid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
 		
-		<a href="action.php?admin=pilotranks" action="deleterank" id="<?php echo $rank->rankid;?>" class="ajaxcall">
+		<a href="<?php echo SITE_URL?>/admin/action.php/settings/pilotranks" action="deleterank" id="<?php echo $rank->rankid;?>" class="ajaxcall">
 			<img src="lib/images/delete.gif" alt="Delete" /></a></td>
 	</td>
 </tr>

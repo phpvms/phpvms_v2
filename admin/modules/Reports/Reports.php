@@ -21,7 +21,7 @@ class Reports extends CodonModule
 {
 	function HTMLHead()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
 			case 'reports':
 					
@@ -34,8 +34,9 @@ class Reports extends CodonModule
 	
 	function Controller()
 	{
-		switch($this->get->admin)
+		switch($this->get->page)
 		{
+			case '':
 			case 'reports':
 			
 				Template::Set('acstats', StatsData::AircraftUsage());

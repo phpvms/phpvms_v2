@@ -1,5 +1,5 @@
 <h3><?php echo $title?></h3>
-<form id="form" action="action.php?admin=pilotranks" method="post">
+<form id="form" action="<?php echo SITE_URL?>/admin/action.php/settings/pilotranks" method="post">
 <dl>
 	<dt>Rank Title</dt>
 	<dd><input name="rank" type="text" value="<?php echo $rank->rank;?>" /></dd>

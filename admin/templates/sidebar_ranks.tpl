@@ -1,10 +1,10 @@
 <h3>Tasks</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
-		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/settings/addrank">Add Rank</a>
+		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/pilotranking/addrank">Add Rank</a>
 	</span></li>
 	<li><span class="file">
-		<a href="<?php echo SITE_URL?>/admin/action.php/settings/calculateranks">Recalculate Ranks</a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/pilotranking/calculateranks">Recalculate Ranks</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

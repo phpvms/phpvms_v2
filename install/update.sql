@@ -1,4 +1,10 @@
+CREATE TABLE `phpvms_downloads` (
+   `id` INT AUTO_INCREMENT,
+   `pid` INT,
+   `name` VARCHAR(50),
+   `link` TEXT ASCII,
+   `image` TEXT ASCII,
+   `hits` INT,
+  PRIMARY KEY (id)
+) ENGINE = MyISAM;
 
-
-UPDATE phpvms_pireps s, phpvms_aircraft a SET s.aircraft=a.id WHERE s.aircraft=a.name;
-ALTER TABLE `phpvms_pireps` CHANGE `aircraft` `aircraft` INT( 11 ) NOT NULL;

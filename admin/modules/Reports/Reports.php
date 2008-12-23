@@ -23,11 +23,13 @@ class Reports extends CodonModule
 	{
 		switch($this->get->page)
 		{
+			case '':
 			case 'reports':
 					
 				Template::Set('sidebar', 'sidebar_reports.tpl');
 				
 				break;
+				
 		}
 	}
 	
@@ -42,6 +44,18 @@ class Reports extends CodonModule
 				Template::Set('acstats', StatsData::AircraftUsage());
 				Template::Set('toproutes', StatsData::TopRoutes());
 				Template::Show('reports_main.tpl');
+				
+				break;
+				
+			case 'financials':
+				
+				echo '<h3>Coming soon!</h3>';
+				
+				break;
+			
+			case 'aircraft':
+				
+				echo '<h3>Coming soon!</h3>';
 				
 				break;
 		}

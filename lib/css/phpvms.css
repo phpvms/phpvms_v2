@@ -1,25 +1,3 @@
-#error
-{
-	border: 1px solid #FF0000;
-	background: #FFCCDA;
-	padding: 4px;
-	text-align: center;
-	width: auto;
-}
-
-#success
-{
-	border: 1px solid #008020;
-	background: #D8FFCC;
-	padding: 4px;
-	text-align: center;
-	width: auto;
-}
-
-.indent 
-{
-	padding-left: 32px;
-}
 
 
 /* moodalbox CSS */

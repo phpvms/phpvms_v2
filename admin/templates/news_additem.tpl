@@ -3,8 +3,10 @@
 <form action="<?php echo SITE_URL?>/admin/index.php/sitecms/viewnews" method="post">
 <p><strong>Subject: </strong><input type="text" name="subject" value="<?php echo $newsitem->subject?>" /></p>
 	<p>
-	<strong>News Text: </strong><br />
-		<textarea id="editor" name="body" style="width: 550px; height: 250px;"><?php echo $newsitem->body?></textarea>
+	<p><strong>News Text: </strong></p>
+	<p>
+		<textarea id="editor" name="body" width="100%" 
+				style="width: 100%; height: 250px;"><?php echo $newsitem->body?></textarea>
 		</p>
 	<input type="hidden" name="action" value="<?php echo $action?>" />
 	<input type="hidden" name="id" value="<?php echo $newsitem->id; ?>" />

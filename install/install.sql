@@ -1,3 +1,13 @@
+CREATE TABLE `phpvms_downloads` (
+   `id` INT AUTO_INCREMENT,
+   `pid` INT,
+   `name` VARCHAR(50),
+   `link` TEXT ASCII,
+   `image` TEXT ASCII,
+   `hits` INT,
+  PRIMARY KEY (id)
+) ENGINE = MyISAM;
+
 CREATE TABLE `phpvms_acarsdata` (
   `id` int(11) NOT NULL auto_increment,
   `pilotid` varchar(11) NOT NULL default '0',

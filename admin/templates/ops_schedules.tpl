@@ -31,7 +31,7 @@ foreach($schedules as $sched)
 	<td align="center"><?php echo $sched->distance; ?></td>
 	<td align="center"><?php echo $sched->timesflown; ?></td>
 	<td align="center">
-		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>"><img src="lib/images/edit.gif" alt="Edit Schedule" /></a>
+		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>"><img src="<?echo SITE_URL?>/admin/lib/images/edit.gif" alt="Edit Schedule" /></a>
 	<?php
 	/*
 	  <a href="action.php?admin=<?php echo Vars::GET('admin'); ?>"

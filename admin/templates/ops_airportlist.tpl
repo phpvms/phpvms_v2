@@ -29,7 +29,7 @@ foreach($airports as $airport)
 	<td align="center"><?php echo $airport->country; ?></td>
 	<td align="center"><?php echo $airport->lat; ?></td>
 	<td align="center"><?php echo $airport->lng; ?></td>
-	<td align="center"><a id="dialog" class="jqModal" href="a<?php echo SITE_URL?>/admin/index.php/operations/editairport?icao=<?php echo $airport->icao?>"><img src="lib/images/edit.gif" alt="Edit" /></a></td>
+	<td align="center"><a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/operations/editairport?icao=<?php echo $airport->icao?>"><img src="lib/images/edit.gif" alt="Edit" /></a></td>
 </tr>
 <?php
 }

@@ -7,6 +7,7 @@ body  {
 	text-align: center; 
 	color: #000000;
 }
+
 #container { 
 	width: 95%; 
 	background: #FFFFFF;
@@ -28,7 +29,7 @@ body  {
 	float: left; 
 	width: 200px;
 	background: #EBEBEB; 
-	padding: 15px 0; 
+	padding: 0; 
 	font-size: 8pt;
 }
 #sidebar h3, #sidebar p {
@@ -49,10 +50,31 @@ body  {
 	  border-bottom: 4px solid #999;
 }
 
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #000;
+}
+
 #mainContent { 
 	margin: 0 20px 0 160pt; 
 	font-size: 8pt;	
 } 
+
+#result
+{
+	float: right;
+}
+
+#bodytext
+{
+	padding: 0px;
+	margin: 0px
+}
+
 
 #mainContent h3
 {
@@ -60,6 +82,32 @@ body  {
 	border-bottom: 1px solid #999;
 	padding-bottom: 4px;
 }
+
+#error
+{
+	border: 1px solid #FF0000;
+	background: #FFCCDA;
+	padding: 4px;
+	text-align: center;
+	width: auto;
+	margin-top: 10px;
+}
+
+#success
+{
+	border: 1px solid #008020;
+	background: #D8FFCC;
+	padding: 4px;
+	text-align: center;
+	width: auto;
+	margin-top: 10px;
+}
+
+.indent 
+{
+	padding-left: 32px;
+}
+
 
 #footer { 
 	padding: 0 10px;
@@ -102,7 +150,10 @@ ul#menu, ul#menu ul {
 ul#menu a {
   display: block;
   text-decoration: none;
-  padding-bottom: 2px;	
+  padding-bottom: 5px;	
+}
+ul#menu a img {
+  padding-bottom: 0px;
 }
 
 ul#menu li {
@@ -139,6 +190,10 @@ ul#menu li ul li a:hover {
 }
 
 /* tables */
+.tablesorter tr, .tablesorter td
+{
+	border: none;
+}
 table.tablesorter {
 	border: none;
 	font-family:arial;
@@ -173,6 +228,7 @@ table.tablesorter tbody td {
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
+	border: none;
 }
 table.tablesorter thead tr .headerSortUp {
 	background-image: url(images/asc.gif);
@@ -183,6 +239,7 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp 
 {
 	background-color: #8dbdd8;
+	border: none;
 }
 
 img

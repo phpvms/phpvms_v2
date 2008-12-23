@@ -1,4 +1,4 @@
-<h3>Reports</h3>
+<!--<h3>Options</h3>
 <ul class="filetree treeview-famfamfam">
 	<li><span class="file">
 		<a href="#">VA and Pilot Stats</a>
@@ -11,5 +11,6 @@
 	<li><span class="file">
 		<a href="#">Aircraft Statistics </a>
 	</span></li>
-</ul>
-<p>These ain't active yet, but a taste of what's coming ;)</p>
+</ul>-->
+<h3>Help</h3>
+<p>These are general reports for your airline. </p>

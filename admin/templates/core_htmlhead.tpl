@@ -16,7 +16,7 @@
 <script type="text/javascript" src="<?php echo SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 
 <link rel="stylesheet" href="<?php echo SITE_URL?>/lib/js/jqModal.css" type="text/css" />
-<link rel="stylesheet" href="<?php echo SITE_URL?>/lib/css/phpvms.css" type="text/css" />
+
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo SITE_URL?>/lib/rss/latestpireps.rss">
 

@@ -205,6 +205,6 @@ $(document).ready(function() {
 	
 	if(document.getElementById('editor'))
 	{
-		new nicEditor({iconsPath : '../lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
+		new nicEditor({iconsPath : baseurl+'/lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
 	}
 });

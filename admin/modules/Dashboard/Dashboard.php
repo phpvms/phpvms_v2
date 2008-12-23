@@ -60,7 +60,7 @@ class Dashboard extends CodonModule
 	{
 		if(file_exists(SITE_ROOT.'/install'))
 		{
-			Template::Set('message', 'The install folder still exists!! Delete this folder immediately!');
+			Template::Set('message', 'The install folder still exists!! This poses a security risk. Please delete it immediately');
 			Template::Show('core_error.tpl');
 		}
 	}
@@ -73,8 +73,8 @@ class Dashboard extends CodonModule
 		if(NOTIFY_UPDATE == true)
 		{
 			$postversion = @file_get_contents('http://www.phpvms.net/extern/version.php');
-			$postversion = str_replace('.', '', $postversion);
-			$currversion = str_replace('.', '', PHPVMS_VERSION);
+			$postversion = intval(str_replace('.', '', trim($postversion)));
+			$currversion = intval(str_replace('.', '', PHPVMS_VERSION));
 			
 			if($currversion < $postversion)
 			{

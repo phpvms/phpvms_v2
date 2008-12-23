@@ -24,6 +24,7 @@ class Settings extends CodonModule
 	{
 		switch($this->get->page)
 		{
+			case '':
 			case 'settings':
 				Template::Set('sidebar', 'sidebar_settings.tpl');
 				break;

@@ -1,5 +1,5 @@
 <h3>Admin Panel</h3>
-<p>Welcome back to the admin panel, <?php echo Auth::$userinfo->firstname?>!</p>
+<p>Welcome back, <?php echo Auth::$userinfo->firstname?>!</p>
 
 <h3>Latest Stats</h3>
 <p>

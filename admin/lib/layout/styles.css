@@ -76,11 +76,14 @@ a:hover {
 }
 
 
-#mainContent h3
-{
+#mainContent h3 {
 	font-size: 11pt;
 	border-bottom: 1px solid #999;
 	padding-bottom: 4px;
+}
+
+#mainContent a {
+	text-decoration: underline;
 }
 
 #error
@@ -269,7 +272,7 @@ dd
 	width: 300px;
 	margin: 0 0 8px 0;
 	padding-left: 6px;
-	font-size: 12px;
+	
 }
 
 dd button

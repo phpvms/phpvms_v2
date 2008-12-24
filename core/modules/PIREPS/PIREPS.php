@@ -99,8 +99,17 @@ class PIREPS extends CodonModule
 				$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
 				
 				break;
-				
+			
+			case 'file':
+			case 'new':
 			case 'filepirep':
+			
+				if(!Auth::LoggedIn())
+				{
+					Template::Set('message', 'You must be logged in to access this feature!');
+					Template::Show('core_error.tpl');
+					return;
+				}
 				
 				$this->FilePIREPForm();
 				
@@ -133,6 +142,7 @@ class PIREPS extends CodonModule
 				break;
 				
 			case 'getarrapts':
+			
 				$code = $this->get->id;
 				$icao = $this->get->icao;
 				
@@ -179,8 +189,16 @@ class PIREPS extends CodonModule
 		$aircraft = $this->post->aircraft;
 		$flighttime = $this->post->flighttime;
 		$comment = $this->post->comment;
-				
-		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
+		
+		if($pilotid == '' || Auth::LoggedIn() == false)
+		{
+			Template::Set('message', 'You must be logged in to access this feature!!');
+			Template::Show('core_error.tpl');
+			return false;
+		}		
+		
+		if($code == '' || $flightnum == '' || $depicao == '' 
+				|| $arricao == '' || $aircraft == '' || $flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
 			Template::Show('core_error.tpl');

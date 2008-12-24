@@ -299,6 +299,49 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
+	
+	/**
+	 * Calculate the distance between two coordinates
+	 */
+	public static function distanceBetweenPoints($lat1, $lng1, $lat2, $lng2)
+	{
+		$radius = 3963; #miles
+		$a1=deg2rad($lat1);
+		$a2=deg2rad($lat2);
+		
+		$b1=deg2rad($lng1);
+		$b2=deg2rad($lng2);
+		
+		$theta_lat = ($a1-$a2);
+		$theta_lng = ($b1-$b2);
+		
+		$top1 = pow(cos($a2)*sin($theta_lng), 2);
+		$top2 = pow((cos($a1)*sin($a2)) - (sin($a1)*cos($a2)*cos($theta_lng)), 2);
+		$bottom = (sin($a1)*sin($a2)) + (cos($a1)*cos($a2)*cos($theta_lng));
+		
+		$haversine = atan(sqrt($top1+$top2)/$bottom);
+		$distance = $haversine * $radius;
+		
+		return round($distance, 2);
+	}
+	
+	/**
+	 * Update a distance
+	 */
+	public static function UpdateDistance($scheduleid, $distance)
+	{
+		$sql = 'UPDATE '.TABLE_PREFIX.'schedules 
+					SET distance=\''.$distance.'\'
+					WHERE id='.$scheduleid;
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
 	/**
 	 * Add a schedule
 	 */
@@ -566,4 +609,3 @@ class SchedulesData
 		return $data;
 	}
 }
-?>

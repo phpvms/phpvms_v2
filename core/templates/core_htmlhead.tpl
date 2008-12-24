@@ -15,8 +15,7 @@ var urlbase = "<?php echo SITE_URL?>";
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.form.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.sparklines.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.listen-min.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/ui.tabs.min.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/ui.tabs.ext.pack.js"></script>
+<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/phpvms.js"></script>
 
 <?php echo $MODULE_HEAD_INC;?>

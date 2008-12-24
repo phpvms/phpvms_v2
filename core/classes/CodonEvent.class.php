@@ -77,14 +77,14 @@ class CodonEvent
 			}
 		}
 		
-		// Load each module and call the EventListen function
+		# Load each module and call the EventListen function
+		if(!self::$listeners) self::$listeners = array();
 		foreach(self::$listeners as $ModuleName => $Events)
 		{
-			echo $ModuleName;
 			$ModuleName = strtoupper($ModuleName);
 			global $$ModuleName;
 			
-			// Run if no specific events specified, or if the eventname is there
+			# Run if no specific events specified, or if the eventname is there
 			if(!$Events || in_array($eventname, $Events))
 			{
 				self::$lastevent = $eventname;

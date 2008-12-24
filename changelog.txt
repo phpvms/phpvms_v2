@@ -16,6 +16,9 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
   * Backend optimizations
   * Duplicate schedules on import now overwrite previous existing schedule
   * Update check fixed
+  * Maintenance section to calculate distances for routes/pireps
+  * PIREP access controls fixed
+  * Security fixes
 
 Build 458 (Version 1.1.458)
 

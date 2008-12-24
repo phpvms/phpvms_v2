@@ -42,12 +42,13 @@ foreach($allfields as $field)
 		}
 	?>
 	</td>
-	<td align="center">
-		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/settings/editpirepfield&id=<?php echo $field->fieldid;?>">
-			<img src="lib/images/edit.gif" alt="Edit" /></a><br />
-			
-		<a href="<?php echo SITE_URL?>/admin/action.php/settings/pirepfields" action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">
-			<img src="lib/images/delete.gif" alt="Delete" /></a>
+	<td align="left" width="1%" nowrap>
+		<a id="dialog" class="jqModal" 
+			href="<?php echo SITE_URL?>/admin/action.php/settings/editpirepfield&id=<?php echo $field->fieldid;?>">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/settings/pirepfields" 
+			action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
 	</td>
 </tr>
 <?php

@@ -79,25 +79,25 @@ foreach($pireps as $report)
 		}
 		?>
 	</td>
-	<td align="center" width="10%" nowrap>
-		<a id="dialog" class="jqModal"
-			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
-				View Comments</a>
-		<br />
-		<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.gif" alt="Edit" /></a>
-		<br />	
+	<td align="left" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="approvepirep"
 			id="<?php echo $report->pirepid;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/accept.gif" alt="Accept" /></a>
+			<img src="<?php echo SITE_URL?>/admin/lib/images/accept.png" alt="Accept" /></a>
 		<br />
 		<a id="dialog" class="jqModal"
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/rejectpirep?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.gif" alt="Reject" /></a>
+				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.png" alt="Reject" /></a>
+		<br />
+		<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+		<br />	
+		<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/viewcomments.png" alt="View Comments" /></a>
 		<br />
 		<a id="dialog" class="jqModal"
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/addcomment?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.gif" alt="Add Comment" /></a>
+				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.png" alt="Add Comment" /></a>
 			
 	</td>
 </tr>

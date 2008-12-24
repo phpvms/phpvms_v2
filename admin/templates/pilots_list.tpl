@@ -38,7 +38,9 @@ foreach($allpilots as $pilot)
 	<td align="center"><?php echo $pilot->location; ?></td>
 	<td align="center"><?php echo $pilot->totalflights; ?></td>
 	<td align="center"><?php echo $pilot->totalhours; ?></td>
-	<td align="center"><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><img src="<?php echo SITE_URL?>/admin/lib/images/options.gif" alt="Options" /></a></td>
+	<td align="center" width="1%" nowrap>
+		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/options.png" alt="Options" /></a></td>
 </tr>
 <?php
 }

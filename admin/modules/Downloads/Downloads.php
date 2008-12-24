@@ -41,12 +41,20 @@ class Downloads extends CodonModule
 						$this->EditCategory();
 						break;
 						
+					case 'deletecategory':
+						$this->DeleteCategory();
+						break;
+						
 					case 'adddownload':
 						$this->AddDownload();
 						break;
 						
 					case 'editdownload':
 						$this->EditDownload();
+						break;
+						
+					case 'deletedownload':
+						$this->DeleteDownload();
 						break;
 										
 				}
@@ -149,6 +157,21 @@ class Downloads extends CodonModule
 		
 	}
 	
+	public function DeleteCategory()
+	{
+		if($this->post->id=='')
+		{
+			Template::Set('message', 'Invalid category!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		DownloadData::RemoveCategory($this->post->id);
+		
+		Template::Set('message', 'Category removed!');
+		Template::Show('core_success.tpl');
+	}
+	
 	public function AddDownload()
 	{
 		if($this->post->name == '' || $this->post->link == '')
@@ -174,6 +197,21 @@ class Downloads extends CodonModule
 		DownloadData::EditAsset($this->post->id, $this->post->name, '', '');
 		
 		Template::Set('message', 'Download edited!');
+		Template::Show('core_success.tpl');
+	}
+	
+	public function DeleteDownload()
+	{
+		if($this->post->id=='')
+		{
+			Template::Set('message', 'Invalid download ID!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		DownloadData::RemoveAsset($this->post->id);
+		
+		Template::Set('message', 'Download removed!');
 		Template::Show('core_success.tpl');
 		
 	}

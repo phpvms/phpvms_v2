@@ -27,9 +27,12 @@ foreach($allpages as $page)
 	<td align="center"><?php echo $page->postedby; ?></td>
 	<td align="center"><?php echo $page->postdate; ?></td>
 	<td align="center"><?php echo $page->filename; ?></td>
-	<td align="center">
-		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
-		<a href="<?php echo SITE_URL?>/admin/action.php/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>" class="confirm"><img src="lib/images/delete.gif" alt="delete" /></a>
+	<td align="center" width="1%" nowrap>
+		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>" 
+				class="confirm">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="delete" /></a>
 	</td>
 </tr>
 <?php

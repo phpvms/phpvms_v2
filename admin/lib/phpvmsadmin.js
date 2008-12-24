@@ -152,13 +152,10 @@ $(document).ready(function() {
 	});
 	
 	$.listen('dblclick','.dialogajax', function() {
+		
 		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
-	$("ul.nav").superfish();
-	
-	
-		
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
 	

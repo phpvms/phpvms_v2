@@ -70,9 +70,46 @@ class DownloadData
 					(pid, name, link, image)
 				VALUES	(0, '$name', '$link', '$image')";
 				
-		DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
 	}
 	
+	public static function RemoveCategory($id)
+	{
+		if($id == '') return false;
+		$id = intval($id);
+		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'downloads
+					WHERE pid='.$id;
+					
+		DB::query($sql);
+		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'downloads
+					WHERE id='.$id;
+					
+		DB::query($sql);
+	}
+	public static function AddDownload($categoryid, $name, $link, $image)
+	{
+		if($categoryid == '') return false;
+		
+		$name = DB::escape($name);
+		
+		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
+							(pid, name, link, image)
+					VALUES	($categoryid, '$name', '$link', '$image')";
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
 	
 	public static function EditAsset($id, $name, $link='', $image='')
 	{
@@ -84,19 +121,28 @@ class DownloadData
 					SET name='$name', link='$link', image='$image'
 					WHERE id=$id";
 		
-		DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
 	}
 	
-	public static function AddDownload($categoryid, $name, $link, $image)
+	public static function RemoveAsset($id)
 	{
-		if($categoryid == '') return false;
+		if($id == '') return false;
 		
-		$name = DB::escape($name);
+		$id = intval($id);
 		
-		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
-							(pid, name, link, image)
-					VALUES	($categoryid, '$name', '$link', '$image')";
+		$sql = "DELETE FROM ".TABLE_PREFIX."downloads
+					WHERE id=$id";
 		
-		DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
 	}
 }

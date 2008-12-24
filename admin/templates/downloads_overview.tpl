@@ -10,7 +10,7 @@ foreach($allcategories as $category)
 {
 ?>
 	<h3><?php echo $category->name?> 
-		<span style="font-size: 8pt">[<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/downloads/editcategory?id=<?php echo $category->id?>">Edit</a>]</span>
+		<span style="font-size: 8pt">[<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/downloads/editcategory?id=<?php echo $category->id?>">Edit</a>] [<a class="ajaxcall" action="deletecategory" id="<?php echo $category->id?>" href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</a>]</span>
 	</h3>
 <?php
 
@@ -38,9 +38,16 @@ foreach($allcategories as $category)
 		<tr>
 			<td><?php echo '<a href="'.$download->link.'">'.$download->name.'</a>' ?></td>
 			<td><?php echo ($download->hits=='')? '0' : $download->hits?></td>
-			<td><a id="dialog" class="jqModal" 
+			<td>
+				<a id="dialog" class="jqModal" 
 					href="<?php echo SITE_URL?>/admin/action.php/downloads/editdownload?id=<?php echo $download->id?>">
 					<img src="<?echo SITE_URL?>/admin/lib/images/edit.gif" alt="Edit" /></a>
+					
+				<a class="ajaxcall" 
+					action="deletedownload" id="<?php echo $download->id?>"
+					href="<?php echo SITE_URL?>/admin/action.php/downloads">
+					<img src="<?echo SITE_URL?>/admin/lib/images/delete.gif" alt="Delete" /></a>	
+					
 			</td>
 		</tr>
 <?php	} 

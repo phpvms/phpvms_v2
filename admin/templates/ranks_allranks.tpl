@@ -20,11 +20,13 @@ foreach($ranks as $rank)
 	<td align="center"><?php echo $rank->minhours; ?></td>
 	<td align="center"><?php echo $rank->payrate; ?></td>
 	<td align="center"><?php echo $rank->totalpilots; ?></td>
-	<td align="center">
-		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/pilotranking/editrank?rankid=<?php echo $rank->rankid;?>"><img src="lib/images/edit.gif" alt="Edit" /></a>
-		
-		<a href="<?php echo SITE_URL?>/admin/action.php/pilotranking/pilotranks" action="deleterank" id="<?php echo $rank->rankid;?>" class="ajaxcall">
-			<img src="lib/images/delete.gif" alt="Delete" /></a></td>
+	<td align="center" width="1%" nowrap>
+		<a id="dialog" class="jqModal" 
+			href="<?php echo SITE_URL?>/admin/action.php/pilotranking/editrank?rankid=<?php echo $rank->rankid;?>">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/pilotranking/pilotranks" action="deleterank" 
+			id="<?php echo $rank->rankid;?>" class="ajaxcall">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a></td>
 	</td>
 </tr>
 <?php

@@ -26,13 +26,13 @@ foreach($allpilots as $pilot)
 	<td align="center"><?php echo $pilot->email; ?></td>
 	<td align="center"><?php echo $pilot->location; ?></td>
 	<td align="center"><?php echo $pilot->hub; ?></td>
-	<td align="center">
+	<td align="center" width="1%" nowrap>
         <a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/<?php echo Vars::GET('page'); ?>" action="approvepilot"
 			id="<?php echo $pilot->pilotid;?>" class="ajaxcall">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/accept.gif" alt="Accept" /></a>
+				<img src="<?php echo SITE_URL?>/admin/lib/images/accept.png" alt="Accept" /></a>
         <a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/<?php echo Vars::GET('page'); ?>" action="rejectpilot"
 			id="<?php echo $pilot->pilotid;?>" class="ajaxcall">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.gif" alt="Reject" /></a>
+				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.png" alt="Reject" /></a>
 	</td>
 </tr>
 <?php

@@ -147,10 +147,18 @@ class Import extends CodonModule
 						
 					}
 					
-					// Check the aircraft
+					# Check the aircraft
 					$aircraft = trim($aircraft);
-					$aircraft = OperationsData::GetAircraftByReg($aircraft);
-					$ac = $aircraft->id;
+					$ac_info = OperationsData::GetAircraftByReg($aircraft);
+					
+					# If the aircraft doesn't exist, skip it
+					if(!$ac_info)
+					{
+						echo 'Aircraft "'.$aircraft.'" does not exist! Skipping<br />';
+						continue;
+					}
+					
+					$ac = $ac_info->id;
 					
 					
 					# Check if the schedule exists:

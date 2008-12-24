@@ -30,8 +30,9 @@ foreach($schedules as $sched)
 	<td align="center"><?php echo $sched->aircraft; ?></td>
 	<td align="center"><?php echo $sched->distance; ?></td>
 	<td align="center"><?php echo $sched->timesflown; ?></td>
-	<td align="center">
-		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>"><img src="<?echo SITE_URL?>/admin/lib/images/edit.gif" alt="Edit Schedule" /></a>
+	<td align="center" width="1%" nowrap>
+		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>">
+		<img src="<?echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit Schedule" /></a>
 	<?php
 	/*
 	  <a href="action.php?admin=<?php echo Vars::GET('admin'); ?>"

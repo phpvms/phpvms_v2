@@ -60,7 +60,7 @@ a:hover {
 }
 
 #mainContent { 
-	margin: 0 20px 0 160pt; 
+	margin: 0 15px 0 160pt; 
 	font-size: 8pt;	
 } 
 
@@ -398,46 +398,12 @@ div#mb_caption
 	margin-right: 71px;
 }
 
-/* jqModal base Styling courtesy of;
-  Brice Burgess <bhb@iceburg.net> */
 
-/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
-  the Window's z-index value will be set to 3000 by default (in jqModal.js). You
-  can change this value by either;
-    a) supplying one via CSS
-    b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
-  
-.jqmWindow {
-    display: none;
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    font-size: 8pt;
-    margin-left: -300px;
-    width: 600px;
-    color: #333;
-    border: 2px solid black;
-    padding: 8px;
-	text-align: left;
-}
-
-.jqmOverlay { background-color: #000; }
-
-/* Fixed posistioning emulation for IE6
-     Star selector used to hide definition from browsers other than IE6
-     For valid CSS, use a conditional include instead */
-* html .jqmWindow {
-     position: absolute;
-     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(6 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
-}
-/* Caution! Ensure accessibility in print and other media types... */
-@media projection, screen { /* Use class for showing/hiding tab content, so that visibility can be better controlled in different media types... */
+@media projection, screen { 
     .ui-tabs-hide {
         display: none;
     }
 }
-
-/* Hide useless elements in print layouts... */
 @media print {
     .ui-tabs-nav {
         display: none;
@@ -450,6 +416,53 @@ div#mb_caption
 	float:none;
 }
 
+
+/* jqModal base Styling courtesy of;
+	Brice Burgess <bhb@iceburg.net> */
+
+/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
+	the Window's z-index value will be set to 3000 by default (in jqModal.js). You
+	can change this value by either;
+	  a) supplying one via CSS
+	  b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
+	
+.jqmWindow {
+    display: none;
+    position: fixed;
+    top: 17%;
+    left: 50%;
+    
+    margin-left: -300px;
+    width: 600px;
+    
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;
+    font-size: 8pt;
+    text-align: left;
+}
+
+.jqmWindow dl {
+	width: 570px;
+}
+
+.jqmOverlay { background-color: #000; }
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
 #treecontrol { margin: 1em 0; display: none; }
 
 ul.treeview-famfamfam { padding-left: 25px; }
@@ -460,7 +473,7 @@ ul.treeview-famfamfam { padding-left: 25px; }
 .filetree span.folder, .filetree span.file { padding: 1px 0 1px 16px; display: block; }
 .filetree span.folder { background: url(images/folder.gif) 0 0 no-repeat; }
 .filetree li.expandable span.folder { background: url(images/folder-closed.gif) 0 0 no-repeat; }
-.filetree span.file { background: url(images/file.gif) 0 0 no-repeat; }
+.filetree span.file { background: url(images/icon_file.png) 0 0 no-repeat; }
 
 .jqiwarning .jqi{
       background-color: #b0be96;
@@ -501,7 +514,6 @@ div.jqi button{
 /* Skin */
 .ui-tabs-nav, .ui-tabs-panel {
     font-family: "Trebuchet MS", Trebuchet, Verdana, Helvetica, Arial, sans-serif;
-    font-size: 12px;
 }
 .ui-tabs-nav {
     list-style: none;

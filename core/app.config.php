@@ -66,7 +66,7 @@ Config::Set('AVATAR_MAX_HEIGHT', 80);
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', true);
-Config::Set('ERROR_LEVEL', E_ALL);
+Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
 
 /**
  * Advanced options, don't edit unless you

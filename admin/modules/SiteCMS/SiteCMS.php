@@ -282,12 +282,15 @@ class SiteCMS extends CodonModule
 	
 	function DeleteNewsItem()
 	{
-		if(SiteData::DeleteItem($this->post->id))
-			Template::Set('message', 'News item deleted');
-		else
+		if(!SiteData::DeleteItem($this->post->id))
+		{
 			Template::Set('message', 'There was an error deleting the item');
-			
-		Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		Template::Set('message', 'News item deleted');
+		Template::Show('core_succcess.tpl');
 	}
 }
 

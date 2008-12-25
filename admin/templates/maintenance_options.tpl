@@ -9,7 +9,7 @@
 	</dd>
 	
 	<dt><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetdistances">Reset Distances</a>: 
+		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetdistances">Recalculate Distances</a>: 
 		</strong>
 	</dt>
 	<dd>Select this to re-calcuate all the distances in your schedules and PIREPS. Useful for a import. Accurate 

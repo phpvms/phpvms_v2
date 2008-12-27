@@ -1,4 +1,4 @@
-<li><a class="menu" href="<?php echo SITE_URL?>/admin/index.php/dashboard">
+<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard">
 		<img src="<?echo SITE_URL?>/admin/lib/layout/images/dashboard_icon.png" />Dashboard
 	</a>
 	<ul>
@@ -57,9 +57,9 @@
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/maintenance/options">Maintenance Options</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/customfields">Profile Fields</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/pirepfields">PIREP Fields</a></li>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/about">About phpVMS</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard/about">About phpVMS</a></li>
 	</ul>
 </li>
 <?php echo $MODULE_NAV_INC;?>
-<li><a class="menu" href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></li>
-<li><a class="menu" href="<?php echo SITE_URL?>/index.php">View Your Site</a></li>
+<li><a href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></li>
+<li><a href="<?php echo SITE_URL?>/index.php">View Your Site</a></li>

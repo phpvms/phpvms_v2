@@ -293,5 +293,3 @@ class SiteCMS extends CodonModule
 		Template::Show('core_succcess.tpl');
 	}
 }
-
-?>

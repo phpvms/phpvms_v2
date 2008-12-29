@@ -241,7 +241,8 @@ class PilotData
 	 */
    	public static function RejectPilot($pilotid)
 	{
-		/*$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_REJECTED.'
+		/*$sql = 'UPDATE ' . TABLE_PREFIX.'pilots 
+					SET confirmed='.PILOT_REJECTED.'
 					WHERE pilotid='.$pilotid;*/
 		
 		return self::DeletePilot($pilotid);
@@ -253,12 +254,13 @@ class PilotData
 	
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'acarsdata WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'bids WHERE pilotid='.$pilotid;
-		# These delete on cascade
-		//$sql[] = 'DELETE FROM '.TABLE_PREFIX.'fieldvalues WHERE pilotid='.$pilotid;
-		//$sql[] = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE pilotid='.$pilotid;
-		//$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pirepcomments WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pireps WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
+		
+		# These SHOULD delete on cascade
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'fieldvalues WHERE pilotid='.$pilotid;
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE pilotid='.$pilotid;
+		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pirepcomments WHERE pilotid='.$pilotid;
 		
 		foreach($sql as $query)
 		{

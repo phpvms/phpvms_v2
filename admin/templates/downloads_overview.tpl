@@ -13,12 +13,13 @@ foreach($allcategories as $category)
 		<span style="font-size: 8pt">[<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/downloads/editcategory?id=<?php echo $category->id?>">Edit</a>] [<a class="ajaxcall" action="deletecategory" id="<?php echo $category->id?>" href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</a>]</span>
 	</h3>
 <?php
-
 	$alldownloads = DownloadData::GetDownloads($category->id);
 	
 	if(!$alldownloads)
 	{
-		echo 'There are no downloads under this category.';
+		echo 'There are no downloads under this category. 
+				<a id="dialog" class="jqModal" 
+				href="'.SITE_URL.'/admin/action.php/downloads/adddownload?cat='.$category->id.'">Click to Add</a>';
 	}
 	else
 	{
@@ -32,8 +33,7 @@ foreach($allcategories as $category)
 		</tr>
 		</thead>
 		<tbody>
-<?php	foreach($alldownloads as $download)
-		{ 
+<?php	foreach($alldownloads as $download) { 
 ?>
 		<tr>
 			<td><?php echo '<a href="'.$download->link.'">'.$download->name.'</a>' ?></td>

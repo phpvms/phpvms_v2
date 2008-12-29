@@ -70,6 +70,10 @@ a:hover {
 	font-family: Arial;
 }
 
+#mainContent tr.disabled td {
+	color: #CCC;
+}
+
 #result
 {
 	float: right;
@@ -435,7 +439,7 @@ div#mb_caption
 .jqmWindow {
     display: none;
     position: fixed;
-    top: 17%;
+    top: 2%;
     left: 50%;
     
     margin-left: -300px;

@@ -102,6 +102,7 @@ else
 
 	Config::Set('URL_REWRITE', array(	
 									'default'=>array('module', 'page'),
+									'Downloads'=>array('module', 'id'),
 									'Login'=>array('module', 'page', 'redir'),
 								 	'Logout'=>array('module', 'page', 'redir'),
 									'Pages'=>array('module', 'page'),

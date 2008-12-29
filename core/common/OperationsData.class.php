@@ -24,10 +24,12 @@ class OperationsData
 	
 	public static function GetAllAirlines($onlyenabled=false)
 	{
-		if($onlyenabled) $where = 'WHERE enabled=1';
+		if($onlyenabled == true) $where = 'WHERE `enabled`=1';
 		else $where = '';
 		
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines '.$where.' ORDER BY code ASC');
+		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines 
+									'.$where.' 
+									ORDER BY `code` ASC');
 	}
 	
 	/**
@@ -35,17 +37,46 @@ class OperationsData
 	 */
 	public static function GetAllHubs()
 	{
-		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports WHERE hub=1
-									ORDER BY icao ASC');
+		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports 
+									WHERE `hub`=1
+									ORDER BY `icao` ASC');
 	}
 	
 	/**
 	 * Get all of the aircraft
 	 */
-	public static function GetAllAircraft()
+	public static function GetAllAircraft($onlyenabled=false)
 	{
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'aircraft 
-									ORDER BY icao ASC');
+		$sql = 'SELECT * 
+					FROM ' . TABLE_PREFIX .'aircraft';
+					
+		if($onlyenabled == true)
+		{
+			$sql .= ' WHERE `enabled`=1 ';
+		}
+		
+		$sql .= ' ORDER BY icao ASC';
+		
+		return DB::get_results($sql);
+	}
+	
+	/**
+	 * Get all of the aircraft
+	 */
+	public static function GetAllAircraftSearchList($onlyenabled=false)
+	{
+		$sql = 'SELECT * 
+				FROM ' . TABLE_PREFIX .'aircraft';
+		
+		if($onlyenabled == true)
+		{
+			$sql .= ' WHERE `enabled`=1 ';
+		}
+		
+		$sql .= 'GROUP BY `name`
+				 ORDER BY `icao` ASC';
+		
+		return DB::get_results($sql);
 	}
 	
 	/**
@@ -57,7 +88,7 @@ class OperationsData
 		
 		$sql = 'SELECT * 
 					FROM ' . TABLE_PREFIX .'aircraft 
-					WHERE registration=\''.$registration.'\'';
+					WHERE `registration`=\''.$registration.'\'';
 								
 		return DB::get_row($sql);
 	}
@@ -68,7 +99,7 @@ class OperationsData
 	public static function GetAllAirports()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports 
-									ORDER BY icao ASC');
+									ORDER BY `icao` ASC');
 	}
 	
 	/**
@@ -79,18 +110,19 @@ class OperationsData
 		$id = DB::escape($id);
 		
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft 
-								WHERE id='.$id);
+								WHERE `id`='.$id);
 	}
 	
 	public static function GetAirlineByCode($code)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
-								WHERE code=\''.$code.'\'');
+								WHERE `code`=\''.$code.'\'');
 	}
 	
 	public static function GetAirlineByID($id)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines WHERE id=\''.$id.'\'');
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
+								WHERE `id`=\''.$id.'\'');
 	}
 	
 	/**
@@ -102,7 +134,9 @@ class OperationsData
 		$code = strtoupper($code);
 		$name = DB::escape($name);
 		
-		$sql = "INSERT INTO " .TABLE_PREFIX."airlines (code, name) VALUES ('$code', '$name')";
+		$sql = "INSERT INTO " .TABLE_PREFIX."airlines (
+						`code`, `name`) 
+					VALUES ('$code', '$name')";
 		
 		$res = DB::query($sql);
 		
@@ -121,7 +155,7 @@ class OperationsData
 		else $enabled = 0;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."airlines 
-					SET code='$code', name='$name', enabled=$enabled 
+					SET `code`='$code', `name`='$name', `enabled`=$enabled 
 					WHERE id=$id";
 		
 		$res = DB::query($sql);
@@ -135,16 +169,28 @@ class OperationsData
 	/**
 	 * Add an aircraft
 	 */
-	public static function AddAircaft($icao, $name, $fullname, $registration, $downloadlink, $imagelink, $range, $weight, $cruise)
+	public static function AddAircaft($icao, $name, $fullname, $registration, $downloadlink,
+										$imagelink, $range, $weight, $cruise, $enabled=true)
 	{
 		$icao = DB::escape(strtoupper($icao));
 		$name = DB::escape(strtoupper($name));
 		$registration = DB::escape(strtoupper($registration));
 		
-		$sql = "INSERT INTO " . TABLE_PREFIX . "aircraft 
-						(icao, name, fullname, registration, downloadlink, imagelink, range, weight, cruise)
-					VALUES ('$icao', '$name', '$fullname', '$registration', '$downloadlink', '$imagelink',
-								'$range', '$weight', '$cruise')";
+		$range = ($range == '') ? 0 : $range;
+		$weight = ($weight == '') ? 0 : $weight;
+		$cruise = ($cruise == '') ? 0 : $cruise;
+		
+		if($enabled == true)
+			$enabled = 1;
+		else
+			$enabled = 0;
+		
+		$sql = "INSERT INTO ".TABLE_PREFIX."aircraft (
+					`icao`, `name`, `fullname`, `registration`, `downloadlink`,
+					`imagelink`, `range`, `weight`, `cruise`, `enabled`)
+				VALUES (
+					'$icao', '$name', '$fullname', '$registration', '$downloadlink', 
+					'$imagelink', '$range', '$weight', '$cruise', $enabled)";
 		
 		$res = DB::query($sql);
 		
@@ -158,15 +204,23 @@ class OperationsData
 	 * Edit an aircraft
 	 */
 	public static function EditAircraft($id, $icao, $name, $fullname, $registration, $downloadlink, $imagelink,
-								$range, $weight, $cruise)
+								$range, $weight, $cruise, $enabled=true)
 	{
 		$icao = DB::escape(strtoupper($icao));
 		$name = DB::escape(strtoupper($name));
 		$registration = DB::escape(strtoupper($registration));
+		
+		if($enabled == true)
+			$enabled = 1;
+		else
+			$enabled = 0;
 
-		$sql = "UPDATE " . TABLE_PREFIX."aircraft SET icao='$icao', name='$name', fullname='$fullname',
-					registration='$registration', downloadlink='$downloadlink', imagelink='$imagelink',
-					range='$range', weight='$weight', cruise='$cruise' WHERE id=$id";
+		$sql = "UPDATE " . TABLE_PREFIX."aircraft 
+					SET `icao`='$icao', `name`='$name', `fullname`='$fullname',
+						`registration`='$registration', `downloadlink`='$downloadlink', 
+						`imagelink`='$imagelink', `range`='$range', `weight`='$weight',
+						`cruise`='$cruise', `enabled`=$enabled
+					WHERE `id`=$id";
 		
 		$res = DB::query($sql);
 		
@@ -189,8 +243,10 @@ class OperationsData
 		else
 			$hub = 0;
 
-		$sql = "INSERT INTO " . TABLE_PREFIX ."airports (icao, name, country, lat, lng, hub)
-					VALUES ('$icao', '$name', '$country', $lat, $long, $hub)";
+		$sql = "INSERT INTO " . TABLE_PREFIX ."airports (
+						`icao`, `name`, `country`, `lat`, `lng`, `hub`)
+					VALUES (
+						'$icao', '$name', '$country', $lat, $long, $hub)";
 
 		$res = DB::query($sql);
 		
@@ -211,8 +267,8 @@ class OperationsData
 			$hub = 0;
 
 		$sql = "UPDATE " . TABLE_PREFIX . "airports
-					SET name='$name', country='$country', lat=$lat, lng=$long, hub=$hub
-					WHERE icao='$icao'";
+					SET `name`='$name', `country`='$country', `lat`=$lat, `lng`=$long, `hub`=$hub
+					WHERE `icao`='$icao'";
 
 		$res = DB::query($sql);
 		
@@ -227,7 +283,8 @@ class OperationsData
 	 */
 	public static function GetAirportInfo($icao)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports WHERE icao=\''.$icao.'\'');
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports 
+								WHERE `icao`=\''.$icao.'\'');
 	}
 	
 	/**

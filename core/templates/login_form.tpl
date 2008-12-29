@@ -13,7 +13,7 @@ if($message)
 	<dd><input type="password" name="password" value="" />
 	
 	<dt></dt>
-	<dd><input type="hidden" name="redir" value="<?php echo $redir;?>" />
+	<dd><input type="hidden" name="redir" value="index.php/profile" />
 		<input type="hidden" name="action" value="login" />
 		<input type="submit" name="submit" value="Log In" />
 		

@@ -50,7 +50,7 @@ class Login extends CodonModule
 				
 				/*redirect back to front page
 				*/
-				Template::Set('redir', SITE_URL);
+				//Template::Set('redir', SITE_URL);
 				Template::Show('login_complete.tpl');
 				
 				break;

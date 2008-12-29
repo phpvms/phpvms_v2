@@ -69,7 +69,7 @@ class Vars
 			self::$get->$key = self::cleaned($value);
 		}
 		
-	foreach($_REQUEST as $key=>$value)
+		foreach($_REQUEST as $key=>$value)
 		{
 			self::$request->$key = self::cleaned($value);
 		}
@@ -96,8 +96,7 @@ class Vars
 			}
 		}
 		
-		// Now parse any other matches
-		
+		// Now parse any other matches		
 		if(!is_array($parameters))
 		{
 			return false;
@@ -269,4 +268,3 @@ class Vars
 		return self::$getcount;
 	}
 }
-?>

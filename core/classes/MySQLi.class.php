@@ -184,27 +184,7 @@ class ezSQL_mysqli extends ezSQLcore
 			
 			return $result;
 		}
-			
-		// If there is an error then take note of it..
-		if ( !$result )
-		{
-			$errno = $this->dbh->errno;
-			
-			if($errno == 0)
-			{
-				$this->clear_errors();
-				return true;
-			}
-			
-			$this->register_error($this->dbh->error, $this->dbh->errno);
-			
-			return false;
-		}
-		else
-		{
-			$this->clear_errors();
-		}
-		
+				
 		// Query was an insert, delete, update, replace
 		$is_insert = false;
 		if (preg_match("/^(insert|delete|update|replace)\s+/i",$query))

@@ -13,8 +13,8 @@
 		<?php
 		foreach($allcategories as $category)
 		{
-			if($category->id == $download->pid)
-				$checked = ' checked ';
+			if($category->id == $download->pid || $_GET['cat'] == $category->id)
+				$checked = ' selected ';
 			else
 				$checked = '';
 				

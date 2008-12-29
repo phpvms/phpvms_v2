@@ -20,13 +20,14 @@
 
 class Operations extends CodonModule
 {
-	function HTMLHead()
+	public function HTMLHead()
 	{
 		switch($this->get->page)
 		{
 			case 'airlines':
 				Template::Set('sidebar', 'sidebar_airlines.tpl');
 				break;
+			case 'addaircraft':
 			case 'aircraft':
 				Template::Set('sidebar', 'sidebar_aircraft.tpl');
 				break;
@@ -45,7 +46,7 @@ class Operations extends CodonModule
 		}
 	}
 
-	function Controller()
+	public function Controller()
 	{
 		switch($this->get->page)
 		{
@@ -254,7 +255,7 @@ class Operations extends CodonModule
 		}
 	}
 	
-	function AddAirline()
+	public function AddAirline()
 	{
 		$code = $this->post->code;
 		$name = $this->post->name;
@@ -290,7 +291,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	function EditAirline()
+	public function EditAirline()
 	{
 		$id = $this->post->id;
 		$code = $this->post->code;
@@ -328,7 +329,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 			
-	function AddAircraft()
+	public function AddAircraft()
 	{		
 		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == ''
 			|| $this->post->registration == '')
@@ -338,9 +339,24 @@ class Operations extends CodonModule
 			return;
 		}
 		
+		if($this->post->enabled == '1')
+			$this->post->enabled = true;
+		else
+			$this->post->enabled = false;
+			
+		# Check aircraft registration, make sure it's not a duplicate
+		
+		$ac = OperationsData::GetAircraftByReg($this->post->registration);
+		if($ac)
+		{
+			Template::Set('message', 'The aircraft registration must be unique');
+			Template::Show('core_error.tpl');
+			return;
+		}
+			
 		OperationsData::AddAircaft($this->post->icao, $this->post->name, $this->post->fullname, 
 					$this->post->registration, $this->post->downloadlink, $this->post->imagelink,
-					$this->post->range, $this->post->weight, $this->post->cruise);
+					$this->post->range, $this->post->weight, $this->post->cruise, $this->post->enabled);
 		
 		if(DB::errno() != 0)
 		{
@@ -357,7 +373,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	function AddAirport()
+	public function AddAirport()
 	{
 		$icao = $this->post->icao;
 		$name = $this->post->name;
@@ -396,7 +412,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	function EditAirport()
+	public function EditAirport()
 	{
        $icao = $this->post->icao;
 		$name = $this->post->name;
@@ -431,7 +447,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	function AddSchedule()
+	public function AddSchedule()
 	{
 		$code = $this->post->code;
 		$flightnum = $this->post->flightnum;
@@ -476,7 +492,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	function EditSchedule()
+	public function EditSchedule()
 	{
 		$scheduleid = $this->post->id;
    		$code = $this->post->code;
@@ -516,7 +532,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	function DeleteSchedule()
+	public function DeleteSchedule()
 	{
 		$id = $this->post->id;
 		
@@ -533,7 +549,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	function EditAircraft()
+	public function EditAircraft()
 	{
 		if($this->post->id == '')
 		{
@@ -549,10 +565,16 @@ class Operations extends CodonModule
 			Template::Show('core_error.tpl');
 			return;
 		}
-
+		
+		if($this->post->enabled == '1')
+			$this->post->enabled = true;
+		else
+			$this->post->enabled = false;
+			
 		OperationsData::EditAircraft($this->post->id, $this->post->icao, $this->post->name, 
 					$this->post->fullname, $this->post->registration, $this->post->downloadlink,
-					$this->post->imagelink, $this->post->range, $this->post->weight, $this->post->cruise);
+					$this->post->imagelink, $this->post->range, 
+					$this->post->weight, $this->post->cruise, $this->post->enabled);
 		
 		if(DB::errno() != 0)
 		{

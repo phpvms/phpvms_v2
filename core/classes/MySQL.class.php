@@ -201,18 +201,9 @@ class ezSQL_mysql extends ezSQLcore
 		$this->result = @mysql_query($query);
 
 		// If there is an error then take note of it..
-		if(!$this->result)
+		if(!$this->result && mysql_errno() != 0)
 		{
-			// Check the error to number to see if something
-			//	actually went wrong
-			$errno = mysql_errno();
-			
-			if($errno == 0)
-			{
-				$this->clear_errors();
-				return true;
-			}
-				
+			// Something went wrong				
 			$this->register_error(mysql_error(), $errno);
 			return false;
 		}

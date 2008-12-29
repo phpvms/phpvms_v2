@@ -100,8 +100,8 @@ class DownloadData
 		$name = DB::escape($name);
 		
 		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
-							(pid, name, link, image)
-					VALUES	($categoryid, '$name', '$link', '$image')";
+							(pid, name, link, image, hits)
+					VALUES	($categoryid, '$name', '$link', '$image', 0)";
 		
 		$res = DB::query($sql);
 		
@@ -140,6 +140,20 @@ class DownloadData
 		
 		$res = DB::query($sql);
 		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
+	public static function IncrementDLCount($id)
+	{
+		$sql = 'UPDATE '.TABLE_PREFIX.'downloads
+					SET hits=hits+1
+					WHERE id='.intval($id);
+	
+		$res = DB::query($sql);
+				
 		if(DB::errno() != 0)
 			return false;
 		

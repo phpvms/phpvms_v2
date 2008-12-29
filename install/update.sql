@@ -8,3 +8,4 @@ CREATE TABLE `phpvms_downloads` (
   PRIMARY KEY (id)
 ) ENGINE = MyISAM;
 
+ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;

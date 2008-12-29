@@ -25,7 +25,7 @@ if(!$allaircraft)
 foreach($allaircraft as $aircraft)
 {
 ?>
-<tr>
+<tr class="<?php echo ($aircraft->enabled==0)?'disabled':''?>">
 	<td align="center"><?php echo $aircraft->icao; ?></td>
 	<td align="center"><?php echo $aircraft->name; ?></td>
 	<td align="center"><?php echo $aircraft->fullname; ?></td>
@@ -34,8 +34,7 @@ foreach($allaircraft as $aircraft)
 	<td align="center"><?php echo $aircraft->weight; ?></td>
 	<td align="center"><?php echo $aircraft->cruise; ?></td>
 	<td align="center" width="1%" nowrap>
-			<a id="dialog" class="jqModal" 
-			href="<?php echo SITE_URL?>/admin/action.php/operations/editaircraft?id=<?php echo $aircraft->id;?>">
+			<a href="<?php echo SITE_URL?>/admin/index.php/operations/editaircraft?id=<?php echo $aircraft->id;?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/options.png" alt="Options" /></a></td>
 </tr>
 <?php

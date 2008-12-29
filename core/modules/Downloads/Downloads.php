@@ -22,14 +22,30 @@ class Downloads extends CodonModule
 	
 	public function Controller()
 	{
-		
-		switch($this->get->page)
+		if(!Auth::LoggedIn())
 		{
-			case '':
-							
+			echo 'You must be logged in to access this page!';
+			break;
+		}
+		
+		switch($this->get->id)
+		{
+			case '':				
+			
 				Template::Set('allcategories', DownloadData::GetAllCategories());
 				Template::Show('downloads_list.tpl');
-				break;		
+				break;	
+				
+			default:
+			
+				# Download the item, but "one up" the download count
+				
+				DownloadData::IncrementDLCount($this->get->id);
+				
+				Template::Set('download', DownloadData::GetAsset($this->get->id));
+				Template::Show('download_item.tpl');
+				
+				break;	
 		}
 		
 		# Retrieve our download ID and download it

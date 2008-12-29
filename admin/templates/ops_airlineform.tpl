@@ -1,13 +1,13 @@
 <h3><?php echo $title;?></h3>
 <form id="form" action="<?php echo SITE_URL?>/admin/action.php/operations/airlines" method="post">
 <dl>
-<dt>Airline Code</dt>
+<dt>Airline Code *</dt>
 <dd><input name="code" type="text" value="<?php echo $airline->code; ?>" /></dd>
 
-<dt>Airline Name</dt>
+<dt>Airline Name *</dt>
 <dd><input name="name" type="text" value="<?php echo $airline->name; ?>" /></dd>
 
-<dt>Enabled?</dt>
+<dt>Enabled *</dt>
 <dd><?php $checked = ($airline->enabled==1)?'CHECKED':''; ?>
 	<input name="enabled" type="checkbox" <?php echo $checked ?> /></dd>
 

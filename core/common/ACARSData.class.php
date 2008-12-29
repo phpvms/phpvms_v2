@@ -48,7 +48,9 @@ class ACARSData extends CodonModule
 		}*/
 
 		// first see if we exist:
-		$exist = DB::get_row('SELECT id FROM '.TABLE_PREFIX.'acarsdata WHERE pilotid=\''.$data['pilotid'].'\'');
+		$exist = DB::get_row('SELECT `id`
+								FROM '.TABLE_PREFIX.'acarsdata 
+								WHERE `pilotid`=\''.$data['pilotid'].'\'');
 		
 		if($exist)
 		{ // update
@@ -60,7 +62,7 @@ class ACARSData extends CodonModule
 				// append the message log
 				if($field == 'messagelog')
 				{
-					$upd.='messagelog=CONCAT(messagelog, \''.DB::escape($data['field']).'\'), ';
+					$upd.='`messagelog`=CONCAT(`messagelog`, \''.DB::escape($data['field']).'\'), ';
 				}
 				else 
 				{
@@ -80,7 +82,8 @@ class ACARSData extends CodonModule
 			$upd.='lastupdate=NOW() ';
 
 			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata 
-						SET '.$upd.' WHERE pilotid=\''.$data['pilotid'].'\'';
+						SET '.$upd.' 
+						WHERE `pilotid`=\''.$data['pilotid'].'\'';
 						
 			DB::query($query);
 		}
@@ -103,7 +106,7 @@ class ACARSData extends CodonModule
 				}
 				
 				$ins[$field] = $data[$field];
-				$fields.=$field.',';
+				$fields.='`'.$field.'`,';
 				
 				/*if(is_numeric($data[$field]))
 				{
@@ -119,7 +122,9 @@ class ACARSData extends CodonModule
 			$fields .=' lastupdate ';
 			$values .= ' NOW()';
 			
-			$query = 'INSERT INTO '.TABLE_PREFIX.'acarsdata ('.$fields.') VALUES ('.$values.')';
+			$query = 'INSERT INTO '.TABLE_PREFIX.'acarsdata (
+							'.$fields.') 
+						VALUES ('.$values.')';
 		
 			DB::query($query);
 			
@@ -179,8 +184,9 @@ class ACARSData extends CodonModule
 		$cutofftime = $cutofftime / 12;
 		
 		
-		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'acarsdata
-					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= lastupdate';
+		$sql = 'SELECT * 
+					FROM ' . TABLE_PREFIX .'acarsdata
+					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= `lastupdate`';
 		
 		return DB::get_results($sql);
 		

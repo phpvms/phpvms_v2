@@ -55,6 +55,7 @@ CREATE TABLE `phpvms_aircraft` (
   `range` varchar(15) NOT NULL default '0',
   `weight` varchar(15) NOT NULL default '0',
   `cruise` varchar(15) NOT NULL default '0',
+  `enabled` smallint(6) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB ;
 

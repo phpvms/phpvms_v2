@@ -115,7 +115,8 @@ class Schedules extends CodonModule
 		/*$depapts = SchedulesData::GetDepartureAirports();
 		$appapts = SchedulesData::GetArrivalAiports();*/
 		$depapts = OperationsData::GetAllAirports();
-		$equip = OperationsData::GetAllAircraft();
+		//$equip = OperationsData::GetAllAircraft(true);
+		$equip = OperationsData::GetAllAircraftSearchList(true);
 		
 		Template::Set('depairports', $depapts);
 		Template::Set('equipment', $equip);

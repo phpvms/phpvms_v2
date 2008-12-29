@@ -15,7 +15,10 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
   * Revamped admin panel
   * Backend optimizations
   * Duplicate schedules on import now overwrite previous existing schedule
-  * Pilot notified of registraion status
+  * Pilot notified of registration status
+  * Search list aircraft dupes fixed
+  * Search shows results properly
+  * Enabled/disable aircraft
   * Update check fixed
   * Javascript trimmed down
   * Maintenance section to calculate distances for routes/pireps

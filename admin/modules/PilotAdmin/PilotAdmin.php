@@ -20,7 +20,7 @@
 class PilotAdmin extends CodonModule
 {
 
-	function HTMLHead()
+	public function HTMLHead()
 	{
 		switch($this->get->page)
 		{
@@ -36,7 +36,7 @@ class PilotAdmin extends CodonModule
 		}
 	}
 		
-	function Controller()
+	public function Controller()
 	{
 
 		switch($this->get->page)
@@ -131,12 +131,14 @@ class PilotAdmin extends CodonModule
                 switch($this->post->action)
                 {
 					case 'approvepilot':
-						PilotData::AcceptPilot($this->post->id);
-						RanksData::CalculatePilotRanks();
+						
+						$this->ApprovePilot();
 						
 						break;
 					case 'rejectpilot':
-						PilotData::RejectPilot($this->post->id);
+						
+						$this->RejectPilot();
+						
 						break;
 				}
 
@@ -157,7 +159,7 @@ class PilotAdmin extends CodonModule
 		
 	}
 	
-	function ShowPilotsList()
+	public function ShowPilotsList()
 	{
 		$letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
 						 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
@@ -169,7 +171,7 @@ class PilotAdmin extends CodonModule
 		Template::Show('pilots_list.tpl');
 	}
 	
-	function ViewPilotDetails()
+	public function ViewPilotDetails()
 	{
 		$pilotid = $this->get->pilotid;
 		
@@ -184,7 +186,7 @@ class PilotAdmin extends CodonModule
 		Template::Show('pilots_detailtabs.tpl');
 	}
 	
-	function SetGroupsData($pilotid)
+	public function SetGroupsData($pilotid)
 	{
 		//This is for the groups tab
 		// Only send the groups they're in
@@ -204,7 +206,7 @@ class PilotAdmin extends CodonModule
 		Template::Set('freegroups', $freegroups);
 	}
 	
-	function AddGroup()
+	public function AddGroup()
 	{
 		$name = $this->post->name;
 		
@@ -229,7 +231,7 @@ class PilotAdmin extends CodonModule
 		}		
 	}
 	
-	function AddPilotToGroup()
+	public function AddPilotToGroup()
 	{
 		$pilotid = $this->post->pilotid;
 		$groupname = $this->post->groupname;
@@ -255,7 +257,7 @@ class PilotAdmin extends CodonModule
 		}		
 	}
 	
-	function RemovePilotGroup()
+	public function RemovePilotGroup()
 	{
 		$pilotid = $this->post->pilotid;
 		$groupid = $this->post->groupid;
@@ -274,14 +276,55 @@ class PilotAdmin extends CodonModule
 		}
 	}
 	
-	function ShowGroups()
+	public function ShowGroups()
 	{
 		Template::Set('allgroups', PilotGroups::GetAllGroups());
 		Template::Show('groups_grouplist.tpl');
 		Template::Show('groups_addgroup.tpl');
 	}
 	
-	function ChangePassword()
+	public function ApprovePilot()
+	{
+		PilotData::AcceptPilot($this->post->id);
+		RanksData::CalculatePilotRanks();
+		
+		$pilot = PilotData::GetPilotData($this->post->id);
+		
+		# Send pilot notification
+		
+		$subject = 'Your registration was accepted - '.SITE_NAME;
+		$message = "Dear $pilot->firstname $pilot->lastname,
+Your registration for ".SITE_NAME." was accepted! Please visit us 
+at <a href=\"".SITE_URL."\">".SITE_URL."</a> to login and complete your registration
+
+Thanks!
+".SITE_NAME." Staff";
+	
+		Util::SendEmail($pilot->email, $subject, $message);
+		
+	}
+	
+	public function RejectPilot()
+	{	
+		$pilot = PilotData::GetPilotData($this->post->id);
+		
+		# Send pilot notification
+		
+		$subject = 'Your registration was accepted - '.SITE_NAME;
+		$message = "Dear $pilot->firstname $pilot->lastname,
+				Your registration for ".SITE_NAME." was accepted! Please visit us 
+				at <a href=\"".SITE_URL."\">".SITE_URL."</a> to login and complete your registration
+				
+				Thanks!
+				".SITE_NAME." Staff";
+		
+		Util::SendEmail($pilot->email, $subject, $message);
+		
+		# Reject in the end, since it's delted
+		PilotData::RejectPilot($this->post->id);
+	}
+	
+	public function ChangePassword()
 	{
 		$password1 = $this->post->password1;
 		$password2 = $this->post->password2;

@@ -24,6 +24,7 @@ class Logout extends CodonModule
 		switch($this->get)
 		{
 			case '':
+			default:
 				
 				Auth::LogOut();
 				

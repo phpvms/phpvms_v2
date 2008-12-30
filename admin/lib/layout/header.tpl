@@ -45,6 +45,8 @@ Template::Show('core_htmlreq.tpl');
 		Template::Show('core_navigation.tpl');
 		?>
 	</ul>
+	<h3><a href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></h3>
+	<h3><a href="<?php echo SITE_URL?>/index.php">View Your Site</a></h3>
 	<h3></h3>
 	
   </div>

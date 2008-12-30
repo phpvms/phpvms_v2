@@ -50,6 +50,12 @@ body  {
 	border-bottom: 4px solid #999;
 }
 
+#sidebar h3 a
+{
+	color: #fff;
+	font-weight: none;
+}
+
 a {
 	color: #333;
 	text-decoration: none;

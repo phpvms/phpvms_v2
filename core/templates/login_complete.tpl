@@ -1,4 +1,8 @@
-<div align="center">
+<?php
+	if($redir == '')
+		$redir = SITE_URL;
+		
+?><div align="center">
 <p>You will be forwarded in a few seconds, or click below to be forwarded.</p>
 <p><a href="<?php echo $redir;?>">Click here to be redirected</a></p>
 </div>

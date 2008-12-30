@@ -1,33 +1,84 @@
-<form name='form1' method='post' action='index.php'>
+<h3>Contact Us</h3>
+<form method="post" action="<?php echo SITE_URL ?>/index.php/contact">
   <table width='100%' border='0'>
     <tr>
-      <td>Name:</td>
-      <td><label>
-        <input type='text' name='name' id='name'>
-      </label></td>
+      <td><strong>Name:</strong></td>
+      <td>
+		<?php
+		if(Auth::LoggedIn())
+		{
+			echo Auth::$userinfo->firstname .' '.Auth::$userinfo->lastname;
+			echo '<input type="hidden" name="name" 
+					value="'.Auth::$userinfo->firstname 
+							.' '.Auth::$userinfo->lastname.'" />';
+		}
+		else
+		{
+		?>
+			<input type="text" name="name" value="" />
+			<?php
+		}
+		?>
+      </td>
     </tr>
     <tr>
-      <td>E-Mail Address:</td>
-      <td><label>
-        <input type='text' name='email' id='email'>
-      </label></td>
+		<td width="1%" nowrap><strong>E-Mail Address:</strong></td>
+		<td>
+		<?php
+		if(Auth::LoggedIn())
+		{
+			echo Auth::$userinfo->email;
+			echo '<input type="hidden" name="name" 
+					value="'.Auth::$userinfo->email.'" />';
+		}
+		else
+		{
+		?>
+			<input type="text" name="email" value="" />
+			<?php
+		}
+		?>
+		</td>
+	</tr>
+	
+	<?php
+	
+	# This is a simple captcha thing for if they are not logged in
+	if(Auth::LoggedIn() == false)
+	{
+		# Just a simple addition
+		$int1 = rand(0, 10);
+		$int2 = rand(0, 10);
+		
+		SessionManager::Set('captcha_sum', $int1 + $int2);
+		
+		echo '<tr>
+				<td><strong>Captcha</strong></td>
+				<td><p>What is the sum of '.$int1 .' + '.$int2.'?<br />
+					<input type="text" name="captcha" value="" />
+				</td>
+			  </tr>';
+	}
+	
+	?>
+	<tr>
+		<td><strong>Subject: </strong></td>
+		<td><input type="text" name="subject" value=""</td>
+	
+	</tr>
+    <tr>
+      <td><strong>Message:</strong></td>
+      <td>
+		<textarea name="message" cols='45' rows='5'></textarea>
+      </td>
     </tr>
     <tr>
-      <td>Message:</td>
-      <td><label>
-        <textarea name='message' id='message' cols='45' rows='5'></textarea>
-      </label></td>
+		<td>
+			<input type="hidden" name="loggedin" value="<?php echo (Auth::LoggedIn())?'true':'false'?>" />
+		</td>
+		<td>
+          <input type="submit" name="submit" value='Send Message'>
+		</td>
     </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td colspan='2'><label>
-        <div align='center'>
-          <input type='submit' name='button' id='button' value='Send Message'>
-        </div>
-      </label></td>
-    </tr>
-  </table><input name='contact' type='hidden' value='contact'>
+  </table>
 </form>

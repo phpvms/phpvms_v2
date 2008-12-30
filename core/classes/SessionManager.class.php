@@ -65,9 +65,19 @@ class SessionManager
 		}
 	}
 	
+	public static function Set($key, $value)
+	{
+		$_SESSION[$key] = serialize($value);
+	}
+	
 	public static function AddData($key, $value)
 	{
 		$_SESSION[$key] = serialize($value);
+	}
+	
+	public static function Get($key)
+	{
+		return unserialize($_SESSION[$key]);
 	}
 	
 	public static function GetData($key)
@@ -91,5 +101,3 @@ class SessionManager
 		session_destroy();
 	}
 }
-
-?>

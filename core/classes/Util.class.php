@@ -39,10 +39,14 @@
 
 class Util
 {
-	function SendEmail($email, $subject, $message)
+	function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
 	{
 	
-		$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
+		if($fromname!='' && $fromemail !='')
+			$headers = "From: $fromname <$fromemail>\r\n";
+		else
+			$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
+			
 		$headers .= "MIME-Version: 1.0\r\n";
 		$boundary = uniqid("PHPVMSMAILER");
 		$headers .= "Content-Type: multipart/alternative" .

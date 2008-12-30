@@ -61,5 +61,3 @@
 	</ul>
 </li>
 <?php echo $MODULE_NAV_INC;?>
-<li><a href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></li>
-<li><a href="<?php echo SITE_URL?>/index.php">View Your Site</a></li>

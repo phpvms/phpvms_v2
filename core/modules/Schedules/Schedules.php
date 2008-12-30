@@ -112,10 +112,7 @@ class Schedules extends CodonModule
 	
 	function ShowSchedules()
 	{
-		/*$depapts = SchedulesData::GetDepartureAirports();
-		$appapts = SchedulesData::GetArrivalAiports();*/
 		$depapts = OperationsData::GetAllAirports();
-		//$equip = OperationsData::GetAllAircraft(true);
 		$equip = OperationsData::GetAllAircraftSearchList(true);
 		
 		Template::Set('depairports', $depapts);
@@ -123,7 +120,7 @@ class Schedules extends CodonModule
 		
 		Template::Show('schedule_searchform.tpl');
 		
-		// Show the routes. Remote this to not show them.
+		# Show the routes. Remote this to not show them.
 		Template::Set('allroutes', SchedulesData::GetSchedules());
 		
 		Template::Show('schedule_list.tpl');

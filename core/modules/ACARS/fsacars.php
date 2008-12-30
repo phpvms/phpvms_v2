@@ -90,6 +90,7 @@ switch($_GET['action'])
 		
 		break;
 		
+	case 'flightplans':
 	case 'schedules':
 	
 		$allschedules = SchedulesData::GetSchedules('', true);

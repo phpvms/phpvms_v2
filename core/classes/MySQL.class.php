@@ -117,13 +117,13 @@ class ezSQL_mysql extends ezSQLcore
 	function select($dbname='')
 	{
 		// Must have a database name
-		if ( $dbname == '')
+		if ($dbname == '')
 		{
 			$this->register_error('No database name specified!');
 			return false;
 		}
 		// Must have an active database connection
-		if (! $this->dbh)
+		if (!$this->dbh)
 		{
 			$this->register_error('Can\'t select database, invalid or inactive connection', -1);
 			return false;

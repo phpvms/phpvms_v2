@@ -260,29 +260,22 @@ img
 	border: none;
 }
 
-dl
-{
-	position: relative;
+dl {
 	float: left;
 	z-index: 100;
 	width: 100%;
 }
 
-dt
-{
-	clear: both;
-	width: 200px;
+dt {
+	/*clear: both;
+	width: 200px;*/
 	padding: 0px 0 2px 0;
 	text-align: left;
 	font-weight: bold;
 }
 
-dd
-{
-	width: 300px;
-	margin: 0 0 8px 0;
+dd {
 	padding-left: 6px;
-	
 }
 
 dd button

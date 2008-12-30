@@ -97,6 +97,7 @@ class DownloadData
 	{
 		if($categoryid == '') return false;
 		
+		$categoryid = intval($categoryid);
 		$name = DB::escape($name);
 		
 		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
@@ -116,6 +117,7 @@ class DownloadData
 		if($id == '' || $name == '') return false;
 		
 		$id = intval($id);
+		$name = DB::escape($name);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."downloads
 					SET name='$name', link='$link', image='$image'

@@ -11,7 +11,9 @@
 <dd><input name="fullname" type="text"  value="<?php echo $aircraft->fullname; ?>" /></dd>
 
 <dt>Aircraft Registration *</dt>
-<dd><input name="registration" type="text"  value="<?php echo $aircraft->registration; ?>" /></dd>
+<dd><input name="registration" type="text"  value="<?php echo $aircraft->registration; ?>" />
+	<p>Inactive aircraft have an X as their registration prefix</p>
+</dd>
 
 <dt>Link to download aircraft</dt>
 <dd><input name="downloadlink" type="text"  value="<?php echo $aircraft->downloadlink; ?>" /></dd>
@@ -19,6 +21,8 @@
 <dt>Link to aircraft image</dt>
 <dd><input name="imagelink" type="text"  value="<?php echo $aircraft->imagelink; ?>" /></dd>
 
+<dt></dt>
+<dd>Some of this aircraft can be retrieved from <a href="http://www.airliners.net/aircraft-data/" target="_new">this site</a>.</dd>
 <dt>Range</dt>
 <dd><input name="range" type="text"   value="<?php echo $aircraft->range; ?>" /></dd>
 

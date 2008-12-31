@@ -81,6 +81,7 @@ class ezSQLcore
 	public $cache_inserts    = false;
 	public $use_disk_cache   = false;
 	public $cache_timeout    = 24; // hours
+	public $insert_id;
 	
 	public $get_col_info = false;
 	

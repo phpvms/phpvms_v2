@@ -190,11 +190,13 @@ class ezSQL_mysqli extends ezSQLcore
 		if (preg_match("/^(insert|delete|update|replace)\s+/i",$query))
 		{
 			$this->rows_affected = $this->dbh->affected_rows;
-			$this->insert_id = $this->dbh->insert_id;
 			$this->num_rows = $this->rows_affected;
 					
-			if($this->insert_id > 0)
+			if($this->dbh->insert_id > 0)
+			{
+				$this->insert_id = $this->dbh->insert_id;
 				$is_insert = true;
+			}
 			
 			// Return number fo rows affected
 			$return_val = $this->rows_affected;

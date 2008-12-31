@@ -217,11 +217,13 @@ class ezSQL_mysql extends ezSQLcore
 		if(preg_match("/^(insert|delete|update|replace)\s+/i",$query))
 		{
 			$this->rows_affected = @mysql_affected_rows();
-			$this->insert_id = @mysql_insert_id();
 			$this->num_rows = $this->rows_affected;
-				
-			if($this->insert_id > 0)
+						
+			if(mysql_insert_id() > 0)
+			{
+				$this->insert_id = @mysql_insert_id();
 				$is_insert = true;
+			}
 			
 			// Return number fo rows affected
 			$return_val = $this->rows_affected;
@@ -267,4 +269,3 @@ class ezSQL_mysql extends ezSQLcore
 		return $return_val;
 	}
 }
-?>

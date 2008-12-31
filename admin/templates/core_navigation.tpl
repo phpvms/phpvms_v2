@@ -40,6 +40,7 @@
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending">View Pending</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewrecent">View Recent Reports</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewall">View All Reports</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/pirepfields">PIREP Fields</a></li>
 	</ul>
 </li>
 <li><a class="menu" href="<?php echo SITE_URL?>/admin/index.php/reports">
@@ -56,7 +57,6 @@
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings">General Settings</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/maintenance/options">Maintenance Options</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/customfields">Profile Fields</a></li>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/pirepfields">PIREP Fields</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard/about">About phpVMS</a></li>
 	</ul>
 </li>

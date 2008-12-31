@@ -248,8 +248,7 @@ class PIREPS extends CodonModule
 			Template::Set('message', 'There was an error adding your PIREP');
 			Template::Show('core_error.tpl');
 			return false;
-		}
-		
+		}		
 		$pirepid = DB::$insert_id;
 		PIREPData::SaveFields($pirepid, $_POST);
 		

@@ -17,7 +17,9 @@
  */
 
 class PIREPData
-{
+{	
+	public $pirepid;
+	
 	/**
 	 * Return all of the pilot reports. Can pass a start and
 	 * count for pagination. Returns 20 rows by default. If you
@@ -310,13 +312,13 @@ class PIREPData
 			$ret = DB::query($sql);
 
 		}
-
-		DB::$insert_id = $pirepid;
 		
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
 		SchedulesData::IncrementFlownCount($code, $flightnum);
 		self::UpdatePIREPFeed();
+		
+		DB::$insert_id = $pirepid;
 		
 		return true;
 	}

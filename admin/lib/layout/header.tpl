@@ -38,17 +38,18 @@ Template::Show('core_htmlreq.tpl');
 	<?php
 	Template::Show('core_sidebar.tpl');
 	?>
-	<h3>Navigation</h3>
+	<h3>Options</h3>
 	
-	<ul id="menu">
+	<ul id="slidermenu" class="menu">
 		<?php
 		Template::Show('core_navigation.tpl');
 		?>
 	</ul>
-	<h3><a href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></h3>
-	<h3><a href="<?php echo SITE_URL?>/index.php">View Your Site</a></h3>
-	<h3></h3>
-	
+	<ul class="menu">
+		<li><a style="border-top: none" href="<?php echo SITE_URL?>/index.php">View Your Site</a></li>
+		<li><a href="<?php echo SITE_URL?>/index.php/Login/logout">Log Out</a></li>
+	</ul>
+		
   </div>
   <div id="mainContent">
 	<div id="results"></div>

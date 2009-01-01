@@ -358,7 +358,8 @@ class GoogleMapAPI {
      *
      * @param string $dsn
      */
-    function setDSN($dsn) {
+    function setDSN($dsn) 
+    {
         $this->dsn = $dsn;   
     }
     
@@ -367,7 +368,8 @@ class GoogleMapAPI {
      *
      * @param string $key
      */
-    function setAPIKey($key) {
+    function setAPIKey($key) 
+    {
         $this->api_key = $key;   
     }
 
@@ -376,7 +378,8 @@ class GoogleMapAPI {
      *
      * @param string $width
      */
-    function setWidth($width) {
+    function setWidth($width) 
+    {
         if(!preg_match('!^(\d+)(.*)$!',$width,$_match))
             return false;
 
@@ -422,7 +425,8 @@ class GoogleMapAPI {
      * enables the map controls (zoom/move)
      *
      */
-    function enableMapControls() {
+    function enableMapControls() 
+    {
         $this->map_controls = true;
     }
 
@@ -430,7 +434,8 @@ class GoogleMapAPI {
      * disables the map controls (zoom/move)
      *
      */
-    function disableMapControls() {
+    function disableMapControls() 
+    {
         $this->map_controls = false;
     }    
     
@@ -439,7 +444,8 @@ class GoogleMapAPI {
      *
      * @param string $size
      */
-    function setControlSize($size) {
+    function setControlSize($size) 
+    {
         if(in_array($size,array('large','small')))
             $this->control_size = $size;
     }            
@@ -448,7 +454,8 @@ class GoogleMapAPI {
      * enables the type controls (map/satellite/hybrid)
      *
      */
-    function enableTypeControls() {
+    function enableTypeControls() 
+    {
         $this->type_controls = true;
     }
 
@@ -456,7 +463,8 @@ class GoogleMapAPI {
      * disables the type controls (map/satellite/hybrid)
      *
      */
-    function disableTypeControls() {
+    function disableTypeControls() 
+    {
         $this->type_controls = false;
     }
 
@@ -464,8 +472,11 @@ class GoogleMapAPI {
      * set default map type (map/satellite/hybrid)
      *
      */
-    function setMapType($type) {
-        /*switch($type) {
+    function setMapType($type) 
+    {
+        /*
+        switch($type) 
+        {
             case 'hybrid':
                 $this->map_type = 'G_HYBRID_MAP';
                 break;
@@ -476,16 +487,19 @@ class GoogleMapAPI {
             default:
                 $this->map_type = 'G_NORMAL_MAP';
                 break;
-        }    */
-
+        }    
+        */
+        
         $this->map_type = $type;
+        return true;
     }    
     
     /**
      * enables onload
      *
      */
-    function enableOnLoad() {
+    function enableOnLoad() 
+    {
         $this->onload = true;
     }
 
@@ -517,7 +531,8 @@ class GoogleMapAPI {
      * enables map directions inside info window
      *
      */
-    function enableDirections() {
+    function enableDirections() 
+    {
         $this->directions = true;
     }
 
@@ -534,7 +549,8 @@ class GoogleMapAPI {
      *
      * @params $message string
      */
-    function setBrowserAlert($message) {
+    function setBrowserAlert($message) 
+    {
         $this->browser_alert = $message;
     }
 
@@ -543,21 +559,24 @@ class GoogleMapAPI {
      *
      * @params $message string
      */
-    function setJSAlert($message) {
+    function setJSAlert($message) 
+    {
         $this->js_alert = $message;
     }
 
     /**
      * enable map marker info windows
      */
-    function enableInfoWindow() {
+    function enableInfoWindow() 
+    {
         $this->info_window = true;
     }
     
     /**
      * disable map marker info windows
      */
-    function disableInfoWindow() {
+    function disableInfoWindow() 
+    {
         $this->info_window = false;
     }
     
@@ -566,8 +585,10 @@ class GoogleMapAPI {
      *
      * @params $message string click/mouseover
      */
-    function setInfoWindowTrigger($type) {
-        switch($type) {
+    function setInfoWindowTrigger($type) 
+    {
+        switch($type) 
+        {
             case 'mouseover':
                 $this->window_trigger = 'mouseover';
                 break;
@@ -580,7 +601,8 @@ class GoogleMapAPI {
     /**
      * enable zoom to encompass makers
      */
-    function enableZoomEncompass() {
+    function enableZoomEncompass() 
+    {
         $this->zoom_encompass = true;
     }
     
@@ -717,7 +739,8 @@ class GoogleMapAPI {
      * @param string $weight the weight of the line in pixels
      * @param string $opacity the line opacity (percentage)
      */
-    function addPolyLineByCoords($lon1,$lat1,$lon2,$lat2,$color='',$weight=0,$opacity=0) {
+    function addPolyLineByCoords($lon1,$lat1,$lon2,$lat2,$color='',$weight=0,$opacity=0) 
+    {
         $_polyline['lon1'] = $lon1;
         $_polyline['lat1'] = $lat1;
         $_polyline['lon2'] = $lon2;
@@ -775,28 +798,58 @@ class GoogleMapAPI {
      * @param string $infoWindowAnchorX X coordinate for info window anchor point
      * @param string $infoWindowAnchorY Y coordinate for info window anchor point
      */
-    function createMarkerIcon($iconImage,$iconShadowImage = '',$iconAnchorX = 'x',$iconAnchorY = 'x',$infoWindowAnchorX = 'x',$infoWindowAnchorY = 'x') {
+	function createMarkerIcon($iconImage,$iconHeight = '', $iconWidth = '', 
+				$iconShadowImage = '',
+			$iconAnchorX = 'x',$iconAnchorY = 'x',$infoWindowAnchorX = 'x',$infoWindowAnchorY = 'x') 
+	{
         $_icon_image_path = strpos($iconImage,'http') === 0 ? $iconImage : $_SERVER['DOCUMENT_ROOT'] . $iconImage;
-        if(!($_image_info = @getimagesize($_icon_image_path))) {
-            die('GoogleMapAPI:createMarkerIcon: Error reading image: ' . $iconImage);   
-        }
-        if($iconShadowImage) {
+        
+        if($iconHeight == '' && $iconWidth == '')
+        {
+			if(!($_image_info = @getimagesize($_icon_image_path)))
+			{
+				die('GoogleMapAPI:createMarkerIcon: Error reading image: ' . $iconImage);
+			}
+		}
+		else
+		{
+			$_image_info = array($iconWidth, $iconHeight);
+		}
+		
+        if($iconShadowImage) 
+        {
             $_shadow_image_path = strpos($iconShadowImage,'http') === 0 ? $iconShadowImage : $_SERVER['DOCUMENT_ROOT'] . $iconShadowImage;
-            if(!($_shadow_info = @getimagesize($_shadow_image_path))) {
-                die('GoogleMapAPI:createMarkerIcon: Error reading image: ' . $iconShadowImage);
-            }
+            
+            if($iconHeight == '' && $iconWidth == '')
+			{
+				if(!($_shadow_info = @getimagesize($_shadow_image_path))) 
+				{
+					die('GoogleMapAPI:createMarkerIcon: Error reading image: ' . $iconShadowImage);
+				}
+			}
+			else
+			{
+				$_shadow_info = array($iconWidth, $iconHeight);
+			}
         }
         
-        if($iconAnchorX === 'x') {
+        if($iconAnchorX === 'x') 
+        {
             $iconAnchorX = (int) ($_image_info[0] / 2);
         }
-        if($iconAnchorY === 'x') {
+        
+        if($iconAnchorY === 'x') 
+        {
             $iconAnchorY = (int) ($_image_info[1] / 2);
         }
-        if($infoWindowAnchorX === 'x') {
+        
+        if($infoWindowAnchorX === 'x') 
+        {
             $infoWindowAnchorX = (int) ($_image_info[0] / 2);
         }
-        if($infoWindowAnchorY === 'x') {
+        
+        if($infoWindowAnchorY === 'x') 
+        {
             $infoWindowAnchorY = (int) ($_image_info[1] / 2);
         }
                         
@@ -820,15 +873,27 @@ class GoogleMapAPI {
     /**
      * set the marker icon for ALL markers on the map
      */
-    function setMarkerIcon($iconImage,$iconShadowImage = '',$iconAnchorX = 'x',$iconAnchorY = 'x',$infoWindowAnchorX = 'x',$infoWindowAnchorY = 'x') {
-        $this->_icons = array($this->createMarkerIcon($iconImage,$iconShadowImage,$iconAnchorX,$iconAnchorY,$infoWindowAnchorX,$infoWindowAnchorY));
+	function setMarkerIcon($iconImage, $iconHeight, $iconWidth, 
+							$iconShadowImage = '',$iconAnchorX = 'x',
+							$iconAnchorY = 'x',$infoWindowAnchorX = 'x',
+							$infoWindowAnchorY = 'x') 
+	{
+		$this->_icons = array($this->createMarkerIcon($iconImage,$iconHeight, $iconWidth, 
+											$iconShadowImage,$iconAnchorX,$iconAnchorY,
+											$infoWindowAnchorX,$infoWindowAnchorY));
     }
     
     /**
      * add an icon to go with the correspondingly added marker
      */
-    function addMarkerIcon($iconImage,$iconShadowImage = '',$iconAnchorX = 'x',$iconAnchorY = 'x',$infoWindowAnchorX = 'x',$infoWindowAnchorY = 'x') {
-        $this->_icons[] = $this->createMarkerIcon($iconImage,$iconShadowImage,$iconAnchorX,$iconAnchorY,$infoWindowAnchorX,$infoWindowAnchorY);
+    function addMarkerIcon($iconImage, $iconHeight, $iconWidth, 
+							$iconShadowImage = '',$iconAnchorX = 'x',
+							$iconAnchorY = 'x',$infoWindowAnchorX = 'x',
+							$infoWindowAnchorY = 'x') 
+	{
+		$this->_icons[] = $this->createMarkerIcon($iconImage,$iconHeight, $iconWidth, 
+													$iconShadowImage, $iconAnchorX,$iconAnchorY,
+													$infoWindowAnchorX,$infoWindowAnchorY);
         return count($this->_icons) - 1;
     }
 
@@ -845,7 +910,9 @@ class GoogleMapAPI {
      * 
      */
     function getHeaderJS() {
-        return sprintf('<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=%s" type="text/javascript" charset="utf-8"></script>', $this->api_key);
+		
+		return '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='
+				.$this->api_key.'" type="text/javascript" charset="utf-8"></script>';
     }    
     
    /**                                                                                                                          
@@ -854,7 +921,8 @@ class GoogleMapAPI {
     *      $map->printMap();                                                                                                     
     *      $map->printOnLoad();                                                                                                  
     */                                                                                                                           
-    function printOnLoad() {
+    function printOnLoad() 
+    {
         echo $this->getOnLoad();
     }
 
@@ -907,8 +975,8 @@ class GoogleMapAPI {
 
                 // hash the icon data to see if we've already got this one; if so, save some javascript
                 $icon_key = md5(serialize($info));
-                if(!isset($exist_icn[$icon_key])) {
-
+                if(!isset($exist_icn[$icon_key])) 
+                {
                     $_output .= "icon[$i] = new GIcon();\n";   
                     $_output .= sprintf('icon[%s].image = "%s";',$i,$info['image']) . "\n";   
                     if($info['shadow']) {
@@ -918,7 +986,9 @@ class GoogleMapAPI {
                     $_output .= sprintf('icon[%s].iconSize = new GSize(%s,%s);',$i,$info['iconWidth'],$info['iconHeight']) . "\n";   
                     $_output .= sprintf('icon[%s].iconAnchor = new GPoint(%s,%s);',$i,$info['iconAnchorX'],$info['iconAnchorY']) . "\n";   
                     $_output .= sprintf('icon[%s].infoWindowAnchor = new GPoint(%s,%s);',$i,$info['infoWindowAnchorX'],$info['infoWindowAnchorY']) . "\n";
-                } else {
+                } 
+                else 
+                {
                     $_output .= "icon[$i] = icon[$exist_icn[$icon_key]];\n";
                 }
             }
@@ -926,20 +996,28 @@ class GoogleMapAPI {
                            
         $_output .= 'var map = null;' . "\n";
                      
-        if($this->onload) {
+        if($this->onload) 
+        {
            $_output .= 'function onLoad() {' . "\n";   
         }
                 
-        if(!empty($this->browser_alert)) {
+        if(!empty($this->browser_alert)) 
+        {
             $_output .= 'if (GBrowserIsCompatible()) {' . "\n";
         }
 
         $_output .= sprintf('var mapObj = document.getElementById("%s");',$this->map_id) . "\n";
         $_output .= 'if (mapObj != "undefined" && mapObj != null) {' . "\n";
         $_output .= sprintf('map = new GMap2(document.getElementById("%s"));',$this->map_id) . "\n";
-        if(isset($this->center_lat) && isset($this->center_lon)) {
-			// Special care for decimal point in lon and lat, would get lost if "wrong" locale is set; applies to (s)printf only
-			$_output .= sprintf('map.setCenter(new GLatLng(%s, %s), %d, %s);', number_format($this->center_lat, 6, ".", ""), number_format($this->center_lon, 6, ".", ""), $this->zoom, $this->map_type) . "\n";
+        if(isset($this->center_lat) && isset($this->center_lon)) 
+        {
+			// Special care for decimal point in lon and lat, 
+			//	would get lost if "wrong" locale is set; applies to (s)printf only
+			$_output .= sprintf('map.setCenter(new GLatLng(%s, %s), %d, %s);', 
+								number_format($this->center_lat, 6, '.', ''), 
+								number_format($this->center_lon, 6, '.', ''), 
+								$this->zoom, 
+								$this->map_type)."\n";
         }
         
         // zoom so that all markers are in the viewport
@@ -953,11 +1031,13 @@ class GoogleMapAPI {
             $this->_min_lat -= $_len_lat * $this->bounds_fudge;
             $this->_max_lat += $_len_lat * $this->bounds_fudge;
 
-            $_output .= "var bds = new GLatLngBounds(new GLatLng($this->_min_lat, $this->_min_lon), new GLatLng($this->_max_lat, $this->_max_lon));\n";
-            $_output .= 'map.setZoom(map.getBoundsZoomLevel(bds));' . "\n";
+            $_output .= "var bds = new GLatLngBounds(new GLatLng($this->_min_lat, $this->_min_lon), ";
+            $_output .= "new GLatLng($this->_max_lat, $this->_max_lon));\n";
+            $_output .= 'map.setZoom(map.getBoundsZoomLevel(bds));'."\n";
         }
         
-        if($this->map_controls) {
+        if($this->map_controls) 
+        {
           if($this->control_size == 'large')
               $_output .= 'map.addControl(new GLargeMapControl());' . "\n";
           else
@@ -976,10 +1056,10 @@ class GoogleMapAPI {
         }
         
         $_output .= $this->getAddMarkersJS();
-
         $_output .= $this->getPolylineJS();
 
-        if($this->sidebar) {
+        if($this->sidebar) 
+        {
             $_output .= sprintf('document.getElementById("%s").innerHTML = "<ul class=\"gmapSidebar\">"+ sidebar_html +"<\/ul>";', $this->sidebar_id) . "\n";
         }
 

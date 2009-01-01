@@ -159,50 +159,51 @@ a:hover {
     line-height: 0px;
 }
 
-ul#menu, ul#menu ul {
+ul.menu, ul.menu ul {
   list-style-type:none;
   margin: 0;
   padding: 0;
   width: 100%;
+  border-bottom: 1px solid #FFF;
 }
 
-ul#menu a {
+ul.menu a {
   display: block;
   text-decoration: none;
   padding-bottom: 5px;	
 }
-ul#menu a img {
+ul.menu a img {
   padding-bottom: 0px;
 }
 
-ul#menu li {
+ul.menu li {
   margin-top: 1px;
 }
 
-ul#menu img {
+ul.menu img {
 	padding-right: 5px;
 }
-ul#menu li a {
+ul.menu li a {
   background: #333;
   color: #fff;	
   padding: 0.5em;
 }
-ul#menu li a img
+ul.menu li a img
 {
 	padding: none;
 }
 
-ul#menu li a:hover {
+ul.menu li a:hover {
   background: #000;
 }
 
-ul#menu li ul li a {
+ul.menu li ul li a {
   background: #ccc;
   color: #000;
   padding-left: 20px;
 }
 
-ul#menu li ul li a:hover {
+ul.menu li ul li a:hover {
   background: #aaa;
   border-left: 5px #000 solid;
   padding-left: 15px;

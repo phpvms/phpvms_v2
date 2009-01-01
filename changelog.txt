@@ -19,6 +19,7 @@ Build <<REVISION>> (Version 1.1.<<REVISION>>)
   * Search list aircraft dupes fixed
   * Search shows results properly
   * Enabled/disable aircraft
+  * Google Maps "createMarkerIcon" error fixed
   * Update check fixed
   * Javascript trimmed down
   * Maintenance section to calculate distances for routes/pireps

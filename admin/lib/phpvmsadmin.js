@@ -75,7 +75,7 @@ $(document).ready(function() {
 	formInit();
 	reloadGroups();
 	
-	$("#menu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
+	$("#slidermenu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
 	
 	$(".tablesorter").tablesorter(); 
 	

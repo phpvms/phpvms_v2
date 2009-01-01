@@ -13,17 +13,17 @@ phpVMS - Virtual Airline Administration Software
 Build <<REVISION>> (Version 1.1.<<REVISION>>)
 
   * Revamped admin panel
-  * Backend optimizations
+  * Backend optimizations, Javascript trimmed down
+  * Download manager - create categories and add downloads
+  * Enabled/disable aircraft 
+  * Delete PIREPS
   * Duplicate schedules on import now overwrite previous existing schedule
-  * Pilot notified of registration status
-  * Search list aircraft dupes fixed
-  * Search shows results properly
-  * Enabled/disable aircraft
+  * Pilot (properly) notified of registration status
+  * Email sent to admin on registration/PIREP submission
+  * Search list aircraft dupes and results fixed
   * Google Maps "createMarkerIcon" error fixed
-  * Update check fixed
-  * Javascript trimmed down
+  * Update checking bug fixed
   * Maintenance section to calculate distances for routes/pireps
-  * PIREP access controls fixed
   * Security fixes
 
 Build 458 (Version 1.1.458)

@@ -279,7 +279,7 @@ class PIREPData
 					  'comment'=>'',
 					  'log'=>'');*/
 		
-		if($pirepdata['leg'] == '') $pirepdata['leg'] = 1;
+		if($pirepdata['leg'] == '' || $pirepdata['leg'] == '0') $pirepdata['leg'] = 1;
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
@@ -290,9 +290,8 @@ class PIREPData
 		# Remove the comment field, since it doesn't exist
 		# 	in the PIREPs table.
 		$comment = DB::escape($pirepdata['comment']);
-		//@unset($pirepdata['comment']);
-		
-		#replaced
+			
+		# Replaced
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
 					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, accepted, log)
 					VALUES ($pirepdata[pilotid], '$pirepdata[code]', '$pirepdata[flightnum]', 
@@ -315,8 +314,12 @@ class PIREPData
 		
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
-		SchedulesData::IncrementFlownCount($code, $flightnum);
 		self::UpdatePIREPFeed();
+		
+		# Send an email to the admin that a PIREP was submitted
+		$sub = 'PIREP Submitted';
+		$message = 'A PIREP has been submitted';
+		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
 		
 		DB::$insert_id = $pirepid;
 		
@@ -337,12 +340,11 @@ class PIREPData
 					  'comment'=>'',
 					  'log'=>'');*/
 		
-		if($pirepdata['leg'] == '') $pirepdata['leg'] = 1;		
+		if($pirepdata['leg'] == '' || $pirepdata['leg'] == '0') $pirepdata['leg'] = 1;		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
 		{
 			return false;
 		}
-		
 		
 		$sql = "UPDATE ".TABLE_PREFIX."pireps SET
 						code='$pirepdata[code]', flightnum='$pirepdata[flightnum]',
@@ -353,6 +355,38 @@ class PIREPData
 		$ret = DB::query($sql);
 		
 		return true;
+	}
+	
+	public static function DeleteFlightReport($pirepid)
+	{
+		$pirepid = intval($pirepid);
+		$pirep_details = self::GetReportDetails($pirepid);
+		
+		$sql = 'DELETE FROM '. TABLE_PREFIX.'pireps
+					WHERE pirepid='.$pirepid;
+		
+		DB::query($sql);
+					
+		# Delete any comments and fields
+		$sql = 'DELETE FROM '. TABLE_PREFIX.'comments
+					WHERE pirepid='.$pirepid;
+				
+		DB::query($sql);
+		
+		# Delete any custom field data
+		$sql = 'DELETE FROM '. TABLE_PREFIX.'pirepvalues
+					WHERE pirepid='.$pirepid;
+		
+		DB::query($sql);
+		
+		# Check if this was accepted report
+		#	If it was, remove it from that pilot's stats
+		if($pirep_details->accepted == PIREP_ACCEPTED)
+		{
+			PilotData::UpdateFlightData($pirep_details->pilotid, ($pirep_details->flighttime) * -1, -1);
+		}
+		
+		self::UpdatePIREPFeed();
 	}
 	
 	public static function UpdatePIREPFeed()

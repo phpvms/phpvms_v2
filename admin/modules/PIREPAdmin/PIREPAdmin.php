@@ -18,7 +18,7 @@
  
 class PIREPAdmin extends CodonModule
 {
-	function HTMLHead()
+	public function HTMLHead()
 	{
 		switch($this->get->page)
 		{
@@ -28,7 +28,7 @@ class PIREPAdmin extends CodonModule
 		}
 	}
 	
-	function Controller()
+	public function Controller()
 	{
 		// Post actions
 		switch($this->post->action)
@@ -39,6 +39,11 @@ class PIREPAdmin extends CodonModule
 				
 			case 'approvepirep':
 				$this->ApprovePIREP();
+				break;
+				
+			case 'deletepirep':
+				
+				$this->DeletePIREP();
 				break;
 				
 			case 'rejectpirep':
@@ -147,7 +152,7 @@ class PIREPAdmin extends CodonModule
 		}
 	}
 	
-	function AddComment()
+	public function AddComment()
 	{
 		$comment = $this->post->comment;
 		$commenter = Auth::$userinfo->pilotid;
@@ -172,7 +177,7 @@ class PIREPAdmin extends CodonModule
 	 * Approve the PIREP, and then update
 	 * the pilot's data
 	 */
-	function ApprovePIREP()
+	public function ApprovePIREP()
 	{
 		$pirepid = $this->post->id;
 		
@@ -182,22 +187,35 @@ class PIREPAdmin extends CodonModule
 		
 		if(intval($pirep_details->accepted) == PIREP_ACCEPTED) return;
 	
+		# Update pilot stats
+		SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
-		//DB::debug();
-		//RanksData::CalculatePilotRanks();
 		
 		PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
-		PilotData::GenerateSignature($pirep_details->pilotid);
-		
+			
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
+		PilotData::GenerateSignature($pirep_details->pilotid);
 	}
+	
+	/** 
+	 * Delete a PIREP
+	 */
+	 
+	public function DeletePIREP()
+	{
+		$pirepid = $this->post->id;
+		if($pirepid == '') return;
+		
+		PIREPData::DeleteFlightReport($pirepid);
+	}
+		
 	
 	/**
 	 * Reject the report, and then send them the comment
 	 * that was entered into the report
 	 */
-	function RejectPIREP()
+	public function RejectPIREP()
 	{
 		$pirepid = $this->post->pirepid;
 		$comment = $this->post->comment;
@@ -280,5 +298,3 @@ class PIREPAdmin extends CodonModule
 		return true;
 	}
 }
-
-?>

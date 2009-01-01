@@ -44,7 +44,7 @@ foreach($allfields as $field)
 	</td>
 	<td align="left" width="1%" nowrap>
 		<a id="dialog" class="jqModal" 
-			href="<?php echo SITE_URL?>/admin/action.php/settings/editpirepfield&id=<?php echo $field->fieldid;?>">
+			href="<?php echo SITE_URL?>/admin/action.php/settings/editpirepfield?id=<?php echo $field->fieldid;?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
 		<a href="<?php echo SITE_URL?>/admin/action.php/settings/pirepfields" 
 			action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">

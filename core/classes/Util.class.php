@@ -42,7 +42,7 @@ class Util
 	function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
 	{
 	
-		if($fromname!='' && $fromemail !='')
+		if($fromname != '' && $fromemail != '')
 			$headers = "From: $fromname <$fromemail>\r\n";
 		else
 			$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";

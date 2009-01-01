@@ -10,12 +10,13 @@ if(!$pireps)
 	return;
 }
 ?>
+<p>There are a total of <?php echo count($pireps);?> flight reports in this category.</p>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
 	<th>PIREP Information</th>
 	<th>Details</th>
-	<th>Options (* for double click)</th>
+	<th>Options</th>
 </tr>
 </thead>
 <tbody>
@@ -59,6 +60,16 @@ foreach($pireps as $report)
 		?>
 	</td>
 	<td align="left" valign="top" >
+		<span style="float: right">
+		<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/viewcomments.png" alt="View Comments" /></a>
+		
+		<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/addcomment?pirepid=<?php echo $report->pirepid;?>">
+				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.png" alt="Add Comment" /></a>
+		</span>
+		
 		<strong>Aircraft: </strong><?php echo $report->aircraft. " ($report->registration)" ?><br />
 	<?php
 		// Get the additional fields
@@ -78,6 +89,7 @@ foreach($pireps as $report)
 			}
 		}
 		?>
+
 	</td>
 	<td align="left" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="approvepirep"
@@ -91,13 +103,9 @@ foreach($pireps as $report)
 		<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
 		<br />	
-		<a id="dialog" class="jqModal"
-			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/viewcomments.png" alt="View Comments" /></a>
-		<br />
-		<a id="dialog" class="jqModal"
-			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/addcomment?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.png" alt="Add Comment" /></a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="deletepirep"
+			id="<?php echo $report->pirepid;?>" class="ajaxcall">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
 			
 	</td>
 </tr>
@@ -106,6 +114,7 @@ foreach($pireps as $report)
 ?>
 </tbody>
 </table>
+<span style="float: right">* - double click to select</span>
 
 <?php
 if($paginate)

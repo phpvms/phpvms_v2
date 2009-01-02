@@ -6,7 +6,7 @@ if(!$pilotgroups)
 else
 {
 ?>
-<table id="tabledlist" class="tablesorter">
+<table id="tabledlist" class="tablesorter" style="float: left">
 <thead>
 	<tr>
 		<th>Group Name</th>	
@@ -21,7 +21,7 @@ else
 ?>
 	<tr>
 		<td><?php echo $group->name;?></td>
-		<td><a href="action.php?admin=viewpilots" pilotid="<?php echo $pilotid;?>" 
+		<td><a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" pilotid="<?php echo $pilotid;?>" 
 				action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax">Remove</a></td>
 	</tr>		
 	
@@ -43,7 +43,7 @@ if($total == 0)
 	return;
 }
 ?>
-<form id="selectpilotgroup" action="action.php?admin=viewpilots" method="post">
+<form id="selectpilotgroup" action="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" method="post">
 
 <dl>
 	<dt>Select Group:</dt>

@@ -474,6 +474,7 @@ class Operations extends CodonModule
 						'flighttime'=>$this->post->flighttime,
 						'maxload'=>$this->post->maxload,
 						'price'=>$this->post->price,
+					'flighttype'=>$this->post->flighttype,
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
 				
@@ -517,6 +518,7 @@ class Operations extends CodonModule
 						'flighttime'=>$this->post->flighttime,
 						'maxload'=>$this->post->maxload,
 						'price'=>$this->post->price,
+						'flighttype'=>$this->post->flighttype,
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
 						

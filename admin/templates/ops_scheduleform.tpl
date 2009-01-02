@@ -23,7 +23,6 @@
 		
 		?>
 		</select>
-		<p>Default is your airline callsign
 	</td>
 </tr>
 <tr>
@@ -35,7 +34,7 @@
 <tr>
 	<td valign="top"><strong>Leg:</strong></td>
 	<td><input type="text" name="leg" value="<?php echo $schedule->leg;?>" />
-		<p>Blank will default to "1"</p>
+		<p>Blank or 0 (zero) will default to leg 1</p>
 	</td>
 </tr>
 <tr>
@@ -112,8 +111,28 @@
 				$sel = '';
 	
 			echo '<option value="'.$aircraft->id.'" '.$sel.'>'.$aircraft->name.' ('.$aircraft->registration.')</option>';
+		} ?>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td valign="top"><strong>Flight Type</strong></td>
+	<td><?php		
+		if($schedule->flighttype == 'p')
+		{
+			$psel = 'selected';
+			$csel = '';
 		}
+		else
+		{
+			$psel = '';
+			$csel = 'selected';
+		}
+		
 		?>
+		<select name="flighttype">
+			<option value="P" <?php echo $psel; ?>>Passenger Flight</option>
+			<option value="C" <?php echo $csel; ?>>Cargo Flight</option>
 		</select>
 	</td>
 </tr>
@@ -123,16 +142,24 @@
 	</td>
 </tr>
 <tr>
-	<td><strong>Passengers:</strong> </td>
-	<td><input type="text" name="maxpax" value="<?php echo $schedule->maxpax?>" /></td>
+	<td valign="top"><strong>Maximum Load:</strong> </td>
+	<td><input type="text" name="maxload" value="<?php echo $schedule->maxload?>" />
+		<p>This is the number of passengers, or the maximum cargo alloted
+			in <?php echo Config::Get('CARGO_UNITS'); ?></p>
+	</td>
 </tr>
 <tr>
-	<td><strong>Ticket Price</strong> </td>
-	<td><input type="text" name="price" value="<?php echo $schedule->price?>" /></td>
+	<td valign="top"><strong>Price</strong> </td>
+	<td><input type="text" name="price" value="<?php echo $schedule->price?>" />
+		<p>This is the ticket price, or price per <?php echo Config::Get('CARGO_UNITS'); ?>
+			for a cargo flight.</p>
+	</td>
 </tr>
 <tr>
 	<td valign="top"><strong>Notes</strong></td>
-	<td><textarea name="notes" style="width: 60%; height: 150px"><?php echo $schedule->notes?></textarea>
+	<td valign="top" style="padding-top: 0px">
+		<p>Any notes about the flight, including frequency, dates flown, etc.</p>
+		<textarea name="notes" style="width: 60%; height: 150px"><?php echo $schedule->notes?></textarea>
 	</td>
 </tr>
 <tr>

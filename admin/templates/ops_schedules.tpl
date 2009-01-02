@@ -15,6 +15,7 @@ if(!$schedules)
 	<th>Aircraft</th>
 	<th>Distance</th>
 	<th>Times Flown</th>
+	<th>Details</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -30,6 +31,9 @@ foreach($schedules as $sched)
 	<td align="center"><?php echo $sched->aircraft; ?></td>
 	<td align="center"><?php echo $sched->distance; ?></td>
 	<td align="center"><?php echo $sched->timesflown; ?></td>
+	<td align="center">
+		<?php echo $sched->flighttype . ' ('.$sched->maxload.'/'.$sched->price.')'; ?>
+	</td>
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>">
 		<img src="<?echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit Schedule" /></a>

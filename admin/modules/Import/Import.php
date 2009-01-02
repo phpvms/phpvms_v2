@@ -87,8 +87,12 @@ class Import extends CodonModule
 					$arrtime = $fields[9];
 					$flighttime = $fields[10];
 					$notes = $fields[11];
-					$maxpax = $fields[12];
+					$maxload = $fields[12];
 					$price = $fields[13];
+					$type = $fields[14];
+					
+					if($type == '')
+						$type = 'p';
 					
 					if($code=='')
 					{
@@ -181,7 +185,8 @@ class Import extends CodonModule
 									'notes'=>$notes,
 									'enabled'=>true,
 									'maxload'=>$maxload,
-									'price'=>$price);
+									'price'=>$price,
+									'flighttype'=>$type);
 						
 					# Check if the schedule exists:
 					if(($schedinfo = self::GetScheduleByFlight($code, $flightnum, $leg)))

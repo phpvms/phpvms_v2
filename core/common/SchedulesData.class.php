@@ -390,6 +390,10 @@ class SchedulesData
 			$data['enabled'] = 1;
 		else
 			$data['enabled'] = 0;
+		
+		# If they didn't specify 
+		if($data['flighttype'] != 'p' && $data['flighttype'] != 'c')
+			$data['flighttype'] = 'p';
 			
 		foreach($data as $key=>$value)
 		{
@@ -399,7 +403,7 @@ class SchedulesData
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
 						(`code`, `flightnum`, `leg`, `depicao`, `arricao`, 
 							`route`, `aircraft`, `distance`, `deptime`, `arrtime`, 
-							`flighttime`, `maxload`, `price`, `notes`, `enabled`)
+							`flighttime`, `maxload`, `price`, `flighttype`, `notes`, `enabled`)
 					VALUES ('$data[code]', 
 							'$data[flightnum]', 
 							'$data[leg]', 
@@ -413,6 +417,7 @@ class SchedulesData
 							'$data[flighttime]',
 							'$data[maxload]',
 							'$data[price]', 
+							'$data[flighttype]',
 							'$data[notes]', 
 							$data[enabled])";
 		
@@ -443,7 +448,8 @@ class SchedulesData
 							'notes'=>'',
 							'enabled'=>'',
 							'maxload'=>'',
-							'price'=>'');
+							'price'=>'',
+							'flighttype'=>'p' OR 'c');
 	 */
 	public static function EditSchedule($data)
 	{
@@ -464,6 +470,10 @@ class SchedulesData
 			$data['enabled'] = 1;
 		else
 			$data['enabled'] = 0;
+			
+		# If they didn't specify 
+		if($data['flighttype'] != 'p' && $data['flighttype'] != 'c')
+			$data['flighttype'] = 'p';
 		
 		foreach($data as $key=>$value)
 		{
@@ -484,6 +494,7 @@ class SchedulesData
 						`flighttime`='$data[flighttime]', 
 						`maxload`='$data[maxload]',
 						`price`='$data[price]',
+						`flighttype`='$data[flighttype]',
 						`notes`='$data[notes]', 
 						`enabled`=$data[enabled]
 					WHERE `id`=$data[scheduleid]";

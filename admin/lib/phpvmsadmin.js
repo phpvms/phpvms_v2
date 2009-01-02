@@ -25,6 +25,23 @@ function formInit()
 			formInit();
 		}
 	});
+	
+		
+	$('#pilotoptionchangepass').ajaxForm({
+		target: '#dialogresult',
+		success: function() 
+		{
+			formInit();
+		}
+	});
+	
+	$('#selectpilotgroup').ajaxForm({
+		target: '#pilotgroups',
+		success: function() 
+		{
+			formInit();
+		}
+	});
 }
 
 function reloadGroups()
@@ -35,7 +52,11 @@ function reloadGroups()
 	});
 	
 	$.listen('dblclick','.pilotgroupajax', function() {
-		$("#pilotgroups").load($(this).attr("href"), {action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")}, function() { reloadGroups(); });
+		$("#pilotgroups").load($(this).attr("href"), 
+		    { action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")}, 
+		    function() 
+            { reloadGroups(); 
+            });
 	});
 }
 
@@ -129,14 +150,6 @@ $(document).ready(function() {
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
     $.listen('dblclick','.jqModal', function() { return false; });
 		
-	$('#pilotoptionchangepass').ajaxForm({
-		target: '#dialogresult'
-	});
-	
-	$('#selectpilotgroup').ajaxForm({
-		target: '#pilotgroups' 
-	});
-	
 	// Binding the AJAX call clicks
 	$.listen('click','.ajaxcall', function() {
 		return false; // cancel the single click event

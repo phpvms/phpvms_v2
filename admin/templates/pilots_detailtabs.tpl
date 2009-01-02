@@ -8,6 +8,7 @@
 		<li><a href="#pireps"><span>View PIREPs</span></a></li>
 		<li><a href="#resetpass"><span>Pilot Options</span></a></li>
 	</ul>
+	<br />
 	<div id="pilotdetails">
 		<?php Template::Show('pilots_details.tpl'); ?>
 	</div>

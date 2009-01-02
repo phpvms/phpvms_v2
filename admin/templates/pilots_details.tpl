@@ -1,5 +1,5 @@
 <form id="dialogform" action="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" method="post">
-<table id="tabledlist" class="tablesorter">
+<table id="tabledlist" class="tablesorter" style="float: left">
 <thead>
 	<tr>
 		<th colspan="2">Edit Pilot Details</th>	

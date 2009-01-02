@@ -90,10 +90,7 @@ class Import extends CodonModule
 					$maxload = $fields[12];
 					$price = $fields[13];
 					$type = $fields[14];
-					
-					if($type == '')
-						$type = 'p';
-					
+									
 					if($code=='')
 					{
 						continue;
@@ -110,7 +107,7 @@ class Import extends CodonModule
 					$url = 'http://ws.geonames.org/search?maxRows=1&featureCode=AIRP&q=';
 					if(!($depapt = OperationsData::GetAirportInfo($depicao)))
 					{
-						// add it
+						# Add the airport if it doesn't exist
 						echo "ICAO $depicao not added... retriving information: <br />";
 						
 						$reader = simplexml_load_file($url.$depicao);
@@ -128,7 +125,6 @@ class Import extends CodonModule
 							OperationsData::AddAirport($depicao, $reader->geoname->name, $reader->geoname->countryName,
 										$reader->geoname->lat, $reader->geoname->lng, false);
 						}
-						
 					}
 					
 					if(!($arrapt = OperationsData::GetAirportInfo($arricao)))

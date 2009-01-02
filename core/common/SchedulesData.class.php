@@ -369,7 +369,8 @@ class SchedulesData
 						'notes'=>'',
 						'enabled'=>'',
 						'maxload'=>'',
-						'price'=>'');
+						'price'=>''
+						'flighttype'=>'');
 	 */
 	public static function AddSchedule($data)
 	{
@@ -392,8 +393,9 @@ class SchedulesData
 			$data['enabled'] = 0;
 		
 		# If they didn't specify 
-		if($data['flighttype'] != 'p' && $data['flighttype'] != 'c')
-			$data['flighttype'] = 'p';
+		$data['flighttype'] = strtoupper($data['flighttype']);
+		if($data['flighttype'] != 'P' && $data['flighttype'] != 'C')
+			$data['flighttype'] = 'P';
 			
 		foreach($data as $key=>$value)
 		{
@@ -402,8 +404,8 @@ class SchedulesData
 				
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
 						(`code`, `flightnum`, `leg`, `depicao`, `arricao`, 
-							`route`, `aircraft`, `distance`, `deptime`, `arrtime`, 
-							`flighttime`, `maxload`, `price`, `flighttype`, `notes`, `enabled`)
+						 `route`, `aircraft`, `distance`, `deptime`, `arrtime`, 
+						 `flighttime`, `maxload`, `price`, `flighttype`, `notes`, `enabled`)
 					VALUES ('$data[code]', 
 							'$data[flightnum]', 
 							'$data[leg]', 
@@ -449,7 +451,7 @@ class SchedulesData
 							'enabled'=>'',
 							'maxload'=>'',
 							'price'=>'',
-							'flighttype'=>'p' OR 'c');
+							'flighttype'=>'P' OR 'C');
 	 */
 	public static function EditSchedule($data)
 	{
@@ -472,8 +474,9 @@ class SchedulesData
 			$data['enabled'] = 0;
 			
 		# If they didn't specify 
-		if($data['flighttype'] != 'p' && $data['flighttype'] != 'c')
-			$data['flighttype'] = 'p';
+		$data['flighttype'] = strtoupper($data['flighttype']);
+		if($data['flighttype'] != 'P' && $data['flighttype'] != 'C')
+			$data['flighttype'] = 'P';
 		
 		foreach($data as $key=>$value)
 		{

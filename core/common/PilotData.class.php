@@ -506,9 +506,12 @@ class PilotData
 		# Add the country flag, line it up with the first line, which is the
 		#	pilot code/name
 		$country = strtolower($pilot->location);
-		$flagimg = imagecreatefrompng(SITE_ROOT.'/lib/images/countries/'.$country.'.png');
-		$ret = imagecopy($img, $flagimg, strlen($output[0])*$fontwidth+20, 
+		if(file_exists(SITE_ROOT.'/lib/images/countries/'.$country.'.png'))
+		{
+			$flagimg = imagecreatefrompng(SITE_ROOT.'/lib/images/countries/'.$country.'.png');
+			$ret = imagecopy($img, $flagimg, strlen($output[0])*$fontwidth+20, 
 							($yoffset+($stepsize/2)-5.5), 0, 0, 16, 11);
+		}
 							
 		# Add the Rank image
 		if(Config::Get('SIGNATURE_SHOW_RANK_IMAGE') == true && $pilot->rankimage!=''

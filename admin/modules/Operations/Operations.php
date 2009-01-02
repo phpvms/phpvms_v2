@@ -448,38 +448,37 @@ class Operations extends CodonModule
 	}
 	
 	public function AddSchedule()
-	{
-		$code = $this->post->code;
-		$flightnum = $this->post->flightnum;
-		$leg = $this->post->leg;
-		$depicao = $this->post->depicao;
-		$arricao = $this->post->arricao;
-		$route = $this->post->route;
-		$aircraft = $this->post->aircraft;
-		$distance = $this->post->distance;
-		$deptime = $this->post->deptime;
-		$arrtime =$this->post->arrtime;
-		$flighttime = $this->post->flighttime;
-		$notes = $this->post->notes;
-		$enabled = (isset($_POST['enabled'])) ? true : false;
-
-		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
-			|| $depicao == '' || $arricao == '')
+	{	
+		if($this->post->code == '' || $this->post->flightnum == '' 
+			|| $this->post->deptime == '' || $this->post->arrtime == ''
+			|| $this->post->depicao == '' || $this->post->arricao == '')
 		{
 			Template::Set('message', 'All of the fields must be filled out');
 			Template::Show('core_message.tpl');
 			
 			return;
 		}
+		
+		$enabled = (isset($_POST['enabled'])) ? true : false ;
 
-		# Make sure it's a valid leg
-		if($leg == '' || $leg == '0')
-			$leg = 1;
-			
-			
+		$data = array(	'code'=>$this->post->code,
+						'flightnum'=>$this->post->flightnum,
+						'leg'=>$this->post->leg,
+						'depicao'=>$this->post->depicao,
+						'arricao'=>$this->post->arricao,
+						'route'=>$this->post->route,
+						'aircraft'=>$this->post->aircraft,
+						'distance'=>$this->post->distance,
+						'deptime'=>$this->post->deptime,
+						'arrtime'=>$this->post->arrtime,
+						'flighttime'=>$this->post->flighttime,
+						'maxload'=>$this->post->maxload,
+						'price'=>$this->post->price,
+						'notes'=>$this->post->notes,
+						'enabled'=>$enabled);
+				
 		# Add it in
-		$ret = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
-										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled);
+		$ret = SchedulesData::AddSchedule($data);
 			
 		if(DB::errno() != 0 && $ret == false)
 		{
@@ -494,34 +493,36 @@ class Operations extends CodonModule
 
 	public function EditSchedule()
 	{
-		$scheduleid = $this->post->id;
-   		$code = $this->post->code;
-		$flightnum = $this->post->flightnum;
-		$leg = $this->post->leg;
-		$depicao = $this->post->depicao;
-		$arricao = $this->post->arricao;
-		$route = $this->post->route;
-		$aircraft = $this->post->aircraft;
-		$distance = $this->post->distance;
-		$deptime = $this->post->deptime;
-		$arrtime =$this->post->arrtime;
-		$flighttime = $this->post->flighttime;
-		$notes = $this->post->notes;
-		$enabled = (isset($_POST['enabled'])) ? true : false;
-		
-		if($code == '' || $flightnum == '' || $deptime == '' || $arrtime == ''
-			|| $depicao == '' || $arricao == '')
+		if($this->post->code == '' || $this->post->flightnum == '' 
+			|| $this->post->deptime == '' || $this->post->arrtime == ''
+			|| $this->post->depicao == '' || $this->post->arricao == '')
 		{
 			Template::Set('message', 'All of the fields must be filled out');
-			Template::Show('core_error.tpl');
-
+			Template::Show('core_message.tpl');
+			
 			return;
 		}
 
-		SchedulesData::EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route, $aircraft,
-										$distance, $deptime, $arrtime, $flighttime, $notes, $enabled);
+		$data = array(	'scheduleid'=>$this->post->id,
+						'code'=>$this->post->code,
+						'flightnum'=>$this->post->flightnum,
+						'leg'=>$this->post->leg,
+						'depicao'=>$this->post->depicao,
+						'arricao'=>$this->post->arricao,
+						'route'=>$this->post->route,
+						'aircraft'=>$this->post->aircraft,
+						'distance'=>$this->post->distance,
+						'deptime'=>$this->post->deptime,
+						'arrtime'=>$this->post->arrtime,
+						'flighttime'=>$this->post->flighttime,
+						'maxload'=>$this->post->maxload,
+						'price'=>$this->post->price,
+						'notes'=>$this->post->notes,
+						'enabled'=>$enabled);
+						
+		$val = SchedulesData::EditSchedule($data);
 										
-		if(DB::errno() != 0)
+		if(!$val)
 		{
 			Template::Set('message', 'There was an error editing the schedule: '.DB::error());
 			Template::Show('core_error.tpl');

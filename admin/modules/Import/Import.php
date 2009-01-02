@@ -57,7 +57,7 @@ class Import extends CodonModule
 				
 				echo '<p><strong>DO NOT REFRESH OR STOP THIS PAGE</strong></p>';
 				
-				set_time_limit(180);
+				set_time_limit(270);
 				$errs = array();
 				$skip = false;
 				
@@ -87,6 +87,8 @@ class Import extends CodonModule
 					$arrtime = $fields[9];
 					$flighttime = $fields[10];
 					$notes = $fields[11];
+					$maxpax = $fields[12];
+					$price = $fields[13];
 					
 					if($code=='')
 					{
@@ -102,7 +104,7 @@ class Import extends CodonModule
 					
 					// Make sure airports exist:
 					$url = 'http://ws.geonames.org/search?maxRows=1&featureCode=AIRP&q=';
-					if(!OperationsData::GetAirportInfo($depicao))
+					if(!($depapt = OperationsData::GetAirportInfo($depicao)))
 					{
 						// add it
 						echo "ICAO $depicao not added... retriving information: <br />";
@@ -125,7 +127,7 @@ class Import extends CodonModule
 						
 					}
 					
-					if(!OperationsData::GetAirportInfo($arricao))
+					if(!($arrapt = OperationsData::GetAirportInfo($arricao)))
 					{
 						echo "ICAO $arricao not added... retriving information: <br />";
 						
@@ -141,7 +143,8 @@ class Import extends CodonModule
 									.' ('.$reader->geoname->lat.','.$reader->geoname->lng.'), airport added<br /><br />';
 									
 							// Add the AP
-							OperationsData::AddAirport($arricao, $reader->geoname->name, $reader->geoname->countryName,
+							OperationsData::AddAirport($arricao, $reader->geoname->name, 
+										$reader->geoname->countryName,
 										$reader->geoname->lat, $reader->geoname->lng, false);
 						}
 						
@@ -160,21 +163,40 @@ class Import extends CodonModule
 					
 					$ac = $ac_info->id;
 					
+					# This is our 'struct' we're passing into the schedule function
+					#	to add or edit it
 					
+					$data = array(	'scheduleid'=>$schedinfo->id,
+									'code'=>$code,
+									'flightnum'=>$flightnum,
+									'leg'=>$leg,
+									'depicao'=>$depicao,
+									'arricao'=>$arricao,
+									'route'=>$route,
+									'aircraft'=>$ac,
+									'distance'=>$distance,
+									'deptime'=>$deptime,
+									'arrtime'=>$arrtime,
+									'flighttime'=>$flighttime,
+									'notes'=>$notes,
+									'enabled'=>true,
+									'maxload'=>$maxload,
+									'price'=>$price);
+						
 					# Check if the schedule exists:
 					if(($schedinfo = self::GetScheduleByFlight($code, $flightnum, $leg)))
 					{
 						# Update the schedule instead
-						$val = SchedulesData::EditSchedule($schedinfo->id, $code, $flightnum, $leg, $depicao, 
-									$arricao, $route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);
+						$val = SchedulesData::EditSchedule($data);
 					
 					}
 					else
 					{
 						# Add it
 					
-						$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
-										$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);
+						/*$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
+										$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);*/
+						$val = SchedulesData::AddSchedule($data);
 										
 					}
 					

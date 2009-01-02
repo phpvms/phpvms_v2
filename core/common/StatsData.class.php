@@ -26,7 +26,7 @@ class StatsData
 	{
 		$sql = 'SELECT SUM(totalhours) AS total FROM '.TABLE_PREFIX.'pilots';
 		$res = DB::get_row($sql);
-		return $res->total;
+		return round($res->total, 2);
 	}
 	
 	/**
@@ -76,7 +76,7 @@ class StatsData
 					GROUP BY p.aircraft';
 		
 		return DB::get_results($sql);
-		DB::debug();
+		//DB::debug();
 		return $ret;
 	}
 	

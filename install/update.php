@@ -47,11 +47,11 @@ if(!isset($_GET['force']))
 echo 'Starting the update...<br />';
 
 
-# Do updates based on version
-#	But cascade the updates
+	# Do updates based on version
+	#	But cascade the updates
 
 	$version = intval(str_replace('.', '', PHPVMS_VERSION));
-	echo $version;
+	
 	if($version  < 11400)
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_400.sql');
@@ -77,7 +77,7 @@ echo 'Starting the update...<br />';
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_441.sql');
 	}
-	else
+	elseif($version < 11458)
 	{
 		
 		Installer::add_to_config('PAGE_ENCODING', 'ISO-8859-1', 'This is the page encoding');
@@ -94,6 +94,15 @@ echo 'Starting the update...<br />';
 			PilotData::GenerateSignature($pilot->pilotid);
 		}
 	}
+	else
+	{
+		Installer::add_to_config('LOAD_FACTOR', '72'); 
+		Installer::add_to_config('CARGO_UNITS', 'lbs');
+		
+		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
+		
+	}
+		
 	
 # Final version update
 $sql = 'UPDATE `phpvms_settings` 

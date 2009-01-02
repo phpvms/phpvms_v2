@@ -68,4 +68,3 @@ class Util
 		mail($email, $subject, '', $headers);
 	}
 }
-?>

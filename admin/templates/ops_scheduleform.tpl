@@ -123,6 +123,14 @@
 	</td>
 </tr>
 <tr>
+	<td><strong>Passengers:</strong> </td>
+	<td><input type="text" name="maxpax" value="<?php echo $schedule->maxpax?>" /></td>
+</tr>
+<tr>
+	<td><strong>Ticket Price</strong> </td>
+	<td><input type="text" name="price" value="<?php echo $schedule->price?>" /></td>
+</tr>
+<tr>
 	<td valign="top"><strong>Notes</strong></td>
 	<td><textarea name="notes" style="width: 60%; height: 150px"><?php echo $schedule->notes?></textarea>
 	</td>

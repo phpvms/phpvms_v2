@@ -29,30 +29,54 @@ class Maintenance extends CodonModule
 		
 		switch($this->get->page)
 		{
+			# Show the main menu
+			
 			case '':
 			case 'options':
 			
 				Template::Show('maintenance_options.tpl');
 			
 				break;
+				
 			case 'resetdistances':
 			
 				echo '<h3>Updating and Calculating Distances</h3>';
 				
-				echo 'Retrieving schedules...<br /><br />';
+				# Update all of the schedules
+				
+				echo '<p><strong>Retrieving schedules...</strong></p>';
 				
 				$allschedules = SchedulesData::GetSchedules();
 				
 				foreach($allschedules as $sched)
 				{
-					$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplng, 
-																		$sched->arrlat, $sched->arrlng);
-																		
-					echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname is $distance miles<br />";
+					$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
+																		$sched->arrlat, $sched->arrlong);							
+					echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname "
+						."is $distance miles<br />";
+						
 					SchedulesData::UpdateDistance($sched->id, $distance);
 				}
+				
+				# Update all of the PIREPS
+				
+				echo '<p><strong>Updating PIREPS</strong></p>';
+				
+				$allpireps = PIREPData::GetAllReports();
+				
+				foreach($allpireps as $sched)
+				{
+					$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
+													$sched->arrlat, $sched->arrlong);	
+													
+					echo "PIREP Number $sched->pirepid ($sched->code$sched->flightnum) "
+						."$sched->depname to $sched->arrname is $distance miles<br />";
+					
+					PIREPData::UpdatePIREPDistance($sched->pirepid, $distance);
+					
+				}
 			
-				echo '<br />Completed!';
+				echo '<p>Completed!</p><br />';
 			
 				break;
 				

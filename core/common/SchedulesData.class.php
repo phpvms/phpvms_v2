@@ -301,10 +301,20 @@ class SchedulesData
 	
 	/**
 	 * Calculate the distance between two coordinates
+	 * Using a revised equation found on http://www.movable-type.co.uk/scripts/latlong.html
 	 */
-	public static function distanceBetweenPoints($lat1, $lng1, $lat2, $lng2)
+	public static function distanceBetweenPoints($lat1, $lon1, $lat2, $lon2)
 	{
-		$radius = 3963; #miles
+		
+		$distance = (3958 * 3.1415926 * sqrt(($lat2-$lat1) * ($lat2-$lat1) 
+					+ cos($lat2/57.29578) * cos($lat1/57.29578) * ($lon2-$lon1) * ($lon2-$lon1))/180);
+					
+		$distance = $distance * .868976242; # Convert to nautical miles
+
+		return round($distance, 2);
+		
+		# My old one... hahaha
+		/*$radius = 3963; #miles
 		$a1=deg2rad($lat1);
 		$a2=deg2rad($lat2);
 		
@@ -321,7 +331,7 @@ class SchedulesData
 		$haversine = atan(sqrt($top1+$top2)/$bottom);
 		$distance = $haversine * $radius;
 		
-		return round($distance, 2);
+		return round($distance, 2);*/
 	}
 	
 	/**
@@ -343,43 +353,68 @@ class SchedulesData
 	
 	/**
 	 * Add a schedule
+	 * 
+	 * Pass in the following:
+				$data = array(	'code'=>'',
+						'flightnum'='',
+						'leg'=>'',
+						'depicao'=>'',
+						'arricao'=>'',
+						'route'=>'',
+						'aircraft'=>'',
+						'distance'=>'',
+						'deptime'=>'',
+						'arrtime'=>'',
+						'flighttime'=>'',
+						'notes'=>'',
+						'enabled'=>'',
+						'maxload'=>'',
+						'price'=>'');
 	 */
-	public static function AddSchedule($code, $flightnum, $leg, $depicao, $arricao, $route,
-				$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled = true)
+	public static function AddSchedule($data)
 	{
-		$code = DB::escape($code);
-		$flightnum = DB::escape($flightnum);
-		$leg = DB::escape($leg);
-		$depicao = DB::escape($depicao);
-		$arricao = DB::escape($arricao);
-		$route = DB::escape($route);
-		$aircraft = DB::escape($aircraft);
-		$distance = DB::escape($distance);
-		$deptime = DB::escape($deptime);
-		$arrtime = DB::escape($arrtime);
-		$flighttime = DB::escape($flighttime);
-		$notes = DB::escape($notes);
-		
-		if($leg == '') $leg = 1;
-		$deptime = strtoupper($deptime);
-		$arrtime = strtoupper($arrtime);
-		
-		if($depicao == $arricao)
-		{
+	
+		if(!is_array($data))
 			return false;
-		}
+						
+		if($data['depicao'] == $data['arricao'])
+			return false;
+		
+		if($data['leg'] == '' || $data['leg'] == '0')
+			$data['leg'] = 1;
 			
+		$data['deptime'] = strtoupper($data['deptime']);
+		$data['arrtime'] = strtoupper($data['arrtime']);
 		
-		if($enabled == true)
-			$enabled = 1;
+		if($data['enabled'] == true || $data['enabled'] == '' || $data['enabled'] == 'true')
+			$data['enabled'] = 1;
 		else
-			$enabled = 0;
-		
+			$data['enabled'] = 0;
+			
+		foreach($data as $key=>$value)
+		{
+			$data[$key] = DB::escape($value);
+		}
+				
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
-				(code, flightnum, leg, depicao, arricao, route, aircraft, 
-						distance, deptime, arrtime, flighttime, notes, enabled)
-				VALUES ('$code', '$flightnum', '$leg', '$depicao', '$arricao', '$route', '$aircraft', '$distance',
-						'$deptime', '$arrtime', '$flighttime', '$notes', $enabled)";
+						(`code`, `flightnum`, `leg`, `depicao`, `arricao`, 
+							`route`, `aircraft`, `distance`, `deptime`, `arrtime`, 
+							`flighttime`, `maxload`, `price`, `notes`, `enabled`)
+					VALUES ('$data[code]', 
+							'$data[flightnum]', 
+							'$data[leg]', 
+							'$data[depicao]', 
+							'$data[arricao]', 
+							'$data[route]', 
+							'$data[aircraft]', 
+							'$data[distance]',
+							'$data[deptime]', 
+							'$data[arrtime]',
+							'$data[flighttime]',
+							'$data[maxload]',
+							'$data[price]', 
+							'$data[notes]', 
+							$data[enabled])";
 		
 		$res = DB::query($sql);
 		
@@ -391,42 +426,70 @@ class SchedulesData
 
 	/**
 	 * Edit a schedule
-	 */
-	public static function EditSchedule($scheduleid, $code, $flightnum, $leg, $depicao, $arricao, $route,
-				$aircraft, $distance, $deptime, $arrtime, $flighttime, $notes='', $enabled=true)
-	{
-
-		$scheduleid = DB::escape($scheduleid);
-		$code = DB::escape($code);
-		$flightnum = DB::escape($flightnum);
-		$leg = DB::escape($leg);
-		$depicao = DB::escape($depicao);
-		$arricao = DB::escape($arricao);
-		$route = DB::escape($route);
-		$aircraft = DB::escape($aircraft);
-		$distance = DB::escape($distance);
-		$deptime = DB::escape($deptime);
-		$arrtime = DB::escape($arrtime);
-		$flighttime = DB::escape($flighttime);
-		$notes = DB::escape($notes);
+	 * Pass in the following:
 		
-		if($leg == '') $leg = 1;
-		$deptime = strtoupper($deptime);
-		$arrtime = strtoupper($arrtime);
-
-		if($enabled == true)
-			$enabled = 1;
+			$data = array(	'scheduleid'=>'',
+							'code'=>'',
+							'flightnum'='',
+							'leg'=>'',
+							'depicao'=>'',
+							'arricao'=>'',
+							'route'=>'',
+							'aircraft'=>'',
+							'distance'=>'',
+							'deptime'=>'',
+							'arrtime'=>'',
+							'flighttime'=>'',
+							'notes'=>'',
+							'enabled'=>'',
+							'maxload'=>'',
+							'price'=>'');
+	 */
+	public static function EditSchedule($data)
+	{
+		
+		if(!is_array($data))
+			return false;
+		
+		if($data['depicao'] == $data['arricao'])
+			return false;
+		
+		if($data['leg'] == '' || $data['leg'] == '0')
+			$data['leg'] = 1;
+		
+		$data['deptime'] = strtoupper($data['deptime']);
+		$data['arrtime'] = strtoupper($data['arrtime']);
+		
+		if($data['enabled'] == true || $data['enabled'] == '' || $data['enabled'] == 'true')
+			$data['enabled'] = 1;
 		else
-			$enabled = 0;
+			$data['enabled'] = 0;
+		
+		foreach($data as $key=>$value)
+		{
+			$data[$key] = DB::escape($value);
+		}
 			
-		$sql = "UPDATE " . TABLE_PREFIX ."schedules SET code='$code', flightnum='$flightnum', leg='$leg',
-						depicao='$depicao', arricao='$arricao',
-						route='$route', aircraft='$aircraft', distance='$distance', deptime='$deptime',
-						arrtime='$arrtime', flighttime='$flighttime', notes='$notes', enabled=$enabled
-					WHERE id=$scheduleid";
+		$sql = "UPDATE " . TABLE_PREFIX ."schedules 
+					SET `code`='$data[code]', 
+						`flightnum`='$data[flightnum]', 
+						`leg`='$data[leg]',
+						`depicao`='$data[depicao]', 
+						`arricao`='$data[arricao]',
+						`route`='$data[route]', 
+						`aircraft`='$data[aircraft]', 
+						`distance`='$data[distance]', 
+						`deptime`='$data[deptime]',
+						`arrtime`='$data[arrtime]', 
+						`flighttime`='$data[flighttime]', 
+						`maxload`='$data[maxload]',
+						`price`='$data[price]',
+						`notes`='$data[notes]', 
+						`enabled`=$data[enabled]
+					WHERE `id`=$data[scheduleid]";
 
 		$res = DB::query($sql);
-		
+				
 		if(DB::errno() != 0)
 			return false;
 			

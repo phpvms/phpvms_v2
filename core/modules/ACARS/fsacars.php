@@ -105,7 +105,7 @@ $route->route
 $route->aircraft
 
 $date
-$route->flightnum
+$route->code$route->flightnum
 $route->registration
 $route->code
 $route->route

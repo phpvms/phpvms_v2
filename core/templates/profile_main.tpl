@@ -50,6 +50,7 @@
 				<li><a href="<?php echo SITE_URL ?>/index.php/profile/editprofile">Edit My Profile, Email and Avatar</a></li>
 				<li><a href="<?php echo SITE_URL ?>/index.php/profile/changepassword">Change my Password</a></li>
 				<li><a href="<?php echo SITE_URL.SIGNATURE_PATH.'/'.$pilotcode.'.png' ?>">View my Badge</a></li>
+				<li><a href="<?php echo SITE_URL ?>/index.php/downloads">View Downloads</a></li>
 			</ul>
 		</p>
 		<p>

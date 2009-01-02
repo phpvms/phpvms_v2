@@ -31,9 +31,13 @@ class PIREPData
 		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
 						a.name as aircraft, a.registration,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
 					WHERE p.pilotid=u.pilotid LIMIT '.$start.', '.$count;
 
 		return DB::get_results($sql);
@@ -357,6 +361,23 @@ class PIREPData
 		return true;
 	}
 	
+	/**
+	 * Update the PIREP distance
+	 */
+	 
+	public static function UpdatePIREPDistance($pirepid, $distance)
+	{
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
+					SET distance=\''.$distance.'\'
+					WHERE pirepid='.$pirepid;
+		
+		return DB::query($sql);		
+	}
+	
+	/**
+	 * Delete a flight report and all of its associated data
+	 */
 	public static function DeleteFlightReport($pirepid)
 	{
 		$pirepid = intval($pirepid);

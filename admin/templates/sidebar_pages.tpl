@@ -10,3 +10,4 @@
 </ul>
 <h3>Help</h3>
 <p>You can create "pages" for your site; if the navigation bar is setup properly in your skin, then these pages will automatically show up, and be able to be linked to. </p>
+<p>Right click on the link in the 'File/Link' column, and select "Copy Link" to get the link to that page.</p>

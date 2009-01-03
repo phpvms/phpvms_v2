@@ -60,13 +60,16 @@ if(!Auth::UserInGroup('Administrators'))
 //MainController::loadModules($modules);
 
 $BaseTemplate = new TemplateSet;
+$tplname = 'layout';
 
 //load the main skin
-$settings_file = SITE_ROOT . '/admin/lib/layout/admin.php';
+$settings_file = SITE_ROOT . '/admin/lib/'.$tplname.'/'.$tplname.'.php';
 if(file_exists($settings_file))
+{
 	include $settings_file;
+}
 	
-$BaseTemplate->template_path = SITE_ROOT . '/admin/lib/layout';
+$BaseTemplate->template_path = SITE_ROOT . '/admin/lib/'.$tplname;
 $BaseTemplate->Set('title', SITE_NAME);
 
 Template::Set('MODULE_NAV_INC', $_GLOBALS['NAVBAR']);

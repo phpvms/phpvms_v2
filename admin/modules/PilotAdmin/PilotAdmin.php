@@ -161,13 +161,7 @@ class PilotAdmin extends CodonModule
 	
 	public function ShowPilotsList()
 	{
-		$letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-						 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-						 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-		
-		Template::Set('allletters', $letters);
 		Template::Set('allpilots', PilotData::GetAllPilots(Vars::GET('letter')));
-		
 		Template::Show('pilots_list.tpl');
 	}
 	
@@ -188,8 +182,7 @@ class PilotAdmin extends CodonModule
 	
 	public function SetGroupsData($pilotid)
 	{
-		//This is for the groups tab
-		// Only send the groups they're in
+		# This is for the groups tab
 		$freegroups = array();
 		
 		$allgroups = PilotGroups::GetAllGroups();

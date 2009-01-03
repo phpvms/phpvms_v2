@@ -194,7 +194,7 @@ class Downloads extends CodonModule
 			return;
 		}
 			
-		DownloadData::EditAsset($this->post->id, $this->post->name, '', '');
+		DownloadData::EditAsset($this->post->id, $this->post->name, $this->post->link, $this->post->image);
 		
 		Template::Set('message', 'Download edited!');
 		Template::Show('core_success.tpl');

@@ -157,9 +157,12 @@ class TemplateSet
 			return $cont;
 	}
 	
-	public function ShowModule($ModuleName, $Method='ShowTemplate')
+	public function ShowModule($ModuleName, $MethodName='ShowTemplate')
 	{
-		$ModuleName = strtoupper($ModuleName);
+		
+		return MainController::Run($ModuleName, $MethodName);
+		
+		/*$ModuleName = strtoupper($ModuleName);
 		global $$ModuleName;
 		
 		// have a reference to the self 
@@ -186,7 +189,7 @@ class TemplateSet
 		{
 			//no parameters, straight return
 			return $$ModuleName->$MethodName();
-		}
+		}*/
 	}
 }
 ?>

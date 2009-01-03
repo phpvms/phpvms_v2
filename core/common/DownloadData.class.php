@@ -106,6 +106,8 @@ class DownloadData
 		
 		$res = DB::query($sql);
 		
+		DB::debug();
+		
 		if(DB::errno() != 0)
 			return false;
 		
@@ -125,6 +127,7 @@ class DownloadData
 		
 		$res = DB::query($sql);
 		
+		DB::debug(); 
 		if(DB::errno() != 0)
 			return false;
 		

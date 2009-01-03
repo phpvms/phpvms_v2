@@ -1,5 +1,4 @@
 <h3>All Pages</h3>
-
 <?php
 if(!$allpages)
 {
@@ -13,7 +12,7 @@ if(!$allpages)
 	<th>Page Name</th>
 	<th>Updated By</th>
 	<th>Update Date</th>
-	<th>Filename</th>
+	<th>File/Link</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -26,7 +25,7 @@ foreach($allpages as $page)
 	<td align="center"><?php echo $page->pagename; ?></td>
 	<td align="center"><?php echo $page->postedby; ?></td>
 	<td align="center"><?php echo $page->postdate; ?></td>
-	<td align="center"><?php echo $page->filename; ?></td>
+	<td align="center"><a href="<?php echo SITE_URL?>/index.php/pages/<?php echo $page->filename; ?>"><?php echo $page->filename; ?></a></td>
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>">
 				<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>

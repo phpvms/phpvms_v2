@@ -42,6 +42,10 @@ ul {
 	font-size: 16px;
 	filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10);
 }
+ul li ul {
+	margin-top: 10px;
+	margin-bottom: 8px;
+}
 -->
 </style>
 </head>
@@ -70,14 +74,14 @@ ul {
   <li> Enabled/disable aircraft (retirement)</li>
   <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
   <li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
-  <li>Added three fields to schedules and import: type, maxpax and price - for financials later on.<br />
+  <li>Added three fields to schedules and import: Type, Maxload and Price - for financials later on.
+    <ul>
+      <li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value of P or C, P is default)</li>
+      <li><strong>Maxload</strong> - The maximum number of passengers or cargo allowed on this flight (maxload is in CARGO_UNITS, explained below)</li>
+      <li><strong>Price</strong> - This is the price per unit - if it's a passenger flight, it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT (ie, per lb/kg)</li>
+    </ul>
   </li>
 </ul>
-<pre>
-TYPE 		This is whether it's a passenger or cargo flight (value of 'p' or 'c', blank assumes 'p')
-MAXLOAD 	The maximum number of passengers/cargo on that flight
-			Enter the number of passengers, or cargo (in any units, keep consistant)
-PRICE		The average price paid per MAXLOAD unit (ticket price, price per lb/kg, etc)</pre>
 <ul>
   <li>PIREPS determine a passenger count based on a new config setting called LOAD_FACTOR (explained below)
   </li>
@@ -94,19 +98,20 @@ PRICE		The average price paid per MAXLOAD unit (ticket price, price per lb/kg, e
 	This setting determines the % of MAXLOAD which are on a flight. 
 	The system will generate a passenger/cargo load based off of this number.
 	The industry load factor at this time is 72% (according to ATA). 
-	Can be adjusted, not more than 90%
+	Can be adjusted, not more than 90%. phpVMS will decide between +/- 10% of LOAD_FACTOR
 
 Config::Set('CARGO_UNITS', 'lbs');
 	This is your units for cargo flights - lbs/kg/newtons ;)</pre>
 <p><strong>Template Changes:</strong></p>
 <p>Added:</p>
-<pre>downloads_list.tpl - Shows the main list of categories and downloads
-download_item.tpl - This is the &quot;Downloading Now&quot; page
+<pre><em>downloads_list.tpl </em>- Shows the main list of categories and downloads
+<em>download_item.tpl</em> - This is the &quot;Downloading Now&quot; page
 </pre>
 <p>Changed:</p>
-<pre>profile_main.tpl - Added link to download page:
+<pre><em>profile_main.tpl</em> - Added link to download page:
 
 	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/downloads&quot;&gt;View Downloads&lt;/a&gt;&lt;/li&gt;</em></pre>
+<hr />
 <h1>Build 458 (Version 1.1.458)</h1>
 <ul> <li> Added page encoding option</li>
   <li> Added option for changing pilot ID length</li>

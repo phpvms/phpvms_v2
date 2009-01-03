@@ -1,10 +1,10 @@
 <h3>Pilots List</h3>
 <div align="center">
-	<a href="?admin=viewpilots&letter=">View All</a>
+	Find by Last Name: <a href="?admin=viewpilots&letter=">View All</a>
 <?php
-for($i=0;$i<27;$i++)
+for($i=65;$i<91;$i++)
 {
-	echo '<a href="'.SITE_URL.'/admin/index.php/pilotadmin/viewpilots?letter='.$allletters[$i].'">'.$allletters[$i].'</a> ';
+	echo '<a href="'.SITE_URL.'/admin/index.php/pilotadmin/viewpilots?letter='.chr($i).'">'.chr($i).'</a> ';
 }
 ?>
 </div>

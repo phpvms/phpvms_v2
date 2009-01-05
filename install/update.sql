@@ -8,6 +8,13 @@ CREATE TABLE `phpvms_downloads` (
   PRIMARY KEY (id)
 ) ENGINE = MyISAM;
 
+CREATE TABLE `phpvms_expenses` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`name` VARCHAR( 25 ) NOT NULL ,
+	`cost` FLOAT NOT NULL ,
+	`fixed` INT NOT NULL
+) ENGINE = MYISAM;
+
 ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;
 
 ALTER TABLE `phpvms_schedules` 

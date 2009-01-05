@@ -109,6 +109,9 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('LiquidUnit', '2', '0=liter 1=gal 2=kg 3=lbs');
 		Installer::add_to_config('WelcomeMessage', SITE_NAME.' ACARS', 'Welcome Message');
 		
+		Installer::add_to_config('COMMENT', 'Monetary Units');
+		Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
+		
 		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		
 	}

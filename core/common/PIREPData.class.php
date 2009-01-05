@@ -18,7 +18,7 @@
 
 class PIREPData
 {	
-	public $lasterror;
+	public static $lasterror;
 	public $pirepid;
 	
 	/**
@@ -395,6 +395,27 @@ class PIREPData
 	}
 	
 	/**
+	 * 
+	 * Populate PIREPS which have 0 values for the load/price, etc
+	 */
+	 
+	public static function PopulateEmptyPIREPS()
+	{
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
+					WHERE `load`=0';
+					
+		$results = DB::get_results($sql);
+		
+		foreach($results as $row)
+		{
+			self::PopulatePIREPFinance($row->pirepid);
+		}
+	
+		return true;		
+	}
+	
+	/**
 	 * Populate the PIREP with the fianancial info needed
 	 */
 	
@@ -411,6 +432,7 @@ class PIREPData
 		
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
 		
+		//print_r($sched);
 		if(!$sched)
 		{
 			self::$lasterror = 'Schedule does not exist';
@@ -431,6 +453,8 @@ class PIREPData
 					WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
+		
+		//DB::debug();
 	}
 	
 	/**

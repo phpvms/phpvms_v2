@@ -291,11 +291,14 @@ class SchedulesData
 	{
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'schedules s
-						INNER JOIN '.TABLE_PREFIX.'aircraft ON a.id=s.aircraft
-					WHERE s.enabled=0;
+						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id=s.aircraft
+					WHERE s.enabled=0
 					ORDER BY s.flightnum ASC';
 					
 		return DB::get_results($sql);
+		DB::debug();
+		
+		return $ret;
 	}
 	
 	
@@ -387,10 +390,10 @@ class SchedulesData
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
-		if($data['enabled'] == true || $data['enabled'] == '' || $data['enabled'] == 'true')
-			$data['enabled'] = 1;
-		else
+		if($data['enabled'] == false || $data['enabled'] == 'false')
 			$data['enabled'] = 0;
+		else
+			$data['enabled'] = 1;
 		
 		# If they didn't specify 
 		$data['flighttype'] = strtoupper($data['flighttype']);
@@ -455,7 +458,6 @@ class SchedulesData
 	 */
 	public static function EditSchedule($data)
 	{
-		
 		if(!is_array($data))
 			return false;
 		
@@ -468,10 +470,14 @@ class SchedulesData
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
-		if($data['enabled'] == true || $data['enabled'] == '' || $data['enabled'] == 'true')
-			$data['enabled'] = 1;
-		else
+		if($data['enabled'] == false || $data['enabled'] == 'false')
+		{
 			$data['enabled'] = 0;
+		}
+		else
+		{
+			$data['enabled'] = 1;
+		}
 			
 		# If they didn't specify 
 		$data['flighttype'] = strtoupper($data['flighttype']);

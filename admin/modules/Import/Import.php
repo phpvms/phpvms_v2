@@ -89,7 +89,7 @@ class Import extends CodonModule
 					$notes = $fields[11];
 					$maxload = $fields[12];
 					$price = $fields[13];
-					$type = $fields[14];
+					$flighttype = $fields[14];
 									
 					if($code=='')
 					{
@@ -160,8 +160,16 @@ class Import extends CodonModule
 						echo 'Aircraft "'.$aircraft.'" does not exist! Skipping<br />';
 						continue;
 					}
-					
+										
 					$ac = $ac_info->id;
+					
+					
+					if($flighttype == '')
+					{
+						$flighttype = 'P';
+					}
+					
+					$flighttype = strtoupper($flighttype);
 					
 					# This is our 'struct' we're passing into the schedule function
 					#	to add or edit it
@@ -182,7 +190,7 @@ class Import extends CodonModule
 									'enabled'=>true,
 									'maxload'=>$maxload,
 									'price'=>$price,
-									'flighttype'=>$type);
+									'flighttype'=>$flighttype);
 						
 					# Check if the schedule exists:
 					if(($schedinfo = self::GetScheduleByFlight($code, $flightnum, $leg)))

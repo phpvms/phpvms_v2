@@ -44,7 +44,7 @@ class Maintenance extends CodonModule
 				
 				# Update all of the schedules
 				
-				echo '<p><strong>Retrieving schedules...</strong></p>';
+				echo '<p><strong>Updating schedules...</strong></p>';
 				
 				$allschedules = SchedulesData::GetSchedules();
 				
@@ -60,7 +60,7 @@ class Maintenance extends CodonModule
 				
 				# Update all of the PIREPS
 				
-				echo '<p><strong>Updating PIREPS</strong></p>';
+				echo '<p><strong>Updating PIREPs...</strong></p>';
 				
 				$allpireps = PIREPData::GetAllReports();
 				
@@ -93,6 +93,16 @@ class Maintenance extends CodonModule
 				}
 				
 				echo "Done";
+				
+				break;
+				
+			case 'resetpirepfinance':
+			
+				echo '<h3>Reset PIREP Data</h3> 
+						Resetting PIREPs...<br />';
+				PIREPData::PopulateEmptyPIREPS();
+				
+				echo 'Complete';
 				
 				break;
 		}

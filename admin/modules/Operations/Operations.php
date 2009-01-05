@@ -461,7 +461,7 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		$enabled = (isset($_POST['enabled'])) ? true : false ;
+		$enabled = ($_POST['enabled'] == 'on') ? 'true' : 'false';
 
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
@@ -476,7 +476,7 @@ class Operations extends CodonModule
 						'flighttime'=>$this->post->flighttime,
 						'maxload'=>$this->post->maxload,
 						'price'=>$this->post->price,
-					'flighttype'=>$this->post->flighttype,
+						'flighttype'=>$this->post->flighttype,
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
 				
@@ -505,6 +505,12 @@ class Operations extends CodonModule
 			
 			return;
 		}
+		
+		$enabled = true;
+		if($_POST['enabled'] == '')
+		{
+			$enabled = false;
+		}
 
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,
@@ -523,7 +529,7 @@ class Operations extends CodonModule
 						'flighttype'=>$this->post->flighttype,
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
-						
+		
 		$val = SchedulesData::EditSchedule($data);
 										
 		if(!$val)

@@ -76,15 +76,17 @@ ul li ul {
   <li> Enabled/disable aircraft (retirement)</li>
   <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
   <li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
-  <li>Added three fields to schedules and import: Type, Maxload and Price - for financials later on.
+  <li><strong>Schedule Data</strong>: Added four fields to schedules and import: Type, Maxload, Price and FlightType- for financials later on.
     <ul>
       <li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value of P or C, P is default)</li>
       <li><strong>Maxload</strong> - The maximum number of passengers or cargo allowed on this flight (maxload is in CARGO_UNITS, explained below)</li>
       <li><strong>Price</strong> - This is the price per unit - if it's a passenger flight, it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT (ie, per lb/kg)</li>
+      <li><strong>FlightType</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights operate at 100%  LOAD_FACTOR, </li>
     </ul>
   </li>
 </ul>
 <ul>
+  <li><strong>Monthly Expenses</strong> area added under financials - itemize your monthly expenses to be factored into calculations</li>
   <li>PIREPS determine a passenger count based on a new config setting called LOAD_FACTOR (explained below)
   </li>
   <li>Duplicate schedules on import now overwrite previous existing schedule</li>
@@ -92,6 +94,7 @@ ul li ul {
   <li> Email sent to admin on registration/PIREP submission</li>
   <li> Search list aircraft dupes and results fixed</li>
   <li> Google Maps &quot;createMarkerIcon&quot; error fixed</li>
+  <li>Fixed active/inactive schedules</li>
   <li> Update checking bug fixed</li>
   <li>Security fixes</li>
 </ul>

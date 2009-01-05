@@ -18,6 +18,19 @@
 
 class FinanceData
 {	
+
+	public static function AddExpense($name, $cost, $fixed=false)
+	{
+		
+		
+		
+	}
+	
+	public static function EditExpense($id, $name, $cost, $fixed)
+	{
+		
+		
+	}
 	/** 
 	 * Get the active load count based on the load factor
 	 *  based on the flight type: P(assenger), C(argo), H(Charter)
@@ -28,7 +41,7 @@ class FinanceData
 		#	Charter flights always will have a 100% capacity
 		if(strtoupper($sched->flighttype) == 'H')
 		{
-			$load = 100;			
+			$load = 100;
 		}
 		else
 		{	# Not a charter
@@ -40,7 +53,8 @@ class FinanceData
 				$load = 95;			
 		}
 		
-		return $count * ($load / 100);
+		$currload = ceil($count * ($load / 100));
+		return $currload;
 	}
 
 }

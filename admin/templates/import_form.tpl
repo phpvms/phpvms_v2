@@ -9,6 +9,7 @@ must be done:</p>
 	<li>All of the columns can be there, but only the route, leg, distance, and flighttime can be blank</li>
 	<li>Routes which already exist (based on the code and flight number) will not be re-added</li>
 	<li>Aircraft must be added by registration</li>
+	<li>Flight Type can be "P" (Passenger), "C" (Cargo) or "H" (Charter). Enter it without quotes</li>
 </ol>
 
 <form enctype="multipart/form-data" action="<?php echo SITE_URL?>/admin/index.php/import/processimport" method="post">

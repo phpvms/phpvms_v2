@@ -6,6 +6,7 @@
 		</strong>
 	</dt>
 	<dd>Select this option to reset your member's signatures. If you change the background, regenerate them.
+	<br />
 	</dd>
 	
 	<dt><strong>
@@ -13,5 +14,11 @@
 		</strong>
 	</dt>
 	<dd>Select this to re-calcuate all the distances in your schedules and PIREPS. Useful for a import. Accurate 
-	distances are required for some reports.</dd>
+	distances are required for some reports.<br /></dd>
+	
+	<dt><strong>
+		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpirepfinance">Reset PIREP Finances</a>:
+		</strong>
+	</dt>
+	<dd>This adds financial data to existing PIREPS which do not have any.<br /></dd>
 </dl>

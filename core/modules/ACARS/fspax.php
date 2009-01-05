@@ -51,6 +51,7 @@
 			return;
 		}
 		
+		# Give it what it wants
 		echo "#Answer# Ok - connected;";
 		echo 'Weight='.Config::Get('WeightUnit').' Dist='.Config::Get('DistanceUnit').' Speed='.Config::Get('SpeedUnit').' Alt='.Config::Get('AltUnit').' Liqu='.Config::Get('LiquidUnit');
 		echo '#welcome#'.Config::Get('WelcomeMessage').'#endwelcome#';

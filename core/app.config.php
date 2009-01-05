@@ -55,6 +55,9 @@ Config::Set('MAP_CENTER_LNG', '-62.334821');
 Config::Set('ACARS_LIVE_TIME', 720); 
 Config::Set('ACARS_DEBUG', false);
 
+# Monetary Units
+Config::Set('MONEY_UNIT', '$'); # $, €, etc
+
 # FSPassengers Settings
 # Units settings
 Config::Set('WeightUnit', '0');   # 0=Kg 1=lbs
@@ -62,7 +65,7 @@ Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
 Config::Set('SpeedUnit', '1');   # 0=Km/H 1=Kts
 Config::Set('AltUnit', '1');   # 0=Meter 1=Feet 
 Config::Set('LiquidUnit', '2');   # 0=liter 1=gal 2=kg 3=lbs
-Config::Set('welcome_message', SITE_NAME.' ACARS'); # Welcome Message
+Config::Set('WelcomeMessage', SITE_NAME.' ACARS'); # Welcome Message
 
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');

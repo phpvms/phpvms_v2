@@ -112,7 +112,7 @@ class Auth
 		#  Just ID: 001
 		if(is_numeric($useridoremail))
 		{
-			$useridoremail = intval(Config::Get('PILOTID_OFFSET')) - $useridoremail;
+			$useridoremail =  $useridoremail - intval(Config::Get('PILOTID_OFFSET'));
 			$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
 						WHERE pilotid='.$useridoremail;
 		}
@@ -120,15 +120,15 @@ class Auth
 		{
 			if(preg_match('/^.*\@.*$/i', $useridoremail) > 0)
 			{
-				$emailaddress = DB::escape($emailaddress);
+				$emailaddress = DB::escape($useridoremail);
 				$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
-						WHERE email=\''.$emailaddress.'\'';
+						WHERE email=\''.$useridoremail.'\'';
 			} 
 			
 			elseif(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $useridoremail, $matches)>0)
 			{
 				$id = trim($matches[2]);
-				$id = intval(Config::Get('PILOTID_OFFSET')) - $id;
+				$id = $id - intval(Config::Get('PILOTID_OFFSET'));
 				
 				$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
 							WHERE pilotid='.$id;

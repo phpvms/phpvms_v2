@@ -61,7 +61,7 @@ ul li ul {
   &nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 <p class="header"><em>Last Update:
-<!-- #BeginDate format:Am1 -->January 1, 2009<!-- #EndDate -->
+<!-- #BeginDate format:Am1 -->January 5, 2009<!-- #EndDate -->
   </em><br />
 </p>
 <hr />
@@ -69,8 +69,10 @@ ul li ul {
 <ul>
   <li>Revamped and reorganized Admin Panel</LI>
   <li> Backend optimizations, Javascript trimmed down</li>
+  <li><strong>FSPassengers Support</strong></li>
   <li> Download manager - create categories and add downloads, track # of downloads (<strong>Link: </strong><em>index.php/downloads</em>)</li>
   <li> FSACARS retrieves flight information from most recent bid</li>
+  <li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
   <li> Enabled/disable aircraft (retirement)</li>
   <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
   <li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
@@ -108,7 +110,7 @@ Config::Set('CARGO_UNITS', 'lbs');
 <em>download_item.tpl</em> - This is the &quot;Downloading Now&quot; page
 </pre>
 <p>Changed:</p>
-<pre><em>profile_main.tpl</em> - Added link to download page:
+<pre><em>profile_main.tpl</em> - Added link to download page, and FSPassengers config link:
 
 	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/downloads&quot;&gt;View Downloads&lt;/a&gt;&lt;/li&gt;</em></pre>
 <hr />

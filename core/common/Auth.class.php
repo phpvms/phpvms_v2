@@ -104,14 +104,40 @@ class Auth
 	/**
 	 * Log the user in
 	 */
-	public function ProcessLogin($emailaddress, $password)
+	public function ProcessLogin($useridoremail, $password)
 	{
-		$emailaddress = DB::escape($emailaddress);
+		# Allow them to login in any manner:
+		#  Email: blah@blah.com
+		#  Pilot ID: VMA0001, VMA 001, etc
+		#  Just ID: 001
+		if(is_numeric($useridoremail))
+		{
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
+						WHERE pilotid='.$useridoremail;
+		}
+		else
+		{
+			if(preg_match('/^.*\@.*$/i', $useridoremail) > 0)
+			{
+				$emailaddress = DB::escape($emailaddress);
+				$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
+						WHERE email=\''.$emailaddress.'\'';
+			} 
+			
+			elseif(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $useridoremail, $matches)>0)
+			{
+				$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
+							WHERE pilotid='.trim($matches[2]);
+			}
+			
+			else
+			{
+				self::$error_message = 'Invalid user ID';
+				return false;
+			}
+		}
+	
 		$password = DB::escape($password);
-		
-		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
-					WHERE email=\''.$emailaddress.'\'';
-
 		$userinfo = DB::get_row($sql);
 
 		if(!$userinfo)

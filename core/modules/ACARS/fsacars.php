@@ -31,21 +31,7 @@ writedebug($_SERVER['QUERY_STRING']);
 ##################################
 
 writedebug($val);
-function writedebug($msg)
-{
-	$debug = Config::Get('ACARS_DEBUG');
-	
-	if(!$debug)
-		return;
-	
-	$fp = fopen(dirname(__FILE__).'/log.txt', 'a+');
-	$msg .= '
-';
-	
-	fwrite($fp, $msg, strlen($msg));
-	
-	fclose($fp);
-}
+
 
 ##################################
 	
@@ -270,7 +256,7 @@ $route->route
 			# Can't do it. They completely screwed this up
 			if(!$sched)
 			{
-				DB::debug();
+				//DB::debug();
 				return;
 			}
 			
@@ -300,7 +286,6 @@ $route->route
 			OperationsData::RetrieveAirportInfo($_GET['dest']);
 		}
 		
-		
 		# Convert the time to xx.xx 
 		$flighttime = str_replace(':', '.', $_GET['duration']);
 		
@@ -317,7 +302,6 @@ $route->route
 						'log'=> $_GET['log']);
 			
 		writedebug($data);
-		print_r($data);
 			
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 		

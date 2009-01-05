@@ -99,6 +99,16 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('LOAD_FACTOR', '72'); 
 		Installer::add_to_config('CARGO_UNITS', 'lbs');
 		
+		
+		Installer::add_to_config('COMMENT', 'FSPassengers Settings');
+		Installer::add_to_config('COMMENT', 'Units settings');
+		Installer::add_to_config('WeightUnit', '0', '0=Kg 1=lbs');
+		Installer::add_to_config('DistanceUnit', '2', '0=KM 1= Miles 2=NMiles');
+		Installer::add_to_config('SpeedUnit', '1', '0=Km/H 1=Kts');
+		Installer::add_to_config('AltUnit', '1', '0=Meter 1=Feet');
+		Installer::add_to_config('LiquidUnit', '2', '0=liter 1=gal 2=kg 3=lbs');
+		Installer::add_to_config('WelcomeMessage', SITE_NAME.' ACARS', 'Welcome Message');
+		
 		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		
 	}
@@ -115,4 +125,3 @@ echo '<p><strong>Update completed!</strong><br />
 		If there were any errors, please correct them, and re-run the update using: <a href="update.php?force">update.php?force</a></p>';
 
 Template::Show('footer.tpl');
-?>

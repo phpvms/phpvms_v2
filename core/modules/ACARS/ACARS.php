@@ -16,6 +16,22 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
+function writedebug($msg)
+{
+	$debug = Config::Get('ACARS_DEBUG');
+	
+	if(!$debug)
+		return;
+	
+	$fp = fopen(dirname(__FILE__).'/log.txt', 'a+');
+	$msg .= '
+			';
+	
+	fwrite($fp, $msg, strlen($msg));
+	
+	fclose($fp);
+}
+
 class ACARS extends CodonModule
 {
 		

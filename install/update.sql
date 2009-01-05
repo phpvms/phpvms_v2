@@ -12,7 +12,7 @@ CREATE TABLE `phpvms_expenses` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`name` VARCHAR( 25 ) NOT NULL ,
 	`cost` FLOAT NOT NULL ,
-	`fixed` INT NOT NULL
+	`fixed` INT NOT NULL DEFAULT 0
 ) ENGINE = MYISAM;
 
 ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;

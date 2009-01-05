@@ -19,18 +19,64 @@
 class FinanceData
 {	
 
-	public static function AddExpense($name, $cost, $fixed=false)
+	public static $lasterror;
+	
+	public static function GetAllExpenses()
+	{		
+		$sql = 'SELECT * 
+				FROM '.TABLE_PREFIX.'expenses';
+		
+		return DB::get_results($sql);
+	}
+	
+	public static function AddExpense($name, $cost)
 	{
 		
+		if($name == '' || $cost == '')
+		{
+			self::$lasterror = 'Name and cost must be entered';
+			return false;
+		}
 		
+		$name = DB::escape($name);
+		$cost = DB::escape($cost);
 		
+		$sql = 'INSERT INTO '.TABLE_PREFIX."expenses
+					 (`name`, `cost`, `fixed`)
+					VALUES('$name', '$cost')";
+		
+		DB::query($sql);
 	}
 	
 	public static function EditExpense($id, $name, $cost, $fixed)
 	{
 		
+		if($name == '' || $cost == '')
+		{
+			self::$lasterror = 'Name and cost must be entered';
+			return false;
+		}
+		
+		$name = DB::escape($name);
+		$cost = DB::escape($cost);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX."expenses
+					SET `name`='$name', `cost`='$cost'
+					WHERE `id`=$id";
+		
+		DB::query($sql);
 		
 	}
+	
+	public static function RemoveExpense($id)
+	{
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'expenses
+					WHERE `id`='.$id;
+					
+		DB::query($sql);
+	}
+	
+	
 	/** 
 	 * Get the active load count based on the load factor
 	 *  based on the flight type: P(assenger), C(argo), H(Charter)

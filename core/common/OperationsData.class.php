@@ -243,8 +243,8 @@ class OperationsData
 		else
 			$hub = 0;
 
-		$sql = "INSERT INTO " . TABLE_PREFIX ."airports (
-						`icao`, `name`, `country`, `lat`, `lng`, `hub`)
+		$sql = "INSERT INTO " . TABLE_PREFIX ."airports 
+					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`)
 					VALUES (
 						'$icao', '$name', '$country', $lat, $long, $hub)";
 

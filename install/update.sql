@@ -18,4 +18,5 @@ ALTER TABLE `phpvms_schedules`
 ALTER TABLE `phpvms_pireps` 
 	ADD `load` INT NOT NULL ,
 	ADD `price` FLOAT NOT NULL, 
-	ADD `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P' AFTER `price`;
+	ADD `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
+	ADD `pilotpay` FLOAT NOT NULL;

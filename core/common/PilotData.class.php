@@ -39,7 +39,7 @@ class PilotData
 	 */
 	public static function GetAllPilotsDetailed($start='', $limit=20)
 	{
-		$sql = 'SELECT p.*, r.rankimage 
+		$sql = 'SELECT p.*, r.rankimage, r.payrate
 					FROM '.TABLE_PREFIX.'pilots p
 					LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rank = p.rank
 					ORDER BY totalhours DESC';
@@ -65,7 +65,7 @@ class PilotData
 	 */
 	public static function GetAllPilotsByHub($hub)
 	{
-		$sql = "SELECT p.*, r.rankimage 
+		$sql = "SELECT p.*, r.rankimage, r.payrate
 					FROM ".TABLE_PREFIX."pilots p
 					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 					WHERE p.hub='$hub'
@@ -89,7 +89,7 @@ class PilotData
 	 */
 	public static function GetPilotData($pilotid)
 	{					
-		$sql = "SELECT p.*, r.rankimage 
+		$sql = "SELECT p.*, r.rankimage, r.payrate
 					FROM ".TABLE_PREFIX."pilots p
 					LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 					WHERE p.pilotid='$pilotid'";
@@ -104,7 +104,7 @@ class PilotData
 	{
 		$sql = 'SELECT * 
 				FROM '. TABLE_PREFIX.'pilots 
-				WHERE email=\''.$email.'\'';
+				WHERE `email`=\''.$email.'\'';
 				
 		return DB::get_row($sql);
 	}
@@ -114,7 +114,8 @@ class PilotData
 	 */
 	public static function GetPendingPilots($count='')
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots WHERE confirmed='.PILOT_PENDING;
+		$sql = 'SELECT * 
+					FROM '.TABLE_PREFIX.'pilots WHERE `confirmed`='.PILOT_PENDING;
 
 		if($count!='')
 			$sql .= ' LIMIT '.intval($count);
@@ -125,7 +126,7 @@ class PilotData
 	public static function GetLatestPilots($count=10)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
-					ORDER BY pilotid DESC
+					ORDER BY `pilotid` DESC
 					LIMIT '.$count;
 	
 		return DB::get_results($sql);
@@ -168,12 +169,12 @@ class PilotData
 	public static function SaveProfile($pilotid, $email, $location, $hub='')
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
-					SET email='$email', location='$location' ";
+					SET `email`='$email', `location`='$location' ";
 		
 		if($hub!= '')
 			$sql.=", hub='$hub' ";
 			
-		$sql .= 'WHERE pilotid='.$pilotid;
+		$sql .= 'WHERE `pilotid`='.$pilotid;
 		
 		$res = DB::query($sql);
 		
@@ -195,6 +196,9 @@ class PilotData
 			return false;
 		}*/
 		
+		if(!$_FILES['avatar']['type'])
+			return false;
+			
 		# Create the image so we can convert it to PNG
 		if($_FILES['avatar']['type'] == 'image/gif')
 		{
@@ -231,8 +235,10 @@ class PilotData
 	 */
 	public static function AcceptPilot($pilotid)
 	{
-		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots SET confirmed='.PILOT_ACCEPTED.'
-					WHERE pilotid='.$pilotid;
+		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots 
+					SET `confirmed`='.PILOT_ACCEPTED.'
+					WHERE `pilotid`='.$pilotid;
+					
 		DB::query($sql);
 	}
 	

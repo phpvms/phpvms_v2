@@ -187,10 +187,17 @@ $route->route
 		writedebug("PIREP FILE");
 		writedebug(print_r($_GET, true));
 			
-		# see if they are a valid pilot:
-		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
-		$code = $matches[1];
-		$pilotid = $matches[2];
+		if(is_numeric($_GET['pilot']))
+		{
+			$pilotid = $_GET{'pilot'];
+		}
+		else
+		{
+			# see if they are a valid pilot:
+			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
+			$code = $matches[1];
+			$pilotid = $matches[2];
+		}
 
 		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{

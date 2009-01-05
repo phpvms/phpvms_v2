@@ -117,22 +117,19 @@
 </tr>
 <tr>
 	<td valign="top"><strong>Flight Type</strong></td>
-	<td><?php		
-		if($schedule->flighttype == 'p')
-		{
-			$psel = 'selected';
-			$csel = '';
-		}
-		else
-		{
-			$psel = '';
-			$csel = 'selected';
-		}
-		
-		?>
-		<select name="flighttype">
-			<option value="P" <?php echo $psel; ?>>Passenger Flight</option>
-			<option value="C" <?php echo $csel; ?>>Cargo Flight</option>
+	<td><select name="flighttype">
+			<?php
+			foreach($flighttypes as $flightkey=>$flighttype)
+			{
+				if($schedule->flighttype == $flightkey)
+					$sel = 'selected';
+				else	
+					$sel = '';
+			?>
+				<option value="<?php echo $flightkey?>" <?php echo $sel; ?>><?php echo $flighttype?> Flight</option>
+			<?php
+			}
+			?>
 		</select>
 	</td>
 </tr>

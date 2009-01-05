@@ -119,6 +119,12 @@ else
 /**
  * Constants
  */
+ 
+ 
+Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
+									'C'=>'Cargo',
+									'H'=>'Charter'));
+
 define('PIREP_PENDING', 0);
 define('PIREP_ACCEPTED', 1);
 define('PIREP_REJECTED', 2);

@@ -18,6 +18,7 @@
 
 class PIREPData
 {	
+	public $lasterror;
 	public $pirepid;
 	
 	/**
@@ -244,8 +245,10 @@ class PIREPData
 	public static function GetReportsByAcceptStatus($pilotid, $accept=0)
 	{
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
-					WHERE pilotid='.intval($pilotid).' AND accepted='.intval($accept);
+		$sql = 'SELECT * 
+					FROM '.TABLE_PREFIX.'pireps
+					WHERE pilotid='.intval($pilotid).' 
+						AND accepted='.intval($accept);
 
 		return DB::get_results($sql);
 	}
@@ -294,13 +297,28 @@ class PIREPData
 		# Remove the comment field, since it doesn't exist
 		# 	in the PIREPs table.
 		$comment = DB::escape($pirepdata['comment']);
-			
-		# Replaced
-		$sql = "INSERT INTO ".TABLE_PREFIX."pireps
-					(pilotid, code, flightnum, depicao, arricao, aircraft, flighttime, submitdate, accepted, log)
-					VALUES ($pirepdata[pilotid], '$pirepdata[code]', '$pirepdata[flightnum]', 
-							'$pirepdata[depicao]', '$pirepdata[arricao]', '$pirepdata[aircraft]', 
-							'$pirepdata[flighttime]', NOW(), ".PIREP_PENDING.", '$pirepdata[log]')";
+				
+		$sql = "INSERT INTO ".TABLE_PREFIX."pireps(	
+							`pilotid`, 
+							`code`, 
+							`flightnum`, 
+							`depicao`, 
+							`arricao`, 
+							`aircraft`, 
+							`flighttime`, 
+							`submitdate`, 
+							`accepted`, 
+							`log`)
+					VALUES ($pirepdata[pilotid], 
+							'$pirepdata[code]', 
+							'$pirepdata[flightnum]', 
+							'$pirepdata[depicao]', 
+							'$pirepdata[arricao]', 
+							'$pirepdata[aircraft]', 
+							'$pirepdata[flighttime]', 
+							NOW(), 
+							".PIREP_PENDING.", 
+							'$pirepdata[log]')";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
@@ -309,12 +327,24 @@ class PIREPData
 		if($comment != '')
 		{
 			$pirepid = DB::$insert_id;
-			$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
-						VALUES ($pirepid, $pirepdata[pilotid], '$pirepdata[comment]', NOW())";
+			$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments 
+								(`pirepid`, 
+								`pilotid`, 
+								`comment`, 
+								`postdate`)
+						VALUES ($pirepid,
+								$pirepdata[pilotid], 
+								'$pirepdata[comment]', 
+								NOW()
+							)";
 
 			$ret = DB::query($sql);
-
 		}
+		
+		
+		# Update the financial information for the PIREP:
+		
+		self::PopulatePIREPFinance($pirepid);
 		
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
@@ -329,7 +359,7 @@ class PIREPData
 		
 		return true;
 	}
-	
+		
 	public static function UpdateFlightReport($pirepid, $pirepdata)
 	{		
 		/*$pirepdata = array('pilotid'=>'',
@@ -350,15 +380,57 @@ class PIREPData
 			return false;
 		}
 		
-		$sql = "UPDATE ".TABLE_PREFIX."pireps SET
-						code='$pirepdata[code]', flightnum='$pirepdata[flightnum]',
-						depicao='$pirepdata[depicao]', arricao='$pirepdata[arricao]', 
-						aircraft='$pirepdata[aircraft]', flighttime='$pirepdata[flighttime]'
-					WHERE pirepid=$pirepid";
+		$sql = "UPDATE ".TABLE_PREFIX."pireps 
+				SET `code`='$pirepdata[code]', 
+					`flightnum`='$pirepdata[flightnum]',	
+					`depicao`='$pirepdata[depicao]', 
+					`arricao`='$pirepdata[arricao]', 
+					`aircraft`='$pirepdata[aircraft]', 
+					`flighttime`='$pirepdata[flighttime]'
+				WHERE `pirepid`=$pirepid";
 
 		$ret = DB::query($sql);
 		
 		return true;
+	}
+	
+	/**
+	 * Populate the PIREP with the fianancial info needed
+	 */
+	
+	public static function PopulatePIREPFinance($pirepid)
+	{
+		$pirepid = intval($pirepid);
+		$pirep = PIREPData::GetReportDetails($pirepid);
+		
+		if(!$pirep)
+		{
+			self::$lasterror = 'PIREP does not exist';
+			return false;
+		}
+		
+		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
+		
+		if(!$sched)
+		{
+			self::$lasterror = 'Schedule does not exist';
+			return false;
+		}
+		
+		$pilot = PilotData::GetPilotData($pirep->pilotid);
+		
+		# Get the load factor for this flight
+		$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+		
+		# Update it
+		$sql = 'UPDATE '.TABLE_PREFIX."pireps
+					SET `load`='$load', 
+						`price`='$sched->price', 
+						`type`='$sched->flighttype', 
+						`pilotpay`='$pilot->payrate'
+					WHERE `pirepid`=$pirepid";
+					
+		DB::query($sql);
 	}
 	
 	/**
@@ -367,7 +439,6 @@ class PIREPData
 	 
 	public static function UpdatePIREPDistance($pirepid, $distance)
 	{
-		
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
 					SET distance=\''.$distance.'\'
 					WHERE pirepid='.$pirepid;

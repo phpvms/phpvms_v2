@@ -190,6 +190,7 @@ class Operations extends CodonModule
                 Template::Set('allairlines', OperationsData::GetAllAirlines());
 				Template::Set('allaircraft', OperationsData::GetAllAircraft());
 				Template::Set('allairports', OperationsData::GetAllAirports());
+				Template::Set('flighttypes', Config::Get('FLIGHT_TYPES'));
 
 				Template::Show('ops_scheduleform.tpl');
 
@@ -207,7 +208,8 @@ class Operations extends CodonModule
                 Template::Set('allairlines', OperationsData::GetAllAirlines());
 				Template::Set('allaircraft', OperationsData::GetAllAircraft());
 				Template::Set('allairports', OperationsData::GetAllAirports());
-
+				Template::Set('flighttypes', Config::Get('FLIGHT_TYPES'));
+				
 				Template::Show('ops_scheduleform.tpl');
 
 				break;

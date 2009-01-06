@@ -181,8 +181,7 @@ class ACARSData extends CodonModule
 		if($cutofftime == '')
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
-		$cutofftime = $cutofftime / 12;
-		
+		$cutofftime = $cutofftime / 60;		
 		
 		$sql = 'SELECT * 
 					FROM ' . TABLE_PREFIX .'acarsdata

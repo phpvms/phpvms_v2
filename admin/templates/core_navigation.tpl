@@ -47,8 +47,9 @@
 		<img src="<?echo SITE_URL?>/admin/lib/layout/images/reports_icon.png" />Stats & Reports</a>
 	<ul>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports">Overview</a></li>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports/financials">Financial Reports</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/finance/viewcurrent">Financial Reports</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports/aircraft">Aircraft Reports</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/finance/viewexpenses">Expenses</a></li>
 	</ul>
 </li>
 <li><a class="menu" href="#">

@@ -102,6 +102,31 @@ a:hover {
 	text-decoration: underline;
 }
 
+
+table.balancesheet {
+	border: 2px solid #333;
+	padding: 0px
+}
+
+table.balancesheet tr {
+	border-bottom: 1px solid #CCC;
+}
+
+table.balancesheet td  {
+	padding: 4px;
+}
+
+.balancesheet_header td {
+	border: none;
+	padding: 4px;
+	padding-left: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: #333;
+	color: #FFF;
+	text-align: right;
+}
+
 #error
 {
 	border: 1px solid #FF0000;

@@ -39,18 +39,31 @@ class Finance extends CodonModule
 		
 		switch($this->get->page)
 		{
+			case 'viewcurrent':
+			
+				$pirepfinance = FinanceData::CalculatePIREPS();
+				
+				Template::Set('pirepfinance', $pirepfinance);
+				Template::Set('allexpenses', FinanceData::GetAllExpenses());
+				
+				Template::Show('finance_balancesheet.tpl');
+				
+				break;
+				
 			case 'viewexpenses':
 			
-				if($this->post->action == 'addexpense')
+				if($this->post->action == 'addexpense' || $this->post->action == 'editexpense')
 				{
-					$this->AddExpense();
+					$this->ProcessExpense();
 				}
-				elseif($this->post->action == 'editexpense')
+				
+				if($this->get->action == 'deleteexpense')
 				{
-					$this->EditExpense();
+					FinanceData::RemoveExpense($this->post->id);
 				}
 			
 				Template::Set('allexpenses', FinanceData::GetAllExpenses());
+				Template::Show('finance_expenselist.tpl');
 			
 				break;
 				
@@ -67,6 +80,7 @@ class Finance extends CodonModule
 			
 				Template::Set('title', 'Edit Expense');
 				Template::Set('action', 'editexpense');
+				Template::Set('expense', FinanceData::GetExpenseDetail($this->get->id));
 				
 				Template::Show('finance_expenseform.tpl');
 							
@@ -74,15 +88,49 @@ class Finance extends CodonModule
 		}		
 	}
 	
-	public function AddExpense()
+	public function ProcessExpense()
 	{
 		
+		if($this->post->name == '' || $this->post->cost == '')
+		{
+			Template::Set('message', 'Name and cost must be entered');
+			Template::Show('core_error.tpl');
+			return;
+		}
 		
-	}
-	
-	public function EditExpense()
-	{
+		if(!is_numeric($this->post->cost))
+		{
+			Template::Set('message', 'Cost must be a numeric amount, no symbols');
+			Template::Show('core_error.tpl');
+			return;
+		}
 		
+		if($this->post->action == 'addexpense')
+		{
+			# Make sure it doesn't exist
+			if(FinanceData::GetExpenseByName($this->post->name))
+			{
+				Template::Set('message', 'Expense already exists!');
+				Template::Show('core_error.tpl');
+				return;				
+			}
+			
+			$ret = FinanceData::AddExpense($this->post->name, $this->post->cost);
+		}
+		elseif($this->post->action == 'editexpense')
+		{
+			$ret = FinanceData::EditExpense($this->post->id, $this->post->name, $this->post->cost);
+		}
 		
-	}
+		if(!$ret)
+		{
+			Template::Set('message', 'Error: '.DB::error());
+			Template::Show('core_error.tpl');
+			
+			return;
+		}
+		
+		Template::Set('message', 'Expense Added');
+		Template::Show('core_success.tpl');
+	}	
 }

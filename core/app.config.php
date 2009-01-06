@@ -57,6 +57,7 @@ Config::Set('ACARS_DEBUG', false);
 
 # Monetary Units
 Config::Set('MONEY_UNIT', '$'); # $, €, etc
+Config::Set('MONEY_FORMAT', '%(#10n');
 
 # FSPassengers Settings
 # Units settings

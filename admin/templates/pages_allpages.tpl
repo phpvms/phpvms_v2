@@ -29,7 +29,8 @@ foreach($allpages as $page)
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>">
 				<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
-		<a href="<?php echo SITE_URL?>/admin/action.php/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>" 
+				
+		<a href="<?php echo SITE_URL?>/admin/action.php/sitecms/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>" 
 				class="confirm">
 				<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="delete" /></a>
 	</td>

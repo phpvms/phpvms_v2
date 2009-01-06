@@ -262,7 +262,8 @@ class PIREPAdmin extends CodonModule
 		$flighttime = $this->post->flighttime;
 		$comment = $this->post->comment;
 				
-		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' || $aircraft == '' || $flighttime == '')
+		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' 
+					|| $aircraft == '' || $flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
 			Template::Show('core_error.tpl');

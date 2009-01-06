@@ -20,8 +20,8 @@ function writedebug($msg)
 {
 	$debug = Config::Get('ACARS_DEBUG');
 	
-	if(!$debug)
-		return;
+	/*if(!$debug)
+		return;*/
 	
 	$fp = fopen(dirname(__FILE__).'/log.txt', 'a+');
 	$msg .= '

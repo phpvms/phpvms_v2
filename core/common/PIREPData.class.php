@@ -57,7 +57,7 @@ class PIREPData
 						a.name as aircraft, a.registration,
 						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 
 		return DB::get_results($sql);
@@ -206,8 +206,8 @@ class PIREPData
 					    a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
 					    p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
@@ -294,10 +294,20 @@ class PIREPData
 			return false;
 		}
 		
+		
+		# Check the load, if it's blank then
+		#	look it up
+		if($pirepdata['load'] == '')
+		{
+			$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
+			$pirepdata['load'] = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+		}
+		
+		
 		# Remove the comment field, since it doesn't exist
 		# 	in the PIREPs table.
 		$comment = DB::escape($pirepdata['comment']);
-				
+		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps(	
 							`pilotid`, 
 							`code`, 
@@ -308,7 +318,8 @@ class PIREPData
 							`flighttime`, 
 							`submitdate`, 
 							`accepted`, 
-							`log`)
+							`log`
+							`load`)
 					VALUES ($pirepdata[pilotid], 
 							'$pirepdata[code]', 
 							'$pirepdata[flightnum]', 
@@ -318,7 +329,8 @@ class PIREPData
 							'$pirepdata[flighttime]', 
 							NOW(), 
 							".PIREP_PENDING.", 
-							'$pirepdata[log]')";
+							'$pirepdata[log]',
+							'$pirepdata[load]')";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
@@ -442,15 +454,21 @@ class PIREPData
 		$pilot = PilotData::GetPilotData($pirep->pilotid);
 		
 		# Get the load factor for this flight
-		$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+		$load = '';
+		if($pirep->load == '')
+		{
+			$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+		}
 		
 		# Update it
 		$sql = 'UPDATE '.TABLE_PREFIX."pireps
-					SET `load`='$load', 
-						`price`='$sched->price', 
+					SET `price`='$sched->price', 
 						`type`='$sched->flighttype', 
-						`pilotpay`='$pilot->payrate'
-					WHERE `pirepid`=$pirepid";
+						`pilotpay`='$pilot->payrate'";
+		if($load != '')
+			$sql .= ", `load`='$load'";
+			
+		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
 		

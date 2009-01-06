@@ -508,8 +508,17 @@ class DB
 		return self::$DB->escape($val);
 	}
 	
-	public static function debug()
+	public static function debug($return = false)
 	{
+		if($return == true)
+		{
+			ob_start();
+			self::$DB->debug();
+			$val = ob_get_clean();
+			ob_end_clean();
+			
+			return $val;
+		}
 		return self::$DB->debug();
 	}
 }

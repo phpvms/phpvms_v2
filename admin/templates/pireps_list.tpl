@@ -11,6 +11,17 @@ if(!$pireps)
 }
 ?>
 <p>There are a total of <?php echo count($pireps);?> flight reports in this category.</p>
+<?php
+if($paginate)
+{
+?>
+<div style="float: right;">
+	<a href="?admin=<?php echo $admin?>&start=<?php echo $start?>">Next Page</a>
+	<br />
+</div>
+	<?php
+}
+?>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
@@ -23,6 +34,8 @@ if(!$pireps)
 <?php
 foreach($pireps as $report)
 {
+	$error = false; #IF there are any errors on the report, then don't allow accept
+	
 	if($report->accepted == PIREP_ACCEPTED)
 		$class = 'success';
 	else
@@ -70,7 +83,16 @@ foreach($pireps as $report)
 				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.png" alt="Add Comment" /></a>
 		</span>
 		
-		<strong>Aircraft: </strong><?php echo $report->aircraft. " ($report->registration)" ?><br />
+		<strong>Aircraft: </strong>
+		<?php 
+			if($report->aircraft == '')
+			{
+				$error = true;
+				echo '<span style="color: red">No aircraft! View log for more details</span>';
+			}
+			else
+				echo $report->aircraft. " ($report->registration)";
+		?><br />
 	<?php
 		// Get the additional fields
 		//	I know, badish place to put it, but it's pulled per-PIREP
@@ -89,13 +111,30 @@ foreach($pireps as $report)
 			}
 		}
 		?>
+		
+		<?php
+		# If there was an error, don't allow the PIREP to go through
+		if($error == true)
+		{
+			echo '<span style="color: red">There were errors with this PIREP. Correct them to be able to accept it</span>';
+		}		
+	?>
 
 	</td>
 	<td align="left" width="1%" nowrap>
+	
+	<?php
+		# If there was an error, don't allow the PIREP to go through
+		if($error == false)
+		{
+	?>
 		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="approvepirep"
 			id="<?php echo $report->pirepid;?>" class="ajaxcall">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/accept.png" alt="Accept" /></a>
 		<br />
+	<?php
+		}
+	?>
 		<a id="dialog" class="jqModal"
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/rejectpirep?pirepid=<?php echo $report->pirepid;?>">
 				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.png" alt="Reject" /></a>
@@ -114,13 +153,16 @@ foreach($pireps as $report)
 ?>
 </tbody>
 </table>
-<span style="float: right">* - double click to select</span>
+<span style="float: right">* - double click to select</span><br />
 
 <?php
 if($paginate)
 {
 ?>
-<a href="?admin=<?php echo $admin?>&start=<?php echo $start?>">Next Page</a></a>
+<div style="float: right;">
+	<a href="?admin=<?php echo $admin?>&start=<?php echo $start?>">Next Page</a>
+	<br />
+</div>
 <?php
 }
 ?>

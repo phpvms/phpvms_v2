@@ -47,6 +47,24 @@ $flightcargo = array('Pax', 'Cargo');
 
 ##################################
 
+
+function find_in_fsacar_log($txt, $log)
+{
+	$total = count($log);
+	for($i=0;$i<$total; $i++)
+	{
+		if(strstr($log[$i], $txt) === false)
+		{
+			continue;
+		}
+		else
+		{
+			return $i;
+			break;
+		}
+	}
+}
+
 switch($_GET['action'])
 {
 	#
@@ -175,7 +193,7 @@ $route->route
 			
 		if(is_numeric($_GET['pilot']))
 		{
-			$pilotid = $_GET{'pilot'];
+			$pilotid = $_GET['pilot'];
 		}
 		else
 		{
@@ -216,27 +234,20 @@ $route->route
 		$code = $matches[1];
 		
 		$log = explode('*', $_GET['log']);
-		$total = count($log);
 		
 		# Find where flight IATA is
-		for($i=0;$i<$total; $i++)
-		{
-			if(strstr($log[$i], 'Flight IATA') === false)
-			{
-				continue;
-			}
-			else
-			{
-				$pos = $i;
-				break;
-			}
-		}
-		
+		$pos = find_in_fsacar_log('Flight IATA', $log);		
 		# Extract the code and flight number
 		$flightnum = str_replace('Flight IATA:', '', $log[$pos]);
 		preg_match('/^([A-Za-z]*)(\d*)/', $flightnum, $matches);
 		$code = $matches[1];
 		$flightnum = $matches[2];
+		
+		
+		# Get the passenger count:
+		# Find where flight IATA is
+		$pos = find_in_fsacar_log('PAX', $log);
+		$load = str_replace('PAX:', '', $log[$pos]);		
 		
 		# Get our aircraft
 		$reg = trim($_GET['reg']);
@@ -299,6 +310,7 @@ $route->route
 						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
 						'comment'=>$comment,
+						'load'=>$load,
 						'log'=> $_GET['log']);
 			
 		writedebug($data);

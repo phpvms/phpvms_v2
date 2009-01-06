@@ -455,7 +455,7 @@ class PIREPData
 		
 		# Get the load factor for this flight
 		$load = '';
-		if($pirep->load == '')
+		if($pirep->load == '' || $pirep->load == 0)
 		{
 			$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
 		}
@@ -463,7 +463,7 @@ class PIREPData
 		# Update it
 		$sql = 'UPDATE '.TABLE_PREFIX."pireps
 					SET `price`='$sched->price', 
-						`type`='$sched->flighttype', 
+						`flighttype`='$sched->flighttype', 
 						`pilotpay`='$pilot->payrate'";
 		if($load != '')
 			$sql .= ", `load`='$load'";

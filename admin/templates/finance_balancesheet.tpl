@@ -36,6 +36,17 @@
 
 <?php
 	/* COUNT EXPENSES */
+	if(!$allexpenses)
+	{
+		$allexpenses = array();
+		?>
+		<tr>
+		<td align="right">None</td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), 0));?></td>
+	</tr>
+	<?php
+	}
+	
 	foreach($allexpenses as $expense)
 	{
 		$expense->cost  = $expense->cost * -1;

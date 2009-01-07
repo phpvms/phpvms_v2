@@ -173,8 +173,9 @@ class ACARSData extends CodonModule
 		return true;
 	}
 	
-	
-	//TODO: convert this cutoff time into a SETTING parameter, in minutes
+	/**
+	 * Get all of the current ACARS data
+	 */
 	public static function GetACARSData($cutofftime = '')
 	{
 		//cutoff time in days

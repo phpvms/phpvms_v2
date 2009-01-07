@@ -286,6 +286,11 @@ class Installer
 		}
 		elseif($name == 'COMMENT')
 		{
+			if(strpos($config, '# '.$value) !== false)
+			{
+				return false;
+			}
+			
 			$config = $config.'
 # '.$value.'
 ';

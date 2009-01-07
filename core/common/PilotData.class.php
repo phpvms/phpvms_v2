@@ -67,7 +67,7 @@ class PilotData
 	{
 		$sql = "SELECT p.*, r.rankimage, r.payrate
 					FROM ".TABLE_PREFIX."pilots p
-					INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
+						INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
 					WHERE p.hub='$hub'
 					ORDER BY p.pilotid DESC";
 					
@@ -80,8 +80,15 @@ class PilotData
 	 */
 	public static function GetPilotCode($code, $pilotid)
 	{
-		$pilotid = $pilotid + PILOTID_OFFSET;
-		return $code . str_pad($pilotid, 4, '0', STR_PAD_LEFT);
+		# Make sure values are entered
+		if(Config::Get('PILOTID_LENGTH') == '')
+			Config::Set('PILOTID_LENGTH', 4);
+		
+		if(Config::Get('PILOTID_OFFSET') == '')
+			Config::Set('PILOTID_OFFSET', 0);
+			
+		$pilotid = $pilotid + Config::Get('PILOTID_OFFSET');
+		return $code . str_pad($pilotid, Config::Get('PILOTID_LENGTH'), '0', STR_PAD_LEFT);
 	}
 	
 	/**
@@ -89,10 +96,10 @@ class PilotData
 	 */
 	public static function GetPilotData($pilotid)
 	{					
-		$sql = "SELECT p.*, r.rankimage, r.payrate
+		$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
 					FROM ".TABLE_PREFIX."pilots p
-					LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
-					WHERE p.pilotid='$pilotid'";
+						LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank`
+					WHERE p.`pilotid`='$pilotid'";
 		
 		return DB::get_row($sql);
 	}
@@ -103,8 +110,8 @@ class PilotData
 	public static function GetPilotByEmail($email)
 	{
 		$sql = 'SELECT * 
-				FROM '. TABLE_PREFIX.'pilots 
-				WHERE `email`=\''.$email.'\'';
+					FROM '. TABLE_PREFIX.'pilots 
+					WHERE `email`=\''.$email.'\'';
 				
 		return DB::get_row($sql);
 	}

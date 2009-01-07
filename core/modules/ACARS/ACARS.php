@@ -54,11 +54,11 @@ class ACARS extends CodonModule
 				break;
 				
 					
-			#
-			# Output the FSACARS config file from the template
-			#	Tell the browser its <code>.ini for the airline that
-			#	 the pilot is registered to
-			#
+			/**
+			 * Output the FSACARS config file from the template
+			 *	Tell the browser its <code>.ini for the airline that
+			 *	the pilot is registered to
+			 */
 			case 'fsacarsconfig':
 				
 				if(!Auth::LoggedIn())
@@ -77,6 +77,31 @@ class ACARS extends CodonModule
 				header('Content-Length: ' . strlen($fsacars_config));
 				
 				echo $fsacars_config;
+				
+			/**
+			 * Output the fsacars config
+			 */
+			case 'fspaxconfig':
+			
+				if(!Auth::LoggedIn())
+				{
+					echo 'You are not logged in!';
+					break;
+				}
+				
+				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+				Template::Set('userinfo', Auth::$userinfo);
+				
+				$fspax_config = Template::GetTemplate('fspax_config.tpl', true);
+				
+				# Set the headers so the browser things a file is being sent
+				header('Content-Type: text/plain');
+				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'_config.cfg"');
+				header('Content-Length: ' . strlen($fspax_config));
+				
+				echo $fspax_config;
+				
+				break;
 				
 			// default handles the connectors as plugins
 			default:

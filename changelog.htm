@@ -61,32 +61,34 @@ ul li ul {
   &nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 <p class="header"><em>Last Update:
-<!-- #BeginDate format:Am1 -->January 5, 2009<!-- #EndDate -->
+<!-- #BeginDate format:Am1 -->January 7, 2009<!-- #EndDate -->
   </em><br />
 </p>
 <hr />
 <h1>Build <<REVISION>> (Version 1.1.<<REVISION>>)</h1>
 <ul>
-  <li>Revamped and reorganized Admin Panel</LI>
-  <li> Backend optimizations, Javascript trimmed down</li>
-  <li><strong>FSPassengers Support</strong></li>
-  <li> Download manager - create categories and add downloads, track # of downloads (<strong>Link: </strong><em>index.php/downloads</em>)</li>
-  <li> FSACARS retrieves flight information from most recent bid</li>
-  <li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
-  <li> Enabled/disable aircraft (retirement)</li>
-  <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
-  <li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
-  <li><strong>Schedule Data</strong>: Added four fields to schedules and import: Type, Maxload, Price and FlightType- for financials later on.
+  <li>NEW:<strong> FSPassengers Support</strong></li>
+  <li> NEW: <strong>Download manager</strong> - create categories and add downloads, track # of downloads (<strong>Link: </strong><em>index.php/downloads</em>)</li>
+  <li>NEW:<strong> Schedule Data</strong>: Added four fields to schedules and import: Type, Maxload, Price and FlightType- for financials later on.
     <ul>
-      <li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value of P or C, P is default)</li>
-      <li><strong>Maxload</strong> - The maximum number of passengers or cargo allowed on this flight (maxload is in CARGO_UNITS, explained below)</li>
-      <li><strong>Price</strong> - This is the price per unit - if it's a passenger flight, it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT (ie, per lb/kg)</li>
-      <li><strong>FlightType</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights operate at 100%  LOAD_FACTOR, </li>
+      <ul>
+        <li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value of P or C, P is default)</li>
+        <li><strong>Maxload</strong> - The maximum number of passengers or cargo allowed on this flight (maxload is in CARGO_UNITS, explained below)</li>
+        <li><strong>Price</strong> - This is the price per unit - if it's a passenger flight, it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT (ie, per lb/kg)</li>
+        <li><strong>FlightType</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights operate at 100%  LOAD_FACTOR, </li>
+      </ul>
     </ul>
   </li>
-</ul>
-<ul>
-  <li><strong>Monthly Expenses</strong> area added under financials - itemize your monthly expenses to be factored into calculations</li>
+
+  <li>NEW: <strong>Monthly Expenses</strong> area added under financials - itemize your monthly expenses to be factored into calculations</li>
+  <li> Enabled/disable aircraft (retirement)</li>
+  
+  <li>Revamped and reorganized Admin Panel</li>
+  <li> Backend optimizations, Javascript trimmed down</li>
+  <li>FSACARS retrieves flight information from most recent bid</li>
+  <li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
+  <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
+  <li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
   <li>PIREPS determine a passenger count based on a new config setting called LOAD_FACTOR (explained below)
   </li>
   <li>Duplicate schedules on import now overwrite previous existing schedule</li>
@@ -94,7 +96,7 @@ ul li ul {
   <li> Email sent to admin on registration/PIREP submission</li>
   <li> Search list aircraft dupes and results fixed</li>
   <li> Google Maps &quot;createMarkerIcon&quot; error fixed</li>
-  <li>Fixed active/inactive schedules</li>
+  <li>Fixed active/inactive schedules view</li>
   <li> Update checking bug fixed</li>
   <li>Security fixes</li>
 </ul>
@@ -115,7 +117,11 @@ Config::Set('CARGO_UNITS', 'lbs');
 <p>Changed:</p>
 <pre><em>profile_main.tpl</em> - Added link to download page, and FSPassengers config link:
 
-	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/downloads&quot;&gt;View Downloads&lt;/a&gt;&lt;/li&gt;</em></pre>
+	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/downloads&quot;&gt;View Downloads&lt;/a&gt;&lt;/li&gt;</em>
+
+	---
+
+	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL?&gt;/action.php/acars/fspaxconfig&quot;&gt;Download FSPax Config&lt;/li&gt;</em></pre>
 <hr />
 <h1>Build 458 (Version 1.1.458)</h1>
 <ul> <li> Added page encoding option</li>

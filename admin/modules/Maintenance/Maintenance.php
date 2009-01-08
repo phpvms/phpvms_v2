@@ -84,7 +84,8 @@ class Maintenance extends CodonModule
 					
 				$allpilots = PilotData::GetAllPilots();
 				
-				echo '<h3>Regenerating signatures</h3>Generating signatures<br />';
+				echo '<h3>Regenerating signatures</h3>
+						<strong>Generating signatures...</strong><br />';
 				
 				foreach($allpilots as $pilot)
 				{

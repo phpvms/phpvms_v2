@@ -281,8 +281,7 @@ class Installer
 		
 		if($name == 'BLANK')
 		{
-			$config = $config.'
-					';
+			$config = $config.PHP_EOL;
 		}
 		elseif($name == 'COMMENT')
 		{
@@ -291,14 +290,11 @@ class Installer
 				return false;
 			}
 			
-			$config = $config.'
-# '.$value.'
-';
+			$config = $config.PHP_EOL.'#'.$value.PHP_EOL;
 		}
 		else 
 		{
-			$config = $config ."
-Config::Set('$name', ";
+			$config = $config.PHP_EOL."Config::Set('$name', ";
 			
 			if(is_bool($value))
 			{

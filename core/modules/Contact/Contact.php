@@ -25,6 +25,8 @@ class Contact extends CodonModule
 		if($this->post->submit)
 		{
 			
+			#echo "Session: ".SessionManager::Get('captcha_sum');
+			
 			if($this->post->loggedin == 'false')
 			{
 				// Check the captcha thingy
@@ -37,7 +39,12 @@ class Contact extends CodonModule
 			}
 			
 			$subject = 'New message from '.$this->post->name.' - "'.$this->post->subject.'"';
-			$message = DB::escape($message);
+			$message = DB::escape($message). PHP_EOL;
+			
+			foreach($_POST as $field=>$value)
+			{
+				$message.="[ $field ] = $value".PHP_EOL;
+			}
 			
 			Util::SendEmail(ADMIN_EMAIL, $subject, $message, 
 								$this->post->name, $this->post->email);

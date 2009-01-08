@@ -296,8 +296,8 @@ class SchedulesData
 					ORDER BY s.flightnum ASC';
 					
 		return DB::get_results($sql);
-		DB::debug();
 		
+		DB::debug();
 		return $ret;
 	}
 	

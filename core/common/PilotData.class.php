@@ -310,7 +310,8 @@ class PilotData
 	public static function UpdateFlightData($pilotid, $flighttime, $numflights=1)
 	{
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=totalhours+$flighttime, totalflights=totalflights+$numflights
+					SET totalhours=totalhours+$flighttime,
+						totalflights=totalflights+$numflights
 					WHERE pilotid=$pilotid";
 		
 		$res = DB::query($sql);

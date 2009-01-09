@@ -77,6 +77,8 @@ Template::Set('MODULE_HEAD_INC', $_GLOBALS['HTMLHead']);
 
 $BaseTemplate->Show('header.tpl');
 
+flush();
+
 MainController::RunAllActions(Config::Get('RUN_MODULE'));
 
 $BaseTemplate->Show('footer.tpl');

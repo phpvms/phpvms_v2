@@ -160,6 +160,7 @@ class Auth
 			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);
 			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
+			PilotData::UpdateLogin($userinfo->pilotid);
 						
 			return true;
 		}			

@@ -45,18 +45,10 @@
 	
 	# This is a simple captcha thing for if they are not logged in
 	if(Auth::LoggedIn() == false)
-	{
-		# Just a simple addition
-		$int1 = rand(1, 10);
-		$int2 = rand(1, 10);
-		
-		SessionManager::Set('captcha_sum', $int1 + $int2);
-		
-		//echo "Session: ".SessionManager::Get('captcha_sum');
-		
+	{		
 		echo '<tr>
 				<td><strong>Captcha</strong></td>
-				<td><p>What is the sum of '.$int1 .' and '.$int2.'?<br />
+				<td><p>What is the sum of '.$rand1 .' and '.$rand2.'?<br />
 					<input type="text" name="captcha" value="" />
 				</td>
 			  </tr>';

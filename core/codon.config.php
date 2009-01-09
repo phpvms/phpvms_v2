@@ -61,6 +61,7 @@ if(substr($version, 0, 1) != '5')
 // Include all dependencies
 include CLASS_PATH . '/Config.class.php';
 include CLASS_PATH . '/CodonAJAX.class.php';
+include CLASS_PATH . '/CodonCondenser.class.php';
 include CLASS_PATH . '/CodonEvent.class.php';
 include CLASS_PATH . '/CodonForm.class.php';
 include CLASS_PATH . '/CodonModule.class.php';

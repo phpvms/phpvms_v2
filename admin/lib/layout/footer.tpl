@@ -15,5 +15,8 @@
 	</p>
   </div>
 </div>
+<?php
+Template::Show('core_footer.tpl');
+?>
 </body>
 </html>

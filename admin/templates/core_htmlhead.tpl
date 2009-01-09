@@ -1,17 +1,26 @@
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.dimensions.pack.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.form.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jqModal.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.bigiframe.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.sparklines.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.autocomplete.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.tablesorter.pack.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.tablesorter.pager.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.metadata.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.listen-min.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/jquery.impromptu.js"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/nicEdit.js"></script>
+<?php
+$condenser = new CodonCondenser();
+$condenser->SetOptions(SITE_ROOT.'/lib/js', SITE_URL.'/lib/js', 'js', '');
+
+$files = array(	'jquery.min.js', 
+				'jquery-ui.js', 
+				'jqModal.js',
+				'jquery.form.js', 
+				'jquery.bigiframe.js',
+				'jquery.sparklines.js', 
+				//'jquery.autocomplete.js',
+				'jquery.tablesorter.pack.js',
+				'jquery.tablesorter.pager.js', 
+				'jquery.metadata.js', 
+				'jquery.impromptu.js',
+				'jquery.listen-min.js', 
+				'nicEdit.js');
+
+$cache_url = $condenser->GetCondensedFile($files, 'jquery_essentials.js');
+
+?>
+<script type="text/javascript" src="<?php echo $cache_url?>"></script>
+<script type="text/javascript" src="<?php echo SITE_URL ?>/lib/js/jquery.dimensions.pack.js"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo SITE_URL?>/lib/rss/latestpireps.rss">

@@ -93,7 +93,6 @@ class SessionManager
 			return $upack->$index;
 		else
 			return $upack[$index];
-		
 	}
 	
 	public static function Logout()

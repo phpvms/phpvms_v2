@@ -29,7 +29,7 @@
 		<img src="<?echo SITE_URL?>/admin/lib/layout/images/pilots_icon.png" />Pilots & Groups</a>
 	<ul>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/pendingpilots">Pending Registrations</a></li>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots">View Registered Pilots</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots">View All Pilots</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/pilotgroups">Pilot Groups</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotranking/pilotranks">Pilot Ranks</a></li>
 	</ul>

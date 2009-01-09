@@ -44,7 +44,6 @@ class PIREPData
 		return DB::get_results($sql);
 	}
 	
-
 	/**
 	 * Get all of the reports by the accepted status. Use the
 	 * constants:
@@ -294,12 +293,13 @@ class PIREPData
 			return false;
 		}
 		
+		# Look up the schedule
+		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
 		
 		# Check the load, if it's blank then
 		#	look it up
 		if($pirepdata['load'] == '')
 		{
-			$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
 			$pirepdata['load'] = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
 		}
 		
@@ -366,6 +366,7 @@ class PIREPData
 		$sub = 'PIREP Submitted';
 		$message = 'A PIREP has been submitted';
 		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
+		SchedulesData::IncrementFlownCount($sched->id);
 		
 		DB::$insert_id = $pirepid;
 		

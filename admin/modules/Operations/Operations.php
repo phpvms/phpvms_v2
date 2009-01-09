@@ -461,7 +461,7 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		$enabled = ($_POST['enabled'] == 'on') ? 'true' : 'false';
+		$enabled = ($_POST['enabled'] == 'on') ? true : false;
 
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
@@ -506,11 +506,7 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		$enabled = true;
-		if($_POST['enabled'] == '')
-		{
-			$enabled = false;
-		}
+		$enabled = ($_POST['enabled'] == 'on') ? true : false;
 
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,

@@ -37,7 +37,7 @@ Config::Set('PAGE_EXT', '.htm');
 Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
 Config::Set('PILOTID_LENGTH', 4);
 Config::Set('SHOW_LEG_TEXT', true);
-Config::Set('UNITS', 'mi'); // Your units: mi or km
+Config::Set('UNITS', 'nm'); // Your units: nm, mi or km
 Config::Set('LOAD_FACTOR', '72'); 
 Config::Set('CARGO_UNITS', 'lbs');
 

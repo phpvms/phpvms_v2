@@ -82,13 +82,13 @@
 <tr>
 	<td valign="top"><strong>Departure Time:</strong> </td>
 	<td><input type="text" name="deptime" value="<?php echo $schedule->deptime?>" />
-		<p>Time can be entered in any format</p>
+		<p>Please enter time as: HH::MM Timezone (eg: 17:30 EST, or 5:30 PM EST)</p>
 	</td>
 </tr>
 <tr>
 	<td valign="top"><strong>Arrival Time:</strong> </td>
 	<td><input type="text" name="arrtime" value="<?php echo $schedule->arrtime?>" />
-		<p>Time can be entered in any format</p>
+		<p>Please enter time as: HH::MM Timezone (eg: 17:30 EST, or 5:30 PM EST)</p>
 	</td>
 </tr>
 <tr>

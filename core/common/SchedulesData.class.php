@@ -64,12 +64,13 @@ class SchedulesData
 		return DB::get_row($sql);		
 	}
 	
-	public static function IncrementFlownCount($code, $flightnum)
+	public static function IncrementFlownCount($schedid)
 	{
+		$schedid = intval($schedid);
+		
 		$sql = 'UPDATE '.TABLE_PREFIX.'schedules 
 					SET timesflown=timesflown+1
-					WHERE code=\''.$code.'\' 
-						AND flightnum=\''.$flightnum.'\'';
+					WHERE id='.$schedid;
 		
 		$res = DB::query($sql);
 		
@@ -93,6 +94,24 @@ class SchedulesData
 					WHERE s.id='.$id;
 		
 		return DB::get_row($sql);
+	}
+	
+	
+	/**
+	 * Return all schedules which have no distance value
+	 */
+	public static function GetSchedulesNoDistance()
+	{
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM '.TABLE_PREFIX.'schedules s
+						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+					WHERE s.distance=0';
+		
+		return DB::get_results($sql);
 	}
 	
 	/**
@@ -305,14 +324,34 @@ class SchedulesData
 	/**
 	 * Calculate the distance between two coordinates
 	 * Using a revised equation found on http://www.movable-type.co.uk/scripts/latlong.html
+	 * 
+	 * Also converts to proper type based on UNIT setting
 	 */
 	public static function distanceBetweenPoints($lat1, $lon1, $lat2, $lon2)
 	{
 		
 		$distance = (3958 * 3.1415926 * sqrt(($lat2-$lat1) * ($lat2-$lat1) 
 					+ cos($lat2/57.29578) * cos($lat1/57.29578) * ($lon2-$lon1) * ($lon2-$lon1))/180);
-					
-		$distance = $distance * .868976242; # Convert to nautical miles
+		
+		# Distance is in miles
+		#	Do proper conversions if needed
+		#	Return in nm by default
+		
+		if(strtolower(Config::Get('UNITS')) == 'mi')
+		{
+			# Leave it in miles
+			return $distance;
+		}
+		elseif(strtolower(Config::Get('UNITS')) == 'km')
+		{
+			# Convert to km
+			return $distance * 1.609344;
+		}
+		else
+		{
+			# Convert to nm
+			return $distance * .868976242; # Convert to nautical miles
+		}
 
 		return round($distance, 2);
 		
@@ -390,10 +429,10 @@ class SchedulesData
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
-		if($data['enabled'] == false || $data['enabled'] == 'false')
-			$data['enabled'] = 0;
+		if($data['enabled'] == true)
+			$data['enabled'] = true;
 		else
-			$data['enabled'] = 1;
+			$data['enabled'] = false;
 		
 		# If they didn't specify 
 		$data['flighttype'] = strtoupper($data['flighttype']);
@@ -470,14 +509,10 @@ class SchedulesData
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
-		if($data['enabled'] == false || $data['enabled'] == 'false')
-		{
-			$data['enabled'] = 0;
-		}
+		if($data['enabled'] == true)
+			$data['enabled'] = true;
 		else
-		{
-			$data['enabled'] = 1;
-		}
+			$data['enabled'] = false;
 			
 		# If they didn't specify 
 		$data['flighttype'] = strtoupper($data['flighttype']);

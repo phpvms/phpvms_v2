@@ -62,7 +62,7 @@ class Maintenance extends CodonModule
 				
 				echo '<p><strong>Updating PIREPs...</strong></p>';
 				
-				$allpireps = PIREPData::GetAllReports();
+				$allpireps = PIREPData::GetSchedulesNoDistance();
 				
 				foreach($allpireps as $sched)
 				{
@@ -101,6 +101,7 @@ class Maintenance extends CodonModule
 			
 				echo '<h3>Reset PIREP Data</h3> 
 						Resetting PIREPs...<br />';
+						
 				PIREPData::PopulateEmptyPIREPS();
 				
 				echo 'Complete';

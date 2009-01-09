@@ -25,7 +25,6 @@ class Contact extends CodonModule
 		if($this->post->submit)
 		{
 			$captcha = SessionManager::Get('captcha_sum');
-			print_r($_SESSION);
 			
 			if($this->post->loggedin == 'false')
 			{
@@ -62,8 +61,7 @@ class Contact extends CodonModule
 				$message.="-$field = $value".PHP_EOL;
 			}
 			
-			Util::SendEmail(ADMIN_EMAIL, $subject, $message, 
-								$this->post->name, $this->post->email);
+			Util::SendEmail(ADMIN_EMAIL, $subject, $message);
 			
 			return;
 		}		

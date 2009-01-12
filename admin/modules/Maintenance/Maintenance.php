@@ -46,14 +46,14 @@ class Maintenance extends CodonModule
 				
 				echo '<p><strong>Updating schedules...</strong></p>';
 				
-				$allschedules = SchedulesData::GetSchedules();
+				$allschedules = SchedulesData::GetSchedulesNoDistance();
 				
 				foreach($allschedules as $sched)
 				{
 					$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
 																		$sched->arrlat, $sched->arrlong);							
 					echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname "
-						."is $distance miles<br />";
+						."is $distance ".Config::Get('UNIT').'<br />';
 						
 					SchedulesData::UpdateDistance($sched->id, $distance);
 				}
@@ -62,18 +62,17 @@ class Maintenance extends CodonModule
 				
 				echo '<p><strong>Updating PIREPs...</strong></p>';
 				
-				$allpireps = PIREPData::GetSchedulesNoDistance();
+				$allpireps = PIREPData::GetAllReports();
 				
-				foreach($allpireps as $sched)
+				foreach($allpireps as $pirep)
 				{
-					$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
-													$sched->arrlat, $sched->arrlong);	
+					$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
+																	 $pirep->arrlat, $pirep->arrlong);	
 													
 					echo "PIREP Number $sched->pirepid ($sched->code$sched->flightnum) "
-						."$sched->depname to $sched->arrname is $distance miles<br />";
+						."$sched->depname to $sched->arrname is $distance ".Config::Get('UNIT').'<br />';
 					
-					PIREPData::UpdatePIREPDistance($sched->pirepid, $distance);
-					
+					PIREPData::UpdatePIREPDistance($pirep->pirepid, $distance);
 				}
 			
 				echo '<p>Completed!</p><br />';

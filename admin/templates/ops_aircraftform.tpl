@@ -12,7 +12,7 @@
 
 <dt>Aircraft Registration *</dt>
 <dd><input name="registration" type="text"  value="<?php echo $aircraft->registration; ?>" />
-	<p>Inactive aircraft have an X as their registration prefix</p>
+	<p>TIP: Place an X in the registration to denote an inactive aircraft</p>
 </dd>
 
 <dt>Link to download aircraft</dt>

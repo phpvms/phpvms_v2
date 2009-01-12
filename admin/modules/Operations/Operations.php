@@ -573,6 +573,14 @@ class Operations extends CodonModule
 			return;
 		}
 		
+		$ac = OperationsData::CheckRegDupe($this->post->id, $this->post->registration);
+		if($ac)
+		{
+			Template::Set('message', 'This registration is already assigned to another active aircraft');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
 		if($this->post->enabled == '1')
 			$this->post->enabled = true;
 		else

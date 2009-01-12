@@ -88,9 +88,9 @@ class SchedulesData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.id='.$id;
 		
 		return DB::get_row($sql);
@@ -106,9 +106,9 @@ class SchedulesData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.distance=0';
 		
 		return DB::get_results($sql);
@@ -183,9 +183,9 @@ class SchedulesData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules AS s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.depicao=\''.$depicao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
@@ -204,9 +204,9 @@ class SchedulesData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.arricao=\''.$arricao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
@@ -231,9 +231,9 @@ class SchedulesData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules AS s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.distance '.$type.' '.$distance.' '.$enabled.'
 						ORDER BY s.depicao DESC';
 	
@@ -258,8 +258,7 @@ class SchedulesData
 		
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'aircraft a
-					WHERE a.name=\''.$ac.'\' 
-						AND a.id=s.aircraft
+					WHERE a.name=\''.$ac.'\' AND a.id=s.aircraft
 					'.$enabled.'
 					ORDER BY s.depicao DESC';
 		
@@ -288,9 +287,9 @@ class SchedulesData
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules AS s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					'.$enabled.'
 					ORDER BY s.depicao DESC';
 		
@@ -445,9 +444,12 @@ class SchedulesData
 		}
 				
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
-						(`code`, `flightnum`, `leg`, `depicao`, `arricao`, 
-						 `route`, `aircraft`, `distance`, `deptime`, `arrtime`, 
-						 `flighttime`, `maxload`, `price`, `flighttype`, `notes`, `enabled`)
+						(`code`, `flightnum`, `leg`, 
+						 `depicao`, `arricao`, 
+						 `route`, `aircraft`, `distance`, 
+						 `deptime`, `arrtime`, 
+						 `flighttime`, `maxload`, `price`, 
+						 `flighttype`, `notes`, `enabled`)
 					VALUES ('$data[code]', 
 							'$data[flightnum]', 
 							'$data[leg]', 
@@ -514,7 +516,7 @@ class SchedulesData
 		else
 			$data['enabled'] = false;
 			
-		# If they didn't specify 
+		# If they didn't specify a flight type, just default to pax
 		$data['flighttype'] = strtoupper($data['flighttype']);
 		if($data['flighttype'] != 'P' && $data['flighttype'] != 'C')
 			$data['flighttype'] = 'P';
@@ -557,7 +559,8 @@ class SchedulesData
 	public static function DeleteSchedule($scheduleid)
 	{
 		$scheduleid = DB::escape($scheduleid);
-		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules WHERE id='.$scheduleid;
+		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules 
+					WHERE id='.$scheduleid;
 
 		$res = DB::query($sql);
 		
@@ -567,6 +570,22 @@ class SchedulesData
 		return true;
 	}
 	
+	/**
+	 * Get the latest bids
+	 */
+	 
+	public static function GetLatestBids($limit=5)
+	{
+		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+						'.TABLE_PREFIX.'aircraft a
+					WHERE b.routeid = s.id 
+							AND s.aircraft=a.id
+					ORDER BY bidid DESC
+					LIMIT '.$limit;
+		
+		return DB::get_results($sql);
+	}
 	
 	/**
 	 * Get a specific bid with route information

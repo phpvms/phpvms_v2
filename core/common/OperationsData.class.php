@@ -93,6 +93,23 @@ class OperationsData
 		return DB::get_row($sql);
 	}
 	
+	/** 
+	 * Check an aircraft registration, against an ID and a 
+	 *  registration. For instance, editing an aircraft with a 
+	 *  registration change. This checks to see if that reg is
+	 *  being already used
+	 */
+	 
+	 public static function CheckRegDupe($acid, $reg)
+	 {
+		# Search for reg that's not on the AC supplied
+		$sql = "SELECT * FROM ".TABLE_PREFIX."aircraft
+					WHERE `id` != $acid
+						AND `registration`='$reg'";
+		
+		return DB::get_results($sql);
+	}
+	
 	/**
 	 * Get all of the airports
 	 */

@@ -1,22 +1,14 @@
 <h3>Administration Panel</h3>
 <?php
 MainController::Run('Dashboard', 'CheckInstallFolder');
-MainController::Run('Dashboard', 'CheckForUpdates');
+
+echo $updateinfo;
 ?>
 <h3>Pilot Reports for the Past Week</h3>
-
-<div id="reportcounts">Loading chart...</div>
-<script type="text/javascript">
-$(document).ready(function()
-{
-	$("#reportcounts").sparkline(<?php echo $reportcounts; ?>, {width: '90%', height: '100px'});
-
-});
-</script>
-
+<div id="reportcounts" align="center">Loading chart...</div>
 <table width="100%">
 	<tr>
-		<td valign="top">
+		<td valign="top" width="50%">
 			<h3>VA Stats:</h3>
 			<ul>
 				<li><strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?></li>
@@ -24,8 +16,16 @@ $(document).ready(function()
 				<li><strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?></li>
 			</ul>
 		</td>
-		<td>
-			<?php echo StatsData::AircraftFlownGraph();?>
+		<td valign="top" width="50%">
+			<h3>Latest News</h3>
+			<?php echo $latestnews; //StatsData::AircraftFlownGraph();?>
 		</td>
 	</tr>
 </table>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#reportcounts").sparkline(<?php echo $reportcounts; ?>, {width: '90%', height: '100px'});
+
+});
+</script>

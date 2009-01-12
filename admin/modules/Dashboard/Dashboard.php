@@ -41,6 +41,8 @@ class Dashboard extends CodonModule
 				/* Dashboard.tpl calls the functions below
 				*/
 				
+				$this->CheckForUpdates();
+				
 				Template::Set('reportcounts', PIREPData::ShowReportCounts());
 				Template::Show('dashboard.tpl');
 
@@ -72,18 +74,25 @@ class Dashboard extends CodonModule
 	{
 		if(NOTIFY_UPDATE == true)
 		{
-			$postversion = @file_get_contents('http://www.phpvms.net/extern/version.php');
-			$postversion = intval(str_replace('.', '', trim($postversion)));
+			$url = 'http://www.phpvms.net/extern/version.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
+					.'&version='.urlencode(PHPVMS_VERSION);
+			
+			$contents = @file_get_contents($url);
+			
+			preg_match('/^.*Version: (.*)<\/span>/', $contents, $version_info);
+			$version = $version_info[1];
+			
+			$postversion = intval(str_replace('.', '', trim($version)));
 			$currversion = intval(str_replace('.', '', PHPVMS_VERSION));
 			
 			if($currversion < $postversion)
 			{
-				Template::Set('message', 'An update for phpVMS is available! See the "Latest News" below');
-				Template::Show('core_error.tpl');
-				
-				$updatenews = @file_get_contents('http://www.phpvms.net/extern/news.php');
-				echo $updatenews;
+				Template::Set('message', 'Version '.$version.' is available for download! Please update ASAP');
+				Template::Set('updateinfo', Template::GetTemplate('core_error.tpl', true));
 			}
+			
+			# Always show the latest news	
+			Template::Set('latestnews', $contents);
 		}
 	}
 }

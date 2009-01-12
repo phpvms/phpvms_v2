@@ -8,6 +8,13 @@ CREATE TABLE `phpvms_downloads` (
   PRIMARY KEY (id)
 ) ENGINE = MyISAM;
 
+CREATE TABLE `phpvms_expenses` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`name` VARCHAR( 25 ) NOT NULL ,
+	`cost` FLOAT NOT NULL ,
+	`fixed` INT NOT NULL DEFAULT 0
+) ENGINE = MYISAM;
+
 CREATE TABLE `phpvms_acarsdata` (
   `id` int(11) NOT NULL auto_increment,
   `pilotid` varchar(11) NOT NULL default '0',
@@ -85,6 +92,9 @@ CREATE TABLE `phpvms_schedules` (
   `deptime` varchar(15) NOT NULL default '',
   `arrtime` varchar(15) NOT NULL default '',
   `flighttime` int(11) NOT NULL default '0',
+  `maxload` INT(11) NOT NULL,
+  `price` FLOAT NOT NULL,
+  `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
   `timesflown` int(11) NOT NULL default '0',
   `notes` text NOT NULL,
   `enabled` int(11) NOT NULL default '1',
@@ -165,6 +175,10 @@ CREATE TABLE `phpvms_pireps` (
   `submitdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `accepted` smallint(6) NOT NULL default '0',
   `log` text NOT NULL,
+  `load` INT(11) NOT NULL,
+  `price` FLOAT NOT NULL,
+  `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
+  `pilotpay` FLOAT NOT NULL,
   PRIMARY KEY  (`pirepid`)
 ) ENGINE=InnoDB;
 

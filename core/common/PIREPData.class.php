@@ -318,7 +318,7 @@ class PIREPData
 							`flighttime`, 
 							`submitdate`, 
 							`accepted`, 
-							`log`
+							`log`,
 							`load`)
 					VALUES ($pirepdata[pilotid], 
 							'$pirepdata[code]', 
@@ -334,7 +334,7 @@ class PIREPData
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
-
+		
 		// Add the comment if its not blank
 		if($comment != '')
 		{

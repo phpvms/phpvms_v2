@@ -21,7 +21,7 @@ class AircraftStats
 	
 	public static function getAircraftDistances()
 	{
-		$sql = 'SELECT a.name,
+		$sql = 'SELECT a.name, 
 					   a.fullname,
 					   a.registration,
 					   a.icao,

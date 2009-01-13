@@ -29,6 +29,10 @@ define('REVISION', '<<REVISION>>');
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 Template::Show('header.tpl');
 
+# Ew
+echo '<h3 align="left">phpVMS Updater</h3>';
+
+
 # Check versions for mismatch, unless ?force is passed
 if(!isset($_GET['force']))
 {
@@ -36,6 +40,8 @@ if(!isset($_GET['force']))
 	{
 		echo '<p>You already have updated! Please delete this /install folder.<br /><br />
 				To force the update to run again, click: <a href="update.php?force">update.php?force</a></p>';
+		
+		Template::Show('footer.tpl');
 		exit;
 	}
 }

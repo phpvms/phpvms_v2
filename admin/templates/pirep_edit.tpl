@@ -126,6 +126,12 @@ if($message!='')
 	<?php
 	}
 	?>
+	
+	<dt>Load</dt>
+	<dd><input type="text" name="load" value="<?php echo $pirep->load; ?>" />
+		<p>This is the load of this flight. It's automatically determined, though you can adjust it here</p></dd>
+		
+		
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" value="<?php echo $pirep->flighttime; ?>" />
 		<p>Enter as hours - "5.3" is five hours and thirty minutes</p></dd>

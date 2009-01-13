@@ -267,11 +267,11 @@ class googleChart {
 	 */
 	function setType($type) {
 		switch ($type) {
-			case 'barx':$type='bhg';break; //horizontal bars
-			case 'bary':$type='bvg';break; //vertical bars
-			case 'pie':	$type='p';break; //pie chart
-			case 'pie3d':$type='p3';break; //3d pie chart
-			case 'line': //line graph
+			case 'barx': case 'bhg': $type='bhg';break; //horizontal bars
+			case 'bary': case 'bvg': $type='bvg';break; //vertical bars
+			case 'pie': case 'p':	$type='p';break; //pie chart
+			case 'pie3d': case'p3':$type='p3';break; //3d pie chart
+			case 'line': case 'lc': //line graph
 			default: $type='lc';
 		}
 		$this->type=$type;

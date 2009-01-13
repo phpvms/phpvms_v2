@@ -48,7 +48,7 @@ $flightcargo = array('Pax', 'Cargo');
 ##################################
 
 
-function find_in_fsacar_log($txt, $log)
+function find_in_fsacars_log($txt, $log)
 {
 	$total = count($log);
 	for($i=0;$i<$total; $i++)
@@ -60,7 +60,6 @@ function find_in_fsacar_log($txt, $log)
 		else
 		{
 			return $i;
-			break;
 		}
 	}
 }
@@ -79,6 +78,13 @@ switch($_GET['action'])
 		writedebug(print_r($_GET, true));
 
 		$pilotid = $_GET['pilotnumber'];
+		
+		if(!is_numeric($pilotid))
+		{
+			preg_match('/^([A-Za-z]*)(\d*)/', $pilotid, $matches);
+			$code = $matches[1];
+			$pilotid = $matches[2];
+		}
 		
 		$fields = array('pilotid'=>$_GET['pilotnumber'],
 						'messagelog'=>str_ireplace('Message content: £', '', $_GET['mcontent']).'\n');
@@ -236,17 +242,16 @@ $route->route
 		$log = explode('*', $_GET['log']);
 		
 		# Find where flight IATA is
-		$pos = find_in_fsacar_log('Flight IATA', $log);		
-		# Extract the code and flight number
+		# And extract the code and flight number
+		$pos = find_in_fsacars_log('Flight IATA', $log);
 		$flightnum = str_replace('Flight IATA:', '', $log[$pos]);
 		preg_match('/^([A-Za-z]*)(\d*)/', $flightnum, $matches);
 		$code = $matches[1];
 		$flightnum = $matches[2];
 		
-		
 		# Get the passenger count:
 		# Find where flight IATA is
-		$pos = find_in_fsacar_log('PAX', $log);
+		$pos = find_in_fsacars_log('PAX', $log);
 		$load = str_replace('PAX:', '', $log[$pos]);		
 		
 		# Get our aircraft
@@ -264,7 +269,7 @@ $route->route
 			# Find a flight using just the flight code
 			$sched = SchedulesData::FindFlight($matches[2]);
 		
-			# Can't do it. They completely screwed this up
+			# Can't do it. They completely fucked this up
 			if(!$sched)
 			{
 				//DB::debug();
@@ -274,8 +279,6 @@ $route->route
 			$code = $sched->code;
 			$flightnum = $sched->flightnum;
 			$leg = $sched->leg;
-			/*$depicao = $sched->depicao;
-			$arricao = $sched->arricao;*/
 			
 			if($_GET['origin'] != $sched->depicao
 				|| $_GET['dest'] != $sched->arricao)

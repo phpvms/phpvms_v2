@@ -169,12 +169,11 @@ class Installer
 			if($str == ';')
 			{
 				$sql.=$str;
-				
 				$sql = str_replace('phpvms_', $_POST['TABLE_PREFIX'], $sql);
 				
 				DB::query($sql);
-				
-				if(DB::$errno == 1050)
+							
+				if(DB::errno() == 1050)
 					continue;
 				$sql = '';
 			}

@@ -11,7 +11,26 @@ body
 {
 	font-family: Verdana;
 	font-size: 12px;
+	background: #666666;
+	color: #000000;
+	margin: 0;
+	padding: 0;
 }
+
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #000;
+}
+
+.header { 
+	padding: 0px;
+	background: url(../admin/lib/layout/images/background.png) repeat-x;
+	border-bottom: 2px solid #000;
+} 
 
 #error
 {
@@ -34,12 +53,39 @@ body
 	font-size: 10px;
 }
 
+table {
+	padding: 0px;
+	background: #FFF;
+}
+
+td {
+	padding: none;
+}
+
 td input
 {
 	width: 385px;
 	padding: 5px;
 	border: 1px solid #CCCCCC;
 }
+
+.footer { 
+	padding: 0 10px;
+	background:#DDDDDD;
+	border-top: 2px solid #000;
+} 
+
+.footer td {
+	padding: 10px;
+}
+
+.footer p {
+	margin: 0; 
+	padding: 10px 0;
+	text-align: right;
+	font-size: 7pt;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -55,11 +101,14 @@ $("#dbcheck").bind('click', function()
 </head>
 <body>
 
-<table width="770px" align="center" style="border: 1px solid #999999; padding-bottom: 10px;">
-<tr>
-	<td align="center">
-		<img src="lib/logo.jpg" />
+<table width="770px" style="padding: 0px" align="center" cellpadding="0" cellspacing="0">
+<tr style="padding: 0px; margin: 0px;">
+	<td class="header" style="padding: 0px; margin: 0px;">
+		<img src="../admin/lib/layout/images/admin_logo.png" />
 	</td>
 </tr>
+</table>
+
+<table width="770px" align="center" style="padding-bottom: 10px;">
 <tr>
-	<td>
+	<td align="center">

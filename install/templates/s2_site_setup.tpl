@@ -3,7 +3,7 @@
 	<tr>
 	<td colspan="2">
 		<p>Now to setup your main site. Provide your login, VA name, and your first airline. For more information,
-			<a href="http://www.phpvms.net/wiki/installation" target="_blank">view this page (opens in new window)</a>.</p>
+			<a href="http://www.phpvms.net/docs/installation" target="_blank">view this page (opens in new window)</a>.</p>
 		<?php 
 		if($message!='')
 		{

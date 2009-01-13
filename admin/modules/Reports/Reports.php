@@ -57,6 +57,10 @@ class Reports extends CodonModule
 				
 				echo '<h3>Coming soon!</h3>';
 				
+				$stats = AircraftStats::getAircraftDistances();
+				
+				DB::debug();
+				
 				break;
 		}
 	}

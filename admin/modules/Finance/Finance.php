@@ -43,6 +43,7 @@ class Finance extends CodonModule
 			
 				$pirepfinance = FinanceData::CalculatePIREPS();
 				
+				Template::Set('title', 'To-Date Balance Sheet');				
 				Template::Set('pirepfinance', $pirepfinance);
 				Template::Set('allexpenses', FinanceData::GetAllExpenses());
 				

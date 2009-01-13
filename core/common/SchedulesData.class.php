@@ -35,8 +35,6 @@ class SchedulesData
 	
 	public static function GetScheduleByFlight($code, $flightnum, $leg=1)
 	{
-		if($leg == '') $leg = 1;
-		
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
 							dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
@@ -45,8 +43,12 @@ class SchedulesData
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.code=\''.$code.'\' 
-						AND s.flightnum=\''.$flightnum.'\'
-						AND s.leg='.$leg;
+						AND s.flightnum=\''.$flightnum.'\'';
+						
+		if($leg != '')
+		{
+			$sql .= ' AND s.leg='.$leg;
+		}
 				
 		return DB::get_row($sql);
 	}

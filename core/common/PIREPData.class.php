@@ -29,17 +29,21 @@ class PIREPData
 	 */
 	public static function GetAllReports($start=0, $count=20)
 	{
-		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
+		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
+						u.pilotid, u.firstname, u.lastname, u.email, u.rank
 						a.name as aircraft, a.registration,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong						
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
-					WHERE p.pilotid=u.pilotid LIMIT '.$start.', '.$count;
+					WHERE p.pilotid=u.pilotid';
+					
+		if($start !='' && $count != '')
+		{
+			$sql .= ' LIMIT '.$start.', '.$count;
+		}
 
 		return DB::get_results($sql);
 	}
@@ -51,10 +55,9 @@ class PIREPData
 	 */
 	public static function GetAllReportsByAccept($accept=0)
 	{
-		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
-						a.name as aircraft, a.registration,
-						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
+						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+						a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
@@ -64,10 +67,9 @@ class PIREPData
 	
 	public static function GetAllReportsFromHub($accept=0, $hub)
 	{
-		$sql = "SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
-						a.name as aircraft, a.registration,
-						p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+		$sql = "SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate,
+						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+						a.name as aircraft, a.registration
 					FROM ".TABLE_PREFIX."pilots u, ".TABLE_PREFIX."pireps p
 						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid AND p.accepted=$accept
@@ -84,10 +86,9 @@ class PIREPData
 	{
 		if($count == '') $count = 10;
 
-		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
-					   a.name as aircraft, a.registration,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate,
+					   u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+					   a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid
@@ -102,10 +103,9 @@ class PIREPData
 	 */
 	public static function GetRecentReports($days=2)
 	{
-		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   p.code, p.flightnum, p.depicao, p.arricao, p.flighttime, 
-					   a.name as aircraft, a.registration,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate,
+					   u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+					   a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 					WHERE p.pilotid=u.pilotid
@@ -198,7 +198,7 @@ class PIREPData
 	 */
 	public static function GetReportDetails($pirepid)
 	{
-		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+		$sql = 'SELECT p.*, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					    p.code, p.flightnum, p.depicao, p.arricao, 
@@ -284,6 +284,9 @@ class PIREPData
 					  'submitdate'=>'',
 					  'comment'=>'',
 					  'log'=>'');*/
+					  
+		if(!is_array($pirepdata))
+			return false;
 		
 		if($pirepdata['leg'] == '' || $pirepdata['leg'] == '0') $pirepdata['leg'] = 1;
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
@@ -385,9 +388,16 @@ class PIREPData
 					  'flighttime'=>'',
 					  'submitdate'=>'',
 					  'comment'=>'',
-					  'log'=>'');*/
+					  'log'=>'',
+					  'load'=>'');
+		*/
 		
+		if(!is_array($pirepdata))
+			return false;
+		
+		# Set the leg to the proper
 		if($pirepdata['leg'] == '' || $pirepdata['leg'] == '0') $pirepdata['leg'] = 1;		
+		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
 		{
 			return false;
@@ -399,7 +409,8 @@ class PIREPData
 					`depicao`='$pirepdata[depicao]', 
 					`arricao`='$pirepdata[arricao]', 
 					`aircraft`='$pirepdata[aircraft]', 
-					`flighttime`='$pirepdata[flighttime]'
+					`flighttime`='$pirepdata[flighttime]',
+					`load`='$pirepdata[load]'
 				WHERE `pirepid`=$pirepid";
 
 		$ret = DB::query($sql);
@@ -415,14 +426,21 @@ class PIREPData
 	public static function PopulateEmptyPIREPS()
 	{
 		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pireps
+		$sql = 'SELECT  `pirepid`, `pilotid`, `code`, `flightnum`,
+						`load`, `price`, `flighttype`, `pilotpay`
+					FROM '.TABLE_PREFIX.'pireps
 					WHERE `load`=0';
 					
 		$results = DB::get_results($sql);
 		
+		if(!$results)
+		{
+			return true;
+		}
+				
 		foreach($results as $row)
 		{
-			self::PopulatePIREPFinance($row->pirepid);
+			self::PopulatePIREPFinance($row);
 		}
 	
 		return true;		
@@ -430,25 +448,27 @@ class PIREPData
 	
 	/**
 	 * Populate the PIREP with the fianancial info needed
+	 *  Pass the PIREPID or the PIREP row
 	 */
 	
-	public static function PopulatePIREPFinance($pirepid)
+	public static function PopulatePIREPFinance($pirep)
 	{
-		$pirepid = intval($pirepid);
-		$pirep = PIREPData::GetReportDetails($pirepid);
-		
-		if(!$pirep)
+				
+		if(!is_object($pirep))
 		{
-			self::$lasterror = 'PIREP does not exist';
-			return false;
+			$pirep = PIREPData::GetReportDetails($pirepid);
+			
+			if(!$pirep)
+			{
+				self::$lasterror = 'PIREP does not exist';
+				return false;
+			}
 		}
 		
-		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
-		
-		//print_r($sched);
+		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, '');
 		if(!$sched)
 		{
-			self::$lasterror = 'Schedule does not exist';
+			self::$lasterror = 'Schedule does not exist. Please update this manually.';
 			return false;
 		}
 		
@@ -473,7 +493,7 @@ class PIREPData
 					
 		DB::query($sql);
 		
-		//DB::debug();
+		DB::debug();
 	}
 	
 	/**
@@ -657,6 +677,9 @@ class PIREPData
 	 */
 	public static function SaveFields($pirepid, $list)
 	{
+		if(!is_array($list) || $pirepid == '')
+			return false;
+			
 		$allfields = self::GetAllFields();
 		
 		if(!$allfields) return true;

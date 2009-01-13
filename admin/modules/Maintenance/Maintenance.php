@@ -48,6 +48,13 @@ class Maintenance extends CodonModule
 				
 				$allschedules = SchedulesData::GetSchedulesNoDistance();
 				
+				if(!$allschedules)
+				{
+					echo 'No schedules to update';
+					$allschedules = array();
+				}
+				
+				# Check 'em
 				foreach($allschedules as $sched)
 				{
 					$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
@@ -62,17 +69,40 @@ class Maintenance extends CodonModule
 				
 				echo '<p><strong>Updating PIREPs...</strong></p>';
 				
-				$allpireps = PIREPData::GetAllReports();
+				$allpireps = PIREPData::GetAllReports('', '');
+				
+				if(!$allpireps)
+				{
+					echo 'No PIREPs need updating. Good job!';
+					$allpireps = array();
+				}
 				
 				foreach($allpireps as $pirep)
 				{
-					$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
-																	 $pirep->arrlat, $pirep->arrlong);	
-													
-					echo "PIREP Number $sched->pirepid ($sched->code$sched->flightnum) "
-						."$sched->depname to $sched->arrname is $distance ".Config::Get('UNIT').'<br />';
 					
-					PIREPData::UpdatePIREPDistance($pirep->pirepid, $distance);
+					# Find the schedule, and the distance supplied by the schedule:
+					
+					$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum);
+					
+					if(!$sched)
+					{
+						$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
+																	 $pirep->arrlat, $pirep->arrlong);	
+					}
+					else
+					{
+						$distance = $sched->distance;
+					}
+													
+					echo "PIREP Number $pirep->pirepid ($pirep->code$pirep->flightnum) "
+						."$pirep->depname to $pirep->arrname is $distance ".Config::Get('UNIT').'<br />';
+					
+					$ret = PIREPData::UpdatePIREPDistance($pirep->pirepid, $distance);
+					
+					if($ret == false)
+					{
+						echo PIREPData::$lasterror.'<br />';
+					}
 				}
 			
 				echo '<p>Completed!</p><br />';

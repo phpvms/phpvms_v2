@@ -252,7 +252,7 @@ class PIREPAdmin extends CodonModule
 	
 	public function EditPIREP()
 	{
-		$pirepid = $this->post->pirepid;
+		/*$pirepid = $this->post->pirepid;
 		$code = $this->post->code;
 		$flightnum = $this->post->flightnum;
 		$leg = $this->post->leg;
@@ -260,10 +260,11 @@ class PIREPAdmin extends CodonModule
 		$arricao = $this->post->arricao;
 		$aircraft = $this->post->aircraft;
 		$flighttime = $this->post->flighttime;
-		$comment = $this->post->comment;
+		$comment = $this->post->comment;*/
 				
-		if($code == '' || $flightnum == '' || $depicao == '' || $arricao == '' 
-					|| $aircraft == '' || $flighttime == '')
+		if($this->post->code == '' || $this->post->flightnum == '' 
+			|| $this->post->depicao == '' || $this->post->arricao == '' 
+			|| $this->post->aircraft == '' || $this->post->flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
 			Template::Show('core_error.tpl');
@@ -278,23 +279,24 @@ class PIREPAdmin extends CodonModule
 		}		
 		
 		# form the fields to submit
-		$data = array('pilotid'=>$pilotid,
-					  'code'=>$code,
-					  'flightnum'=>$flightnum,
-					  'leg'=>$leg,
-					  'depicao'=>$depicao,
-					  'arricao'=>$arricao,
-					  'aircraft'=>$aircraft,
-					  'flighttime'=>$flighttime);
+		$data = array('pirepid'=>$this->post->pirepid,
+					  'code'=>$this->post->code,
+					  'flightnum'=>$this->post->flightnum,
+					  'leg'=>$this->post->leg,
+					  'depicao'=>$this->post->depicao,
+					  'arricao'=>$this->post->arricao,
+					  'aircraft'=>$this->post->aircraft,
+					  'flighttime'=>$this->post->flighttime,
+					  'load'=>$this->post->load);
 		
-		if(!PIREPData::UpdateFlightReport($pirepid, $data))
+		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');
 			Template::Show('core_error.tpl');
 			return false;
 		}
 		
-		PIREPData::SaveFields($pirepid, $_POST);
+		PIREPData::SaveFields($this->post->pirepid, $_POST);
 			
 		return true;
 	}

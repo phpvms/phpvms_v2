@@ -6,8 +6,11 @@
  ini_set('display_errors', 'on');
 */
 define('ADMIN_PANEL', true);
+define('INSTALLER_VERSION', '1.1.<<REVISION>>');
 
 include dirname(__FILE__).'/loader.inc.php';
+
+
 /*
 echo Template::$tplset->template_path .'<br />';
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');

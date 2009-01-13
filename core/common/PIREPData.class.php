@@ -465,7 +465,7 @@ class PIREPData
 			
 		}
 		
-		#Set the PIREP ID
+		# Set the PIREP ID
 		$pirepid = $pirep->pirepid;
 		
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, '');
@@ -495,8 +495,6 @@ class PIREPData
 		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
-		
-		DB::debug();
 	}
 	
 	/**

@@ -29,7 +29,8 @@ class AircraftStats
 					   SUM(p.flighttime) AS totaltime
 				  FROM   '.TABLE_PREFIX.'pireps p
 					INNER JOIN '.TABLE_PREFIX.'aircraft a
-						ON (p.aircraft = a.registration)';
+						ON (p.aircraft = a.registration)
+				  GROUP BY a.registration';
 		
 		return DB::get_results($sql);       
     }

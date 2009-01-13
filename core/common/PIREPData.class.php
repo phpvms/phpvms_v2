@@ -456,14 +456,17 @@ class PIREPData
 				
 		if(!is_object($pirep))
 		{
-			$pirep = PIREPData::GetReportDetails($pirepid);
-			
+			$pirep = PIREPData::GetReportDetails($pirep);
 			if(!$pirep)
 			{
 				self::$lasterror = 'PIREP does not exist';
 				return false;
 			}
+			
 		}
+		
+		#Set the PIREP ID
+		$pirepid = $pirep->pirepid;
 		
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, '');
 		if(!$sched)

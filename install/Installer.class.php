@@ -319,13 +319,17 @@ class Installer
 		if($version == '')
 			$version = PHPVMS_VERSION;
 			
-		$url = 'http://www.phpvms.net/extern/register.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
-					.'&version='.urlencode($version);
+		$params=array('name'=>SITE_NAME,
+					  'url'=>SITE_URL,
+					  'version'=>$version,
+					  'php'=>phpversion());
+					  
+		$url = 'http://www.phpvms.net/extern/register.php';
 					
 		# Do fopen(), if that fails then it'll default to 
 		#	curl
 		$file = new CodonWebService();
 		$file->setType('fopen'); 
-		$response = $file->get($url);
+		$response = $file->get($url, $params);
 	}
 }

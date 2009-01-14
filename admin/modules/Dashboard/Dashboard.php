@@ -75,8 +75,7 @@ class Dashboard extends CodonModule
 		if(NOTIFY_UPDATE == true)
 		{
 			
-			$url = 'http://www.phpvms.net/extern/version.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
-					.'&version='.urlencode(PHPVMS_VERSION);
+			$url = 'http://www.phpvms.net/extern/version.php';
 			
 			# Default to fopen(), if that fails it'll use CURL
 			$file = new CodonWebService();

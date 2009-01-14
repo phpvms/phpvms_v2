@@ -41,6 +41,8 @@ class CodonWebService
 {
 	protected $type = 'curl';
 	protected $curl;
+	public $_separator = '&';	
+	
 	public $errors = array();
 	public $options = array(
 		CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9) Gecko/2008052906 Firefox/3.0',
@@ -150,11 +152,24 @@ class CodonWebService
 	 *
 	 * @param url $url
 	 * @param array $params Associative array of key=value
-	 * @param string $type post or get (get by default)
 	 */
-	public function get($url, $params='', $type='get')
+	public function get($url, $params='')
 	{
-		if($this->type == 'fopen' && $type != 'post')
+		
+		# Builds the parameters list
+		if(is_array($params))
+		{
+			$q_string = '';
+			foreach($params as $name=>$value)
+			{
+				$q_string .= $name.'='.urlencode($value).$this->_separator;
+			}
+			
+			$q_string = substr($q_string, 0, strlen($q_string)-1);
+			$url = $url.'?'.$q_string;
+		}
+		
+		if($this->type == 'fopen')
 		{
 			if(ini_get('allow_url_fopen'))
 			{
@@ -166,6 +181,30 @@ class CodonWebService
 			}
 		}
 		
+		if(!$this->curl)
+		{
+			$this->error('cURL not initialized');
+			return false;
+		}
+				
+		curl_setopt ($this->curl, CURLOPT_URL, $url);
+		if(($ret = curl_exec($this->curl)) === false)
+		{
+			$this->error();
+			return false;
+		}
+
+		return $ret;
+	}
+	
+	/**
+	 * Grab a URL, return the reponse, POST params
+	 *
+	 * @param url $url
+	 * @param array $params Associative array of key=value
+	 */
+	public function post($url, $params='')
+	{		
 		if(!$this->curl)
 		{
 			$this->error('cURL not initialized');
@@ -196,7 +235,7 @@ class CodonWebService
 			$this->error();
 			return false;
 		}
-
+		
 		return $ret;
 	}
 	

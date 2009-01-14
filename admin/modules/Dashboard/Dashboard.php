@@ -78,7 +78,10 @@ class Dashboard extends CodonModule
 			$url = 'http://www.phpvms.net/extern/version.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
 					.'&version='.urlencode(PHPVMS_VERSION);
 			
-			$contents = @file_get_contents($url);
+			# Default to fopen(), if that fails it'll use CURL
+			$file = new CodonWebService();
+			$file->setType('fopen'); 
+			$contents = $file->get($url);
 			
 			preg_match('/^.*Version: (.*)<\/span>/', $contents, $version_info);
 			$version = $version_info[1];

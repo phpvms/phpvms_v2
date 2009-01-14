@@ -21,7 +21,7 @@ class Installer
 	
 	static $error;
 	
-	function CheckServer()
+	public static function CheckServer()
 	{
 		$noerror = true;
 		$version = phpversion();
@@ -101,7 +101,7 @@ class Installer
 		return $noerror;
 	}
 	
-	function WriteConfig()
+	public static function WriteConfig()
 	{
 		$tpl = file_get_contents(SITE_ROOT . '/install/templates/config.tpl');
 		
@@ -128,7 +128,7 @@ class Installer
 		return true;
 	}
 	
-	function AddTables()
+	public static function AddTables()
 	{
 		
 		// Write the SQL Tables, from install.sql
@@ -186,7 +186,7 @@ class Installer
 		return true;
 	}
 	
-	function SiteSetup()
+	public static function SiteSetup()
 	{
 		/*$_POST['SITE_NAME'] == '' || $_POST['firstname'] == '' || $_POST['lastname'] == ''
 					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == ''
@@ -224,7 +224,7 @@ class Installer
 		
 	}
 	
-	function sql_file_update($filename)
+	public static function sql_file_update($filename)
 	{
 		# Table changes, other SQL updates
 		$sql_file = file_get_contents($filename);
@@ -265,7 +265,7 @@ class Installer
 	/**
 	 * Add an entry into the local.config.php file
 	 */
-	function add_to_config($name, $value, $comment='')
+	public static function add_to_config($name, $value, $comment='')
 	{
 		$config = file_get_contents(CORE_PATH.'/local.config.php');
 		
@@ -313,4 +313,17 @@ class Installer
 		file_put_contents(CORE_PATH.'/local.config.php', $config);
 	}
 	
+	
+	public static function RegisterInstall()
+	{
+		$url = 'http://www.phpvms.net/extern/register.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
+					.'&version='.urlencode(PHPVMS_VERSION);
+			
+			
+		# Do fopen(), if that fails then it'll default to 
+		#	curl
+		$file = new CodonWebService();
+		$file->setType('fopen'); 
+		$file->get($url);
+	}
 }

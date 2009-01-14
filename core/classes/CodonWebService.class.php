@@ -53,18 +53,30 @@ class CodonWebService
 			
 	public function __construct()
 	{
-		if(!$this->curl = curl_init())
-		{
-			$this->error();
-			return false;
-		}
 		
-		curl_setopt_array($this->curl, $this->options);
+		# Make sure cURL is installed
+		if(defined('curl_init'))
+		{
+			if(!$this->curl = curl_init())
+			{
+				$this->error();
+				$this->setType('fopen');
+				//return false;
+			}
+			
+			$this->setType('curl');
+			curl_setopt_array($this->curl, $this->options);
+		}
+		else
+		{
+			$this->setType('fopen');
+		}
 	}
 	
 	public function __destruct()
 	{
-		curl_close($this->curl);
+		if($this->curl)
+			curl_close($this->curl);
 	}
 	
 	/**
@@ -156,7 +168,7 @@ class CodonWebService
 		
 		if(!$this->curl)
 		{
-			$this->error('cURL not initialzied');
+			$this->error('cURL not initialized');
 			return false;
 		}
 		

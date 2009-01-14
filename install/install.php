@@ -89,6 +89,7 @@ switch($_GET['page'])
 			}
 			else
 			{
+				Installer::RegisterInstall();
 				echo '<p>Your site is all setup! You can login to the admin panel <a href="'.SITE_URL.'/admin">here</a></p>';
 			}
 		}

@@ -1,5 +1,5 @@
 CREATE TABLE `phpvms_downloads` (
-   `id` INT AUTO_INCREMENT,
+   `id` INT NOT NULL AUTO_INCREMENT,
    `pid` INT,
    `name` VARCHAR(50),
    `link` TEXT ASCII,

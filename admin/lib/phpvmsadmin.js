@@ -47,11 +47,11 @@ function formInit()
 function reloadGroups()
 {
     // Binding the AJAX call clicks
-	$.listen('click','.pilotgroupajax', function() {
+	$('.pilotgroupajax').live('click', function() {
 		return false; // cancel the single click event
 	});
 	
-	$.listen('dblclick','.pilotgroupajax', function() {
+	$('.pilotgroupajax').live('dblclick', function() {
 		$("#pilotgroups").load($(this).attr("href"), 
 		    { action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")}, 
 		    function() 
@@ -60,9 +60,12 @@ function reloadGroups()
 	});
 }
 
-function dialogInit()
-{
-    $('#jqmdialog').jqm({
+
+$(document).ready(function() 
+{ 		
+      // Show dialog box
+	
+	  $('#jqmdialog').jqm({
 	    ajax:'@href',
 		onLoad: function(h) 
 		{
@@ -71,7 +74,8 @@ function dialogInit()
 				success: function() 
 				{
 					$('#jqmdialog').jqmAddTrigger('.jqModal');
-					$.listen('dblclick','.jqModal', function() { return false; });
+					//$.listen('dblclick','.jqModal', function() { return false; });
+		
 					$('#bodytext').fadeIn('slow');
 					$('#jqmdialog').jqmHide();
 				}
@@ -83,16 +87,10 @@ function dialogInit()
             h.o.remove(); // remove overlay
             h.w.fadeOut(100); // hide window 
             $("#jqmdialog").html('');
-            dialogInit();
+            //dialogInit();
         }
     });
-}
-
-$(document).ready(function() {
- 		
-    // Show dialog box
-	
-	dialogInit();
+    
 	formInit();
 	reloadGroups();
 	
@@ -104,8 +102,8 @@ $(document).ready(function() {
 		target: '#results'
 	});
 	
-	//$.listen('click', '.confirm', function() { return false; });
-	$.listen('click', '.confirm', function()
+	$('.confirm').live('click', function() { return false; });
+	$('.confirm').live('click', function()
 	{
 		var url = $(this).attr("href");
 		
@@ -123,8 +121,8 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$.listen('click', '.deleteitem', function(){return false;});
-	$.listen('dblclick','.deleteitem', function(){	
+	$('.deleteitem').live('click', function(){return false;});
+	$('.deleteitem').live('dblclick', function(){	
 		var url = $(this).attr("href");
 		var action = $(this).attr("action");
 		var id = $(this).attr("id");
@@ -148,73 +146,71 @@ $(document).ready(function() {
 	});
     
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
-    $.listen('dblclick','.jqModal', function() { return false; });
+    $('.jqModal').live('dblclick', function() { return false; });
 		
 	// Binding the AJAX call clicks
-	$.listen('click','.ajaxcall', function() {
+	$('.ajaxcall').live('click', function() {
 		return false; // cancel the single click event
 	});
 	
-	$.listen('dblclick','.ajaxcall', function() {
+	$('.ajaxcall').live('dblclick', function() {
 		$("#bodytext").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
 	// Binding the AJAX call clicks
-	$.listen('click','.dialogajax', function() {
+	$('.dialogajax').live('click', function() {
 		return false; // cancel the single click event
 	});
 	
-	$.listen('dblclick','.dialogajax', function() {
-		
+	$('.dialogajax').live('dblclick', function() {
 		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
-	
-	// Dynamically look up airport information based on the provided ICAO
-	$.listen("click","#lookupicao", function()
-	{
-		icao = $("#airporticao").val();
 		
-		if(icao.length != 4)
-		{
-			$("#statusbox").html("Please enter the full 4 letter ICAO");
-			return false;
-		}
-			
-		$("#statusbox").html("Fetching airport data...");
-		$("#lookupicao").hide();
-		
-		$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=10&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
-			function(data){
-			
-			 //$("#airportname").autocomplete(data.geonames);
-			 
-			if(data.totalResultsCount == 0)
-			{
-				$("#statusbox").html("Nothing found. Try entering the full 4 letter ICAO");
-				$("#lookupicao").show();
-				return;
-			}
-		
-			$.each(data.geonames, function(i,item){
-				$("#airporticao").val(icao);
-				$("#airportname").val(item.name);
-				$("#airportcountry").val(item.countryName);
-				$("#airportlat").val(item.lat);
-				$("#airportlong").val(item.lng);
-			
-				$("#statusbox").html("");
-				$("#lookupicao").show();
-			});
-		});
-		
-		return false;
-	});
-	
 	if(document.getElementById('editor'))
 	{
 		new nicEditor({iconsPath : baseurl+'/lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
 	}
 });
+
+function lookupICAO()
+{
+	icao = $("#airporticao").val();
+	
+	if(icao.length != 4)
+	{
+		$("#statusbox").html("Please enter the full 4 letter ICAO");
+		return false;
+	}
+		
+	$("#statusbox").html("Fetching airport data...");
+	$("#lookupicao").hide();
+	
+	$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=10&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
+		function(data){
+		
+		 //$("#airportname").autocomplete(data.geonames);
+		 
+		if(data.totalResultsCount == 0)
+		{
+			$("#statusbox").html("Nothing found. Try entering the full 4 letter ICAO");
+			$("#lookupicao").show();
+			return;
+		}
+	
+		$.each(data.geonames, function(i,item){
+			$("#airporticao").val(icao);
+			$("#airportname").val(item.name);
+			$("#airportcountry").val(item.countryName);
+			$("#airportlat").val(item.lat);
+			$("#airportlong").val(item.lng);
+		
+			$("#statusbox").html("");
+			$("#lookupicao").show();
+		});
+	});
+	
+	return false;
+}

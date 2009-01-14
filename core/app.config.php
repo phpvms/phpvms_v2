@@ -40,6 +40,7 @@ Config::Set('SHOW_LEG_TEXT', true);
 Config::Set('UNITS', 'nm'); // Your units: nm, mi or km
 Config::Set('LOAD_FACTOR', '72'); 
 Config::Set('CARGO_UNITS', 'lbs');
+Config::Set('VA_START_DATE', 'October 2008');
 
 # Google Map Options
 Config::Set('MAP_WIDTH', '600px');

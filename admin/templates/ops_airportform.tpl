@@ -2,7 +2,9 @@
 <form id="form" action="<?php echo SITE_URL?>/admin/action.php/operations/airports" method="post">
 <dl>
 <dt>Airport ICAO Code *</dt>
-<dd><input id="airporticao" name="icao" type="text" value="<?php echo $airport->icao?>" /> <button id="lookupicao">Look Up</button></dd>
+<dd><input id="airporticao" name="icao" type="text" value="<?php echo $airport->icao?>" /> 
+	<button id="lookupicao" onclick="lookupICAO(); return false;">Look Up</button>
+</dd>
 
 <dt></dt>
 <dd><div id="statusbox"></div></dd>

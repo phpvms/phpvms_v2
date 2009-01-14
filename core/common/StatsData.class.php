@@ -19,6 +19,26 @@
 class StatsData
 {
 	
+	public static function GetMonthsSinceStart()
+	{
+		$months = array();
+		
+		$start = Config::Get('VA_START_DATE');
+		$end = time();
+
+		do
+		{
+			# Get the months
+			$month = date('M', ($start += (86400 * 29)));
+			
+			# Set the timestamp
+			$months[$month] = $start; 
+			
+		} while ( $start < $end ); 
+
+		return $months;		
+	}
+	
 	/**
 	 * Get the total number of hours flown by pilots
 	 */

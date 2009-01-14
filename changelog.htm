@@ -61,7 +61,7 @@ ul li ul {
   &nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 <p class="header"><em>Last Update:
-<!-- #BeginDate format:Am1 -->January 12, 2009<!-- #EndDate -->
+<!-- #BeginDate format:Am1 -->January 14, 2009<!-- #EndDate -->
   </em><br />
 </p>
 <hr />
@@ -94,8 +94,9 @@ ul li ul {
   <li>Add &quot;value&quot; factor to aircraft, to count as part of your &quot;Net Worth&quot;</li>
   
   <li>Revamped and reorganized Admin Panel</li>
+  <li>Backend optimizations, Javascript trimmed down:</li>
+  <li>Update to jQuery 1.3.0/1.3.1 - includes many optimizations</li>
   <li>Dashboard now shows mainsite news - NOTE: getting the version number sends me your VA name/url and version. This is not made public, only for version tracking, so I can target certain notices to certain VAs that are using certain versions (did I use that enough?)</li>
-  <li> Backend optimizations, Javascript trimmed down</li>
   <li>FSACARS retrieves flight information from most recent bid</li>
   <li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
   <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
@@ -119,7 +120,24 @@ ul li ul {
 	Can be adjusted, not more than 90%. phpVMS will decide between +/- 10% of LOAD_FACTOR
 
 Config::Set('CARGO_UNITS', 'lbs');
-	This is your units for cargo flights - lbs/kg/newtons ;)</pre>
+	This is your units for cargo flights - lbs/kg/newtons ;)
+
+Config::Set('UNITS', 'nm'); 
+	Enter nm (nautical miles), mi (miles), or km (kilometers)
+	This will affect distance calculations
+
+Config::Set('VA_START_DATE', 'October 2008');
+<br />	This is the month your VA started, used for stats.
+
+Config::Set('MONEY_UNIT', '$'); 
+	This is the unit of money. For non-dollars, use :
+		Euro (&#8364;), enter &quot;&amp;#8364;&quot;
+        Yen (&yen;), enter &quot;&amp;yen;&quot;
+        Pounds (&pound;), enter &quot;&amp;pound;&quot;
+
+	For example:
+		Config::Set('MONEY_UNIT', '&amp;#8364;'); // For Euro
+        </pre>
 <p><strong>Template Changes:</strong></p>
 <p>Added:</p>
 <pre><em>

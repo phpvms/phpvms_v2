@@ -118,6 +118,9 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('COMMENT', 'Monetary Units');
 		Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
 		
+		Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
+		Installer::add_to_config('VA_START_DATE', 'January 2008');
+		
 		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		
 	}
@@ -136,7 +139,6 @@ echo '<p><strong>Update completed!</strong><br />
 # Don't count forced updates
 if(!isset($_GET['force']))
 {
-	echo 'calling update';
 	Installer::RegisterInstall(UPDATE_VERSION);
 }
 

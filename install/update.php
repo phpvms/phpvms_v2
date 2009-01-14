@@ -136,6 +136,7 @@ echo '<p><strong>Update completed!</strong><br />
 # Don't count forced updates
 if(!isset($_GET['force']))
 {
+	echo 'calling update';
 	Installer::RegisterInstall(UPDATE_VERSION);
 }
 

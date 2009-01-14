@@ -133,5 +133,10 @@ DB::query($sql);
 echo '<p><strong>Update completed!</strong><br />
 		If there were any errors, please correct them, and re-run the update using: <a href="update.php?force">update.php?force</a></p>';
 
-Installer::RegisterInstall();
+# Don't count forced updates
+if(!isset($_GET['force']))
+{
+	Installer::RegisterInstall();
+}
+
 Template::Show('footer.tpl');

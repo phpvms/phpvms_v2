@@ -318,12 +318,11 @@ class Installer
 	{
 		$url = 'http://www.phpvms.net/extern/register.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
 					.'&version='.urlencode(PHPVMS_VERSION);
-			
-			
+					
 		# Do fopen(), if that fails then it'll default to 
 		#	curl
 		$file = new CodonWebService();
 		$file->setType('fopen'); 
-		$file->get($url);
+		$response = $file->get($url);
 	}
 }

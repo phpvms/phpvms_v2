@@ -136,7 +136,7 @@ echo '<p><strong>Update completed!</strong><br />
 # Don't count forced updates
 if(!isset($_GET['force']))
 {
-	Installer::RegisterInstall();
+	Installer::RegisterInstall(UPDATE_VERSION);
 }
 
 Template::Show('footer.tpl');

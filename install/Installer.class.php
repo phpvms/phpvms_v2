@@ -314,10 +314,13 @@ class Installer
 	}
 	
 	
-	public static function RegisterInstall()
+	public static function RegisterInstall($version='')
 	{
+		if($version == '')
+			$version = PHPVMS_VERSION;
+			
 		$url = 'http://www.phpvms.net/extern/register.php?name='.urlencode(SITE_NAME).'&url='.urlencode(SITE_URL)
-					.'&version='.urlencode(PHPVMS_VERSION);
+					.'&version='.urlencode($version);
 					
 		# Do fopen(), if that fails then it'll default to 
 		#	curl

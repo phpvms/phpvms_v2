@@ -40,10 +40,39 @@ class Finance extends CodonModule
 		switch($this->get->page)
 		{
 			case 'viewcurrent':
-			
-				$pirepfinance = FinanceData::CalculatePIREPS();
+			case 'viewreport':
+		
+				$type = $this->get->type;
+							
+				/**
+				 * Check the first letter in the type
+				 * m#### - month
+				 * y#### - year
+				 * 
+				 * No type indicates to view the 'overall'
+				 */
+				if($type[0] == 'm')
+				{
+					$type = str_replace('m', '', $type);
+					$period = date('F Y', $type);
+					Template::Set('title', 'Balance Sheet for '.$period);
+					
+					$pirepfinance = FinanceData::PIREPForMonth($type);
+				}
+				elseif($type[0] == 'y')
+				{
+					$type = str_replace('y', '', $type);
+					$period = date('Y', $type);
+					Template::Set('title', 'Balance Sheet Year '.$period);
+					
+					$pirepfinance = FinanceData::PIREPForYear($type);					
+				}
+				else
+				{
+					Template::Set('title', 'To-Date Balance Sheet');
+					$pirepfinance = FinanceData::CalculatePIREPS();
+				}
 				
-				Template::Set('title', 'To-Date Balance Sheet');				
 				Template::Set('pirepfinance', $pirepfinance);
 				Template::Set('allexpenses', FinanceData::GetAllExpenses());
 				

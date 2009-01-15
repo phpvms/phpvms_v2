@@ -17,24 +17,76 @@
  */
 
 class FinanceData
-{	
-
+{
 	public static $lasterror;
 	
 	
 	/**
-	 * Get the total payment for PIREPS
+	 * Get PIREP financials for the MONTH that's
+	 *  in the timestamp. Just pass any timestamp,
+	 *  it'll pull the MONTH
+	 */	 
+	public static function PIREPForMonth($timestamp)
+	{
+		# Form the timestamp
+		if($timestamp == '')
+		{
+			return false;
+		}
+		
+		# If a numeric date/time is passed
+		#	Otherwise, we convert it to a timestamp
+		if(!is_numeric($timestamp))
+		{
+			$timestamp = strtotime($timestamp);
+		}
+		
+		# %c/$Month = Numeric Month (01..12)
+		# %Y/$Year = Full Year (XXXX)
+		$MonthYear = date('mY', $timestamp);
+		
+		$where_sql = " WHERE DATE_FORMAT(submitdate, '%c%Y') = '$MonthYear'";	
+		
+		return self::CalculatePIREPS($where_sql);
+	}
+	
+	/**
+	 * Get PIREP financials for the YEAR that's
+	 *  in the timestamp. Just pass any timestamp,
+	 *  it'll pull the YEAR
 	 */
+	public static function PIREPForYear($timestamp)
+	{
+		# Form the timestamp
+		if($timestamp == '')
+		{
+			return false;
+		}
+		
+		# If a numeric date/time is passed
+		#	Otherwise, we convert it to a timestamp
+		if(!is_numeric($timestamp))
+		{
+			$timestamp = strtotime($timestamp);
+		}
+		
+		# %Y/$Year = Full Year (XXXX)
+		$Year = date('Y', $timestamp);
+		
+		$where_sql = " WHERE DATE_FORMAT(submitdate, '%Y') = '$Year'";	
+		
+		return self::CalculatePIREPS($where_sql);
+	}
 	 
-	public static function CalculatePIREPS()
+	public static function CalculatePIREPS($where='')
 	{
 		$sql = 'SELECT COUNT(*) AS TotalFlights,
 					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
 					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue
-				FROM '.TABLE_PREFIX.'pireps p';
+				FROM '.TABLE_PREFIX.'pireps p '.$where;
 		
 		return DB::get_row($sql);
-	}
+	}	
 	
 	/**
 	 * Get a list of all the expenses

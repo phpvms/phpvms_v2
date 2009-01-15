@@ -19,24 +19,50 @@
 class StatsData
 {
 	
+	/**
+	 * Get all of the months since the VA started
+	 */
 	public static function GetMonthsSinceStart()
 	{
 		$months = array();
 		
-		$start = Config::Get('VA_START_DATE');
+		$start = strtotime(Config::Get('VA_START_DATE'));
 		$end = time();
 
 		do
 		{
 			# Get the months
-			$month = date('M', ($start += (SECONDS_PER_DAY * 29)));
+			$month = date('M Y', ($start += (SECONDS_PER_DAY * 29)));
 			
 			# Set the timestamp
 			$months[$month] = $start; 
 			
 		} while ( $start < $end ); 
 
-		return $months;		
+		return array_reverse($months, true);
+	}
+	
+	/**
+	 * Get years since the VA started
+	 */
+	public static function GetYearsSinceStart()
+	{
+		$months = array();
+		
+		$start = strtotime(Config::Get('VA_START_DATE'));
+		$end = time();
+		
+		do
+		{
+			# Get the months
+			$year = date('Y', ($start += (SECONDS_PER_DAY * 29)));
+			
+			# Set the timestamp
+			$years[$year] = $start; 
+			
+		} while ( $start < $end ); 
+		
+		return array_reverse($years, true);	
 	}
 	
 	/**

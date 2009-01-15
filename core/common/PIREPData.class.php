@@ -30,7 +30,7 @@ class PIREPData
 	public static function GetAllReports($start=0, $count=20)
 	{
 		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
-						u.pilotid, u.firstname, u.lastname, u.email, u.rank
+						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						a.name as aircraft, a.registration,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong						
@@ -46,6 +46,8 @@ class PIREPData
 		}
 
 		return DB::get_results($sql);
+		DB::debug();
+		return $ret;
 	}
 	
 	/**
@@ -63,6 +65,9 @@ class PIREPData
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 
 		return DB::get_results($sql);
+		DB::debug();
+		
+		return $ret;
 	}
 	
 	public static function GetAllReportsFromHub($accept=0, $hub)

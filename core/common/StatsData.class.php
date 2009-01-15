@@ -96,7 +96,6 @@ class StatsData
 					GROUP BY p.aircraft';
 		
 		return DB::get_results($sql);
-		//DB::debug();
 		return $ret;
 	}
 	

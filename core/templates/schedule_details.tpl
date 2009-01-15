@@ -1,4 +1,4 @@
-<h3>Schedule Details</h3>
+<?php DB::debug(); ?><h3>Schedule Details</h3>
 <div class="indent">
 <strong>Flight Number: </strong> <?php echo $schedule->code.$schedule->flightnum ?><br />
 <strong>Departure: </strong><?php echo $schedule->depname ?> (<?php echo $schedule->depicao ?>) at <?php echo $schedule->deptime ?><br />
@@ -18,6 +18,7 @@ if($schedule->route!='')
 <div id="schedgraph" align="center">Loading graph...</div>
 </div>
 <script type="text/javascript">
-$(document).ready(function()
-{	$("#schedgraph").sparkline(<?php echo implode(',', $scheddata); ?>, {width: '90%', height: '75px'}); });
+$(document).ready(function() {
+	$("#schedgraph").sparkline([<?php echo implode(',', $scheddata); ?>], {width: '90%', height: '75px'}); 
+});
 </script>

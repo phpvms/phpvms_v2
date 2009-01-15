@@ -5,7 +5,16 @@ MainController::Run('Dashboard', 'CheckInstallFolder');
 echo $updateinfo;
 ?>
 <h3>Pilot Reports for the Past Week</h3>
-<div id="reportcounts" align="center">Loading chart...</div>
+<div id="reportcounts" align="center" width="400px" >
+	<?php
+
+	# Create the chart
+	$chart = new googleChart(implode(',', $reportcounts), 'line', '', '500x150');
+	$chart->setLabels(implode('|', $reportcounts), 'bottom');
+	echo '<img src="'.$chart->draw(false).'" />';
+	
+	?>
+</div>
 <table width="100%">
 	<tr>
 		<td valign="top" width="50%">
@@ -18,14 +27,18 @@ echo $updateinfo;
 		</td>
 		<td valign="top" width="50%">
 			<h3>Latest News</h3>
-			<?php echo $latestnews; //StatsData::AircraftFlownGraph();?>
+			<?php echo $latestnews; ?>
 		</td>
 	</tr>
 </table>
+<?php
+/*
 <script type="text/javascript">
 $(document).ready(function()
 {
-	$("#reportcounts").sparkline(<?php echo $reportcounts; ?>, {width: '90%', height: '100px'});
+	$("#reportcounts").sparkline([<?php echo implode(',', $reportcounts); ?>], {width: '400px', height: '100px', type: 'bar'});
 
 });
 </script>
+*/
+?>

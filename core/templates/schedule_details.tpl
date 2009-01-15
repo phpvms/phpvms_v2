@@ -15,9 +15,9 @@ if($schedule->route!='')
 <div id="<?php echo $schedule->arricao ?>" class="metar">Getting current METAR information for <?php echo $schedule->arricao ?></div>
 <br />
 <strong>Schedule Frequency</strong>
-<div id="schedgraph" align="center">Loading graph....</div>
+<div id="schedgraph" align="center">Loading graph...</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function()
-{	$("#schedgraph").sparkline(<?php echo $scheddata; ?>, {width: '90%', height: '75px'}); });
+{	$("#schedgraph").sparkline(<?php echo implode(',', $scheddata); ?>, {width: '90%', height: '75px'}); });
 </script>

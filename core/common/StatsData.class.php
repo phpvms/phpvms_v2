@@ -29,7 +29,7 @@ class StatsData
 		do
 		{
 			# Get the months
-			$month = date('M', ($start += (86400 * 29)));
+			$month = date('M', ($start += (SECONDS_PER_DAY * 29)));
 			
 			# Set the timestamp
 			$months[$month] = $start; 

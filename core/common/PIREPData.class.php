@@ -739,34 +739,25 @@ class PIREPData
 	{
 		// Recent PIREP #'s
 		$max = 0;
-		$data = '[';
-
-		// This is for the past 7 days
-		for($i=-7;$i<=0;$i++)
-		{
-			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
-			$count = PIREPData::GetReportCount($date);
-
-			//array_push($data, intval($count));
-			//$label .= date('m/d', $date) .'|';
-			$data.=$count.',';
+		$data = array();
+		
+		# Get the past 7 days
+		$time_start = strtotime('-7 days');
+		$time_end = time();
+	
+		do {
+			$count = PIREPData::GetReportCount($time_start);
+			$data[] = $count;
+			
 			if($count > $max)
 				$max = $count;
-		}
+				
+			$time_start += SECONDS_PER_DAY;
+		} while ($time_start < $time_end);
 		
-		$data = substr($data, 0, strlen($data)-1);
-		$data .= ']';
+		//$data = substr($data, 0, strlen($data)-1);
 		
 		return $data;
-		/*$chart = new googleChart($data);
-		$chart->dimensions = '700x200';
-		$chart->setLabelsMinMax($max,'left');
-		$chart->setLabels($label,'bottom');
-
-		if($ret == true)
-			return $chart->draw(false);
-		else
-			echo '<img src="'.$chart->draw(false).'" align="center" />';*/
 	}
 	
 }

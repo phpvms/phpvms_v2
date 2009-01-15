@@ -147,3 +147,5 @@ define('PIREP_INPROGRESS', 3);
 define('PILOT_PENDING', 0);
 define('PILOT_ACCEPTED', 1);
 define('PILOT_REJECTED', 2);
+
+define('SECONDS_PER_DAY', 86400);

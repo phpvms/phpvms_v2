@@ -690,30 +690,27 @@ class SchedulesData
 	public static function GetScheduleFlownCounts($code, $flightnum, $days=30)
 	{
 		$max = 0;
-		$data = '[';
-		//$days = $days * -1;
-
-		// turn on cacheing:
 		
+		$time_start = strtotime("- $days days");
+		$time_end = time();
+		$data = array();
+				
+		# Turn on caching:		
 		DB::enableCache();
-		// This is for the past 7 days
-		for($i=-30;$i<=0;$i++)
-		{
-			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
-			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $date);
-			//DB::debug();
-
-			//array_push($data, intval($count));
-			//$label .= date('m/d', $date) .'|';
-			$data.=$count.',';
+			
+		do 
+		{	
+			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $time_start);
+			$data[] = $count;			
+			
 			if($count > $max)
 				$max = $count;
-		}
+				
+			$timestart += SECONDS_PER_DAY;
+			
+		}  while ($time_start < $time_end);
 		
 		DB::disableCache();
-		
-		$data = substr($data, 0, strlen($data)-1);
-		$data .= ']';
 		
 		return $data;
 	}
@@ -726,24 +723,25 @@ class SchedulesData
 	{
 		// Recent PIREP #'s
 		$max = 0;
-		$data = '[';
+		$data = array();
 
+		$time_start = strtotime('-7 days');
+		$time_end = time();
+		
 		// This is for the past 7 days
-		for($i=-7;$i<=0;$i++)
-		{
-			$date = mktime(0,0,0,date('m'), date('d') + $i ,date('Y'));
-			$count = PIREPData::GetReportCount($date);
+		do {
+			$count = PIREPData::GetReportCount($time_start);
 
 			//array_push($data, intval($count));
 			//$label .= date('m/d', $date) .'|';
-			$data.=$count.',';
+			$data[] = $count;
+			
 			if($count > $max)
 				$max = $count;
-		}
-		
-		$data = substr($data, 0, strlen($data)-1);
-		$data .= ']';
-		
+				
+			$time_start += SECONDS_PER_DAY;
+		} while ($time_start < $time_end);
+			
 		return $data;
 	}
 }

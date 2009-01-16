@@ -80,14 +80,13 @@ foreach ($allfinances as $month)
 $profit = substr($profit, 0, strlen($profit)-1);
 $revenue = substr($revenue, 0, strlen($revenue)-1);
 $expenses = substr($expenses, 0, strlen($revenue)-1);
-$months = substr($months, 0, strlen($months)-1);
 
+# Months labels
+$months = substr($months, 0, strlen($months)-1);
 
 /*
 	Show the revenue details graph
-	
 */
-
 $chart = new googleChart('', 'line', 'Revenue for '.$year, '500x200');
 $chart->negativeMode = true;
 $chart->loadData($profit);
@@ -101,9 +100,7 @@ echo '<img src="'.$chart->draw(false).'" />';
 <?php
 /*
 	Show the expenses details graph
-	
 */
-
 $chart = new googleChart($expenses, 'line', 'Expenses for '.$year, '500x200');
 $chart->setLabels($months, 'bottom');
 

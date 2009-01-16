@@ -76,7 +76,7 @@ class Finance extends CodonModule
 					Template::Set('allfinances', $data);
 					Template::Set('year', date('Y', $type));
 					
-					Template::Show('finance_yearlysummary.tpl');
+					Template::Show('finance_summarysheet.tpl');
 				}
 				else
 				{
@@ -85,10 +85,8 @@ class Finance extends CodonModule
 					$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
 					
 					Template::Set('title', 'Balance Sheet for Last 3 Months');
-					Template::Set('allfinances', $data);
-					//Template::Set('year', date('Y', $type));
-					
-					Template::Show('finance_yearlysummary.tpl');
+					Template::Set('allfinances', $data);					
+					Template::Show('finance_summarysheet.tpl');
 				}			
 				
 				

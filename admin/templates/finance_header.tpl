@@ -1,13 +1,16 @@
 <span style="float: right;">
 <form action="<?php echo SITE_URL?>/admin/index.php/finance/viewreport" method="get">
 <strong>Select Report: </strong>
+<?php
+$years = StatsData::GetYearsSinceStart();
+$months = StatsData::GetMonthsSinceStart();
+?>
 <select name="type">
 	<option value="" <?php echo ($_GET['type']=='')?'selected="selected"':''?>>View Overall</option>
 <?php
 /*
  * Get the years since the VA started
  */
-$years = StatsData::GetYearsSinceStart();
 foreach($years as $yearname=>$timestamp)
 {
 	# Get the one that's currently selected
@@ -24,7 +27,7 @@ foreach($years as $yearname=>$timestamp)
 /*
  * Get all the months since the VA started
  */
-$months = StatsData::GetMonthsSinceStart();
+
 foreach($months as $monthname=>$timestamp)
 {
 	# Get the one that's currently selected

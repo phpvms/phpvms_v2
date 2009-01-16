@@ -27,12 +27,13 @@ class StatsData
 		$months = array();
 		
 		# $start = strtotime(Config::Get('VA_START_DATE'));
-		$sql = 'SELECT submitdate 
+		$sql = 'SELECT pirepid, submitdate
 					FROM '.TABLE_PREFIX.'pireps
-					ORDER BY id ASC
+					ORDER BY pirepid ASC
 					LIMIT 1';
+					
 		$result = DB::get_row($sql);
-		DB::debug();
+	
 		$start = strtotime($result->submitdate);
 		$end = time();
 
@@ -56,7 +57,14 @@ class StatsData
 	{
 		$months = array();
 		
-		$start = strtotime(Config::Get('VA_START_DATE'));
+		$sql = 'SELECT pirepid, submitdate
+					FROM '.TABLE_PREFIX.'pireps
+					ORDER BY pirepid ASC
+					LIMIT 1';
+		
+		$result = DB::get_row($sql);
+		
+		$start = strtotime($result->submitdate);
 		$end = time();
 		
 		do
@@ -77,7 +85,8 @@ class StatsData
 	 */
 	public static function TotalHours()
 	{
-		$sql = 'SELECT SUM(totalhours) AS total FROM '.TABLE_PREFIX.'pilots';
+		$sql = 'SELECT SUM(totalhours) AS total 
+					FROM '.TABLE_PREFIX.'pilots';
 		$res = DB::get_row($sql);
 		return round($res->total, 2);
 	}
@@ -87,7 +96,8 @@ class StatsData
 	 */
 	public static function TotalFlights()
 	{
-		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pireps
+		$sql = 'SELECT COUNT(*) AS total 
+					FROM '.TABLE_PREFIX.'pireps
 					WHERE accepted='.PIREP_ACCEPTED;
 		$res = DB::get_row($sql);
 		return $res->total;

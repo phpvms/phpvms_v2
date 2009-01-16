@@ -4,6 +4,7 @@
 <?php
 $years = StatsData::GetYearsSinceStart();
 $months = StatsData::GetMonthsSinceStart();
+$months = array_reverse($months, true);
 ?>
 <select name="type">
 	<option value="" <?php echo ($_GET['type']=='')?'selected="selected"':''?>>View Overall</option>

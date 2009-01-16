@@ -55,28 +55,37 @@ class Finance extends CodonModule
 				{
 					$type = str_replace('m', '', $type);
 					$period = date('F Y', $type);
-					Template::Set('title', 'Balance Sheet for '.$period);
 					
-					$pirepfinance = FinanceData::PIREPForMonth($type);
+					$data = FinanceData::GetMonthBalanceData($period);
+					
+					Template::Set('title', 'Balance Sheet for '.$data['title']);
+					Template::Set('pirepfinance', $data['pirepfinance']);
+					Template::Set('allexpenses', $data['allexpenses']);
+					Template::Set('totalexpenses', $data['totalexpenses']);
+					Template::Set('total', $data['total']);
+					
+					Template::Show('finance_balancesheet.tpl');
 				}
 				elseif($type[0] == 'y')
 				{
 					$type = str_replace('y', '', $type);
-					$period = date('Y', $type);
-					Template::Set('title', 'Balance Sheet for Year '.$period);
+
+					$data = FinanceData::GetYearBalanceData($type);
 					
-					$pirepfinance = FinanceData::PIREPForYear($type);					
+					Template::Set('title', 'Balance Sheet for Year '.date('Y', $type));
+					Template::Set('allfinances', $data);
+					Template::Set('year', date('Y', $type));
+					
+					Template::Show('finance_yearlysummary.tpl');
 				}
 				else
 				{
-					Template::Set('title', 'To-Date Balance Sheet');
-					$pirepfinance = FinanceData::CalculatePIREPS();
+					// This should be the last 3 months overview
+					#Template::Set('title', 'To-Date Balance Sheet');
+					#$pirepfinance = FinanceData::CalculatePIREPS();
 				}
 				
-				Template::Set('pirepfinance', $pirepfinance);
-				Template::Set('allexpenses', FinanceData::GetAllExpenses());
 				
-				Template::Show('finance_balancesheet.tpl');
 				
 				break;
 				

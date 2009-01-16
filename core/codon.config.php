@@ -36,7 +36,7 @@
  * @license BSD License
  * @package codon_core
  */
-
+ 
 session_start();
 
 error_reporting(E_ALL ^ E_NOTICE);
@@ -53,7 +53,7 @@ define('LIB_PATH', SITE_ROOT.'/lib');
 
 
 $version = phpversion();
-if(substr($version, 0, 1) != '5')
+if($version[0] != '5')
 {
 	die('You are not running PHP 5+');
 }

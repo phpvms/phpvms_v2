@@ -18,7 +18,7 @@
 	$pirepfinance->TotalPay  = $pirepfinance->TotalPay * -1;
 ?>
 
-<table width="500px" class="balancesheet" cellpadding="0" cellspacing="0">
+<table width="550px" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Cash and Sales</td>
@@ -26,14 +26,14 @@
 	
 	<tr>
 		<td align="right">Cash Reserves: </td>
-		<td align="right"><?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($cashreserves));?></td>
+		<td align="right"><?php echo FinanceData::FormatMoney($cashreserves);?></td>
 	</tr>
 
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
 			Total number of flights: <?php echo $pirepfinance->TotalFlights; ?>
 		</td>
-		<td align="right" valign="top"><?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($pirepfinance->Revenue));?></td>
+		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($pirepfinance->Revenue);?></td>
 	</tr>
 	
 	<tr>
@@ -78,6 +78,14 @@
 <?php		
 	}
 ?>
+	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
+		<td align="" colspan="2" style="padding: 1px;"></td>
+	</tr>
+	<tr>
+		<td align="right"><strong>Expenses Total:</strong></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($expense_total));?></td>
+	</tr>
+	
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Totals</td>
 	</tr>

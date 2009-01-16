@@ -35,7 +35,7 @@ class Installer
 		$wf[] = 'lib/signatures';
 		
 		// Check the PHP version
-		if(substr($version, 0, 1) != '5')
+		if($version[0] != '5')
 		{
 			$noerror = false;
 			$type = 'error';

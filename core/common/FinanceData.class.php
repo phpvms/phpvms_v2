@@ -21,6 +21,88 @@ class FinanceData
 	public static $lasterror;
 	
 	
+	public static function GetYearBalanceData($yearstamp)
+	{
+		$ret = array();
+		$year = date('Y', $yearstamp);
+		
+		$times = StatsData::GetMonthsInRange('January '.$year, 'December '.$year);
+		
+		foreach($times as $monthstamp)
+		{
+			$data = self::GetMonthBalanceData($monthstamp);
+			$data['timestamp'] = $monthstamp;
+			
+			$ret[] = $data;
+		}
+		
+		return $ret;		
+	}
+	
+	public static function GetMonthBalanceData($monthstamp)
+	{
+		$ret = array();
+				
+		# Check if it's already in our financereports table
+		$report = self::GetFinanceData($monthstamp);
+		if($report)
+		{
+			
+		}
+		else
+		{
+			# Set the defaults to 0
+			$ret['total'] = 0;
+			$ret['totalexpenses'] = 0;
+			
+			# Get fresh copy
+			$ret['pirepfinance'] = self::PIREPForMonth($monthstamp);
+		
+			if($ret['pirepfinance']->TotalFlights == 0)
+			{
+				return;
+			}
+				
+			$ret['allexpenses'] =  self::GetAllExpenses();
+			
+			# Do the calculations
+			$ret['total'] = $ret['pirepfinance']->Revenue - $ret['allexpenses']->TotalPay;
+			
+			foreach($ret['allexpenses'] as $expense)
+			{
+				$ret['totalexpenses'] += $expense->cost;
+			}
+			
+			# Subtract the total expenses from the total			
+			$ret['total'] -= $ret['totalexpenses'];
+			
+			# Save it
+			self::AddFinanceData($monthstamp, $ret['pirepfinance'], 
+									$ret['allexpenses'], $ret['totalexpenses'], $ret['total']);
+		}
+		
+		return $ret;
+	}
+	
+	/** 
+	 * Add a financial expense report
+	 */
+	public static function AddFinanceData($monthstamp, $pirepdata, $allexpenses, $totalexpenses, $total)
+	{
+			
+		
+	}
+	
+	/**
+	 * Get an archived financial expenses report
+	 */
+	public static function GetFinanceData($monthstamp)
+	{
+		return false;
+		
+		
+	}
+	
 	/**
 	 * Get PIREP financials for the MONTH that's
 	 *  in the timestamp. Just pass any timestamp,
@@ -218,7 +300,9 @@ class FinanceData
 	{
 		$isneg = false;
 		if($number < 0)
+		{
 			$isneg = true;
+		}
 		
 		$number = Config::Get('MONEY_UNIT') .' '.number_format($number, 2, '.', ', ');
 		

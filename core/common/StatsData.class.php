@@ -33,21 +33,8 @@ class StatsData
 					LIMIT 1';
 					
 		$result = DB::get_row($sql);
-	
-		$start = strtotime($result->submitdate);
-		$end = time();
-
-		do
-		{
-			# Get the months
-			$month = date('M Y', ($start += (SECONDS_PER_DAY * 29)));
-			
-			# Set the timestamp
-			$months[$month] = $start; 
-			
-		} while ( $start < $end ); 
-
-		return array_reverse($months, true);
+		
+		return self::GetMonthsSinceDate($result->submitdate);
 	}
 	
 	/**
@@ -78,6 +65,59 @@ class StatsData
 		} while ( $start < $end ); 
 		
 		return array_reverse($years, true);	
+	}
+	
+	
+	/**
+	 * Get all of the months since a certain date
+	 */
+	public static function GetMonthsSinceDate($start)
+	{
+		if(!is_numeric($start)){
+			$start = strtotime($start);
+		}
+		
+		$end = time();
+
+		do
+		{
+			# Get the months
+			$month = date('M Y', ($start += (SECONDS_PER_DAY * 29)));
+			
+			# Set the timestamp
+			$months[$month] = $start; 
+			
+		} while ( $start < $end ); 
+
+		return $months;
+	}
+	
+	/**
+	 * Get all the months within a certain range
+	 * Pass timestamp, or textual date
+	 */
+	public static function GetMonthsInRange($start, $end)
+	{
+		if(!is_numeric($start)){
+			$start = strtotime($start);
+		}
+		
+		if(!is_numeric($end))
+		{
+			$end = strtotime($end);
+		}
+		
+		do
+		{
+			# Get the months
+			$month = date('M Y', ($start += (SECONDS_PER_DAY * 29)));
+			
+			# Set the timestamp
+			$months[$month] = $start; 
+			
+		} while ( $start < $end ); 
+		
+		return $months;		
 	}
 	
 	/**

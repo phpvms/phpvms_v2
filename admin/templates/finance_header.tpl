@@ -7,7 +7,7 @@ $months = StatsData::GetMonthsSinceStart();
 $months = array_reverse($months, true);
 ?>
 <select name="type">
-	<option value="" <?php echo ($_GET['type']=='')?'selected="selected"':''?>>View Overall</option>
+	<option value="" <?php echo ($_GET['type']=='')?'selected="selected"':''?>>View Summary</option>
 <?php
 /*
  * Get the years since the VA started

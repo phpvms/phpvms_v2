@@ -20,13 +20,22 @@ class FinanceData
 {
 	public static $lasterror;
 	
-	
+	/**
+	 * Get a year
+	 */	
 	public static function GetYearBalanceData($yearstamp)
 	{
 		$ret = array();
+		
 		$year = date('Y', $yearstamp);
 		
-		$times = StatsData::GetMonthsInRange('January '.$year, 'December '.$year);
+		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
+	}
+	
+	public static function GetRangeBalanceData($start, $end)
+	{
+		
+		$times = StatsData::GetMonthsInRange($start, $end);
 		
 		foreach($times as $monthstamp)
 		{
@@ -38,6 +47,7 @@ class FinanceData
 		
 		return $ret;		
 	}
+	
 	
 	public static function GetMonthBalanceData($monthstamp)
 	{

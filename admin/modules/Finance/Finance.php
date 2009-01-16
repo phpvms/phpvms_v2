@@ -83,6 +83,8 @@ class Finance extends CodonModule
 					// This should be the last 3 months overview
 					#Template::Set('title', 'To-Date Balance Sheet');
 					#$pirepfinance = FinanceData::CalculatePIREPS();
+					
+					Template::Show('finance_header.tpl');
 				}
 				
 				

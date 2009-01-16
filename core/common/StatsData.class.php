@@ -26,7 +26,14 @@ class StatsData
 	{
 		$months = array();
 		
-		$start = strtotime(Config::Get('VA_START_DATE'));
+		# $start = strtotime(Config::Get('VA_START_DATE'));
+		$sql = 'SELECT submitdate 
+					FROM '.TABLE_PREFIX.'pireps
+					ORDER BY id ASC
+					LIMIT 1';
+		$result = DB::get_row($sql);
+		DB::debug();
+		$start = strtotime($result->submitdate);
 		$end = time();
 
 		do

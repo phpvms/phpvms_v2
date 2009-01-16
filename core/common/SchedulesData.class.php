@@ -26,9 +26,9 @@ class SchedulesData
 	{
 		#$id = DB::escape($id);
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration
-					FROM '. TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'aircraft a
-						WHERE s.id='.intval($id).'
-							AND s.aircraft=a.id';
+					FROM '. TABLE_PREFIX.'schedules s
+						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id=s.aircraft
+					WHERE s.id='.intval($id);
 		
 		return DB::get_row($sql);
 	}

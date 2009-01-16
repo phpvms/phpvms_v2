@@ -132,9 +132,7 @@ else
 							
 /**
  * Constants
- */
- 
- 
+ */ 
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
 									'C'=>'Cargo',
 									'H'=>'Charter'));

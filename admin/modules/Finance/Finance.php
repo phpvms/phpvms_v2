@@ -63,7 +63,7 @@ class Finance extends CodonModule
 				{
 					$type = str_replace('y', '', $type);
 					$period = date('Y', $type);
-					Template::Set('title', 'Balance Sheet Year '.$period);
+					Template::Set('title', 'Balance Sheet for Year '.$period);
 					
 					$pirepfinance = FinanceData::PIREPForYear($type);					
 				}

@@ -105,7 +105,6 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('LOAD_FACTOR', '72'); 
 		Installer::add_to_config('CARGO_UNITS', 'lbs');
 		
-		
 		Installer::add_to_config('COMMENT', 'FSPassengers Settings');
 		Installer::add_to_config('COMMENT', 'Units settings');
 		Installer::add_to_config('WeightUnit', '0', '0=Kg 1=lbs');
@@ -119,7 +118,7 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
 		
 		Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
-		Installer::add_to_config('VA_START_DATE', 'January 2008');
+		# Installer::add_to_config('VA_START_DATE', 'January 2008');
 		
 		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		

@@ -1,5 +1,4 @@
 <h3>Pilot Ranks</h3>
-<p>You can define your pilot ranks here. When a PIREP is accepted, the pilot is automatically placed into the proper ranking.</p>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
@@ -18,7 +17,7 @@ foreach($ranks as $rank)
 <tr>
 	<td align="center"><?php echo $rank->rank; ?></td>
 	<td align="center"><?php echo $rank->minhours; ?></td>
-	<td align="center"><?php echo $rank->payrate; ?></td>
+	<td align="center"><?php echo Config::Get('MONEY_UNIT').$rank->payrate.'/hr'; ?></td>
 	<td align="center"><?php echo $rank->totalpilots; ?></td>
 	<td align="center" width="1%" nowrap>
 		<a id="dialog" class="jqModal" 

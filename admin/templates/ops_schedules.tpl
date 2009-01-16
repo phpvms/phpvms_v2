@@ -28,7 +28,7 @@ foreach($schedules as $sched)
 	<td align="left"><?php echo $sched->code . $sched->flightnum; ?> (Leg <?php echo$sched->leg?>)</td>
 	<td align="left"><?php echo $sched->depicao; ?> (<?php echo $sched->deptime;?>)</td>
 	<td align="left"><?php echo $sched->arricao; ?> (<?php echo $sched->arrtime;?>)</td>
-	<td align="center"><?php echo $sched->aircraft; ?></td>
+	<td align="left"><?php echo $sched->aircraft.' ('.$sched->registration.')'; ?></td>
 	<td align="center"><?php echo $sched->distance; ?></td>
 	<td align="center"><?php echo $sched->timesflown; ?></td>
 	<td align="center">

@@ -26,19 +26,19 @@
 	
 	<tr>
 		<td align="right">Cash Reserves: </td>
-		<td align="right"><?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), $cashreserves));?></td>
+		<td align="right"><?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), $cashreserves));?></td>
 	</tr>
 
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
 			Total number of flights: <?php echo $pirepfinance->TotalFlights; ?>
 		</td>
-		<td align="right" valign="top"><?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), $pirepfinance->Revenue));?></td>
+		<td align="right" valign="top"><?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), $pirepfinance->Revenue));?></td>
 	</tr>
 	
 	<tr>
 		<td align="right">Pilot Payments: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), $pirepfinance->TotalPay));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), $pirepfinance->TotalPay));?></td>
 	</tr>
 	
 	<tr class="balancesheet_header">
@@ -54,7 +54,7 @@
 		?>
 		<tr>
 		<td align="right">None</td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), 0));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), 0));?></td>
 	</tr>
 	<?php
 	}
@@ -73,7 +73,7 @@
 ?>		
 	<tr>
 		<td align="right"><?php echo $expense->name?>: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), $expense->cost));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), $expense->cost));?></td>
 	</tr>
 <?php		
 	}
@@ -84,14 +84,14 @@
 	
 	<tr style="border: 0px">
 		<td align="right">Total Revenue: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), $total)); ?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), $total)); ?></td>
 	</tr>
 	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
 		<td align="" colspan="2" style="padding: 1px;"></td>
 	</tr>
 	<tr>
 		<td align="right"><strong>Net Worth:</strong></td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), money_format(Config::Get('MONEY_FORMAT'), $total+$cashreserves)); ?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(Config::Get('MONEY_FORMAT'), $total+$cashreserves)); ?></td>
 	</tr>
 </table>
 
@@ -114,7 +114,7 @@ $chart->setLabels($g_expenses_labels);
 echo '<img src="'.$chart->draw(false).'" />';
 	
 ?>
-<br />
+<br /><br />
 </div>
 <div>
 <strong>Overall Costs</strong>

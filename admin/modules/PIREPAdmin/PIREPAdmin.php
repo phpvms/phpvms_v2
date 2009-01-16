@@ -271,7 +271,7 @@ class PIREPAdmin extends CodonModule
 			return false;
 		}
 			
-		if($depicao == $arricao)
+		if($this->post->depicao == $this->post->arricao)
 		{
 			Template::Set('message', 'The departure airport is the same as the arrival airport!');
 			Template::Show('core_error.tpl');

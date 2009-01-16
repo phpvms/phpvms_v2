@@ -93,6 +93,14 @@ foreach($pireps as $report)
 			else
 				echo $report->aircraft. " ($report->registration)";
 		?><br />
+		
+		
+		<strong>Load Count: </strong>
+		<?php
+			echo ($report->load!='')?$report->load:'-';
+		?><br />
+		
+		
 	<?php
 		// Get the additional fields
 		//	I know, badish place to put it, but it's pulled per-PIREP

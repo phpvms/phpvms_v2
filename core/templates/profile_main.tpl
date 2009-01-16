@@ -61,6 +61,7 @@
 				<li><a href="<?php echo SITE_URL?>/index.php/pireps/filepirep">File a Pilot Report</a></li>
 				<li><a href="<?php echo SITE_URL?>/index.php/Schedules/view">View Flight Schedules</a></li>
 				<li><a href="<?php echo SITE_URL?>/index.php/Schedules/bids">View my flight bids</a></li>		
+				<li><a href="<?php echo SITE_URL?>/index.php/Finances">View VA Finances</a></li>
 			</ul>	
 		</p>
 		<p>

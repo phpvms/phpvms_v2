@@ -25,7 +25,7 @@ if(Auth::LoggedIn())
 {
 	if(Auth::UserInGroup('Administrators'))
 	{
-		echo '<li><a href="'.SITE_URL.'/admin">Admin Center</a></li>';
+		echo '<li><a href="'.SITE_URL.'/admin/">Admin Center</a></li>';
 	}
 ?>
 

@@ -18,7 +18,7 @@
 			else
 				$sel = '';
 	
-			echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->name.'</option>';
+			echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->code.' - '.$airline->name.'</option>';
 		}
 		
 		?>

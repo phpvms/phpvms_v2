@@ -47,6 +47,13 @@ class ACARSData extends CodonModule
 			return false;
 		}*/
 
+		if(!is_numeric($data['pilotid']))
+		{
+			preg_match('/^([A-Za-z]*)(\d*)/', $data['pilotid'], $matches);
+			$code = $matches[1];
+			$data['pilotid'] = $matches[2];
+		}
+	
 		// first see if we exist:
 		$exist = DB::get_row('SELECT `id`
 								FROM '.TABLE_PREFIX.'acarsdata 
@@ -182,11 +189,13 @@ class ACARSData extends CodonModule
 		if($cutofftime == '')
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
-		$cutofftime = $cutofftime / 60;		
+		$cutofftime = $cutofftime / 60;			
+		//$time = strtotime('-'.$cutofftime .' hours');
 		
-		$sql = 'SELECT * 
-					FROM ' . TABLE_PREFIX .'acarsdata
-					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= `lastupdate`';
+		$sql = 'SELECT a.*, p.pilotid as pilotid, p.code, p.firstname, p.lastname
+					FROM ' . TABLE_PREFIX .'acarsdata a
+					INNER JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
+					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 		

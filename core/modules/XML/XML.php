@@ -63,6 +63,7 @@ class XML extends CodonModule
 	{
 		$output = '';
 		$flights = ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME'));
+		//DB::debug();
 		
 		$output = '<livemap>';
 		
@@ -85,7 +86,7 @@ class XML extends CodonModule
 			# Pilot and Route Information
 			#
 			$output.='<pilotid>'.$flight->pilotid.'</pilotid>';
-			$output.='<pilotname>'. $pilotinfo->firstname.' '.$pilotinfo->lastname.'</pilotname>';
+			$output.='<pilotname>'. $flight->firstname.' '.$flight->lastname.'</pilotname>';
 			$output.='<depicao>'.$flight->depicao.'</depicao>';
 			$output.='<arricao>'.$flight->arricao.'</arricao>';
 			$output.='<phase>'.$flight->phasedetail.'</phase>';
@@ -97,7 +98,7 @@ class XML extends CodonModule
 			#
 			# Set the icon
 			#
-			$output.='<icon>';
+			$output.='<icon><![CDATA[';
 			
 				if($flight->phasedetail != 'Boarding' && $flight->phasedetail != 'Taxiing'
 					&& $flight->phasedetail != 'FSACARS Closed' && $flight->phasedetail != 'Taxiiing to gate'
@@ -110,7 +111,7 @@ class XML extends CodonModule
 					$output.=SITE_URL.'/lib/images/onground.png';
 				}
 				
-			$output.='</icon>';
+			$output.=']]></icon>';
 			
 			#
 			# Show their specific flight data

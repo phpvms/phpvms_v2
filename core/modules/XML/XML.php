@@ -68,24 +68,16 @@ class XML extends CodonModule
 		$output = '<livemap>';
 		
 		foreach($flights as $flight)
-		{
-			#
-			# Grab some basic info about the pilot
-			#			
-			preg_match('/^([A-Za-z]{2,3})(\d*)/', $flight->pilotid, $matches);
-			$pilotid = $matches[2];
-			$pilotinfo = PilotData::GetPilotData($pilotid);
-			
+		{			
 			#
 			# Start our output
 			#
 			$output.='<aircraft flightnum="'.$flight->flightnum.'" lat="'.$flight->lat.'" lng="'.$flight->lng.'">';
 			
-		
 			#
 			# Pilot and Route Information
 			#
-			$output.='<pilotid>'.$flight->pilotid.'</pilotid>';
+			$output.='<pilotid>'.PilotData::GetPilotCode($flight->code, $flight->pilotid).'</pilotid>';
 			$output.='<pilotname>'. $flight->firstname.' '.$flight->lastname.'</pilotname>';
 			$output.='<depicao>'.$flight->depicao.'</depicao>';
 			$output.='<arricao>'.$flight->arricao.'</arricao>';

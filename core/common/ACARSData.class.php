@@ -192,7 +192,7 @@ class ACARSData extends CodonModule
 		$cutofftime = $cutofftime / 60;			
 		//$time = strtotime('-'.$cutofftime .' hours');
 		
-		$sql = 'SELECT a.*, p.pilotid as pilotid, p.code, p.firstname, p.lastname
+		$sql = 'SELECT a.*, p.code, p.pilotid as pilotid, p.firstname, p.lastname
 					FROM ' . TABLE_PREFIX .'acarsdata a
 					INNER JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
 					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';

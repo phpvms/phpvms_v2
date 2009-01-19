@@ -72,6 +72,7 @@ class FinanceData
 			# Set the defaults to 0
 			$ret['total'] = 0;
 			$ret['totalexpenses'] = 0;
+			$ret['flightexpenses'] = 0;
 			
 			# Get fresh copy
 			$ret['pirepfinance'] = self::PIREPForMonth($monthstamp);
@@ -81,10 +82,14 @@ class FinanceData
 				return;
 			}
 				
-			$ret['allexpenses'] =  self::GetAllExpenses();
+			$ret['allexpenses'] =  self::GetMonthlyExpenses();
 			
 			# Do the calculations
 			$ret['total'] = $ret['pirepfinance']->Revenue - $ret['allexpenses']->TotalPay;
+			
+			# Subtract the flight expenses
+			$ret['total'] -= $ret['pirepfinance']->FlightExpenses;
+			$ret['flightexpenses'] += $ret['pirepfinance']->FlightExpenses;
 			
 			foreach($ret['allexpenses'] as $expense)
 			{
@@ -93,6 +98,7 @@ class FinanceData
 			
 			# Subtract the total expenses from the total			
 			$ret['total'] -= $ret['totalexpenses'];
+			
 			
 			# Save it
 			self::AddFinanceData($monthstamp, $ret['pirepfinance'], 
@@ -188,8 +194,8 @@ class FinanceData
 	{
 		$sql = 'SELECT COUNT(*) AS TotalFlights,
 					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
-					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue
-					   ROUND(SUM(p.`expenses`)) AS Expenses
+					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue,
+					   ROUND(SUM(p.`expenses`)) AS FlightExpenses
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
 		
 		return DB::get_row($sql);
@@ -229,6 +235,18 @@ class FinanceData
 		return DB::get_row($sql);
 	}
 	
+	/**
+	 * Get monthly expenses
+	 */
+	 
+	public static function GetMonthlyExpenses()
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
+					WHERE `type`=\'M\'';
+		
+		return DB::get_results($sql);		
+	}
+	
 	/** 
 	 * Get all of the expenses for a flight
 	 */
@@ -238,7 +256,7 @@ class FinanceData
 				FROM ".TABLE_PREFIX."expenses
 					WHERE `type`='F'";
 					
-		return DB::get_row($sql);
+		return DB::get_results($sql);
 	}
 	
 	/**

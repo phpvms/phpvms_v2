@@ -491,11 +491,18 @@ class PIREPData
 		$expense_list = '';
 		
 		$allexpenses = FinanceData::GetFlightExpenses();
-		if($allexpenses)
+		//DB::debug();
+		
+		if(!$allexpenses)
+		{
+			$allexpenses = array();
+		}
+		else
 		{
 			# Add up the total amount so we can add it in
 			foreach($allexpenses as $ex)
 			{
+				echo '<pre>';print_r($ex);echo'</pre>';
 				$total_ex += $ex->cost;				
 			}
 			

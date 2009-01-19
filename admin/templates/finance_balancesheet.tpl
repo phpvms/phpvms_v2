@@ -16,6 +16,7 @@
 	
 	# Correct the sign since we're subtracting
 	$pirepfinance->TotalPay  = $pirepfinance->TotalPay * -1;
+	$pirepfinance->FlightExpenses  = $pirepfinance->FlightExpenses * -1;
 ?>
 
 <table width="550px" class="balancesheet" cellpadding="0" cellspacing="0">
@@ -39,6 +40,10 @@
 	<tr>
 		<td align="right">Pilot Payments: </td>
 		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($pirepfinance->TotalPay));?></td>
+	</tr>
+	<tr>
+		<td align="right">Flight Expenses: </td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($pirepfinance->FlightExpenses));?></td>
 	</tr>
 	
 	<tr class="balancesheet_header">

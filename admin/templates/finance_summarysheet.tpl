@@ -6,14 +6,15 @@
 	
 ?>
 
-<table width="550px" class="balancesheet" cellpadding="0" cellspacing="0">
+<table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header" style="text-align: center">
 		<td align="left">Month</td>
 		<td align="center">Flights</td>
 		<td align="left">Revenue</td>
-		<td align="center">Pilot Pay</td>
+		<td align="center" nowrap>Pilot Pay</td>
 		<td align="center">Expenses</td>
+		<td align="center" nowrap>Flight</td>
 		<td align="center">Total</td>
 	</tr>
 	
@@ -34,25 +35,31 @@ foreach ($allfinances as $month)
 			echo ($month['pirepfinance']->TotalFlights=='') ? 0 : $month['pirepfinance']->TotalFlights;
 		?>
 		</td>
-		<td align="right">
+		<td align="right" nowrap>
 			<?php 
 			$revenue .= $month['pirepfinance']->Revenue.',';
 			echo FinanceData::FormatMoney($month['pirepfinance']->Revenue);
 			?>
 		</td>
-		<td align="right">
+		<td align="right" nowrap>
 			<?php 
 			$pilot_pay.= $month['pirepfinance']->TotalPay.',';
 			echo FinanceData::FormatMoney($month['pirepfinance']->TotalPay);
 			?>
 		</td>
-		<td align="right">
+		<td align="right" nowrap>
 			<?php 
 			$expenses.=$month['totalexpenses'].',';
-			echo FinanceData::FormatMoney($month['totalexpenses']);
+			echo FinanceData::FormatMoney((-1)*$month['totalexpenses']);
 			?>
 		</td>
-		<td align="right">
+		<td align="right" nowrap>
+		<?php 
+		$flightexpenses.=$month['flightexpenses'].',';
+		echo FinanceData::FormatMoney((-1)*$month['flightexpenses']);
+		?>
+		</td>
+		<td align="right" nowrap>
 			<?php 
 			$profit .= $month['total'].',';
 			$total+=$month['total'];
@@ -64,12 +71,12 @@ foreach ($allfinances as $month)
 }
 ?>
 <tr class="balancesheet_header" style="border-bottom: 1px dotted">
-	<td align="" colspan="6" style="padding: 1px;"></td>
+	<td align="" colspan="7" style="padding: 1px;"></td>
 </tr>
 	
 <tr>
 	<td align="right" colspan="5"><strong>Total:</strong></td>
-	<td align="right"><strong><?php echo FinanceData::FormatMoney($total);?></strong></td>
+	<td align="right" colspan="2"><strong><?php echo FinanceData::FormatMoney($total);?></strong></td>
 </tr>
 	
 </table>

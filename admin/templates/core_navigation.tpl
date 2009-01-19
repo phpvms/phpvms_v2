@@ -44,7 +44,7 @@
 	</ul>
 </li>
 <li><a class="menu" href="<?php echo SITE_URL?>/admin/index.php/reports">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/reports_icon.png" />Stats & Reports</a>
+		<img src="<?echo SITE_URL?>/admin/lib/layout/images/reports_icon.png" />Reports & Expenses</a>
 	<ul>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports">Overview</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/finance/viewcurrent">Financial Reports</a></li>

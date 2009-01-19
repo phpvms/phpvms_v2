@@ -45,6 +45,29 @@ Config::Set('MAP_CENTER_LNG', '-62.334821');
 Config::Set('ACARS_LIVE_TIME', 720); 
 Config::Set('ACARS_DEBUG', false);
 
+
+/*
+  This is the unit of money. For non-dollars, use :
+	Dollars ($), enter "$"
+	Euro (€), enter "&#8364;"
+	Yen (¥), enter "&yen;"
+	Pounds (£), enter "&pound;"
+	
+  For example, to set EUROS:
+	Config::Set('MONEY_UNIT', '&#8364;');
+ */
+
+Config::Set('MONEY_UNIT', '$');
+ 
+# FSPassengers Settings
+# Units settings
+Config::Set('WeightUnit', '0');   # 0=Kg 1=lbs
+Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
+Config::Set('SpeedUnit', '1');   # 0=Km/H 1=Kts
+Config::Set('AltUnit', '1');   # 0=Meter 1=Feet 
+Config::Set('LiquidUnit', '2');   # 0=liter 1=gal 2=kg 3=lbs
+Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
+
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);

@@ -100,6 +100,15 @@ class Registration extends CodonModule
 				return false;
 			}
 			
+			$ret = RegistrationData::CheckUserEmail($email);
+			
+			if($ret)
+			{
+				Template::Set('error', 'This email address is already in use');
+				Template::Show('registration_error.tpl');
+				return false;
+			}
+			
 			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $hub, $password) == false)
 			{
 				Template::Set('error', RegistrationData::$error);
@@ -157,7 +166,7 @@ class Registration extends CodonModule
 		
 		/* Check the email address
 		 */
-		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $this->post->email) == false)
+		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]*)$", $this->post->email) == false)
 		{
 			$error = true;
 			Template::Set('email_error', true);

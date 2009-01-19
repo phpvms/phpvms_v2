@@ -32,12 +32,6 @@
 	</td>
 </tr>
 <tr>
-	<td valign="top"><strong>Leg:</strong></td>
-	<td><input type="text" name="leg" value="<?php echo $schedule->leg;?>" />
-		<p>Blank or 0 (zero) will default to leg 1</p>
-	</td>
-</tr>
-<tr>
 	<td width="3%" nowrap><strong>Departure Airport:</strong></td>
 	<td><select name="depicao">
 		<?php

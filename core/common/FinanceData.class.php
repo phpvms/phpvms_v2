@@ -32,6 +32,11 @@ class FinanceData
 		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
 	}
 	
+	
+	/**
+	 * Get the financial data for a range of dates
+	 *  Pass in dates as text, or UNIX Timestamps
+	 */
 	public static function GetRangeBalanceData($start, $end)
 	{
 		
@@ -48,7 +53,10 @@ class FinanceData
 		return $ret;		
 	}
 	
-	
+	/**
+	 * Get the financial data for a month
+	 *  Pass date as a text, or UNIX Timestamp
+	 */
 	public static function GetMonthBalanceData($monthstamp)
 	{
 		$ret = array();
@@ -146,10 +154,16 @@ class FinanceData
 	 * Get PIREP financials for the YEAR that's
 	 *  in the timestamp. Just pass any timestamp,
 	 *  it'll pull the YEAR
+	 * 
+	 * DEPRICATED
+	 *  "wut? already?" SHEAH
+	 *  use GetYearBalanceData instead
 	 */
 	public static function PIREPForYear($timestamp)
 	{
-		# Form the timestamp
+		
+		return self::GetYearBalanceData($timestamp);
+		/*# Form the timestamp
 		if($timestamp == '')
 		{
 			return false;
@@ -167,7 +181,7 @@ class FinanceData
 		
 		$where_sql = " WHERE DATE_FORMAT(submitdate, '%Y') = '$Year'";	
 		
-		return self::CalculatePIREPS($where_sql);
+		return self::CalculatePIREPS($where_sql);*/
 	}
 	 
 	public static function CalculatePIREPS($where='')
@@ -175,6 +189,7 @@ class FinanceData
 		$sql = 'SELECT COUNT(*) AS TotalFlights,
 					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
 					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue
+					   ROUND(SUM(p.`expenses`)) AS Expenses
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
 		
 		return DB::get_row($sql);
@@ -214,10 +229,22 @@ class FinanceData
 		return DB::get_row($sql);
 	}
 	
+	/** 
+	 * Get all of the expenses for a flight
+	 */
+	public static function GetFlightExpenses()
+	{
+		$sql = "SELECT * 
+				FROM ".TABLE_PREFIX."expenses
+					WHERE `type`='F'";
+					
+		return DB::get_row($sql);
+	}
+	
 	/**
 	 * Add an expense
 	 */
-	public static function AddExpense($name, $cost)
+	public static function AddExpense($name, $cost, $type)
 	{
 		
 		if($name == '' || $cost == '')
@@ -228,10 +255,13 @@ class FinanceData
 		
 		$name = DB::escape($name);
 		$cost = DB::escape($cost);
+		$type = strtoupper($type);
+		if($type == '')
+			$type = 'M'; // Default as monthly
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX."expenses
-					 (`name`, `cost`)
-					VALUES('$name', '$cost')";
+					 (`name`, `cost`, `type`)
+					VALUES('$name', '$cost', '$type')";
 		
 		DB::query($sql);
 		
@@ -244,7 +274,7 @@ class FinanceData
 	/**
 	 * Edit a certain expense
 	 */
-	public static function EditExpense($id, $name, $cost)
+	public static function EditExpense($id, $name, $cost, $type)
 	{
 		if($name == '' || $cost == '')
 		{
@@ -254,9 +284,12 @@ class FinanceData
 		
 		$name = DB::escape($name);
 		$cost = DB::escape($cost);
+		$type = strtoupper($type);
+		if($type == '')
+			$type = 'M'; // Default as monthly
 		
 		$sql = 'UPDATE '.TABLE_PREFIX."expenses
-					SET `name`='$name', `cost`='$cost'
+					SET `name`='$name', `cost`='$cost', `type`='$type'
 					WHERE `id`=$id";
 		
 		DB::query($sql);
@@ -293,7 +326,7 @@ class FinanceData
 		else
 		{	# Not a charter
 			$loadfactor = intval(Config::Get('LOAD_FACTOR'));
-			$load = rand($loadfactor - 10, $loadfactor + 10);
+			$load = rand($loadfactor - LOAD_VARIATION, $loadfactor + LOAD_VARIATION);
 			
 			# Don't allow a load of more than 95%
 			if($load > 95)
@@ -314,6 +347,8 @@ class FinanceData
 			$isneg = true;
 		}
 		
+		# $ 50.00 - If positive
+		# ($ -50.00)  - If negative
 		$number = Config::Get('MONEY_UNIT') .' '.number_format($number, 2, '.', ', ');
 		
 		if($isneg == true)

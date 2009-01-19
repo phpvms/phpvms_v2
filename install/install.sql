@@ -13,6 +13,7 @@ CREATE TABLE `phpvms_expenses` (
 	`name` VARCHAR( 25 ) NOT NULL ,
 	`cost` FLOAT NOT NULL ,
 	`fixed` INT NOT NULL DEFAULT 0,
+	`type` VARCHAR( 1 ) NOT NULL default 'M',
 	PRIMARY KEY (`id`)
 ) ENGINE = MYISAM;
 
@@ -180,6 +181,8 @@ CREATE TABLE `phpvms_pireps` (
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
   `pilotpay` FLOAT NOT NULL,
+  `expenses` FLOAT NOT NULL,
+  `expenselist` BLOB NOT NULL,
   PRIMARY KEY  (`pirepid`)
 ) ENGINE=InnoDB;
 

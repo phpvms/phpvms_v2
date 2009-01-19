@@ -292,8 +292,7 @@ class PIREPData
 					  
 		if(!is_array($pirepdata))
 			return false;
-		
-		if($pirepdata['leg'] == '' || $pirepdata['leg'] == '0') $pirepdata['leg'] = 1;
+	
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
@@ -399,10 +398,7 @@ class PIREPData
 		
 		if(!is_array($pirepdata))
 			return false;
-		
-		# Set the leg to the proper
-		if($pirepdata['leg'] == '' || $pirepdata['leg'] == '0') $pirepdata['leg'] = 1;		
-		
+	
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
 		{
 			return false;
@@ -432,9 +428,9 @@ class PIREPData
 	{
 		
 		$sql = 'SELECT  `pirepid`, `pilotid`, `code`, `flightnum`,
-						`load`, `price`, `flighttype`, `pilotpay`
+						`load`, `price`, `expenses`, `flighttype`, `pilotpay`
 					FROM '.TABLE_PREFIX.'pireps
-					WHERE `load`=0';
+					WHERE `load`=0 OR `expenses`=0';
 					
 		$results = DB::get_results($sql);
 		
@@ -446,6 +442,7 @@ class PIREPData
 		foreach($results as $row)
 		{
 			self::PopulatePIREPFinance($row);
+			DB::debug();
 		}
 	
 		return true;		
@@ -489,11 +486,32 @@ class PIREPData
 			$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
 		}
 		
+		# Get the expenses for a flight
+		$total_ex = 0;
+		$expense_list = '';
+		
+		$allexpenses = FinanceData::GetFlightExpenses();
+		if($allexpenses)
+		{
+			# Add up the total amount so we can add it in
+			foreach($allexpenses as $ex)
+			{
+				$total_ex += $ex->cost;				
+			}
+			
+			# Serialize and package it, so we can store it
+			#	with the PIREP
+			$expense_list = serialize($allexpenses);
+		}
+		
 		# Update it
 		$sql = 'UPDATE '.TABLE_PREFIX."pireps
 					SET `price`='$sched->price', 
+						`expenses`=$total_ex,
+						`expenselist`='$expense_list',
 						`flighttype`='$sched->flighttype', 
 						`pilotpay`='$pilot->payrate'";
+		
 		if($load != '')
 			$sql .= ", `load`='$load'";
 			

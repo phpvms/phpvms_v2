@@ -37,6 +37,15 @@ class RegistrationData
 		return DB::get_results($sql);
 	}
 	
+	public static function CheckUserEmail($email)
+	{
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
+					WHERE email=\''.$email.'\'';
+					
+		return DB::get_row($sql);
+	}
+	
 	/**
 	 * Add a  User
 	 */

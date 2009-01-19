@@ -465,7 +465,6 @@ class Operations extends CodonModule
 
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
-						'leg'=>$this->post->leg,
 						'depicao'=>$this->post->depicao,
 						'arricao'=>$this->post->arricao,
 						'route'=>$this->post->route,
@@ -511,7 +510,6 @@ class Operations extends CodonModule
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
-						'leg'=>$this->post->leg,
 						'depicao'=>$this->post->depicao,
 						'arricao'=>$this->post->arricao,
 						'route'=>$this->post->route,

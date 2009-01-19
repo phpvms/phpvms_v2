@@ -110,7 +110,7 @@ class XML extends CodonModule
 			#
 			$output.='<details><![CDATA['
 				.'<span style="font-size: 10px; text-align:left; width: 100%" align="left">'
-				.'<a href="'.SITE_URL.'/index.php/profile/view/'.$flight->pilotid.'">'.$flight->pilotid.' - ' . $pilotinfo->firstname .' ' . $pilotinfo->lastname.'</a><br />'
+				.'<a href="'.SITE_URL.'/index.php/profile/view/'.$flight->pilotid.'">'.PilotData::GetPilotCode($flight->code, $flight->pilotid).' - ' . $flight->firstname .' ' . $flight->lastname.'</a><br />'
 				.'<strong>Flight '.$flight->flightnum.'</strong> ('.$flight->depicao.' to '.$flight->arricao.')<br />'
 				.'<strong>Status: </strong>'.$flight->phasedetail.'<br />'
 				.'<strong>Dist/Time Remain: </strong>'.$flight->distremain.Config::Get('UNITS').'/'.$flight->timeremaining.' h:m<br />'

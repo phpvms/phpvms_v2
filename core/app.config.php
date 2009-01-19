@@ -85,8 +85,13 @@ Config::Set('DEBUG_MODE', true);
 Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
 
 /**
+ * *******************************************************
+ * 
  * Advanced options, don't edit unless you
  * know what you're doing!!
+ * 
+ * Actually, don't change them, at all. Please.
+ * For your sake. And mine. :)
  */
 
 Config::Set('TEMPLATE_USE_CACHE', false);
@@ -133,11 +138,18 @@ else
 							
 /**
  * Constants
+ *	Do not modify these! All sorts of weird shit can happen
  */ 
+ 
+# Set the type of flights we have
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
 									'C'=>'Cargo',
 									'H'=>'Charter'));
-
+									
+# Set the types of expenses we have
+Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
+									'F'=>'Per Flight'));
+									
 define('PIREP_PENDING', 0);
 define('PIREP_ACCEPTED', 1);
 define('PIREP_REJECTED', 2);
@@ -147,4 +159,5 @@ define('PILOT_PENDING', 0);
 define('PILOT_ACCEPTED', 1);
 define('PILOT_REJECTED', 2);
 
+define('LOAD_VARIATION', 5);
 define('SECONDS_PER_DAY', 86400);

@@ -55,7 +55,8 @@ class SchedulesData
 	
 	public static function FindFlight($flightnum, $depicao='')
 	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'schedules
+		$sql = 'SELECT * 
+					FROM '.TABLE_PREFIX.'schedules
 					WHERE flightnum=\''.$flightnum.'\' ';
 					
 		if($depicao != '')
@@ -212,8 +213,6 @@ class SchedulesData
 					WHERE s.arricao=\''.$arricao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
-		DB::debug();
-		return $ret;
 	}
 	
 	public static function GetSchedulesByDistance($distance, $type, $onlyenabled=true, $limit='')
@@ -399,8 +398,7 @@ class SchedulesData
 	 * 
 	 * Pass in the following:
 				$data = array(	'code'=>'',
-						'flightnum'='',
-						'leg'=>'',
+						'flightnum'=''
 						'depicao'=>'',
 						'arricao'=>'',
 						'route'=>'',
@@ -424,8 +422,8 @@ class SchedulesData
 		if($data['depicao'] == $data['arricao'])
 			return false;
 		
-		if($data['leg'] == '' || $data['leg'] == '0')
-			$data['leg'] = 1;
+		/*if($data['leg'] == '' || $data['leg'] == '0')
+			$data['leg'] = 1;*/
 			
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
@@ -446,15 +444,14 @@ class SchedulesData
 		}
 				
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
-						(`code`, `flightnum`, `leg`, 
+						(`code`, `flightnum`, 
 						 `depicao`, `arricao`, 
 						 `route`, `aircraft`, `distance`, 
 						 `deptime`, `arrtime`, 
 						 `flighttime`, `maxload`, `price`, 
 						 `flighttype`, `notes`, `enabled`)
 					VALUES ('$data[code]', 
-							'$data[flightnum]', 
-							'$data[leg]', 
+							'$data[flightnum]',
 							'$data[depicao]', 
 							'$data[arricao]', 
 							'$data[route]', 
@@ -483,8 +480,7 @@ class SchedulesData
 		
 			$data = array(	'scheduleid'=>'',
 							'code'=>'',
-							'flightnum'='',
-							'leg'=>'',
+							'flightnum'=''
 							'depicao'=>'',
 							'arricao'=>'',
 							'route'=>'',
@@ -506,10 +502,7 @@ class SchedulesData
 		
 		if($data['depicao'] == $data['arricao'])
 			return false;
-		
-		if($data['leg'] == '' || $data['leg'] == '0')
-			$data['leg'] = 1;
-		
+			
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
@@ -530,8 +523,7 @@ class SchedulesData
 			
 		$sql = "UPDATE " . TABLE_PREFIX ."schedules 
 					SET `code`='$data[code]', 
-						`flightnum`='$data[flightnum]', 
-						`leg`='$data[leg]',
+						`flightnum`='$data[flightnum]',
 						`depicao`='$data[depicao]', 
 						`arricao`='$data[arricao]',
 						`route`='$data[route]', 
@@ -731,9 +723,7 @@ class SchedulesData
 		// This is for the past 7 days
 		do {
 			$count = PIREPData::GetReportCount($time_start);
-
-			//array_push($data, intval($count));
-			//$label .= date('m/d', $date) .'|';
+			
 			$data[] = $count;
 			
 			if($count > $max)

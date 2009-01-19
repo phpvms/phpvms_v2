@@ -7,6 +7,25 @@
 <dt>* Cost</dt>
 <dd><input name="cost" type="text" value="<?php echo $expense->cost; ?>" /></dd>
 
+<dt>* Type</dt>
+<dd>
+<select name="type">
+<?php
+$alltypes = Config::Get('EXPENSE_TYPES');
+
+foreach($alltypes as $typeval=>$typename)
+{
+	if($expense->type == $typeval)
+		$sel = 'selected="selected"';
+	else
+		$sel = '';
+		
+		
+	echo "<option value=\"$typeval\" $sel>$typename</option>";
+}
+?>
+</dd>
+
 <dt></dt>
 <dd><input type="hidden" name="id" value="<?php echo $expense->id;?>" />
 	<input type="hidden" name="action" value="<?php echo $action;?>" />

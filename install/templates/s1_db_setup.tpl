@@ -2,12 +2,12 @@
 	$siteurl = str_replace('/install/install.php', '', $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 ?>
 <form action="?page=dbsetup" method="post" align="center">
+<p>Welcome to the phpVMS installer! Enter your database information below. You must have the following
+			permissions on your database: SELECT, UPDATE, DELETE, ALTER, CREATE. For more information,
+			<a href="http://www.phpvms.net/docs/installation" target="_blank">view this page (opens in new window)</a>.</p>
 	<table width="550px">
 	<tr>
 	<td colspan="2">
-		<p>Welcome to the phpVMS installer! Enter your database information below. You must have the following
-			permissions on your database: SELECT, UPDATE, DELETE, ALTER, CREATE. For more information,
-			<a href="http://www.phpvms.net/docs/installation" target="_blank">view this page (opens in new window)</a>.</p>
 		<?php 
 		if($message!='')
 		{

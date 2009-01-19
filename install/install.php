@@ -47,6 +47,8 @@ if($_POST['action'] == 'submitdb')
 
 Template::Show('header.tpl');
 
+echo '<h3 align="left">phpVMS Installer</h3>';
+
 // Controller
 switch($_GET['page'])
 {

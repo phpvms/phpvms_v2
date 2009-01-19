@@ -111,4 +111,4 @@ $("#dbcheck").bind('click', function()
 
 <table width="770px" align="center" style="padding-bottom: 10px;">
 <tr>
-	<td align="center">
+	<td align="" style="padding: 10px;">

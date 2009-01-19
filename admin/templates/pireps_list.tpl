@@ -62,6 +62,7 @@ foreach($pireps as $report)
 				echo 'In Progress';
 			
 			?><br />
+		Comments: <?php echo PIREPData::getCommentCount($report->pirepid); ?><br />
 		<?php
 		if($report->log != '')
 		{

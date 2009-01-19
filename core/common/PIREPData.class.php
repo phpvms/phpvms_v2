@@ -38,7 +38,8 @@ class PIREPData
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
-					WHERE p.pilotid=u.pilotid';
+					WHERE p.pilotid=u.pilotid
+					ORDER BY p.pirepid DESC';
 					
 		if($start !='' && $count != '')
 		{
@@ -255,6 +256,25 @@ class PIREPData
 						AND accepted='.intval($accept);
 
 		return DB::get_results($sql);
+	}
+	
+	/**
+	 * Get the count of comments
+	 */
+	 
+	public static function getCommentCount($pirepid)
+	{
+		
+		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pirepcomments
+					WHERE pirepid='.$pirepid.'
+					GROUP BY pirepid';
+		
+		$total = DB::get_row($sql)->total;
+		
+		if($total == '')
+			return 0;
+		
+		return $total;
 	}
 	
 

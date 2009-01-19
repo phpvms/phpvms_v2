@@ -102,6 +102,7 @@ echo 'Starting the update...<br />';
 	}
 	else
 	{
+		echo '<p>Adding new options to the core/local.config.php...</p>';
 		Installer::add_to_config('LOAD_FACTOR', '72'); 
 		Installer::add_to_config('CARGO_UNITS', 'lbs');
 		
@@ -120,6 +121,7 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
 		# Installer::add_to_config('VA_START_DATE', 'January 2008');
 		
+		echo '<p>Updating your database...</p>';
 		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		
 	}
@@ -132,8 +134,10 @@ $sql = 'UPDATE `phpvms_settings`
 			
 DB::query($sql);
 
-echo '<p><strong>Update completed!</strong><br />
-		If there were any errors, please correct them, and re-run the update using: <a href="update.php?force">update.php?force</a></p>';
+echo '<p><strong>Update completed!</strong></p>
+		<hr>
+	  <p style="width:500px">If there were any errors, you may have to manually run the SQL update, or correct the errors, and click the following to re-run the update: <a href="update.php?force">update.php?force</a></p>
+	  <p>Click here to <a href="'.SITE_URL.'">goto your site</a>, or <a href="'.SITE_URL.'/admin">your admin panel</a></p>  ';
 
 # Don't count forced updates
 if(!isset($_GET['force']))

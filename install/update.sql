@@ -25,6 +25,7 @@ ALTER TABLE `phpvms_schedules` ADD `price` FLOAT NOT NULL AFTER `maxload`;
 ALTER TABLE `phpvms_schedules` ADD `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P' AFTER `price`;
 
 ALTER TABLE `phpvms_pireps` ADD `load` INT NOT NULL;
+ALTER TABLE `phpvms_pireps` ADD `fuelused` VARCHAR ( 15 ) NOT NULL AFTER `load`;
 ALTER TABLE `phpvms_pireps` ADD `price` FLOAT NOT NULL;
 ALTER TABLE `phpvms_pireps` ADD `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P';
 ALTER TABLE `phpvms_pireps` ADD `pilotpay` FLOAT NOT NULL;

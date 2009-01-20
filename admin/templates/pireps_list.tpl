@@ -101,6 +101,11 @@ foreach($pireps as $report)
 			echo ($report->load!='')?$report->load:'-';
 		?><br />
 		
+		<strong>Fuel Used: </strong>
+		<?php
+			echo ($report->fuelused!='')?$report->fuelused . Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit')):'-';
+		?><br />
+		
 		
 	<?php
 		// Get the additional fields

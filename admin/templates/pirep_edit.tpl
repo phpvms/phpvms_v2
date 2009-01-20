@@ -23,9 +23,8 @@ if($message!='')
 		</select>
 	</dd>
 	
-	<dt>Enter Flight Number and Leg:</dt>
-	<dd><input type="text" name="flightnum" value="<?php echo $pirep->flightnum ?>" />
-		<input type="text" name="leg" value="<?php echo ($pirep->leg=='')?1:$pirep->leg ?>" /></dd>
+	<dt>Enter Flight Number:</dt>
+	<dd><input type="text" name="flightnum" value="<?php echo $pirep->flightnum ?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>
@@ -130,6 +129,13 @@ if($message!='')
 	<dt>Load</dt>
 	<dd><input type="text" name="load" value="<?php echo $pirep->load; ?>" />
 		<p>This is the load of this flight. It's automatically determined, though you can adjust it here</p></dd>
+		
+	<dt>Fuel Used</dt>
+	<dd><input type="text" name="fuelused" value="<?php echo $pirep->fuelused; ?>" />
+		<p>This is the fuel used on this flight in <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>		
+	<dt>Fuel Price</dt>
+	<dd><input type="text" name="fuelprice" value="<?php echo $pirep->fuelprice; ?>" />
+		<p>This is the price of fuel, <?php echo Config::Get('MONEY_UNIT').' per '.Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>
 		
 		
 	<dt>Flight Time</dt>

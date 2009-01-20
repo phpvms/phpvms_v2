@@ -20,6 +20,17 @@ class FinanceData
 {
 	public static $lasterror;
 	
+	
+	/**
+	 * Get the current fuel cost, either use a setting
+	 *  or WE'LL DO IT LIVE!
+	 */
+	public static function GetFuelCost()
+	{
+		# For now
+		return '5.10';
+	}
+	
 	/**
 	 * Get a year
 	 */	
@@ -84,21 +95,32 @@ class FinanceData
 				
 			$ret['allexpenses'] =  self::GetMonthlyExpenses();
 			
-			# Do the calculations
-			$ret['total'] = $ret['pirepfinance']->Revenue - $ret['allexpenses']->TotalPay;
+			/*
+				Do the calculations
+			*/
 			
+			# Start
+			$ret['cashreserve'] = 0;
+			$ret['total'] = $ret['pirepfinance']->Revenue;
+			
+			# Subtract the pay
+			$ret['total'] -= $ret['allexpenses']->TotalPay;
 			# Subtract the flight expenses
 			$ret['total'] -= $ret['pirepfinance']->FlightExpenses;
-			$ret['flightexpenses'] += $ret['pirepfinance']->FlightExpenses;
+			# Subtract fuel costs
+			$ret['total'] -= $ret['pirepfinance']->FuelCost;
 			
+			# Subtract the total expenses from the total	
 			foreach($ret['allexpenses'] as $expense)
 			{
 				$ret['totalexpenses'] += $expense->cost;
 			}
 			
-			# Subtract the total expenses from the total			
 			$ret['total'] -= $ret['totalexpenses'];
 			
+			# Save these separately
+			$ret['flightexpenses'] += $ret['pirepfinance']->FlightExpenses;
+			$ret['fuelcost'] = $ret['pirepfinance']->FuelCost;		
 			
 			# Save it
 			self::AddFinanceData($monthstamp, $ret['pirepfinance'], 
@@ -123,8 +145,6 @@ class FinanceData
 	public static function GetFinanceData($monthstamp)
 	{
 		return false;
-		
-		
 	}
 	
 	/**
@@ -195,7 +215,8 @@ class FinanceData
 		$sql = 'SELECT COUNT(*) AS TotalFlights,
 					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
 					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue,
-					   ROUND(SUM(p.`expenses`)) AS FlightExpenses
+					   ROUND(SUM(p.`expenses`)) AS FlightExpenses,
+					   ROUND(SUM(p.`fuelused` * p.`fuelprice`)) AS FuelCost
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
 		
 		return DB::get_row($sql);

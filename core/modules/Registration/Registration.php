@@ -120,7 +120,7 @@ class Registration extends CodonModule
 				Template::Show('registration_sentconfirmation.tpl');
 			}
 			
-			CodonEvent::Dispatch('registration_complete', 'Registration');			
+			CodonEvent::Dispatch('registration_complete', 'Registration', $_POST);			
 			
 			$rss = new RSSFeed('Latest Pilot Registrations', SITE_URL, 'The latest pilot registrations');
 			$allpilots = PilotData::GetLatestPilots();

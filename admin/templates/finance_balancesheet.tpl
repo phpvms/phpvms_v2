@@ -2,21 +2,21 @@
 <h3><?php echo $title?></h3>
 <?php
 
-	$total = $pirepfinance->Revenue - $pirepfinance->TotalPay;
-	
-	# Temporary
-	$cashreserves = 0;
-	
+	//$total = $pirepfinance->Revenue - $pirepfinance->TotalPay;
+		
 	# This holds all of our values for the graph
 	#	And some default values
-	$pilotpay_total = $pirepfinance->TotalPay;
+	$pilotpay_total = $allfinances['pirepfinance']->TotalPay;
 	$expense_total = 0;
 	$g_expenses_values='';
 	$g_expenses_labels='';
 	
 	# Correct the sign since we're subtracting
-	$pirepfinance->TotalPay  = $pirepfinance->TotalPay * -1;
-	$pirepfinance->FlightExpenses  = $pirepfinance->FlightExpenses * -1;
+	$allfinances['pirepfinance']->TotalPay  = $allfinances['pirepfinance']->TotalPay * -1;
+	$allfinances['pirepfinance']->FlightExpenses  = $allfinances['pirepfinance']->FlightExpenses * -1;
+	$allfinances['pirepfinance']->FuelCost  = $allfinances['pirepfinance']->FuelCost * -1;
+	
+	$running_total = $allfinances['pirepfinance']->Revenue + $allfinances['pirepfinance']->TotalPay + $allfinances['pirepfinance']->FlightExpenses + $allfinances['pirepfinance']->FuelCost;
 ?>
 
 <table width="550px" class="balancesheet" cellpadding="0" cellspacing="0">
@@ -27,29 +27,41 @@
 	
 	<tr>
 		<td align="right">Cash Reserves: </td>
-		<td align="right"><?php echo FinanceData::FormatMoney($cashreserves);?></td>
+		<td align="right"><?php echo FinanceData::FormatMoney($allfinances['cashreserve']);?></td>
 	</tr>
 
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
 			Total number of flights: <?php echo $pirepfinance->TotalFlights; ?>
 		</td>
-		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($pirepfinance->Revenue);?></td>
+		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($allfinances['pirepfinance']->Revenue);?></td>
 	</tr>
 	
 	<tr>
 		<td align="right">Pilot Payments: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($pirepfinance->TotalPay));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['pirepfinance']->TotalPay));?></td>
+	</tr>
+	<tr>
+		<td align="right">Fuel Costs: </td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['pirepfinance']->FuelCost));?></td>
 	</tr>
 	<tr>
 		<td align="right">Flight Expenses: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($pirepfinance->FlightExpenses));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['pirepfinance']->FlightExpenses));?></td>
+	</tr>
+	
+	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
+		<td align="" colspan="2" style="padding: 1px;"></td>
+	</tr>
+	
+	<tr>
+		<td align="right"><strong>Total:</strong></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($running_total));?></td>
 	</tr>
 	
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Expenses (Monthly)</td>
 	</tr>
-
 
 <?php
 	/* COUNT EXPENSES */
@@ -64,7 +76,7 @@
 	<?php
 	}
 	
-	foreach($allexpenses as $expense)
+	foreach($allfinances['allexpenses'] as $expense)
 	{
 		# Add the value to the graph
 		
@@ -97,14 +109,14 @@
 	
 	<tr style="border: 0px">
 		<td align="right">Total Revenue: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($total)); ?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['total'])); ?></td>
 	</tr>
 	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
 		<td align="" colspan="2" style="padding: 1px;"></td>
 	</tr>
 	<tr>
 		<td align="right"><strong>Net Worth:</strong></td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($total+$cashreserves)); ?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['total'])); ?></td>
 	</tr>
 </table>
 

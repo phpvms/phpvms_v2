@@ -60,13 +60,13 @@ Config::Set('ACARS_DEBUG', false);
 Config::Set('MONEY_UNIT', '$'); # $, €, etc
 Config::Set('MONEY_FORMAT', '%(#10n');
 
-# FSPassengers Settings
 # Units settings
-Config::Set('WeightUnit', '0');   # 0=Kg 1=lbs
+#	These are global, also used for FSPAX
+Config::Set('WeightUnit', '0');		# 0=Kg 1=lbs
 Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
-Config::Set('SpeedUnit', '1');   # 0=Km/H 1=Kts
-Config::Set('AltUnit', '1');   # 0=Meter 1=Feet 
-Config::Set('LiquidUnit', '2');   # 0=liter 1=gal 2=kg 3=lbs
+Config::Set('SpeedUnit', '1');		# 0=Km/H 1=Kts
+Config::Set('AltUnit', '1');		# 0=Meter 1=Feet 
+Config::Set('LiquidUnit', '2');		# 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 
 # Options for the signature that's generated 
@@ -150,6 +150,8 @@ Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
 Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
 									'F'=>'Per Flight'));
 									
+Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
+
 define('PIREP_PENDING', 0);
 define('PIREP_ACCEPTED', 1);
 define('PIREP_REJECTED', 2);

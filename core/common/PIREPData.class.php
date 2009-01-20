@@ -330,11 +330,15 @@ class PIREPData
 			$pirepdata['load'] = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
 		}
 		
+		# Get the fuelprice
+		if($pirepdata['fuelprice'] == '')
+		{
+			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice();
+		}
 		
-		# Remove the comment field, since it doesn't exist
-		# 	in the PIREPs table.
+		# Escape the comment field
 		$comment = DB::escape($pirepdata['comment']);
-		
+				
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps(	
 							`pilotid`, 
 							`code`, 
@@ -346,7 +350,9 @@ class PIREPData
 							`submitdate`, 
 							`accepted`, 
 							`log`,
-							`load`)
+							`load`,
+							`fuelused`,
+							`fuelprice`)
 					VALUES ($pirepdata[pilotid], 
 							'$pirepdata[code]', 
 							'$pirepdata[flightnum]', 
@@ -357,7 +363,9 @@ class PIREPData
 							NOW(), 
 							".PIREP_PENDING.", 
 							'$pirepdata[log]',
-							'$pirepdata[load]')";
+							'$pirepdata[load]',
+							'$pirepdata[fuelused]',
+							'$pirepdata[fuelprice]')";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
@@ -374,8 +382,7 @@ class PIREPData
 						VALUES ($pirepid,
 								$pirepdata[pilotid], 
 								'$pirepdata[comment]', 
-								NOW()
-							)";
+								NOW())";
 
 			$ret = DB::query($sql);
 		}
@@ -424,6 +431,12 @@ class PIREPData
 			return false;
 		}
 		
+		# Get the fuelprice
+		if($pirepdata['fuelprice'] == '')
+		{
+			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice();
+		}
+				
 		$sql = "UPDATE ".TABLE_PREFIX."pireps 
 				SET `code`='$pirepdata[code]', 
 					`flightnum`='$pirepdata[flightnum]',	
@@ -431,7 +444,9 @@ class PIREPData
 					`arricao`='$pirepdata[arricao]', 
 					`aircraft`='$pirepdata[aircraft]', 
 					`flighttime`='$pirepdata[flighttime]',
-					`load`='$pirepdata[load]'
+					`load`='$pirepdata[load]',
+					`fuelused`='$pirepdata[fuelused]',
+					`fuelprice`='$pirepdata[fuelprice]'
 				WHERE `pirepid`=$pirepid";
 
 		$ret = DB::query($sql);

@@ -178,6 +178,8 @@ CREATE TABLE `phpvms_pireps` (
   `accepted` smallint(6) NOT NULL default '0',
   `log` text NOT NULL,
   `load` INT(11) NOT NULL,
+  `fuelused` VARCHAR ( 15 ) NOT NULL,
+  `fuelprice` FLOAT NOT NULL DEFAULT 5.10,
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
   `pilotpay` FLOAT NOT NULL,

@@ -616,6 +616,14 @@ class PIREPData
 		$reports = PIREPData::GetRecentReportsByCount(10);
 		$rss = new RSSFeed('Latest Pilot Reports', SITE_URL, 'The latest pilot reports');
 		
+		# Empty the rss file if there are no pireps
+		if(!$reports)
+		{
+			//file_put_contents(LIB_PATH.'/rss/latestpireps.rss', '');
+			$reports = array();
+			return;
+		}
+			
 		foreach($reports as $report)
 		{
 			$rss->AddItem('Report #'.$report->pirepid.' - '.$report->depicao.' to '.$report->arricao,

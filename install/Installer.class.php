@@ -321,8 +321,10 @@ class Installer
 			
 		$params=array('name'=>SITE_NAME,
 					  'url'=>SITE_URL,
+					  'email'=>SettingsData::GetSetting('ADMIN_EMAIL'),
 					  'version'=>$version,
-					  'php'=>phpversion());
+					  'php'=>phpversion(),
+					  'mysql'=>@mysql_get_server_info());
 					  
 		$url = 'http://www.phpvms.net/extern/register.php';
 					

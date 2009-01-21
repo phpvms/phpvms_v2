@@ -29,6 +29,15 @@ class SettingsData
 					WHERE name=\''.$name.'\'');
 	}
 	
+	public static function GetSettingValue($name)
+	{
+		$ret = DB::get_row('SELECT value FROM '.TABLE_PREFIX.'settings 
+					WHERE name=\''.$name.'\'');
+					
+		return $ret->value;
+	}
+	
+	
 	/**
 	 * Return all of the custom fields data
 	 */

@@ -321,7 +321,7 @@ class Installer
 			
 		$params=array('name'=>SITE_NAME,
 					  'url'=>SITE_URL,
-					  'email'=>SettingsData::GetSetting('ADMIN_EMAIL'),
+					  'email'=>SettingsData::GetSettingValue('ADMIN_EMAIL'),
 					  'version'=>$version,
 					  'php'=>phpversion(),
 					  'mysql'=>@mysql_get_server_info());

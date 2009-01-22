@@ -32,3 +32,4 @@ ALTER TABLE `phpvms_pireps` ADD `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P';
 ALTER TABLE `phpvms_pireps` ADD `pilotpay` FLOAT NOT NULL;
 ALTER TABLE `phpvms_pireps` ADD `expenses` FLOAT NOT NULL DEFAULT 0;
 ALTER TABLE `phpvms_pireps` ADD `expenselist` BLOB NOT NULL;
+ALTER TABLE `phpvms_pireps` ADD `source` VARCHAR ( 25 ) NOT NULL;

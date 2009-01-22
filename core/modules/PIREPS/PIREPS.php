@@ -181,14 +181,6 @@ class PIREPS extends CodonModule
 	function SubmitPIREP()
 	{
 		$pilotid = Auth::$userinfo->pilotid;
-		$code = $this->post->code;
-		$flightnum = $this->post->flightnum;
-		$leg = $this->post->leg;
-		$depicao = $this->post->depicao;
-		$arricao = $this->post->arricao;
-		$aircraft = $this->post->aircraft;
-		$flighttime = $this->post->flighttime;
-		$comment = $this->post->comment;
 		
 		if($pilotid == '' || Auth::LoggedIn() == false)
 		{
@@ -197,29 +189,30 @@ class PIREPS extends CodonModule
 			return false;
 		}		
 		
-		if($code == '' || $flightnum == '' || $depicao == '' 
-				|| $arricao == '' || $aircraft == '' || $flighttime == '')
+		if($this->post->code == '' || $this->post->flightnum == '' 
+				|| $this->post->depicao == '' || $this->post->arricao == '' 
+				|| $this->post->aircraft == '' || $this->post->flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
 			Template::Show('core_error.tpl');
 			return false;
 		}
 		
-		if(!SchedulesData::GetScheduleByFlight($code, $flightnum, $leg))
+		if(!SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum))
 		{
 			Template::Set('message', 'The flight code and number you entered is not a valid route!');
 			Template::Show('core_error.tpl');
 			return false;
 		}
 		
-		if($depicao == $arricao)
+		if($this->post->depicao == $this->post->arricao)
 		{
 			Template::Set('message', 'The departure airport is the same as the arrival airport!');
 			Template::Show('core_error.tpl');
 			return false;
 		}
 		
-		if(!is_numeric($flighttime) && !is_float($flightnum))
+		if(!is_numeric($this->post->flighttime) && !is_numeric($this->post->flightnum))
 		{
 			Template::Set('message', 'The flight time has to be a number!');
 			Template::Show('core_error.tpl');
@@ -233,23 +226,24 @@ class PIREPS extends CodonModule
 	
 		# form the fields to submit
 		$data = array('pilotid'=>$pilotid,
-					  'code'=>$code,
-					  'flightnum'=>$flightnum,
-					  'leg'=>$leg,
-					  'depicao'=>$depicao,
-					  'arricao'=>$arricao,
-					  'aircraft'=>$aircraft,
-					  'flighttime'=>$flighttime,
+					  'code'=>$this->post->code,
+					  'flightnum'=>$this->post->flightnum,
+					  'depicao'=>$this->post->depicao,
+					  'arricao'=>$this->post->arricao,
+					  'aircraft'=>$this->post->aircraft,
+					  'flighttime'=>$this->post->flighttime,
 					  'submitdate'=>'NOW()',
-					  'comment'=>$comment);
+					  'fuelused'=>$this->post->fuelused,
+					  'source'=>'manual',
+					  'comment'=>$this->post->comment);
 		
 		if(!PIREPData::FileReport($data))
 		{
 			Template::Set('message', 'There was an error adding your PIREP : '.DB::error());
-			//Template::Set('message', PIREPData::l);
 			Template::Show('core_error.tpl');
 			return false;
-		}		
+		}
+		
 		$pirepid = DB::$insert_id;
 		PIREPData::SaveFields($pirepid, $_POST);
 		
@@ -275,5 +269,3 @@ class PIREPS extends CodonModule
 		Template::Show('frontpage_reports.tpl');
 	}
 }
-		
-?>

@@ -326,7 +326,7 @@ class Installer
 					  'php'=>phpversion(),
 					  'mysql'=>@mysql_get_server_info());
 					  
-		$url = 'http://www.phpvms.net/extern/register.php';
+		$url = 'http://update.phpvms.net/register.php';
 					
 		# Do fopen(), if that fails then it'll default to 
 		#	curl

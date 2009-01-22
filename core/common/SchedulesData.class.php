@@ -33,7 +33,7 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
-	public static function GetScheduleByFlight($code, $flightnum, $leg=1)
+	public static function GetScheduleByFlight($code, $flightnum, $leg='')
 	{
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
 							dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
@@ -44,12 +44,7 @@ class SchedulesData
 						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					WHERE s.code=\''.$code.'\' 
 						AND s.flightnum=\''.$flightnum.'\'';
-						
-		if($leg != '')
-		{
-			$sql .= ' AND s.leg='.$leg;
-		}
-				
+			
 		return DB::get_row($sql);
 	}
 	

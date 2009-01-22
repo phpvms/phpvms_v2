@@ -252,15 +252,6 @@ class PIREPAdmin extends CodonModule
 	
 	public function EditPIREP()
 	{
-		/*$pirepid = $this->post->pirepid;
-		$code = $this->post->code;
-		$flightnum = $this->post->flightnum;
-		$leg = $this->post->leg;
-		$depicao = $this->post->depicao;
-		$arricao = $this->post->arricao;
-		$aircraft = $this->post->aircraft;
-		$flighttime = $this->post->flighttime;
-		$comment = $this->post->comment;*/
 				
 		if($this->post->code == '' || $this->post->flightnum == '' 
 			|| $this->post->depicao == '' || $this->post->arricao == '' 

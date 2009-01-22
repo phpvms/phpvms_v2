@@ -46,22 +46,31 @@ ul li ul {
 	margin-top: 10px;
 	margin-bottom: 8px;
 }
+.style1 {
+	color: #F60;
+	font-size: x-large;
+	filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10);
+}
+.style2 {
+	font-size: small;
+}
 -->
 </style>
 </head>
 
 <body>
-<p class="header"><strong><span class="shadow">phpVMS</span> - Virtual Airline Administration Software</strong><br />
+<p class="header"><strong><span class="style1">phpVMS</span> 
+<span class="style2">Virtual Airline Administration Software</span></strong><br />
   Copyright &copy; 2008 Nabeel Shahzad<br />
   For more information, visit <a href="www.phpvms.net" target="_blank">www.phpvms.net</a><br />
   &nbsp;&nbsp;&nbsp;&nbsp;Forums: <a href="http://www.phpvms.net/forum" target="_blank">http://www.phpvms.net/forum</a><br />
   &nbsp;&nbsp;&nbsp;&nbsp;Documentation: <a href="http://www.phpvms.net/docs">http://www.phpvms.net/docs</a></p>
-<p class="header">  phpVMS is licenced under the:<br />
+<p class="header">  phpVMS is licensed under the:<br />
   &nbsp;&nbsp;&nbsp;&nbsp;Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)<br />
   &nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 <p class="header"><em>Last Update:
-<!-- #BeginDate format:Am1 -->January 15, 2009<!-- #EndDate -->
+<!-- #BeginDate format:Am1 -->January 22, 2009<!-- #EndDate -->
   </em><br />
 </p>
 <hr />
@@ -73,7 +82,9 @@ ul li ul {
     <ul>
       <ul>
         <ul>
-          <li>Any extra fields added into form in the contact template will also be emailed to the webmaster email</li>
+          <li>Any extra fields added into form in the contact template will also be emailed to the webmaster email 
+		  (so you can add another &lt;input type=&quot;text&quot; name=&quot;custom&quot; /&gt; and that 
+		  will be included in the email</li>
         </ul>
       </ul>
     </ul>
@@ -84,19 +95,27 @@ ul li ul {
         <li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value of P or C, P is default)</li>
         <li><strong>Maxload</strong> - The maximum number of passengers or cargo allowed on this flight (maxload is in CARGO_UNITS, explained below)</li>
         <li><strong>Price</strong> - This is the price per unit - if it's a passenger flight, it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT (ie, per lb/kg)</li>
-        <li><strong>FlightType</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights operate at 100%  LOAD_FACTOR, </li>
+        <li><strong>Flight Type</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights operate at 100%  LOAD_FACTOR, </li>
       </ul>
     </ul>
   </li>
 
   <li>NEW: <strong>Monthly Expenses</strong> area added under financials - itemize your monthly, 
   or per-flight expenses to be factored into calculations</li>
+	<li>NEW: <strong>Per Flight Expenses</strong> - add expenses that are 
+	&quot;charged&quot; per-flight (for example, de-icing, catering)</li>
+	<li>NEW: <strong>Fuel Used/Fuel Prices </strong>are taken into account for 
+	finances</li>
 	<li>NEW: <strong>Financial Data</strong> - View your VA&#39;s financial 
 	performance, with per-Month/Year views, with detailed reports and charts
 	 <ul>
       <ul>
         <ul>
           <li>Based on PIREP and expenses data</li>
+			<li>Fuel costs are taken into account</li>
+			<li>Graphs, charts of average prices, expenses, fuel prices</li>
+			<li>Monthly expense breakdown</li>
+			<li>Yearly totals breakdown</li>
         </ul>
       </ul>
     </ul>
@@ -105,9 +124,13 @@ ul li ul {
   <li>Add &quot;value&quot; factor to aircraft, to count as part of your &quot;Net Worth&quot;</li>
   
   <li>Revamped and reorganized Admin Panel</li>
-  <li>Backend optimizations, Javascript trimmed down:</li>
-  <li>Update to jQuery 1.3.0/1.3.1 - includes many optimizations</li>
-  <li>Dashboard now shows mainsite news - NOTE: getting the version number sends me your VA name/url and version. This is not made public, only for version tracking, so I can target certain notices to certain VAs that are using certain versions (did I use that enough?)</li>
+  <li>Backend optimizations, Javascript trimmed down, including:</li>
+    <li>Update to jQuery 1.3.0/1.3.1 - includes many optimizations&nbsp;&nbsp;&nbsp;
+	</li>
+  <li>Dashboard now shows news from the main site</li>
+	<li>Flight leg removed (if you&#39;re using legs now, it&#39;s just removed)</li>
+	<li>Distance for flights can be automatically calculated</li>
+	<li>PIREPs ask for fuel used</li>
   <li>FSACARS retrieves flight information from most recent bid</li>
   <li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
   <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
@@ -118,7 +141,7 @@ ul li ul {
   <li> Pilot (properly) notified of registration status</li>
   <li> Email sent to admin on registration/PIREP submission</li>
   <li> Search list aircraft dupes and results fixed</li>
-  <li> Google Maps &quot;createMarkerIcon&quot; error fixed</li>
+  <li> Google Maps &quot;createMarkerIcon()&quot; error fixed</li>
   <li>Fixed active/inactive schedules view</li>
   <li> Update checking bug fixed</li>
   <li>Security fixes</li>
@@ -170,6 +193,8 @@ downloads_list.tpl </em>- Shows the main list of categories and downloads
 	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL?&gt;/action.php/acars/fspaxconfig&quot;&gt;Download FSPax Config&lt;/li&gt;</em>
 
 schedule_details.tpl - Javascript change (at bottom), replace the &lt;script type=&quot;text/javascript&quot;&gt;...&lt;/script&gt; portion
+
+pirep_new.tpl - Added &quot;Fuel Used&quot; field, and removed flight leg field 
 
 </pre>
 <hr />

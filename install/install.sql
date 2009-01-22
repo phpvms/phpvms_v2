@@ -185,6 +185,7 @@ CREATE TABLE `phpvms_pireps` (
   `pilotpay` FLOAT NOT NULL,
   `expenses` FLOAT NOT NULL,
   `expenselist` BLOB NOT NULL,
+  `source` VARCHAR(25) NOT NULL,
   PRIMARY KEY  (`pirepid`)
 ) ENGINE=InnoDB;
 

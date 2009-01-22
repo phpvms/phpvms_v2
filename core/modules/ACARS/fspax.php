@@ -123,7 +123,6 @@ writedebug(print_r($_POST, true));
 			# Can't do it. They completely screwed this up
 			if(!$sched)
 			{
-				//DB::debug();
 				return;
 			}
 			
@@ -142,7 +141,9 @@ writedebug(print_r($_POST, true));
 		# Get the time, don't care about seconds
 		preg_match('/^(\d*):(\d*):(\d*)/', $_POST['TotalBlockTime'], $time);
 		$flighttime = $time[1].'.'.$time[2];
-		#$flighttime = str_replace(':', '.', $_POST['TotalBlockTime']);
+		
+		# Get the fuel used
+		$fuelused = floatval($_POST['StartFuelQuantity']) - floatval($_POST['EndFuelQuantity']);
 		
 		# Form the log:
 		$log = '';
@@ -153,13 +154,12 @@ writedebug(print_r($_POST, true));
 				continue;
 			}
 			
-			$log .= "$name=$value<br />
-					";
+			$log .= "$name=$value<br />".PHP_EOL;
 		}
 		
 		$comment .= 'FSPassengers Flight. No aircraft entered';
 		
-		$data = array('pilotid'=>$pilotid,
+		$data = array(	'pilotid'=>$pilotid,
 						'code'=>$code,
 						'flightnum'=>$flightnum,
 						'leg'=>$leg,
@@ -169,6 +169,8 @@ writedebug(print_r($_POST, true));
 						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
 						'load'=>$_POST['NbrPassengers'],
+						'fuelused'=>$fuelused,
+						'source'=>'fspax',
 						'comment'=>$comment,
 						'log'=> $log);
 			

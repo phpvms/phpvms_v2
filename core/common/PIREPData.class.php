@@ -308,6 +308,8 @@ class PIREPData
 					  'flighttime'=>'',
 					  'submitdate'=>'',
 					  'comment'=>'',
+					  'fuelused'=>'',
+					  'source'=>''
 					  'log'=>'');*/
 					  
 		if(!is_array($pirepdata))
@@ -352,7 +354,8 @@ class PIREPData
 							`log`,
 							`load`,
 							`fuelused`,
-							`fuelprice`)
+							`fuelprice`,
+							`source`)
 					VALUES ($pirepdata[pilotid], 
 							'$pirepdata[code]', 
 							'$pirepdata[flightnum]', 
@@ -365,7 +368,8 @@ class PIREPData
 							'$pirepdata[log]',
 							'$pirepdata[load]',
 							'$pirepdata[fuelused]',
-							'$pirepdata[fuelprice]')";
+							'$pirepdata[fuelprice]',
+							'$pirepdata[source]')";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;

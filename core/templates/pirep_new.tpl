@@ -23,9 +23,8 @@ if($message!='')
 		</select>
 	</dd>
 	
-	<dt>Enter Flight Number and Leg:</dt>
-	<dd><input type="text" name="flightnum" value="<?php echo $bid->flightnum?><?php echo $_POST['flightnum'] ?>" />
-		<input type="text" name="leg" value="<?php echo $bid->leg?><?php echo $_POST['leg'] ?>" /></dd>
+	<dt>Enter Flight Number:</dt>
+	<dd><input type="text" name="flightnum" value="<?php echo $bid->flightnum?><?php echo $_POST['flightnum'] ?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>
@@ -88,6 +87,7 @@ if($message!='')
 		<?php
 		
 		// Determine field by the type
+		
 		if($field->type == '' || $field->type == 'text')
 		{
 		?>
@@ -116,6 +116,10 @@ if($message!='')
 	<?php
 	}
 	?>
+	
+	<dt>Fuel Used</dt>
+	<dd><input type="text" name="fuelused" value="<?php echo $_POST['fuelused']; ?>" />
+		<p>This is the fuel used on this flight in <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>
 	
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" value="<?php echo $_POST['flighttime'] ?>" />

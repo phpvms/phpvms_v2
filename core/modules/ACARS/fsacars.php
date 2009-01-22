@@ -235,7 +235,6 @@ $route->route
 		}
 		
 		# Full PIREP, run with it
-		
 		preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
 		$code = $matches[1];
 		
@@ -252,11 +251,16 @@ $route->route
 		# Get the passenger count:
 		# Find where flight IATA is
 		$pos = find_in_fsacars_log('PAX', $log);
-		$load = str_replace('PAX:', '', $log[$pos]);		
+		$load = str_replace('PAX:', '', $log[$pos]);
 		
 		# Get our aircraft
 		$reg = trim($_GET['reg']);
 		$ac = OperationsData::GetAircraftByReg($reg);
+		
+		# Get the fuel used
+		$pos = find_in_fsacars_log('Spent Fuel', $log);
+		preg_match('/^.*Spent Fuel: (\d*)/', $log[$pos], $matches);
+		$fuelused = $matches[1];
 		
 		# Do some cleanup
 		$_GET['origin'] = DB::escape($_GET['origin']);
@@ -272,7 +276,6 @@ $route->route
 			# Can't do it. They completely fucked this up
 			if(!$sched)
 			{
-				//DB::debug();
 				return;
 			}
 			
@@ -313,6 +316,8 @@ $route->route
 						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
 						'comment'=>$comment,
+						'fuelused'=>$fuelused,
+						'source'=>'fsacars',
 						'load'=>$load,
 						'log'=> $_GET['log']);
 			

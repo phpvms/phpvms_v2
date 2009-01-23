@@ -1,4 +1,14 @@
-<?php Template::Show('finance_header.tpl'); ?>
+<?php
+
+/**
+ * DO NOT EDIT THIS TEMPLATE UNLESS:
+ *   1. YOU HAVE ALOT OF TIME
+ *   2. YOU DON'T MIND LOSING SOME HAIR
+ *   3. YOU HAVE BIG BALLS MADE OF STEEL
+ */
+
+
+?><?php Template::Show('finance_header.tpl'); ?>
 <h3><?php echo $title?></h3>
 <?php
 
@@ -6,12 +16,13 @@
 		
 	# This holds all of our values for the graph
 	#	And some default values
+	# DO NOT EDIT THESE!!!!!!!!!!!!!!!!!!!!!!!!!!!1111111111111111
+	
 	$pilotpay_total = $allfinances['pirepfinance']->TotalPay;
 	$expense_total = 0;
-	$g_expenses_values='';
-	$g_expenses_labels='';
+	$g_expenses_values=array();
+	$g_expenses_labels=array();
 	
-	# Correct the sign since we're subtracting
 	$allfinances['pirepfinance']->TotalPay  = $allfinances['pirepfinance']->TotalPay * -1;
 	$allfinances['pirepfinance']->FlightExpenses  = $allfinances['pirepfinance']->FlightExpenses * -1;
 	$allfinances['pirepfinance']->FuelCost  = $allfinances['pirepfinance']->FuelCost * -1;
@@ -80,8 +91,8 @@
 	{
 		# Add the value to the graph
 		
-		$g_expenses_values .= $expense->cost/100 .',';
-		$g_expenses_labels .= $expense->name .'|';
+		$g_expenses_values[] =  $expense->cost/100;
+		$g_expenses_labels[] = $expense->name;
 	
 		$expense_total += $expense->cost;
 		
@@ -122,41 +133,45 @@
 
 <h3>Breakdown</h3>
 <div>
-<strong>Expenses: </strong>
+<strong>Expenses: </strong><br />
 <?php
 /*
-	Show the expenses details graph
+	Show the expenses details graphs
+	
+	IF YOU DO NOT WANT THE GRAPH TO SHOW
+	COMMENT OUT THE ECHO BELOW BY ADDING TWO
+	// IN FRONT OF IT
 	
 */
-$g_expenses_values = substr($g_expenses_values, 0, strlen($g_expenses_values)-1);
-$g_expenses_labels = substr($g_expenses_labels, 0, strlen($g_expenses_labels)-1);
-// GRAPH
 
-$chart = new googleChart($g_expenses_values, 'p3');
-$chart->dimensions = '500x180';
-$chart->setLabels($g_expenses_labels);
-
-echo '<img src="'.$chart->draw(false).'" />';
+$graph = new ChartGraph('pchart', 'pie', 500, 200);
+$graph->setTitles('Expenses');
+$graph->AddData($g_expenses_values, $g_expenses_labels);
+echo '<img src="'.$graph->GenerateGraph().'" />'; 
 	
 ?>
 <br /><br />
 </div>
 <div>
-<strong>Overall Costs</strong>
+<strong>Overall Costs</strong><br />
 <?php
 /*
 	Show the total expenditures graph
 	
+	IF YOU DO NOT WANT THE GRAPH TO SHOW
+	COMMENT OUT THE ECHO BELOW BY ADDING TWO
+	// IN FRONT OF IT
+	
 */
-$g_expenses_values = "$pilotpay_total, $expense_total";
-$g_expenses_labels = "Pilot Salary|Expenses";
+//$graph = Graphing::GenerateGraph($g_expenses_values, $g_expenses_labels);
 
-// GRAPH
-$chart = new googleChart($g_expenses_values, 'p3');
-$chart->dimensions = '500x180';
-$chart->setLabels($g_expenses_labels);
+$g_expenses_values = array($pilotpay_total, $expense_total);
+$g_expenses_labels = array('Pilot Salary','Expenses');
 
-echo '<img src="'.$chart->draw(false).'" />';
+$expense_graph = new ChartGraph('pchart', 'pie3d', 500, 200);
+$expense_graph->setTitles('Pilot Salary vs Expenses');
+$expense_graph->AddData($g_expenses_values, $g_expenses_labels);
+echo '<img src="'.$expense_graph->GenerateGraph().'" />'; 
 
 ?>
 </div>

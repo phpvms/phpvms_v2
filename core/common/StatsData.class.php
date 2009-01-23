@@ -107,10 +107,20 @@ class StatsData
 			$end = strtotime($end);
 		}
 		
+		/*
+			Loop through, adding one month to $start each time
+		*/		
 		do
 		{
+			# Move it up a month
+			$start += (SECONDS_PER_DAY * 29);
+			
+			# Check if it's greater than today
+			if($start > time())
+				break;
+				
 			# Get the months
-			$month = date('M Y', ($start += (SECONDS_PER_DAY * 29)));
+			$month = date('M Y', $start);
 			
 			# Set the timestamp
 			$months[$month] = $start; 

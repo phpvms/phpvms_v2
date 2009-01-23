@@ -26,7 +26,7 @@
  * Most of these are in your local.config.php already
  *
  */
- 
+
 define('SIGNATURE_PATH', '/lib/signatures');
 define('AVATAR_PATH', '/lib/avatars');
 
@@ -109,7 +109,7 @@ if(ADMIN_PANEL == true && defined('ADMIN_PANEL'))
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
 	Config::Set('URL_REWRITE', array('default'=>array('module', 'page')
-									 ));	
+				));	
 }
 else 
 {	
@@ -120,36 +120,36 @@ else
 	Config::Set('DEFAULT_MODULE', 'Frontpage');
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
-
+	
 	Config::Set('URL_REWRITE', array(	
-									'default'=>array('module', 'page'),
-									'Downloads'=>array('module', 'id'),
-									'Finance'=>array('module', 'page'),
-									'Login'=>array('module', 'page', 'redir'),
-								 	'Logout'=>array('module', 'page', 'redir'),
-									'Pages'=>array('module', 'page'),
-									'PIREPS'=>array('module', 'page', 'id', 'icao'),
-									'Pilots'=>array('module', 'page', 'pilotid'),
-									'Profile'=>array('module', 'page', 'pilotid'),
-									'Schedules'=>array('module', 'page', 'id'),
-									'ACARS'=>array('module', 'page', 'action'),
-									'XML'=>array('module', 'request')));
+				'default'=>array('module', 'page'),
+				'Downloads'=>array('module', 'id'),
+				'Finance'=>array('module', 'page'),
+				'Login'=>array('module', 'page', 'redir'),
+				'Logout'=>array('module', 'page', 'redir'),
+				'Pages'=>array('module', 'page'),
+				'PIREPS'=>array('module', 'page', 'id', 'icao'),
+				'Pilots'=>array('module', 'page', 'pilotid'),
+				'Profile'=>array('module', 'page', 'pilotid'),
+				'Schedules'=>array('module', 'page', 'id'),
+				'ACARS'=>array('module', 'page', 'action'),
+				'XML'=>array('module', 'request')));
 }
-							
+
 /**
  * Constants
  *	Do not modify these! All sorts of weird shit can happen
  */ 
- 
+
 # Set the type of flights we have
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
-									'C'=>'Cargo',
-									'H'=>'Charter'));
-									
+			'C'=>'Cargo',
+			'H'=>'Charter'));
+
 # Set the types of expenses we have
 Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
-									'F'=>'Per Flight'));
-									
+			'F'=>'Per Flight'));
+
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
 define('PIREP_PENDING', 0);
@@ -163,3 +163,9 @@ define('PILOT_REJECTED', 2);
 
 define('LOAD_VARIATION', 5);
 define('SECONDS_PER_DAY', 86400);
+
+
+/*
+ * Library Includes (from 3rd Party)
+ */
+

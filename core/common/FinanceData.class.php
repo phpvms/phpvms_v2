@@ -25,7 +25,7 @@ class FinanceData
 	 * Get the current fuel cost, either use a setting
 	 *  or WE'LL DO IT LIVE!
 	 */
-	public static function GetFuelCost()
+	public static function GetFuelPrice()
 	{
 		# For now
 		return '5.10';

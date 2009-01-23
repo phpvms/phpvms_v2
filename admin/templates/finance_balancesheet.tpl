@@ -75,9 +75,9 @@
 
 <?php
 	/* COUNT EXPENSES */
-	if(!$allexpenses)
+	if(!$allexpenses['allexpenses'])
 	{
-		$allexpenses = array();
+		$allexpenses['allexpenses'] = array();
 		?>
 		<tr>
 		<td align="right">None</td>

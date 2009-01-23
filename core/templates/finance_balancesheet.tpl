@@ -53,9 +53,9 @@
 		$allexpenses = array();
 		?>
 		<tr>
-		<td align="right">None</td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(0));?></td>
-	</tr>
+			<td align="right">None</td>
+			<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(0));?></td>
+		</tr>
 	<?php
 	}
 	

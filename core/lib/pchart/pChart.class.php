@@ -360,6 +360,11 @@
         {
          while(!$ScaleOk)
           {
+			if($this->VMax == $this->VMin)
+			{
+				$this->VMax += 10;
+			}
+				
            $Scale1 = ( $this->VMax - $this->VMin ) / $Factor;
            $Scale2 = ( $this->VMax - $this->VMin ) / $Factor / 2;
            $Scale4 = ( $this->VMax - $this->VMin ) / $Factor / 4;

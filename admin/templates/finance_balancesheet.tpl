@@ -1,13 +1,12 @@
 <?php
-
-/**
+/*
  * DO NOT EDIT THIS TEMPLATE UNLESS:
  *   1. YOU HAVE ALOT OF TIME
  *   2. YOU DON'T MIND LOSING SOME HAIR
  *   3. YOU HAVE BIG BALLS MADE OF STEEL
+ *
+ *	It can cause incontinance
  */
-
-
 ?><?php Template::Show('finance_header.tpl'); ?>
 <h3><?php echo $title?></h3>
 <?php
@@ -144,7 +143,7 @@
 	
 */
 
-$graph = new ChartGraph('pchart', 'pie', 500, 200);
+$graph = new ChartGraph('pchart', 'pie', 600, 400);
 $graph->setTitles('Expenses');
 $graph->AddData($g_expenses_values, $g_expenses_labels);
 echo '<img src="'.$graph->GenerateGraph().'" />'; 
@@ -168,7 +167,7 @@ echo '<img src="'.$graph->GenerateGraph().'" />';
 $g_expenses_values = array($pilotpay_total, $expense_total);
 $g_expenses_labels = array('Pilot Salary','Expenses');
 
-$expense_graph = new ChartGraph('pchart', 'pie3d', 500, 200);
+$expense_graph = new ChartGraph('pchart', 'pie3d', 600, 400);
 $expense_graph->setTitles('Pilot Salary vs Expenses');
 $expense_graph->AddData($g_expenses_values, $g_expenses_labels);
 echo '<img src="'.$expense_graph->GenerateGraph().'" />'; 

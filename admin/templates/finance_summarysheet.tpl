@@ -1,4 +1,13 @@
-<?php Template::Show('finance_header.tpl'); ?>
+<?php
+/*
+ * DO NOT EDIT THIS TEMPLATE UNLESS:
+ *   1. YOU HAVE ALOT OF TIME
+ *   2. YOU DON'T MIND LOSING SOME HAIR
+ *   3. YOU HAVE BIG BALLS MADE OF STEEL
+ *
+ *	It can cause incontinance
+ */
+?><?php Template::Show('finance_header.tpl'); ?>
 <h3><?php echo $title?></h3>
 <?php
 
@@ -12,7 +21,6 @@
 	$months=array();
 	
 ?>
-
 <table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header" style="text-align: center">
@@ -95,7 +103,7 @@ foreach ($allfinances as $month)
  * Show the revenue details graph
  */
 
-$graph = new ChartGraph('pchart', 'line', 500, 300);
+$graph = new ChartGraph('pchart', 'line', 600, 400);
 $graph->AddData($revenue, $months);
 $graph->setTitles('Monthly Revenue', 'Month', 'Revenue');
 echo '<img align="center" src="'.$graph->GenerateGraph().'" />';
@@ -106,7 +114,7 @@ echo '<img align="center" src="'.$graph->GenerateGraph().'" />';
 /*
 	Show the expenses details graph
 */
-$graph = new ChartGraph('pchart', 'line', 500, 300);
+$graph = new ChartGraph('pchart', 'line', 600, 400);
 $graph->AddData($expenses, $months);
 $graph->setTitles('Monthly Expenses', 'Month', 'Expenses');
 echo '<img align="center" src="'.$graph->GenerateGraph().'" />';

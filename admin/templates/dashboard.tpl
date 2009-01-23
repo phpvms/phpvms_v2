@@ -8,8 +8,13 @@ echo $updateinfo;
 <div id="reportcounts" align="center" width="400px" >
 	<?php
 
+	/*$chart = new ChartGraph('pchart', 'line', 500, 150);
+	$chart->setTitles('Total PIREPS');
+	$chart->AddData($reportcounts, $reportcounts);
+	echo '<img src="'.$chart->GenerateGraph().'" />'; */
+
 	# Create the chart
-	$chart = new googleChart(implode(',', $reportcounts), 'line', '', '500x150');
+	$chart = new googleChart(implode(',',$reportcounts), 'line', '', '500x150');
 	$chart->setLabels(implode('|', $reportcounts), 'bottom');
 	echo '<img src="'.$chart->draw(false).'" />';
 	

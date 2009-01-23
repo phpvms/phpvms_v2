@@ -61,8 +61,8 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		if(function_exists('gd_info'))
 		{
 			$this->pChart = new pChart($this->x, $this->y);
-			$this->pChart->setFontProperties(SITE_ROOT.'/lib/fonts/tahoma.ttf', 8);
-			$this->pChart->loadColorPalette(SITE_ROOT.'/core/lib/pchart/tones-2.txt');
+			$this->setFontSize(8);
+			$this->pChart->loadColorPalette(SITE_ROOT.'/core/lib/pchart/tones-7.txt');
 			#$this->pChart->reportWarnings(); 
 			
 			$this->setType($source, $type); 
@@ -70,6 +70,11 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		else
 		
 			$this->pInvalid = true;
+	}
+	
+	public function setFontSize($size=8)
+	{
+		$this->pChart->setFontProperties(SITE_ROOT.'/lib/fonts/tahoma.ttf', $size);
 	}
 		
 	/**
@@ -139,7 +144,6 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 	
 	public function GenerateGraph($filename='')
 	{
-		
 		# Check if GD is installed
 		#	If not, then default to gchart, otherwise use pchart
 		#	
@@ -148,7 +152,6 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 			$this->setType('gchart', $this->orig_type);
 		}		
 			
-		
 		if($this->source == 'pchart')
 		{
 			return $this->pChart($filename);
@@ -164,7 +167,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 	{
 		$pData = new pData;
 		$count = 1;
-			
+	
 		$pData->AddPoint($this->data, 'dataset');
 		$pData->AddPoint($this->labels, 'labels', 'labels');
 		$pData->AddSerie('dataset');
@@ -184,28 +187,34 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		//$this->pCache->GetFromCache($filename,$pData->GetData());
 		
 	  	# Create a "frame"
-		$this->pChart->drawFilledRoundedRectangle(0,0,$this->x,$this->y,5,240,240,240);  
+	  	$this->pChart->drawBackground(255,255,255);
+		$this->pChart->drawFilledRoundedRectangle(0,0,$this->x,$this->y, 5,  255, 255, 255);  
 		$this->pChart->drawRoundedRectangle(5,5,$this->x-5,$this->y-5,5,230,230,230);
 		
 		if($this->type == 'pie')
 		{
-			$this->pChart->drawBasicPieGraph($pData->GetData(), $pData->GetDataDescription(),150,90,70,PIE_PERCENTAGE);  
-			$this->pChart->drawPieLegend($this->x-200,30,$pData->GetData(),$pData->GetDataDescription(),250,250,250);
+			$this->pChart->loadColorPalette('tones-1.txt');
+			$this->pChart->drawBasicPieGraph($pData->GetData(), $pData->GetDataDescription(), 200, 200, 120, PIE_PERCENTAGE);  
+			$this->pChart->drawPieLegend($this->x-150,30,$pData->GetData(),$pData->GetDataDescription(),250,250,250);
 		}
 		elseif($this->type == 'pie3d')
 		{			
-			$this->pChart->drawPieGraph($pData->GetData(), $pData->GetDataDescription(),150,90,70,PIE_PERCENTAGE,TRUE,50,20,5);
-			$this->pChart->drawPieLegend($this->x-200,30,$pData->GetData(),$pData->GetDataDescription(),250,250,250);
+			$this->pChart->loadColorPalette('tones-1.txt');
+			$this->pChart->drawPieGraph($pData->GetData(), $pData->GetDataDescription(), 200, 200, 120, PIE_PERCENTAGE, true);
+			$this->pChart->drawPieLegend($this->x-150,30,$pData->GetData(),$pData->GetDataDescription(),250,250,250);
 		}
 		elseif($this->type == 'line')
 		{  		
 			$this->pChart->setGraphArea(90, 30, $this->x-30, $this->y-50);  
-			$this->pChart->drawScale($pData->GetData(), $pData->GetDataDescription(),SCALE_START0,0,0,0);  
+			$this->pChart->drawScale($pData->GetData(), $pData->GetDataDescription(), SCALE_START0, 0, 0, 0, true); 
+			#@$this->pChart->drawXYScale($pData->GetData(), $pData->GetDataDescription(), SCALE_START0, 0, 0, 0, true); 
 			$this->pChart->drawTreshold(0,143,55,72,TRUE,TRUE);  
 			$this->pChart->drawGrid(4,TRUE);
 			
 			#$this->pChart->drawLegend(90,35,$pData->GetDataDescription(),255,255,255); 
-			$this->pChart->drawLineGraph($pData->GetData(), $pData->GetDataDescription()); 
+			$this->pChart->drawFilledLineGraph($pData->GetData(), $pData->GetDataDescription(), 20, true); 
+			
+			//$this->pChart->drawCubicCurve($pData->GetData(), $pData->GetDataDescription()); 
 			$this->pChart->drawPlotGraph($pData->GetData(),$pData->GetDataDescription()); 
 		}
 		elseif($this->type = 'bar')
@@ -213,6 +222,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 			$this->pChart->drawBarGraph($pData->GetData(),$pData->GetDataDescription(),TRUE);
 		}
 			
+		$this->setFontSize(10);
 		$w = strlen($this->chart_title)*1.5;
 		@$this->pChart->drawTitle(0,20,$this->chart_title,0,0,0, $this->x);
 		

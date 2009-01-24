@@ -1,4 +1,12 @@
 <h3><?php echo $title?></h3>
+
+<?php
+	if(!$allpilots)
+	{
+		echo 'There are no pilots!';
+		return;
+	}
+?>
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
@@ -7,8 +15,6 @@
 	<th>Rank</th>
 	<th>Flights</th>
 	<th>Hours</th>
-	<th>Field 1</th>
-	<th>Field 2</th>
 </tr>
 </thead>
 <tbody>
@@ -40,13 +46,8 @@ foreach($allpilots as $pilot)
 	<td><img src="<?php echo $pilot->rankimage?>" alt="<?php echo $pilot->rank;?>" /></td>
 	<td><?php echo $pilot->totalflights?></td>
 	<td><?php echo $pilot->totalhours?></td>
-	<td><?php echo PilotData::GetFieldValue($pilot->pilotid, 'VATSIM ID');?></td>
-	<td><?php echo PilotData::GetFieldValue($pilot->pilotid, 'My face');?></td>
-</tr>
 <?php
 }
 ?>
 </tbody>
 </table>
-
-<?php echo "Total number of queries: ".DB::$DB->num_queries ?>

@@ -65,6 +65,6 @@ class Util
 					"Content-Transfer-Encoding: base64\r\n\r\n";
 		$headers .= chunk_split(base64_encode($message));
 
-		mail($email, $subject, '', $headers);
+		@mail($email, $subject, '', $headers);
 	}
 }

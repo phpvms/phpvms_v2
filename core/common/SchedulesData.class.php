@@ -674,7 +674,7 @@ class SchedulesData
 		return true;
 	}
 	
-	public static function GetScheduleFlownCounts($code, $flightnum, $days=30)
+	public static function GetScheduleFlownCounts($code, $flightnum, $days=7)
 	{
 		$max = 0;
 		
@@ -690,9 +690,6 @@ class SchedulesData
 			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $time_start);
 			$data[] = $count;			
 			
-			if($count > $max)
-				$max = $count;
-				
 			$timestart += SECONDS_PER_DAY;
 			
 		}  while ($time_start < $time_end);

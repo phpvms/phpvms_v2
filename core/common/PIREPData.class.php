@@ -139,8 +139,9 @@ class PIREPData
 	 */
 	public static function GetReportCountForRoute($code, $flightnum, $date)
 	{
+		$MonthYear = date('mY', $date);
 		$sql = "SELECT COUNT(*) AS count FROM ".TABLE_PREFIX."pireps
-					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME($date))
+					WHERE DATE_FORMAT(submitdate, '%c%Y') = '$MonthYear'
 						AND code='$code' AND flightnum='$flightnum'";
 
 		$row = DB::get_row($sql);

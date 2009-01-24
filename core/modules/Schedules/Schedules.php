@@ -57,15 +57,17 @@ class Schedules extends CodonModule
 			case 'details':
 				
 				$routeid = $this->get->id;
-				if(preg_match('/^([A-Za-z]{3})(\d*)/', $routeid, $matches) > 0)
+				
+				if(!is_numeric($routeid))
 				{
+					preg_match('/^([A-Za-z]{3})(\d*)/', $routeid, $matches);
 					$routeid = $matches[2];
 				}
 				
 				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 							
 				Template::Set('schedule', $scheddata);
-				Template::Set('scheddata', SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum, 30)); // past 30 days
+				//Template::Set('scheddata', SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum)); // past 30 days
 				
 				Template::Show('schedule_details.tpl');
 				Template::Show('route_map.tpl');

@@ -16,9 +16,20 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
+
+/**
+ * This class is the model for the Downloads
+ *
+ */
 class DownloadData
 {
 	
+	/**
+	 * Get all of the categories for the downloads
+	 *
+	 * @return array Returns all of hte categories
+	 *
+	 */
 	public static function GetAllCategories()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'downloads
@@ -27,6 +38,14 @@ class DownloadData
 		return DB::get_results($sql);
 	}
 	
+	
+	/**
+	 * Return as asset (category or download)
+	 *
+	 * @param int $id ID of the asset (ID column)
+	 * @return array Asset data row
+	 *
+	 */
 	public static function GetAsset($id)
 	{
 		$id = DB::escape($id);
@@ -37,6 +56,14 @@ class DownloadData
 		return DB::get_row($sql);
 	}
 	
+	
+	/**
+	 * Find a category given the name
+	 *
+	 * @param string $categoryname Category name
+	 * @return array Category row
+	 *
+	 */
 	public static function FindCategory($categoryname)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'downloads
@@ -45,6 +72,14 @@ class DownloadData
 		return DB::get_row($sql);
 	}
 
+	
+	/**
+	 * Get all of the downloads in a certain category
+	 *
+	 * @param int $categoryid the ID of the category
+	 * @return array Array of objects of all the downloads
+	 *
+	 */
 	public static function GetDownloads($categoryid)
 	{
 		if($categoryid == '')	return false;

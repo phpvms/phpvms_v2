@@ -303,13 +303,12 @@ Thanks!
 		
 		# Send pilot notification
 		
-		$subject = 'Your registration was accepted - '.SITE_NAME;
+		$subject = 'Your registration was denied - '.SITE_NAME;
 		$message = "Dear $pilot->firstname $pilot->lastname,
-				Your registration for ".SITE_NAME." was accepted! Please visit us 
-				at <a href=\"".SITE_URL."\">".SITE_URL."</a> to login and complete your registration
+Your registration for ".SITE_NAME." was denied. Please contact an admin at <a href=\"".SITE_URL."\">".SITE_URL."</a> to dispute this. 
 				
-				Thanks!
-				".SITE_NAME." Staff";
+Thanks!
+".SITE_NAME." Staff";
 		
 		Util::SendEmail($pilot->email, $subject, $message);
 		

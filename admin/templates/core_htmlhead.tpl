@@ -1,5 +1,8 @@
+<script type="text/javascript">
+var baseurl="<?php echo SITE_URL;?>";
+var geourl="<?php echo GEONAME_URL; ?>";
+</script>
 <?php
-
 $files = array(	'jqModal.js',
 				'jquery.form.js', 
 				'jquery.bigiframe.js',

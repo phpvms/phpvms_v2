@@ -678,8 +678,8 @@ class SchedulesData
 	{
 		$max = 0;
 		
-		$time_start = strtotime("- $days days");
-		$time_end = time();
+		$start = strtotime("- $days days");
+		$end = time();
 		$data = array();
 				
 		# Turn on caching:		
@@ -687,12 +687,15 @@ class SchedulesData
 			
 		do 
 		{	
-			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $time_start);
-			$data[] = $count;			
+			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $start);
+			//DB::debug();
+			$date = date('m Y', $start);
 			
-			$timestart += SECONDS_PER_DAY;
+			$data[$date] = $count;			
 			
-		}  while ($time_start < $time_end);
+			$start += SECONDS_PER_DAY;
+			
+		}  while ($start < $end);
 		
 		DB::disableCache();
 		

@@ -188,7 +188,7 @@ function lookupICAO()
 	$("#statusbox").html("Fetching airport data...");
 	$("#lookupicao").hide();
 	
-	$.getJSON("http://ws.geonames.org/searchJSON?style=medium&maxRows=10&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
+	$.getJSON(geourl+"/searchJSON?style=medium&maxRows=10&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
 		function(data){
 		
 		 //$("#airportname").autocomplete(data.geonames);

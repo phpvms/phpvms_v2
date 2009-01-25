@@ -16,6 +16,7 @@ Template::Show('core_htmlhead.tpl');
 ?>
 <script type="text/javascript">
 var baseurl="<?php echo SITE_URL;?>";
+var geourl="<?php echo GEONAME_URL; ?>";
 </script>
 <link href="<?php echo SITE_URL?>/admin/lib/layout/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>

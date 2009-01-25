@@ -26,6 +26,14 @@ class ACARSData extends CodonModule
 								   'arrapt', 'deptime', 'arrtime', 'distremain', 'timeremaining',
 								   'phasedetail', 'online', 'messagelog');
 	
+	
+	/**
+	 * This updates the ACARS live data for a pilot
+	 *
+	 * @param mixed $data This is the data structure with flight properties
+	 * @return mixed Nothing
+	 *
+	 */
 	public static function UpdateFlightData($data)
 	{
 		if(!is_array($data))
@@ -140,8 +148,14 @@ class ACARSData extends CodonModule
 		return true;
 	}
 	
+	
 	/**
-	 * Handle PIREP filing functions
+	 * File a PIREP from an ACARS program
+	 *
+	 * @param mixed $pilotid The pilot ID of the pilot filing the PIREP
+	 * @param mixed $data This is the data structure with the PIREP info
+	 * @return bool true/false
+	 *
 	 */
 	public static function FilePIREP($pilotid, $data)
 	{
@@ -179,9 +193,14 @@ class ACARSData extends CodonModule
 		
 		return true;
 	}
+
 	
 	/**
-	 * Get all of the current ACARS data
+	 * This returns all of the current ACARS flights within the cutoff
+	 *
+	 * @param int $cutofftime This is the cut-off time in hours (12 hours return in)
+	 * @return array Returns an array of objects with the ACARS data
+	 *
 	 */
 	public static function GetACARSData($cutofftime = '')
 	{

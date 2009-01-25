@@ -3,7 +3,6 @@
 $files = array(	'jqModal.js',
 				'jquery.form.js', 
 				'jquery.bigiframe.js',
-				'jquery.sparklines.js',
 				'jquery.tablesorter.pack.js',
 				'jquery.tablesorter.pager.js', 
 				'jquery.metadata.js', 

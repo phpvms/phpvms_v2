@@ -67,7 +67,7 @@ class Schedules extends CodonModule
 				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 							
 				Template::Set('schedule', $scheddata);
-				//Template::Set('scheddata', SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum)); // past 30 days
+				Template::Set('scheddata', SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum)); // past 30 days
 				
 				Template::Show('schedule_details.tpl');
 				Template::Show('route_map.tpl');
@@ -96,7 +96,7 @@ class Schedules extends CodonModule
 				}
 				
 				SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
-				DB::debug();
+				//DB::debug();
 				
 				CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
 				

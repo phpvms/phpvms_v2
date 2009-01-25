@@ -10,7 +10,6 @@ var urlbase = "<?php echo SITE_URL?>";
 </script>
 <?php
 $files = array(	'jquery.form.js',
-				'jquery.sparklines.js',
 				'jquery-ui.js');
 				
 # Build a condensed version of the above files

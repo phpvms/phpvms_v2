@@ -164,8 +164,8 @@ define('PILOT_REJECTED', 2);
 define('LOAD_VARIATION', 5);
 define('SECONDS_PER_DAY', 86400);
 
+define('GEONAME_URL', 'http://ws.geonames.org');
 
 /*
  * Library Includes (from 3rd Party)
  */
-

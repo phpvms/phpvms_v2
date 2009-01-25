@@ -26,11 +26,12 @@ class Auth
 	public static $userinfo;
 	public static $usergroups;
 	
+	
 	/**
-	 * Constructor.  
+	 * Start the "auth engine", see if anyone is logged in and grab their info
 	 *
-	 * @param 
-	 * @return 
+	 * @return mixed This is the return value description
+	 *
 	 */
 	public function StartAuth() 
 	{	
@@ -55,8 +56,12 @@ class Auth
 		}
 	}
 	
+	
 	/**
-	 * Return the current pilot's ID
+	 * Return the pilot ID of the currently logged in user
+	 *
+	 * @return int The pilot's ID
+	 *
 	 */
 	public function PilotID()
 	{

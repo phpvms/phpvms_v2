@@ -14,15 +14,20 @@ if($schedule->route!='')
 <div id="<?php echo $schedule->depicao ?>" class="metar">Getting current METAR information for <?php echo $schedule->depicao ?></div>
 <div id="<?php echo $schedule->arricao ?>" class="metar">Getting current METAR information for <?php echo $schedule->arricao ?></div>
 <br />
-<?php
-/*
 <strong>Schedule Frequency</strong>
-<div id="schedgraph" align="center">Loading graph...</div>
-</div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#schedgraph").sparkline([<?php echo implode(',', $scheddata); ?>], {width: '90%', height: '75px'}); 
-});
-</script>
-*/
+
+<?php
+	$data = array();
+	$labels = array();
+	
+	foreach($scheddata as $month=>$count)
+	{
+		$data[] = $count;
+		$labels[] = $month;
+	}
+	
+	$chart = new ChartGraph('gchart', 'ls', 600, 150);
+	$chart->AddData($data, $labels);
+	
+	echo '<img align="center" src="'.$chart->GenerateGraph().'" />';
 ?>

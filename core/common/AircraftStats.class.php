@@ -19,14 +19,20 @@
 class AircraftStats
 {
 	
-	public static function getAircraftDistances()
+	
+	/**
+	 * Return summary/detailed information about all aircraft
+	 *
+	 * @return array Array of objects with the flight data
+	 *
+	 */
+	public static function getAircraftDetails()
 	{
-		$sql = 'SELECT a.name, 
-					   a.fullname,
-					   a.registration,
-					   a.icao,
+		$sql = 'SELECT a.*,
 					   SUM(p.distance) AS totaldistance,
-					   SUM(p.flighttime) AS totaltime
+					   SUM(p.flighttime) AS totaltime,
+					   AVG(p.distance) AS averagedistance,
+					   AVG(p.flighttime) as averagetime
 				  FROM   '.TABLE_PREFIX.'pireps p
 					INNER JOIN '.TABLE_PREFIX.'aircraft a
 						ON (p.aircraft = a.registration)

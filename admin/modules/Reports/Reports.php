@@ -47,19 +47,15 @@ class Reports extends CodonModule
 				
 				break;
 				
-			case 'financials':
-				
-				echo '<h3>Coming soon!</h3>';
-				
-				break;
-			
 			case 'aircraft':
 				
 				echo '<h3>Coming soon!</h3>';
 				
-				$stats = AircraftStats::getAircraftDistances();
+				$stats = AircraftStats::getAircraftDetails();
 				
-				DB::debug();
+				Template::Set('aircraftstats', $stats);
+				
+				Template::Show('reports_aircraft.tpl');
 				
 				break;
 		}

@@ -308,9 +308,32 @@ class PilotData
 	 * After a PIREP been accepted, update their statistics
 	 */
 	public static function UpdateFlightData($pilotid, $flighttime, $numflights=1)
-	{
+	{	
+		# Update the flighttime
+		$pilotdata = PilotData::GetPilotData($pilotid);		
+		$flighttime = $pilotdata->totalhours + $flighttime;
+	
+		/* Blow it apart, see if the minutes are greater
+			than 60, if they are, subtract 60, and then
+			add one to the hour
+		 */
+		$parts = explode('.', $flighttime);
+		$hours = $parts[0];
+		$mins = $parts[1];
+		if(strlen($mins)==1)
+			$mins *= 10;
+		
+		if($mins >= 60)
+		{
+			$mins -= 60;
+			$hours++;
+		}
+		
+		$flighttime = $hours.'.'.$mins;
+	
+		
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=totalhours+$flighttime,
+					SET totalhours=$flighttime,
 						totalflights=totalflights+$numflights
 					WHERE pilotid=$pilotid";
 		
@@ -354,6 +377,9 @@ class PilotData
 						
 		$payrate = DB::get_row($sql);
 		$payrate = $payrate->payrate;
+		
+		# Convert the hours to fractions
+		$flighthours = ($flighthours/60)*100;
 		
 		$payupdate = floatval($flighthours * $payrate);
 		

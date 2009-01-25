@@ -310,7 +310,7 @@ class OperationsData
 	 
 	public static function RetrieveAirportInfo($icao)
 	{
-		$url = 'http://ws.geonames.org/search?maxRows=1&featureCode=AIRP&q=';
+		$url = GEONAME_URL.'/search?maxRows=1&featureCode=AIRP&q=';
 		
 		$reader = simplexml_load_file($url.$icao);
 		if($reader->totalResultsCount == 0 || !$reader)

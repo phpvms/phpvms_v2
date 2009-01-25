@@ -104,50 +104,19 @@ class Import extends CodonModule
 					}
 					
 					// Make sure airports exist:
-					$url = 'http://ws.geonames.org/search?maxRows=1&featureCode=AIRP&q=';
 					if(!($depapt = OperationsData::GetAirportInfo($depicao)))
 					{
-						# Add the airport if it doesn't exist
-						echo "ICAO $depicao not added... retriving information: <br />";
+						echo "ICAO $depicao not added... retriving information: <br />";						
+						$aptinfo = OperationsData::RetrieveAirportInfo($depicao);
 						
-						$reader = simplexml_load_file($url.$depicao);
-						if($reader->totalResultsCount == 0 || !$reader)
-						{
-							echo "Could not retrieve information about $depicao, try again, skipping for now... <br /><br />";
-							continue;
-						}
-						else
-						{
-							echo "Found: $depicao - ".$reader->geoname->name
-									.' ('.$reader->geoname->lat.','.$reader->geoname->lng.'), airport added<br /><br />';
-
-							// Add the AP
-							OperationsData::AddAirport($depicao, $reader->geoname->name, $reader->geoname->countryName,
-										$reader->geoname->lat, $reader->geoname->lng, false);
-						}
+						echo "Found: $depicao - ".$aptinfo->name
+							.' ('.$aptinfo->lat.','.$aptinfo->lng.'), airport added<br /><br />';
 					}
 					
 					if(!($arrapt = OperationsData::GetAirportInfo($arricao)))
 					{
 						echo "ICAO $arricao not added... retriving information: <br />";
-						
-						$reader = simplexml_load_file($url.$arricao);
-						if($reader->totalResultsCount == 0 || !$reader)
-						{
-							echo "Could not retrieve information about $arricao, try again, skipping for now...<br /><br />";
-							continue;
-						}
-						else
-						{
-							echo "Found: $depicao - ".$reader->geoname->name
-									.' ('.$reader->geoname->lat.','.$reader->geoname->lng.'), airport added<br /><br />';
-									
-							// Add the AP
-							OperationsData::AddAirport($arricao, $reader->geoname->name, 
-										$reader->geoname->countryName,
-										$reader->geoname->lat, $reader->geoname->lng, false);
-						}
-						
+						$aptinfo = OperationsData::RetrieveAirportInfo($arricao);						
 					}
 					
 					# Check the aircraft
@@ -160,9 +129,7 @@ class Import extends CodonModule
 						echo 'Aircraft "'.$aircraft.'" does not exist! Skipping<br />';
 						continue;
 					}
-										
 					$ac = $ac_info->id;
-					
 					
 					if($flighttype == '')
 					{

@@ -70,7 +70,7 @@ ul li ul {
   &nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 <p class="header"><em>Last Update:
-<!-- #BeginDate format:Am1 -->January 22, 2009<!-- #EndDate -->
+<!-- #BeginDate format:Am1 -->January 24, 2009<!-- #EndDate -->
   </em><br />
 </p>
 <hr />
@@ -115,22 +115,22 @@ ul li ul {
 			<li>Fuel costs are taken into account</li>
 			<li>Graphs, charts of average prices, expenses, fuel prices</li>
 			<li>Monthly expense breakdown</li>
-			<li>Yearly totals breakdown</li>
+			<li>Yearly summary breakdown</li>
         </ul>
       </ul>
     </ul>
 </li>
+  <li>Flight leg removed (if you&#39;re using legs now, it&#39;s just ignored)</li>
   <li> Enabled/disable aircraft (retirement)</li>
-  <li>Add &quot;value&quot; factor to aircraft, to count as part of your &quot;Net Worth&quot;</li>
   
   <li>Revamped and reorganized Admin Panel</li>
-  <li>Backend optimizations, Javascript trimmed down, including:</li>
+  <li>Backend optimizations, Javascript trimmed down, libraries removed.</li>
+  <li>New Javascript condensor to reduce HTTP requests (marked speed improvement)</li>
     <li>Update to jQuery 1.3.0/1.3.1 - includes many optimizations&nbsp;&nbsp;&nbsp;
 	</li>
-  <li>Dashboard now shows news from the main site</li>
-	<li>Flight leg removed (if you&#39;re using legs now, it&#39;s just removed)</li>
+  <li>Admin Dashboard now shows news from the main site</li>
 	<li>Distance for flights can be automatically calculated</li>
-	<li>PIREPs ask for fuel used</li>
+	<li>PIREPs ask for fuel used, required field. Automatically taken from FSACARS/FSPAX</li>
   <li>FSACARS retrieves flight information from most recent bid</li>
   <li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
   <li> You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
@@ -171,14 +171,14 @@ Config::Set('MONEY_UNIT', '$');
 
 	For example:
 		Config::Set('MONEY_UNIT', '&amp;#8364;'); // For Euro
-        </pre>
+
+There are also various settings for FSPAX, please make sure those are proper       </pre>
 <p><strong>Template Changes:</strong></p>
 <p>Added:</p>
 <pre><em>
-contact_form.tpl </em>- The contact form. Any extra fields added here will also be emailed<em>
+core_htmlhead.tpl </em>- Revert to the default one<em><br />contact_form.tpl </em>- The contact form. Any extra fields added here will also be emailed<em>
 downloads_list.tpl </em>- Shows the main list of categories and downloads
-<em>download_item.tpl</em> - This is the &quot;Downloading Now&quot; page
-</pre>
+<em>download_item.tpl</em> - This is the &quot;Downloading Now&quot; page<br />finance_balancesheet.tpl - BEWARE. Try NOT to edit this one<br />finance_header.tpl - Same as above<br />finance_summarysheet.tpl - Same as above</pre>
 <p>Changed:</p>
 <pre>profile_main.tpl - Added link to download page, financials, and FSPassengers config link:
 
@@ -192,10 +192,9 @@ downloads_list.tpl </em>- Shows the main list of categories and downloads
 
 	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL?&gt;/action.php/acars/fspaxconfig&quot;&gt;Download FSPax Config&lt;/li&gt;</em>
 
-schedule_details.tpl - Javascript change (at bottom), replace the &lt;script type=&quot;text/javascript&quot;&gt;...&lt;/script&gt; portion
+schedule_details.tpl - Chart change
 
 pirep_new.tpl - Added &quot;Fuel Used&quot; field, and removed flight leg field 
-
 </pre>
 <hr />
 <h1>Build 458 (Version 1.1.458)</h1>

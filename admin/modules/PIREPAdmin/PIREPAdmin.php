@@ -230,8 +230,7 @@ class PIREPAdmin extends CodonModule
 		{
 			PilotData::UpdateFlightData($pirep_details->pilotid, -1 * floatval($pirep->flighttime), -1);
 		}
-		
-		//RanksData::CalculatePilotRanks();
+
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 		
 		// Send comment for rejection

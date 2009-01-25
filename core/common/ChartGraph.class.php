@@ -52,24 +52,35 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 	public $x;
 	public $y;
 	
-	public function __construct($source, $type, $x, $y)
+	
+	/**
+	 * Constructor for chart graph
+	 *
+	 * @param string $source "pchart" or "gchart" (to use Google Chart)
+	 * @param string $type Type of graph (view function to see options)
+	 * @param int $width width
+	 * @param int $height Height
+	 * @return object Returns chart object
+	 *
+	 */
+	public function __construct($source, $type, $width, $height)
 	{
 		$this->data = array();
-		$this->x = $x;
-		$this->y = $y;		
+		$this->x = $width;
+		$this->y = $height;		
 		
 		if(function_exists('gd_info'))
 		{
 			$this->pChart = new pChart($this->x, $this->y);
 			$this->setFontSize(8);
 			$this->pChart->loadColorPalette(SITE_ROOT.'/core/lib/pchart/tones-7.txt');
-			#$this->pChart->reportWarnings(); 
-			
-			$this->setType($source, $type); 
+			#$this->pChart->reportWarnings();
 		}
-		else
-		
+		else		
 			$this->pInvalid = true;
+			
+			
+		$this->setType($source, $type); 
 	}
 	
 	public function setFontSize($size=8)
@@ -113,7 +124,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 			elseif($type == 'pie3d')
 				$this->type = 'p3';
 			else			
-				$this->type = 'barx';
+				$this->type = $type;
 		}
 		else
 		{
@@ -135,7 +146,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$this->y = $height;
 	}
 	
-	public function AddData($data, $x_labels, $y_labels='')
+	public function AddData($data, $x_label='', $y_labels='')
 	{
 		//$data = array('data'=>$data, 'x_labels'=>$x_labels, 'y_labels'=>$y_labels);
 		$this->data = $data;
@@ -244,8 +255,8 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		# Loop through every set data
 		foreach($this->data as $set)
 		{
-			$values = implode(',', $set['data']);
-			$labels = implode('|', $set['x_labels']);		
+			$values = @implode(',', $set['data']);
+			$labels = @implode('|', $set['x_labels']);		
 	
 			$chart->loadData($values);
 			$chart->setLabels($labels, 'bottom');

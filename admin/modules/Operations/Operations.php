@@ -96,6 +96,13 @@ class Operations extends CodonModule
 				
 				break;
 				
+				
+			case 'calculatedistance':
+			
+				echo OperationsData::getAirportDistance($this->get->depicao, $this->get->arricao);
+				
+				break;
+				
 			
 			/**
 			 * These are the main form
@@ -461,6 +468,12 @@ class Operations extends CodonModule
 		}
 		
 		$enabled = ($_POST['enabled'] == 'on') ? true : false;
+		
+		# Check the distance
+		if($this->post->distance == '' || $this->post->distance == 0)
+		{
+			$this->post->distance = OperationsData::getAirportDistance($this->post->depicao, $this->post->arricao);
+		}
 
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,

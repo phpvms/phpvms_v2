@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td width="3%" nowrap><strong>Departure Airport:</strong></td>
-	<td><select name="depicao">
+	<td><select name="depicao" id="depicao">
 		<?php
 		foreach($allairports as $airport)
 		{
@@ -54,7 +54,7 @@
 </tr>
 <tr>
 	<td><strong>Arrival Airport:</strong></td>
-	<td><select name="arricao">
+	<td><select name="arricao" id="arricao">
 		<?php
 		foreach($allairports as $airport)
 		{
@@ -86,12 +86,15 @@
 	</td>
 </tr>
 <tr>
-	<td><strong>Distance:</strong> </td>
-	<td><input type="text" name="distance" value="<?php echo $schedule->distance?>" /></td>
+	<td valign="top"><strong>Distance:</strong> </td>
+	<td><input type="text" name="distance" id="distance" value="<?php echo $schedule->distance?>" />
+		<p><a href="#" onclick="calcDistance(); return false;">Calculate Distance</a>. Leaving blank or 0 (zero) will automatically calculate the distance.</p></td>
 </tr>
 <tr>
-	<td><strong>Flight Time:</strong> </td>
-	<td><input type="text" name="flighttime" value="<?php echo $schedule->flighttime?>" /></td>
+	<td valign="top"><strong>Flight Time:</strong> </td>
+	<td><input type="text" name="flighttime" value="<?php echo $schedule->flighttime?>" />
+	<p>Please enter as HH:MM</p>
+	</td>
 </tr>
 <tr>
 	<td><strong>Equipment: </strong></td>

@@ -140,7 +140,7 @@ class OperationsData
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
 								WHERE `id`=\''.$id.'\'');
-	}
+	}	
 	
 	/**
 	 * Add an airline
@@ -305,6 +305,24 @@ class OperationsData
 					WHERE `icao`=\''.$icao.'\'';
 		
 		return DB::get_row($sql);
+	}
+	
+	
+	/**
+	 * Get the distance between two airports
+	 *
+	 * @param string $depicao ICAO of the departure airport
+	 * @param string $arricao ICAO of the destination airport
+	 * @return int The distance
+	 *
+	 */
+	public static function getAirportDistance($depicao, $arricao)
+	{
+		
+		$dep = self::GetAirportInfo($depicao);
+		$arr = self::GetAirportInfo($arricao);
+		
+		return SchedulesData::distanceBetweenPoints($dep->lat, $dep->lng, $arr->lat, $arr->lng);	
 	}
 	
 	/**

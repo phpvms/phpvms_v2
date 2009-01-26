@@ -60,6 +60,15 @@ function reloadGroups()
 	});
 }
 
+function calcDistance()
+{
+     $("#distance").val("Calculating...");
+    $.get(baseurl+"/admin/action.php/operations/calculatedistance", {depicao: $("#depicao").val(), arricao: $("#arricao").val()},
+    function (data){
+        $("#distance").val(data);
+    });
+}
+
 
 $(document).ready(function() 
 { 		

@@ -62,13 +62,22 @@ class SchedulesData
 		return DB::get_row($sql);		
 	}
 	
-	public static function IncrementFlownCount($schedid)
+	
+	/**
+	 * Increment the flown count for a schedule
+	 *
+	 * @param string $code Airline code
+	 * @param int $flightnum Flight number
+	 * @return bool 
+	 *
+	 */
+	public static function IncrementFlownCount($code, $flightnum)
 	{
 		$schedid = intval($schedid);
 		
-		$sql = 'UPDATE '.TABLE_PREFIX.'schedules 
+		$sql = 'UPDATE '.TABLE_PREFIX."schedules 
 					SET timesflown=timesflown+1
-					WHERE id='.$schedid;
+					WHERE code='{$code}' AND flightnum='{$flightnum}'";
 		
 		$res = DB::query($sql);
 		
@@ -78,6 +87,14 @@ class SchedulesData
 		return true;
 	}
 	
+	
+	/**
+	 * Get detailed information about a schedule 
+	 *
+	 * @param int $id ID of the schedule
+	 * @return array Schedule details
+	 *
+	 */
 	public static function GetScheduleDetailed($id)
 	{
 		$limit = DB::escape($limit);
@@ -96,7 +113,10 @@ class SchedulesData
 	
 	
 	/**
-	 * Return all schedules which have no distance value
+	 * Return a list of schedules which have no distance, or a distance of 0
+	 *
+	 * @return array 
+	 *
 	 */
 	public static function GetSchedulesNoDistance()
 	{
@@ -142,6 +162,7 @@ class SchedulesData
 	 * Get all of the airports which have a schedule, from
 	 *	a certain airport, using the airline code. Code
 	 *	is optional, otherwise it returns all of the airports.
+	 * 
 	 * @return database object
 	 */
 	public static function GetArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
@@ -321,6 +342,7 @@ class SchedulesData
 	 * Using a revised equation found on http://www.movable-type.co.uk/scripts/latlong.html
 	 * 
 	 * Also converts to proper type based on UNIT setting
+	 *
 	 */
 	public static function distanceBetweenPoints($lat1, $lon1, $lat2, $lon2)
 	{
@@ -416,10 +438,7 @@ class SchedulesData
 						
 		if($data['depicao'] == $data['arricao'])
 			return false;
-		
-		/*if($data['leg'] == '' || $data['leg'] == '0')
-			$data['leg'] = 1;*/
-			
+					
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		

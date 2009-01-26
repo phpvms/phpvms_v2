@@ -62,7 +62,7 @@ class PIREPS extends CodonModule
 					echo '<p>This PIREP does not exist!</p>';
 					return;
 				}
-
+				
 				Template::Set('pirep', $pirep);
 				Template::Set('fields', PIREPData::GetFieldData($pirepid));
 				Template::Set('comments', PIREPData::GetComments($pirepid));

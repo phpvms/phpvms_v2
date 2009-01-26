@@ -405,7 +405,7 @@ class PIREPData
 		$sub = 'PIREP Submitted';
 		$message = 'A PIREP has been submitted';
 		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
-		SchedulesData::IncrementFlownCount($sched->id);
+		SchedulesData::IncrementFlownCount($pirepdata['code'], $pirepdata['flightnum']);
 		
 		DB::$insert_id = $pirepid;
 		

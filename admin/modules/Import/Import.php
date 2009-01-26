@@ -136,6 +136,15 @@ class Import extends CodonModule
 						$flighttype = 'P';
 					}
 					
+					
+					
+					# Check the distance
+					
+					if($distance == 0 || $distance == '')
+					{
+						$distance = OperationsData::getAirportDistance($depicao, $arricao);
+					}
+					
 					$flighttype = strtoupper($flighttype);
 					
 					# This is our 'struct' we're passing into the schedule function

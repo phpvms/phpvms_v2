@@ -336,7 +336,7 @@ class PIREPData
 		# Get the fuelprice
 		if($pirepdata['fuelprice'] == '')
 		{
-			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice();
+			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice($pirepdata['fuelused'], $pirepdata['depicao']);
 		}
 		
 		# Escape the comment field

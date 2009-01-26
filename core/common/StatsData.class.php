@@ -57,10 +57,10 @@ class StatsData
 		do
 		{
 			# Get the months
-			$year = date('Y', ($start += (SECONDS_PER_DAY * 29)));
-			
+			$year = date('Y', $start);
 			# Set the timestamp
 			$years[$year] = $start; 
+			$start += SECONDS_PER_DAY * 29;		
 			
 		} while ( $start < $end ); 
 		
@@ -82,10 +82,13 @@ class StatsData
 		do
 		{
 			# Get the months
-			$month = date('M Y', ($start += (SECONDS_PER_DAY * 29)));
+			$month = date('M Y', $start);
 			
 			# Set the timestamp
 			$months[$month] = $start; 
+			
+			# Add a month
+			$start += SECONDS_PER_DAY * 29;
 			
 		} while ( $start < $end ); 
 
@@ -111,14 +114,15 @@ class StatsData
 			Loop through, adding one month to $start each time
 		*/		
 		do
-		{
-			# Move it up a month
-			$start += (SECONDS_PER_DAY * 29);				
+		{			
 			# Get the month +
 			$month = date('M Y', $start);
 			
 			# Set the timestamp
 			$months[$month] = $start;
+			
+			# Move it up a month
+			$start += (SECONDS_PER_DAY * 29);
 			
 		} while ( $start < $end ); 
 		

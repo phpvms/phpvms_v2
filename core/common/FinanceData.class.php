@@ -192,7 +192,7 @@ class FinanceData
 		# %Y/$Year = Full Year (XXXX)
 		$MonthYear = date('mY', $timestamp);
 		
-		$where_sql = " WHERE DATE_FORMAT(submitdate, '%c%Y') = '$MonthYear'";	
+		$where_sql = " WHERE DATE_FORMAT(p.`submitdate`, '%m%Y') = '$MonthYear'";	
 		
 		return self::CalculatePIREPS($where_sql);
 	}
@@ -239,8 +239,10 @@ class FinanceData
 					   ROUND(SUM(p.`expenses`)) AS FlightExpenses,
 					   ROUND(SUM(p.`fuelprice`)) AS FuelCost
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
-		
+					
 		return DB::get_row($sql);
+		DB::debug();
+		return $ret;
 	}	
 	
 	/**

@@ -58,7 +58,7 @@ class Finance extends CodonModule
 					
 					$data = FinanceData::GetMonthBalanceData($period);
 					
-					Template::Set('title', 'Balance Sheet for '.$data['title']);
+					Template::Set('title', 'Balance Sheet for '.$period);
 					/*Template::Set('pirepfinance', $data['pirepfinance']);
 					Template::Set('allexpenses', $data['allexpenses']);
 					Template::Set('totalexpenses', $data['totalexpenses']);

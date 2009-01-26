@@ -20,5 +20,5 @@
 		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpirepfinance">Reset PIREP Finances</a>:
 		</strong>
 	</dt>
-	<dd>This adds financial data to existing PIREPS which do not have any.<br /></dd>
+	<dd>This adds financial data to existing PIREPS which do not have any. NOTICE! This will reset <strong>all</strong> of your PIREPS to the current finances (expenses, fuel prices, etc)<br /></dd>
 </dl>

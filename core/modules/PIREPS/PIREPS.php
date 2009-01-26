@@ -15,7 +15,7 @@
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
- 
+
 class PIREPS extends CodonModule
 {
 	public $pirep;

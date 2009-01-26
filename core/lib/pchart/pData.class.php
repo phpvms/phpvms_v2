@@ -136,6 +136,7 @@
       }
      else
       {
+		if(!is_array($Value)) $Value = array();
        foreach($Value as $key => $Val)
         {
          $this->Data[$ID][$Serie] = $Val;

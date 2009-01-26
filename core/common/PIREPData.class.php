@@ -466,11 +466,12 @@ class PIREPData
 	 
 	public static function PopulateEmptyPIREPS()
 	{
+		//DB::get_results('SELECT * FROM phpvms_pireps');
+		//DB::debug();
 		
 		$sql = 'SELECT  `pirepid`, `pilotid`, `code`, `flightnum`,
 						`load`, `price`, `expenses`, `flighttype`, `pilotpay`
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE `load`=0 OR `expenses`=0';
+					FROM '.TABLE_PREFIX.'pireps';
 					
 		$results = DB::get_results($sql);
 		
@@ -478,11 +479,10 @@ class PIREPData
 		{
 			return true;
 		}
-				
+		
 		foreach($results as $row)
 		{
 			self::PopulatePIREPFinance($row);
-			DB::debug();
 		}
 	
 		return true;		
@@ -504,7 +504,6 @@ class PIREPData
 				self::$lasterror = 'PIREP does not exist';
 				return false;
 			}
-			
 		}
 		
 		# Set the PIREP ID
@@ -524,6 +523,12 @@ class PIREPData
 		if($pirep->load == '' || $pirep->load == 0)
 		{
 			$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+		}
+		
+		# Check the fuel
+		if($pirep->fuelused != '')
+		{
+			$fuelused = FinanceData::GetFuelPrice($pirep->fuelused, $pirep->depicao);
 		}
 		
 		# Get the expenses for a flight
@@ -554,6 +559,7 @@ class PIREPData
 		# Update it
 		$sql = 'UPDATE '.TABLE_PREFIX."pireps
 					SET `price`='$sched->price', 
+						`fuelprice`='$fuelused',
 						`expenses`=$total_ex,
 						`expenselist`='$expense_list',
 						`flighttype`='$sched->flighttype', 
@@ -565,6 +571,7 @@ class PIREPData
 		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
+		DB::debug();
 	}
 	
 	/**

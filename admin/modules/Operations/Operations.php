@@ -377,26 +377,23 @@ class Operations extends CodonModule
 	
 	public function AddAirport()
 	{
-		$icao = $this->post->icao;
-		$name = $this->post->name;
-		$country = $this->post->country;
-		$lat = $this->post->lat;
-		$long = $this->post->long;
-		$hub = $this->post->hub;
-
-		if($icao == '' || $name == '' || $country == '' || $lat == '' || $long == '')
+		
+		if($this->post->icao == '' || $this->post->name == '' 
+				|| $this->post->country == '' || $this->post->lat == '' || $this->post->long == '')
 		{
 			Template::Set('message', 'Some fields were blank!');
 			Template::Show('core_error.tpl');
 			return;
 		}
 
-        if($hub == 'true')
-			$hub = true;
+		if($this->post->hub == 'true')
+			$this->post->hub = true;
 		else
-			$hub = false;
+			$this->post->hub = false;
 	
-		OperationsData::AddAirport($icao, $name, $country, $lat, $long, $hub);
+		OperationsData::AddAirport($this->post->icao, $this->post->name, $this->post->country, 
+									$this->post->lat, $this->post->long, 
+									$this->post->hub, $this->post->fuelprice);
 		
 		if(DB::errno() != 0)
 		{
@@ -416,26 +413,28 @@ class Operations extends CodonModule
 
 	public function EditAirport()
 	{
-       $icao = $this->post->icao;
+		$icao = $this->post->icao;
 		$name = $this->post->name;
 		$country = $this->post->country;
 		$lat = $this->post->lat;
 		$long = $this->post->long;
 		$hub = $this->post->hub;
 
-		if($icao == '' || $name == '' || $country == '' || $lat == '' || $long == '')
+		if($this->post->icao == '' || $this->post->name == '' 
+				|| $this->post->country == '' || $this->post->lat == '' || $this->post->long == '')
 		{
 			Template::Set('message', 'Some fields were blank!');
 			Template::Show('core_message.tpl');
 			return;
 		}
 
-		if($hub == 'true')
-			$hub = true;
+		if($this->post->hub == 'true')
+			$this->post->hub = true;
 		else
-			$hub = false;
+			$this->post->hub = false;
 
-		OperationsData::EditAirport($icao, $name, $country, $lat, $long, $hub);
+		OperationsData::EditAirport($this->post->icao, $this->post->name, $this->post->country, 
+									$this->post->lat, $this->post->long, $this->post->hub, $this->post->fuelprice);
 		
 		if(DB::errno() != 0)
 		{

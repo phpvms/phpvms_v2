@@ -28,6 +28,9 @@ class Contact extends CodonModule
 			
 			if($this->post->loggedin == 'false')
 			{
+				echo 'output of $_SESSION: <br />';
+				print_r($_SESSION);
+				
 				// Check the captcha thingy
 				if($this->post->captcha != $captcha)
 				{
@@ -76,8 +79,8 @@ class Contact extends CodonModule
 		$tot = $rand1 + $rand2;
 		echo "total: $tot <br />";
 		SessionManager::Set('captcha_sum', $tot);
-		//$_SESSION['captcha_sum'] = $tot;
 		
+		echo 'output of $_SESSION: <br />';
 		print_r($_SESSION);
 		
 		Template::Show('contact_form.tpl');

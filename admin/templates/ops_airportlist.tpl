@@ -15,6 +15,7 @@ if(!$airports)
 	<th>Airport Country</th>
 	<th>Latitude</th>
 	<th>Longitude</th>
+	<th>Fuel Cost</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -29,6 +30,7 @@ foreach($airports as $airport)
 	<td align="center"><?php echo $airport->country; ?></td>
 	<td align="center"><?php echo $airport->lat; ?></td>
 	<td align="center"><?php echo $airport->lng; ?></td>
+	<td align="center"><?php echo $airport->fuelprice; ?></td>
 	<td align="center" width="1%" nowrap><a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/operations/editairport?icao=<?php echo $airport->icao?>"><img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a></td>
 </tr>
 <?php

@@ -24,11 +24,9 @@
  *  local.config.php
  *
  * Most of these are in your local.config.php already
- *
+ * 
+ * View the docs for details about these settings
  */
-
-define('SIGNATURE_PATH', '/lib/signatures');
-define('AVATAR_PATH', '/lib/avatars');
 
 # Page encoding options
 Config::Set('PAGE_ENCODING', 'ISO-8859-1');
@@ -40,7 +38,6 @@ Config::Set('SHOW_LEG_TEXT', true);
 Config::Set('UNITS', 'nm'); // Your units: nm, mi or km
 Config::Set('LOAD_FACTOR', '72'); 
 Config::Set('CARGO_UNITS', 'lbs');
-Config::Set('VA_START_DATE', 'October 2008');
 
 # Google Map Options
 Config::Set('MAP_WIDTH', '600px');
@@ -59,6 +56,15 @@ Config::Set('ACARS_DEBUG', false);
 # Monetary Units
 Config::Set('MONEY_UNIT', '$'); # $, €, etc
 Config::Set('MONEY_FORMAT', '%(#10n');
+
+
+# Fuel info
+/* Default fuel price, for airports that don't have
+	And the surcharge percentage. View the docs
+	for more details about these
+*/ 
+Config::Set('FUEL_DEFAULT_PRICE', '5.10');
+Config::Set('FUEL_SURCHARGE', '20');
 
 # Units settings
 #	These are global, also used for FSPAX
@@ -151,6 +157,9 @@ Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
 			'F'=>'Per Flight'));
 
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
+
+define('SIGNATURE_PATH', '/lib/signatures');
+define('AVATAR_PATH', '/lib/avatars');
 
 define('PIREP_PENDING', 0);
 define('PIREP_ACCEPTED', 1);

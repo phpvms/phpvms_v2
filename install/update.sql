@@ -18,6 +18,8 @@ CREATE TABLE `phpvms_expenses` (
 
 ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;
 
+ALTER TABLE `phpvms_airports` ADD `fuelprice` FLOAT NOT NULL ;
+
 ALTER TABLE `phpvms_expenses` ADD `type` VARCHAR ( 1 ) NOT NULL DEFAULT 'M';
 
 ALTER TABLE `phpvms_schedules` ADD `maxload` INT NOT NULL AFTER `flighttime`;

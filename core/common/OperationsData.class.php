@@ -250,7 +250,7 @@ class OperationsData
 	/**
 	 * Add an airport
 	 */
-	public static function AddAirport($icao, $name, $country, $lat, $long, $hub)
+	public static function AddAirport($icao, $name, $country, $lat, $long, $hub, $fuelprice=0)
 	{
 	
 		$icao = strtoupper($icao);
@@ -261,9 +261,9 @@ class OperationsData
 			$hub = 0;
 
 		$sql = "INSERT INTO " . TABLE_PREFIX ."airports 
-					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`)
+					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`, `fuelprice`)
 					VALUES (
-						'$icao', '$name', '$country', $lat, $long, $hub)";
+						'$icao', '$name', '$country', $lat, $long, $hub, $fuelprice)";
 
 		$res = DB::query($sql);
 		
@@ -276,7 +276,7 @@ class OperationsData
 	/**
 	 * Edit the airport
 	 */
-	public static function EditAirport($icao, $name, $country, $lat, $long, $hub)
+	public static function EditAirport($icao, $name, $country, $lat, $long, $hub, $fuelprice=0)
 	{
         if($hub == true)
 			$hub = 1;
@@ -284,7 +284,8 @@ class OperationsData
 			$hub = 0;
 
 		$sql = "UPDATE " . TABLE_PREFIX . "airports
-					SET `name`='$name', `country`='$country', `lat`=$lat, `lng`=$long, `hub`=$hub
+					SET `name`='$name', `country`='$country', 
+						`lat`=$lat, `lng`=$long, `hub`=$hub, `fuelprice`=$fuelprice
 					WHERE `icao`='$icao'";
 
 		$res = DB::query($sql);
@@ -300,8 +301,10 @@ class OperationsData
 	 */
 	public static function GetAirportInfo($icao)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airports 
-								WHERE `icao`=\''.$icao.'\'');
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
+					WHERE `icao`=\''.$icao.'\'';
+		
+		return DB::get_row($sql);
 	}
 	
 	/**

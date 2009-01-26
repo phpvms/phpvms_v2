@@ -21,14 +21,35 @@ class FinanceData
 	public static $lasterror;
 	
 	
+	
 	/**
-	 * Get the current fuel cost, either use a setting
-	 *  or WE'LL DO IT LIVE!
+	 * Get the fuel cost, given the airport and the amount of fuel
+	 *
+	 * @param int $$fuel_amount Amount of fuel used
+	 * @param string $apt_icao ICAO of the airport to calculate fuel price
+	 * @return int Total cost of the fuel
+	 *
 	 */
-	public static function GetFuelPrice()
+	public static function GetFuelPrice($fuel_amount, $apt_icao='')
 	{
-		# For now
-		return '5.10';
+		
+		if($apt_icao != '')
+		{
+			$aptinfo = OperationsData::GetAirportInfo($apt_icao);
+			
+			if($aptinfo->fuelprice == '' || $aptinfo->fuelprice == 0)
+				$price = Config::Get('FUEL_DEFAULT_PRICE');
+			else
+				$price = $aptinfo->fuelprice;
+		}
+		else
+		{
+			$price = Config::Get('FUEL_DEFAULT_PRICE');
+		}
+		
+		$total = ($fuel_amount * $price) + ((Config::Get('FUEL_SURCHARGE')/100) * $fuel_amount);
+		
+		return $total;
 	}
 	
 	/**
@@ -95,9 +116,9 @@ class FinanceData
 				
 			$ret['allexpenses'] =  self::GetMonthlyExpenses();
 			
-			/*
-				Do the calculations
-			*/
+			#
+			# Do all the calculations
+			#
 			
 			# Start
 			$ret['cashreserve'] = 0;
@@ -123,8 +144,8 @@ class FinanceData
 			$ret['fuelcost'] = $ret['pirepfinance']->FuelCost;		
 			
 			# Save it
-			self::AddFinanceData($monthstamp, $ret['pirepfinance'], 
-									$ret['allexpenses'], $ret['totalexpenses'], $ret['total']);
+			self::AddFinanceData($monthstamp, $ret['pirepfinance'], $ret['allexpenses'], 
+									$ret['totalexpenses'], $ret['total']);
 		}
 		
 		return $ret;
@@ -216,7 +237,7 @@ class FinanceData
 					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
 					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue,
 					   ROUND(SUM(p.`expenses`)) AS FlightExpenses,
-					   ROUND(SUM(p.`fuelused` * p.`fuelprice`)) AS FuelCost
+					   ROUND(SUM(p.`fuelprice`)) AS FuelCost
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
 		
 		return DB::get_row($sql);

@@ -319,12 +319,14 @@ class Installer
 		if($version == '')
 			$version = PHPVMS_VERSION;
 			
+		$ext = urlencode(serialize(get_loaded_extensions()));
 		$params=array('name'=>SITE_NAME,
 					  'url'=>SITE_URL,
 					  'email'=>SettingsData::GetSettingValue('ADMIN_EMAIL'),
 					  'version'=>$version,
 					  'php'=>phpversion(),
-					  'mysql'=>@mysql_get_server_info());
+					  'mysql'=>@mysql_get_server_info(),
+					  'ext'=>$ext);
 					  
 		$url = 'http://update.phpvms.net/register.php';
 					

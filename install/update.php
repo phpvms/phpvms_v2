@@ -34,7 +34,7 @@ echo '<h3 align="left">phpVMS Updater</h3>';
 
 
 # Check versions for mismatch, unless ?force is passed
-if(!isset($_GET['force']))
+if(!isset($_GET['force']) && !isset($_GET['test']))
 {
 	if(PHPVMS_VERSION == UPDATE_VERSION)
 	{
@@ -128,11 +128,14 @@ echo 'Starting the update...<br />';
 		
 	
 # Final version update
-$sql = 'UPDATE `phpvms_settings` 
-			SET value=\''.UPDATE_VERSION.'\' 
-			WHERE name=\'PHPVMS_VERSION\'';
-			
-DB::query($sql);
+if(!isset($_GET['test']))
+{
+	$sql = 'UPDATE `phpvms_settings` 
+				SET value=\''.UPDATE_VERSION.'\' 
+				WHERE name=\'PHPVMS_VERSION\'';
+				
+	DB::query($sql);
+}
 
 echo '<p><strong>Update completed!</strong></p>
 		<hr>

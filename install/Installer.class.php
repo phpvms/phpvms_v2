@@ -226,6 +226,10 @@ class Installer
 	
 	public static function sql_file_update($filename)
 	{
+		
+		if(isset($_GET['test']))
+			return true;
+			
 		# Table changes, other SQL updates
 		$sql_file = file_get_contents($filename);
 		
@@ -239,6 +243,7 @@ class Installer
 				
 				$sql = str_replace('phpvms_', TABLE_PREFIX, $sql);
 				
+
 				DB::query($sql);
 				
 				if(DB::errno() != 0 && DB::errno() != 1060)
@@ -267,6 +272,9 @@ class Installer
 	 */
 	public static function add_to_config($name, $value, $comment='')
 	{
+		if(isset($_GET['test']))
+			return true;
+			
 		$config = file_get_contents(CORE_PATH.'/local.config.php');
 		
 		# Replace the closing PHP tag, don't need a closing tag
@@ -319,7 +327,7 @@ class Installer
 		if($version == '')
 			$version = PHPVMS_VERSION;
 			
-		$ext = urlencode(serialize(get_loaded_extensions()));
+		$ext = serialize(get_loaded_extensions());
 		$params=array('name'=>SITE_NAME,
 					  'url'=>SITE_URL,
 					  'email'=>SettingsData::GetSettingValue('ADMIN_EMAIL'),

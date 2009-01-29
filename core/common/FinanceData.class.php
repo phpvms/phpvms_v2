@@ -132,6 +132,8 @@ class FinanceData
 			$ret['total'] -= $ret['pirepfinance']->FuelCost;
 			
 			# Subtract the total expenses from the total	
+			
+			if(!$ret['allexpenses']) $ret['allexpenses'] = array();
 			foreach($ret['allexpenses'] as $expense)
 			{
 				$ret['totalexpenses'] += $expense->cost;
@@ -207,30 +209,18 @@ class FinanceData
 	 *  use GetYearBalanceData instead
 	 */
 	public static function PIREPForYear($timestamp)
-	{
-		
+	{		
 		return self::GetYearBalanceData($timestamp);
-		/*# Form the timestamp
-		if($timestamp == '')
-		{
-			return false;
-		}
-		
-		# If a numeric date/time is passed
-		#	Otherwise, we convert it to a timestamp
-		if(!is_numeric($timestamp))
-		{
-			$timestamp = strtotime($timestamp);
-		}
-		
-		# %Y/$Year = Full Year (XXXX)
-		$Year = date('Y', $timestamp);
-		
-		$where_sql = " WHERE DATE_FORMAT(submitdate, '%Y') = '$Year'";	
-		
-		return self::CalculatePIREPS($where_sql);*/
 	}
 	 
+	
+	/**
+	 * Calculate a PIREP's finances with optional WHERE clause to restrict results
+	 *
+	 * @param string $where Where clause, to restrict results. Include WHERE
+	 * @return array Finances
+	 *
+	 */
 	public static function CalculatePIREPS($where='')
 	{
 		$sql = 'SELECT COUNT(*) AS TotalFlights,

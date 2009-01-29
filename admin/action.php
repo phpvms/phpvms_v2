@@ -55,4 +55,5 @@ Template::SetTemplatePath(dirname(__FILE__).'/templates');
 
 MainController::RunAllActions();
 
-?>
+# Force connection close
+DB::close();

@@ -61,4 +61,5 @@ MainController::RunAllActions(Config::Get('RUN_MODULE'));
 
 $BaseTemplate->ShowTemplate('footer.tpl');
 
-?>
+# Force connection close
+DB::close();

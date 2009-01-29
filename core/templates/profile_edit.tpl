@@ -37,6 +37,22 @@
 		?>
 	</dd>
 	
+	<dt>Signature Background</dt>
+	<dd><select name="bgimage">
+		<?php
+		foreach($bgimages as $image)
+		{
+			if($userinfo->bgimage == $image)
+				$sel = 'selected="selected"';
+			else	
+				$sel = '';
+			
+			echo '<option value="'.$image.'" '.$sel.'>'.$image.'</option>';
+		}
+		?>
+		</select>
+	</dd>
+	
 	<?php
 	if($customfields)
 	{

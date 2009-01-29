@@ -57,4 +57,6 @@ Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
 MainController::RunAllActions(Config::Get('RUN_MODULE'));
-?>
+
+# Force connection close
+DB::close();

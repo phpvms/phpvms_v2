@@ -111,7 +111,7 @@ echo "OK
 $route->depicao
 $route->arricao
 
-$route->route
+
 $route->aircraft
 
 $date

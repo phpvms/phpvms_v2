@@ -135,10 +135,8 @@ class MainController
 
 		foreach($files as $file)
 		{
-    		//if(is_file(COMMON_PATH.'/'.$file))
-    		//if(strpos($file, '.php') !== false)
+    		if($file == '.' || $file == '..') continue;
     		
-    		# strstr() won out to be the fastest
     		if(strstr($file, '.php') !== false)
 				include_once COMMON_PATH.'/'.$file;
 		}

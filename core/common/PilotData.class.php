@@ -159,8 +159,8 @@ class PilotData
 		$lastname = DB::escape($lastname);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
-					SET firstname=\''.$firstname.'\', lastname=\''.$lastname.'\'
-					WHERE pilotid='.intval($pilotid);
+					SET `firstname`=\''.$firstname.'\', `lastname`=\''.$lastname.'\'
+					WHERE `pilotid`='.intval($pilotid);
 		
 		$res = DB::query($sql);
 		
@@ -173,22 +173,51 @@ class PilotData
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
-	public static function SaveProfile($pilotid, $email, $location, $hub='')
+	public static function SaveProfile($pilotid, $email, $location, $hub='', $bgimage='')
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
 					SET `email`='$email', `location`='$location' ";
 		
 		if($hub!= '')
-			$sql.=", hub='$hub' ";
+			$sql.=", `hub`='$hub' ";
+			
+		if($bgimage != '')
+			$sql.=",`bgimage`='$bgimage' ";
 			
 		$sql .= 'WHERE `pilotid`='.$pilotid;
 		
 		$res = DB::query($sql);
 		
+		# Generate a fresh signature
+		self::GenerateSignature($pilotid);
+		
 		if(DB::errno() != 0)
 			return false;
 			
 		return true;
+	}
+	
+	
+	/**
+	 * Returns an array with a list of background images available
+	 *
+	 * @return array The background images list
+	 *
+	 */
+	public static function GetBackgroundImages()
+	{
+		$list = array();
+		$files = scandir(SITE_ROOT.'/lib/signatures/background');
+
+		foreach($files as $file)
+		{   
+			if($file == '.' || $file == '..') continue;
+			
+    		if(strstr($file, '.png') !== false)
+				$list[] = $file;
+		}
+		
+		return $list;
 	}
 	
 	/**
@@ -261,6 +290,14 @@ class PilotData
 		return self::DeletePilot($pilotid);
 	}
 	
+		
+	/**
+	 * Completely delete a pilot	
+	 *
+	 * @param int $pilotid Pilot ID
+	 * @return mixed This is the return value description
+	 *
+	 */
 	public static function DeletePilot($pilotid)
 	{
 		$sql = array();
@@ -284,7 +321,6 @@ class PilotData
 			return false;
 		
 		return true;
-		
 	}
 	
 	/**
@@ -303,9 +339,15 @@ class PilotData
 			
 		return true;
 	}
-	
+		
 	/**
-	 * After a PIREP been accepted, update their statistics
+	 * Update a pilot's flight data, ie after a pirep
+	 *
+	 * @param int $pilotid Pilot ID
+	 * @param int $flighttime Number of hours.minutes to increment by
+	 * @param int $numflights Number of flights (default 1)
+	 * @return bool Success
+	 *
 	 */
 	public static function UpdateFlightData($pilotid, $flighttime, $numflights=1)
 	{	
@@ -320,6 +362,7 @@ class PilotData
 		$parts = explode('.', $flighttime);
 		$hours = $parts[0];
 		$mins = $parts[1];
+		
 		if(strlen($mins)==1)
 			$mins *= 10;
 		
@@ -330,8 +373,10 @@ class PilotData
 		}
 		
 		$flighttime = $hours.'.'.$mins;
-	
 		
+		if($numflights == '')
+			$numflights = 1;
+	
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
 					SET totalhours=$flighttime,
 						totalflights=totalflights+$numflights
@@ -348,6 +393,13 @@ class PilotData
 	/**
 	 * Don't update the pilot's flight data, but just replace it
 	 * 	with the values given
+	 *
+	 * @param int $pilotid Pilot ID
+	 * @param int $flighttime Number of flight hours
+	 * @param int $numflights Number of flights
+	 * @param int $totalpay The total amount of money they have
+	 * @return bool Success
+	 *
 	 */
 	public static function ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay)
 	{
@@ -363,10 +415,15 @@ class PilotData
 			
 		return true;
 	}
-	
+		
 	/**
 	 * Update a pilot's pay. Pass the pilot ID, and the number of
 	 * hours they are being paid for
+	 *
+	 * @param int $pilotid The pilot ID
+	 * @param int $flighthours Number of hours to pay the pilot for
+	 * @return bool Success
+	 *
 	 */
 	function UpdatePilotPay($pilotid, $flighthours)
 	{
@@ -396,8 +453,15 @@ class PilotData
 		
 	}
 	
+	
 	/**
-	 * Save the custom fields. Usually just pass the $_POST
+	 * This saves all of the custom fields attributed to pilot
+	 * Pass an associated array (fieldname NOT title) to value
+	 *
+	 * @param int $pilotid Pilot ID
+	 * @param array $list fieldname=>fieldvalue associated array
+	 * @return bool Success value
+	 *
 	 */
 	public static function SaveFields($pilotid, $list)
 	{
@@ -439,9 +503,14 @@ class PilotData
 		
 		return true;
 	}
-	
+		
 	/**
-	 * Get all of the "cusom fields" for a pilot
+	 * Get all of the custom fields and values for a pilot
+	 *
+	 * @param int $pilotid The pilot ID
+	 * @param bool $inclprivate TRUE to also include private fields (default false)
+	 * @return array Returns all of the fields (names and values)
+	 *
 	 */
 	public static function GetFieldData($pilotid, $inclprivate=false)
 	{
@@ -456,8 +525,14 @@ class PilotData
 		return DB::get_results($sql);
 	}
 	
+	
 	/**
-	 * Get the field value for a pilot
+	 * Get the value of a "custom field" for a pilot
+	 *
+	 * @param int $pilotid The pilot ID
+	 * @param string $title Full title of field, as enter "VATSIM ID"
+	 * @return string Returns the value of that field
+	 *
 	 */
 	public static function GetFieldValue($pilotid, $title)
 	{
@@ -471,8 +546,13 @@ class PilotData
 		return $res->value;
 	}
 	
+	
 	/**
-	 * Get the groups a pilot is in
+	 * Get all of the groups a pilot is a member of
+	 *
+	 * @param int $pilotid The pilot ID
+	 * @return array Groups the pilot is in (groupid and groupname)
+	 *
 	 */
 	public static function GetPilotGroups($pilotid)
 	{
@@ -499,8 +579,10 @@ class PilotData
 	 *  as not to burden a server with image generation
 	 * 
 	 * Also requires GD to be installed on the server
-	 */
-	 
+	 * 
+	 * @param int The pilot ID for which to generate a signature for
+	 * @return bool Success
+	 */	 
 	public function GenerateSignature($pilotid)
 	{
 		$pilot = self::GetPilotData($pilotid);
@@ -519,7 +601,16 @@ class PilotData
 		}
 		
 		# Load up our image
-		$img = imagecreatefrompng(SITE_ROOT.SIGNATURE_PATH.'/background.png');
+		# Get the background image the pilot selected
+		$bgimage = SITE_ROOT.SIGNATURE_PATH.'/background/'.$pilot->bgimage;
+		
+		if(!file_exists($bgimage))
+		{
+			# Doesn't exist so use the default
+			$bgimage = SITE_ROOT.SIGNATURE_PATH.'/background/background.png';
+		}
+		
+		$img = imagecreatefrompng($bgimage);
 		$height = imagesy($img);
 		$width = imagesx($img);
 			
@@ -591,42 +682,4 @@ class PilotData
 		imagepng($img, SITE_ROOT.SIGNATURE_PATH.'/'.$pilotcode.'.png', 1);
 		imagedestroy($img);
 	}
-	
-	/*public function GenerateSignatureOld($pilotid)
-	{
-		$pilot = self::GetPilotData($pilotid);
-		
-		# Configure what we want to show on each line
-		$output = array();
-		$output[] = $pilot->firstname.' '.$pilot->lastname;
-		$output[] = $pilot->rank;
-		$output[] = 'Total Flights: ' . $pilot->totalflights;
-		
-		# Load up our image
-		$img = imagecreatefrompng(SITE_ROOT.'/lib/signatures/background.png');
-		$height = imagesy($img);
-		$width = imagesx($img);
-		
-		$xoffset = 10; # How many pixels, from left, to start
-		$yoffset = 10; # How many pixels, from top, to start
-		
-		# The line height of each item to fit nicely, dynamic
-		$stepsize = ($height - $yoffset) / count($output);
-		
-		imageantialias($img, true);
-		
-		$textcolor = imagecolorallocate($img, 0, 0, 0);
-		$font = 3;
-		
-		foreach($output as $line)
-		{
-			imagestring($img, $font, $xoffset, $yoffset, $line, $textcolor);
-			
-			$yoffset+=$stepsize;
-			
-		}
-		
-		imagepng($img, SITE_ROOT.'/lib/signatures/'.$pilotid.'.png', 1);
-		imagedestroy($img);
-	}*/
 }

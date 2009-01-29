@@ -103,6 +103,7 @@ class Profile extends CodonModule
 
 				Template::Set('userinfo', Auth::$userinfo);
 				Template::Set('customfields', PilotData::GetFieldData(Auth::$pilotid, true));
+				Template::Set('bgimages', PilotData::GetBackgroundImages());
 				Template::Set('countries', Countries::getAllCountries());
 				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 
@@ -133,7 +134,7 @@ class Profile extends CodonModule
 			return;
 		}
 
-		PilotData::SaveProfile(Auth::$pilotid, $this->post->email, $this->post->location);
+		PilotData::SaveProfile(Auth::$pilotid, $this->post->email, $this->post->location, '', $this->post->bgimage);
 		PilotData::SaveFields(Auth::$pilotid, $_POST);
 		
 		PilotData::SaveAvatar($userinfo->code, $userinfo->pilotid, $_FILES);

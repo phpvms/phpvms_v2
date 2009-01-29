@@ -5,7 +5,9 @@
  *   2. YOU DON'T MIND LOSING SOME HAIR
  *   3. YOU HAVE BIG BALLS MADE OF STEEL
  *
- *	It can cause incontinance
+ *	It can cause incontinence
+ *
+ *	YOU HAVE BEEN WARNED!!!
  */
 ?><?php Template::Show('finance_header.tpl'); ?>
 <h3><?php echo $title?></h3>

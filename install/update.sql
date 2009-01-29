@@ -16,6 +16,15 @@ CREATE TABLE `phpvms_expenses` (
 	PRIMARY KEY (`id`)
 ) ENGINE = MYISAM;
 
+CREATE TABLE IF NOT EXISTS `phpvms_financedata` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`month` int(11) NOT NULL,
+	`year` int(11) NOT NULL,
+	`data` text NOT NULL,
+	`total` float NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
 ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;
 
 ALTER TABLE `phpvms_airports` ADD `fuelprice` FLOAT NOT NULL ;

@@ -17,6 +17,15 @@ CREATE TABLE `phpvms_expenses` (
 	PRIMARY KEY (`id`)
 ) ENGINE = MYISAM;
 
+CREATE TABLE IF NOT EXISTS `phpvms_financedata` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`month` int(11) NOT NULL,
+	`year` int(11) NOT NULL,
+	`data` text NOT NULL,
+	`total` float NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
 CREATE TABLE `phpvms_acarsdata` (
   `id` int(11) NOT NULL auto_increment,
   `pilotid` varchar(11) NOT NULL default '0',

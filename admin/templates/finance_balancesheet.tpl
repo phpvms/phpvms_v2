@@ -5,7 +5,9 @@
  *   2. YOU DON'T MIND LOSING SOME HAIR
  *   3. YOU HAVE BIG BALLS MADE OF STEEL
  *
- *	It can cause incontinance
+ *	It can cause incontinence
+ *
+ *	YOU HAVE BEEN WARNED!!!
  */
 ?><?php Template::Show('finance_header.tpl'); ?>
 <h3><?php echo $title?></h3>
@@ -34,12 +36,14 @@
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Cash and Sales</td>
 	</tr>
-	
+	<?php
+	/*
 	<tr>
 		<td align="right">Cash Reserves: </td>
 		<td align="right"><?php echo FinanceData::FormatMoney($allfinances['cashreserve']);?></td>
 	</tr>
-
+	*/
+	?>
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
 			Total number of flights: <?php echo $pirepfinance->TotalFlights; ?>

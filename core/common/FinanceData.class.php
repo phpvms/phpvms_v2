@@ -52,9 +52,14 @@ class FinanceData
 		return $total;
 	}
 	
+		
 	/**
-	 * Get a year
-	 */	
+	 * This gets all of the balance data for a year
+	 *
+	 * @param int $yearstamp Any timestamp which is in the year you want
+	 * @return array All the year's balance data
+	 *
+	 */
 	public static function GetYearBalanceData($yearstamp)
 	{
 		$ret = array();
@@ -63,11 +68,16 @@ class FinanceData
 		
 		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
 	}
-	
+ 
 	
 	/**
 	 * Get the financial data for a range of dates
 	 *  Pass in dates as text, or UNIX Timestamps
+	 * 
+	 * @param string $start Start date (any date inside that month)
+	 * @param string $end End date (any date inside that month)
+	 * @return mixed This is the return value description
+	 *
 	 */
 	public static function GetRangeBalanceData($start, $end)
 	{
@@ -88,16 +98,18 @@ class FinanceData
 	/**
 	 * Get the financial data for a month
 	 *  Pass date as a text, or UNIX Timestamp
+	 * 
+	 * This will automatically handle the caching
 	 */
 	public static function GetMonthBalanceData($monthstamp)
 	{
 		$ret = array();
 				
-		# Check if it's already in our financereports table
-		$report = self::GetFinanceData($monthstamp);
-		if($report)
+		# Check if it's already in our financedata table
+		$report = self::GetCachedFinanceData($monthstamp);
+		if(is_object($report))
 		{
-			
+			$ret = unserialize(stripslashes($report->data));
 		}
 		else
 		{
@@ -145,31 +157,92 @@ class FinanceData
 			$ret['flightexpenses'] += $ret['pirepfinance']->FlightExpenses;
 			$ret['fuelcost'] = $ret['pirepfinance']->FuelCost;		
 			
-			# Save it
-			self::AddFinanceData($monthstamp, $ret['pirepfinance'], $ret['allexpenses'], 
-									$ret['totalexpenses'], $ret['total']);
+			
+			
+			# Save it, with all the above calculations
+			#	Remains intact
+			self::AddFinanceDataCache($monthstamp, $ret);
 		}
 		
 		return $ret;
 	}
 	
-	/** 
-	 * Add a financial expense report
-	 */
-	public static function AddFinanceData($monthstamp, $pirepdata, $allexpenses, $totalexpenses, $total)
-	{
-			
-		
-	}
-	
 	/**
 	 * Get an archived financial expenses report
 	 */
-	public static function GetFinanceData($monthstamp)
+	public static function GetCachedFinanceData($monthstamp)
 	{
-		return false;
+		$submit = strtotime($monthstamp);
+		$submitperiod =  date('mY', $submit);
+		$nowperiod = date('mY');
+		
+		if($submitperiod == $nowperiod)
+		{
+			return false;
+		}
+		
+		$month = date('m', $submit);
+		$year = date('Y', $submit);
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."financedata
+					WHERE `month`='$month' AND `year`='$year'";
+		
+		return DB::get_row($sql);
 	}
 	
+	
+	/**
+	 * Add financial data into the cache, saving time and queries
+	 *
+	 * @param int $monthstamp Any timestamp inside the month you are storing
+	 * @param mixed $data This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function AddFinanceDataCache($monthstamp, $data)
+	{		
+		$submit = strtotime($monthstamp);
+		$submitperiod =  date('mY', $submit);
+		$nowperiod = date('mY');
+		
+		# Don't save if we're in the current "active" month
+		#	Or projecting forward for some reason
+		
+		if($submitperiod == $nowperiod)
+		{
+			return false;
+		}
+		
+		$month = date('m', $submit);
+		$year = date('Y', $submit);
+		
+		$total = $data['total'];
+		$data = DB::escape(serialize($data));
+		
+		# Check if it exists
+		#	Update it if it does
+		$sql = 'SELECT id FROM '.TABLE_PREFIX."financedata
+					WHERE `month`='$month' AND `year`='$year'";
+					
+		$res = DB::get_row($sql);
+		if($res)
+		{
+			$sql = 'UPDATE '.TABLE_PREFIX."financedata
+						SET `month`='$month', 
+							`year`='$year',
+							`data`='$data',
+							`total`='$total'";
+		}
+		else
+		{
+			$sql = 'INSERT INTO '.TABLE_PREFIX."financedata
+								(`month`, `year`, `data`, `total`)
+						VALUES	('$month', '$year', '$data', '$total')";
+		}
+		
+		DB::query($sql);	
+	}
+		
 	/**
 	 * Get PIREP financials for the MONTH that's
 	 *  in the timestamp. Just pass any timestamp,

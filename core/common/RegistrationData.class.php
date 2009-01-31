@@ -57,7 +57,8 @@ class RegistrationData
 		
 		//Stuff it into here, the confirmation email will use it.
 		self::$salt = $salt;
-
+		
+		$code = strtoupper($code);
 		$firstname = ucwords($firstname);
 		$lastname = ucwords($lastname);
 		//Add this stuff in

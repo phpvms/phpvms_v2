@@ -44,11 +44,8 @@ class Finances extends CodonModule
 					
 					$data = FinanceData::GetMonthBalanceData($period);
 					
-					Template::Set('title', 'Balance Sheet for '.date('F Y', $type));
-					Template::Set('pirepfinance', $data['pirepfinance']);
-					Template::Set('allexpenses', $data['allexpenses']);
-					Template::Set('totalexpenses', $data['totalexpenses']);
-					Template::Set('total', $data['total']);
+					Template::Set('title', 'Balance Sheet for '.$period);
+					Template::Set('allfinances', $data);
 					
 					Template::Show('finance_balancesheet.tpl');
 				}

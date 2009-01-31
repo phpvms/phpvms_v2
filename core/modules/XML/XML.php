@@ -67,6 +67,7 @@ class XML extends CodonModule
 		
 		$output = '<livemap>';
 		
+		if(!$flights) $flights = array();		
 		foreach($flights as $flight)
 		{			
 			#

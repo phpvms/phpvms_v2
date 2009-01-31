@@ -654,7 +654,7 @@ class PIREPData
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
 					SET `log` = CONCAT(`log`, \''.$log.'\')
-					WHERE pirepid='.$pirepid;
+					WHERE `pirepid`='.$pirepid;
 					
 		$res = DB::query($sql);
 		

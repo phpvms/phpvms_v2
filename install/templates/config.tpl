@@ -61,7 +61,7 @@ Config::Set('MONEY_UNIT', '$');
  
 # FSPassengers Settings
 # Units settings
-Config::Set('WeightUnit', '0');   # 0=Kg 1=lbs
+Config::Set('WeightUnit', '1');   # 0=Kg 1=lbs
 Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
 Config::Set('SpeedUnit', '1');   # 0=Km/H 1=Kts
 Config::Set('AltUnit', '1');   # 0=Meter 1=Feet 

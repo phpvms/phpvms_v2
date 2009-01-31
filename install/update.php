@@ -108,7 +108,7 @@ echo 'Starting the update...<br />';
 		
 		Installer::add_to_config('COMMENT', 'FSPassengers Settings');
 		Installer::add_to_config('COMMENT', 'Units settings');
-		Installer::add_to_config('WeightUnit', '0', '0=Kg 1=lbs');
+		Installer::add_to_config('WeightUnit', '1', '0=Kg 1=lbs');
 		Installer::add_to_config('DistanceUnit', '2', '0=KM 1= Miles 2=NMiles');
 		Installer::add_to_config('SpeedUnit', '1', '0=Km/H 1=Kts');
 		Installer::add_to_config('AltUnit', '1', '0=Meter 1=Feet');

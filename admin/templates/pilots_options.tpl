@@ -21,6 +21,8 @@ $pilotid = Vars::GET('pilotid');
 if($pilotid != Auth::$userinfo->pilotid)
 {?>
 <h3>Delete Pilot</h3>
+<p><strong>Warning!</strong> This is NOT reversible. This removes all of this pilot's information and data,
+	including PIREPS and their registration.</p>
 <form id="deletepilot" action="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots" method="post">
 <dl>	
 	<dt></dt>

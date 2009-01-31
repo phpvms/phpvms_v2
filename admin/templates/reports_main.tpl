@@ -7,6 +7,10 @@
 	<strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?><br />
 </div>
 
+<?php
+if(is_array($acstats))
+{
+	?>
 <h3>Aircraft Usage<span> Aircraft Hours and Usage</span></h3>
 <table id="tabledlist" class="tablesorter">
 	<thead>
@@ -31,9 +35,11 @@
 		}?>
 	</tbody>
 </table>
+<?php } ?>
 
-
-
+<?php
+if(is_array($toproutes)) {
+	?>
 <h3>Routes <span>Top 10 Routes</span></h3>
 
 <table id="tabledlist" class="tablesorter">
@@ -64,7 +70,7 @@
 	}?>
 </tbody>
 </table>
-	
+<?php } ?>
 
 <script type="text/javascript">
 $(document).ready(function(){

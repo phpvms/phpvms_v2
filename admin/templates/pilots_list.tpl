@@ -19,6 +19,7 @@ if(!$allpilots)
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>
+	<th width="1%">Pilot ID</th>
 	<th>Pilot Name</th>
 	<th>Email Address</th>
 	<th>Location</th>
@@ -33,6 +34,7 @@ foreach($allpilots as $pilot)
 {
 ?>
 <tr>
+	<td nowrap><?php echo PilotData::GetPilotCode($pilot->code, $pilot->pilotid);?> </td>
 	<td><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
 	<td align="center"><?php echo $pilot->email; ?></td>
 	<td align="center"><?php echo $pilot->location; ?></td>

@@ -602,15 +602,25 @@ class PilotData
 		
 		# Load up our image
 		# Get the background image the pilot selected
-		$bgimage = SITE_ROOT.SIGNATURE_PATH.'/background/'.$pilot->bgimage;
+		$bgimage = SITE_ROOT.'/lib/signatures/background/'.$pilot->bgimage;
 		
 		if(!file_exists($bgimage))
 		{
 			# Doesn't exist so use the default
-			$bgimage = SITE_ROOT.SIGNATURE_PATH.'/background/background.png';
+			$bgimage = SITE_ROOT.'/lib/signatures/background/background.png';
+			
+			if(!file_exists($bgimage))
+			{
+				return false;
+			}
 		}
 		
-		$img = imagecreatefrompng($bgimage);
+		$img = @imagecreatefrompng($bgimage);
+		if(!$img)
+		{
+			$img = imagecreatetruecolor(300, 50);
+		}
+		
 		$height = imagesy($img);
 		$width = imagesx($img);
 			

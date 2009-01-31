@@ -46,7 +46,7 @@
 	?>
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
-			Total number of flights: <?php echo $pirepfinance->TotalFlights; ?>
+			Total number of flights: <?php echo $allfinances['pirepfinance']->TotalFlights; ?>
 		</td>
 		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($allfinances['pirepfinance']->Revenue);?></td>
 	</tr>
@@ -89,6 +89,8 @@
 	</tr>
 	<?php
 	}
+	
+	if(!$allfinances['allexpenses']) $allfinances['allexpenses'] = array();
 	
 	foreach($allfinances['allexpenses'] as $expense)
 	{
@@ -135,26 +137,28 @@
 </table>
 
 <h3>Breakdown</h3>
-<div>
-<strong>Expenses: </strong><br />
-<?php
-/*
-	Show the expenses details graphs
-	
-	IF YOU DO NOT WANT THE GRAPH TO SHOW
-	COMMENT OUT THE ECHO BELOW BY ADDING TWO
-	// IN FRONT OF IT
-	
-*/
+	<div>
+	<strong>Expenses: </strong><br />
+	<?php
+	/*
+		Show the expenses details graphs
+		
+		IF YOU DO NOT WANT THE GRAPH TO SHOW
+		COMMENT OUT THE ECHO BELOW BY ADDING TWO
+		// IN FRONT OF IT
+		
+	*/
 
-$graph = new ChartGraph('pchart', 'pie', 600, 400);
-$graph->setTitles('Expenses');
-$graph->AddData($g_expenses_values, $g_expenses_labels);
-echo '<img src="'.$graph->GenerateGraph().'" />'; 
+	error_reporting(0);
 	
-?>
-<br /><br />
-</div>
+	$graph = new ChartGraph('pchart', 'pie', 600, 400);
+	$graph->setTitles('Expenses');
+	$graph->AddData($g_expenses_values, $g_expenses_labels);
+	echo '<img src="'.$graph->GenerateGraph().'" />'; 
+		
+	?>
+	<br /><br />
+	</div>
 <div>
 <strong>Overall Costs</strong><br />
 <?php

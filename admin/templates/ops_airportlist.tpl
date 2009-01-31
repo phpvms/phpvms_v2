@@ -1,5 +1,4 @@
 <h3>Airports List</h3>
-<p>The airports that are currently served are listed here.</p>
 <?php
 if(!$airports)
 {

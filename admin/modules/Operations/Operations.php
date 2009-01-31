@@ -401,7 +401,6 @@ class Operations extends CodonModule
 		OperationsData::AddAirport($this->post->icao, $this->post->name, $this->post->country, 
 									$this->post->lat, $this->post->long, 
 									$this->post->hub, $this->post->fuelprice);
-		
 		if(DB::errno() != 0)
 		{
 			if(DB::$errno == 1062) // Duplicate entry

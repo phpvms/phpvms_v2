@@ -83,9 +83,13 @@ class FinanceData
 	{
 		
 		$times = StatsData::GetMonthsInRange($start, $end);
+		$now = time();
 		
 		foreach($times as $monthstamp)
 		{
+			/*if($monthstamp > $now)
+				break;
+				*/
 			$data = self::GetMonthBalanceData($monthstamp);
 			$data['timestamp'] = $monthstamp;
 			
@@ -104,7 +108,7 @@ class FinanceData
 	public static function GetMonthBalanceData($monthstamp)
 	{
 		$ret = array();
-				
+					
 		# Check if it's already in our financedata table
 		$report = self::GetCachedFinanceData($monthstamp);
 		if(is_object($report))
@@ -120,11 +124,11 @@ class FinanceData
 			
 			# Get fresh copy
 			$ret['pirepfinance'] = self::PIREPForMonth($monthstamp);
-		
+							
 			if($ret['pirepfinance']->TotalFlights == 0)
 			{
 				return;
-			}
+			}			
 				
 			$ret['allexpenses'] =  self::GetMonthlyExpenses();
 			
@@ -172,11 +176,15 @@ class FinanceData
 	 */
 	public static function GetCachedFinanceData($monthstamp)
 	{
-		$submit = strtotime($monthstamp);
-		$submitperiod =  date('mY', $submit);
-		$nowperiod = date('mY');
-		
-		if($submitperiod == $nowperiod)
+		if(!is_int($monthstamp))
+			$submit = strtotime($monthstamp);
+		else
+			$submit = $monthstamp;
+			
+		$submitperiod =  date('Ym', $submit);
+		$nowperiod = date('Ym');
+				
+		if($submitperiod >= $nowperiod)
 		{
 			return false;
 		}
@@ -187,7 +195,9 @@ class FinanceData
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."financedata
 					WHERE `month`='$month' AND `year`='$year'";
 		
-		return DB::get_row($sql);
+		$ret = DB::get_row($sql);
+		
+		return $ret;
 	}
 	
 	
@@ -201,18 +211,22 @@ class FinanceData
 	 */
 	public static function AddFinanceDataCache($monthstamp, $data)
 	{		
-		$submit = strtotime($monthstamp);
-		$submitperiod =  date('mY', $submit);
-		$nowperiod = date('mY');
-		
-		# Don't save if we're in the current "active" month
-		#	Or projecting forward for some reason
-		
-		if($submitperiod == $nowperiod)
+	
+		if(!is_int($monthstamp))
+			$submit = strtotime($monthstamp);
+		else
+			$submit = $monthstamp;
+			
+		// Don't cache it for the current month
+		//	or any months ahead of it
+		$submitperiod =  date('Ym', $submit);
+		$nowperiod = date('Ym');
+				
+		if($submitperiod >= $nowperiod)
 		{
 			return false;
 		}
-		
+				
 		$month = date('m', $submit);
 		$year = date('Y', $submit);
 		

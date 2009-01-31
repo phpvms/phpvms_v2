@@ -30,7 +30,8 @@
 		<td align="center">Flights</td>
 		<td align="left">Revenue</td>
 		<td align="center" nowrap>Pilot Pay</td>
-		<td align="center">Expenses</td>
+		<td align="left">Expenses</td>
+		<td align="left">Fuel</td>
 		<td align="center" nowrap>Flight</td>
 		<td align="center">Total</td>
 	</tr>
@@ -72,6 +73,12 @@ foreach ($allfinances as $month)
 		</td>
 		<td align="right" nowrap>
 			<?php 
+			$expenses[] = $month['fuelcost']==''?0:$month['fuelcost'];
+			echo FinanceData::FormatMoney((-1)*$month['fuelcost']);
+			?>
+		</td>
+		<td align="right" nowrap>
+			<?php 
 			$flightexpenses[] = $month['flightexpenses']==''?0:$month['flightexpenses'];
 			echo FinanceData::FormatMoney((-1)*$month['flightexpenses']);
 			?>
@@ -88,11 +95,11 @@ foreach ($allfinances as $month)
 }
 ?>
 <tr class="balancesheet_header" style="border-bottom: 1px dotted">
-	<td align="" colspan="7" style="padding: 1px;"></td>
+	<td align="" colspan="8" style="padding: 1px;"></td>
 </tr>
 	
 <tr>
-	<td align="right" colspan="5"><strong>Total:</strong></td>
+	<td align="right" colspan="6"><strong>Total:</strong></td>
 	<td align="right" colspan="2"><strong><?php echo FinanceData::FormatMoney($total);?></strong></td>
 </tr>
 	

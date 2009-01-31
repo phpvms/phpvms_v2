@@ -571,7 +571,6 @@ class PIREPData
 		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
-		DB::debug();
 	}
 	
 	/**

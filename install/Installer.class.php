@@ -193,7 +193,7 @@ class Installer
 					|| $_POST['vacode'] == ''*/
 					
 		// first add the airline
-		if(!OperationsData::AddAirline($_POST['vacode'], $_POST['vaname']))
+		if(!OperationsData::AddAirline(strtoupper($_POST['vacode']), $_POST['vaname']))
 		{
 			self::$error = DB::$error;
 			return false;

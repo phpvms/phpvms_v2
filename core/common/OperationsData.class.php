@@ -259,6 +259,9 @@ class OperationsData
 			$hub = 1;
 		else
 			$hub = 0;
+			
+		if($fuelprice == '')
+			$fuelprice = 0;
 
 		$sql = "INSERT INTO " . TABLE_PREFIX ."airports 
 					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`, `fuelprice`)

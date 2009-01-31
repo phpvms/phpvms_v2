@@ -34,7 +34,12 @@ class StatsData
 					
 		$result = DB::get_row($sql);
 		
-		return self::GetMonthsSinceDate($result->submitdate);
+		if(!$result)
+			$startdate = time();
+		else
+			$startdate = $result->submitdate;
+			
+		return self::GetMonthsSinceDate($startdate);
 	}
 	
 	/**
@@ -51,7 +56,12 @@ class StatsData
 		
 		$result = DB::get_row($sql);
 		
-		$start = strtotime($result->submitdate);
+		if(!$result)
+			$startdate = 'Today';
+		else
+			$startdate = $result->submitdate;
+		
+		$start = strtotime($startdate);
 		$end = time();
 		
 		do

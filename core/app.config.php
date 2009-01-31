@@ -64,11 +64,11 @@ Config::Set('MONEY_FORMAT', '%(#10n');
 	for more details about these
 */ 
 Config::Set('FUEL_DEFAULT_PRICE', '5.10');
-Config::Set('FUEL_SURCHARGE', '20');
+Config::Set('FUEL_SURCHARGE', '5');
 
 # Units settings
 #	These are global, also used for FSPAX
-Config::Set('WeightUnit', '0');		# 0=Kg 1=lbs
+Config::Set('WeightUnit', '1');		# 0=Kg 1=lbs
 Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
 Config::Set('SpeedUnit', '1');		# 0=Km/H 1=Kts
 Config::Set('AltUnit', '1');		# 0=Meter 1=Feet 

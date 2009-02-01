@@ -29,13 +29,14 @@ class AircraftStats
 	public static function getAircraftDetails()
 	{
 		$sql = 'SELECT a.*,
+					   COUNT(p.pirepid) AS routesflown,
 					   SUM(p.distance) AS totaldistance,
 					   SUM(p.flighttime) AS totaltime,
 					   AVG(p.distance) AS averagedistance,
 					   AVG(p.flighttime) as averagetime
-				  FROM   '.TABLE_PREFIX.'pireps p
-					INNER JOIN '.TABLE_PREFIX.'aircraft a
-						ON (p.aircraft = a.registration)
+				  FROM   '.TABLE_PREFIX.'aircraft a
+					LEFT JOIN '.TABLE_PREFIX.'pireps p
+						ON (p.aircraft = a.id)
 				  GROUP BY a.registration';
 		
 		return DB::get_results($sql);       

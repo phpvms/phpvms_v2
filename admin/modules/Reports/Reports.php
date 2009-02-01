@@ -21,18 +21,8 @@ class Reports extends CodonModule
 {
 	function HTMLHead()
 	{
-		switch($this->get->page)
-		{
-			case '':
-			case 'reports':
-					
-				Template::Set('sidebar', 'sidebar_reports.tpl');
-				
-				break;
-				
-		}
+		Template::Set('sidebar', 'sidebar_reports.tpl');
 	}
-	
 	
 	function Controller()
 	{
@@ -49,12 +39,9 @@ class Reports extends CodonModule
 				
 			case 'aircraft':
 				
-				echo '<h3>Coming soon!</h3>';
-				
-				$stats = AircraftStats::getAircraftDetails();
-				
-				Template::Set('aircraftstats', $stats);
-				
+				$acstats = AircraftStats::getAircraftDetails();
+								
+				Template::Set('acstats', $acstats);
 				Template::Show('reports_aircraft.tpl');
 				
 				break;

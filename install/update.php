@@ -20,9 +20,9 @@ define('ADMIN_PANEL', true);
 
 include '../core/codon.config.php';
 include dirname(__FILE__).'/Installer.class.php';
-
  
 # phpVMS Updater 
+define('INSTALLER_VERSION', '1.1.<<REVISION>>');
 define('UPDATE_VERSION', '1.1.<<REVISION>>');
 define('REVISION', '<<REVISION>>');
 

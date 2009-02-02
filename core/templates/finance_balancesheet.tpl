@@ -46,7 +46,7 @@
 	?>
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
-			Total number of flights: <?php echo $allfinances['pirepfinance']->TotalFlights; ?>
+			Total number of flights: <?php echo $allfinances['pirepfinance']->TotalFlights==''? 0 : $allfinances['pirepfinance']->TotalFlights; ?>
 		</td>
 		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($allfinances['pirepfinance']->Revenue);?></td>
 	</tr>

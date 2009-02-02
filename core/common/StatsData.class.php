@@ -18,7 +18,7 @@
  
 class StatsData
 {
-	
+		
 	/**
 	 * Get all of the months since the VA started
 	 */

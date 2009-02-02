@@ -66,9 +66,6 @@ class PIREPData
 					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
 
 		return DB::get_results($sql);
-		DB::debug();
-		
-		return $ret;
 	}
 	
 	public static function GetAllReportsFromHub($accept=0, $hub)

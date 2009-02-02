@@ -146,7 +146,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$this->y = $height;
 	}
 	
-	public function AddData($data, $x_label='', $y_labels='')
+	public function AddData($data, $x_labels='', $y_labels='')
 	{
 		//$data = array('data'=>$data, 'x_labels'=>$x_labels, 'y_labels'=>$y_labels);
 		$this->data = $data;
@@ -180,12 +180,12 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$count = 1;
 	
 		$pData->AddPoint($this->data, 'dataset');
-		$pData->AddPoint($this->labels, 'labels', 'labels');
-		$pData->AddSerie('dataset');
-		$pData->SetAbsciseLabelSerie('labels');
+		$pData->AddPoint($this->labels, 'labels');
+		$pData->AddAllSeries();		
+		$pData->SetAbsciseLabelSerie('labels');		
 		
 		$pData->SetYAxisName($this->y_title);
-		$pData->SetXAxisName($this->x_title);  
+		$pData->SetXAxisName($this->x_title);
 		
 		/*
 			Check the cache
@@ -201,6 +201,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 	  	$this->pChart->drawBackground(255,255,255);
 		$this->pChart->drawFilledRoundedRectangle(0,0,$this->x,$this->y, 5,  255, 255, 255);  
 		$this->pChart->drawRoundedRectangle(5,5,$this->x-5,$this->y-5,5,230,230,230);
+		$this->setFontSize(10);
 		
 		if($this->type == 'pie')
 		{
@@ -232,16 +233,17 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		{
 			$this->pChart->drawBarGraph($pData->GetData(),$pData->GetDataDescription(),TRUE);
 		}
+		
+		$this->pChart->writeValues($pData->GetData(), $pData->GetDataDescription(), 'labels');
 			
 		$this->setFontSize(10);
 		$w = strlen($this->chart_title)*1.5;
 		@$this->pChart->drawTitle(0,20,$this->chart_title,0,0,0, $this->x);
 		
-		
 		//$this->pCache->WriteToCache($filename,$pData->GetData(),$this->pChart); 
 					
 		$this->pChart->Render(SITE_ROOT.'/core/cache/'.$filename.'.png'); 
-		return SITE_URL.'/core/cache/'.$filename.'.png';
+		echo '<img src="'.SITE_URL.'/core/cache/'.$filename.'.png" />';
 	}
 		
 	

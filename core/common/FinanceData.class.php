@@ -87,9 +87,6 @@ class FinanceData
 		
 		foreach($times as $monthstamp)
 		{
-			/*if($monthstamp > $now)
-				break;
-				*/
 			$data = self::GetMonthBalanceData($monthstamp);
 			$data['timestamp'] = $monthstamp;
 			
@@ -125,10 +122,10 @@ class FinanceData
 			# Get fresh copy
 			$ret['pirepfinance'] = self::PIREPForMonth($monthstamp);
 							
-			if($ret['pirepfinance']->TotalFlights == 0)
+			/*if($ret['pirepfinance']->TotalFlights == 0)
 			{
 				return;
-			}			
+			}*/			
 				
 			$ret['allexpenses'] =  self::GetMonthlyExpenses();
 			

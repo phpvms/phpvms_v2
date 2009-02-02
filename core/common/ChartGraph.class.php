@@ -266,6 +266,6 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 			
 		$chart->dimensions = $this->x.'x'.$this->y;
 		
-		return $chart->draw(false);
+		echo '<img src="'.$chart->draw(false).'" />';
 	}
 }

@@ -139,24 +139,24 @@
 <h3>Breakdown</h3>
 	<div>
 	<strong>Expenses: </strong><br />
-	<?php
-	/*
-		Show the expenses details graphs
-		
-		IF YOU DO NOT WANT THE GRAPH TO SHOW
-		COMMENT OUT THE ECHO BELOW BY ADDING TWO
-		// IN FRONT OF IT
-		
-	*/
-
-	error_reporting(0);
+<?php
+/*
+	Show the expenses details graphs
 	
-	$graph = new ChartGraph('pchart', 'pie', 600, 400);
-	$graph->setTitles('Expenses');
-	$graph->AddData($g_expenses_values, $g_expenses_labels);
-	echo '<img src="'.$graph->GenerateGraph().'" />'; 
-		
-	?>
+	IF YOU DO NOT WANT THE GRAPH TO SHOW
+	COMMENT OUT THE ECHO BELOW BY ADDING TWO
+	// IN FRONT OF IT
+	
+*/
+
+error_reporting(0);
+
+$graph = new ChartGraph('pchart', 'pie', 600, 400);
+$graph->setTitles('Expenses');
+$graph->AddData($g_expenses_values, $g_expenses_labels);
+$graph->GenerateGraph();
+	
+?>
 	<br /><br />
 	</div>
 <div>
@@ -178,7 +178,7 @@ $g_expenses_labels = array('Pilot Salary','Expenses');
 $expense_graph = new ChartGraph('pchart', 'pie3d', 600, 400);
 $expense_graph->setTitles('Pilot Salary vs Expenses');
 $expense_graph->AddData($g_expenses_values, $g_expenses_labels);
-echo '<img src="'.$expense_graph->GenerateGraph().'" />'; 
+$expense_graph->GenerateGraph();
 
 ?>
 </div>

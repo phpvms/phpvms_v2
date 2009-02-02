@@ -115,7 +115,7 @@ foreach ($allfinances as $month)
 $graph = new ChartGraph('pchart', 'line', 600, 400);
 $graph->AddData($revenue, $months);
 $graph->setTitles('Monthly Revenue', 'Month', 'Revenue');
-echo '<img align="center" src="'.$graph->GenerateGraph().'" />';
+$graph->GenerateGraph();
 
 ?>
 <br /><br />
@@ -126,6 +126,6 @@ echo '<img align="center" src="'.$graph->GenerateGraph().'" />';
 $graph = new ChartGraph('pchart', 'line', 600, 400);
 $graph->AddData($expenses, $months);
 $graph->setTitles('Monthly Expenses', 'Month', 'Expenses');
-echo '<img align="center" src="'.$graph->GenerateGraph().'" />';
+$graph->GenerateGraph();
 
 ?>

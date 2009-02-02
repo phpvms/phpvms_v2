@@ -18,7 +18,18 @@
  
 class StatsData
 {
-		
+	
+	public static function GetStartDate()
+	{
+		$sql = 'SELECT pirepid, submitdate
+					FROM '.TABLE_PREFIX.'pireps
+					ORDER BY submitdate ASC
+					LIMIT 1';
+					
+		return DB::get_row($sql);
+	
+	}
+	
 	/**
 	 * Get all of the months since the VA started
 	 */
@@ -26,18 +37,12 @@ class StatsData
 	{
 		$months = array();
 		
-		# $start = strtotime(Config::Get('VA_START_DATE'));
-		$sql = 'SELECT pirepid, submitdate
-					FROM '.TABLE_PREFIX.'pireps
-					ORDER BY pirepid ASC
-					LIMIT 1';
-					
-		$result = DB::get_row($sql);
+		$date = self::GetStartDate();
 		
-		if(!$result)
+		if(!$date)
 			$startdate = time();
 		else
-			$startdate = $result->submitdate;
+			$startdate = $date->submitdate;
 			
 		return self::GetMonthsSinceDate($startdate);
 	}
@@ -49,17 +54,12 @@ class StatsData
 	{
 		$months = array();
 		
-		$sql = 'SELECT pirepid, submitdate
-					FROM '.TABLE_PREFIX.'pireps
-					ORDER BY pirepid ASC
-					LIMIT 1';
+		$date = self::GetStartDate();
 		
-		$result = DB::get_row($sql);
-		
-		if(!$result)
+		if(!$date)
 			$startdate = 'Today';
 		else
-			$startdate = $result->submitdate;
+			$startdate = $date->submitdate;
 		
 		$start = strtotime($startdate);
 		$end = time();		
@@ -117,23 +117,20 @@ class StatsData
 			$end = strtotime($end);
 		}
 		
-		$end = date('Ym', $end);
+		$end = intval(date('Ym', $end));
 		
 		/*
 			Loop through, adding one month to $start each time
 		*/		
 		do
 		{			
-			# Get the month +
-			$month = date('M Y', $start);	
 			
-			# Set the timestamp
-			$months[$month] = $start;
+			$month = date('M Y', $start);		# Get the month
+			$months[$month] = $start;			# Set the timestamp			
+			$start += (SECONDS_PER_DAY * 29);	# Move it up a month
 			
-			# Move it up a month
-			$start += (SECONDS_PER_DAY * 29);
+			$check = intval(date('Ym', $start));
 			
-			$check = date('Ym', $start);
 		} while ( $check <= $end );
 		
 		return $months;		

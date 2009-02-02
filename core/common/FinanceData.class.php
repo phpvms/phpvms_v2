@@ -63,10 +63,9 @@ class FinanceData
 	public static function GetYearBalanceData($yearstamp)
 	{
 		$ret = array();
-		
 		$year = date('Y', $yearstamp);
 		
-		return self::GetRangeBalanceData('January '.$year, 'January '.($year+1));
+		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
 	}
  
 	
@@ -81,14 +80,32 @@ class FinanceData
 	 */
 	public static function GetRangeBalanceData($start, $end)
 	{
-		
 		$times = StatsData::GetMonthsInRange($start, strtotime($end));
 		$now = time();
 		
+		$start = StatsData::GetStartDate();
+		if(!$start)
+			$start = intval(date('Ym'));
+		else
+			$start = intval(date('Ym', strtotime($start->submitdate)));
+			
+		$now = intval(date('Ym'));
+		
 		foreach($times as $monthstamp)
 		{
-			$data = self::GetMonthBalanceData($monthstamp);
-			$data['timestamp'] = $monthstamp;
+			# Check if we're asking for something that's before
+			#	The first PIREP, or after this current month
+			
+			$c_monthstamp = intval(date('Ym', $monthstamp));
+			if($c_monthstamp < $start || $c_monthstamp > $now)
+			{
+				$data = array('timestamp'=>$monthstamp);
+			}
+			else
+			{
+				$data = self::GetMonthBalanceData($monthstamp);
+				$data['timestamp'] = $monthstamp;
+			}
 			
 			$ret[] = $data;
 		}
@@ -107,7 +124,7 @@ class FinanceData
 		$ret = array();
 					
 		# Check if it's already in our financedata table
-		$report = self::GetCachedFinanceData($monthstamp);
+		//$report = self::GetCachedFinanceData($monthstamp);
 		if(is_object($report))
 		{
 			$ret = unserialize(stripslashes($report->data));
@@ -121,11 +138,7 @@ class FinanceData
 			
 			# Get fresh copy
 			$ret['pirepfinance'] = self::PIREPForMonth($monthstamp);
-							
-			/*if($ret['pirepfinance']->TotalFlights == 0)
-			{
-				return;
-			}*/			
+						
 				
 			$ret['allexpenses'] =  self::GetMonthlyExpenses();
 			

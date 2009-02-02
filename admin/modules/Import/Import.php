@@ -77,19 +77,18 @@ class Import extends CodonModule
 					// list fields:
 					$code = $fields[0];
 					$flightnum = $fields[1];
-					$leg = $fields[2];
-					$depicao = $fields[3];
-					$arricao = $fields[4];
-					$route = $fields[5];
-					$aircraft = $fields[6];
-					$distance = $fields[7];
-					$deptime = $fields[8];
-					$arrtime = $fields[9];
-					$flighttime = $fields[10];
-					$notes = $fields[11];
-					$maxload = $fields[12];
-					$price = $fields[13];
-					$flighttype = $fields[14];
+					$depicao = $fields[2];
+					$arricao = $fields[3];
+					$route = $fields[4];
+					$aircraft = $fields[5];
+					$distance = $fields[6];
+					$deptime = $fields[7];
+					$arrtime = $fields[8];
+					$flighttime = $fields[9];
+					$notes = $fields[10];
+					$maxload = $fields[11];
+					$price = $fields[12];
+					$flighttype = $fields[13];
 									
 					if($code=='')
 					{

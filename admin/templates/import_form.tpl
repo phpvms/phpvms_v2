@@ -10,6 +10,7 @@ must be done:</p>
 	<li>Routes which already exist (based on the code and flight number) will not be re-added</li>
 	<li>Aircraft must be added by registration</li>
 	<li>Flight Type can be "P" (Passenger), "C" (Cargo) or "H" (Charter). Enter it without quotes</li>
+	<li><strong>Remove the leg column</strong> - legs are no longer counted, so please remove that column</li>
 </ol>
 
 <form enctype="multipart/form-data" action="<?php echo SITE_URL?>/admin/index.php/import/processimport" method="post">

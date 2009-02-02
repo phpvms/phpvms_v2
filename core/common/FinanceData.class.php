@@ -66,7 +66,7 @@ class FinanceData
 		
 		$year = date('Y', $yearstamp);
 		
-		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
+		return self::GetRangeBalanceData('January '.$year, 'January '.($year+1));
 	}
  
 	
@@ -82,7 +82,7 @@ class FinanceData
 	public static function GetRangeBalanceData($start, $end)
 	{
 		
-		$times = StatsData::GetMonthsInRange($start, $end);
+		$times = StatsData::GetMonthsInRange($start, strtotime($end));
 		$now = time();
 		
 		foreach($times as $monthstamp)

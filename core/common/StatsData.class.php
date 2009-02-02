@@ -126,7 +126,7 @@ class StatsData
 		do
 		{			
 			# Get the month +
-			$month = date('M Y', $start);
+			$month = date('M Y', $start);	
 			
 			# Set the timestamp
 			$months[$month] = $start;
@@ -134,7 +134,7 @@ class StatsData
 			# Move it up a month
 			$start += (SECONDS_PER_DAY * 29);
 			
-		} while ( $start < $end ); 
+		} while ( $start < $end );
 		
 		return $months;		
 	}

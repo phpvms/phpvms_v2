@@ -20,6 +20,7 @@
 	$revenue = array();	
 	$expenses = array();
 	$flightexpenses = array();
+	$fuelexpenses = array();
 	$months=array();
 	
 ?>
@@ -73,7 +74,7 @@ foreach ($allfinances as $month)
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$expenses[] = $month['fuelcost']==''?0:$month['fuelcost'];
+			$fuelexpenses[] = $month['fuelcost']==''?0:$month['fuelcost'];
 			echo FinanceData::FormatMoney((-1)*$month['fuelcost']);
 			?>
 		</td>
@@ -124,8 +125,8 @@ $graph->GenerateGraph();
 	Show the expenses details graph
 */
 $graph = new ChartGraph('pchart', 'line', 600, 400);
-$graph->AddData($expenses, $months);
-$graph->setTitles('Monthly Expenses', 'Month', 'Expenses');
+$graph->AddData($fuelexpenses, $months);
+$graph->setTitles('Fuel Used', 'Month', 'Expenses');
 $graph->GenerateGraph();
 
 ?>

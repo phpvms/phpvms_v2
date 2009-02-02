@@ -150,15 +150,15 @@
 */
 
 error_reporting(0);
-
+		
 $graph = new ChartGraph('pchart', 'pie', 600, 400);
 $graph->setTitles('Expenses');
 $graph->AddData($g_expenses_values, $g_expenses_labels);
 $graph->GenerateGraph();
-	
+		
 ?>
-	<br /><br />
-	</div>
+<br /><br />
+</div>
 <div>
 <strong>Overall Costs</strong><br />
 <?php

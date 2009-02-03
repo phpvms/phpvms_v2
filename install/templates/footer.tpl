@@ -12,7 +12,7 @@
 		<a href="http://www.phpvms.net/docs/license">License & About</a> | 
 		Version <?php 
 		
-		if(defined(INSTALLER_VERSION))
+		if(defined('INSTALLER_VERSION'))
 			echo INSTALLER_VERSION;
 		else
 			echo UPDATE_VERSION;

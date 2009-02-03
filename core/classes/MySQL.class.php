@@ -45,8 +45,9 @@
  *
  */
  
-/*
+/**
  * Modifications by Nabeel Shahzad
+ * www.nsslive.net 
  */
 
 /**********************************************************************
@@ -56,65 +57,84 @@
 class ezSQL_mysql extends ezSQLcore
 {
 
-	/**/
-
-	function ezSQL_mysql($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+	
+	/**
+	 * Constructor, connects to database immediately, unless $dbname is blank
+	 *
+	 * @param string $dbuser Database username
+	 * @param string $dbpassword Database password
+	 * @param string $dbname Database name (if blank, will not connect)
+	 * @param string $dbhost Hostname, optional, default is 'localhost'
+	 * @return bool Connect status
+	 *
+	 */
+	public function __construct($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
-		//return $this->quick_connect($dbuser, $dbpassword, $dbname, $dbhost);
+		if($dbname == '') return false;
+		
+		if($this->connect($dbuser, $dbpassword, $dbhost))
+		{
+			return $this->select($dbname);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Explicitly close the connection on destruct
+	 */
+	 
+	public function __destruct()
+	{
+		$this->close();
+	}
+	
+	/**
+	 * Connects to database immediately, unless $dbname is blank
+	 *
+	 * @param string $dbuser Database username
+	 * @param string $dbpassword Database password
+	 * @param string $dbname Database name (if blank, will not connect)
+	 * @param string $dbhost Hostname, optional, default is 'localhost'
+	 * @return bool Connect status
+	 *
+	 */
+	public function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+	{
+		$this->__construct($dbuser, $dbpassword, $dbname, $dbhost);
 	}
 
-	/*
-	 *  Short hand way to connect to mySQL database server
-	 *  and select a mySQL database at the same time
-	 
-	 
-	function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
-	{
-		$this->dbname = $dbname;
 	
-		if($dbuser != '' && $dbhost != '')
-		{
-			if(!$this->connect($dbuser, $dbpassword, $dbhost))
-				return false;
-		}
-		else
-		{
-			$this->register_error('Username or host not set');
-		}
-	
-		if($this->dbname != '')
-		{
-			if(!$this->select($this->dbname))
-				return false;
-		}
-	
-		return true;
-	}*/
-
-	/*
-	 *  Try database connection
+	/**
+	 * Connect to MySQL, but not to a database
+	 *
+	 * @param string $dbuser Username
+	 * @param string $dbpassword Password
+	 * @param string $dbhost Host, optional, default is localhost
+	 * @return bool Success
+	 *
 	 */
-
-	function connect($dbuser='', $dbpassword='', $dbhost='localhost')
+	public function connect($dbuser='', $dbpassword='', $dbhost='localhost')
 	{
 		if(!$this->dbh = @mysql_connect($dbhost, $dbuser, $dbpassword, true))
 		{
 			$this->register_error(mysql_error(), mysql_errno());
 			return false;
 		}
-		else
-		{
-			$this->clear_errors();
-			return true;
-		}
 		
+	
+		$this->clear_errors();
 		return true;
 	}
-
-	/*
-	 *  Try to select a mySQL database
+	
+	/**
+	 * Select a MySQL Database
+	 *
+	 * @param string $dbname Database name
+	 * @return bool Success or not
+	 *
 	 */
-	function select($dbname='')
+	public function select($dbname='')
 	{
 		// Must have a database name
 		if ($dbname == '')
@@ -129,50 +149,58 @@ class ezSQL_mysql extends ezSQLcore
 			return false;
 		}
 
-		if(!@mysql_select_db($dbname,$this->dbh))
+		if(!@mysql_select_db($dbname, $this->dbh))
 		{
 			$this->register_error(mysql_error($this->dbh), mysql_errno($this->dbh));
 			return false;
 		}
-		else
-		{
-			$this->clear_errors();
-			return true;
-		}
 		
+		$this->clear_errors();
 		return true;
 	}
 	
-	function close()
-	{
-		mysql_close($this->dbh);
-	}
-
-	/*
-	 *  Format a mySQL string correctly for safe mySQL insert
-	 *  (no mater if magic quotes are on or not)
+	/**
+	 * Close the database connection
 	 */
-
-	function escape($str)
+	public function close()
+	{
+		return mysql_close($this->dbh);
+	}
+	
+	/**
+	 * Format a mySQL string correctly for safe mySQL insert
+	 *  (no matter if magic quotes are on or not)
+	 *
+	 * @param string $str String to escape
+	 * @return string Returns the escaped string
+	 *
+	 */
+	public function escape($str)
 	{
 		return mysql_real_escape_string(stripslashes($str), $this->dbh);
 	}
-
-	/*
-	 *  Return mySQL specific system date syntax
-	 *  i.e. Oracle: SYSDATE Mysql: NOW()
+	
+	/**
+	 * Returns the DB specific timestamp function (Oracle: SYSDATE, MySQL: NOW())
+	 *
+	 * @return string Timestamp function
+	 *
 	 */
-
-	function sysdate()
+	public function sysdate()
 	{
 		return 'NOW()';
 	}
 
-	/*
-	 *  Perform mySQL query and try to detirmin result value
+	/**
+	 * Run the SQL query, and get the result. Returns false on failure
+	 *  Check $this->error() and $this->errno() functions for any errors
+	 *  MySQL returns errno() == 0 for no error. That's the most reliable check
+	 *
+	 * @param string $query SQL Query
+	 * @return mixed Return values
+	 *
 	 */
-
-	function query($query)
+	public function query($query)
 	{
 		// Flush cached values..
 		$this->flush();

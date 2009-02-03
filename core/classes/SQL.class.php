@@ -51,9 +51,9 @@
 */
 
 define('EZSQL_VERSION','2.03');
-define('OBJECT','OBJECT',true);
-define('ARRAY_A','ARRAY_A',true);
-define('ARRAY_N','ARRAY_N',true);
+define('OBJECT','OBJECT', true);
+define('ARRAY_A','ARRAY_A', true);
+define('ARRAY_N','ARRAY_N', true);
 define('EZSQL_CORE_ERROR','ezSQLcore can not be used by itself (it is designed for use by database specific modules).');
 
 
@@ -83,21 +83,35 @@ class ezSQLcore
 	public $cache_timeout    = 24; // hours
 	public $insert_id;
 	
+	public $dbuser = false;
+	public $dbpassword = false;
+	public $dbname = false;
+	public $dbhost = false;
+	public $result;
+	
 	public $get_col_info = false;
 	
 	// == TJH == default now needed for echo of debug function
 	public $debug_echo_is_on = true;
 	
-	/*
-	 *  Error Handling
+	/**
+	 * Clear any previous errors
 	 */
-	function clear_errors()
+	public function clear_errors()
 	{
 		$this->error = '';
 		$this->errno = 0;
-	}
+	}	
 	
-	function register_error($err_str, $err_no=-1)
+	/**
+	 * Save an error that occurs in our log
+	 *
+	 * @param string $err_str This is the error string
+	 * @param int $err_no This is the error number
+	 * @return bool True
+	 *
+	 */
+	public function register_error($err_str, $err_no=-1)
 	{
 		// Keep track of last error
 		$this->error = $err_str;
@@ -113,56 +127,95 @@ class ezSQLcore
 		//$this->show_errors ? trigger_error($this->error . '(' . $this->last_query . ')', E_USER_WARNING) : null;
 	}
 	
-	function get_all_errors()
+	
+	/**
+	 * Get the error log from all the query
+	 *
+	 * @return array Queries and their error/errno values
+	 *
+	 */
+	public function get_all_errors()
 	{
 		return $this->captured_errors;
 	}
 	
-	function error()
+		
+	/**
+	 * Returns the error string from the previous query
+	 *
+	 * @return string Error string
+	 *
+	 */
+	public function error()
 	{
-		if($this->error == '')
-			return false;
-			
 		return $this->error;
 	}
 	
-	function errno()
+	
+	/**
+	 * Returns the error code from the previous query
+	 *
+	 * @return mixed Error code
+	 *
+	 */
+	public function errno()
 	{
 		return $this->errno;
 	}
 	
-	/**********************************************************************
-	*  Turn error handling on or off..
-	*/
-	
-	function show_errors()
+	/**
+	 * Show all errors by default
+	 *
+	 * @return bool true
+	 *
+	 */
+	public function show_errors()
 	{
 		$this->show_errors = true;
+		return true;
 	}
 	
-	function hide_errors()
+	
+	/**
+	 * Hide any errors from showing by default.
+	 * Can also access the property as $this->show_errors=false
+	 *
+	 * @return bool true
+	 *
+	 */
+	public function hide_errors()
 	{
 		$this->show_errors = false;
+		return true;
 	}
 	
-	/**********************************************************************
-	*  Kill cached query results
-	*/
-	
-	function flush()
+	/**
+	 * Remove the results from the last query
+	 *
+	 * @return bool Returns true
+	 *
+	 */
+	public function flush()
 	{
 		// Get rid of these
 		$this->last_result = null;
 		$this->col_info = null;
 		$this->last_query = null;
 		$this->from_disk_cache = false;
+		
+		return true;
 	}
-	
-	/**********************************************************************
-	*  Get one variable from the DB - see docs for more detail
-	*/
-	
-	function get_var($query=null,$x=0,$y=0)
+			
+	/**
+	 * Get a single column/variable
+	 *
+	 * @param string $query SQL query
+	 * @param int $x Column offset (default 0, returns first column)
+	 * @param int $y Row offset (default 0, first row returned)
+	 * @return mixed Returns the value of the variable
+	 *
+	 */
+	public function get_var($query=null,$x=0,$y=0)
 	{
 		
 		// Log how the function was called
@@ -184,11 +237,18 @@ class ezSQLcore
 		return (isset($values[$x]) && $values[$x]!=='')?$values[$x]:null;
 	}
 	
-	/**********************************************************************
-	*  Get one row from the DB - see docs for more detail
-	*/
-	
-	function get_row($query=null,$output=OBJECT,$y=0)
+		
+	/**
+	 * Return one row from the DB query (use if your doing LIMIT 1)
+	 *	or are expecting/want only one row returned
+	 *
+	 * @param string $query The SQL Query
+	 * @param type $output OBJECT (fastest, default), ARRAY_A, ARRAY_N
+	 * @param string $y Row offset (0 for first, 1 for 2nd, etc)
+	 * @return type Returns type as defined in $output
+	 *
+	 */
+	public function get_row($query=null,$output=OBJECT,$y=0)
 	{
 		
 		// Log how the function was called
@@ -223,12 +283,140 @@ class ezSQLcore
 		
 	}
 	
-	/**********************************************************************
-	*  Function to get 1 column from the cached result set based in X index
-	*  see docs for usage and info
-	*/
+	/**
+	 * Build a SELECT query, specifying the table, fields and extra conditions
+	 *
+	 * @param string $table Table to SELECT from
+	 * @param mixed $fields Array of fields to SELECT for, or comma delimited string of fields
+	 * @param string $cond Extra conditions (include the WHERE, LIMIT, etc)
+	 * @param int $limit Number of results to limit
+	 * @param type $type OBJECT, ARRAY_A, ARRAY_n
+	 * @return type Array of results
+	 *
+	 */
+	public function quick_select($table, $fields, $cond='', $type=OBJECT)
+	{
+		if($table ==  '') return false;
+			
+		$sql = 'SELECT ';
+		
+		if(is_array($fields))
+		{
+			$sql.= implode(',', $fields);
+		}
+		else
+		{
+			$sql .= $fields;
+		}
+		
+		$sql .= ' FROM '.$table;
+		
+		if($cond != '')
+			$sql .= ' '.$cond;
+		
+		return $this->get_results($sql, $type);
+	}
 	
-	function get_col($query=null,$x=0)
+	
+	/**
+	 * Build a UPDATE SQL Query. All values except for
+	 *  numeric and NOW() will be put in quotes
+	 * 
+	 * Values are NOT escaped
+	 *
+	 * @param string $table Table to build update on
+	 * @param array $fields Associative array, with [column]=value
+	 * @param string $cond Extra conditions, without WHERE
+	 * @return bool Results
+	 *
+	 */
+	public function quick_update($table, $fields, $cond='')
+	{
+		if($table ==  '') return false;
+		
+		$sql = 'UPDATE '.$table.' SET ';
+		
+		if(is_array($fields))
+		{
+			foreach($fields as $key=>$value)
+			{
+				$sql.= "$key=";
+				
+				if(is_numeric($value) || $value == 'NOW()')
+					$sql.=$value.',';
+				else
+					$sql.="'$value',";
+				
+			}
+			
+			$sql = substr($sql, 0, strlen($sql)-1);
+		}
+		else
+		{
+			$sql .= $fields;
+		}
+		
+		if($cond != '')
+			$sql .= ' WHERE '.$cond;
+		
+		return $this->query($sql, $type);
+	}
+	
+	
+	/**
+	 * Build a quick INSERT query. For simplistic INSERTs only,
+	 *  all values except numeric and NOW() are put in quotes
+	 * 
+	 * Values are NOT escaped
+	 *
+	 * @param string $table Table to insert into
+	 * @param array $fields Associative array [column] = value
+	 * @param string $flags Extra INSERT flags to add
+	 * @return bool Results
+	 *
+	 */
+	public function quick_insert($table, $fields, $flags= '')
+	{
+		if($table ==  '') return false;
+		//if(!is_array($fields) == false) return false;
+	
+		$sql = 'INSERT '. $flags .' INTO '.$table.' ';
+
+		if(is_array($fields))
+		{
+			foreach($fields as $key=>$value)
+			{
+				// build both strings
+				$cols .= $key.',';
+							
+				// Quotes or none based on value
+				if(is_numeric($value) || $value == 'NOW()')
+					$col_values .= "$value,";
+				else
+				{
+					$col_values .= "'$value',";
+				}
+					
+			}
+			
+			$cols = substr($cols, 0, strlen($cols)-1);
+			$col_values = substr($col_values, 0, strlen($col_values)-1);
+			
+			$sql .= '('.$cols.') VALUES ('.$col_values.')';
+		}
+
+		return $this->query($sql);
+	}
+	
+	/**
+	 * Get the value of one column from a query
+	 *
+	 * @param string $query The SQL query
+	 * @param string $x Column to return
+	 * @return array Return's the results of that one column
+	 *
+	 */
+	public function get_col($query=null,$x=0)
 	{
 		
 		// If there is a query then perform it if not then use cached results..
@@ -245,13 +433,17 @@ class ezSQLcore
 		
 		return $new_array;
 	}
-	
-	
-	/**********************************************************************
-	*  Return the the query as a result set - see docs for more details
-	*/
-	
-	function get_results($query=null, $output = OBJECT)
+		
+	/**
+	 * Returns the query as a set of results. Default returns OBJECT,
+	 * that is much faster than translating to ARRAY_A or ARRAY_N
+	 *
+	 * @param string $query SQL query
+	 * @param define $output OBJECT, ARRAY_A (associative array), ARRAY_N (numeric indexed). OBJECT is default and fastest
+	 * @return object Array of results, each array value being what $output is defined as
+	 *
+	 */
+	public function get_results($query=null, $output = OBJECT)
 	{
 		
 		// Log how the function was called
@@ -275,7 +467,6 @@ class ezSQLcore
 				$i=0;
 				foreach( $this->last_result as $row )
 				{
-					
 					$new_array[$i] = get_object_vars($row);
 					
 					if ( $output == ARRAY_N )
@@ -294,17 +485,18 @@ class ezSQLcore
 			}
 		}
 	}
-	
-	
-	/**********************************************************************
-	*  Function to get column meta data info pertaining to the last query
-	* see docs for more info and usage
-	*/
-	
-	function get_col_info($info_type="name",$col_offset=-1)
-	{
 		
-		if ( $this->col_info )
+	/**
+	 * Get metadata regarding a column, about a column in the last query
+	 *
+	 * @param string $info_type Column information type to get
+	 * @param int $col_offset Column number, -1 returns all columns
+	 * @return array Column information
+	 *
+	 */
+	public function get_col_info($info_type='name',$col_offset=-1)
+	{
+		if ($this->col_info )
 		{
 			if ( $col_offset == -1 )
 			{
@@ -321,13 +513,20 @@ class ezSQLcore
 				return $this->col_info[$col_offset]->{$info_type};
 			}
 		}
+		
+		return false;
 	}
 	
-	/**********************************************************************
-	*  store_cache
-	*/
 	
-	function store_cache($query,$is_insert)
+	/**
+	 * Store a results in the cache for a certain query
+	 *
+	 * @param string $query SQL query to store
+	 * @param bool $is_insert If it's an INSERT or not
+	 * @return bool Success
+	 *
+	 */
+	public function store_cache($query,$is_insert)
 	{
 		
 		// The would be cache file for this query
@@ -339,6 +538,7 @@ class ezSQLcore
 			if ( ! is_dir($this->cache_dir) )
 			{
 				$this->register_error("Could not open cache dir: $this->cache_dir");
+				return false;
 			}
 			else
 			{
@@ -354,13 +554,18 @@ class ezSQLcore
 			}
 		}
 		
+		return true;		
 	}
 	
-	/**********************************************************************
-	*  get_cache
-	*/
 	
-	function get_cache($query)
+	/**
+	 * Get the cached results for a query. This is called more internally
+	 *
+	 * @param string $query SQL query to return results for
+	 * @return mixed Returns the unserialized results
+	 *
+	 */
+	public function get_cache($query)
 	{
 		
 		// The would be cache file for this query
@@ -393,12 +598,16 @@ class ezSQLcore
 		
 	}
 	
-	/**********************************************************************
-	*  Dumps the contents of any input variable to screen in a nicely
-	*  formatted and easy to understand way - any type: Object, Var or Array
-	*/
 	
-	function vardump($mixed='')
+	/**
+	 * Show values of any variable type "nicely"
+	 *
+	 * @param mixed $mixed Variable to show
+	 * @param bool $return Return the results or show on screen
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public function vardump($mixed='', $return=false)
 	{
 		
 		// Start outup buffering
@@ -426,7 +635,7 @@ class ezSQLcore
 		ob_end_clean();
 		
 		// Only echo output if it is turned on
-		if ( $this->debug_echo_is_on )
+		if ( $this->debug_echo_is_on || $return == false)
 		{
 			echo $html;
 		}
@@ -437,22 +646,29 @@ class ezSQLcore
 		
 	}
 	
-	/**********************************************************************
-	*  Alias for the above function
-	*/
-	
-	function dumpvar($mixed)
+	/**
+	 * Show values of any variable type "nicely"
+	 *
+	 * @param mixed $mixed Variable to show
+	 * @param bool $return Return the results or show on screen
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public function dumpvar($mixed, $return=false)
 	{
-		$this->vardump($mixed);
+		$this->vardump($mixed, $return);
 	}
-	
-	/**********************************************************************
-	*  Displays the last query string that was sent to the database & a
-	* table listing results (if there were any).
-	* (abstracted into a seperate file to save server overhead).
-	*/
-	
-	function debug()
+		
+	/**
+	 *  Displays the last query string that was sent to the database & a
+	 * table listing results (if there were any).
+	 * (abstracted into a seperate file to save server overhead).
+	 *
+	 * @param bool $return Return the results, or display right away
+	 * @return string The debug table is $return = true
+	 *
+	 */
+	public function debug($return=false)
 	{
 		
 		// Start outup buffering
@@ -540,7 +756,7 @@ class ezSQLcore
 		ob_end_clean();
 		
 		// Only echo output if it is turned on
-		if ( $this->debug_echo_is_on )
+		if ( $this->debug_echo_is_on || $return == false )
 		{
 			echo $html;
 		}
@@ -555,7 +771,7 @@ class ezSQLcore
 	*  Naughty little function to ask for some remuniration!
 	*/
 	
-	function donation()
+	public function donation()
 	{
 		return "<font size=1 face=arial color=000000>If ezSQL has helped <a href=\"https://www.paypal.com/xclick/business=justin%40justinvincent.com&item_name=ezSQL&no_note=1&tax=0\" style=\"color: 0000CC;\">make a donation!?</a> &nbsp;&nbsp;<!--[ go on! you know you want to! ]--></font>";
 	}

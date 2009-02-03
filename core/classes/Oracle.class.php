@@ -47,28 +47,66 @@
 
 class ezSQL_oracle8_9 extends ezSQLcore
 {
-
-	var $dbuser = false;
-	var $dbpassword = false;
-	var $dbname = false;
-
-	/**********************************************************************
-	*  Constructor - allow the user to perform a qucik connect at the
-	*  same time as initialising the ezSQL_oracle8_9 class
-	*/
-	/**********************************************************************
-	*  Try to connect to Oracle database server
-	*/
-
-	function connect($dbuser='', $dbpassword='', $dbname='')
+	/**
+	 * Connects to database immediately, unless $dbname is blank
+	 *
+	 * @param string $dbuser Database username
+	 * @param string $dbpassword Database password
+	 * @param string $dbname Database name (if blank, will not connect)
+	 * @param string $dbhost Hostname, optional, default is 'localhost'
+	 * @return bool Connect status
+	 *
+	 */
+	 
+	public function __construct($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
-		// Must have a user and a password
-		//if (!$dbuser || !$dbpassword || !$dbname)
-		//{
-		//	$this->register_error('Username and password required to connect!');
-		//	return false;
-		//}	
+		if($dbname == '') return false;
 		
+		if($this->connect($dbuser, $dbpassword, $dbhost))
+		{
+			return $this->select($dbname);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Explicitly close the connection on destruct
+	 */
+	public function __destruct()
+	{
+		$this->close();
+	}
+	
+	/**
+	 * Connects to database immediately, unless $dbname is blank
+	 * 
+	 * In the case of Oracle quick_connect is not really needed
+	 *  because std. connect already does what quick connect does -
+	 *  but for the sake of consistency it has been included
+	 *
+	 * @param string $dbuser Database username
+	 * @param string $dbpassword Database password
+	 * @param string $dbname Database name (if blank, will not connect)
+	 * @param string $dbhost Hostname, optional, default is 'localhost'
+	 * @return bool Connect status
+	 *
+	 */
+	public function quick_connect($dbuser='', $dbpassword='', $dbname='')
+	{
+		return $this->connect($dbuser='', $dbpassword='', $dbname='');
+	}
+	
+	/**
+	 * Connect to MySQL, but not to a database
+	 *
+	 * @param string $dbuser Username
+	 * @param string $dbpassword Password
+	 * @return bool Success
+	 *
+	 */
+	public function connect($dbuser='', $dbpassword='', $dbname='')
+	{		
 		if (!$this->dbh = oci_new_connect($dbuser, $dbpassword, $dbname))
 		{
 			$err = ocierror();
@@ -82,76 +120,65 @@ class ezSQL_oracle8_9 extends ezSQLcore
 			return true;
 		}
 	}
-
-	/*
-	 *  In the case of Oracle quick_connect is not really needed
-	 *  because std. connect already does what quick connect does -
-	 *  but for the sake of consistency it has been included
+	
+	/**
+	 *  No real equivalent of mySQL select in Oracle
+	 *  once again, function included for the sake of consistency
 	 */
-
-	function quick_connect($dbuser='', $dbpassword='', $dbname='')
+	public function select($dbuser='', $dbpassword='', $dbname='')
 	{
 		return $this->connect($dbuser='', $dbpassword='', $dbname='');
 	}
 
-	/**********************************************************************
-	*  No real equivalent of mySQL select in Oracle
-	*  once again, function included for the sake of consistency
-	*/
-
-	function select($dbuser='', $dbpassword='', $dbname='')
-	{
-		return $this->connect($dbuser='', $dbpassword='', $dbname='');
-	}
-
-	/**********************************************************************
-	*  Format a Oracle string correctly for safe Oracle insert
-	*  (no mater if magic quotes are on or not)
-	*/
-
-	function escape($str)
+	/**
+	 * Format an Oracle string correctly for safe Oracle insert
+	 *  (no matter if magic quotes are on or not)
+	 *
+	 * @param string $str String to escape
+	 * @return string Returns the escaped string
+	 *
+	 */
+	public function escape($str)
 	{
 		return str_replace("'","''",str_replace("''","'",stripslashes($str)));
 	}
 
-	/**********************************************************************
-	*  Return Oracle specific system date syntax
-	*  i.e. Oracle: SYSDATE Mysql: NOW()
-	*/
-
-	function sysdate()
+	/**
+	 * Returns the DB specific timestamp function (Oracle: SYSDATE, MySQL: NOW())
+	 *
+	 * @return string Timestamp function
+	 *
+	 */
+	public function sysdate()
 	{
 		return "SYSDATE";
 	}
 
-	/**********************************************************************
-	*  These special Oracle functions make sure that even if your test
-	*  pattern is '' it will still match records that are null if
-	*  you don't use these funcs then oracle will return no results
-	*  if $user = ''; even if there were records that = ''
-	*
-	*  SELECT * FROM USERS WHERE USER = ".$db->is_equal_str($user)."
-	*/
+	/**
+	 *  These special Oracle functions make sure that even if your test
+	 *  pattern is '' it will still match records that are null if
+	 *  you don't use these funcs then oracle will return no results
+	 *  if $user = ''; even if there were records that = ''
+	 *
+	 *  SELECT * FROM USERS WHERE USER = ".$db->is_equal_str($user)."
+	 */
 
-	function is_equal_str($str='')
+	public function is_equal_str($str='')
 	{
 		return ($str==''?'IS NULL':"= '".$this->escape($str)."'");
 	}
 
-	function is_equal_int($int)
+	public function is_equal_int($int)
 	{
 		return ($int==''?'IS NULL':'= '.$int);
 	}
 
-	/**********************************************************************
-	*  Another oracle specific function - if you have set up a sequence
-	*  this function returns the next ID from that sequence
-	*/
-
-	function insert_id($seq_name)
+	/**
+	 *  Another oracle specific function - if you have set up a sequence
+	 *  this function returns the next ID from that sequence
+	 */
+	public function insert_id($seq_name)
 	{
-		global $ezsql_oracle8_9_str;
-
 		$return_val = $this->get_var("SELECT $seq_name.nextVal id FROM Dual");
 
 		// If no return value then try to create the sequence
@@ -160,17 +187,22 @@ class ezSQL_oracle8_9 extends ezSQLcore
 			$this->query("CREATE SEQUENCE $seq_name maxValue 9999999999 INCREMENT BY 1 START WITH 1 CACHE 20 CYCLE");
 			$return_val = $this->get_var("SELECT $seq_name.nextVal id FROM Dual");
 			
-			$this->register_error($ezsql_oracle8_9_str[2].": $seq_name");
+			$this->register_error("Oracle CREATE SEQUENCE error: $seq_name");
 		}
 
 		return $return_val;
 	}
 
-	/**********************************************************************
-	*  Perform Oracle query and try to determine result value
-	*/
-
-	function query($query)
+	/**
+	 * Run the SQL query, and get the result. Returns false on failure
+	 *  Check $this->error() and $this->errno() functions for any errors
+	 *  MySQL returns errno() == 0 for no error. That's the most reliable check
+	 *
+	 * @param string $query SQL Query
+	 * @return mixed Return values
+	 *
+	 */	
+	public function query($query)
 	{
 
 		$return_value = 0;

@@ -102,6 +102,10 @@
 		<td><?php echo $pilotinfo->rank;?></td>
 	</tr>
 	<tr>
+		<td>Date Joined</td>
+		<td><?php echo date(DATE_FORMAT, $pilotinfo->joindate);?></td>
+	</tr>
+	<tr>
 		<td>Last Login</td>
 		<td><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></td>
 	</tr>

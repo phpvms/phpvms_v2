@@ -69,9 +69,9 @@ class RegistrationData
 			$confirm = 0;
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email,
-					code, location, hub, password, salt, confirmed)
+					code, location, hub, password, salt, confirmed, joindate)
 				  VALUES ('$firstname', '$lastname', '$email', '$code',
-							'$location', '$hub', '$password', '$salt', $confirm)";
+							'$location', '$hub', '$password', '$salt', $confirm, NOW())";
 		
 		$res = DB::query($sql);
 		

@@ -41,12 +41,13 @@
 
 /* If not included:
  */
+ 
 
 $THISBASE = dirname(__FILE__);
-@include_once($THISBASE.'/SQL.class.php');
-@include_once($THISBASE.'/MySQL.class.php');
-@include_once($THISBASE.'/MySQLi.class.php');
-@include_once($THISBASE.'/Oracle.class.php');
+include_once($THISBASE.'/SQL.class.php');
+include_once($THISBASE.'/MySQL.class.php');
+include_once($THISBASE.'/MySQLi.class.php');
+include_once($THISBASE.'/Oracle.class.php');
  
 class DB
 {
@@ -100,7 +101,7 @@ class DB
 			{
 				self::$error = self::$DB->error;
 				self::$errno = self::$DB->errno;
-				
+			
 				return false;
 			}
 			
@@ -233,33 +234,7 @@ class DB
 	 */
 	public static function quick_select($table, $fields, $cond='', $type=OBJECT)
 	{
-		if($table ==  '') return false;
-		//if(!is_array($fields) == false) return false;
-	
-		$sql = 'SELECT ';
-		
-		if(is_array($fields))
-		{
-			$total = count($fields);
-			
-			for($i=0;$i<$total;$i++)
-			{
-				$sql .= ' '.$fields[$i].',';
-			}
-			
-			$sql = substr($sql, 0, strlen($sql)-1);
-		}
-		else
-		{
-			$sql .= $fields;
-		}
-		
-		$sql .= ' FROM '.self::$table_prefix.$table;
-		
-		if($cond != '')
-			$sql .= ' WHERE '.$cond;
-		
-		return self::get_results($sql, $type);
+		return self::$DB->quick_select($table, $fields, $cond, $type);
 	}
 	
 	/**
@@ -273,35 +248,7 @@ class DB
 	 */
 	public static function quick_update($table, $fields, $cond='')
 	{
-		if($table ==  '') return false;
-		//if(!is_array($fields) == false) return false;
-	
-		$sql = 'UPDATE '.self::$table_prefix.$table.' SET ';
-		
-		if(is_array($fields))
-		{
-			foreach($fields as $key=>$value)
-			{
-				$sql.= "$key=";
-				
-				if(is_numeric($value) || $value == "NOW()")
-					$sql.=$value.',';
-				else
-					$sql.="'$value',";
-				
-			}
-			
-			$sql = substr($sql, 0, strlen($sql)-1);
-		}
-		else
-		{
-			$sql .= $fields;
-		}
-		
-		if($cond != '')
-			$sql .= ' WHERE '.$cond;
-		
-		return self::query($sql,$type);
+		return self::$DB->quick_update($table, $fields, $cond);
 	}
 	
 	/**
@@ -315,37 +262,7 @@ class DB
 	 */
 	public static function quick_insert($table, $fields, $flags= '')
 	{
-		if($table ==  '') return false;
-		//if(!is_array($fields) == false) return false;
-	
-		$sql = 'INSERT '. $flags .' INTO '.self::$table_prefix.$table.' ';
-
-		if(is_array($fields))
-		{
-			foreach($fields as $key=>$value)
-			{
-				// build both strings
-				$cols .= $key.',';
-							
-				// Quotes or none based on value
-				if(is_numeric($value) || $value == 'NOW()')
-					$col_values .= "$value,";
-				else
-					$col_values .= "'$value',";
-					
-			}
-			
-			$cols = substr($cols, 0, strlen($cols)-1);
-			$col_values = substr($col_values, 0, strlen($col_values)-1);
-			
-			$sql .= '('.$cols.') VALUES ('.$col_values.')';
-		}
-		else
-		{
-			$sql .= $fields;
-		}
-		
-		return self::query($sql);
+		return self::$DB->quick_insert($table, $fields, $flags);
 	}
 	
 	/**
@@ -510,16 +427,7 @@ class DB
 	
 	public static function debug($return = false)
 	{
-		if($return == true)
-		{
-			ob_start();
-			self::$DB->debug();
-			$val = ob_get_clean();
-			ob_end_clean();
-			
-			return $val;
-		}
-		return self::$DB->debug();
+		return self::$DB->debug($return);
 	}
 }
 ?>

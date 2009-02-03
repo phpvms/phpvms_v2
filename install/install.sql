@@ -169,6 +169,7 @@ CREATE TABLE `phpvms_pilots` (
   `rank` varchar(32) NOT NULL default 'Trainee Pilot',
   `confirmed` smallint(5) unsigned NOT NULL default '0',
   `retired` smallint(6) NOT NULL default '0',
+  `joindate` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`pilotid`),
   UNIQUE KEY `email` (`email`),
   KEY `code` (`code`),

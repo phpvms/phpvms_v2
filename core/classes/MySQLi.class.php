@@ -43,36 +43,63 @@
 
 class ezSQL_mysqli extends ezSQLcore
 {
-	var $dbuser = false;
-	var $dbpassword = false;
-	var $dbname = false;
-	var $dbhost = false;
-	var $result;
-	
-	function ezSQL_mysqli($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+
+	/**
+	 * Constructor, connects to database immediately, unless $dbname is blank
+	 *
+	 * @param string $dbuser Database username
+	 * @param string $dbpassword Database password
+	 * @param string $dbname Database name (if blank, will not connect)
+	 * @param string $dbhost Hostname, optional, default is 'localhost'
+	 * @return bool Connect status
+	 *
+	 */
+	public function __construct($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
-		//return $this->quick_connect($dbuser, $dbpassword, $dbname, $dbhost);
+		if($dbname == '') return false;
+		
+		if($this->connect($dbuser, $dbpassword, $dbhost))
+		{
+			return $this->select($dbname);
+		}
+		
+		return false;
 	}
 	
-	/*function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
-	{
-		if($this->dbuser!='' && $dbhost!='')
-		{
-			if(!$this->connect($dbuser, $dbpassword, $dbhost))
-				return false;
-		}
-
-		if($this->dbname != '')
-		{
-			if(!$this->select($this->dbname))
-				return false;
-		}
-
-		return true;
-	}*/
+	/**
+	 * Explicitly close the connection on destruct
+	 */
 	
-
-	function connect($dbuser='', $dbpassword='', $dbhost='localhost')
+	public function __destruct()
+	{
+		$this->close();
+	}
+	
+	/**
+	 * Connects to database immediately, unless $dbname is blank
+	 *
+	 * @param string $dbuser Database username
+	 * @param string $dbpassword Database password
+	 * @param string $dbname Database name (if blank, will not connect)
+	 * @param string $dbhost Hostname, optional, default is 'localhost'
+	 * @return bool Connect status
+	 *
+	 */
+	public function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
+	{
+		$this->__construct($dbuser, $dbpassword, $dbname, $dbhost);
+	}	
+	
+	/**
+	 * Connect to MySQL, but not to a database
+	 *
+	 * @param string $dbuser Username
+	 * @param string $dbpassword Password
+	 * @param string $dbhost Host, optional, default is localhost
+	 * @return bool Success
+	 *
+	 */
+	public function connect($dbuser='', $dbpassword='', $dbhost='localhost')
 	{
 		$this->dbh =  new mysqli($dbhost, $dbuser, $dbpassword);
 		
@@ -90,8 +117,14 @@ class ezSQL_mysqli extends ezSQLcore
 		return true;
 	}
 	
-	
-	function select($dbname='')
+	/**
+	 * Select a MySQL Database
+	 *
+	 * @param string $dbname Database name
+	 * @return bool Success or not
+	 *
+	 */
+	public function select($dbname='')
 	{
 		// Must have a database name
 		if ($dbname == '')
@@ -120,22 +153,48 @@ class ezSQL_mysqli extends ezSQLcore
 		return true;
 	}
 	
-	function close()
+	/**
+	 * Close the database connection
+	 */
+	public function close()
 	{
 		return $this->dbh->close();
 	}
 	
-	function escape($str)
+	/**
+	 * Format a mySQL string correctly for safe mySQL insert
+	 *  (no matter if magic quotes are on or not)
+	 *
+	 * @param string $str String to escape
+	 * @return string Returns the escaped string
+	 *
+	 */
+	public function escape($str)
 	{
 		return $this->dbh->real_escape_string($str);
 	}
 	
-	function sysdate()
+	/**
+	 * Returns the DB specific timestamp function (Oracle: SYSDATE, MySQL: NOW())
+	 *
+	 * @return string Timestamp function
+	 *
+	 */
+	public function sysdate()
 	{
 		return 'NOW()';
 	}
 	
-	function query($query)
+	/**
+	 * Run the SQL query, and get the result. Returns false on failure
+	 *  Check $this->error() and $this->errno() functions for any errors
+	 *  MySQL returns errno() == 0 for no error. That's the most reliable check
+	 *
+	 * @param string $query SQL Query
+	 * @return mixed Return values
+	 *
+	 */	
+	public function query($query)
 	{
 		// Initialise return
 		$return_val = true;
@@ -246,7 +305,7 @@ class ezSQL_mysqli extends ezSQLcore
 	
 	/* this is mysqli only
 	 * incomplete implementation
-	 */
+	 *//*
 	function execute($query, $params)
 	{
 		if($this->mysql_version!=5 || $query == '' || $params == '')
@@ -271,29 +330,8 @@ class ezSQL_mysqli extends ezSQLcore
 
 		$stmt->execute();
 
-		/*
-		$result = $stmt->result_metadata();
-
-		$count = 1; //start the count from 1. First value has to be a reference to stmt.
-		$fieldnames[0] = &$stmt;
-		$obj = new stdClass;
-		while ($field = $result->fetch_field())
-		{
-			$fn = $field->name;
-			$fieldnames[$count] = &$obj->$fn;
-			$count++;
-		}
-
-		call_user_func_array(array($stmt, 'bind_result'), $fieldnames);
-		$stmt->fetch();
-
-		print_r($fieldnames);
-
-		print_r($obj);
-
-		$result->close();
-		*/
-	}
+	
+	}*/
 }
 
 ?>

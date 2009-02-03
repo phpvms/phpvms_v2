@@ -47,7 +47,7 @@ class SchedulesData
 			
 		return DB::get_row($sql);
 	}
-	
+		
 	public static function FindFlight($flightnum, $depicao='')
 	{
 		$sql = 'SELECT * 
@@ -482,7 +482,6 @@ class SchedulesData
 		
 		$res = DB::query($sql);
 		
-		DB::debug();
 		if(DB::errno() != 0)
 			return false;
 			

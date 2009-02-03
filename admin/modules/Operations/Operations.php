@@ -461,9 +461,19 @@ class Operations extends CodonModule
 			|| $this->post->depicao == '' || $this->post->arricao == '')
 		{
 			Template::Set('message', 'All of the fields must be filled out');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			
 			return;
+		}
+		
+		# Check if the schedule exists
+		$sched = SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum);
+		if(is_object($sched))
+		{
+			Template::Set('message', 'This schedule already exists!');
+			Template::Show('core_error.tpl');
+			
+			return;			
 		}
 		
 		$enabled = ($_POST['enabled'] == 'on') ? true : false;
@@ -517,7 +527,7 @@ class Operations extends CodonModule
 		}
 		
 		$enabled = ($_POST['enabled'] == 'on') ? true : false;
-
+		
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,

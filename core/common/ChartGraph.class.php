@@ -217,17 +217,13 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 			$this->pChart->drawGrid(4,TRUE);
 			
 			//$this->pChart->drawLegend(90,35,$pData->GetDataDescription(),255,255,255); 
-			//$this->pChart->drawFilledLineGraph($pData->GetData(), $pData->GetDataDescription(), 20, true); 
-			
-			#$this->pChart->drawCubicCurve($pData->GetData(), $pData->GetDataDescription()); 
+			//$this->pChart->drawFilledLineGraph($pData->GetData(), $pData->GetDataDescription(), 20, true);
+			//$this->pChart->drawCubicCurve($pData->GetData(), $pData->GetDataDescription()); 
+			//$this->pChart->drawLimitsGraph($pData->GetData(), $pData->GetDataDescription());
 			
 			$this->pChart->drawFilledCubicCurve($pData->GetData(), $pData->GetDataDescription(), .01, 20, true); 
-			#$this->pChart->drawLimitsGraph($pData->GetData(), $pData->GetDataDescription());
 			$this->pChart->drawPlotGraph($pData->GetData(),$pData->GetDataDescription(), 3, 2); 
-			
-			$this->pChart->drawTreshold(0,143,55,72,TRUE,TRUE);  
-			
-			//$this->pChart->writeValues($pData->GetData(), $pData->GetDataDescription(), 'dataset');
+			$this->pChart->drawTreshold(0,143,55,72,TRUE,TRUE);
 		}
 		elseif($this->type = 'bar')
 		{

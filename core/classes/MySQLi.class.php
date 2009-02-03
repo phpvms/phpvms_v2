@@ -158,7 +158,7 @@ class ezSQL_mysqli extends ezSQLcore
 	 */
 	public function close()
 	{
-		return $this->dbh->close();
+		return @$this->dbh->close();
 	}
 	
 	/**

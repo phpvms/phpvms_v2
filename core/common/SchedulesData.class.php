@@ -449,7 +449,7 @@ class SchedulesData
 		
 		# If they didn't specify 
 		$data['flighttype'] = strtoupper($data['flighttype']);
-		if($data['flighttype'] != 'P' && $data['flighttype'] != 'C')
+		if($data['flighttype'] == '')
 			$data['flighttype'] = 'P';
 			
 		foreach($data as $key=>$value)
@@ -482,6 +482,7 @@ class SchedulesData
 		
 		$res = DB::query($sql);
 		
+		DB::debug();
 		if(DB::errno() != 0)
 			return false;
 			
@@ -527,7 +528,7 @@ class SchedulesData
 			
 		# If they didn't specify a flight type, just default to pax
 		$data['flighttype'] = strtoupper($data['flighttype']);
-		if($data['flighttype'] != 'P' && $data['flighttype'] != 'C')
+		if($data['flighttype'] == '')
 			$data['flighttype'] = 'P';
 		
 		foreach($data as $key=>$value)

@@ -443,10 +443,10 @@ class SchedulesData
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
 		if($data['enabled'] == true)
-			$data['enabled'] = true;
+			$data['enabled'] = 1;
 		else
-			$data['enabled'] = false;
-		
+			$data['enabled'] = 0;
+				
 		# If they didn't specify 
 		$data['flighttype'] = strtoupper($data['flighttype']);
 		if($data['flighttype'] == '')
@@ -520,11 +520,12 @@ class SchedulesData
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
 		
+		
 		if($data['enabled'] == true)
-			$data['enabled'] = true;
+			$data['enabled'] = 1;
 		else
-			$data['enabled'] = false;
-			
+			$data['enabled'] = 0;
+					
 		# If they didn't specify a flight type, just default to pax
 		$data['flighttype'] = strtoupper($data['flighttype']);
 		if($data['flighttype'] == '')

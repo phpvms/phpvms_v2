@@ -476,7 +476,7 @@ class Operations extends CodonModule
 			return;			
 		}
 		
-		$enabled = ($_POST['enabled'] == 'on') ? true : false;
+		$enabled = ($this->post->enabled == 'on') ? true : false;
 		
 		# Check the distance
 		if($this->post->distance == '' || $this->post->distance == 0)
@@ -526,7 +526,7 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		$enabled = ($_POST['enabled'] == 'on') ? true : false;
+		$enabled = ($this->post->enabled == 'on') ? true : false;
 		
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,
@@ -545,8 +545,8 @@ class Operations extends CodonModule
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
 		
+		//print_r($data);
 		$val = SchedulesData::EditSchedule($data);
-										
 		if(!$val)
 		{
 			Template::Set('message', 'There was an error editing the schedule: '.DB::error());

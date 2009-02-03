@@ -390,6 +390,29 @@ class PilotData
 		return true;
 	}
 	
+	
+	/**
+	 * Update the last PIREP date for a pilot
+	 *
+	 * @param int $pilotid Pilot ID
+	 * @return bool Success
+	 *
+	 */
+	public static function UpdateLastPIREPDate($pilotid)
+	{
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'pilots
+					SET `lastpirep`=NOW()
+					WHERE pilotid='.$pilotid;
+		
+		DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
 	/**
 	 * Don't update the pilot's flight data, but just replace it
 	 * 	with the values given

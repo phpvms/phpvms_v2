@@ -21,7 +21,7 @@ if(!$allpilots)
 <tr>
 	<th width="1%">Pilot ID</th>
 	<th>Pilot Name</th>
-	<th>Email Address</th>
+	<th>Email</th>
 	<th>Location</th>
 	<th>Total Flights</th>
 	<th>Total Hours</th>
@@ -35,9 +35,9 @@ foreach($allpilots as $pilot)
 ?>
 <tr>
 	<td nowrap><?php echo PilotData::GetPilotCode($pilot->code, $pilot->pilotid);?> </td>
-	<td><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
-	<td align="center"><?php echo $pilot->email; ?></td>
-	<td align="center"><?php echo $pilot->location; ?></td>
+	<td width="1%" nowrap><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
+	<td align="left" width="1% nowrap"><?php echo $pilot->email; ?></td>
+	<td align="center" width="1%"><img src="<?php echo Countries::getCountryImage($pilot->location);?>" </td>
 	<td align="center"><?php echo $pilot->totalflights; ?></td>
 	<td align="center"><?php echo $pilot->totalhours; ?></td>
 	<td align="center" width="1%" nowrap>

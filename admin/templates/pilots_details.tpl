@@ -103,11 +103,15 @@
 	</tr>
 	<tr>
 		<td>Date Joined</td>
-		<td><?php echo date(DATE_FORMAT, $pilotinfo->joindate);?></td>
+		<td><?php echo date(DATE_FORMAT, strtotime($pilotinfo->joindate));?></td>
 	</tr>
 	<tr>
 		<td>Last Login</td>
-		<td><?php echo date(DATE_FORMAT, $pilotinfo->lastlogin);?></td>
+		<td><?php echo date(DATE_FORMAT, strtotime($pilotinfo->lastlogin));?></td>
+	</tr>
+	<tr>
+		<td>Last Flight</td>
+		<td><?php echo date(DATE_FORMAT, strtotime($pilotinfo->lastpirep));?></td>
 	</tr>
 	<tr>
 		<td>Total Flights</td>

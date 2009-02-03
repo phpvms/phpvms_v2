@@ -31,6 +31,7 @@ ALTER TABLE `phpvms_airports` ADD `fuelprice` FLOAT NOT NULL ;
 
 ALTER TABLE `phpvms_pilots` ADD `bgimage` VARCHAR( 30 ) NOT NULL DEFAULT 'background.png' AFTER `salt`;
 ALTER TABLE `phpvms_pilots` ADD `joindate` datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE `phpvms_pilots` ADD `lastpirep` datetime NOT NULL default '0000-00-00 00:00:00';
 
 ALTER TABLE `phpvms_expenses` ADD `type` VARCHAR ( 1 ) NOT NULL DEFAULT 'M';
 

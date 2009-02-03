@@ -150,6 +150,11 @@
 */
 
 error_reporting(0);
+if(count($g_expenses_values) ==0)
+{
+	$g_expenses_values[] = 100;
+	$g_expenses_labels[] = '';
+}
 		
 $graph = new ChartGraph('pchart', 'pie', 600, 400);
 $graph->setTitles('Expenses');

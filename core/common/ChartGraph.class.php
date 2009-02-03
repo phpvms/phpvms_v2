@@ -173,11 +173,12 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		}
 	}
 	
-	
 	protected function pChart($filename)
 	{
 		$pData = new pData;
 		$count = 1;
+		
+		$this->setFontSize(8);
 	
 		$pData->AddPoint($this->data, 'dataset');
 		$pData->AddPoint($this->labels, 'labels');
@@ -187,21 +188,14 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$pData->SetYAxisName($this->y_title);
 		$pData->SetXAxisName($this->x_title);
 		
-		/*
-			Check the cache
-		 */
 		# Set the file name:
 		if($filename == '')
 			$filename = md5(implode('',$this->data));
-			
-		//$this->pCache = new pCache(SITE_ROOT.'/core/cache'); 
-		//$this->pCache->GetFromCache($filename,$pData->GetData());
 		
 	  	# Create a "frame"
 	  	$this->pChart->drawBackground(255,255,255);
 		$this->pChart->drawFilledRoundedRectangle(0,0,$this->x,$this->y, 5,  255, 255, 255);  
 		$this->pChart->drawRoundedRectangle(5,5,$this->x-5,$this->y-5,5,230,230,230);
-		$this->setFontSize(10);
 		
 		if($this->type == 'pie')
 		{
@@ -218,27 +212,31 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		elseif($this->type == 'line')
 		{  		
 			$this->pChart->setGraphArea(90, 30, $this->x-30, $this->y-50);  
-			$this->pChart->drawScale($pData->GetData(), $pData->GetDataDescription(), SCALE_START0, 0, 0, 0, true); 
-			#@$this->pChart->drawXYScale($pData->GetData(), $pData->GetDataDescription(), SCALE_START0, 0, 0, 0, true); 
+			$this->pChart->drawScale($pData->GetData(), $pData->GetDataDescription(), SCALE_NORMAL, 0, 0, 0, true); 
 			$this->pChart->drawTreshold(0,143,55,72,TRUE,TRUE);  
 			$this->pChart->drawGrid(4,TRUE);
 			
-			#$this->pChart->drawLegend(90,35,$pData->GetDataDescription(),255,255,255); 
-			$this->pChart->drawFilledLineGraph($pData->GetData(), $pData->GetDataDescription(), 20, true); 
+			//$this->pChart->drawLegend(90,35,$pData->GetDataDescription(),255,255,255); 
+			//$this->pChart->drawFilledLineGraph($pData->GetData(), $pData->GetDataDescription(), 20, true); 
 			
-			//$this->pChart->drawCubicCurve($pData->GetData(), $pData->GetDataDescription()); 
-			$this->pChart->drawPlotGraph($pData->GetData(),$pData->GetDataDescription()); 
+			#$this->pChart->drawCubicCurve($pData->GetData(), $pData->GetDataDescription()); 
+			
+			$this->pChart->drawFilledCubicCurve($pData->GetData(), $pData->GetDataDescription(), .01, 20, true); 
+			#$this->pChart->drawLimitsGraph($pData->GetData(), $pData->GetDataDescription());
+			$this->pChart->drawPlotGraph($pData->GetData(),$pData->GetDataDescription(), 3, 2); 
+			
+			$this->pChart->drawTreshold(0,143,55,72,TRUE,TRUE);  
+			
+			//$this->pChart->writeValues($pData->GetData(), $pData->GetDataDescription(), 'dataset');
 		}
 		elseif($this->type = 'bar')
 		{
 			$this->pChart->drawBarGraph($pData->GetData(),$pData->GetDataDescription(),TRUE);
 		}
 		
-		$this->pChart->writeValues($pData->GetData(), $pData->GetDataDescription(), 'labels');
-			
-		$this->setFontSize(10);
+		$this->setFontSize(11);
 		$w = strlen($this->chart_title)*1.5;
-		@$this->pChart->drawTitle(0,20,$this->chart_title,0,0,0, $this->x);
+		@$this->pChart->drawTitle(0,23,$this->chart_title,0,0,0, $this->x);
 		
 		//$this->pCache->WriteToCache($filename,$pData->GetData(),$this->pChart); 
 					

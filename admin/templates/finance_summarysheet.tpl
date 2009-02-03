@@ -86,7 +86,7 @@ foreach ($allfinances as $month)
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$profit[] = $month['total'];
+			$profit[] = round($month['total'], 2);
 			$total+=$month['total'];
 			echo FinanceData::FormatMoney($month['total']);
 			?>
@@ -113,9 +113,10 @@ foreach ($allfinances as $month)
  * Show the revenue details graph
  */
 
-$graph = new ChartGraph('pchart', 'line', 600, 400);
-$graph->AddData($revenue, $months);
-$graph->setTitles('Monthly Revenue', 'Month', 'Revenue');
+$graph = new ChartGraph('pchart', 'line', 680, 400);
+$graph->setFontSize(8);
+$graph->AddData($profit, $months);
+$graph->setTitles('Monthly Profits', 'Month', 'Revenue ('.htmlspecialchars_decode(Config::Get('MONEY_UNIT')).')');
 $graph->GenerateGraph();
 
 ?>
@@ -124,9 +125,9 @@ $graph->GenerateGraph();
 /*
 	Show the expenses details graph
 */
-$graph = new ChartGraph('pchart', 'line', 600, 400);
+$graph = new ChartGraph('pchart', 'line', 680, 400);
 $graph->AddData($fuelexpenses, $months);
-$graph->setTitles('Fuel Used', 'Month', 'Expenses');
+$graph->setTitles('Fuel Costs', 'Month', 'Expenses ('.htmlspecialchars_decode(Config::Get('MONEY_UNIT')).')');
 $graph->GenerateGraph();
 
 ?>

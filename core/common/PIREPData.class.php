@@ -547,7 +547,6 @@ class PIREPData
 			# Add up the total amount so we can add it in
 			foreach($allexpenses as $ex)
 			{
-				echo '<pre>';print_r($ex);echo'</pre>';
 				$total_ex += $ex->cost;				
 			}
 			

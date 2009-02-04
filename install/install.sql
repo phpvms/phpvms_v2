@@ -193,7 +193,7 @@ CREATE TABLE `phpvms_pireps` (
   `accepted` smallint(6) NOT NULL default '0',
   `log` text NOT NULL,
   `load` INT(11) NOT NULL,
-  `fuelused` VARCHAR ( 15 ) NOT NULL,
+  `fuelused` FLOAT NOT NULL DEFAULT 0.0,
   `fuelprice` FLOAT NOT NULL DEFAULT 5.10,
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
@@ -302,7 +302,7 @@ ALTER TABLE `phpvms_pirepcomments`
 ALTER TABLE `phpvms_schedules`
   ADD CONSTRAINT `phpvms_schedules_ibfk_1` FOREIGN KEY (`code`) REFERENCES `phpvms_airlines` (`code`) ON UPDATE CASCADE;
 
-INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '1.1.<<REVISION>>', '', 't');
+INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '1.2.<<REVISION>>', '', 't');
 INSERT INTO `phpvms_settings` VALUES(2, 'Virtual Airline Name', 'SITE_NAME', 'PHPVMS', 'The name of your site. This will show up in the browser title bar.', 't');
 INSERT INTO `phpvms_settings` VALUES(3, 'Webmaster Email Address', 'ADMIN_EMAIL', '', 'This is the email address that email will get sent to/from', 't');
 INSERT INTO `phpvms_settings` VALUES(4, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 't');

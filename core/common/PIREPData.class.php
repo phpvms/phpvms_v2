@@ -465,10 +465,7 @@ class PIREPData
 	 */
 	 
 	public static function PopulateEmptyPIREPS()
-	{
-		//DB::get_results('SELECT * FROM phpvms_pireps');
-		//DB::debug();
-		
+	{		
 		$sql = 'SELECT  `pirepid`, `pilotid`, `code`, `flightnum`,
 						`load`, `price`, `expenses`, `flighttype`, `pilotpay`
 					FROM '.TABLE_PREFIX.'pireps';
@@ -522,7 +519,7 @@ class PIREPData
 		$load = '';
 		if($pirep->load == '' || $pirep->load == 0)
 		{
-			$load = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+			$load = FinanceData::GetLoadCount($pirep->aircraft, $sched->flighttype);
 		}
 		
 		# Check the fuel

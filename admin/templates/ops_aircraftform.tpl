@@ -1,18 +1,29 @@
 <h3><?php echo $title;?></h3>
+<p>* Denotes required fields</p>
 <form action="<?php echo SITE_URL?>/admin/index.php/operations/aircraft" method="post">
 <dl>
-<dt>Aircraft ICAO Code *</dt>
+<dt>* Aircraft ICAO Code</dt>
 <dd><input name="icao" type="text" value="<?php echo $aircraft->icao; ?>" /></dd>
 
-<dt>Aircraft Name/Type (i.e B747-400) *</dt>
+<dt>* Aircraft Name/Type (i.e B747-400)</dt>
 <dd><input name="name" type="text" value="<?php echo $aircraft->name; ?>" /></dd>
 
-<dt>Full Name (Boeing 747-400 Combi) * </dt>
+<dt>* Full Name (Boeing 747-400 Combi)</dt>
 <dd><input name="fullname" type="text"  value="<?php echo $aircraft->fullname; ?>" /></dd>
 
-<dt>Aircraft Registration *</dt>
+<dt>* Aircraft Registration</dt>
 <dd><input name="registration" type="text"  value="<?php echo $aircraft->registration; ?>" />
 	<p>TIP: Place an X in the registration to denote an inactive aircraft</p>
+</dd>
+
+<dt>* Maximum Passengers</dt>
+<dd><input name="maxpax" type="text"  value="<?php echo $aircraft->maxpax; ?>" />
+	<p>The maximum number of passengers that can be flown on this aircraft</p>
+</dd>
+
+<dt>* Maximum Cargo</dt>
+<dd><input name="maxcargo" type="text"  value="<?php echo $aircraft->maxcargo; ?>" />
+	<p>The maximum cargo load of this aicraft in <?php echo Config::Get('CARGO_UNITS'); ?></p>
 </dd>
 
 <dt>Link to download aircraft</dt>

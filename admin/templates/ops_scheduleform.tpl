@@ -135,6 +135,7 @@
 	<td><textarea name="route" style="width: 60%; height: 150px"><?php echo $schedule->route?></textarea>
 	</td>
 </tr>
+<!--
 <tr>
 	<td valign="top"><strong>Maximum Load:</strong> </td>
 	<td><input type="text" name="maxload" value="<?php echo $schedule->maxload?>" />
@@ -142,6 +143,7 @@
 			in <?php echo Config::Get('CARGO_UNITS'); ?></p>
 	</td>
 </tr>
+-->
 <tr>
 	<td valign="top"><strong>Price</strong> </td>
 	<td><input type="text" name="price" value="<?php echo $schedule->price?>" />

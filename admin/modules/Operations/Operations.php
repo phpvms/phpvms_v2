@@ -340,7 +340,8 @@ class Operations extends CodonModule
 			
 	public function AddAircraft()
 	{		
-		if($this->post->icao == '' || $this->post->name == '' || $this->post->fullname == ''
+		if($this->post->icao == '' || $this->post->name == '' 
+			|| $this->post->fullname == ''
 			|| $this->post->registration == '')
 		{
 			Template::Set('message', 'You must enter the ICAO, name, full name and the registration.');
@@ -365,7 +366,8 @@ class Operations extends CodonModule
 			
 		OperationsData::AddAircaft($this->post->icao, $this->post->name, $this->post->fullname, 
 					$this->post->registration, $this->post->downloadlink, $this->post->imagelink,
-					$this->post->range, $this->post->weight, $this->post->cruise, $this->post->enabled);
+					$this->post->range, $this->post->weight, $this->post->cruise, 
+					$this->post->maxpax, $this->post->maxcargo, $this->post->enabled);
 		
 		if(DB::errno() != 0)
 		{
@@ -606,9 +608,10 @@ class Operations extends CodonModule
 			$this->post->enabled = false;
 			
 		OperationsData::EditAircraft($this->post->id, $this->post->icao, $this->post->name, 
-					$this->post->fullname, $this->post->registration, $this->post->downloadlink,
-					$this->post->imagelink, $this->post->range, 
-					$this->post->weight, $this->post->cruise, $this->post->enabled);
+										$this->post->fullname, $this->post->registration, $this->post->downloadlink,
+										$this->post->imagelink, $this->post->range, 
+										$this->post->weight, $this->post->cruise, 
+										$this->post->maxpax, $this->post->maxcargo, $this->post->enabled);
 		
 		if(DB::errno() != 0)
 		{

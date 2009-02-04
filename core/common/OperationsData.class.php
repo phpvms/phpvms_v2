@@ -187,7 +187,9 @@ class OperationsData
 	 * Add an aircraft
 	 */
 	public static function AddAircaft($icao, $name, $fullname, $registration, $downloadlink,
-										$imagelink, $range, $weight, $cruise, $enabled=true)
+										$imagelink, $range, $weight, $cruise, 
+										$maxpax, $maxcargo,
+										$enabled=true)
 	{
 		$icao = DB::escape(strtoupper($icao));
 		$name = DB::escape(strtoupper($name));
@@ -204,10 +206,12 @@ class OperationsData
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."aircraft (
 					`icao`, `name`, `fullname`, `registration`, `downloadlink`,
-					`imagelink`, `range`, `weight`, `cruise`, `enabled`)
+					`imagelink`, `range`, `weight`, `cruise`, 
+					`maxpax`, `maxcargo`, `enabled`)
 				VALUES (
 					'$icao', '$name', '$fullname', '$registration', '$downloadlink', 
-					'$imagelink', '$range', '$weight', '$cruise', $enabled)";
+					'$imagelink', '$range', '$weight', '$cruise', 
+					'$maxpax', '$maxcargo', $enabled)";
 		
 		$res = DB::query($sql);
 		
@@ -220,8 +224,10 @@ class OperationsData
 	/**
 	 * Edit an aircraft
 	 */
-	public static function EditAircraft($id, $icao, $name, $fullname, $registration, $downloadlink, $imagelink,
-								$range, $weight, $cruise, $enabled=true)
+	public static function EditAircraft($id, $icao, $name, $fullname, 
+										$registration, $downloadlink, $imagelink,
+										$range, $weight, $cruise, 
+										$maxpax, $maxcargo, $enabled=true)
 	{
 		$icao = DB::escape(strtoupper($icao));
 		$name = DB::escape(strtoupper($name));
@@ -236,7 +242,8 @@ class OperationsData
 					SET `icao`='$icao', `name`='$name', `fullname`='$fullname',
 						`registration`='$registration', `downloadlink`='$downloadlink', 
 						`imagelink`='$imagelink', `range`='$range', `weight`='$weight',
-						`cruise`='$cruise', `enabled`=$enabled
+						`cruise`='$cruise', `maxpax`='$maxpax', `maxcargo`='$maxcargo',
+						`enabled`=$enabled
 					WHERE `id`=$id";
 		
 		$res = DB::query($sql);

@@ -323,11 +323,11 @@ class PIREPData
 		# Look up the schedule
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
 		
-		# Check the load, if it's blank then
-		#	look it up
+		# Check the load, if it's blank then look it up
+		#	Based on the aircraft that was flown
 		if($pirepdata['load'] == '')
 		{
-			$pirepdata['load'] = FinanceData::GetLoadCount($sched->maxload, $sched->flighttype);
+			$pirepdata['load'] = FinanceData::GetLoadCount($pirepdata['aircraft'], $sched->flighttype);
 		}
 		
 		# Get the fuelprice

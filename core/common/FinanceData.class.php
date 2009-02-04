@@ -464,11 +464,14 @@ class FinanceData
 	 * Get the active load count based on the load factor
 	 *  based on the flight type: P(assenger), C(argo), H(Charter)
 	 */
-	public static function GetLoadCount($count, $flighttype='P')
+	public static function GetLoadCount($aircraft_id, $flighttype='P')
 	{
+		
+		$flighttype = strtoupper($flighttype);
+		
 		# Calculate our load factor for this flight
 		#	Charter flights always will have a 100% capacity
-		if(strtoupper($sched->flighttype) == 'H')
+		if($flighttype == 'H')
 		{
 			$load = 100;
 		}
@@ -483,6 +486,16 @@ class FinanceData
 			elseif($load <= 0)
 				$load = 72; # Use ATA standard of 72%
 		}
+		
+		/*
+		 * Get the maximum allowed based on the aircraft flown
+		 */
+		$aircraft = OperationsData::GetAircraftInfo($aircraft_id);
+		
+		if($flighttype == 'C') # Check cargo if cargo flight
+			$count = $aircraft->maxcargo;
+		else
+			$count = $aircraft->maxpax;
 		
 		$currload = ceil($count * ($load / 100));
 		return $currload;

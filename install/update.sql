@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS `phpvms_financedata` (
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+ALTER TABLE `phpvms_aircraft` ADD `maxpax` FLOAT NOT NULL AFTER `cruise`;
+ALTER TABLE `phpvms_aircraft` ADD `maxcargo` FLOAT NOT NULL AFTER `maxpax`;
 ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;
 
 ALTER TABLE `phpvms_airports` ADD `fuelprice` FLOAT NOT NULL ;

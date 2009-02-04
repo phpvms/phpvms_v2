@@ -24,7 +24,7 @@ foreach($allexpenses as $expense)
 ?>
 <tr>
 	<td align="center"><?php echo $expense->name; ?></td>
-	<td align="center"><?php echo Config::Get('MONEY_UNIT').$expense->cost; ?>/mo</td>
+	<td align="center"><?php echo Config::Get('MONEY_UNIT').$expense->cost; ?></td>
 	<td align="center"><?php echo $expense_list[$expense->type]; ?></td>
 	<td align="center" width="1%" nowrap>
 		<a id="dialog" class="jqModal" 

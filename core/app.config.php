@@ -53,8 +53,17 @@ Config::Set('MAP_CENTER_LNG', '-62.334821');
 Config::Set('ACARS_LIVE_TIME', 720); 
 Config::Set('ACARS_DEBUG', false);
 
-# Monetary Units
-Config::Set('MONEY_UNIT', '$'); # $, €, etc
+/*
+  This is the unit of money. For non-dollars, use :
+	Dollars ($), enter "$"
+	Euro (€), enter "&#8364;"
+	Yen (¥), enter "&yen;"
+	Pounds (£), enter "&pound;"
+	
+  For example, to set EUROS:
+	Config::Set('MONEY_UNIT', '&#8364;');
+ */
+Config::Set('MONEY_UNIT', '$');
 Config::Set('MONEY_FORMAT', '%(#10n');
 
 

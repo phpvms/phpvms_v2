@@ -512,7 +512,7 @@ class Operations extends CodonModule
 			return;
 		}
 
-        Template::Set('message', 'The schedule has been added');
+        Template::Set('message', 'The schedule "'.$this->post->code.$this->post->flightnum.'" has been added');
 		Template::Show('core_success.tpl');
 	}
 
@@ -556,7 +556,7 @@ class Operations extends CodonModule
 			return;
 		}
 
-		Template::Set('message', 'The schedule has been edited');
+		Template::Set('message', 'The schedule "'.$this->post->code.$this->post->flightnum.'" has been edited');
 		Template::Show('core_success.tpl');
 	}
 
@@ -620,7 +620,7 @@ class Operations extends CodonModule
 			return;
 		}
 
-		Template::Set('message', 'The aircraft has been edited');
+		Template::Set('message', 'The aircraft "'.$this->post->registration.'" has been edited');
 		Template::Show('core_success.tpl');
 	}
 }

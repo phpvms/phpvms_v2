@@ -86,9 +86,8 @@ class Import extends CodonModule
 					$arrtime = $fields[8];
 					$flighttime = $fields[9];
 					$notes = $fields[10];
-					$maxload = $fields[11];
-					$price = $fields[12];
-					$flighttype = $fields[13];
+					$price = $fields[11];
+					$flighttype = $fields[12];
 									
 					if($code=='')
 					{

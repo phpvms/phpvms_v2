@@ -266,7 +266,7 @@ class Operations extends CodonModule
 	
 	public function AddAirline()
 	{
-		$code = $this->post->code;
+		$code = strtoupper($this->post->code);
 		$name = $this->post->name;
 		
 		if($code == '' || $name == '')

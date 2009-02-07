@@ -188,9 +188,9 @@ class TemplateSet
 	{
 		/* See if the file has been over-rided in the skin directory
 		 */
+
 		if(!defined('ADMIN_PANEL') && $checkskin == true)
 		{
-			echo 'check skin'; 
 			if(file_exists(SKINS_PATH . DIRECTORY_SEPARATOR . $tpl_name))
 				$tpl_path = SKINS_PATH . DIRECTORY_SEPARATOR . $tpl_name;
 			else
@@ -214,11 +214,11 @@ class TemplateSet
 		$cont = ob_get_contents();
 		ob_end_clean();
 		
-		//dont return, just output
-		if($ret==false)
-			echo $cont;
-		else
+		# Check if we wanna return
+		if($ret==true)		
 			return $cont;
+			
+		echo $cont;
 	}
 	
 	
@@ -234,7 +234,6 @@ class TemplateSet
 	 */
 	public function ShowModule($ModuleName, $MethodName='ShowTemplate')
 	{
-		
 		return MainController::Run($ModuleName, $MethodName);
 	}
 }

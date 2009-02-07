@@ -132,6 +132,7 @@ class OperationsData
 	
 	public static function GetAirlineByCode($code)
 	{
+		$code = strtoupper($code);
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
 								WHERE `code`=\''.$code.'\'');
 	}

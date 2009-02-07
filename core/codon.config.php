@@ -44,12 +44,12 @@ ini_set('display_errors', 'on');
 
 define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
-define('CLASS_PATH', CORE_PATH . '/classes');
-define('TEMPLATES_PATH', CORE_PATH . '/templates');
-define('CACHE_PATH', CORE_PATH . '/cache');
-define('COMMON_PATH', CORE_PATH . '/common');
-define('PAGES_PATH', CORE_PATH . '/pages');
-define('LIB_PATH', SITE_ROOT.'/lib');
+define('CLASS_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'classes');
+define('TEMPLATES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'templates');
+define('CACHE_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'cache');
+define('COMMON_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'common');
+define('PAGES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'pages');
+define('LIB_PATH', SITE_ROOT.DIRECTORY_SEPARATOR.'lib');
 
 
 $version = phpversion();
@@ -59,27 +59,27 @@ if($version[0] != '5')
 }
 
 // Include all dependencies
-include CLASS_PATH . '/Config.class.php';
-include CLASS_PATH . '/CodonAJAX.class.php';
-include CLASS_PATH . '/CodonCondenser.class.php';
-include CLASS_PATH . '/CodonEvent.class.php';
-include CLASS_PATH . '/CodonForm.class.php';
-include CLASS_PATH . '/CodonModule.class.php';
-include CLASS_PATH . '/CodonWebService.class.php';
-include CLASS_PATH . '/DB.class.php';
-include CLASS_PATH . '/Debug.class.php';
-include CLASS_PATH . '/MainController.class.php';
-include CLASS_PATH . '/SessionManager.class.php';
-include CLASS_PATH . '/Template.class.php';
-include CLASS_PATH . '/TemplateSet.class.php';
-include CLASS_PATH . '/Util.class.php';
-include CLASS_PATH . '/Vars.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'Config.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonAJAX.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonCondenser.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonEvent.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonForm.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonModule.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonWebService.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'DB.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'Debug.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'MainController.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'SessionManager.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'Template.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'TemplateSet.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'Util.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'Vars.class.php';
 
-Config::Set('MODULES_PATH', CORE_PATH . '/modules');
+Config::Set('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
 Config::Set('MODULES_AUTOLOAD', true);
 
-include CORE_PATH . '/app.config.php';
-@include CORE_PATH . '/local.config.php';
+include CORE_PATH.DIRECTORY_SEPARATOR.'app.config.php';
+@include CORE_PATH.DIRECTORY_SEPARATOR.'local.config.php';
 
 MainController::loadCommonFolder();
 
@@ -105,7 +105,7 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 	}
 }
 
-include CORE_PATH.'/bootstrap.inc.php';
+include CORE_PATH.DIRECTORY_SEPARATOR.'bootstrap.inc.php';
 
 if(function_exists('pre_module_load'))
 	pre_module_load();
@@ -115,4 +115,4 @@ MainController::loadEngineTasks();
 if(function_exists('post_module_load'))
 	post_module_load();
 
-define('SKINS_PATH', LIB_PATH.'/skins/' . CURRENT_SKIN);
+define('SKINS_PATH', LIB_PATH.DIRECTORY_SEPARATOR.'skins'.DIRECTORY_SEPARATOR.CURRENT_SKIN);

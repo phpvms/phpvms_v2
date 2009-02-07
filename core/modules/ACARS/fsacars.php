@@ -258,9 +258,9 @@ $route->route
 		$ac = OperationsData::GetAircraftByReg($reg);
 		
 		# Get the fuel used
-		$pos = find_in_fsacars_log('Spent Fuel', $log);
+		/*$pos = find_in_fsacars_log('Spent Fuel', $log);
 		preg_match('/^.*Spent Fuel: (\d*)/', $log[$pos], $matches);
-		$fuelused = $matches[1];
+		$fuelused = $_GET['fuel'];*/
 		
 		# Do some cleanup
 		$_GET['origin'] = DB::escape($_GET['origin']);
@@ -316,7 +316,7 @@ $route->route
 						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
 						'comment'=>$comment,
-						'fuelused'=>$fuelused,
+						'fuelused'=>$_GET['fuel'],
 						'source'=>'fsacars',
 						'load'=>$load,
 						'log'=> $_GET['log']);

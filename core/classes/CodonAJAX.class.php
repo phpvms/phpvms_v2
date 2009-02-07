@@ -63,7 +63,7 @@ class CodonAJAX
 	/**
 	 * Show a button that will display a modal box
 	 *
-	 * @example ModalButton('Click me', 'Welcome/options', 'button');
+	 * @example ModalButton('Click me', 'Welcome/options', 'button'); // Going to the Welcome module
 	 *
 	 * @param string $linkname  Name of the link to click
 	 * @param string $get_params Parameters as ?key=value, or /Module/Page or whatever your rewrite is

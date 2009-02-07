@@ -42,7 +42,7 @@ include 'core/codon.config.php';
 $BaseTemplate = new TemplateSet;
 
 //load the main skin
-$settings_file = SKINS_PATH . '/' . CURRENT_SKIN . '.php';
+$settings_file = SKINS_PATH.DIRECTORY_SEPARATOR.CURRENT_SKIN . '.php';
 if(file_exists($settings_file))
 	include $settings_file;
 

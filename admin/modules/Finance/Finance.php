@@ -79,7 +79,7 @@ class Finance extends CodonModule
 				{
 					// This should be the last 3 months overview
 					
-					$data = FinanceData::GetRangeBalanceData('-3 months', 'now');
+					$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
 					
 					Template::Set('title', 'Balance Sheet for Last 3 Months');
 					Template::Set('allfinances', $data);					

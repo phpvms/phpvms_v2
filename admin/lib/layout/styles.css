@@ -184,6 +184,16 @@ table.balancesheet td  {
     line-height: 0px;
 }
 
+.newsitem 
+{
+	margin: 0px; 
+	padding: 0px; 
+	border-bottom: 1px solid #CCC; 
+	padding-top: 6px; 
+	padding-bottom: 6px;
+	line-height: 1.4em;
+}
+
 ul.menu, ul.menu ul {
   list-style-type:none;
   margin: 0;

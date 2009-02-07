@@ -51,8 +51,18 @@ class TemplateSet
 			$this->Set($path);
 	}*/
 	
+	/**
+	 * Set the default path to look for the templates
+	 * 
+	 * @param string $path Path to the templates folder
+	 */
 	public function SetTemplatePath($path)
 	{
+		# Remove trailing directory separator
+		$len = strlen($path);
+		if($path[$len-1] == DIRECTORY_SEPARATOR)
+			$path=substr($path, 0, $len-1);
+			
 		$this->template_path = $path;
 	}
 	
@@ -61,18 +71,28 @@ class TemplateSet
 		$this->enable_caching = $bool;
 	}
 	
+	/**
+	 * Clear all variables
+	 */
 	public function ClearVars()
 	{
 		$this->vars = array();
 	}
 	
+	/**
+	 * Set a variable to the template, call in the template
+	 * as $name
+	 * 
+	 * @param mixed $name Variable name
+	 * @param mixed $value Variable value
+	 */
 	public function Set($name, $value)
 	{
 		// See if they're setting the template as a file
 		//	Check if the file exists 
 		if(!is_object($value) && strstr($value, '.'))
 		{
-			if(file_exists($this->template_path . '/' . $value))
+			if(file_exists($this->template_path . DIRECTORY_SEPARATOR . $value))
 			{
 				$value = $this->GetTemplate($value, true);
 			}
@@ -81,16 +101,34 @@ class TemplateSet
 		$this->vars[$name] = $value;
 	}
 	
-	public function Show($tpl_name)
+	/**
+	 * Alias to self::ShowTemplate();
+	 * 
+	 * @param string $tpl_name Template name including extention
+	 * @param bool $checkskin Check the skin folder or not
+	 */
+	public function Show($tpl_name, $checkskin=true)
 	{
-		return $this->ShowTemplate($tpl_name);
+		return $this->ShowTemplate($tpl_name, $checkskin);
 	}
 	
-	public function ShowTemplate($tpl_name)
+	
+	/**
+	 * Show a template on screen, checks to see if the
+	 *	template is cached or not as well. To return a template,
+	 *  use self::GetTemplate(); this ends up calling GetTemplate()
+	 *	if the cache is empty or disabled
+	 *
+	 * @param string $tpl_name Template name including extention
+	 * @param bool $checkskin Check the skin folder or not
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public function ShowTemplate($tpl_name, $checkskin=true)
 	{		
 		if($this->enable_caching == true)
 		{
-			$cached_file = CACHE_PATH . '/' . $tpl_name;
+			$cached_file = CACHE_PATH . DIRECTORY_SEPARATOR . $tpl_name;
 			
 			// The cache has expired
 			if((time() - filemtime($cached_file)) > ($this->cache_timeout*3600))
@@ -116,25 +154,51 @@ class TemplateSet
 		}
 		else
 		{
-			return $this->GetTemplate($tpl_name);
+			return $this->GetTemplate($tpl_name,false,$checkskin);
 		}
 	}
 	
-	//get the actual template text
-	public function GetTemplate($tpl_name, $ret=false)
+	
+	/**
+	 * Alias to $this->GetTemplate()
+	 *
+	 * @param string $tpl_name Template to return (with extension)
+	 * @param bool $ret Return the template or output it on the screen
+	 * @param bool $checkskin Check the active skin folder for the template first
+	 * @return mixed Returns template text is $ret is true
+	 *
+	 */
+	public function Get($tpl_name, $ret=false, $checkskin=true)
+	{
+		return $this->GetTemplate($tpl_name, $ret, $checkskin);
+	}
+	
+	/**
+	 * GetTemplate
+	 *  This gets the actual template data from a template, and fills
+	 *	in the variables
+	 *
+	 * @param string $tpl_name Template to return (with extension)
+	 * @param bool $ret Return the template or output it on the screen
+	 * @param bool $checkskin Check the active skin folder for the template first
+	 * @return mixed Returns template text is $ret is true
+	 *
+	 */
+	public function GetTemplate($tpl_name, $ret=false, $checkskin=true)
 	{
 		/* See if the file has been over-rided in the skin directory
 		 */
-		if(!defined('ADMIN_PANEL'))
+		if(!defined('ADMIN_PANEL') && $checkskin == true)
 		{
-			if(file_exists(SKINS_PATH . '/' . $tpl_name))
-				$tpl_path = SKINS_PATH . '/' . $tpl_name;
+			echo 'check skin'; 
+			if(file_exists(SKINS_PATH . DIRECTORY_SEPARATOR . $tpl_name))
+				$tpl_path = SKINS_PATH . DIRECTORY_SEPARATOR . $tpl_name;
 			else
-				$tpl_path = $this->template_path . '/' . $tpl_name;
+				$tpl_path = $this->template_path . DIRECTORY_SEPARATOR . $tpl_name;
 		}
 		else
 		{
-			$tpl_path = $this->template_path . '/' . $tpl_name;
+			$tpl_path = $this->template_path . DIRECTORY_SEPARATOR . $tpl_name;
 		}
 
 		if(!file_exists($tpl_path))
@@ -157,39 +221,21 @@ class TemplateSet
 			return $cont;
 	}
 	
+	
+	/**
+	 * ShowModule
+	 *	This is an alias to MainController::Run(); calls a function
+	 *	in a module. Returns back whatever the called function returns
+	 *
+	 * @param string $ModuleName Module name to call
+	 * @param string $MethodName Function which to call in the module
+	 * @return mixed This is the return value description
+	 *
+	 */
 	public function ShowModule($ModuleName, $MethodName='ShowTemplate')
 	{
 		
 		return MainController::Run($ModuleName, $MethodName);
-		
-		/*$ModuleName = strtoupper($ModuleName);
-		global $$ModuleName;
-		
-		// have a reference to the self 
-		if(!is_object($$ModuleName) || ! method_exists($$ModuleName, $MethodName))
-		{
-			return false;	
-		}
-		
-		// if there are parameters added, then call the function 
-		//	using those additional params
-		$args = func_num_args();
-		if($args>2)
-		{
-			$vals=array();
-			for($i=2;$i<$args;$i++)
-			{
-				$param = func_get_arg($i);
-				array_push($vals, $param);
-			}
-			
-			return call_user_method_array($MethodName,  $$ModuleName, $vals);
-		}
-		else
-		{
-			//no parameters, straight return
-			return $$ModuleName->$MethodName();
-		}*/
 	}
 }
 ?>

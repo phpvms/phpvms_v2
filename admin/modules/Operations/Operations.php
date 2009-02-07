@@ -363,6 +363,21 @@ class Operations extends CodonModule
 			Template::Show('core_error.tpl');
 			return;
 		}
+		
+		//TODO: clean this up
+		$data = array(	'icao'=>$this->post->icao,
+						'name'=>$this->post->name,
+						'fullname'=>$this->post->fullname,
+						'registration'=>$this->post->registration,
+						'downloadlink'=>$this->post->downloadlink,
+						'imagelink'=>$this->post->imagelink,
+						'range'=>$this->post->range,
+						'weight'=>$this->post->weight,
+						'cruise'=>$this->post->cruise,
+						'maxpax'=>$this->post->maxpax,
+						'maxcargo'=>$this->post->maxcargo,
+						'enabled'=>$this->post->enabled);
+						
 			
 		OperationsData::AddAircaft($this->post->icao, $this->post->name, $this->post->fullname, 
 					$this->post->registration, $this->post->downloadlink, $this->post->imagelink,

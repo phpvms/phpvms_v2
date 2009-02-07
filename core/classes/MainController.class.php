@@ -74,12 +74,13 @@ class MainController
 				#	in Name=>Path format
 				if(is_numeric($key))
 				{
-					$path = Config::Get('MODULE_PATH') . '/' . $module_list[$key] . '/' . $module_list[$i] .'.php';
+					$path = Config::Get('MODULE_PATH') . DIRECTORY_SEPARATOR 
+								. $module_list[$key] . DIRECTORY_SEPARATOR . $module_list[$i] .'.php';
 					$modules[$module_list[$i]] = $path;
 				}
 				else
 				{
-					$modules[$key] = Config::Get('MODULE_PATH') . '/' . $value;
+					$modules[$key] = Config::Get('MODULE_PATH') . DIRECTORY_SEPARATOR . $value;
 				}
 			}
 			
@@ -137,8 +138,8 @@ class MainController
 		{
     		if($file == '.' || $file == '..') continue;
     		
-    		if(strstr($file, '.php') !== false)
-				include_once COMMON_PATH.'/'.$file;
+			if(strstr($file, '.php') !== false)
+				include_once COMMON_PATH.DIRECTORY_SEPARATOR.$file;
 		}
 	}
 	
@@ -159,7 +160,7 @@ class MainController
 		    {
 		    	if(is_dir($path.'/'.$file))
 		    	{
-					$fullpath = $path . '/' . $file . '/' . $file . '.php';
+					$fullpath = $path . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . $file . '.php';
 					
 					if(file_exists($fullpath))
 					{

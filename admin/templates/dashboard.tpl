@@ -31,7 +31,7 @@ echo $updateinfo;
 			</ul>
 		</td>
 		<td valign="top" width="50%">
-			<h3>Latest News</h3>
+			<h3 style="margin-bottom: 0px;">Latest News</h3>
 			<?php echo $latestnews; ?>
 		</td>
 	</tr>

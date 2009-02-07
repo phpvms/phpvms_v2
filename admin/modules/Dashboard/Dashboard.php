@@ -81,7 +81,8 @@ class Dashboard extends CodonModule
 			$file = new CodonWebService();
 			$file->setType('fopen'); 
 			$contents = $file->get($url);
-			$contents = nl2br(trim($contents));
+			//$contents = nl2br(trim($contents));
+			$contents = str_replace('\n', '', $contents);
 			
 			preg_match('/^.*Version: (.*)<\/span>/', $contents, $version_info);
 			$version = $version_info[1];

@@ -286,12 +286,8 @@ class PilotAdmin extends CodonModule
 		# Send pilot notification
 		
 		$subject = 'Your registration was accepted - '.SITE_NAME;
-		$message = "Dear $pilot->firstname $pilot->lastname,
-Your registration for ".SITE_NAME." was accepted! Please visit us 
-at <a href=\"".SITE_URL."\">".SITE_URL."</a> to login and complete your registration
-
-Thanks!
-".SITE_NAME." Staff";
+		Template::Set('pilot', $pilot);
+		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true);
 	
 		Util::SendEmail($pilot->email, $subject, $message);
 		

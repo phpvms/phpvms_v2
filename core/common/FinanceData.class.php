@@ -80,7 +80,7 @@ class FinanceData
 	 */
 	public static function GetRangeBalanceData($start, $end)
 	{
-		$times = StatsData::GetMonthsInRange($start, strtotime($end));
+		$times = StatsData::GetMonthsInRange($start, $end);
 		$now = time();
 		
 		$start = StatsData::GetStartDate();

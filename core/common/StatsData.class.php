@@ -62,15 +62,14 @@ class StatsData
 			$startdate = $date->submitdate;
 		
 		$start = strtotime($startdate);
-		$end = time();		
+		$end = date('Y');		
 		do
 		{
-			
 			$year = date('Y', $start);	# Get the months
 			$years[$year] = $start;		# Set the timestamp
-			$start += SECONDS_PER_DAY * 29;		
+			$start = strtotime('+1 Year', $start);
 			
-		} while ( $start < $end ); 
+		} while ( $year < $end ); 
 		
 		return array_reverse($years, true);	
 	}
@@ -85,15 +84,15 @@ class StatsData
 			$start = strtotime($start);
 		}
 		
-		$end = intval(date('Ym'));
+		$end = date('Ym');
 
 		do
 		{
 			# Get the months
 			$month = date('M Y', $start);
 			$months[$month] = $start; # Set the timestamp			
-			$start += SECONDS_PER_DAY * 29; # Add a month
-			
+			$start = strtotime('+1 month +1 day', strtotime($month));
+		
 			# Convert to YYYYMM to compare
 			$check = intval(date('Ym', $start));
 			
@@ -124,10 +123,10 @@ class StatsData
 		*/		
 		do
 		{			
-			
 			$month = date('M Y', $start);		# Get the month
-			$months[$month] = $start;			# Set the timestamp			
-			$start += (SECONDS_PER_DAY * 29);	# Move it up a month
+			$months[$month] = $start;			# Set the timestamp	
+			$start = strtotime('+1 month +1 day', strtotime($month));
+			//$start += (SECONDS_PER_DAY * 25);	# Move it up a month
 			
 			$check = intval(date('Ym', $start));
 			

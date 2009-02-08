@@ -128,7 +128,10 @@ class PIREPData
 					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME('.$date.'))';
 
 		$row = DB::get_row($sql);
-		return $row->count;
+		if(!$row)
+			return 0;
+			
+		return ($row->count=='')?0:$row->count;
 	}
 	
 	/**

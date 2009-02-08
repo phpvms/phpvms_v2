@@ -88,6 +88,9 @@ class CodonCondenser
 		
 		$fp = fopen($this->path.'/'.$this->filename, 'w');
 		
+		if(!$fp)
+			return false;
+			
 		foreach($files as $file)
 		{
 			if($file == '' || !file_exists($this->path.'/'.$file))

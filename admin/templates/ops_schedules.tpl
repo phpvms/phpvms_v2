@@ -25,7 +25,7 @@ foreach($schedules as $sched)
 {
 ?>
 <tr id="row<?php echo $sched->id?>" class="<?php echo ($sched->enabled==0)?'disabled':''?>">
-	<td align="left"><?php echo $sched->code . $sched->flightnum; ?> (Leg <?php echo$sched->leg?>)</td>
+	<td align="left"><?php echo $sched->code . $sched->flightnum; ?></td>
 	<td align="left"><?php echo $sched->depicao; ?> (<?php echo $sched->deptime;?>)</td>
 	<td align="left"><?php echo $sched->arricao; ?> (<?php echo $sched->arrtime;?>)</td>
 	<td align="left"><?php echo $sched->aircraft.' ('.$sched->registration.')'; ?></td>

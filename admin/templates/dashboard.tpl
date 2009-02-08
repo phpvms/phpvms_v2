@@ -8,6 +8,11 @@ echo $updateinfo;
 <div id="reportcounts" align="center" width="400px" >
 <?php
 # Create the chart
+//$reportcounts = '';
+if(!$reportcounts)
+{
+	$reportcounts = array();
+}
 $graph = new ChartGraph('pchart', 'line', 680, 180);
 $graph->setFontSize(8);
 $graph->AddData($reportcounts, array_keys($reportcounts));

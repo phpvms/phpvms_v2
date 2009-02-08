@@ -10,3 +10,4 @@
 		<input type="submit" name="submit" value="<?php echo $title;?>" />
 	</dd>
 </dl>
+</form>

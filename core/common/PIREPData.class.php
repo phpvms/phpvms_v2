@@ -339,6 +339,9 @@ class PIREPData
 			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice($pirepdata['fuelused'], $pirepdata['depicao']);
 		}
 		
+		
+		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
+		
 		# Escape the comment field
 		$comment = DB::escape($pirepdata['comment']);
 				
@@ -444,6 +447,8 @@ class PIREPData
 		{
 			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice();
 		}
+		
+		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		$sql = "UPDATE ".TABLE_PREFIX."pireps 
 				SET `code`='$pirepdata[code]', 

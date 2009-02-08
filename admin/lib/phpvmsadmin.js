@@ -95,7 +95,7 @@ $(document).ready(function()
 	    onHide: function(h) {
             h.o.remove(); // remove overlay
             h.w.fadeOut(100); // hide window 
-            $("#jqmdialog").html('');
+            $("#jqmdialog").html("");
             //dialogInit();
         }
     });

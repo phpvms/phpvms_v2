@@ -27,6 +27,9 @@
 	<dt>Download Name</dt>
 	<dd><input name="name" type="text" value="<?php echo $download->name; ?>" /></dd>
 	
+	<dt>Description</dt>
+	<dd><input name="description" type="text" value="<?php echo $download->description; ?>" /></dd>
+	
 	<dt>Download Link</dt>
 	<dd><input name="link" type="text" value="<?php echo $download->link; ?>" /></dd>
 	
@@ -39,3 +42,4 @@
 		<input type="submit" name="submit" value="<?php echo $title;?>" />
 	</dd>
 </dl>
+</form>

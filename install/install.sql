@@ -105,7 +105,7 @@ CREATE TABLE `phpvms_schedules` (
   `distance` float NOT NULL default '0',
   `deptime` varchar(15) NOT NULL default '',
   `arrtime` varchar(15) NOT NULL default '',
-  `flighttime` int(11) NOT NULL default '0',
+  `flighttime` FLOAT NOT NULL default '0',
   `maxload` INT(11) NOT NULL,
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',

@@ -76,8 +76,10 @@ class ACARS extends CodonModule
 				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'.ini"');
 				header('Content-Length: ' . strlen($fsacars_config));
 				
+				//error_reporting(0);
 				echo $fsacars_config;
 				
+				break;
 			/**
 			 * Output the fsacars config
 			 */

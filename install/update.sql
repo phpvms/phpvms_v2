@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS `phpvms_financedata` (
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+ALTER TABLE `phpvms_downloads` ADD `description` TEXT ASCII AFTER `name`;
+
 ALTER TABLE `phpvms_aircraft` ADD `maxpax` FLOAT NOT NULL AFTER `cruise`;
 ALTER TABLE `phpvms_aircraft` ADD `maxcargo` FLOAT NOT NULL AFTER `maxpax`;
 ALTER TABLE `phpvms_aircraft` ADD `enabled` INT NOT NULL DEFAULT 1;
@@ -37,6 +39,7 @@ ALTER TABLE `phpvms_pilots` ADD `lastpirep` datetime NOT NULL default '0000-00-0
 
 ALTER TABLE `phpvms_expenses` ADD `type` VARCHAR ( 1 ) NOT NULL DEFAULT 'M';
 
+ALTER TABLE `phpvms_schedules` CHANGE `flighttime` `flighttime` FLOAT NOT NULL;
 ALTER TABLE `phpvms_schedules` ADD `maxload` INT NOT NULL AFTER `flighttime`;
 ALTER TABLE `phpvms_schedules` ADD `price` FLOAT NOT NULL AFTER `maxload`;
 ALTER TABLE `phpvms_schedules` ADD `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P' AFTER `price`;

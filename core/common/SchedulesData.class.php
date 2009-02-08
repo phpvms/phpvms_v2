@@ -33,8 +33,11 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
-	public static function GetScheduleByFlight($code, $flightnum, $leg='')
+	public static function GetScheduleByFlight($code, $flightnum)
 	{
+		$code = strotoupper($code);
+		$flightnum = strtoupper($flightnum);
+		
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
 							dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
@@ -50,6 +53,8 @@ class SchedulesData
 		
 	public static function FindFlight($flightnum, $depicao='')
 	{
+		$flightnum = strtoupper($flightnum);
+		
 		$sql = 'SELECT * 
 					FROM '.TABLE_PREFIX.'schedules
 					WHERE flightnum=\''.$flightnum.'\' ';
@@ -74,6 +79,9 @@ class SchedulesData
 	public static function IncrementFlownCount($code, $flightnum)
 	{
 		$schedid = intval($schedid);
+		
+		$code = strotoupper($code);
+		$flightnum = strtoupper($flightnum);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX."schedules 
 					SET timesflown=timesflown+1
@@ -167,6 +175,8 @@ class SchedulesData
 	 */
 	public static function GetArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
 	{
+		$depicao = strtoupper($depicao);
+		$airlinecode = strtoupper($airlinecode);
 		$depicao = DB::escape($depicao);
 		
 		if($onlyenabled)
@@ -212,6 +222,7 @@ class SchedulesData
 	
 	public static function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
 	{
+		$arricao = strtoupper($arricao);
 		$arricao = DB::escape($arricao);
 		
 		if($onlyenabled)
@@ -371,26 +382,6 @@ class SchedulesData
 		}
 
 		return round($distance, 2);
-		
-		# My old one... hahaha
-		/*$radius = 3963; #miles
-		$a1=deg2rad($lat1);
-		$a2=deg2rad($lat2);
-		
-		$b1=deg2rad($lng1);
-		$b2=deg2rad($lng2);
-		
-		$theta_lat = ($a1-$a2);
-		$theta_lng = ($b1-$b2);
-		
-		$top1 = pow(cos($a2)*sin($theta_lng), 2);
-		$top2 = pow((cos($a1)*sin($a2)) - (sin($a1)*cos($a2)*cos($theta_lng)), 2);
-		$bottom = (sin($a1)*sin($a2)) + (cos($a1)*cos($a2)*cos($theta_lng));
-		
-		$haversine = atan(sqrt($top1+$top2)/$bottom);
-		$distance = $haversine * $radius;
-		
-		return round($distance, 2);*/
 	}
 	
 	/**
@@ -435,12 +426,16 @@ class SchedulesData
 	
 		if(!is_array($data))
 			return false;
-						
+		
 		if($data['depicao'] == $data['arricao'])
 			return false;
 					
+		$data['code'] = strtoupper($data['code']);
+		$data['flightnum'] = strtoupper($data['flightnum']);			
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
+		$data['depicao'] = strtoupper($data['depicao']);		
+		$data['arricao'] = strtoupper($data['arricao']);
 		
 		if($data['enabled'] == true)
 			$data['enabled'] = 1;
@@ -456,6 +451,8 @@ class SchedulesData
 		{
 			$data[$key] = DB::escape($value);
 		}
+		
+		$data['flighttime'] = str_replace(':', '.', $data['flighttime']);
 				
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
 						(`code`, `flightnum`, 
@@ -517,9 +514,12 @@ class SchedulesData
 		if($data['depicao'] == $data['arricao'])
 			return false;
 			
+		$data['code'] = strtoupper($data['code']);
+		$data['flightnum'] = strtoupper($data['flightnum']);			
 		$data['deptime'] = strtoupper($data['deptime']);
 		$data['arrtime'] = strtoupper($data['arrtime']);
-		
+		$data['depicao'] = strtoupper($data['depicao']);		
+		$data['arricao'] = strtoupper($data['arricao']);
 		
 		if($data['enabled'] == true)
 			$data['enabled'] = 1;
@@ -536,6 +536,7 @@ class SchedulesData
 			$data[$key] = DB::escape($value);
 		}
 			
+		$data['flighttime'] = str_replace(':', '.', $data['flighttime']);
 		$sql = "UPDATE " . TABLE_PREFIX ."schedules 
 					SET `code`='$data[code]', 
 						`flightnum`='$data[flightnum]',
@@ -698,24 +699,26 @@ class SchedulesData
 	{
 		$max = 0;
 		
+		$code = strtoupper($code);
+		$flightnum = strtoupper($flightnum);
+		
 		$start = strtotime("- $days days");
 		$end = time();
 		$data = array();
 				
 		# Turn on caching:		
 		DB::enableCache();
-			
+		
 		do 
 		{	
 			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $start);
-			//DB::debug();
-			$date = date('m Y', $start);
+			$date = date('mY', $start);
 			
 			$data[$date] = $count;			
 			
 			$start += SECONDS_PER_DAY;
 			
-		}  while ($start < $end);
+		}  while ($start <= $end);
 		
 		DB::disableCache();
 		

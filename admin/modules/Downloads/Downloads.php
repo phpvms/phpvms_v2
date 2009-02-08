@@ -181,7 +181,7 @@ class Downloads extends CodonModule
 			return;
 		}
 		
-		DownloadData::AddDownload($this->post->category, $this->post->name, 
+		DownloadData::AddDownload($this->post->category, $this->post->name, $this->post->description,
 					$this->post->link, $this->post->image);
 	}
 	
@@ -194,7 +194,7 @@ class Downloads extends CodonModule
 			return;
 		}
 			
-		DownloadData::EditAsset($this->post->id, $this->post->name, $this->post->link, $this->post->image);
+		DownloadData::EditAsset($this->post->id, $this->post->name,$this->post->description, $this->post->link, $this->post->image);
 		
 		Template::Set('message', 'Download edited!');
 		Template::Show('core_success.tpl');

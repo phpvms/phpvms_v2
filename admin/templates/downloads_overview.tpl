@@ -27,6 +27,7 @@ foreach($allcategories as $category)
 		<thead>
 		<tr>
 			<th>Download Name</th>
+			<th>Description</th>
 			<th>Download Count</th>
 			<th>Options</th>
 		</tr>
@@ -36,7 +37,9 @@ foreach($allcategories as $category)
 ?>
 		<tr>
 			<td><?php echo '<a href="'.$download->link.'">'.$download->name.'</a>' ?></td>
+			<td><?php echo $download->description==''?'-':$download->description; ?></td>
 			<td><?php echo ($download->hits=='')? '0' : $download->hits?></td>
+			
 			<td width="1%" nowrap>
 				<a id="dialog" class="jqModal" 
 					href="<?php echo SITE_URL?>/admin/action.php/downloads/editdownload?id=<?php echo $download->id?>">

@@ -128,7 +128,7 @@ class DownloadData
 					
 		DB::query($sql);
 	}
-	public static function AddDownload($categoryid, $name, $link, $image)
+	public static function AddDownload($categoryid, $name, $description='', $link='', $image='')
 	{
 		if($categoryid == '') return false;
 		
@@ -136,12 +136,10 @@ class DownloadData
 		$name = DB::escape($name);
 		
 		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
-							(pid, name, link, image, hits)
-					VALUES	($categoryid, '$name', '$link', '$image', 0)";
+							(`pid`, `name`, `description`, `link`, `image`, `hits`)
+					VALUES	($categoryid, '$name', '$description', '$link', '$image', 0)";
 		
 		$res = DB::query($sql);
-		
-		DB::debug();
 		
 		if(DB::errno() != 0)
 			return false;
@@ -149,7 +147,7 @@ class DownloadData
 		return true;
 	}
 	
-	public static function EditAsset($id, $name, $link='', $image='')
+	public static function EditAsset($id, $name, $description='', $link='', $image='')
 	{
 		if($id == '' || $name == '') return false;
 		
@@ -157,12 +155,11 @@ class DownloadData
 		$name = DB::escape($name);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."downloads
-					SET name='$name', link='$link', image='$image'
+					SET name='$name', `description`='$description', link='$link', image='$image'
 					WHERE id=$id";
 		
 		$res = DB::query($sql);
 		
-		DB::debug(); 
 		if(DB::errno() != 0)
 			return false;
 		

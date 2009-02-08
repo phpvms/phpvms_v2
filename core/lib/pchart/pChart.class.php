@@ -322,7 +322,7 @@
 
                if ( is_numeric($Value) )
                 {
-                 if ( $this->VMax < $Value) { $this->VMax = $Value; }
+                 if ( $this->VMax < $Value) { $this->VMax = $Value+1; }
                  if ( $this->VMin > $Value) { $this->VMin = $Value; }
                 }
               }

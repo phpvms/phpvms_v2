@@ -57,13 +57,16 @@ echo 'Starting the update...<br />';
 	#	But cascade the updates
 
 	$version = intval(str_replace('.', '', PHPVMS_VERSION));
+	$latestversion = intval(str_replace('.', '', UPDATE_VERSION));
 	
 	if($version  < 11400)
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_400.sql');
 		Installer::add_to_config('UNITS', 'mi');
+		$version = 11400;
 	}
-	elseif($version <  11428)
+	
+	if($version <  11428)
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_437.sql');
 		
@@ -78,12 +81,19 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('AVATAR_FILE_SIZE', 50000);
 		Installer::add_to_config('AVATAR_MAX_WIDTH', 80);
 		Installer::add_to_config('AVATAR_MAX_HEIGHT', 80);
+		
+		$version = 11428;
+		
 	}
-	elseif($version < 11441)
+	
+	if($version < 11441)
 	{
 		Installer::sql_file_update(SITE_ROOT . '/install/update_441.sql');
+		
+		$version = 11441;
 	}
-	elseif($version < 11458)
+	
+	if($version < 11458)
 	{
 		
 		Installer::add_to_config('PAGE_ENCODING', 'ISO-8859-1', 'This is the page encoding');
@@ -99,38 +109,39 @@ echo 'Starting the update...<br />';
 			echo "Generating signature for $pilot->firstname $pilot->lastname<br />";
 			PilotData::GenerateSignature($pilot->pilotid);
 		}
+		
+		$version = 11458;
 	}
-	else
-	{
-		echo '<p>Adding new options to the core/local.config.php...</p>';
-		Installer::add_to_config('LOAD_FACTOR', '72'); 
-		Installer::add_to_config('CARGO_UNITS', 'lbs');
+	
+	
+	echo '<p>Adding new options to the core/local.config.php...</p>';
+	Installer::add_to_config('LOAD_FACTOR', '72'); 
+	Installer::add_to_config('CARGO_UNITS', 'lbs');
+	
+	Installer::add_to_config('COMMENT', 'FSPassengers Settings');
+	Installer::add_to_config('COMMENT', 'Units settings');
+	Installer::add_to_config('WeightUnit', '1', '0=Kg 1=lbs');
+	Installer::add_to_config('DistanceUnit', '2', '0=KM 1= Miles 2=NMiles');
+	Installer::add_to_config('SpeedUnit', '1', '0=Km/H 1=Kts');
+	Installer::add_to_config('AltUnit', '1', '0=Meter 1=Feet');
+	Installer::add_to_config('LiquidUnit', '2', '0=liter 1=gal 2=kg 3=lbs');
+	Installer::add_to_config('WelcomeMessage', SITE_NAME.' ACARS', 'Welcome Message');
+	
+	Installer::add_to_config('COMMENT', 'Monetary Units');
+	Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
+	
+	Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
+	
+	echo '<p>Updating your database...</p>';
+	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		
-		Installer::add_to_config('COMMENT', 'FSPassengers Settings');
-		Installer::add_to_config('COMMENT', 'Units settings');
-		Installer::add_to_config('WeightUnit', '1', '0=Kg 1=lbs');
-		Installer::add_to_config('DistanceUnit', '2', '0=KM 1= Miles 2=NMiles');
-		Installer::add_to_config('SpeedUnit', '1', '0=Km/H 1=Kts');
-		Installer::add_to_config('AltUnit', '1', '0=Meter 1=Feet');
-		Installer::add_to_config('LiquidUnit', '2', '0=liter 1=gal 2=kg 3=lbs');
-		Installer::add_to_config('WelcomeMessage', SITE_NAME.' ACARS', 'Welcome Message');
-		
-		Installer::add_to_config('COMMENT', 'Monetary Units');
-		Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
-		
-		Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
-		# Installer::add_to_config('VA_START_DATE', 'January 2008');
-		
-		echo '<p>Updating your database...</p>';
-		Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
-		
-	}
+	
 		
 	
 # Final version update
 if(!isset($_GET['test']))
 {
-	$sql = 'UPDATE `phpvms_settings` 
+	$sql = 'UPDATE `'.TABLE_PREFIX.'settings` 
 				SET value=\''.UPDATE_VERSION.'\' 
 				WHERE name=\'PHPVMS_VERSION\'';
 				

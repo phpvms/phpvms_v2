@@ -237,7 +237,7 @@ class Installer
 		
 		for($i=0;$i<strlen($sql_file);$i++)
 		{
-			$str = $sql_file{$i};
+			$str = $sql_file[$i];
 			
 			if($str == ';')
 			{
@@ -245,7 +245,6 @@ class Installer
 				
 				$sql = str_replace('phpvms_', TABLE_PREFIX, $sql);
 				
-
 				DB::query($sql);
 				
 				if(DB::errno() != 0 && DB::errno() != 1060)
@@ -294,6 +293,7 @@ class Installer
 		}
 		elseif($name == 'COMMENT')
 		{
+			// If it already exists don't add it
 			if(strpos($config, '# '.$value) !== false)
 			{
 				return false;

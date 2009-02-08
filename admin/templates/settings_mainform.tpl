@@ -26,7 +26,7 @@
 			
 			switch($setting->name)
 			{
-			
+
 				case 'PHPVMS_VERSION':
 					echo '<td>'.PHPVMS_VERSION.'</td>';
 					break;

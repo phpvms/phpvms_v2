@@ -14,9 +14,8 @@ if(!$allaircraft)
 	<th>Name/Type</th>	
 	<th>Full Name</th>
 	<th>Registration</th>
-	<th>Range</th>
-	<th>Weight</th>
-	<th>Cruise</th>
+	<th align="center">Max Pax</th>
+	<th align="center">Max Cargo</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -30,9 +29,8 @@ foreach($allaircraft as $aircraft)
 	<td align="center"><?php echo $aircraft->name; ?></td>
 	<td align="center"><?php echo $aircraft->fullname; ?></td>
 	<td align="center"><?php echo $aircraft->registration; ?></td>
-	<td align="center"><?php echo $aircraft->range; ?></td>
-	<td align="center"><?php echo $aircraft->weight; ?></td>
-	<td align="center"><?php echo $aircraft->cruise; ?></td>
+	<td align="center"><?php echo $aircraft->maxpax; ?></td>
+	<td align="center"><?php echo $aircraft->maxcargo; ?></td>
 	<td align="center" width="1%" nowrap>
 			<a href="<?php echo SITE_URL?>/admin/index.php/operations/editaircraft?id=<?php echo $aircraft->id;?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/options.png" alt="Options" /></a></td>

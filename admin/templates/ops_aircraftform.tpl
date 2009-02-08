@@ -18,12 +18,12 @@
 
 <dt>* Maximum Passengers</dt>
 <dd><input name="maxpax" type="text"  value="<?php echo $aircraft->maxpax; ?>" />
-	<p>The maximum number of passengers that can be flown on this aircraft</p>
+	<p>The maximum number of passengers that can be flown on this aircraft, for passenger or charter flights</p>
 </dd>
 
 <dt>* Maximum Cargo</dt>
 <dd><input name="maxcargo" type="text"  value="<?php echo $aircraft->maxcargo; ?>" />
-	<p>The maximum cargo load of this aicraft in <?php echo Config::Get('CARGO_UNITS'); ?></p>
+	<p>The maximum cargo load of this aircraft in <?php echo Config::Get('CARGO_UNITS'); ?>, for cargo flights</p>
 </dd>
 
 <dt>Link to download aircraft</dt>

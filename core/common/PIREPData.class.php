@@ -823,23 +823,16 @@ class PIREPData
 		
 		# Get the past 7 days
 		$time_start = strtotime('-7 days');
-		$time_end = time();
+		$time_end = date('Ymd');
 	
 		do {
 			$count = PIREPData::GetReportCount($time_start);
-			$data[] = $count;
-			
-			if($count > $max)
-				$max = $count;
-				
+			$data[date('m/d', $time_start)] = $count;
+							
 			$time_start += SECONDS_PER_DAY;
-		} while ($time_start < $time_end);
-		
-		//$data = substr($data, 0, strlen($data)-1);
-		
+			$check = date('Ymd', $time_start);
+		} while ($check <= $time_end);
+				
 		return $data;
 	}
-	
 }
-
-?>

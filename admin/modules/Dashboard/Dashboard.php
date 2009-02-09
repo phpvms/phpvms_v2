@@ -59,6 +59,7 @@ class Dashboard extends CodonModule
 				{
 					$reportcounts = array();
 				}
+				
 				$graph = new ChartGraph('pchart', 'line', 680, 180);
 				$graph->setFontSize(8);
 				$graph->AddData($reportcounts, array_keys($reportcounts));

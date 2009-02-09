@@ -68,7 +68,7 @@
 			<strong>ACARS Config</strong>
 			<ul>
 				<li><a href="<?php echo SITE_URL?>/action.php/acars/fsacarsconfig">Download FSACARS Config</a></li>
-				<li><a href="<?php echo SITE_URL?>/action.php/acars/fspaxconfig">Download FSPax Config</li>
+				<li><a href="<?php echo SITE_URL?>/action.php/acars/fspaxconfig">Download FSPax Config</a></li>
 			</ul>
 		</p>
 	</td>

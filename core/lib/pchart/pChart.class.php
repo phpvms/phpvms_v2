@@ -362,12 +362,13 @@
           {
 			if($this->VMax == $this->VMin)
 			{
-				$this->VMax += 10;
+				$this->VMax += 1;
 			}
 				
            $Scale1 = ( $this->VMax - $this->VMin ) / $Factor;
            $Scale2 = ( $this->VMax - $this->VMin ) / $Factor / 2;
            $Scale4 = ( $this->VMax - $this->VMin ) / $Factor / 4;
+           
 
            if ( $Scale1 > 1 && $Scale1 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $Divisions = floor($Scale1); $Scale = 1;}
            if ( $Scale2 > 1 && $Scale2 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $Divisions = floor($Scale2); $Scale = 2;}

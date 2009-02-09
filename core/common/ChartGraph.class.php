@@ -179,7 +179,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$count = 1;
 		
 		# Give it a minute and a half
-		set_time_limit(120);
+		set_time_limit(30);
 		$this->setFontSize(8);
 		
 		if(!$this->data || count($this->data) == 0)

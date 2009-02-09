@@ -35,7 +35,7 @@ class SchedulesData
 	
 	public static function GetScheduleByFlight($code, $flightnum)
 	{
-		$code = strotoupper($code);
+		$code = strtoupper($code);
 		$flightnum = strtoupper($flightnum);
 		
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
@@ -80,7 +80,7 @@ class SchedulesData
 	{
 		$schedid = intval($schedid);
 		
-		$code = strotoupper($code);
+		$code = strtoupper($code);
 		$flightnum = strtoupper($flightnum);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX."schedules 

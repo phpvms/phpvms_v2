@@ -6,20 +6,8 @@ echo $updateinfo;
 ?>
 <h3>Pilot Reports for the Past Week</h3>
 <div id="reportcounts" align="center" width="400px" >
-<?php
-# Create the chart
-//$reportcounts = '';
-if(!$reportcounts)
-{
-	$reportcounts = array();
-}
-$graph = new ChartGraph('pchart', 'line', 680, 180);
-$graph->setFontSize(8);
-$graph->AddData($reportcounts, array_keys($reportcounts));
-$graph->setTitles('PIREPS Filed');
-$graph->GenerateGraph();
-
-?>
+<img src="<?php echo SITE_URL?>/lib/images/loading.gif" /><br /><br />
+Loading...
 </div>
 <table width="100%">
 	<tr>
@@ -37,14 +25,9 @@ $graph->GenerateGraph();
 		</td>
 	</tr>
 </table>
-<?php
-/*
 <script type="text/javascript">
 $(document).ready(function()
 {
-	$("#reportcounts").sparkline([<?php echo implode(',', $reportcounts); ?>], {width: '400px', height: '100px', type: 'bar'});
-
+	$("#reportcounts").load("<?php echo SITE_URL;?>/admin/action.php/dashboard/pirepcounts");
 });
 </script>
-*/
-?>

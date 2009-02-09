@@ -37,9 +37,10 @@ class OperationsData
 	 */
 	public static function GetAllHubs()
 	{
-		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'airports 
-									WHERE `hub`=1
-									ORDER BY `icao` ASC');
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
+					WHERE `hub`=1
+					ORDER BY `icao` ASC';
+		return DB::get_results($sql);
 	}
 	
 	/**

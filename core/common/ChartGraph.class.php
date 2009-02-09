@@ -178,7 +178,14 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$pData = new pData;
 		$count = 1;
 		
+		# Give it a minute and a half
+		set_time_limit(120);
 		$this->setFontSize(8);
+		
+		if(!$this->data || count($this->data) == 0)
+		{
+			return;
+		}
 	
 		$pData->AddPoint($this->data, 'dataset');
 		$pData->AddPoint($this->labels, 'labels');
@@ -196,7 +203,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 	  	$this->pChart->drawBackground(255,255,255);
 		$this->pChart->drawFilledRoundedRectangle(0,0,$this->x,$this->y, 5,  255, 255, 255);  
 		$this->pChart->drawRoundedRectangle(5,5,$this->x-5,$this->y-5,5,230,230,230);
-		
+				
 		if($this->type == 'pie')
 		{
 			$this->pChart->loadColorPalette('tones-1.txt');
@@ -234,8 +241,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$w = strlen($this->chart_title)*1.5;
 		@$this->pChart->drawTitle(0,23,$this->chart_title,0,0,0, $this->x);
 		
-		//$this->pCache->WriteToCache($filename,$pData->GetData(),$this->pChart); 
-					
+		//$this->pCache->WriteToCache($filename,$pData->GetData(),$this->pChart);
 		$this->pChart->Render(SITE_ROOT.'/core/cache/'.$filename.'.png'); 
 		echo '<img src="'.SITE_URL.'/core/cache/'.$filename.'.png" />';
 	}

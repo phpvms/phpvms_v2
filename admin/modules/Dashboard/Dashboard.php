@@ -43,11 +43,28 @@ class Dashboard extends CodonModule
 				
 				$this->CheckForUpdates();
 				
-				Template::Set('reportcounts', PIREPData::ShowReportCounts());
 				Template::Show('dashboard.tpl');
 
                 /*Template::Set('allpilots', PilotData::GetPendingPilots());
 				Template::Show('pilots_pending.tpl');*/
+				break;
+				
+			case 'pirepcounts':
+		
+			
+				# Create the chart
+				//$reportcounts = '';
+				$reportcounts = PIREPData::ShowReportCounts();
+				if(!$reportcounts)
+				{
+					$reportcounts = array();
+				}
+				$graph = new ChartGraph('pchart', 'line', 680, 180);
+				$graph->setFontSize(8);
+				$graph->AddData($reportcounts, array_keys($reportcounts));
+				$graph->setTitles('PIREPS Filed');
+				$graph->GenerateGraph();
+				
 				break;
 
 			case 'about':

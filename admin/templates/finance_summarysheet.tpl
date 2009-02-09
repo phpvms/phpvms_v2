@@ -24,7 +24,7 @@
 	$months=array();
 	
 ?>
-<table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
+<table width="670px" align="center" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header" style="text-align: center">
 		<td align="left">Month</td>
@@ -107,7 +107,7 @@ foreach ($allfinances as $month)
 </table>
 
 <h3>Breakdown</h3>
-
+<div align="center">
 <?php
 /**
  * Show the revenue details graph
@@ -129,5 +129,5 @@ $graph = new ChartGraph('pchart', 'line', 680, 400);
 $graph->AddData($fuelexpenses, $months);
 $graph->setTitles('Fuel Costs', 'Month', 'Expenses ('.htmlspecialchars_decode(Config::Get('MONEY_UNIT')).')');
 $graph->GenerateGraph();
-
 ?>
+</div>

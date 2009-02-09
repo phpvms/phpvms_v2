@@ -31,7 +31,7 @@
 	$running_total = $allfinances['pirepfinance']->Revenue + $allfinances['pirepfinance']->TotalPay + $allfinances['pirepfinance']->FlightExpenses + $allfinances['pirepfinance']->FuelCost;
 ?>
 
-<table width="550px" class="balancesheet" cellpadding="0" cellspacing="0">
+<table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Cash and Sales</td>
@@ -137,8 +137,7 @@
 </table>
 
 <h3>Breakdown</h3>
-	<div>
-	<strong>Expenses: </strong><br />
+<div>
 <?php
 /*
 	Show the expenses details graphs
@@ -163,9 +162,6 @@ $graph->GenerateGraph();
 		
 ?>
 <br /><br />
-</div>
-<div>
-<strong>Overall Costs</strong><br />
 <?php
 /*
 	Show the total expenditures graph

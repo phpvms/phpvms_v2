@@ -40,7 +40,8 @@
 class CodonWebService
 {
 	protected $type = 'curl';
-	protected $curl;
+	protected $curl = null;
+	protected $curl_exists = true;
 	public $_separator = '&';	
 	
 	public $errors = array();
@@ -55,15 +56,21 @@ class CodonWebService
 			
 	public function __construct()
 	{
-		
 		# Make sure cURL is installed
-		if(defined('curl_init'))
+		
+		if(!function_exists('curl_init'))
+		{
+			$this->curl_exists = false;
+			$this->error('cURL not installed');
+		}
+		
+		if($this->curl_exists == true)
 		{
 			if(!$this->curl = curl_init())
 			{
 				$this->error();
 				$this->setType('fopen');
-				//return false;
+				$this->curl = null;
 			}
 			
 			$this->setType('curl');
@@ -71,6 +78,7 @@ class CodonWebService
 		}
 		else
 		{
+			$this->curl = null;
 			$this->setType('fopen');
 		}
 	}
@@ -94,7 +102,6 @@ class CodonWebService
 			$last = curl_error() .' ('.curl_errno().')';
 		
 		$this->errors[] = $last;
-		throw new Exception($last);
 	}
 	
 	/**
@@ -155,7 +162,6 @@ class CodonWebService
 	 */
 	public function get($url, $params='')
 	{
-		
 		# Builds the parameters list
 		if(is_array($params))
 		{
@@ -171,22 +177,19 @@ class CodonWebService
 		
 		if($this->type == 'fopen')
 		{
-			if(ini_get('allow_url_fopen'))
+			if(strtolower(ini_get('allow_url_fopen')) == 'on')
 			{
 				return file_get_contents($url);
 			}
-			else
-			{
-				$this->error('url fopen not allowed, using cURL');
-			}
 		}
 		
-		if(!$this->curl)
+		if(!$this->curl || $this->curl == null)
 		{
-			$this->error('cURL not initialized');
+			echo 'curl not init';
+			$this->error('cURL not installed or initialized!');
 			return false;
 		}
-				
+		
 		curl_setopt ($this->curl, CURLOPT_URL, $url);
 		if(($ret = curl_exec($this->curl)) === false)
 		{
@@ -251,16 +254,17 @@ class CodonWebService
 		
 		if($this->type == 'fopen')
 		{
-			if(file_put_contents($tofile, file_get_contents($url)) == false)
+			if(strtolower(ini_get('allow_url_fopen')) == 'on')
 			{
-				$this->error('Error getting file');
-				return false;
+				if(file_put_contents($tofile, file_get_contents($url)) == false)
+				{
+					$this->error('Error getting file');
+					return false;
+				}
 			}
-			
-			return true;
 		}
 		
-		if(!$this->curl)
+		if(!$this->curl || $this->curl == null)
 			return false;
 			
 		if(($fp = fopen($tofile, 'wb')) == false)

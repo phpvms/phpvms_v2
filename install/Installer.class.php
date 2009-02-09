@@ -345,7 +345,7 @@ class Installer
 		
 		error_reporting(0);
 		$file = new CodonWebService();
-		$file->setType('fopen'); 
+		//$file->setType('fopen'); 
 		$response = $file->get($url, $params);
 	}
 }

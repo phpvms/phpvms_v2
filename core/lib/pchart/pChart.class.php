@@ -2,7 +2,7 @@
  /*
      pChart - a PHP class to build charts!
      Copyright (C) 2008 Jean-Damien POGOLOTTI
-     Version  1.27b last updated on 08/21/08
+     Version  1.27d last updated on 09/30/08
 
      http://pchart.sourceforge.net
 
@@ -39,44 +39,53 @@
       drawFromJPG($FileName,$X,$Y,$Alpha=100)
      Graph setup methods :
       addBorder($Width=3,$R=0,$G=0,$B=0)
+      clearScale()
+      clearShadow()
+      createColorGradientPalette($R1,$G1,$B1,$R2,$G2,$B2,$Shades)
       drawGraphArea($R,$G,$B,$Stripe=FALSE)
-      drawScale(&$Data,&$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks=TRUE,$Angle=0,$Decimals=1,$WithMargin=FALSE,$SkipLabels=1)
+      drawScale($Data,$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks=TRUE,$Angle=0,$Decimals=1,$WithMargin=FALSE,$SkipLabels=1,$RightScale=FALSE)
+      drawRightScale($Data,$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks=TRUE,$Angle=0,$Decimals=1,$WithMargin=FALSE,$SkipLabels=1)
+      drawXYScale($Data,$DataDescription,$YSerieName,$XSerieName,$R,$G,$B,$WithMargin=0,$Angle=0,$Decimals=1)
       drawGrid($LineWidth,$Mosaic=TRUE,$R=220,$G=220,$B=220,$Alpha=100)
-      drawLegend($XPos,$YPos,&$DataDescription,$R,$G,$B,$Rs=-1,$Gs=-1,$Bs=-1)
+      drawLegend($XPos,$YPos,$DataDescription,$R,$G,$B,$Rs=-1,$Gs=-1,$Bs=-1,$Rt=0,$Gt=0,$Bt=0,$Border=FALSE)
       drawPieLegend($XPos,$YPos,$Data,$DataDescription,$R,$G,$B)
-      drawTitle($XPos,$YPos,$Value,$R,$G,$B,$XPos2=-1,$YPos2=-1)
+      drawTitle($XPos,$YPos,$Value,$R,$G,$B,$XPos2=-1,$YPos2=-1,$Shadow=FALSE)
       drawTreshold($Value,$R,$G,$B,$ShowLabel=FALSE,$ShowOnRight=FALSE,$TickWidth=4,$FreeText=NULL)
-      drawArea(&$Data,$Serie1,$Serie2,$R,$G,$B,$Alpha = 50)
-      drawRadarAxis(&$Data,&$DataDescription,$Mosaic=TRUE,$BorderOffset=10,$A_R=60,$A_G=60,$A_B=60,$S_R=200,$S_G=200,$S_B=200,$MaxValue=-1)
+      drawArea($Data,$Serie1,$Serie2,$R,$G,$B,$Alpha = 50)
+      drawRadarAxis($Data,$DataDescription,$Mosaic=TRUE,$BorderOffset=10,$A_R=60,$A_G=60,$A_B=60,$S_R=200,$S_G=200,$S_B=200,$MaxValue=-1)
       drawGraphAreaGradient($R,$G,$B,$Decay,$Target=TARGET_GRAPHAREA)
       drawTextBox($X1,$Y1,$X2,$Y2,$Text,$Angle=0,$R=255,$G=255,$B=255,$Align=ALIGN_LEFT,$Shadow=TRUE,$BgR=-1,$BgG=-1,$BgB=-1,$Alpha=100)
       getLegendBoxSize($DataDescription)
       loadColorPalette($FileName,$Delimiter=",")
       reportWarnings($Interface="CLI")
       setGraphArea($X1,$Y1,$X2,$Y2)
-      setFixedScale($VMin,$VMax)
-      setLabel(&$Data,&$DataDescription,$SerieName,$ValueName,$Caption,$R=210,$G=210,$B=210)
+      setLabel($Data,$DataDescription,$SerieName,$ValueName,$Caption,$R=210,$G=210,$B=210)
       setColorPalette($ID,$R,$G,$B)
+      setCurrency($Currency)
       setDateFormat($Format)
       setFontProperties($FontName,$FontSize)
       setLineStyle($Width=1,$DotSize=0)
-      setFixedScale($VMin,$VMax,$Divisions=5)
-      writeValues(&$Data,&$DataDescription,$Series)
+      setFixedScale($VMin,$VMax,$Divisions=5,$VXMin=0,$VXMin=0,$XDivisions=5)
+      setShadowProperties($XDistance=1,$YDistance=1,$R=60,$G=60,$B=60,$Alpha)
+      writeValues($Data,$DataDescription,$Series)
     Graphs methods :
-      drawPlotGraph(&$Data,&$DataDescription,$BigRadius=5,$SmallRadius=2,$R2=-1,$G2=-1,$B2=-1)
-      drawLineGraph(&$Data,&$DataDescription,$SerieName="")
-      drawFilledLineGraph(&$Data,&$DataDescription,$Alpha=100,$AroundZero=FALSE)
-      drawCubicCurve(&$Data,&$DataDescription,$Accuracy=.1,$SerieName="")
-      drawFilledCubicCurve(&$Data,&$DataDescription,$Accuracy=.1,$Alpha=100,$AroundZero=FALSE)
-      drawOverlayBarGraph(&$Data,&$DataDescription,$Alpha=50)
-      drawBarGraph(&$Data,&$DataDescription,$Shadow=FALSE)
-      drawStackedBarGraph(&$Data,&$DataDescription,$Alpha=50)
-      drawLimitsGraph(&$Data,&$DataDescription,$R=0,$G=0,$B=0)
-      drawRadar(&$Data,&$DataDescription,$BorderOffset=10,$MaxValue=-1)
-      drawFilledRadar(&$Data,&$DataDescription,$Alpha=50,$BorderOffset=10,$MaxValue=-1)
-      drawBasicPieGraph(&$Data,&$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$R=255,$G=255,$B=255,$Decimals=0)
-      drawFlatPieGraph(&$Data,&$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$SpliceDistance=0,$Decimals = 0)
-      drawPieGraph(&$Data,&$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$EnhanceColors=TRUE,$Skew=60,$SpliceHeight=20,$SpliceDistance=0,$Decimals=0)
+      drawPlotGraph($Data,$DataDescription,$BigRadius=5,$SmallRadius=2,$R2=-1,$G2=-1,$B2=-1,$Shadow=FALSE)
+      drawXYPlotGraph($Data,$DataDescription,$YSerieName,$XSerieName,$PaletteID=0,$BigRadius=5,$SmallRadius=2,$R2=-1,$G2=-1,$B2=-1)
+      drawLineGraph($Data,$DataDescription,$SerieName="")
+      drawXYGraph($Data,$DataDescription,$YSerieName,$XSerieName,$PaletteID=0)
+      drawFilledLineGraph($Data,$DataDescription,$Alpha=100,$AroundZero=FALSE)
+      drawCubicCurve($Data,$DataDescription,$Accuracy=.1,$SerieName="")
+      drawFilledCubicCurve($Data,$DataDescription,$Accuracy=.1,$Alpha=100,$AroundZero=FALSE)
+      drawOverlayBarGraph($Data,$DataDescription,$Alpha=50)
+      drawBarGraph($Data,$DataDescription,$Shadow=FALSE)
+      drawStackedBarGraph($Data,$DataDescription,$Alpha=50,$Contiguous=FALSE)
+      drawLimitsGraph($Data,$DataDescription,$R=0,$G=0,$B=0)
+      drawRadar($Data,$DataDescription,$BorderOffset=10,$MaxValue=-1)
+      drawFilledRadar($Data,$DataDescription,$Alpha=50,$BorderOffset=10,$MaxValue=-1)
+      drawBasicPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$R=255,$G=255,$B=255,$Decimals=0)
+      drawFlatPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$SpliceDistance=0,$Decimals = 0)
+      drawFlatPieGraphWithShadow($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$SpliceDistance=0,$Decimals = 0)
+      drawPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$EnhanceColors=TRUE,$Skew=60,$SpliceHeight=20,$SpliceDistance=0,$Decimals=0)
      Other methods :
       setImageMap($Mode=TRUE,$GraphID="MyGraph")
       getImageMap($MapName,$Flush=TRUE)
@@ -92,6 +101,7 @@
  define("PIE_PERCENTAGE", 1);
  define("PIE_LABELS",2);
  define("PIE_NOLABEL",3);
+ define("PIE_PERCENTAGE_LABEL", 4);
  define("TARGET_GRAPHAREA",1);
  define("TARGET_BACKGROUND",2);
  define("ALIGN_TOP_LEFT",1);
@@ -131,19 +141,26 @@
    var $ErrorFontSize  = 6;
 
    /* vars related to the graphing area */
-   var $GArea_X1       = NULL;
-   var $GArea_Y1       = NULL;
-   var $GArea_X2       = NULL;
-   var $GArea_Y2       = NULL;
-   var $GAreaXOffset   = NULL;
-   var $VMax           = NULL;
-   var $VMin           = NULL;
-   var $Divisions      = NULL;
-   var $DivisionHeight = NULL;
-   var $DivisionCount  = NULL;
-   var $DivisionRatio  = NULL;
-   var $DivisionWidth  = NULL;
-   var $DataCount      = NULL;
+   var $GArea_X1        = NULL;
+   var $GArea_Y1        = NULL;
+   var $GArea_X2        = NULL;
+   var $GArea_Y2        = NULL;
+   var $GAreaXOffset    = NULL;
+   var $VMax            = NULL;
+   var $VMin            = NULL;
+   var $VXMax           = NULL;
+   var $VXMin           = NULL;
+   var $Divisions       = NULL;
+   var $XDivisions      = NULL;
+   var $DivisionHeight  = NULL;
+   var $XDivisionHeight = NULL;
+   var $DivisionCount   = NULL;
+   var $XDivisionCount  = NULL;
+   var $DivisionRatio   = NULL;
+   var $XDivisionRatio  = NULL;
+   var $DivisionWidth   = NULL;
+   var $DataCount       = NULL;
+   var $Currency        = "\$";
 
    /* Text format related vars */
    var $FontName       = NULL;
@@ -158,7 +175,17 @@
    var $Layers         = NULL;
 
    /* Set antialias quality : 0 is maximum, 100 minimum*/
-   var $AntialiasQuality = 10;
+   var $AntialiasQuality = 0;
+
+   /* Shadow settings */
+   var $ShadowActive    = FALSE;
+   var $ShadowXDistance = 1;
+   var $ShadowYDistance = 1;
+   var $ShadowRColor    = 60;
+   var $ShadowGColor    = 60;
+   var $ShadowBColor    = 60;
+   var $ShadowAlpha     = 50;
+   var $ShadowBlur      = 0;
 
    /* Image Map settings */
    var $BuildMap         = FALSE;
@@ -173,7 +200,7 @@
      $this->YSize   = $YSize;
      $this->Picture = imagecreatetruecolor($XSize,$YSize);
 
-     $C_White = imagecolorallocate($this->Picture,255,255,255);
+     $C_White =$this->AllocateColor($this->Picture,255,255,255);
      imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_White);
      imagecolortransparent($this->Picture,$C_White);
 
@@ -194,6 +221,25 @@
      $this->FontSize = $FontSize;
     }
 
+   /* Set the shadow properties */
+   function setShadowProperties($XDistance=1,$YDistance=1,$R=60,$G=60,$B=60,$Alpha=50,$Blur=0)
+    {
+     $this->ShadowActive    = TRUE;
+     $this->ShadowXDistance = $XDistance;
+     $this->ShadowYDistance = $YDistance;
+     $this->ShadowRColor    = $R;
+     $this->ShadowGColor    = $G;
+     $this->ShadowBColor    = $B;
+     $this->ShadowAlpha     = $Alpha;
+     $this->ShadowBlur      = $Blur;
+    }
+
+   /* Remove shadow option */
+   function clearShadow()
+    {
+     $this->ShadowActive = FALSE;
+    }
+ 
    /* Set Palette color */
    function setColorPalette($ID,$R,$G,$B)
     {
@@ -204,6 +250,21 @@
      $this->Palette[$ID]["R"] = $R;
      $this->Palette[$ID]["G"] = $G;
      $this->Palette[$ID]["B"] = $B;
+    }
+
+   /* Create a color palette shading from one color to another */
+   function createColorGradientPalette($R1,$G1,$B1,$R2,$G2,$B2,$Shades)
+    {
+     $RFactor = ($R2-$R1)/$Shades;
+     $GFactor = ($G2-$G1)/$Shades;
+     $BFactor = ($B2-$B1)/$Shades;
+
+     for($i=0;$i<=$Shades-1;$i++)
+      {
+       $this->Palette[$i]["R"] = $R1+$RFactor*$i;
+       $this->Palette[$i]["G"] = $G1+$GFactor*$i;
+       $this->Palette[$i]["B"] = $B1+$BFactor*$i;
+      }
     }
 
    /* Load Color Palette from file */
@@ -237,6 +298,12 @@
     $this->LineDotSize = $DotSize;
    }
 
+   /* Set currency symbol */
+   function setCurrency($Currency)
+    {
+     $this->Currency = $Currency;
+    }
+
    /* Set the graph area location */
    function setGraphArea($X1,$Y1,$X2,$Y2)
     {
@@ -258,7 +325,7 @@
        $G2 = $R-15; if ( $G2 < 0 ) { $G2 = 0; }
        $B2 = $R-15; if ( $B2 < 0 ) { $B2 = 0; }
 
-       $LineColor = imagecolorallocate($this->Picture,$R2,$G2,$B2);
+       $LineColor =$this->AllocateColor($this->Picture,$R2,$G2,$B2);
        $SkewWidth = $this->GArea_Y2-$this->GArea_Y1-1;
 
        for($i=$this->GArea_X1-$SkewWidth;$i<=$this->GArea_X2;$i=$i+4)
@@ -279,21 +346,44 @@
       }
     }
 
+   /* Allow you to clear the scale : used if drawing multiple charts */
+   function clearScale()
+    {
+     $this->VMin       = NULL;
+     $this->VMax       = NULL;
+     $this->VXMin      = NULL;
+     $this->VXMax      = NULL;
+     $this->Divisions  = NULL;
+     $this->XDivisions = NULL;    }
+
    /* Allow you to fix the scale, use this to bypass the automatic scaling */
-   function setFixedScale($VMin,$VMax,$Divisions=5)
+   function setFixedScale($VMin,$VMax,$Divisions=5,$VXMin=0,$VXMax=0,$XDivisions=5)
     {
      $this->VMin      = $VMin;
      $this->VMax      = $VMax;
      $this->Divisions = $Divisions;
+
+     if ( !$VXMin == 0 )
+      {
+       $this->VXMin      = $VXMin;
+       $this->VXMax      = $VXMax;
+       $this->XDivisions = $XDivisions;
+      }
+    }
+
+   /* Wrapper to the drawScale() function allowing a second scale to be drawn */
+   function drawRightScale($Data,$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks=TRUE,$Angle=0,$Decimals=1,$WithMargin=FALSE,$SkipLabels=1)
+    {
+     $this->drawScale($Data,$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks,$Angle,$Decimals,$WithMargin,$SkipLabels,TRUE);
     }
 
    /* Compute and draw the scale */
-   function drawScale(&$Data,&$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks=TRUE,$Angle=0,$Decimals=1,$WithMargin=FALSE,$SkipLabels=1)
+   function drawScale($Data,$DataDescription,$ScaleMode,$R,$G,$B,$DrawTicks=TRUE,$Angle=0,$Decimals=1,$WithMargin=FALSE,$SkipLabels=1,$RightScale=FALSE)
     {
      /* Validate the Data and DataDescription array */
      $this->validateData("drawScale",$Data);
 
-     $C_TextColor         = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_TextColor         =$this->AllocateColor($this->Picture,$R,$G,$B);
 
      $this->drawLine($this->GArea_X1,$this->GArea_Y1,$this->GArea_X1,$this->GArea_Y2,$R,$G,$B);
      $this->drawLine($this->GArea_X1,$this->GArea_Y2,$this->GArea_X2,$this->GArea_Y2,$R,$G,$B);
@@ -322,7 +412,7 @@
 
                if ( is_numeric($Value) )
                 {
-                 if ( $this->VMax < $Value) { $this->VMax = $Value+1; }
+                 if ( $this->VMax < $Value) { $this->VMax = $Value; }
                  if ( $this->VMin > $Value) { $this->VMin = $Value; }
                 }
               }
@@ -350,25 +440,40 @@
           }
         }
 
+       if ( $this->VMax > preg_replace('/\.[0-9]+/','',$this->VMax) )
+        $this->VMax = preg_replace('/\.[0-9]+/','',$this->VMax)+1;
+
+       /* If all values are the same */
+       if ( $this->VMax == $this->VMin )
+        {
+         if ( $this->VMax >= 0 ) { $this->VMax++; }
+         else { $this->VMin--; }
+        }
+
        $DataRange = $this->VMax - $this->VMin;
        if ( $DataRange == 0 ) { $DataRange = .1; }
 
        /* Compute automatic scaling */
        $ScaleOk = FALSE; $Factor = 1;
        $MinDivHeight = 25; $MaxDivs = ($this->GArea_Y2 - $this->GArea_Y1) / $MinDivHeight;
-       if ($MaxDivs > 1)
+
+       if ( $this->VMin == 0 && $this->VMax == 0 )
+        { $this->VMin = 0; $this->VMax = 2; $Scale = 1; $Divisions = 2;}
+       elseif( $this->VMin == $this->VMax)
+       {
+			$this->VMin -= 2;
+			$this->VMax += 2;
+			$Scale = 1;
+			$Divisions = 2;
+		}
+       elseif ($MaxDivs > 1)
         {
+			$this->VMax ++;
          while(!$ScaleOk)
           {
-			if($this->VMax == $this->VMin)
-			{
-				$this->VMax += 1;
-			}
-				
            $Scale1 = ( $this->VMax - $this->VMin ) / $Factor;
            $Scale2 = ( $this->VMax - $this->VMin ) / $Factor / 2;
            $Scale4 = ( $this->VMax - $this->VMin ) / $Factor / 4;
-           
 
            if ( $Scale1 > 1 && $Scale1 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $Divisions = floor($Scale1); $Scale = 1;}
            if ( $Scale2 > 1 && $Scale2 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $Divisions = floor($Scale2); $Scale = 2;}
@@ -438,26 +543,37 @@
      $YPos = $this->GArea_Y2; $XMin = NULL;
      for($i=1;$i<=$Divisions+1;$i++)
       {
-       $this->drawLine($this->GArea_X1,$YPos,$this->GArea_X1-5,$YPos,$R,$G,$B);
+       if ( $RightScale )
+        $this->drawLine($this->GArea_X2,$YPos,$this->GArea_X2+5,$YPos,$R,$G,$B);
+       else
+        $this->drawLine($this->GArea_X1,$YPos,$this->GArea_X1-5,$YPos,$R,$G,$B);
+
        $Value     = $this->VMin + ($i-1) * (( $this->VMax - $this->VMin ) / $Divisions);
        $Value     = round($Value * pow(10,$Decimals)) / pow(10,$Decimals);
        if ( $DataDescription["Format"]["Y"] == "number" )
-       {
-		# Nabeel - modified
-        $Value = number_format($Value.$DataDescription["Unit"]["Y"], 0, '', ',');
-	   }
+        $Value = $Value.$DataDescription["Unit"]["Y"];
        if ( $DataDescription["Format"]["Y"] == "time" )
         $Value = $this->ToTime($Value);        
        if ( $DataDescription["Format"]["Y"] == "date" )
         $Value = $this->ToDate($Value);        
        if ( $DataDescription["Format"]["Y"] == "metric" )
         $Value = $this->ToMetric($Value);        
+       if ( $DataDescription["Format"]["Y"] == "currency" )
+        $Value = $this->ToCurrency($Value);        
 
        $Position  = imageftbbox($this->FontSize,0,$this->FontName,$Value);
        $TextWidth = $Position[2]-$Position[0];
-       imagettftext($this->Picture,$this->FontSize,0,$this->GArea_X1-10-$TextWidth,$YPos+($this->FontSize/2),$C_TextColor,$this->FontName,$Value);
 
-       if ( $XMin > $this->GArea_X1-10-$TextWidth || $XMin == NULL ) { $XMin = $this->GArea_X1-10-$TextWidth; }
+       if ( $RightScale )
+        {
+         imagettftext($this->Picture,$this->FontSize,0,$this->GArea_X2+10,$YPos+($this->FontSize/2),$C_TextColor,$this->FontName,$Value);
+         if ( $XMin < $this->GArea_X2+15+$TextWidth || $XMin == NULL ) { $XMin = $this->GArea_X2+15+$TextWidth; }
+        }
+       else
+        {
+         imagettftext($this->Picture,$this->FontSize,0,$this->GArea_X1-10-$TextWidth,$YPos+($this->FontSize/2),$C_TextColor,$this->FontName,$Value);
+         if ( $XMin > $this->GArea_X1-10-$TextWidth || $XMin == NULL ) { $XMin = $this->GArea_X1-10-$TextWidth; }
+        }
 
        $YPos = $YPos - $this->DivisionHeight;
       }
@@ -468,7 +584,11 @@
        $Position   = imageftbbox($this->FontSize,90,$this->FontName,$DataDescription["Axis"]["Y"]);
        $TextHeight = abs($Position[1])+abs($Position[3]);
        $TextTop    = (($this->GArea_Y2 - $this->GArea_Y1) / 2) + $this->GArea_Y1 + ($TextHeight/2);
-       imagettftext($this->Picture,$this->FontSize,90,$XMin-$this->FontSize,$TextTop,$C_TextColor,$this->FontName,$DataDescription["Axis"]["Y"]);
+
+       if ( $RightScale )
+        imagettftext($this->Picture,$this->FontSize,90,$XMin+$this->FontSize,$TextTop,$C_TextColor,$this->FontName,$DataDescription["Axis"]["Y"]);
+       else
+        imagettftext($this->Picture,$this->FontSize,90,$XMin-$this->FontSize,$TextTop,$C_TextColor,$this->FontName,$DataDescription["Axis"]["Y"]);
       }
 
      /* Horizontal Axis */
@@ -488,6 +608,8 @@
           $Value = $this->ToDate($Value);        
          if ( $DataDescription["Format"]["X"] == "metric" )
           $Value = $this->ToMetric($Value);        
+         if ( $DataDescription["Format"]["X"] == "currency" )
+          $Value = $this->ToCurrency($Value);        
 
          $Position   = imageftbbox($this->FontSize,$Angle,$this->FontName,$Value);
          $TextWidth  = abs($Position[2])+abs($Position[0]);
@@ -523,6 +645,267 @@
       }
     }
 
+   /* Compute and draw the scale for X/Y charts */
+   function drawXYScale($Data,$DataDescription,$YSerieName,$XSerieName,$R,$G,$B,$WithMargin=0,$Angle=0,$Decimals=1)
+    {
+     /* Validate the Data and DataDescription array */
+     $this->validateData("drawScale",$Data);
+
+     $C_TextColor =$this->AllocateColor($this->Picture,$R,$G,$B);
+
+     $this->drawLine($this->GArea_X1,$this->GArea_Y1,$this->GArea_X1,$this->GArea_Y2,$R,$G,$B);
+     $this->drawLine($this->GArea_X1,$this->GArea_Y2,$this->GArea_X2,$this->GArea_Y2,$R,$G,$B);
+
+     /* Process Y scale */
+     if ( $this->VMin == NULL && $this->VMax == NULL)
+      {
+       $this->VMin = $Data[0][$YSerieName];
+       $this->VMax = $Data[0][$YSerieName];
+
+       foreach ( $Data as $Key => $Values )
+        {
+         if (isset($Data[$Key][$YSerieName]))
+          {
+           $Value = $Data[$Key][$YSerieName];
+           if ( $this->VMax < $Value) { $this->VMax = $Value; }
+           if ( $this->VMin > $Value) { $this->VMin = $Value; }
+          }
+        }
+
+       if ( $this->VMax > preg_replace('/\.[0-9]+/','',$this->VMax) )
+        $this->VMax = preg_replace('/\.[0-9]+/','',$this->VMax)+1;
+
+       $DataRange = $this->VMax - $this->VMin;
+       if ( $DataRange == 0 ) { $DataRange = .1; }
+
+       /* Compute automatic scaling */
+       $ScaleOk = FALSE; $Factor = 1;
+       $MinDivHeight = 25; $MaxDivs = ($this->GArea_Y2 - $this->GArea_Y1) / $MinDivHeight;
+
+       if ( $this->VMin == 0 && $this->VMax == 0 )
+        { $this->VMin = 0; $this->VMax = 2; $Scale = 1; $Divisions = 2;}
+       elseif ($MaxDivs > 1)
+        {
+         while(!$ScaleOk)
+          {
+           $Scale1 = ( $this->VMax - $this->VMin ) / $Factor;
+           $Scale2 = ( $this->VMax - $this->VMin ) / $Factor / 2;
+           $Scale4 = ( $this->VMax - $this->VMin ) / $Factor / 4;
+
+           if ( $Scale1 > 1 && $Scale1 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $Divisions = floor($Scale1); $Scale = 1;}
+           if ( $Scale2 > 1 && $Scale2 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $Divisions = floor($Scale2); $Scale = 2;}
+           if (!$ScaleOk)
+            {
+             if ( $Scale2 > 1 ) { $Factor = $Factor * 10; }
+             if ( $Scale2 < 1 ) { $Factor = $Factor / 10; }
+            }
+          }
+
+         if ( floor($this->VMax / $Scale / $Factor) != $this->VMax / $Scale / $Factor)
+          {
+           $GridID     = floor ( $this->VMax / $Scale / $Factor) + 1;
+           $this->VMax = $GridID * $Scale * $Factor;
+           $Divisions++;
+          }
+
+         if ( floor($this->VMin / $Scale / $Factor) != $this->VMin / $Scale / $Factor)
+          {
+           $GridID     = floor( $this->VMin / $Scale / $Factor);
+           $this->VMin = $GridID * $Scale * $Factor;
+           $Divisions++;
+          }
+        }
+       else /* Can occurs for small graphs */
+        $Scale = 1;
+
+       if ( !isset($Divisions) )
+        $Divisions = 2;
+
+       if ( $this->isRealInt(($this->VMax-$this->VMin)/($Divisions-1)))
+        $Divisions--;
+       elseif ( $this->isRealInt(($this->VMax-$this->VMin)/($Divisions+1)))
+        $Divisions++;
+      }
+     else
+      $Divisions = $this->Divisions;
+
+     $this->DivisionCount = $Divisions;
+
+     $DataRange = $this->VMax - $this->VMin;
+     if ( $DataRange == 0 ) { $DataRange = .1; }
+
+     $this->DivisionHeight = ( $this->GArea_Y2 - $this->GArea_Y1 ) / $Divisions;
+     $this->DivisionRatio  = ( $this->GArea_Y2 - $this->GArea_Y1 ) / $DataRange;
+
+     $YPos = $this->GArea_Y2; $XMin = NULL;
+     for($i=1;$i<=$Divisions+1;$i++)
+      {
+       $this->drawLine($this->GArea_X1,$YPos,$this->GArea_X1-5,$YPos,$R,$G,$B);
+       $Value     = $this->VMin + ($i-1) * (( $this->VMax - $this->VMin ) / $Divisions);
+       $Value     = round($Value * pow(10,$Decimals)) / pow(10,$Decimals);
+       if ( $DataDescription["Format"]["Y"] == "number" )
+        $Value = $Value.$DataDescription["Unit"]["Y"];
+       if ( $DataDescription["Format"]["Y"] == "time" )
+        $Value = $this->ToTime($Value);        
+       if ( $DataDescription["Format"]["Y"] == "date" )
+        $Value = $this->ToDate($Value);        
+       if ( $DataDescription["Format"]["Y"] == "metric" )
+        $Value = $this->ToMetric($Value);        
+       if ( $DataDescription["Format"]["Y"] == "currency" )
+        $Value = $this->ToCurrency($Value);        
+
+       $Position  = imageftbbox($this->FontSize,0,$this->FontName,$Value);
+       $TextWidth = $Position[2]-$Position[0];
+       imagettftext($this->Picture,$this->FontSize,0,$this->GArea_X1-10-$TextWidth,$YPos+($this->FontSize/2),$C_TextColor,$this->FontName,$Value);
+
+       if ( $XMin > $this->GArea_X1-10-$TextWidth || $XMin == NULL ) { $XMin = $this->GArea_X1-10-$TextWidth; }
+
+       $YPos = $YPos - $this->DivisionHeight;
+      }
+
+     /* Process X scale */
+     if ( $this->VXMin == NULL && $this->VXMax == NULL)
+      {
+       $this->VXMin = $Data[0][$XSerieName];
+       $this->VXMax = $Data[0][$XSerieName];
+
+       foreach ( $Data as $Key => $Values )
+        {
+         if (isset($Data[$Key][$XSerieName]))
+          {
+           $Value = $Data[$Key][$XSerieName];
+           if ( $this->VXMax < $Value) { $this->VXMax = $Value; }
+           if ( $this->VXMin > $Value) { $this->VXMin = $Value; }
+          }
+        }
+
+       if ( $this->VXMax > preg_replace('/\.[0-9]+/','',$this->VXMax) )
+        $this->VXMax = preg_replace('/\.[0-9]+/','',$this->VXMax)+1;
+
+       $DataRange = $this->VMax - $this->VMin;
+       if ( $DataRange == 0 ) { $DataRange = .1; }
+
+       /* Compute automatic scaling */
+       $ScaleOk = FALSE; $Factor = 1;
+       $MinDivWidth = 25; $MaxDivs = ($this->GArea_X2 - $this->GArea_X1) / $MinDivWidth;
+
+       if ( $this->VXMin == 0 && $this->VXMax == 0 )
+        { $this->VXMin = 0; $this->VXMax = 2; $Scale = 1; $XDivisions = 2;}
+       elseif ($MaxDivs > 1)
+        {
+         while(!$ScaleOk)
+          {
+           $Scale1 = ( $this->VXMax - $this->VXMin ) / $Factor;
+           $Scale2 = ( $this->VXMax - $this->VXMin ) / $Factor / 2;
+           $Scale4 = ( $this->VXMax - $this->VXMin ) / $Factor / 4;
+
+           if ( $Scale1 > 1 && $Scale1 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $XDivisions = floor($Scale1); $Scale = 1;}
+           if ( $Scale2 > 1 && $Scale2 <= $MaxDivs && !$ScaleOk) { $ScaleOk = TRUE; $XDivisions = floor($Scale2); $Scale = 2;}
+           if (!$ScaleOk)
+            {
+             if ( $Scale2 > 1 ) { $Factor = $Factor * 10; }
+             if ( $Scale2 < 1 ) { $Factor = $Factor / 10; }
+            }
+          }
+
+         if ( floor($this->VXMax / $Scale / $Factor) != $this->VXMax / $Scale / $Factor)
+          {
+           $GridID     = floor ( $this->VXMax / $Scale / $Factor) + 1;
+           $this->VXMax = $GridID * $Scale * $Factor;
+           $XDivisions++;
+          }
+
+         if ( floor($this->VXMin / $Scale / $Factor) != $this->VXMin / $Scale / $Factor)
+          {
+           $GridID     = floor( $this->VXMin / $Scale / $Factor);
+           $this->VXMin = $GridID * $Scale * $Factor;
+           $XDivisions++;
+          }
+        }
+       else /* Can occurs for small graphs */
+        $Scale = 1;
+
+       if ( !isset($XDivisions) )
+        $XDivisions = 2;
+
+       if ( $this->isRealInt(($this->VXMax-$this->VXMin)/($XDivisions-1)))
+        $XDivisions--;
+       elseif ( $this->isRealInt(($this->VXMax-$this->VXMin)/($XDivisions+1)))
+        $XDivisions++;
+      }
+     else
+      $XDivisions = $this->XDivisions;
+
+     $this->XDivisionCount = $Divisions;
+     $this->DataCount      = $Divisions + 2;
+
+     $XDataRange = $this->VXMax - $this->VXMin;
+     if ( $XDataRange == 0 ) { $XDataRange = .1; }
+
+     $this->DivisionWidth   = ( $this->GArea_X2 - $this->GArea_X1 ) / $XDivisions;
+     $this->XDivisionRatio  = ( $this->GArea_X2 - $this->GArea_X1 ) / $XDataRange;
+
+     $XPos = $this->GArea_X1; $YMax = NULL;
+     for($i=1;$i<=$XDivisions+1;$i++)
+      {
+       $this->drawLine($XPos,$this->GArea_Y2,$XPos,$this->GArea_Y2+5,$R,$G,$B);
+
+       $Value     = $this->VXMin + ($i-1) * (( $this->VXMax - $this->VXMin ) / $XDivisions);
+       $Value     = round($Value * pow(10,$Decimals)) / pow(10,$Decimals);
+			if ( $DataDescription["Format"]["Y"] == "number" )
+				$Value = number_format($Value.$DataDescription["Unit"]["Y"], 0, '', ',');
+       // $Value = $Value.$DataDescription["Unit"]["Y"];
+       if ( $DataDescription["Format"]["Y"] == "time" )
+        $Value = $this->ToTime($Value);        
+       if ( $DataDescription["Format"]["Y"] == "date" )
+        $Value = $this->ToDate($Value);        
+       if ( $DataDescription["Format"]["Y"] == "metric" )
+        $Value = $this->ToMetric($Value);        
+       if ( $DataDescription["Format"]["Y"] == "currency" )
+        $Value = $this->ToCurrency($Value);        
+
+       $Position   = imageftbbox($this->FontSize,$Angle,$this->FontName,$Value);
+       $TextWidth  = abs($Position[2])+abs($Position[0]);
+       $TextHeight = abs($Position[1])+abs($Position[3]);
+
+       if ( $Angle == 0 )
+        {
+         $YPos = $this->GArea_Y2+18;
+         imagettftext($this->Picture,$this->FontSize,$Angle,floor($XPos)-floor($TextWidth/2),$YPos,$C_TextColor,$this->FontName,$Value);
+        }
+       else
+        {
+         $YPos = $this->GArea_Y2+10+$TextHeight;
+         if ( $Angle <= 90 )
+          imagettftext($this->Picture,$this->FontSize,$Angle,floor($XPos)-$TextWidth+5,$YPos,$C_TextColor,$this->FontName,$Value);
+         else
+          imagettftext($this->Picture,$this->FontSize,$Angle,floor($XPos)+$TextWidth+5,$YPos,$C_TextColor,$this->FontName,$Value);
+         }
+
+       if ( $YMax < $YPos || $YMax == NULL ) { $YMax = $YPos; }
+
+       $XPos = $XPos + $this->DivisionWidth;
+      }
+
+     /* Write the Y Axis caption if set */ 
+     if ( isset($DataDescription["Axis"]["Y"]) )
+      {
+       $Position   = imageftbbox($this->FontSize,90,$this->FontName,$DataDescription["Axis"]["Y"]);
+       $TextHeight = abs($Position[1])+abs($Position[3]);
+       $TextTop    = (($this->GArea_Y2 - $this->GArea_Y1) / 2) + $this->GArea_Y1 + ($TextHeight/2);
+       imagettftext($this->Picture,$this->FontSize,90,$XMin-$this->FontSize,$TextTop,$C_TextColor,$this->FontName,$DataDescription["Axis"]["Y"]);
+      }
+
+     /* Write the X Axis caption if set */ 
+     if ( isset($DataDescription["Axis"]["X"]) )
+      {
+       $Position   = imageftbbox($this->FontSize,90,$this->FontName,$DataDescription["Axis"]["X"]);
+       $TextWidth  = abs($Position[2])+abs($Position[0]);
+       $TextLeft   = (($this->GArea_X2 - $this->GArea_X1) / 2) + $this->GArea_X1 + ($TextWidth/2);
+       imagettftext($this->Picture,$this->FontSize,0,$TextLeft,$YMax+$this->FontSize+5,$C_TextColor,$this->FontName,$DataDescription["Axis"]["X"]);
+      }
+    }
+
    /* Compute and draw the scale */
    function drawGrid($LineWidth,$Mosaic=TRUE,$R=220,$G=220,$B=220,$Alpha=100)
     {
@@ -533,11 +916,11 @@
        $LayerHeight = $this->GArea_Y2-$this->GArea_Y1;
 
        $this->Layers[0] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-       $C_White         = imagecolorallocate($this->Layers[0],255,255,255);
+       $C_White         =$this->AllocateColor($this->Layers[0],255,255,255);
        imagefilledrectangle($this->Layers[0],0,0,$LayerWidth,$LayerHeight,$C_White);
        imagecolortransparent($this->Layers[0],$C_White);
 
-       $C_Rectangle = imagecolorallocate($this->Layers[0],250,250,250);
+       $C_Rectangle =$this->AllocateColor($this->Layers[0],250,250,250);
 
        $YPos  = $LayerHeight; //$this->GArea_Y2-1;
        $LastY = $YPos;
@@ -571,7 +954,7 @@
      if ( $this->GAreaXOffset == 0 )
       { $XPos = $this->GArea_X1 + $this->DivisionWidth + $this->GAreaXOffset; $ColCount = $this->DataCount-2; }
      else
-      { $XPos = $this->GArea_X1 + $this->GAreaXOffset; $ColCount = $this->DataCount; }
+      { $XPos = $this->GArea_X1 + $this->GAreaXOffset; $ColCount = floor( ($this->GArea_X2 - $this->GArea_X1) / $this->DivisionWidth ); }
 
      for($i=1;$i<=$ColCount;$i++)
       {
@@ -604,7 +987,7 @@
     }
 
    /* Draw the data legends */
-   function drawLegend($XPos,$YPos,&$DataDescription,$R,$G,$B,$Rs=-1,$Gs=-1,$Bs=-1)
+   function drawLegend($XPos,$YPos,$DataDescription,$R,$G,$B,$Rs=-1,$Gs=-1,$Bs=-1,$Rt=0,$Gt=0,$Bt=0,$Border=TRUE)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawLegend",$DataDescription);
@@ -612,7 +995,7 @@
      if ( !isset($DataDescription["Description"]) )
       return(-1);
 
-     $C_TextColor = imagecolorallocate($this->Picture,0,0,0);
+     $C_TextColor =$this->AllocateColor($this->Picture,$Rt,$Gt,$Bt);
 
      /* <-10->[8]<-4->Text<-10-> */
      $MaxWidth = 0; $MaxHeight = 8;
@@ -630,8 +1013,11 @@
      if ( $Rs == -1 || $Gs == -1 || $Bs == -1 )
       { $Rs = $R-30; $Gs = $G-30; $Bs = $B-30; }
 
-     $this->drawFilledRoundedRectangle($XPos+1,$YPos+1,$XPos+$MaxWidth+1,$YPos+$MaxHeight+1,5,$Rs,$Gs,$Bs);
-     $this->drawFilledRoundedRectangle($XPos,$YPos,$XPos+$MaxWidth,$YPos+$MaxHeight,5,$R,$G,$B);
+     if ( $Border )
+      {
+       $this->drawFilledRoundedRectangle($XPos+1,$YPos+1,$XPos+$MaxWidth+1,$YPos+$MaxHeight+1,5,$Rs,$Gs,$Bs);
+       $this->drawFilledRoundedRectangle($XPos,$YPos,$XPos+$MaxWidth,$YPos+$MaxHeight,5,$R,$G,$B);
+      }
 
      $YOffset = 4 + $this->FontSize; $ID = 0;
      foreach($DataDescription["Description"] as $Key => $Value)
@@ -648,7 +1034,7 @@
     }
 
    /* Draw the data legends */
-   function drawPieLegend($XPos,$YPos,&$Data,&$DataDescription,$R,$G,$B)
+   function drawPieLegend($XPos,$YPos,$Data,$DataDescription,$R,$G,$B)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawPieLegend",$DataDescription,FALSE);
@@ -657,7 +1043,7 @@
      if ( !isset($DataDescription["Position"]) )
       return(-1);
 
-     $C_TextColor = imagecolorallocate($this->Picture,0,0,0);
+     $C_TextColor =$this->AllocateColor($this->Picture,0,0,0);
 
      /* <-10->[8]<-4->Text<-10-> */
      $MaxWidth = 0; $MaxHeight = 8;
@@ -692,9 +1078,9 @@
     }
 
    /* Draw the graph title */
-   function drawTitle($XPos,$YPos,$Value,$R,$G,$B,$XPos2 = -1, $YPos2 = -1)
+   function drawTitle($XPos,$YPos,$Value,$R,$G,$B,$XPos2=-1,$YPos2=-1,$Shadow=FALSE)
     {
-     $C_TextColor = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_TextColor = $this->AllocateColor($this->Picture,$R,$G,$B);
 
      if ( $XPos2 != -1 )
       {
@@ -708,6 +1094,12 @@
        $Position   = imageftbbox($this->FontSize,0,$this->FontName,$Value);
        $TextHeight = $Position[5]-$Position[3];
        $YPos       = floor(( $YPos2 - $YPos - $TextHeight ) / 2 ) + $YPos;
+      }
+
+     if ( $Shadow )
+      {
+       $C_ShadowColor = $this->AllocateColor($this->Picture,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor);
+       imagettftext($this->Picture,$this->FontSize,0,$XPos+$this->ShadowXDistance,$YPos+$this->ShadowYDistance,$C_ShadowColor,$this->FontName,$Value);     
       }
 
      imagettftext($this->Picture,$this->FontSize,0,$XPos,$YPos,$C_TextColor,$this->FontName,$Value);     
@@ -735,8 +1127,8 @@
      if ( $Align == ALIGN_BOTTOM_CENTER ) { $X = $X1+($AreaWidth/2)-($TextWidth/2); $Y = $Y2-1; }
      if ( $Align == ALIGN_BOTTOM_RIGHT )  { $X = $X2-$TextWidth-1; $Y = $Y2-1; }
 
-     $C_TextColor   = imagecolorallocate($this->Picture,$R,$G,$B);
-     $C_ShadowColor = imagecolorallocate($this->Picture,0,0,0);
+     $C_TextColor   =$this->AllocateColor($this->Picture,$R,$G,$B);
+     $C_ShadowColor =$this->AllocateColor($this->Picture,0,0,0);
      if ( $Shadow )
       imagettftext($this->Picture,$this->FontSize,$Angle,$X+1,$Y+1,$C_ShadowColor,$this->FontName,$Text);     
 
@@ -750,7 +1142,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_TextColor = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_TextColor =$this->AllocateColor($this->Picture,$R,$G,$B);
      $Y = $this->GArea_Y2 - ($Value - $this->VMin) * $this->DivisionRatio;
 
      if ( $Y <= $this->GArea_Y1 || $Y >= $this->GArea_Y2 )
@@ -774,15 +1166,15 @@
     }
 
    /* This function put a label on a specific point */
-   function setLabel(&$Data,&$DataDescription,$SerieName,$ValueName,$Caption,$R=210,$G=210,$B=210)
+   function setLabel($Data,$DataDescription,$SerieName,$ValueName,$Caption,$R=210,$G=210,$B=210)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("setLabel",$DataDescription);
      $this->validateData("setLabel",$Data);
-
-     $C_Label     = imagecolorallocate($this->Picture,$R,$G,$B);
-     $C_Shadow    = imagecolorallocate($this->Picture,$R-30,$G-30,$B-30);
-     $C_TextColor = imagecolorallocate($this->Picture,0,0,0);
+     $ShadowFactor = 100;
+     $C_Label      =$this->AllocateColor($this->Picture,$R,$G,$B);
+     $C_Shadow     =$this->AllocateColor($this->Picture,$R-$ShadowFactor,$G-$ShadowFactor,$B-$ShadowFactor);
+     $C_TextColor  =$this->AllocateColor($this->Picture,0,0,0);
 
      $Cp = 0; $Found = FALSE;
      foreach ( $Data as $Key => $Value )
@@ -798,34 +1190,35 @@
 
      $Position   = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
      $TextHeight = $Position[3] - $Position[5];
-     $TextWidth = $Position[2]-$Position[0];
+     $TextWidth  = $Position[2]-$Position[0] + 2;
      $TextOffset = floor($TextHeight/2);
 
      // Shadow
      $Poly = array($XPos+1,$YPos+1,$XPos + 9,$YPos - $TextOffset,$XPos + 8,$YPos + $TextOffset + 2);
      imagefilledpolygon($this->Picture,$Poly,3,$C_Shadow);
-     $this->drawLine($XPos,$YPos+1,$XPos + 9,$YPos - $TextOffset - 1,$R-30,$G-30,$B-30);
-     $this->drawLine($XPos,$YPos+1,$XPos + 9,$YPos + $TextOffset + 3,$R-30,$G-30,$B-30);
-     $this->drawFilledRectangle($XPos + 9,$YPos - $TextOffset,$XPos + 13 + $TextWidth,$YPos + $TextOffset + 2,$R-30,$G-30,$B-30);
+     $this->drawLine($XPos,$YPos+1,$XPos + 9,$YPos - $TextOffset - .2,$R-$ShadowFactor,$G-$ShadowFactor,$B-$ShadowFactor);
+     $this->drawLine($XPos,$YPos+1,$XPos + 9,$YPos + $TextOffset + 2.2,$R-$ShadowFactor,$G-$ShadowFactor,$B-$ShadowFactor);
+     $this->drawFilledRectangle($XPos + 9,$YPos - $TextOffset-.2,$XPos + 13 + $TextWidth,$YPos + $TextOffset + 2.2,$R-$ShadowFactor,$G-$ShadowFactor,$B-$ShadowFactor);
 
      // Label background
      $Poly = array($XPos,$YPos,$XPos + 8,$YPos - $TextOffset - 1,$XPos + 8,$YPos + $TextOffset + 1);
      imagefilledpolygon($this->Picture,$Poly,3,$C_Label);
-     $this->drawLine($XPos-1,$YPos,$XPos + 8,$YPos - $TextOffset - 2,$R,$G,$B);
-     $this->drawLine($XPos-1,$YPos,$XPos + 8,$YPos + $TextOffset + 2,$R,$G,$B);
-     $this->drawFilledRectangle($XPos + 8,$YPos - $TextOffset - 1,$XPos + 12 + $TextWidth,$YPos + $TextOffset + 1,$R,$G,$B);
+     $this->drawLine($XPos-1,$YPos,$XPos + 8,$YPos - $TextOffset - 1.2,$R,$G,$B);
+     $this->drawLine($XPos-1,$YPos,$XPos + 8,$YPos + $TextOffset + 1.2,$R,$G,$B);
+     $this->drawFilledRectangle($XPos + 8,$YPos - $TextOffset - 1.2,$XPos + 12 + $TextWidth,$YPos + $TextOffset + 1.2,$R,$G,$B);
 
      imagettftext($this->Picture,$this->FontSize,0,$XPos + 10,$YPos + $TextOffset,$C_TextColor,$this->FontName,$Caption);
     }
 
-   /* This function draw a line graph */
-   function drawPlotGraph(&$Data,&$DataDescription,$BigRadius=5,$SmallRadius=2,$R2=-1,$G2=-1,$B2=-1)
+   /* This function draw a plot graph */
+   function drawPlotGraph($Data,$DataDescription,$BigRadius=5,$SmallRadius=2,$R2=-1,$G2=-1,$B2=-1,$Shadow=FALSE)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawPlotGraph",$DataDescription);
      $this->validateData("drawPlotGraph",$Data);
 
      $GraphID = 0;
+     $Ro = $R2; $Go = $G2; $Bo = $B2;
 
      foreach ( $DataDescription["Values"] as $Key2 => $ColName )
       {
@@ -836,6 +1229,7 @@
        $R = $this->Palette[$ColorID]["R"];
        $G = $this->Palette[$ColorID]["G"];
        $B = $this->Palette[$ColorID]["B"];
+       $R2 = $Ro; $G2 = $Go; $B2 = $Bo;
 
        if ( isset($DataDescription["Symbol"][$ColName]) )
         {
@@ -849,6 +1243,7 @@
 
        $XPos  = $this->GArea_X1 + $this->GAreaXOffset;
        $Hsize = round($BigRadius/2);
+       $R3 = -1; $G3 = -1; $B3 = -1;
        foreach ( $Data as $Key => $Values )
         {
          $Value = $Data[$Key][$ColName];
@@ -862,17 +1257,34 @@
           {
            if ( !isset($DataDescription["Symbol"][$ColName]) )
             {
+
+             if ( $Shadow )
+              {
+               if ( $R3 !=-1 && $G3 !=-1 && $B3 !=-1 )
+                $this->drawFilledCircle($XPos+2,$YPos+2,$BigRadius,$R3,$G3,$B3);
+               else
+                {
+                 $R3 = $this->Palette[$ColorID]["R"]-20; if ( $R3 < 0 ) { $R3 = 0; }
+                 $G3 = $this->Palette[$ColorID]["G"]-20; if ( $G3 < 0 ) { $G3 = 0; }
+                 $B3 = $this->Palette[$ColorID]["B"]-20; if ( $B3 < 0 ) { $B3 = 0; }
+                 $this->drawFilledCircle($XPos+2,$YPos+2,$BigRadius,$R3,$G3,$B3);
+                }
+              }
+
              $this->drawFilledCircle($XPos+1,$YPos+1,$BigRadius,$R,$G,$B);
 
-             if ( $R2 !=-1 && $G2 !=-1 && $B2 !=-1 )
-              $this->drawFilledCircle($XPos+1,$YPos+1,$SmallRadius,$R2,$G2,$B2);
-             else
+             if ( $SmallRadius != 0 )
               {
-               $R = $this->Palette[$ColorID]["R"]-5; if ( $R < 0 ) { $R = 0; }
-               $G = $this->Palette[$ColorID]["G"]-5; if ( $G < 0 ) { $G = 0; }
-               $B = $this->Palette[$ColorID]["B"]-5; if ( $B < 0 ) { $B = 0; }
+               if ( $R2 !=-1 && $G2 !=-1 && $B2 !=-1 )
+                $this->drawFilledCircle($XPos+1,$YPos+1,$SmallRadius,$R2,$G2,$B2);
+               else
+                {
+                 $R2 = $this->Palette[$ColorID]["R"]-15; if ( $R2 < 0 ) { $R2 = 0; }
+                 $G2 = $this->Palette[$ColorID]["G"]-15; if ( $G2 < 0 ) { $G2 = 0; }
+                 $B2 = $this->Palette[$ColorID]["B"]-15; if ( $B2 < 0 ) { $B2 = 0; }
 
-               $this->drawFilledCircle($XPos+1,$YPos+1,$SmallRadius,$R,$G,$B);
+                 $this->drawFilledCircle($XPos+1,$YPos+1,$SmallRadius,$R2,$G2,$B2);
+                }
               }
             }
            else
@@ -887,9 +1299,57 @@
       }
     }
 
+   /* This function draw a plot graph in an X/Y space */
+   function drawXYPlotGraph($Data,$DataDescription,$YSerieName,$XSerieName,$PaletteID=0,$BigRadius=5,$SmallRadius=2,$R2=-1,$G2=-1,$B2=-1,$Shadow=TRUE)
+    {
+     $R = $this->Palette[$PaletteID]["R"];
+     $G = $this->Palette[$PaletteID]["G"];
+     $B = $this->Palette[$PaletteID]["B"];
+     $R3 = -1; $G3 = -1; $B3 = -1;
+
+     $YLast = -1; $XLast = -1;
+     foreach ( $Data as $Key => $Values )
+      {
+       if ( isset($Data[$Key][$YSerieName]) && isset($Data[$Key][$XSerieName]) )
+        {
+         $X = $Data[$Key][$XSerieName];
+         $Y = $Data[$Key][$YSerieName];
+
+         $Y = $this->GArea_Y2 - (($Y-$this->VMin) * $this->DivisionRatio);
+         $X = $this->GArea_X1 + (($X-$this->VXMin) * $this->XDivisionRatio);
+
+
+         if ( $Shadow )
+          {
+           if ( $R3 !=-1 && $G3 !=-1 && $B3 !=-1 )
+            $this->drawFilledCircle($X+2,$Y+2,$BigRadius,$R3,$G3,$B3);
+           else
+            {
+             $R3 = $this->Palette[$PaletteID]["R"]-20; if ( $R < 0 ) { $R = 0; }
+             $G3 = $this->Palette[$PaletteID]["G"]-20; if ( $G < 0 ) { $G = 0; }
+             $B3 = $this->Palette[$PaletteID]["B"]-20; if ( $B < 0 ) { $B = 0; }
+             $this->drawFilledCircle($X+2,$Y+2,$BigRadius,$R3,$G3,$B3);
+            }
+          }
+
+         $this->drawFilledCircle($X+1,$Y+1,$BigRadius,$R,$G,$B);
+
+         if ( $R2 !=-1 && $G2 !=-1 && $B2 !=-1 )
+          $this->drawFilledCircle($X+1,$Y+1,$SmallRadius,$R2,$G2,$B2);
+         else
+          {
+           $R2 = $this->Palette[$PaletteID]["R"]+20; if ( $R > 255 ) { $R = 255; }
+           $G2 = $this->Palette[$PaletteID]["G"]+20; if ( $G > 255 ) { $G = 255; }
+           $B2 = $this->Palette[$PaletteID]["B"]+20; if ( $B > 255 ) { $B = 255; }
+           $this->drawFilledCircle($X+1,$Y+1,$SmallRadius,$R2,$G2,$B2);
+          }
+        }
+      }
+
+    }
 
    /* This function draw an area between two series */
-   function drawArea(&$Data,$Serie1,$Serie2,$R,$G,$B,$Alpha = 50)
+   function drawArea($Data,$Serie1,$Serie2,$R,$G,$B,$Alpha = 50)
     {
      /* Validate the Data and DataDescription array */
      $this->validateData("drawArea",$Data);
@@ -898,11 +1358,11 @@
      $LayerHeight = $this->GArea_Y2-$this->GArea_Y1;
 
      $this->Layers[0] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-     $C_White         = imagecolorallocate($this->Layers[0],255,255,255);
+     $C_White         =$this->AllocateColor($this->Layers[0],255,255,255);
      imagefilledrectangle($this->Layers[0],0,0,$LayerWidth,$LayerHeight,$C_White);
      imagecolortransparent($this->Layers[0],$C_White);
 
-     $C_Graph = imagecolorallocate($this->Layers[0],$R,$G,$B);
+     $C_Graph =$this->AllocateColor($this->Layers[0],$R,$G,$B);
 
      $XPos     = $this->GAreaXOffset;
      $LastXPos = -1;
@@ -937,7 +1397,7 @@
 
 
    /* This function write the values of the specified series */
-   function writeValues(&$Data,&$DataDescription,$Series)
+   function writeValues($Data,$DataDescription,$Series)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("writeValues",$DataDescription);
@@ -964,7 +1424,7 @@
            $Width  = $Positions[2] - $Positions[6]; $XOffset = $XPos - ($Width/2); 
            $Height = $Positions[3] - $Positions[7]; $YOffset = $YPos - 4;
 
-           $C_TextColor = imagecolorallocate($this->Picture,$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+           $C_TextColor =$this->AllocateColor($this->Picture,$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
            imagettftext($this->Picture,$this->FontSize,0,$XOffset,$YOffset,$C_TextColor,$this->FontName,$Value);
           }
          $XPos = $XPos + $this->DivisionWidth;
@@ -974,7 +1434,7 @@
     }
 
    /* This function draw a line graph */
-   function drawLineGraph(&$Data,&$DataDescription,$SerieName="")
+   function drawLineGraph($Data,$DataDescription,$SerieName="")
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawLineGraph",$DataDescription);
@@ -1017,8 +1477,33 @@
       }
     }
 
+   /* This function draw a line graph */
+   function drawXYGraph($Data,$DataDescription,$YSerieName,$XSerieName,$PaletteID=0)
+    {
+     $YLast = -1; $XLast = -1;
+     foreach ( $Data as $Key => $Values )
+      {
+       if ( isset($Data[$Key][$YSerieName]) && isset($Data[$Key][$XSerieName]) )
+        {
+         $X = $Data[$Key][$XSerieName];
+         $Y = $Data[$Key][$YSerieName];
+
+         $Y = $this->GArea_Y2 - (($Y-$this->VMin) * $this->DivisionRatio);
+         $X = $this->GArea_X1 + (($X-$this->VXMin) * $this->XDivisionRatio);
+
+         if ($XLast != -1 && $YLast != -1)
+          {
+           $this->drawLine($XLast,$YLast,$X,$Y,$this->Palette[$PaletteID]["R"],$this->Palette[$PaletteID]["G"],$this->Palette[$PaletteID]["B"],TRUE);
+          }
+
+         $XLast = $X;
+         $YLast = $Y;
+        }
+      }
+    }
+
    /* This function draw a cubic curve */
-   function drawCubicCurve(&$Data,&$DataDescription,$Accuracy=.1,$SerieName="")
+   function drawCubicCurve($Data,$DataDescription,$Accuracy=.1,$SerieName="")
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawCubicCurve",$DataDescription);
@@ -1115,7 +1600,7 @@
     }
 
    /* This function draw a filled cubic curve */
-   function drawFilledCubicCurve(&$Data,&$DataDescription,$Accuracy=.1,$Alpha=100,$AroundZero=FALSE)
+   function drawFilledCubicCurve($Data,$DataDescription,$Accuracy=.1,$Alpha=100,$AroundZero=FALSE)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawFilledCubicCurve",$DataDescription);
@@ -1172,7 +1657,7 @@
        $Points[] = $LayerHeight;
 
        $this->Layers[0] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-       $C_White         = imagecolorallocate($this->Layers[0],255,255,255);
+       $C_White         =$this->AllocateColor($this->Layers[0],255,255,255);
        imagefilledrectangle($this->Layers[0],0,0,$LayerWidth,$LayerHeight,$C_White);
        imagecolortransparent($this->Layers[0],$C_White);
 
@@ -1212,7 +1697,7 @@
            $aPoints[] = $XLast;
            $aPoints[] = $YZero;
 
-           $C_Graph = imagecolorallocate($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+           $C_Graph =$this->AllocateColor($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
            imagefilledpolygon($this->Layers[0],$aPoints,4,$C_Graph);
           }
 
@@ -1249,7 +1734,7 @@
            $aPoints[] = $XLast;
            $aPoints[] = $YZero;
 
-           $C_Graph = imagecolorallocate($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+           $C_Graph =$this->AllocateColor($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
            imagefilledpolygon($this->Layers[0],$aPoints,4,$C_Graph);
           }
 
@@ -1266,7 +1751,7 @@
 
        if ( !$AroundZero )
         {
-         $C_Graph = imagecolorallocate($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+         $C_Graph =$this->AllocateColor($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
          imagefilledpolygon($this->Layers[0],$Points,$PointsCount,$C_Graph);
         }
 
@@ -1280,7 +1765,7 @@
     }
 
    /* This function draw a filled line graph */
-   function drawFilledLineGraph(&$Data,&$DataDescription,$Alpha=100,$AroundZero=FALSE)
+   function drawFilledLineGraph($Data,$DataDescription,$Alpha=100,$AroundZero=FALSE)
     {
      $Empty = -2147483647;
 
@@ -1303,7 +1788,7 @@
        $aPoints[] = $LayerHeight;
 
        $this->Layers[0] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-       $C_White         = imagecolorallocate($this->Layers[0],255,255,255);
+       $C_White         = $this->AllocateColor($this->Layers[0],255,255,255);
        imagefilledrectangle($this->Layers[0],0,0,$LayerWidth,$LayerHeight,$C_White);
        imagecolortransparent($this->Layers[0],$C_White);
 
@@ -1349,7 +1834,7 @@
              $Points[] = $XLast;
              $Points[] = $YZero;
 
-             $C_Graph = imagecolorallocate($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+             $C_Graph = $this->AllocateColor($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
              imagefilledpolygon($this->Layers[0],$Points,4,$C_Graph);
             }
            $YLast = $YPos;
@@ -1363,7 +1848,7 @@
 
        if ( $AroundZero == FALSE )
         {
-         $C_Graph = imagecolorallocate($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+         $C_Graph = $this->AllocateColor($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
          imagefilledpolygon($this->Layers[0],$aPoints,$PointsCount,$C_Graph);
         }
 
@@ -1375,7 +1860,7 @@
     }
 
    /* This function draw a bar graph */
-   function drawOverlayBarGraph(&$Data,&$DataDescription,$Alpha=50)
+   function drawOverlayBarGraph($Data,$DataDescription,$Alpha=50)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawOverlayBarGraph",$DataDescription);
@@ -1392,8 +1877,8 @@
         { if ( $keyI == $ColName ) { $ColorID = $ID; }; $ID++; }
 
        $this->Layers[$GraphID] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-       $C_White                = imagecolorallocate($this->Layers[$GraphID],255,255,255);
-       $C_Graph                = imagecolorallocate($this->Layers[$GraphID],$this->Palette[$GraphID]["R"],$this->Palette[$GraphID]["G"],$this->Palette[$GraphID]["B"]);
+       $C_White                = $this->AllocateColor($this->Layers[$GraphID],255,255,255);
+       $C_Graph                = $this->AllocateColor($this->Layers[$GraphID],$this->Palette[$GraphID]["R"],$this->Palette[$GraphID]["G"],$this->Palette[$GraphID]["B"]);
        imagefilledrectangle($this->Layers[$GraphID],0,0,$LayerWidth,$LayerHeight,$C_White);
        imagecolortransparent($this->Layers[$GraphID],$C_White);
 
@@ -1438,7 +1923,7 @@
     }
 
    /* This function draw a bar graph */
-   function drawBarGraph(&$Data,&$DataDescription,$Shadow=FALSE,$Alpha=100)
+   function drawBarGraph($Data,$DataDescription,$Shadow=FALSE,$Alpha=100)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawBarGraph",$DataDescription);
@@ -1489,7 +1974,7 @@
     }
 
    /* This function draw a stacked bar graph */
-   function drawStackedBarGraph(&$Data,&$DataDescription,$Alpha=50)
+   function drawStackedBarGraph($Data,$DataDescription,$Alpha=50,$Contiguous=FALSE)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawBarGraph",$DataDescription);
@@ -1497,7 +1982,10 @@
 
      $GraphID      = 0;
      $Series       = count($DataDescription["Values"]);
-     $SeriesWidth  = $this->DivisionWidth * .8;
+     if ( $Contiguous )
+      $SeriesWidth  = $this->DivisionWidth;
+     else
+      $SeriesWidth  = $this->DivisionWidth * .8;
 
      $YZero  = $this->GArea_Y2 - ((0-$this->VMin) * $this->DivisionRatio);
      if ( $YZero > $this->GArea_Y2 ) { $YZero = $this->GArea_Y2; }
@@ -1546,7 +2034,7 @@
     }
 
    /* This function draw a limits bar graphs */
-   function drawLimitsGraph(&$Data,&$DataDescription,$R=0,$G=0,$B=0)
+   function drawLimitsGraph($Data,$DataDescription,$R=0,$G=0,$B=0)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawLimitsGraph",$DataDescription);
@@ -1594,13 +2082,13 @@
     }
 
    /* This function draw radar axis centered on the graph area */
-   function drawRadarAxis(&$Data,&$DataDescription,$Mosaic=TRUE,$BorderOffset=10,$A_R=60,$A_G=60,$A_B=60,$S_R=200,$S_G=200,$S_B=200,$MaxValue=-1)
+   function drawRadarAxis($Data,$DataDescription,$Mosaic=TRUE,$BorderOffset=10,$A_R=60,$A_G=60,$A_B=60,$S_R=200,$S_G=200,$S_B=200,$MaxValue=-1)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawRadarAxis",$DataDescription);
      $this->validateData("drawRadarAxis",$Data);
 
-     $C_TextColor = imagecolorallocate($this->Picture,$A_R,$A_G,$A_B);
+     $C_TextColor = $this->AllocateColor($this->Picture,$A_R,$A_G,$A_B);
 
      /* Draw radar axis */
      $Points  = count($Data);
@@ -1646,7 +2134,7 @@
              $Plots[] = $LastX2; $Plots[] = $LastY2;
              $Plots[] = $LastX1; $Plots[] = $LastY1;
 
-             $C_Graph = imagecolorallocate($this->Picture,250,250,250);
+             $C_Graph = $this->AllocateColor($this->Picture,250,250,250);
              imagefilledpolygon($this->Picture,$Plots,(count($Plots)+1)/2,$C_Graph);
             }
 
@@ -1732,7 +2220,7 @@
     }
 
    /* This function draw a radar graph centered on the graph area */
-   function drawRadar(&$Data,&$DataDescription,$BorderOffset=10,$MaxValue=-1)
+   function drawRadar($Data,$DataDescription,$BorderOffset=10,$MaxValue=-1)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawRadar",$DataDescription);
@@ -1792,7 +2280,7 @@
     }
 
    /* This function draw a radar graph centered on the graph area */
-   function drawFilledRadar(&$Data,&$DataDescription,$Alpha=50,$BorderOffset=10,$MaxValue=-1)
+   function drawFilledRadar($Data,$DataDescription,$Alpha=50,$BorderOffset=10,$MaxValue=-1)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawFilledRadar",$DataDescription);
@@ -1854,11 +2342,11 @@
          $Plots[] = $Plots[1];
 
          $this->Layers[0] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-         $C_White         = imagecolorallocate($this->Layers[0],255,255,255);
+         $C_White         = $this->AllocateColor($this->Layers[0],255,255,255);
          imagefilledrectangle($this->Layers[0],0,0,$LayerWidth,$LayerHeight,$C_White);
          imagecolortransparent($this->Layers[0],$C_White);
 
-         $C_Graph = imagecolorallocate($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
+         $C_Graph = $this->AllocateColor($this->Layers[0],$this->Palette[$ColorID]["R"],$this->Palette[$ColorID]["G"],$this->Palette[$ColorID]["B"]);
          imagefilledpolygon($this->Layers[0],$Plots,(count($Plots)+1)/2,$C_Graph);
 
          imagecopymerge($this->Picture,$this->Layers[0],$this->GArea_X1,$this->GArea_Y1,0,0,$LayerWidth,$LayerHeight,$Alpha);
@@ -1873,7 +2361,7 @@
     }
 
    /* This function draw a flat pie chart */
-   function drawBasicPieGraph(&$Data,&$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$R=255,$G=255,$B=255,$Decimals=0)
+   function drawBasicPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$R=255,$G=255,$B=255,$Decimals=0)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawBasicPieGraph",$DataDescription,FALSE);
@@ -1909,6 +2397,7 @@
        $TopPlots[$Key][] = $YPos;
 
        /* Process labels position & size */
+       $Caption = "";
        if ( !($DrawLabels == PIE_NOLABEL) )
         {
          $TAngle   = $Angle+($Value*$SpliceRatio/2);
@@ -1916,17 +2405,26 @@
           $Caption  = (round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
          elseif ($DrawLabels == PIE_LABELS)
           $Caption  = $iLabels[$Key];
-         $TX       = cos(($TAngle) * 3.1418 / 180 ) * ($Radius + 10)+ $XPos;
-         $TY       = sin(($TAngle) * 3.1418 / 180 ) * ($Radius+ 10) + $YPos + 4;
+         elseif ($DrawLabels == PIE_PERCENTAGE_LABEL)
+          $Caption  = $iLabels[$Key]."\r\n".(round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
+         elseif ($DrawLabels == PIE_PERCENTAGE_LABEL)
+          $Caption  = $iLabels[$Key]."\r\n".(round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
+
+         $Position   = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
+         $TextWidth  = $Position[2]-$Position[0];
+         $TextHeight = abs($Position[1])+abs($Position[3]);
+
+         $TX = cos(($TAngle) * 3.1418 / 180 ) * ($Radius+10) + $XPos;
+
+         if ( $TAngle > 0 && $TAngle < 180 )
+          $TY = sin(($TAngle) * 3.1418 / 180 ) * ($Radius+10) + $YPos + 4;
+         else
+          $TY = sin(($TAngle) * 3.1418 / 180 ) * ($Radius+4) + $YPos - ($TextHeight/2);
 
          if ( $TAngle > 90 && $TAngle < 270 )
-          {
-           $Position  = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
-           $TextWidth = $Position[2]-$Position[0];
-           $TX = $TX - $TextWidth;
-          }
+          $TX = $TX - $TextWidth;
 
-         $C_TextColor = imagecolorallocate($this->Picture,70,70,70);
+         $C_TextColor = $this->AllocateColor($this->Picture,70,70,70);
          imagettftext($this->Picture,$this->FontSize,0,$TX,$TY,$C_TextColor,$this->FontName,$Caption);
         }
 
@@ -1954,7 +2452,7 @@
      /* Draw Top polygons */
      foreach ($PolyPlots as $Key => $Value)
       { 
-       $C_GraphLo = imagecolorallocate($this->Picture,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
+       $C_GraphLo = $this->AllocateColor($this->Picture,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
        imagefilledpolygon($this->Picture,$PolyPlots[$Key],(count($PolyPlots[$Key])+1)/2,$C_GraphLo);
       }
 
@@ -1969,12 +2467,20 @@
       }
     }
 
+   function drawFlatPieGraphWithShadow($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$SpliceDistance=0,$Decimals=0)
+    {
+     $this->drawFlatPieGraph($Data,$DataDescription,$XPos+$this->ShadowXDistance,$YPos+$this->ShadowYDistance,$Radius,PIE_NOLABEL,$SpliceDistance,$Decimals,TRUE);
+     $this->drawFlatPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius,$DrawLabels,$SpliceDistance,$Decimals,FALSE);
+    }
+
    /* This function draw a flat pie chart */
-   function drawFlatPieGraph(&$Data,&$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$SpliceDistance=0,$Decimals = 0)
+   function drawFlatPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$SpliceDistance=0,$Decimals=0,$AllBlack=FALSE)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawFlatPieGraph",$DataDescription,FALSE);
      $this->validateData("drawFlatPieGraph",$Data);
+
+     $ShadowStatus = $this->ShadowActive ; $this->ShadowActive = FALSE;
 
      /* Determine pie sum */
      $Series = 0; $PieSum = 0;
@@ -1993,23 +2499,33 @@
 
      /* Validate serie */
      if ( $Series != 1 )
-      RaiseFatal("Pie chart can only accept one serie of data.");
+      {
+       RaiseFatal("Pie chart can only accept one serie of data.");
+       return(0);
+      }
 
-     $SpliceDistanceRatio = $SpliceDistance;
-     $SpliceRatio         = (360 - $SpliceDistanceRatio * count($iValues) ) / $PieSum;
-     $SplicePercent       = 100 / $PieSum;
+     $SpliceRatio   = 360 / $PieSum;
+     $SplicePercent = 100 / $PieSum;
 
      /* Calculate all polygons */
-     $Angle    = 0; $TopPlots = "";
+     $Angle = 0; $TopPlots = "";
      foreach($iValues as $Key => $Value)
       {
-       $XCenterPos = cos(($Angle+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * $SpliceDistance + $XPos;
-       $YCenterPos = sin(($Angle+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * $SpliceDistance + $YPos;
+       $XOffset = cos(($Angle+($Value/2*$SpliceRatio)) * 3.1418 / 180 ) * $SpliceDistance;
+       $YOffset = sin(($Angle+($Value/2*$SpliceRatio)) * 3.1418 / 180 ) * $SpliceDistance;
 
-       $TopPlots[$Key][] = $XCenterPos;
-       $TopPlots[$Key][] = $YCenterPos;
+       $TopPlots[$Key][] = round($XPos + $XOffset);
+       $TopPlots[$Key][] = round($YPos + $YOffset);
+
+       if ( $AllBlack )
+        { $Rc = $this->ShadowRColor; $Gc = $this->ShadowGColor; $Bc = $this->ShadowBColor; }
+       else
+        { $Rc = $this->Palette[$Key]["R"]; $Gc = $this->Palette[$Key]["G"]; $Bc = $this->Palette[$Key]["B"]; }
+
+       $XLineLast = ""; $YLineLast = "";
 
        /* Process labels position & size */
+       $Caption = "";
        if ( !($DrawLabels == PIE_NOLABEL) )
         {
          $TAngle   = $Angle+($Value*$SpliceRatio/2);
@@ -2017,81 +2533,73 @@
           $Caption  = (round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
          elseif ($DrawLabels == PIE_LABELS)
           $Caption  = $iLabels[$Key];
-         $TX       = cos(($TAngle) * 3.1418 / 180 ) * ($Radius+10+$SpliceDistance)+$XPos;
-         $TY       = sin(($TAngle) * 3.1418 / 180 ) * ($Radius+10+$SpliceDistance) + $YPos + 4;
+         elseif ($DrawLabels == PIE_PERCENTAGE_LABEL)
+          $Caption  = $iLabels[$Key]."\r\n".(round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
+         elseif ($DrawLabels == PIE_PERCENTAGE_LABEL)
+          $Caption  = $iLabels[$Key]."\r\n".(round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
+
+         $Position   = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
+         $TextWidth  = $Position[2]-$Position[0];
+         $TextHeight = abs($Position[1])+abs($Position[3]);
+
+         $TX = cos(($TAngle) * 3.1418 / 180 ) * ($Radius+10+$SpliceDistance) + $XPos;
+
+         if ( $TAngle > 0 && $TAngle < 180 )
+          $TY = sin(($TAngle) * 3.1418 / 180 ) * ($Radius+10+$SpliceDistance) + $YPos + 4;
+         else
+          $TY = sin(($TAngle) * 3.1418 / 180 ) * ($Radius+$SpliceDistance+4) + $YPos - ($TextHeight/2);
 
          if ( $TAngle > 90 && $TAngle < 270 )
-          {
-           $Position  = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
-           $TextWidth = $Position[2]-$Position[0];
-           $TX = $TX - $TextWidth;
-          }
+          $TX = $TX - $TextWidth;
 
-         $C_TextColor = imagecolorallocate($this->Picture,70,70,70);
+         $C_TextColor = $this->AllocateColor($this->Picture,70,70,70);
          imagettftext($this->Picture,$this->FontSize,0,$TX,$TY,$C_TextColor,$this->FontName,$Caption);
         }
 
-       /* Draw borders to correct imagefilledpolygon bug */
-       $BMax = 2;
-       for($i=-1;$i<=$BMax;$i++)
-        {
-         $BorderX1 = cos(($Angle+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * ($SpliceDistance+$i) + $XPos;
-         $BorderY1 = sin(($Angle+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * ($SpliceDistance+$i) + $YPos;
-         $BorderX2 = cos(($Angle+$i*.5) * 3.1418 / 180 ) * (($Radius+$BMax)+$SpliceDistance) + $XPos;
-         $BorderY2 = sin(($Angle+$i*.5) * 3.1418 / 180 ) * (($Radius+$BMax)+$SpliceDistance) + $YPos;
-         $this->drawLine($BorderX1,$BorderY1,$BorderX2,$BorderY2,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
-
-         $BorderX1 = cos(($Angle+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * ($SpliceDistance+$i) + $XPos;
-         $BorderY1 = sin(($Angle+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * ($SpliceDistance+$i) + $YPos;
-         $BorderX2 = cos(($Angle-$i*.5+$Value*$SpliceRatio) * 3.1418 / 180 ) * (($Radius+$BMax)+$SpliceDistance) + $XPos;
-         $BorderY2 = sin(($Angle-$i*.5+$Value*$SpliceRatio) * 3.1418 / 180 ) * (($Radius+$BMax)+$SpliceDistance) + $YPos;
-         $this->drawLine($BorderX1,$BorderY1,$BorderX2,$BorderY2,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
-        }
-
        /* Process pie slices */
+       if ( !$AllBlack )
+        $LineColor = $this->AllocateColor($this->Picture,$Rc,$Gc,$Bc);
+       else
+        $LineColor = $this->AllocateColor($this->Picture,$Rc,$Gc,$Bc);
+
+       $XLineLast = ""; $YLineLast = "";
        for($iAngle=$Angle;$iAngle<=$Angle+$Value*$SpliceRatio;$iAngle=$iAngle+.5)
         {
-         $TopX = cos($iAngle * 3.1418 / 180 ) * ($Radius+$SpliceDistance) + $XPos;
-         $TopY = sin($iAngle * 3.1418 / 180 ) * ($Radius+$SpliceDistance) + $YPos;
+         $PosX = cos($iAngle * 3.1418 / 180 ) * $Radius + $XPos + $XOffset;
+         $PosY = sin($iAngle * 3.1418 / 180 ) * $Radius + $YPos + $YOffset;
 
-         $TopPlots[$Key][] = $TopX;
-         $TopPlots[$Key][] = $TopY;
+         $TopPlots[$Key][] = round($PosX); $TopPlots[$Key][] = round($PosY);
 
-         if ( $iAngle != $Angle )
-          {
-           for($i=-1;$i<=2;$i++)
-            {
-             $BorderX1 = cos(($iAngle-.5) * 3.1418 / 180 ) * (($Radius+$i)+$SpliceDistance) + $XPos;
-             $BorderY1 = sin(($iAngle-.5) * 3.1418 / 180 ) * (($Radius+$i)+$SpliceDistance) + $YPos;
-             $BorderX2 = cos($iAngle * 3.1418 / 180 ) * (($Radius+$i)+$SpliceDistance) + $XPos;
-             $BorderY2 = sin($iAngle * 3.1418 / 180 ) * (($Radius+$i)+$SpliceDistance) + $YPos;
+         if ( $iAngle == $Angle || $iAngle == $Angle+$Value*$SpliceRatio || $iAngle +.5 > $Angle+$Value*$SpliceRatio)
+          $this->drawLine($XPos+$XOffset,$YPos+$YOffset,$PosX,$PosY,$Rc,$Gc,$Bc);
 
-             $this->drawLine($BorderX1,$BorderY1,$BorderX2,$BorderY2,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
-            }
-          }
+         if ( $XLineLast != "" )
+          $this->drawLine($XLineLast,$YLineLast,$PosX,$PosY,$Rc,$Gc,$Bc);
+
+         $XLineLast = $PosX; $YLineLast = $PosY;
         }
 
-       $TopPlots[$Key][] = $XCenterPos;
-       $TopPlots[$Key][] = $YCenterPos;
+       $TopPlots[$Key][] = round($XPos + $XOffset);  $TopPlots[$Key][] = round($YPos + $YOffset);
 
-       $Angle = $iAngle + $SpliceDistanceRatio;
+       $Angle = $iAngle;
       }
      $PolyPlots = $TopPlots;
 
-     /* Set array values type to float --- PHP Bug with imagefilledpolygon casting to integer */
-     foreach ($TopPlots as $Key => $Value)
-      { foreach ($TopPlots[$Key] as $Key2 => $Value2) { settype($TopPlots[$Key][$Key2],"float"); } }
-
      /* Draw Top polygons */
-     foreach ($TopPlots as $Key => $Value)
+     foreach ($PolyPlots as $Key => $Value)
       { 
-       $C_GraphLo = imagecolorallocate($this->Picture,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
+       if ( !$AllBlack )
+        $C_GraphLo = $this->AllocateColor($this->Picture,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
+       else
+        $C_GraphLo = $this->AllocateColor($this->Picture,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor);
+
        imagefilledpolygon($this->Picture,$PolyPlots[$Key],(count($PolyPlots[$Key])+1)/2,$C_GraphLo);
       }
+     $this->ShadowActive = $ShadowStatus;
     }
 
    /* This function draw a pseudo-3D pie chart */
-   function drawPieGraph(&$Data,&$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$EnhanceColors=TRUE,$Skew=60,$SpliceHeight=20,$SpliceDistance=0,$Decimals=0)
+   function drawPieGraph($Data,$DataDescription,$XPos,$YPos,$Radius=100,$DrawLabels=PIE_NOLABEL,$EnhanceColors=TRUE,$Skew=60,$SpliceHeight=20,$SpliceDistance=0,$Decimals=0)
     {
      /* Validate the Data and DataDescription array */
      $this->validateDataDescription("drawPieGraph",$DataDescription,FALSE);
@@ -2108,7 +2616,8 @@
           if ( isset($Data[$Key][$ColName]))
            {
             if ( $Data[$Key][$ColName] == 0 )
-             { $PieSum++; $iValues[] = 1; $rValues[] = 0; }
+             { $iValues[] = 0; $rValues[] = 0; $iLabels[] = $Data[$Key][$DataDescription["Position"]]; }
+              // Removed : $PieSum++; $rValues[] = 1;
             else
              { $PieSum += $Data[$Key][$ColName]; $iValues[] = $Data[$Key][$ColName]; $iLabels[] = $Data[$Key][$DataDescription["Position"]]; $rValues[] = $Data[$Key][$ColName]; $rPieSum += $Data[$Key][$ColName];}
            }
@@ -2126,7 +2635,9 @@
      $rSplicePercent      = 100 / $rPieSum;
 
      /* Calculate all polygons */
-     $Angle    = 0; $TopPlots = ""; $BotPlots = ""; $CDev = 5;
+     $Angle    = 0; $CDev = 5;
+     $TopPlots = ""; $BotPlots = "";
+     $aTopPlots = ""; $aBotPlots = "";
      foreach($iValues as $Key => $Value)
       {
        $XCenterPos = cos(($Angle-$CDev+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * $SpliceDistance + $XPos;
@@ -2134,10 +2645,13 @@
        $XCenterPos2 = cos(($Angle+$CDev+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * $SpliceDistance + $XPos;
        $YCenterPos2 = sin(($Angle+$CDev+($Value*$SpliceRatio+$SpliceDistanceRatio)/2) * 3.1418 / 180 ) * $SpliceDistance + $YPos;
 
-       $TopPlots[$Key][] = $XCenterPos; $BotPlots[$Key][] = $XCenterPos;
-       $TopPlots[$Key][] = $YCenterPos; $BotPlots[$Key][] = $YCenterPos + $SpliceHeight;
+       $TopPlots[$Key][] = round($XCenterPos); $BotPlots[$Key][] = round($XCenterPos);
+       $TopPlots[$Key][] = round($YCenterPos); $BotPlots[$Key][] = round($YCenterPos + $SpliceHeight);
+       $aTopPlots[$Key][] = $XCenterPos; $aBotPlots[$Key][] = $XCenterPos;
+       $aTopPlots[$Key][] = $YCenterPos; $aBotPlots[$Key][] = $YCenterPos + $SpliceHeight;
 
        /* Process labels position & size */
+       $Caption = "";
        if ( !($DrawLabels == PIE_NOLABEL) )
         {
          $TAngle   = $Angle+($Value*$SpliceRatio/2);
@@ -2145,22 +2659,24 @@
           $Caption  = (round($rValues[$Key] * pow(10,$Decimals) * $rSplicePercent)/pow(10,$Decimals))."%";
          elseif ($DrawLabels == PIE_LABELS)
           $Caption  = $iLabels[$Key];
+         elseif ($DrawLabels == PIE_PERCENTAGE_LABEL)
+          $Caption  = $iLabels[$Key]."\r\n".(round($Value * pow(10,$Decimals) * $SplicePercent)/pow(10,$Decimals))."%";
 
-         $TX       = cos(($TAngle) * 3.1418 / 180 ) * ($Radius + 10)+ $XPos;
+         $Position   = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
+         $TextWidth  = $Position[2]-$Position[0];
+         $TextHeight = abs($Position[1])+abs($Position[3]);
+
+         $TX = cos(($TAngle) * 3.1418 / 180 ) * ($Radius + 10)+ $XPos;
 
          if ( $TAngle > 0 && $TAngle < 180 )
           $TY = sin(($TAngle) * 3.1418 / 180 ) * ($SkewHeight + 10) + $YPos + $SpliceHeight + 4;
          else
-          $TY = sin(($TAngle) * 3.1418 / 180 ) * ($SkewHeight + 10) + $YPos + 4;
+          $TY = sin(($TAngle) * 3.1418 / 180 ) * ($SkewHeight + 4) + $YPos - ($TextHeight/2);
 
          if ( $TAngle > 90 && $TAngle < 270 )
-          {
-           $Position  = imageftbbox($this->FontSize,0,$this->FontName,$Caption);
-           $TextWidth = $Position[2]-$Position[0];
-           $TX = $TX - $TextWidth;
-          }
+          $TX = $TX - $TextWidth;
 
-         $C_TextColor = imagecolorallocate($this->Picture,70,70,70);
+         $C_TextColor = $this->AllocateColor($this->Picture,70,70,70);
          imagettftext($this->Picture,$this->FontSize,0,$TX,$TY,$C_TextColor,$this->FontName,$Caption);
         }
 
@@ -2170,12 +2686,16 @@
          $TopX = cos($iAngle * 3.1418 / 180 ) * $Radius + $XPos;
          $TopY = sin($iAngle * 3.1418 / 180 ) * $SkewHeight + $YPos;
 
-         $TopPlots[$Key][] = $TopX; $BotPlots[$Key][] = $TopX;
-         $TopPlots[$Key][] = $TopY; $BotPlots[$Key][] = $TopY + $SpliceHeight;
+         $TopPlots[$Key][] = round($TopX); $BotPlots[$Key][] = round($TopX);
+         $TopPlots[$Key][] = round($TopY); $BotPlots[$Key][] = round($TopY + $SpliceHeight);
+         $aTopPlots[$Key][] = $TopX; $aBotPlots[$Key][] = $TopX;
+         $aTopPlots[$Key][] = $TopY; $aBotPlots[$Key][] = $TopY + $SpliceHeight;
         }
 
-       $TopPlots[$Key][] = $XCenterPos2; $BotPlots[$Key][] = $XCenterPos2;
-       $TopPlots[$Key][] = $YCenterPos2; $BotPlots[$Key][] = $YCenterPos2 + $SpliceHeight;
+       $TopPlots[$Key][] = round($XCenterPos2); $BotPlots[$Key][] = round($XCenterPos2);
+       $TopPlots[$Key][] = round($YCenterPos2); $BotPlots[$Key][] = round($YCenterPos2 + $SpliceHeight);
+       $aTopPlots[$Key][] = $XCenterPos2; $aBotPlots[$Key][] = $XCenterPos2;
+       $aTopPlots[$Key][] = $YCenterPos2; $aBotPlots[$Key][] = $YCenterPos2 + $SpliceHeight;
 
        $Angle = $iAngle + $SpliceDistanceRatio;
       }
@@ -2186,8 +2706,10 @@
        $C_GraphLo = $this->AllocateColor($this->Picture,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"],-20);
        imagefilledpolygon($this->Picture,$BotPlots[$Key],(count($BotPlots[$Key])+1)/2,$C_GraphLo);
 
-       for($j=0;$j<=count($BotPlots[$Key])-4;$j=$j+2)
-        $this->drawLine($BotPlots[$Key][$j],$BotPlots[$Key][$j+1],$BotPlots[$Key][$j+2],$BotPlots[$Key][$j+3],$this->Palette[$Key]["R"]-20,$this->Palette[$Key]["G"]-20,$this->Palette[$Key]["B"]-20);
+       if ( $EnhanceColors ) { $En = -10; } else { $En = 0; }
+ 
+       for($j=0;$j<=count($aBotPlots[$Key])-4;$j=$j+2)
+        $this->drawLine($aBotPlots[$Key][$j],$aBotPlots[$Key][$j+1],$aBotPlots[$Key][$j+2],$aBotPlots[$Key][$j+3],$this->Palette[$Key]["R"]+$En,$this->Palette[$Key]["G"]+$En,$this->Palette[$Key]["B"]+$En);
       }
 
      /* Draw pie layers */
@@ -2209,7 +2731,8 @@
          imagefilledpolygon($this->Picture,$Plots,(count($Plots)+1)/2,$C_GraphLo);
 
          $Index       = count($Plots);
-         $ColorFactor = -20 + ($SpliceHeight - $i) * $ColorRatio;
+         if ($EnhanceColors ) {$ColorFactor = -20 + ($SpliceHeight - $i) * $ColorRatio; } else { $ColorFactor = 0; }
+
          $this->drawAntialiasPixel($Plots[0],$Plots[1],$this->Palette[$Key]["R"]+$ColorFactor,$this->Palette[$Key]["G"]+$ColorFactor,$this->Palette[$Key]["B"]+$ColorFactor);
          $this->drawAntialiasPixel($Plots[2],$Plots[3],$this->Palette[$Key]["R"]+$ColorFactor,$this->Palette[$Key]["G"]+$ColorFactor,$this->Palette[$Key]["B"]+$ColorFactor);
          $this->drawAntialiasPixel($Plots[$Index-4],$Plots[$Index-3],$this->Palette[$Key]["R"]+$ColorFactor,$this->Palette[$Key]["G"]+$ColorFactor,$this->Palette[$Key]["B"]+$ColorFactor);
@@ -2222,9 +2745,9 @@
        $C_GraphLo = $this->AllocateColor($this->Picture,$this->Palette[$Key]["R"],$this->Palette[$Key]["G"],$this->Palette[$Key]["B"]);
        imagefilledpolygon($this->Picture,$TopPlots[$Key],(count($TopPlots[$Key])+1)/2,$C_GraphLo);
 
-       if ( $EnhanceColors ) { $En = 10; } else { $En = 5; }
-       for($j=0;$j<=count($TopPlots[$Key])-4;$j=$j+2)
-        $this->drawLine($TopPlots[$Key][$j],$TopPlots[$Key][$j+1],$TopPlots[$Key][$j+2],$TopPlots[$Key][$j+3],$this->Palette[$Key]["R"]+$En,$this->Palette[$Key]["G"]+$En,$this->Palette[$Key]["B"]+$En);
+       if ( $EnhanceColors ) { $En = 10; } else { $En = 0; }
+       for($j=0;$j<=count($aTopPlots[$Key])-4;$j=$j+2)
+        $this->drawLine($aTopPlots[$Key][$j],$aTopPlots[$Key][$j+1],$aTopPlots[$Key][$j+2],$aTopPlots[$Key][$j+3],$this->Palette[$Key]["R"]+$En,$this->Palette[$Key]["G"]+$En,$this->Palette[$Key]["B"]+$En);
       }
     }
 
@@ -2235,7 +2758,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_Background = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_Background = $this->AllocateColor($this->Picture,$R,$G,$B);
      imagefilledrectangle($this->Picture,0,0,$this->XSize,$this->YSize,$C_Background);
     }
 
@@ -2249,16 +2772,37 @@
      if ( $Target == TARGET_GRAPHAREA )  { $X1 = $this->GArea_X1+1; $X2 = $this->GArea_X2-1; $Y1 = $this->GArea_Y1+1; $Y2 = $this->GArea_Y2; }
      if ( $Target == TARGET_BACKGROUND ) { $X1 = 0; $X2 = $this->XSize; $Y1 = 0; $Y2 = $this->YSize; }
 
-     $YStep = ($Y2 - $Y1 - 2) / $Decay;
-     for($i=0;$i<=$Decay;$i++)
+     /* Positive gradient */
+     if ( $Decay > 0 )
       {
-       $R-=1;$G-=1;$B-=1;
-       $Yi1 = $Y1 + ( $i * $YStep );
-       $Yi2 = ceil( $Yi1 + ( $i * $YStep ) + $YStep );
-       if ( $Yi2 >= $Yi2 ) { $Yi2 = $Y2-1; }
+       $YStep = ($Y2 - $Y1 - 2) / $Decay;
+       for($i=0;$i<=$Decay;$i++)
+        {
+         $R-=1;$G-=1;$B-=1;
+         $Yi1 = $Y1 + ( $i * $YStep );
+         $Yi2 = ceil( $Yi1 + ( $i * $YStep ) + $YStep );
+         if ( $Yi2 >= $Yi2 ) { $Yi2 = $Y2-1; }
 
-       $C_Background = $this->AllocateColor($this->Picture,$R,$G,$B);
-       imagefilledrectangle($this->Picture,$X1,$Yi1,$X2,$Yi2,$C_Background);
+         $C_Background = $this->AllocateColor($this->Picture,$R,$G,$B);
+         imagefilledrectangle($this->Picture,$X1,$Yi1,$X2,$Yi2,$C_Background);
+        }
+      }
+
+     /* Negative gradient */
+     if ( $Decay < 0 )
+      {
+       $YStep = ($Y2 - $Y1 - 2) / -$Decay;
+       $Yi1   = $Y1; $Yi2   = $Y1+$YStep;
+       for($i=-$Decay;$i>=0;$i--)
+        {
+         $R+=1;$G+=1;$B+=1;
+         $C_Background = $this->AllocateColor($this->Picture,$R,$G,$B);
+         imagefilledrectangle($this->Picture,$X1,$Yi1,$X2,$Yi2,$C_Background);
+
+         $Yi1+= $YStep;
+         $Yi2+= $YStep;
+         if ( $Yi2 >= $Yi2 ) { $Yi2 = $Y2-1; }
+        }
       }
     }
 
@@ -2269,7 +2813,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_Rectangle = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_Rectangle = $this->AllocateColor($this->Picture,$R,$G,$B);
 
      $X1=$X1-.2;$Y1=$Y1-.2;
      $X2=$X2+.2;$Y2=$Y2+.2;
@@ -2280,10 +2824,10 @@
     }
 
    /* This function create a filled rectangle with antialias */
-   function drawFilledRectangle($X1,$Y1,$X2,$Y2,$R,$G,$B,$DrawBorder=TRUE,$Alpha=100)
+   function drawFilledRectangle($X1,$Y1,$X2,$Y2,$R,$G,$B,$DrawBorder=TRUE,$Alpha=100,$NoFallBack=FALSE)
     {
-     if ( $X2 > $X1 ) { list($X1, $X2) = array($X2, $X1); }
-     if ( $Y2 > $Y1 ) { list($Y1, $Y2) = array($Y2, $Y1); }
+     if ( $X2 < $X1 ) { list($X1, $X2) = array($X2, $X1); }
+     if ( $Y2 < $Y1 ) { list($Y1, $Y2) = array($Y2, $Y1); }
 
      if ( $R < 0 ) { $R = 0; } if ( $R > 255 ) { $R = 255; }
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
@@ -2291,8 +2835,23 @@
 
      if ( $Alpha == 100 )
       {
-       $C_Rectangle = imagecolorallocate($this->Picture,$R,$G,$B);
-       imagefilledrectangle($this->Picture,$X1,$Y1,$X2,$Y2,$C_Rectangle);
+       /* Process shadows */
+       if ( $this->ShadowActive && !$NoFallBack )
+        {
+         $this->drawFilledRectangle($X1+$this->ShadowXDistance,$Y1+$this->ShadowYDistance,$X2+$this->ShadowXDistance,$Y2+$this->ShadowYDistance,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor,FALSE,$this->ShadowAlpha,TRUE);
+         if ( $this->ShadowBlur != 0 )
+          {
+           $AlphaDecay = ($this->ShadowAlpha / $this->ShadowBlur);
+
+           for($i=1; $i<=$this->ShadowBlur; $i++)
+            $this->drawFilledRectangle($X1+$this->ShadowXDistance-$i/2,$Y1+$this->ShadowYDistance-$i/2,$X2+$this->ShadowXDistance-$i/2,$Y2+$this->ShadowYDistance-$i/2,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor,FALSE,$this->ShadowAlpha-$AlphaDecay*$i,TRUE);
+           for($i=1; $i<=$this->ShadowBlur; $i++)
+            $this->drawFilledRectangle($X1+$this->ShadowXDistance+$i/2,$Y1+$this->ShadowYDistance+$i/2,$X2+$this->ShadowXDistance+$i/2,$Y2+$this->ShadowYDistance+$i/2,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor,FALSE,$this->ShadowAlpha-$AlphaDecay*$i,TRUE);
+          }
+        }
+
+       $C_Rectangle = $this->AllocateColor($this->Picture,$R,$G,$B);
+       imagefilledrectangle($this->Picture,round($X1),round($Y1),round($X2),round($Y2),$C_Rectangle);
       }
      else
       {
@@ -2300,19 +2859,23 @@
        $LayerHeight = abs($Y2-$Y1)+2;
 
        $this->Layers[0] = imagecreatetruecolor($LayerWidth,$LayerHeight);
-       $C_White         = imagecolorallocate($this->Layers[0],255,255,255);
+       $C_White         = $this->AllocateColor($this->Layers[0],255,255,255);
        imagefilledrectangle($this->Layers[0],0,0,$LayerWidth,$LayerHeight,$C_White);
        imagecolortransparent($this->Layers[0],$C_White);
 
-       $C_Rectangle = imagecolorallocate($this->Layers[0],$R,$G,$B);
-       imagefilledrectangle($this->Layers[0],1,1,$LayerWidth-1,$LayerHeight-1,$C_Rectangle);
+       $C_Rectangle = $this->AllocateColor($this->Layers[0],$R,$G,$B);
+       imagefilledrectangle($this->Layers[0],round(1),round(1),round($LayerWidth-1),round($LayerHeight-1),$C_Rectangle);
 
-       imagecopymerge($this->Picture,$this->Layers[0],min($X1,$X2)-1,min($Y1,$Y2)-1,0,0,$LayerWidth,$LayerHeight,$Alpha);
+       imagecopymerge($this->Picture,$this->Layers[0],round(min($X1,$X2)-1),round(min($Y1,$Y2)-1),0,0,$LayerWidth,$LayerHeight,$Alpha);
        imagedestroy($this->Layers[0]);
       }
 
      if ( $DrawBorder )
-      $this->drawRectangle($X1,$Y1,$X2,$Y2,$R,$G,$B);
+      {
+       $ShadowSettings = $this->ShadowActive; $this->ShadowActive = FALSE;
+       $this->drawRectangle($X1,$Y1,$X2,$Y2,$R,$G,$B);
+       $this->ShadowActive = $ShadowSettings;
+      }
     }
 
    /* This function create a rectangle with rounded corners and antialias */
@@ -2322,7 +2885,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_Rectangle = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_Rectangle = $this->AllocateColor($this->Picture,$R,$G,$B);
 
      $Step = 90 / ((3.1418 * $Radius)/2);
 
@@ -2360,7 +2923,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_Rectangle = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_Rectangle = $this->AllocateColor($this->Picture,$R,$G,$B);
 
      $Step = 90 / ((3.1418 * $Radius)/2);
 
@@ -2408,7 +2971,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_Circle = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_Circle = $this->AllocateColor($this->Picture,$R,$G,$B);
      $Step     = 360 / (2 * 3.1418 * max($Width,$Height));
 
      for($i=0;$i<=360;$i=$i+$Step)
@@ -2427,7 +2990,7 @@
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
 
-     $C_Circle = imagecolorallocate($this->Picture,$R,$G,$B);
+     $C_Circle = $this->AllocateColor($this->Picture,$R,$G,$B);
      $Step     = 360 / (2 * 3.1418 * max($Width,$Height));
 
      for($i=90;$i<=270;$i=$i+$Step)
@@ -2576,7 +3139,7 @@
      $Ga   = floor($G*$Alpha+$G2*$iAlpha);
      $Ba   = floor($B*$Alpha+$B2*$iAlpha);
 
-     $C_Aliased = imagecolorallocate($this->Picture,$Ra,$Ga,$Ba);
+     $C_Aliased = $this->AllocateColor($this->Picture,$Ra,$Ga,$Ba);
      imagesetpixel($this->Picture,$X,$Y,$C_Aliased);
     }
 
@@ -2600,7 +3163,7 @@
      $Height = $this->YSize+2*$Size;
 
      $Resampled    = imagecreatetruecolor($Width,$Height);
-     $C_Background = imagecolorallocate($Resampled,$R,$G,$B);
+     $C_Background = $this->AllocateColor($Resampled,$R,$G,$B);
      imagefilledrectangle($Resampled,0,0,$Width,$Height,$C_Background);
 
      imagecopy($Resampled,$this->Picture,$Size,$Size,0,0,$this->XSize,$this->YSize);
@@ -2610,7 +3173,7 @@
      $this->YSize = $Height;
 
      $this->Picture = imagecreatetruecolor($this->XSize,$this->YSize);
-     $C_White = imagecolorallocate($this->Picture,255,255,255);
+     $C_White = $this->AllocateColor($this->Picture,255,255,255);
      imagefilledrectangle($this->Picture,0,0,$this->XSize,$this->YSize,$C_White);
      imagecolortransparent($this->Picture,$C_White);
      imagecopy($this->Picture,$Resampled,0,0,0,0,$this->XSize,$this->YSize);
@@ -2644,8 +3207,23 @@
     }
 
    /* Private functions for internal processing */
-   function drawAntialiasPixel($X,$Y,$R,$G,$B)
+   function drawAntialiasPixel($X,$Y,$R,$G,$B,$Alpha=100,$NoFallBack=FALSE)
     {
+     /* Process shadows */
+     if ( $this->ShadowActive && !$NoFallBack )
+      {
+       $this->drawAntialiasPixel($X+$this->ShadowXDistance,$Y+$this->ShadowYDistance,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor,$this->ShadowAlpha,TRUE);
+       if ( $this->ShadowBlur != 0 )
+        {
+         $AlphaDecay = ($this->ShadowAlpha / $this->ShadowBlur);
+
+         for($i=1; $i<=$this->ShadowBlur; $i++)
+          $this->drawAntialiasPixel($X+$this->ShadowXDistance-$i/2,$Y+$this->ShadowYDistance-$i/2,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor,$this->ShadowAlpha-$AlphaDecay*$i,TRUE);
+         for($i=1; $i<=$this->ShadowBlur; $i++)
+          $this->drawAntialiasPixel($X+$this->ShadowXDistance+$i/2,$Y+$this->ShadowYDistance+$i/2,$this->ShadowRColor,$this->ShadowGColor,$this->ShadowBColor,$this->ShadowAlpha-$AlphaDecay*$i,TRUE);
+        }
+      }
+
      if ( $R < 0 ) { $R = 0; } if ( $R > 255 ) { $R = 255; }
      if ( $G < 0 ) { $G = 0; } if ( $G > 255 ) { $G = 255; }
      if ( $B < 0 ) { $B = 0; } if ( $B > 255 ) { $B = 255; }
@@ -2656,22 +3234,26 @@
 
      if ( $Xi == $X && $Yi == $Y)
       {
-       /* $this->drawAlphaPixel($Xi,$Yi,0,$R,$G,$B); */
-       $C_Aliased = imagecolorallocate($this->Picture,$R,$G,$B);
-       imagesetpixel($this->Picture,$X,$Y,$C_Aliased);
+       if ( $Alpha == 100 )
+        {
+         $C_Aliased = $this->AllocateColor($this->Picture,$R,$G,$B);
+         imagesetpixel($this->Picture,$X,$Y,$C_Aliased);
+        }
+       else
+        $this->drawAlphaPixel($X,$Y,$Alpha,$R,$G,$B);
       }
      else
       {
-       $Alpha1 = (1 - ($X - floor($X))) * (1 - ($Y - floor($Y))) * 100;
+       $Alpha1 = (((1 - ($X - floor($X))) * (1 - ($Y - floor($Y))) * 100) / 100) * $Alpha;
        if ( $Alpha1 > $this->AntialiasQuality ) { $this->drawAlphaPixel($Xi,$Yi,$Alpha1,$R,$G,$B); }
 
-       $Alpha2 = ($X - floor($X)) * (1 - ($Y - floor($Y))) * 100;
+       $Alpha2 = ((($X - floor($X)) * (1 - ($Y - floor($Y))) * 100) / 100) * $Alpha;
        if ( $Alpha2 > $this->AntialiasQuality ) { $this->drawAlphaPixel($Xi+1,$Yi,$Alpha2,$R,$G,$B); }
 
-       $Alpha3 = (1 - ($X - floor($X))) * ($Y - floor($Y)) * 100;
+       $Alpha3 = (((1 - ($X - floor($X))) * ($Y - floor($Y)) * 100) / 100) * $Alpha;
        if ( $Alpha3 > $this->AntialiasQuality ) { $this->drawAlphaPixel($Xi,$Yi+1,$Alpha3,$R,$G,$B); }
 
-       $Alpha4 = ($X - floor($X)) * ($Y - floor($Y)) * 100;
+       $Alpha4 = ((($X - floor($X)) * ($Y - floor($Y)) * 100) / 100) * $Alpha;
        if ( $Alpha4 > $this->AntialiasQuality ) { $this->drawAlphaPixel($Xi+1,$Yi+1,$Alpha4,$R,$G,$B); }
       }
     }
@@ -2711,7 +3293,7 @@
    /* Validate data contained in the data array */
    function validateData($FunctionName,&$Data)
     {
-     $DataSummary = "";
+     $DataSummary = array();
 
      foreach($Data as $key => $Values)
       {
@@ -2760,7 +3342,7 @@
        $this->drawFilledRoundedRectangle($this->XSize-($MaxWidth+20),$this->YSize-(20+(($this->ErrorFontSize+4)*count($this->Errors))),$this->XSize-10,$this->YSize-10,6,233,185,185);
        $this->drawRoundedRectangle($this->XSize-($MaxWidth+20),$this->YSize-(20+(($this->ErrorFontSize+4)*count($this->Errors))),$this->XSize-10,$this->YSize-10,6,193,145,145);
 
-       $C_TextColor = imagecolorallocate($this->Picture,133,85,85);
+       $C_TextColor = $this->AllocateColor($this->Picture,133,85,85);
        $YPos        = $this->YSize - (18 + (count($this->Errors)-1) * ($this->ErrorFontSize + 4));
        foreach($this->Errors as $key => $Value)
         {
@@ -2867,6 +3449,26 @@
      return($o);
     }
 
+   /* Convert to curency */
+   function ToCurrency($Value)
+    {
+     $Go = floor($Value/1000000000);
+     $Mo = floor(($Value - $Go*1000000000)/1000000);
+     $Ko = floor(($Value - $Go*1000000000 - $Mo*1000000)/1000);
+     $o  = floor($Value - $Go*1000000000 - $Mo*1000000 - $Ko*1000);
+
+     if ( strlen($o) == 1 ) { $o = "00".$o; }
+     if ( strlen($o) == 2 ) { $o = "0".$o; }
+
+     $ResultString = $o;
+     if ( $Ko != 0 ) { $ResultString = $Ko.".".$ResultString; }
+     if ( $Mo != 0 ) { $ResultString = $Mo.".".$ResultString; }
+     if ( $Go != 0 ) { $ResultString = $Go.".".$ResultString; }
+
+     $ResultString = $this->Currency.$ResultString;
+     return($ResultString);
+    }
+
    /* Set date format for axis labels */
    function setDateFormat($Format)
     {
@@ -2877,6 +3479,14 @@
    function ToDate($Value)
     {
      return(date($this->DateFormat,$Value));
+    }
+
+   /* Check if a number is a full integer (for scaling) */
+   function isRealInt($Value)
+    {
+     if ($Value == floor($Value))
+      return(TRUE);
+     return(FALSE);
     }
   }
 

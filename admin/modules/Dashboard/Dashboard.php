@@ -97,14 +97,15 @@ class Dashboard extends CodonModule
 			
 			# Default to fopen(), if that fails it'll use CURL
 			$file = new CodonWebService();
-			$file->setType('fopen'); 
+			//$file->setType('fopen'); 
 			$contents = @$file->get($url);
 			
 			# Something should have been returned
 			if($contents == '')
 			{
 				$msg = '<br /><b>Error:</b> The phpVMS update server could not be contacted. 
-						Check to make sure allow_url_fopen is set to ON in your php.ini';
+						Check to make sure allow_url_fopen is set to ON in your php.ini, or 
+						that the cURL module is installed (contact your host).';
 						
 				Template::Set('latestnews', $msg);
 				return;

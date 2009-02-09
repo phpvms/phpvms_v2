@@ -193,6 +193,8 @@ $route->route
 	# File the PIREP
 	#
 	case 'pirep':
+	
+		ini_set('display_errors', 'off');
 
 		writedebug("PIREP FILE");
 		writedebug(print_r($_GET, true));

@@ -116,7 +116,7 @@ class ezSQL_mysql extends ezSQLcore
 	 */
 	public function connect($dbuser='', $dbpassword='', $dbhost='localhost')
 	{
-		if(!$this->dbh = @mysql_connect($dbhost, $dbuser, $dbpassword, true))
+		if(!$this->dbh = mysql_connect($dbhost, $dbuser, $dbpassword, true))
 		{
 			$this->register_error(mysql_error(), mysql_errno());
 			return false;

@@ -18,7 +18,7 @@ $files = array(	'jquery.form.js',
 #	May also be cached
 $condenser = new CodonCondenser();
 $condenser->SetOptions(SITE_ROOT.'/lib/js', SITE_URL.'/lib/js', 'js', '');
-$cache_url = $condenser->GetCondensedFile($files, 'jquery-front.js');
+$cache_url = $condenser->GetCondensedFile($files, 'jquery-front.js', true);
 ?>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>

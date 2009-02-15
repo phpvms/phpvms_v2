@@ -74,7 +74,7 @@ class CodonWebService
 			}
 			
 			$this->setType('curl');
-			curl_setopt_array($this->curl, $this->options);
+			@curl_setopt_array($this->curl, $this->options);
 		}
 		else
 		{

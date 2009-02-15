@@ -60,7 +60,7 @@ class CodonCondenser
 		$this->file_ext = $file_ext;
 	}
 	
-	public function GetCondensedFile($files, $filename='')
+	public function GetCondensedFile($files, $filename='', $usecache=true)
 	{
 		
 		if(!is_array($files))
@@ -78,7 +78,13 @@ class CodonCondenser
 		
 		# Check if we've already made this condensed cache file
 		#	If we have, then just give the URL of that file
-		if($this->getCachedFile() == true)
+		$ret = false;
+		if($usecache == true)
+		{
+			$ret = $this->getCachedFile();
+		}
+		
+		if($ret == true && $usecache == true)
 		{
 			return $this->url.'/'.$this->filename;
 		}

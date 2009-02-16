@@ -6,7 +6,7 @@
  ini_set('display_errors', 'on');
 */
 define('ADMIN_PANEL', true);
-define('INSTALLER_VERSION', '1.2.<<REVISION>>');
+define('INSTALLER_VERSION', '1.2.##REVISION##');
 
 include dirname(__FILE__).'/loader.inc.php';
 

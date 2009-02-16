@@ -2,6 +2,7 @@ CREATE TABLE `phpvms_downloads` (
    `id` INT NOT NULL AUTO_INCREMENT,
    `pid` INT,
    `name` VARCHAR(50),
+   `description` TEXT ASCII,
    `link` TEXT ASCII,
    `image` TEXT ASCII,
    `hits` INT,
@@ -302,7 +303,7 @@ ALTER TABLE `phpvms_pirepcomments`
 ALTER TABLE `phpvms_schedules`
   ADD CONSTRAINT `phpvms_schedules_ibfk_1` FOREIGN KEY (`code`) REFERENCES `phpvms_airlines` (`code`) ON UPDATE CASCADE;
 
-INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '1.2.<<REVISION>>', '', 't');
+INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '1.2.##REVISION##', '', 't');
 INSERT INTO `phpvms_settings` VALUES(2, 'Virtual Airline Name', 'SITE_NAME', 'PHPVMS', 'The name of your site. This will show up in the browser title bar.', 't');
 INSERT INTO `phpvms_settings` VALUES(3, 'Webmaster Email Address', 'ADMIN_EMAIL', '', 'This is the email address that email will get sent to/from', 't');
 INSERT INTO `phpvms_settings` VALUES(4, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 't');
@@ -310,5 +311,3 @@ INSERT INTO `phpvms_settings` VALUES(5, 'Notify for Updates', 'NOTIFY_UPDATE', '
 INSERT INTO `phpvms_settings` VALUES(6, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 't');
 INSERT INTO `phpvms_settings` VALUES(7, 'Google API Key', 'GOOGLE_KEY', '', 'This is your Google API key. You need it for the maps functionality to work', 't');
 INSERT INTO `phpvms_settings` VALUES(8, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 't');
-
-

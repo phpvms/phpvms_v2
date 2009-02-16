@@ -15,12 +15,11 @@
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
- 
+
 define('ADMIN_PANEL', true);
 define('INSTALLER_VERSION', '1.2.##REVISION##');
 
 include dirname(__FILE__).'/loader.inc.php';
-
 
 if($_POST['action'] == 'submitdb')
 {

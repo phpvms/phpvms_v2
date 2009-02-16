@@ -10,11 +10,7 @@ define('INSTALLER_VERSION', '1.2.##REVISION##');
 
 include dirname(__FILE__).'/loader.inc.php';
 
-/*
-echo Template::$tplset->template_path .'<br />';
-Template::SetTemplatePath(SITE_ROOT.'/install/templates');
-echo Template::$tplset->template_path;
-*/
+
 if($_POST['action'] == 'submitdb')
 {
 	//dbname] => [dbpass] => [dbuser] => [dbtype] => mysql [tableprefix] => phpvms_ [siteurl] => www.phpvms.net/test/ [action] => submitdb [

@@ -132,6 +132,20 @@ echo 'Starting the update...<br />';
 	
 	Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
 	
+	
+	# Specific Checks
+	$sql = 'SELECT * FROM '.TABLE_PREFIX."settings
+			WHERE name='TOTAL_HOURS'";
+	$res = DB::get_row($sql);
+	if(!$res)
+	{
+		$sql = "INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
+		VALUES ('Total Hours', 'TOTAL_HOURS', '', 'These are the total hours your VA has flown', '0')";
+		DB::query($sql);
+	}
+	
+	StatsData::UpdateTotalHours();
+	
 	echo '<p>Updating your database...</p>';
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 		

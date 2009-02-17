@@ -151,19 +151,22 @@ class SettingsData
 		$value = DB::escape($value);
 		$descrip = DB::escape($descrip);
 		
-		/*$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core)
-					VALUES (\''.$name.'\', \''.$value.'\', \''.$descrip.'\', \''. $core.'\')';
+		/*$sql = 'SELECT * FROM '.TABLE_PREFIX.'settings
+					WHERE name=\''.$name.'\'';
 		
-		$res = DB::query($sql);
+		$res = DB::get_row($sql);
 		
-		if(DB::$errno == 1062 || !$res)
+		if(!$res)
+		{
+			$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core)
+						VALUES (\''.$name.'\', \''.$value.'\', \''.$descrip.'\', \''. $core.'\')';
+		}
+		else
 		{*/
 			//update
 			// don't change CORE status on update
 			$sql = 'UPDATE ' . TABLE_PREFIX . 'settings
 						SET value=\''.$value.'\' WHERE name=\''.$name.'\'';
-			
-			$res = DB::query($sql);
 		//}
 		
 		$res = DB::query($sql);

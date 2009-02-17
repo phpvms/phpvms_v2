@@ -135,15 +135,27 @@ class StatsData
 		return $months;		
 	}
 	
+	public static function UpdateTotalHours()
+	{
+		$pireps = PIREPData::GetAllReportsByAccept(PIREP_ACCEPTED);
+		
+		$totaltime = 0;
+		foreach($pireps as $pirep)
+		{
+			$totaltime = Util::AddTime($totaltime, $pirep->totalhours);
+		}
+		
+		
+		SettingsData::SaveSetting('TOTAL_HOURS', $totaltime);
+		
+	}
+	
 	/**
 	 * Get the total number of hours flown by pilots
 	 */
 	public static function TotalHours()
 	{
-		$sql = 'SELECT SUM(totalhours) AS total 
-					FROM '.TABLE_PREFIX.'pilots';
-		$res = DB::get_row($sql);
-		return round($res->total, 2);
+		return SettingsData::GetSettingValue('TOTAL_HOURS');
 	}
 	
 	/**

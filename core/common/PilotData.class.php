@@ -354,25 +354,8 @@ class PilotData
 		# Update the flighttime
 		$pilotdata = PilotData::GetPilotData($pilotid);		
 		$flighttime = $pilotdata->totalhours + $flighttime;
-	
-		/* Blow it apart, see if the minutes are greater
-			than 60, if they are, subtract 60, and then
-			add one to the hour
-		 */
-		$parts = explode('.', $flighttime);
-		$hours = $parts[0];
-		$mins = $parts[1];
-		
-		if(strlen($mins)==1)
-			$mins *= 10;
-		
-		if($mins >= 60)
-		{
-			$mins -= 60;
-			$hours++;
-		}
-		
-		$flighttime = $hours.'.'.$mins;
+
+		$flighttime = Util::AddTime($pilotdata->totalhours, $flighttime);
 		
 		if($numflights == '')
 			$numflights = 1;

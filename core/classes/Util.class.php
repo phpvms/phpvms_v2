@@ -39,7 +39,66 @@
 
 class Util
 {
-	function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
+	
+	
+	/**
+	 * Add two time's together (1:30 + 1:30 = 3 hours)
+	 *
+	 * @param mixed $time1 Time one
+	 * @param mixed $time2 Time two
+	 * @return mixed Total time
+	 *
+	 */
+	public static function AddTime($time1, $time2)
+	{
+		$time1 = str_replace(':', '.', $time1);
+		$time2 = str_replace(':', '.', $time2);
+		
+		$time1 = number_format($time1, 2);
+		$time2 = number_format($time2, 2);
+		
+		$totaltime = $time1 + $time2;
+		$parts = explode('.', $totaltime);
+		$hours = $parts[0];
+		$mins = $parts[1];		
+					
+		if($mins!='')
+		{	
+			if(strlen($mins) == 1)
+				$mins *= 10;
+				
+			if($mins >= 60)
+			{
+				$mins -= 60;
+				$mins = '0'.$mins;
+				$hours++;
+			}
+		
+			# Ugly hack but it works,
+			# If it shows 030 then jsut take the 20
+			if(strlen($mins) == 3)
+				$mins = $mins[1].$mins[2];
+		}
+		else {
+			$mins = '00';
+		}
+		
+		return $hours.'.'.$mins;		
+	}
+	
+	
+	/**
+	 * Send an email 
+	 *
+	 * @param string $email Email Address to send to
+	 * @param string $subject Email Subject
+	 * @param string $message Email Message
+	 * @param string $fromname From name (optional, will use SITE_NAME)
+	 * @param string $fromemail From email (option, will use ADMIN_EMAIL)
+	 * @return mixed 
+	 *
+	 */
+	public static function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
 	{
 	
 		if($fromname != '' && $fromemail != '')

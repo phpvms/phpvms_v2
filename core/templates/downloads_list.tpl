@@ -1,4 +1,4 @@
-<h3>Downloads</h3>
+<h1>Downloads</h1>
 
 <?php 
 if(!$allcategories)
@@ -10,7 +10,7 @@ if(!$allcategories)
 foreach($allcategories as $category)
 {
 ?>
-<p><strong><?php echo $category->name?></strong></p>
+<p><h2><strong><?php echo $category->name?></strong></h2></p>
 <ul>
 
 <?php	
@@ -28,13 +28,13 @@ foreach($allcategories as $category)
 ?>
 	<li>
 		<a href="<?php echo SITE_URL;?>/index.php/downloads/<?php echo $download->id?>">
-			<?php echo $download->name . ' - ' . $download->description?>
-		</a> - Downloaded <?php echo $download->hits?> times
-	</li>
+			<?php echo $download->name?></a><br />
+	      <?php echo $download->description?><br />
+          <em>Downloaded <?php echo $download->hits?> times</em></li>
 <?php
 	}
-?>
+?><br />
 </ul>
-<?php
+	<?php
 }
 ?>

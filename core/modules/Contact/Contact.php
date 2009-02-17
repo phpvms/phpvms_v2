@@ -27,10 +27,7 @@ class Contact extends CodonModule
 			$captcha = SessionManager::Get('captcha_sum');
 			
 			if($this->post->loggedin == 'false')
-			{
-				//echo 'output of $_SESSION: <br />';
-				print_r($_SESSION);
-				
+			{		
 				// Check the captcha thingy
 				if($this->post->captcha != $captcha)
 				{
@@ -66,6 +63,7 @@ class Contact extends CodonModule
 			
 			Util::SendEmail(ADMIN_EMAIL, $subject, $message);
 			
+			Template::Show('contact_sent.tpl');
 			return;
 		}		
 		

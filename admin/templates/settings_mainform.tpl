@@ -22,22 +22,26 @@
 			
 			echo '<tr>
 					<td width="15%" nowrap>
-						<strong>'.$setting->friendlyname.'</strong></td>';
+						<strong>'.$setting->friendlyname.'</strong></td>
+						<td>';
 			
 			switch($setting->name)
 			{
 
 				case 'PHPVMS_VERSION':
-					echo '<td>'.PHPVMS_VERSION.'</td>';
+					echo PHPVMS_VERSION;
 					break;
+					
+				case 'TOTAL_HOURS':
+					
+					echo $setting->value;
 					
 				case 'CURRENT_SKIN':
 				
 					$skins = SiteData::GetAvailableSkins();
 					$skin = SettingsData::GetSetting('CURRENT_SKIN');
 					
-					echo '<td>
-						<SELECT name="CURRENT_SKIN">';
+					echo '<SELECT name="CURRENT_SKIN">';
 						
 						$tot = count($skins);
 						for($i=0;$i<$tot;$i++)
@@ -46,13 +50,10 @@
 							echo '<option value="'.$skins[$i].'" '. $sel . '>'.$skins[$i].'</option>';
 						}
    
-					echo '</SELECT>
-						 </td>';
+					echo '</SELECT>';
 					break;
 					
 				default:
-				
-					echo '<td>';
 					
 					if($setting->value == 'true' || $setting->value == 'false')
 					{
@@ -78,12 +79,11 @@
 						echo '<input type="text" name="'.$setting->name.'" value="'.$setting->value.'" />';
 					}
 					
-					echo '<p>'.$setting->descrip.'</p>
-						</td>';
+					echo '<p>'.$setting->descrip.'</p>';
 					break;
 			}
 			
-			echo '</tr>';
+			echo '</td></tr>';
 		}
 	}
 ?>

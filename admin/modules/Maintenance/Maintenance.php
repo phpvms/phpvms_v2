@@ -126,6 +126,15 @@ class Maintenance extends CodonModule
 				
 				break;
 				
+			case 'resethours':
+				echo '<h3>Updating Total Hours Count</h3>';
+				
+				StatsData::UpdateTotalHours();
+				
+				echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';
+				
+				break;
+				
 			case 'resetpirepfinance':
 			
 				echo '<h3>Reset PIREP Data</h3> 

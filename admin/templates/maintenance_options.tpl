@@ -2,6 +2,12 @@
 
 <dl>
 	<dt><strong>
+		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resethours">Reset Hours</a>:
+		</strong>
+	</dt>
+	<dd>This will reset your VA's total hours count<br /></dd>
+	
+	<dt><strong>
 		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetsignatures">Reset Signatures</a>: 
 		</strong>
 	</dt>

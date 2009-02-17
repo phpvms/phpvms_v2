@@ -142,7 +142,7 @@ class StatsData
 		$totaltime = 0;
 		foreach($pireps as $pirep)
 		{
-			$totaltime = Util::AddTime($totaltime, $pirep->totalhours);
+			$totaltime = Util::AddTime($totaltime, $pirep->flighttime);
 		}
 		
 		

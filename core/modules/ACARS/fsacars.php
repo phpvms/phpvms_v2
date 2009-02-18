@@ -103,7 +103,7 @@ switch($_GET['action'])
 	case 'flightplans':
 	case 'schedules':
 	
-		$allschedules = SchedulesData::GetSchedules('', true);
+		$allschedules = SchedulesData::GetBids($_GET['pilot']);
 		$date=date('Ymd');
 		foreach($allschedules as $route)
 		{

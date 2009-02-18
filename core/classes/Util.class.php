@@ -39,10 +39,8 @@
 
 class Util
 {
-	
-	
 	/**
-	 * Add two time's together (1:30 + 1:30 = 3 hours)
+	 * Add two time's together (1:30 + 1:30 = 3 hours, not 2.6)
 	 *
 	 * @param mixed $time1 Time one
 	 * @param mixed $time2 Time two
@@ -100,8 +98,20 @@ class Util
 	 */
 	public static function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
 	{
-	
-		if($fromname != '' && $fromemail != '')
+		$mail = new PHPMailer(); 
+		  
+		$mail->From     = ($fromemail == '') ? ADMIN_EMAIL : $fromemail;  
+		$mail->FromName = ($fromname == '') ? SITE_NAME : $fromname; 
+		$mail->Mailer = 'mail';
+		
+		$mail->AddAddress($email); 
+		$mail->Subject = $subject;
+		$mail->Body = $message;
+		$mail->AltBody = strip_tags($message);
+		
+		$mail->Send();
+		
+		/*if($fromname != '' && $fromemail != '')
 			$headers = "From: $fromname <$fromemail>\r\n";
 		else
 			$headers = "From: ".SITE_NAME." <".ADMIN_EMAIL.">\r\n";
@@ -124,6 +134,6 @@ class Util
 					"Content-Transfer-Encoding: base64\r\n\r\n";
 		$headers .= chunk_split(base64_encode($message));
 
-		@mail($email, $subject, '', $headers);
+		@mail($email, $subject, '', $headers);*/
 	}
 }

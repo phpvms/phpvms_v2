@@ -187,3 +187,5 @@ define('GEONAME_URL', 'http://ws.geonames.org');
 /*
  * Library Includes (from 3rd Party)
  */
+ 
+ include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');

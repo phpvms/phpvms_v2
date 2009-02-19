@@ -123,8 +123,8 @@ if(ADMIN_PANEL == true && defined('ADMIN_PANEL'))
 	Config::Set('DEFAULT_MODULE', 'Dashboard');
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
-	Config::Set('URL_REWRITE', array('default'=>array('module', 'page')
-				));	
+				
+	CodonRewrite::AddRule('default', array('page'));
 }
 else 
 {	
@@ -136,26 +136,22 @@ else
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
 	
-	Config::Set('URL_REWRITE', array(	
-				'default'=>array('module', 'page'),
-				'Downloads'=>array('module', 'id'),
-				'Finance'=>array('module', 'page'),
-				'Login'=>array('module', 'page', 'redir'),
-				'Logout'=>array('module', 'page', 'redir'),
-				'Pages'=>array('module', 'page'),
-				'PIREPS'=>array('module', 'page', 'id', 'icao'),
-				'Pilots'=>array('module', 'page', 'pilotid'),
-				'Profile'=>array('module', 'page', 'pilotid'),
-				'Schedules'=>array('module', 'page', 'id'),
-				'ACARS'=>array('module', 'page', 'action'),
-				'XML'=>array('module', 'request')));
+	CodonRewrite::AddRule('acars', array('page', 'action'));
+	CodonRewrite::AddRule('default', array('page'));
+	CodonRewrite::AddRule('downloads', array('id'));
+	CodonRewrite::AddRule('login', array('page', 'redir'));
+	CodonRewrite::AddRule('logout', array('page', 'redir'));
+	CodonRewrite::AddRule('pireps', array('page', 'id', 'icao'));
+	CodonRewrite::AddRule('pilots', array('page', 'pilotid'));
+	CodonRewrite::AddRule('profile', array('page', 'pilotid'));
+	CodonRewrite::AddRule('schedules', array('page', 'id'));
+	CodonRewrite::AddRule('xml', array('request'));
 }
 
 /**
  * Constants
  *	Do not modify these! All sorts of weird shit can happen
  */ 
-
 # Set the type of flights we have
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
 			'C'=>'Cargo',

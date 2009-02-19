@@ -65,6 +65,7 @@ include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonCondenser.class.php';
 include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonEvent.class.php';
 include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonForm.class.php';
 include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonModule.class.php';
+include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonRewrite.class.php';
 include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonWebService.class.php';
 include CLASS_PATH.DIRECTORY_SEPARATOR.'DB.class.php';
 include CLASS_PATH.DIRECTORY_SEPARATOR.'Debug.class.php';

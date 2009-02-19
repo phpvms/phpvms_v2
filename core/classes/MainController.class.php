@@ -45,8 +45,8 @@ class MainController
 	
 	
 	public static function loadEngineTasks()
-	{
-		Vars::URLRewrite(Config::Get('URL_REWRITE'));
+	{		
+		CodonRewrite::ProcessRewrite();
 		Vars::setParameters();
 		ob_end_clean();
 		/**
@@ -97,7 +97,7 @@ class MainController
 		
 		if(Config::Get('RUN_SINGLE_MODULE') == true)
 		{
-			$module = Vars::GET('module');
+			$module = CodonRewrite::$current_module; //Vars::GET('module');
 			
 			if($module == '') // No module specified, so run the default
 			{

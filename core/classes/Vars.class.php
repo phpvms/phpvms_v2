@@ -64,10 +64,10 @@ class Vars
 			self::$post->$key = self::cleaned($value);
 		}
 		
-		foreach($_GET as $key=>$value)
+		/*foreach($_GET as $key=>$value)
 		{
 			self::$get->$key = self::cleaned($value);
-		}
+		}*/
 		
 		foreach($_REQUEST as $key=>$value)
 		{
@@ -75,7 +75,7 @@ class Vars
 		}
 	}
 	
-	public static function URLRewrite($parameters)
+	/*public static function URLRewrite($parameters)
 	{
 		// Parse any ? rules
 		$url = substr($_SERVER['REQUEST_URI'],
@@ -119,7 +119,7 @@ class Vars
 		$pattern .= '/i';
 		
 		$pattern = '/(\w*\/?)';
-		*/
+		*//*
 		
 		# Replace backslashes with forward slashes
 		$URL = str_replace('\\', '/', $_SERVER['REQUEST_URI']);
@@ -144,62 +144,41 @@ class Vars
 		// Loop through each match
 		self::$rewrite_rules = new stdClass;
 		self::$rewrite_rules->default = new stdClass;
-		
-		/*// check if this is numeric or not
-		if((array_keys($parameters) !== range(0, count($parameters) - 1)))
-		{*/
-			foreach ($parameters as $pkey=>$pvalue)
-			{
-				if(is_array($parameters[$pkey]))
-				{
-					$index = strtolower($pkey);
-					self::$rewrite_rules->$index = new stdClass;
-					
-					$count = count($parameters[$pkey]);
-					for($i=0; $i<$count; $i++)
-					{
-						$name = $parameters[$pkey][$i];
-						$temp = $matches[$i+1];
-						
-						self::$rewrite_rules->$index->$name=$matches[$i];
-						$_GET[$name]=$matches[$i];
-					}
-				}
-				/*else
-				{
-					$index = 'default';
-					self::$rewrite_rules->$index->$pvalue=$matches[$pkey+1];
-					$_GET[$pvalue] = $matches[$pkey+1];
-				}*/
-				
-				// Write the extra _GET parameters on
-				foreach($get_extra as $key=>$value)
-				{
-					self::$rewrite_rules->$index->$key = $value;
-				}
-			}
-		//}
-		/*else
+
+		foreach ($parameters as $pkey=>$pvalue)
 		{
-			self::$rewrite_rules->default = new stdClass;
-			
-			$count = count($parameters);
-			for($i=0; $i<$count; $i++)
+			if(is_array($parameters[$pkey]))
 			{
-				$name = $parameters[$i];
+				$index = strtolower($pkey);
+				self::$rewrite_rules->$index = new stdClass;
 				
-				self::$rewrite_rules->default->$name = $matches[$i+1];
-				$_GET[$name] = $matches[$i+1];
-				
-				foreach($get_extra as $key=>$value)
+				$count = count($parameters[$pkey]);
+				for($i=0; $i<$count; $i++)
 				{
-					self::$rewrite_rules->default->$key = $value;
+					$name = $parameters[$pkey][$i];
+					$temp = $matches[$i+1];
+					
+					self::$rewrite_rules->$index->$name=$matches[$i];
+					$_GET[$name]=$matches[$i];
 				}
 			}
-		}*/
+			/*else
+			{
+				$index = 'default';
+				self::$rewrite_rules->$index->$pvalue=$matches[$pkey+1];
+				$_GET[$pvalue] = $matches[$pkey+1];
+			}*//*
+			
+			// Write the extra _GET parameters on
+			foreach($get_extra as $key=>$value)
+			{
+				self::$rewrite_rules->$index->$key = $value;
+			}
+		}
+	
 						
 		return true;
-	}
+	}*/
 	
 	public static function cleaned(&$V)
 	{

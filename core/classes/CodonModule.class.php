@@ -54,19 +54,9 @@ class CodonModule
 	function init($module_name='')
 	{
 		$module_name = strtolower($module_name);
-		
-		if($module_name=='' || !isset(Vars::$rewrite_rules->$module_name))
-		{
-			$module_name = 'default';
-		}
-			
-		/*echo '<pre>';
-		print_r(Vars::$matches);
-		print_r(Vars::$rewrite_rules);
-		echo '</pre>';*/
-		
+				
 		$this->post = Vars::$post;
-		$this->get = Vars::$rewrite_rules->$module_name;
+		$this->get = CodonRewrite::$get;
 		$this->request = Vars::$request;
 			
 		$this->init = true;

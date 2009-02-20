@@ -720,7 +720,7 @@ class SchedulesData
 		do 
 		{	
 			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $start);
-			$date = date('mY', $start);
+			$date = date('m-d', $start);
 			
 			$data[$date] = $count;			
 			

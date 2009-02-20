@@ -57,8 +57,19 @@ class CodonRewrite
 	 */
 	public static function AddRule($module, $params)
 	{		
+		$set_params=array();
 		$module = strtolower($module);
-		self::$rewrite_rules[$module] = $params;
+		
+		# Format the rules
+		foreach($params as $key=>$value)
+		{
+			if(is_numeric($key))
+				$set_params[$value]='string';
+			else
+				$set_params[$key]=$value;
+		}
+		
+		self::$rewrite_rules[$module] = $set_params;
 		
 		if(self::$run == true)
 		{
@@ -137,7 +148,7 @@ class CodonRewrite
 	 */
 	public static function ProcessModuleRewrite($module_name)
 	{
-		$i = 1;
+		$i=1;
 		if(is_array(self::$rewrite_rules[$module_name]))
 		{
 			foreach(self::$rewrite_rules[$module_name] as $key=>$type)

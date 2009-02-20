@@ -136,8 +136,8 @@ else
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
 	
-	CodonRewrite::AddRule('acars', array('page', 'action'));
 	CodonRewrite::AddRule('default', array('page'));
+	CodonRewrite::AddRule('acars', array('page', 'action'));
 	CodonRewrite::AddRule('downloads', array('id'));
 	CodonRewrite::AddRule('login', array('page', 'redir'));
 	CodonRewrite::AddRule('logout', array('page', 'redir'));

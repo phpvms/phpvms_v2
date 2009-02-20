@@ -255,17 +255,17 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 		$chart = new googleChart(null, $this->type);
 			
 		# Loop through every set data
-		foreach($this->data as $set)
-		{
-			$values = @implode(',', $set['data']);
-			$labels = @implode('|', $set['x_labels']);		
-	
-			$chart->loadData($values);
-			$chart->setLabels($labels, 'bottom');
-		}
+		//foreach($this->data as $set)
+		//{
+		$values = @implode(',', $this->data);
+		$labels = @implode('|', $this->labels);		
+
+		$chart->loadData($values);
+		$chart->setLabels($labels, 'bottom');
+		//}
 			
 		$chart->dimensions = $this->x.'x'.$this->y;
 		
-		echo '<img src="'.$chart->draw(false).'" />';
+		return $chart->draw(false);
 	}
 }

@@ -50,10 +50,10 @@ class CodonRewrite
 	/**
 	 * Add a rewrite rule for the module
 	 *
-	 * @param string $module module name
-	 * @param array $params The rewrite rules in order
+	 * @param string $module Module name
+	 * @param array $params The rewrite rules in order array('parameter1'=>'type', 'parameter2')
+	 *			Type can be 'string', 'int', 'float', optional, blank defaults to string
 	 * @return mixed This is the return value description
-	 *
 	 */
 	public static function AddRule($module, $params)
 	{		
@@ -140,9 +140,17 @@ class CodonRewrite
 		$i = 1;
 		if(is_array(self::$rewrite_rules[$module_name]))
 		{
-			foreach(self::$rewrite_rules[$module_name] as $key)
+			foreach(self::$rewrite_rules[$module_name] as $key=>$type)
 			{
-				self::$get->$key = self::$peices[$i++];	
+				$val = self::$peices[$i++];
+				
+				# Convert to type specified
+				if($type == 'int')
+					$val = intval($val);
+				elseif($type == 'float')
+					$val = floatval($val);
+				
+				self::$get->$key = $val;	
 			}
 		}
 	}

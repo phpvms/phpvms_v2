@@ -66,9 +66,7 @@ class Schedules extends CodonModule
 				
 				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 				$counts = SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum);
-				
-				print_r($counts);
-							
+											
 				Template::Set('schedule', $scheddata);
 				Template::Set('scheddata', $counts); // past 30 days
 				

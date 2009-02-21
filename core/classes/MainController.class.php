@@ -98,8 +98,7 @@ class MainController
 		if(Config::Get('RUN_SINGLE_MODULE') == true)
 		{
 			$module = CodonRewrite::$current_module; //Vars::GET('module');
-			
-			if($module == '') // No module specified, so run the default
+			/*if($module == '') // No module specified, so run the default
 			{
 				if(Config::Get('DEFAULT_MODULE') == '')
 				{
@@ -110,9 +109,9 @@ class MainController
 				Config::Set('RUN_MODULE', strtoupper(Config::Get('DEFAULT_MODULE')));
 			}
 			else
-			{
+			{*/
 				Config::Set('RUN_MODULE', strtoupper($module));
-			}
+			//}
 			
 			
 			// Make sure it's valid,  ya know.. then throw the invalid page (basically 404 S.O.L.)

@@ -94,17 +94,22 @@ class CodonRewrite
 		$preg_match = $params[0];
 		
 		if($preg_match == '')
-			return true; // nothing behind there
+		{
+			$preg_match = Config::Get('DEFAULT_MODULE');
+		}		
 						
 		self::$peices = explode('/', $preg_match);
 	
 		$module_name = strtolower(self::$peices[0]);
+		
 		if($module_name == '') # If it's blank, check $_GET
 		{
 			$module_name = $_GET['module'];
 		}
 		
 		self::$current_module = $module_name;
+		
+		$_GET['module'] = $module_name;
 		
 		# Match from index 1 and up to the rewrite rule:
 		self::$get = new stdClass;

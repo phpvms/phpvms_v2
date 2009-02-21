@@ -36,6 +36,8 @@
 					
 					echo $setting->value;
 					
+					break;
+					
 				case 'CURRENT_SKIN':
 				
 					$skins = SiteData::GetAvailableSkins();

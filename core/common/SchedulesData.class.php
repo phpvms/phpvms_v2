@@ -597,6 +597,28 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
+	public function GetLatestBid($pilotid)
+	{
+		if(!is_numeric($pilotid))
+		{
+			# see if they are a valid pilot:
+			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
+			$code = $matches[1];
+			$pilotid = $matches[2];			
+		}
+		
+		$pilotid = DB::escape($pilotid);
+		$sql = 'SELECT s.*, b.bidid, a.id as aircraftid, a.name as aircraft, a.registration, a.maxpax, a.maxcargo
+					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+						'.TABLE_PREFIX.'aircraft a
+					WHERE b.routeid = s.id 
+						AND s.aircraft=a.id
+						AND b.pilotid='.$pilotid.'
+						ORDER BY id ASC LIMIT 1';
+		
+		return DB::get_row($sql);
+		
+	}
 	/**
 	 * Get a specific bid with route information
 	 *

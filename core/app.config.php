@@ -36,7 +36,7 @@ Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
 Config::Set('PILOTID_LENGTH', 4);
 Config::Set('SHOW_LEG_TEXT', true);
 Config::Set('UNITS', 'nm'); // Your units: nm, mi or km
-Config::Set('LOAD_FACTOR', '72'); 
+Config::Set('LOAD_FACTOR', '82'); 
 Config::Set('CARGO_UNITS', 'lbs');
 
 # Google Map Options
@@ -51,7 +51,7 @@ Config::Set('MAP_CENTER_LNG', '-62.334821');
 #  Minutes, flights to show on the ACARS
 #  Default is 720 minutes (12 hours)
 Config::Set('ACARS_LIVE_TIME', 720); 
-Config::Set('ACARS_DEBUG', false);
+Config::Set('ACARS_DEBUG', true);
 
 /*
   This is the unit of money. For non-dollars, use :
@@ -154,8 +154,8 @@ else
  */ 
 # Set the type of flights we have
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
-			'C'=>'Cargo',
-			'H'=>'Charter'));
+									'C'=>'Cargo',
+									'H'=>'Charter'));
 
 # Set the types of expenses we have
 Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',

@@ -16,19 +16,10 @@ if(!$allroutes)
 <?php
 foreach($allroutes as $route)
 {
-	if(Config::Get('SHOW_LEG_TEXT') == true // Want it to show
-			&& $route->leg != '' && $route->leg != '0') // And it isn't blank or 0
-		$leg = 'Leg '.$route->leg;
-	else
-		$leg = '';
-	
-	/*
-	<?php echo $route->depname?> (<?php echo $route->depicao; ?>) to <?php echo $route->arrname?> (<?php echo $route->arricao; ?>) <br />
-	*/
 ?>
 <tr>
 	<td nowrap>
-		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>"><?php echo $route->code . $route->flightnum?> <?php echo $leg?> <?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
+		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>"><?php echo $route->code . $route->flightnum?><?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
 		<br />
 		
 		<strong>Departure: </strong><?php echo $route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?php echo $route->arrtime;?><br />

@@ -162,6 +162,7 @@ class CodonRewrite
 					$val = floatval($val);
 				
 				self::$get->$key = $val;	
+				$_GET[$key] = $val;
 			}
 		}
 	}

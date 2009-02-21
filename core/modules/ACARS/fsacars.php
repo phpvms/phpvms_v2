@@ -28,10 +28,6 @@
  */
  
 writedebug($_SERVER['QUERY_STRING']);
-##################################
-
-writedebug($val);
-
 
 ##################################
 	
@@ -102,11 +98,30 @@ switch($_GET['action'])
 		
 	case 'flightplans':
 	case 'schedules':
-	
-		$allschedules = SchedulesData::GetBids($_GET['pilot']);
+		writedebug('FLIGHT PLAN REQUEST');
+		$route = SchedulesData::GetLatestBid($_GET['pilot']);
+		//print_r($route);
 		$date=date('Ymd');
-		foreach($allschedules as $route)
+		
+		# Get load counts
+		if($route->flighttype=='H')
 		{
+			$maxpax = $route->maxpax;
+		}
+		else
+		{
+			if($route->flighttype=='C')
+			{
+				$maxcargo = FinanceData::GetLoadCount($route->aircraftid, 'C');
+			}
+			else
+			{
+				$maxpax = FinanceData::GetLoadCount($route->aircraftid, 'P');
+			}
+		}
+		
+		//$starttime = 
+		
 echo "OK
 $route->depicao
 $route->arricao
@@ -121,13 +136,8 @@ $route->code
 $route->route
 
 
-
-
-
-";
-			
-		}
-	
+$maxpax
+$maxcargo";	
 		break;
 	
 	#

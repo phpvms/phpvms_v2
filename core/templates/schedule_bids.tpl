@@ -22,14 +22,9 @@ if(!$bids)
 <?php
 foreach($bids as $bid)
 {
-	if(Config::Get('SHOW_LEG_TEXT') == true // Want it to show
-			&& $bid->leg != '' && $bid->leg != '0') // And it isn't blank or 0
-		$leg = 'Leg '.$route->leg;
-	else
-		$leg = '';
 ?>
 <tr id="bid<?php echo $bid->bidid ?>">
-	<td><?php echo $bid->code . $bid->flightnum; ?> <?php echo $leg?></td>
+	<td><?php echo $bid->code . $bid->flightnum; ?></td>
 	<td align="center"><?php echo $bid->depicao; ?> to <?php echo $bid->arricao; ?></td>
 	<td align="center"><?php echo $bid->aircraft; ?> (<?php echo $bid->registration?>)</td>
 	<td><?php echo $bid->deptime;?></td>

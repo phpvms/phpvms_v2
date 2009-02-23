@@ -339,6 +339,40 @@ class PilotData
 			
 		return true;
 	}
+	
+		
+	/**
+	 * Get the total number of hours for a pilot, add them up
+	 *
+	 * @param int $pilotid The pilot ID
+	 * @return int Total hours for pilot
+	 *
+	 */
+	public static function UpdateFlightHours($pilotid)
+	{
+		$pireps = PIREPData::GetAllReportsForPilot($pilotid);
+		$total = 0;
+		
+		$allflights = count($pireps);
+		if($allflights != 0)
+		{
+			foreach($pireps as $report)
+			{
+				if($report->accepted != PIREP_ACCEPTED)
+					continue;
+					
+				$total = Util::AddTime($total, $report->flighttime);
+			}
+		}
+		
+		$sql = "UPDATE " .TABLE_PREFIX."pilots
+					SET totalhours=$total, totalflights=$allflights
+					WHERE pilotid=$pilotid";
+		
+		$res = DB::query($sql);
+		
+		return $total;
+	}
 		
 	/**
 	 * Update a pilot's flight data, ie after a pirep
@@ -351,10 +385,9 @@ class PilotData
 	 */
 	public static function UpdateFlightData($pilotid, $flighttime, $numflights=1)
 	{	
+		
 		# Update the flighttime
 		$pilotdata = PilotData::GetPilotData($pilotid);		
-		$flighttime = $pilotdata->totalhours + $flighttime;
-
 		$flighttime = Util::AddTime($pilotdata->totalhours, $flighttime);
 		
 		if($numflights == '')

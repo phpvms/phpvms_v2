@@ -402,6 +402,7 @@ class PIREPData
 		
 		# Set the pilot's last PIREP date
 		PilotData::UpdateLastPIREPDate($pirepdata['pilotid']);
+		PilotData::UpdateFlightData($pirepdata['pilotid'], $pirepdata['flighttime'], 1);
 		
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route

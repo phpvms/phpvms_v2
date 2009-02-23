@@ -129,8 +129,22 @@ class Maintenance extends CodonModule
 			case 'resethours':
 				echo '<h3>Updating Total Hours Count</h3>';
 				
-				StatsData::UpdateTotalHours();
+				$total = 0;
+				echo 'Calculating hours for all pilots: ';
+				$allpilots = PilotData::GetAllPilots();
 				
+				foreach($allpilots as $pilot)
+				{
+					$hours = PilotData::UpdateFlightHours($pilot->pilotid);
+					$total = Util::AddTime($total, $hours);
+					echo "Found $hours for number $pilot->pilotid<br />";
+				}
+				
+				echo "Pilots have a total of <strong>$total hours</strong><br /><br />";
+				
+				echo "<strong>Now counting from PIREPS</strong><br />";
+				
+				StatsData::UpdateTotalHours();
 				echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';
 				
 				break;

@@ -204,7 +204,7 @@ $maxcargo";
 	#
 	case 'pirep':
 	
-		ini_set('display_errors', 'off');
+		//ini_set('display_errors', 'off');
 
 		writedebug("PIREP FILE");
 		writedebug(print_r($_GET, true));
@@ -288,6 +288,7 @@ $maxcargo";
 			# Can't do it. They completely fucked this up
 			if(!$sched)
 			{
+				
 				return;
 			}
 			

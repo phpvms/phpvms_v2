@@ -144,7 +144,21 @@ echo 'Starting the update...<br />';
 		DB::query($sql);
 	}
 	
+	
+	echo "Updating hours<br />";
+	$allpilots = PilotData::GetAllPilots();
+
+	foreach($allpilots as $pilot)
+	{
+		$hours = PilotData::UpdateFlightHours($pilot->pilotid);
+		$total = Util::AddTime($total, $hours);
+	}
+
+	echo "Pilots have a total of <strong>$total hours</strong><br /><br />";
+	echo "<strong>Now counting from PIREPS</strong><br />";
+
 	StatsData::UpdateTotalHours();
+	echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';
 	
 	echo '<p>Updating your database...</p>';
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');

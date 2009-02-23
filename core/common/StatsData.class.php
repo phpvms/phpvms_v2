@@ -137,17 +137,18 @@ class StatsData
 	
 	public static function UpdateTotalHours()
 	{
-		$pireps = PIREPData::GetAllReportsByAccept(PIREP_ACCEPTED);
+		$pireps = PIREPData::GetAllReports();
 		
 		$totaltime = 0;
 		foreach($pireps as $pirep)
 		{
+			if($pirep->accepted != PIREP_ACCEPTED)
+				continue; 
+				
 			$totaltime = Util::AddTime($totaltime, $pirep->flighttime);
 		}
 		
-		
-		SettingsData::SaveSetting('TOTAL_HOURS', $totaltime);
-		
+		SettingsData::SaveSetting('TOTAL_HOURS', $totaltime);		
 	}
 	
 	/**

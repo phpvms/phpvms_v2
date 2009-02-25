@@ -79,7 +79,7 @@ switch($_GET['action'])
 		{
 			preg_match('/^([A-Za-z]*)(\d*)/', $pilotid, $matches);
 			$code = $matches[1];
-			$pilotid = $matches[2];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 		}
 		
 		$fields = array('pilotid'=>$_GET['pilotnumber'],
@@ -98,9 +98,18 @@ switch($_GET['action'])
 		
 	case 'flightplans':
 	case 'schedules':
+	
 		writedebug('FLIGHT PLAN REQUEST');
-		$route = SchedulesData::GetLatestBid($_GET['pilot']);
-		//print_r($route);
+		
+		if(!is_numeric($_GET['pilot']))
+		{
+			# see if they are a valid pilot:
+			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
+			$code = $matches[1];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+		}
+		
+		$route = SchedulesData::GetLatestBid($pilotid);
 		$date=date('Ymd');
 		
 		# Get load counts
@@ -165,7 +174,15 @@ $maxcargo";
 				$_GET['detailph'] = 1;
 		}
 		
-		$fields = array('pilotid'=>$_GET['pnumber'],
+		if(!is_numeric($_GET['pnumber']))
+		{
+			# see if they are a valid pilot:
+			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pnumber'], $matches);
+			$code = $matches[1];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+		}
+		
+		$fields = array('pilotid'=>$pilotid,
 						'flightnum'=>$_GET['IATA'],
 						'pilotname'=>'',
 						'aircraft'=>$_GET['Regist'],
@@ -218,7 +235,7 @@ $maxcargo";
 			# see if they are a valid pilot:
 			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
 			$code = $matches[1];
-			$pilotid = $matches[2];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 		}
 
 		if(!($pilot = PilotData::GetPilotData($pilotid)))

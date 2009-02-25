@@ -25,7 +25,7 @@ class Downloads extends CodonModule
 		if(!Auth::LoggedIn())
 		{
 			echo 'You must be logged in to access this page!';
-			break;
+			return;
 		}
 		
 		switch($this->get->id)

@@ -32,6 +32,7 @@
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots">View All Pilots</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/pilotgroups">Pilot Groups</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotranking/pilotranks">Pilot Ranks</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotranking/awards">Awards</a></li>
 	</ul>
 </li>
 <li><a class="menu" href="#">

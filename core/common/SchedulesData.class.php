@@ -599,13 +599,6 @@ class SchedulesData
 	
 	public function GetLatestBid($pilotid)
 	{
-		if(!is_numeric($pilotid))
-		{
-			# see if they are a valid pilot:
-			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
-			$code = $matches[1];
-			$pilotid = $matches[2];			
-		}
 		
 		$pilotid = DB::escape($pilotid);
 		$sql = 'SELECT s.*, b.bidid, a.id as aircraftid, a.name as aircraft, a.registration, a.maxpax, a.maxcargo
@@ -645,15 +638,7 @@ class SchedulesData
 	 * @return unknown
 	 */
 	public static function GetBids($pilotid)
-	{
-		if(!is_numeric($pilotid))
-		{
-			# see if they are a valid pilot:
-			preg_match('/^([A-Za-z]*)(\d*)/', $_GET['pilot'], $matches);
-			$code = $matches[1];
-			$pilotid = $matches[2];			
-		}
-		
+	{		
 		$pilotid = DB::escape($pilotid);
 		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,

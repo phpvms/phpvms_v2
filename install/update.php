@@ -113,24 +113,31 @@ echo 'Starting the update...<br />';
 		$version = 11458;
 	}
 	
+	if($version < 11628)
+	{
+		echo '<p>Adding new options to the core/local.config.php...</p>';
+		Installer::add_to_config('LOAD_FACTOR', '72'); 
+		Installer::add_to_config('CARGO_UNITS', 'lbs');
+		
+		Installer::add_to_config('COMMENT', 'FSPassengers Settings');
+		Installer::add_to_config('COMMENT', 'Units settings');
+		Installer::add_to_config('WeightUnit', '1', '0=Kg 1=lbs');
+		Installer::add_to_config('DistanceUnit', '2', '0=KM 1= Miles 2=NMiles');
+		Installer::add_to_config('SpeedUnit', '1', '0=Km/H 1=Kts');
+		Installer::add_to_config('AltUnit', '1', '0=Meter 1=Feet');
+		Installer::add_to_config('LiquidUnit', '2', '0=liter 1=gal 2=kg 3=lbs');
+		Installer::add_to_config('WelcomeMessage', SITE_NAME.' ACARS', 'Welcome Message');
+		
+		Installer::add_to_config('COMMENT', 'Monetary Units');
+		Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
+		
+		Installer::sql_file_update(SITE_ROOT . '/install/update628.sql');
+		
+	}
 	
-	echo '<p>Adding new options to the core/local.config.php...</p>';
-	Installer::add_to_config('LOAD_FACTOR', '72'); 
-	Installer::add_to_config('CARGO_UNITS', 'lbs');
-	
-	Installer::add_to_config('COMMENT', 'FSPassengers Settings');
-	Installer::add_to_config('COMMENT', 'Units settings');
-	Installer::add_to_config('WeightUnit', '1', '0=Kg 1=lbs');
-	Installer::add_to_config('DistanceUnit', '2', '0=KM 1= Miles 2=NMiles');
-	Installer::add_to_config('SpeedUnit', '1', '0=Km/H 1=Kts');
-	Installer::add_to_config('AltUnit', '1', '0=Meter 1=Feet');
-	Installer::add_to_config('LiquidUnit', '2', '0=liter 1=gal 2=kg 3=lbs');
-	Installer::add_to_config('WelcomeMessage', SITE_NAME.' ACARS', 'Welcome Message');
-	
-	Installer::add_to_config('COMMENT', 'Monetary Units');
-	Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
-	
-	Installer::add_to_config('COMMENT', 'Start Date - Enter the month/year your VA started');
+	echo '<p>Updating your database...</p>';
+	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
+
 	
 	
 	# Specific Checks
@@ -158,12 +165,7 @@ echo 'Starting the update...<br />';
 	echo "<strong>Now counting from PIREPS</strong><br />";
 
 	StatsData::UpdateTotalHours();
-	echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';
-	
-	echo '<p>Updating your database...</p>';
-	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
-		
-	
+	echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';	
 		
 	
 # Final version update

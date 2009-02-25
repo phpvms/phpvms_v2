@@ -27,6 +27,10 @@ class PilotRanking extends CodonModule
 		{
 			Template::Set('sidebar', 'sidebar_ranks.tpl');
 		}
+		elseif($this->get->page == 'awards')
+		{
+			Template::Set('sidebar', 'sidebar_awards.tpl');
+		}
 	}
 	
 	function Controller()
@@ -45,6 +49,18 @@ class PilotRanking extends CodonModule
 				$ret = RanksData::DeleteRank($this->post->id);
 				
 				Template::Set('message', 'Rank deleted!');
+				Template::Show('core_success.tpl');
+				break;
+				
+			case 'addaward':
+				$this->AddAward();
+				break;				
+			case 'editaward':
+				$this->EditAward();
+				break;				
+			case 'deleteaward':
+				$ret = AwardsData::DeleteAward($this->post->id);
+				Template::Set('message', 'Award deleted!');
 				Template::Show('core_success.tpl');
 				break;
 		}
@@ -67,20 +83,43 @@ class PilotRanking extends CodonModule
 				break;
 
 			case 'calculateranks':
-				RanksData::CalculatePilotRanks();
-				// no break, show the ranks again
-				
+				RanksData::CalculatePilotRanks();				
 			case '':
 			case 'pilotranks':
 				
 				Template::Set('ranks', RanksData::GetAllRanks());
-				Template::ShowTemplate('ranks_allranks.tpl');
+				Template::Show('ranks_allranks.tpl');
 				
 				break;
+				
+			case 'awards':
+				
+				Template::Set('awards', AwardsData::GetAllAwards());
+				Template::Show('awards_allawards.tpl');
+				
+				break;
+				
+			case 'addaward':
+				Template::Set('title', 'Add Award');
+				Template::Set('action', 'addaward');
+				
+				Template::Show('awards_awardform.tpl');
+				break;
+				
+			case 'editaward':
+			
+				Template::Set('title', 'Edit Award');
+				Template::Set('action', 'editaward');
+				Template::Set('award', AwardsData::GetAwardDetail($this->get->awardid));
+				
+				Template::Show('awards_awardform.tpl');
+			
+				break;
+				
 		}
 	}
 	
-	function AddRank()
+	protected function AddRank()
 	{
 		
 		if($this->post->minhours == '' || $this->post->rank == '')
@@ -110,7 +149,7 @@ class PilotRanking extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	function EditRank()
+	protected function EditRank()
 	{
 		if($this->post->minhours == '' || $this->post->rank == '')
 		{
@@ -137,6 +176,36 @@ class PilotRanking extends CodonModule
 		}
 		
 		Template::Set('message', 'Rank Added!');
+		Template::Show('core_success.tpl');
+	}
+	
+	protected function AddAward()
+	{
+		if($this->post->name == '' || $this->post->image == '')
+		{
+			Template::Set('message', 'The name and image must be entered');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$ret = AwardsData::AddAward($this->post->name, $this->post->descrip, $this->post->image);
+		
+		Template::Set('message', 'Award Added!');
+		Template::Show('core_success.tpl');
+	}
+	
+	protected function EditAward()
+	{		
+		if($this->post->name == '' || $this->post->image == '')
+		{
+			Template::Set('message', 'The name and image must be entered');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$ret = AwardsData::EditAward($this->post->awardid, $this->post->name, $this->post->descrip, $this->post->image);
+		
+		Template::Set('message', 'Award Added!');
 		Template::Show('core_success.tpl');
 	}
 }

@@ -29,6 +29,11 @@
 	</tr>
 
 	<tr>
+		<td>Pilot ID</td>
+		<td><?php echo $pilotcode ?></td>
+	</tr>
+	
+	<tr>
 		<td>First Name</td>
 		<td><input type="text" name="firstname" value="<?php echo $pilotinfo->firstname;?>" /></td>
 	</tr>

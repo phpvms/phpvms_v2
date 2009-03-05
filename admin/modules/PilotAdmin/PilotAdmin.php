@@ -155,6 +155,15 @@ class PilotAdmin extends CodonModule
 				
 				$this->ShowGroups();
 				break;
+				
+			case 'pilotawards':
+			
+				$this->AddAward();
+				
+				
+				Template::Set('allawards', AwardsData::GetPilotAwards($this->get->pilotid));
+				Template::Show('pilots_awards.tpl');
+				break;
 		}
 		
 	}
@@ -167,15 +176,14 @@ class PilotAdmin extends CodonModule
 	
 	public function ViewPilotDetails()
 	{
-		$pilotid = $this->get->pilotid;
-		
 		//This is for the main tab
-		Template::Set('pilotinfo', PilotData::GetPilotData($pilotid));
-		Template::Set('customfields', PilotData::GetFieldData($pilotid, true));
-		Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+		Template::Set('pilotinfo', PilotData::GetPilotData($this->get->pilotid));
+		Template::Set('customfields', PilotData::GetFieldData($this->get->pilotid, true));
+		Template::Set('allawards', AwardsData::GetPilotAwards($this->get->pilotid));
+		Template::Set('pireps', PIREPData::GetAllReportsForPilot($this->get->pilotid));
 		Template::Set('countries', Countries::getAllCountries());
 		
-		$this->SetGroupsData($pilotid);
+		$this->SetGroupsData($this->get->pilotid);
 		
 		Template::Show('pilots_detailtabs.tpl');
 	}
@@ -346,5 +354,24 @@ Thanks!
 			Template::Show('core_success.tpl');
 		}
 	}
+	
+	protected function AddAward()
+	{
+		
+		if($this->post->awardid == '' || $this->post->pilotid == '')
+			return;
+					
+		# Check if they already have this award
+		$award = AwardsData::GetPilotAward($this->post->pilotid, $this->post->awardid);
+		if($award)
+		{
+			Template::Set('message', 'They already have this award!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		AwardsData::AddAwardToPilot($this->post->pilotid, $this->post->awardid);
+		DB::debug();
+	}
+	
 }
-?>

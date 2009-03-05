@@ -110,7 +110,7 @@ switch($_GET['action'])
 		}
 		
 		$route = SchedulesData::GetLatestBid($pilotid);
-		$date=date('Ymd');
+		$date=date('Y:m:d');
 		
 		# Get load counts
 		if($route->flighttype=='H')
@@ -138,7 +138,7 @@ $route->arricao
 
 $route->aircraft
 
-$date
+
 $route->code$route->flightnum
 $route->registration
 $route->code
@@ -334,7 +334,7 @@ $maxcargo";
 		}
 		
 		# Convert the time to xx.xx 
-		$flighttime = str_replace(':', '.', $_GET['duration']);
+		$flighttime = number_format(floatval(str_replace(':', '.', $_GET['duration'])), 2);
 		
 		$data = array('pilotid'=>$pilotid,
 						'code'=>$code,
@@ -352,7 +352,6 @@ $maxcargo";
 						'log'=> $_GET['log']);
 			
 		writedebug($data);
-			
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 		
 		if(!$res)

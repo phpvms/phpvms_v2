@@ -42,6 +42,14 @@ function formInit()
 			formInit();
 		}
 	});
+	
+	$('#addaward').ajaxForm({
+		target: '#awardslist',
+		success: function() 
+		{
+			formInit();
+		}
+	});
 }
 
 function reloadGroups()
@@ -130,7 +138,7 @@ $(document).ready(function()
 		return false;
 	});
 	
-	$('.deleteitem').live('click', function(){return false;});
+	$('.deleteitem').live('click', function(){ return false; });
 	$('.deleteitem').live('dblclick', function(){	
 		var url = $(this).attr("href");
 		var action = $(this).attr("action");

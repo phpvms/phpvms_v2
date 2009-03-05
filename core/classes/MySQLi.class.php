@@ -58,6 +58,8 @@ class ezSQL_mysqli extends ezSQLcore
 	{
 		if($dbname == '') return false;
 		
+		parent::__construct();
+		
 		if($this->connect($dbuser, $dbpassword, $dbhost))
 		{
 			return $this->select($dbname);

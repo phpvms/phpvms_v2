@@ -56,13 +56,16 @@ class CodonRewrite
 	 * @return mixed This is the return value description
 	 */
 	public static function AddRule($module, $params)
-	{		
+	{	
+		# Clean
 		$set_params=array();
 		$module = strtolower($module);
 		
-		# Format the rules
+		# Format the rules, make sure we arrange
 		foreach($params as $key=>$value)
 		{
+			# If it wasn't done as $key=>$value, just $key,
+			#	set the default value type as a string
 			if(is_numeric($key))
 				$set_params[$value]='string';
 			else
@@ -71,9 +74,12 @@ class CodonRewrite
 		
 		self::$rewrite_rules[$module] = $set_params;
 		
+		# This is for if we've already processed the rules 
+		#	once. This will allow the rules to be changed
+		#	"on the fly", for example, inside a controller
 		if(self::$run == true)
 		{
-			// Reprocess the rules
+			# Reprocess the rules
 			self::ProcessModuleRewrite($module);
 		}
 	}
@@ -84,21 +90,27 @@ class CodonRewrite
 	 */
 	public static function ProcessRewrite()
 	{
-		$URL = str_replace('\\', '/', $_SERVER['REQUEST_URI']);
+		$URL = $_SERVER['REQUEST_URI'];
 		
 		# Get everything after the .php/ and before the ?
 		$params = explode('.php/', $URL);
 		$preg_match = $params[1];
-		
+			
 		$params = explode('?', $preg_match);
-		$preg_match = $params[0];
+		$split_parameters = $params[0];
 		
-		if($preg_match == '')
+		# Now check if there's anything there (we didn't just have
+		#	index.php?query_string=...
+		# If that's all, then we grab a configuration setting that
+		#	specifies the default rewrite, ie: news/showall
+		#	Which would eq. passing index.php/news/showall
+		if($split_parameters == '')
 		{
-			$preg_match = Config::Get('DEFAULT_MODULE');
+			$split_parameters = Config::Get('DEFAULT_MODULE');
 		}		
-						
-		self::$peices = explode('/', $preg_match);
+		
+		# Now we split it all out, and store the peices
+		self::$peices = explode('/', $split_parameters);
 	
 		$module_name = strtolower(self::$peices[0]);
 		
@@ -108,37 +120,30 @@ class CodonRewrite
 		}
 		
 		self::$current_module = $module_name;
-		
 		$_GET['module'] = $module_name;
 		
-		# Match from index 1 and up to the rewrite rule:
+		# Create the object to hold all of our stuff
 		self::$get = new stdClass;
 		
+		# If we haven't specified specific rules for a module,
+		#	Then we use the rules we made for "default"
 		if(!array_key_exists($module_name, self::$rewrite_rules))
 		{
 			$module_name = 'default';
 		}
-			
+		
+		# This parses now the rules for a specific module
 		self::ProcessModuleRewrite($module_name);
 		
-		// Tack any extra query string parameters back on
-		$url = substr($_SERVER['REQUEST_URI'],
-				strpos($_SERVER['REQUEST_URI'], '?')+1, strlen($_SERVER['REQUEST_URI']));
+		# And this tacks on our $_GET rules
+		parse_str($_SERVER['QUERY_STRING'], $get_extra);
+		$_GET = array_merge($_GET, $get_extra);
 		
-		if($url == $_SERVER['REQUEST_URI'])
-		{ // no extra $_GET parameters
-			$get_extra = array();
-		}
-		else
+		# Add the $_GET to our object
+		foreach($_GET as $key=>$value)
 		{
-			parse_str($url, $get_extra);
-			$_GET = array_merge($_GET, $get_extra);
-			
-			foreach($_GET as $key=>$value)
-			{
-				self::$get->$key = $value;
-			}
-		}	
+			self::$get->$key = $value;
+		}
 		
 		self::$run = true;	
 	}
@@ -154,8 +159,12 @@ class CodonRewrite
 	public static function ProcessModuleRewrite($module_name)
 	{
 		$i=1;
+		
+		# Make sure it's valid
 		if(is_array(self::$rewrite_rules[$module_name]))
 		{
+			# Walk through every peice of the array, $key is the 
+			#	index name, and $type is well, the type
 			foreach(self::$rewrite_rules[$module_name] as $key=>$type)
 			{
 				$val = self::$peices[$i++];
@@ -165,7 +174,11 @@ class CodonRewrite
 					$val = intval($val);
 				elseif($type == 'float')
 					$val = floatval($val);
+					
+				# We can do any other processing we want here
 				
+				# Add it both into the $_GET array, and into
+				#	our object
 				self::$get->$key = $val;	
 				$_GET[$key] = $val;
 			}

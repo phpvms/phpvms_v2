@@ -94,7 +94,7 @@ CREATE TABLE `phpvms_aircraft` (
   `maxcargo` FLOAT NOT NULL default '0',
   `enabled` smallint(6) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB ;
+) ENGINE=InnoDB;
 
 CREATE TABLE `phpvms_airports` (
   `id` int(11) NOT NULL auto_increment,
@@ -134,7 +134,7 @@ CREATE TABLE `phpvms_schedules` (
   KEY `flightnum` (`flightnum`),
   KEY `depicao_arricao` (`depicao`,`arricao`),
   KEY `code` (`code`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB ;
 
 CREATE TABLE `phpvms_news` (
   `id` int(11) NOT NULL auto_increment,

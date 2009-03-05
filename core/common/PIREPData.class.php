@@ -391,13 +391,11 @@ class PIREPData
 								$pirepdata[pilotid], 
 								'$pirepdata[comment]', 
 								NOW())";
-
 			$ret = DB::query($sql);
 		}
 		
 		
 		# Update the financial information for the PIREP:
-		
 		self::PopulatePIREPFinance($pirepid);
 		
 		# Set the pilot's last PIREP date

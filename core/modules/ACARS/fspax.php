@@ -34,14 +34,14 @@ writedebug(print_r($_POST, true));
 		# Entered as ###
 		if(is_numeric($_POST['UserName']))
 		{
-			$pilotid = $_POST['UserName'];
+			$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
 		}
 		else
 		{
 			# Check if they entered as XXX###
 			if(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $_POST['UserName'], $matches)>0)
 			{
-				$pilotid = trim($matches[2]);
+				$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
 			}
 			else
 			{
@@ -74,7 +74,7 @@ writedebug(print_r($_POST, true));
 		
 		if(is_numeric($_POST['UserName']))
 		{
-			$pilotid = $_POST['UserName'];
+			$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
 		}
 		else
 		{
@@ -84,7 +84,7 @@ writedebug(print_r($_POST, true));
 				return;
 			}
 			
-			$pilotid = trim($matches[2]);
+			$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
 		}
 		
 		# Get the flight ID
@@ -115,8 +115,8 @@ writedebug(print_r($_POST, true));
 			OperationsData::RetrieveAirportInfo($arricao);
 		}
 		
-		if($code == '')
-		{
+		//if($code == '')
+		//{
 			# Find a flight using just the flight code
 			$sched = SchedulesData::FindFlight($matches[2]);
 			
@@ -129,6 +129,7 @@ writedebug(print_r($_POST, true));
 			$code = $sched->code;
 			$flightnum = $sched->flightnum;
 			$leg = $sched->leg;
+			$aircraft = $sched->aircraft;
 			/*$depicao = $sched->depicao;
 			$arricao = $sched->arricao;*/
 			
@@ -136,7 +137,7 @@ writedebug(print_r($_POST, true));
 			{
 				$comment = 'phpVMS Message: Arrival or Departure does not match schedule. ';
 			}
-		}
+		//}
 	
 		# Get the time, don't care about seconds
 		preg_match('/^(\d*):(\d*):(\d*)/', $_POST['TotalBlockTime'], $time);
@@ -165,7 +166,7 @@ writedebug(print_r($_POST, true));
 						'leg'=>$leg,
 						'depicao'=>$depicao,
 						'arricao'=>$arricao,
-						'aircraft'=>'',
+						'aircraft'=>$aircraft,
 						'flighttime'=>$flighttime,
 						'submitdate'=>'NOW()',
 						'load'=>$_POST['NbrPassengers'],

@@ -76,10 +76,6 @@ class ezSQLcore
 	public $errno			  = null;
 	public $col_info         = null;
 	public $captured_errors  = array();
-	public $cache_dir        = false;
-	public $cache_queries    = false;
-	public $cache_inserts    = false;
-	public $use_disk_cache   = false;
 	public $cache_timeout    = 24; // hours
 	public $insert_id;
 	
@@ -89,10 +85,24 @@ class ezSQLcore
 	public $dbhost = false;
 	public $result;
 	
+	public $cache_type = 'file';
+	public $cache_dir        = false;
+	public $cache_queries    = false;
+	public $cache_inserts    = false;
+	public $use_disk_cache   = false;
+	
+	public $memcache_status = true;
+	
 	public $get_col_info = false;
 	
 	// == TJH == default now needed for echo of debug function
 	public $debug_echo_is_on = true;
+	
+	
+	public function __construct()
+	{
+		# Check for memcache support
+	}
 	
 	/**
 	 * Clear any previous errors
@@ -528,28 +538,31 @@ class ezSQLcore
 	 */
 	public function store_cache($query,$is_insert)
 	{
+		if(!$this->cache_queries || $is_insert)
+			return false;
+			
+		$result_cache = array('col_info' => $this->col_info,
+								'last_result' => $this->last_result,
+								'num_rows' => $this->num_rows,
+								'return_value' => $this->num_rows);
 		
-		// The would be cache file for this query
-		$cache_file = $this->cache_dir.'/'.md5($query);
-		
-		// disk caching of queries
-		if ( $this->use_disk_cache && ( $this->cache_queries && ! $is_insert ) || ( $this->cache_inserts && $is_insert ))
+		# Use memcache for our caching, make sure memcache is
+		#	available too (this check is done in the constructor)
+		if($this->cache_type == 'memcache' && $memcache_status)
 		{
+			
+		}
+		else
+		{
+			$cache_file = $this->cache_dir.'/'.md5($query);
+
 			if ( ! is_dir($this->cache_dir) )
 			{
 				$this->register_error("Could not open cache dir: $this->cache_dir");
 				return false;
 			}
 			else
-			{
-				// Cache all result values
-				$result_cache = array
-					(
-						'col_info' => $this->col_info,
-						'last_result' => $this->last_result,
-						'num_rows' => $this->num_rows,
-						'return_value' => $this->num_rows,
-						);
+			{																
 				error_log ( serialize($result_cache), 3, $cache_file);
 			}
 		}
@@ -568,34 +581,42 @@ class ezSQLcore
 	public function get_cache($query)
 	{
 		
-		// The would be cache file for this query
-		$cache_file = $this->cache_dir.'/'.md5($query);
-		
-		// Try to get previously cached version
-		if ( $this->use_disk_cache && file_exists($cache_file) )
+		# Check if we want to us memcache, and whether it's available
+		if($this->cache_type == 'memcache' && $memcache_status)
 		{
-			// Only use this cache file if less than 'cache_timeout' (hours)
-			if ( (time() - filemtime($cache_file)) > ($this->cache_timeout*3600) )
-			{
-				unlink($cache_file);
-			}
-			else
-			{
-				$result_cache = unserialize(file_get_contents($cache_file));
-				
-				$this->col_info = $result_cache['col_info'];
-				$this->last_result = $result_cache['last_result'];
-				$this->num_rows = $result_cache['num_rows'];
-				
-				$this->from_disk_cache = true;
-				
-				// If debug ALL queries
-				$this->trace || $this->debug_all ? $this->debug() : null ;
-				
-				return $result_cache['return_value'];
-			}
+			
 		}
-		
+		# Use type "file" for any other cache_type
+		else
+		{
+			// The would be cache file for this query
+			$cache_file = $this->cache_dir.'/'.md5($query);
+			
+			// Try to get previously cached version
+			if (file_exists($cache_file) )
+			{
+				// Only use this cache file if less than 'cache_timeout' (hours)
+				if ( (time() - filemtime($cache_file)) > ($this->cache_timeout*3600) )
+				{
+					unlink($cache_file);
+				}
+				else
+				{
+					$result_cache = unserialize(file_get_contents($cache_file));
+					
+					$this->col_info = $result_cache['col_info'];
+					$this->last_result = $result_cache['last_result'];
+					$this->num_rows = $result_cache['num_rows'];
+					
+					$this->from_disk_cache = true;
+					
+					// If debug ALL queries
+					$this->trace || $this->debug_all ? $this->debug() : null ;
+					
+					return $result_cache['return_value'];
+				}
+			}
+		}	
 	}
 	
 	

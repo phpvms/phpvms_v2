@@ -116,12 +116,14 @@ class RegistrationData
 	public static function ChangePassword($pilotid, $newpassword)
 	{
 		$salt = md5(date('His'));
-
 		$password = md5($newpassword . $salt);
-		
 		self::$salt = $salt;
 		
-		$sql = "UPDATE " . TABLE_PREFIX ."pilots SET password='$password', salt='$salt', confirmed='y' WHERE pilotid=$pilotid";
+		//, confirmed='y' 
+		$sql = "UPDATE " . TABLE_PREFIX ."pilots 
+					SET password='$password', 
+						salt='$salt'
+					WHERE pilotid=$pilotid";
 		
 		$res = DB::query($sql);
 		

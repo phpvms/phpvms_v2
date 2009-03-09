@@ -158,7 +158,16 @@ class PilotAdmin extends CodonModule
 				
 			case 'pilotawards':
 			
-				$this->AddAward();
+				print_r($this->post);
+				
+				if($this->post->action == 'addaward')
+				{			
+					$this->AddAward();
+				}
+				elseif($this->post->action == 'deleteaward')
+				{
+					$this->DeleteAward();
+				}
 				
 				
 				Template::Set('allawards', AwardsData::GetPilotAwards($this->get->pilotid));
@@ -374,4 +383,9 @@ Thanks!
 		DB::debug();
 	}
 	
+	protected function DeleteAward()
+	{
+		
+		
+	}
 }

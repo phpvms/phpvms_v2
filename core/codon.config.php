@@ -40,7 +40,7 @@
 session_start();
 
 error_reporting(E_ALL ^ E_NOTICE);
-ini_set('display_errors', 'on');
+@ini_set('display_errors', 'on');
 
 define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );

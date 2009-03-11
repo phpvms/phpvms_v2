@@ -10,7 +10,8 @@ echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='.GOOGLE
 }
 ?>
 <?php
-$files = array(	'jquery.form.js',
+$files = array(	'jquery.min.js',
+				'jquery.form.js',
 				'jquery-ui.js');
 				
 # Build a condensed version of the above files
@@ -21,7 +22,7 @@ $condenser->SetOptions(SITE_ROOT.'/lib/js', SITE_URL.'/lib/js', 'js', '');
 $cache_url = $condenser->GetCondensedFile($files, 'jquery-front.js', true);
 ?>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $cache_url?>"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/phpvms.js"></script>
 

@@ -168,9 +168,8 @@ class PilotAdmin extends CodonModule
 				{
 					$this->DeleteAward();
 				}
-				
-				
-				Template::Set('allawards', AwardsData::GetPilotAwards($this->get->pilotid));
+								
+				Template::Set('allawards', AwardsData::GetPilotAwards($_REQUEST['pilotid']));
 				Template::Show('pilots_awards.tpl');
 				break;
 		}
@@ -380,12 +379,11 @@ Thanks!
 		}
 		
 		AwardsData::AddAwardToPilot($this->post->pilotid, $this->post->awardid);
-		DB::debug();
 	}
 	
 	protected function DeleteAward()
 	{
-		
+		echo 'Deleting';
 		
 	}
 }

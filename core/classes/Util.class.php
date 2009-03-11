@@ -39,6 +39,8 @@
 
 class Util
 {
+	
+	public static $trace;
 	/**
 	 * Add two time's together (1:30 + 1:30 = 3 hours, not 2.6)
 	 *
@@ -49,16 +51,43 @@ class Util
 	 */
 	public static function AddTime($time1, $time2)
 	{
+		
+		self::$trace = array();
 		$time1 = str_replace(':', '.', $time1);
 		$time2 = str_replace(':', '.', $time2);
-		
+	
 		$time1 = number_format($time1, 2);
 		$time2 = number_format($time2, 2);
+	
+		self::$trace[] = "Inputted as: $time1 + $time2";
+		# Check if the times are fractions,
+		# Basing on that whether the minutes are > 60
+		$t1_ex = explode('.', $time1);
+		# It's a fraction
+		if($t1_ex[1] > 60)
+		{
+			$t1_min = intval((intval($t1_ex[1])*60)/100);
+			$time1 = $t1_ex[0].'.'.$t1_min;
+		}
+			
+		# Check if the times are fractions:
+		$t2_ex = explode('.', $time2);
+		# It's a fraction
+		if($t2_ex[1] > 60)
+		{
+			$t2_min = intval((intval($t2_ex[1])*60)/100);
+			$time2 = $t2_ex[0].'.'.$t2_min;
+			
+		}
 		
+		self::$trace[] = "After fraction check: $time1 + $time2";
+			
 		$totaltime = $time1 + $time2;
 		$parts = explode('.', $totaltime);
 		$hours = $parts[0];
 		$mins = $parts[1];		
+		
+		self::$trace[] = "Added, before conversion: $totaltime";
 					
 		if($mins!='')
 		{	
@@ -81,6 +110,7 @@ class Util
 			$mins = '00';
 		}
 		
+		self::$trace[] = "Translated to $hours.$mins";
 		return $hours.'.'.$mins;		
 	}
 	

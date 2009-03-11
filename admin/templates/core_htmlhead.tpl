@@ -3,7 +3,8 @@ var baseurl="<?php echo SITE_URL;?>";
 var geourl="<?php echo GEONAME_URL; ?>";
 </script>
 <?php
-$files = array(	'jqModal.js',
+$files = array(	'jquery.min.js',
+				'jqModal.js',
 				'jquery.form.js', 
 				'jquery.bigiframe.js',
 				'jquery.tablesorter.pack.js',
@@ -26,7 +27,7 @@ $cache_url = $condenser->GetCondensedFile($files, 'jquery-admin.js');
 <script type="text/javascript" src="<?php echo SITE_URL ?>/lib/js/jquery.dimensions.pack.js"></script>
 */
 ?>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $cache_url?>"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 

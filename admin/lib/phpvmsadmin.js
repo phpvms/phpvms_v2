@@ -174,6 +174,14 @@ $(document).ready(function()
 		$("#bodytext").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
 	
+	$('.awardajaxcall').live('click', function() {
+		return false; // cancel the single click event
+	});
+	
+	$('.awardajaxcall').live('dblclick', function() {
+		$("#awardslist").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
+	});
+	
 	// Binding the AJAX call clicks
 	$('.dialogajax').live('click', function() {
 		return false; // cancel the single click event

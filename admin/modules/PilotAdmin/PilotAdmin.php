@@ -157,9 +157,7 @@ class PilotAdmin extends CodonModule
 				break;
 				
 			case 'pilotawards':
-			
-				print_r($this->post);
-				
+							
 				if($this->post->action == 'addaward')
 				{			
 					$this->AddAward();
@@ -383,7 +381,14 @@ Thanks!
 	
 	protected function DeleteAward()
 	{
-		echo 'Deleting';
+		AwardsData::DeletePilotAward($this->post->id);
+		
+		if($award)
+		{
+			Template::Set('message', 'Award deleted!');
+			Template::Show('core_success.tpl');
+			return;
+		}
 		
 	}
 }

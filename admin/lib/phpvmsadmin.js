@@ -179,7 +179,7 @@ $(document).ready(function()
 	});
 	
 	$('.awardajaxcall').live('dblclick', function() {
-		$("#awardslist").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
+		$("#awardslist").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id"), pilotid:$(this).attr("pilotid")});
 	});
 	
 	// Binding the AJAX call clicks

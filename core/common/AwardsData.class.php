@@ -45,7 +45,7 @@ class AwardsData
 	public static function GetPilotAwards($pilotid)
 	{
 		$pilotid = intval($pilotid);
-		$sql = 'SELECT a.* 
+		$sql = 'SELECT g.id, g.pilotid, a.*
 					FROM '.TABLE_PREFIX.'awardsgranted g
 					INNER JOIN '.TABLE_PREFIX.'awards a ON a.awardid = g.awardid
 					WHERE g.`pilotid`='.$pilotid;
@@ -68,7 +68,7 @@ class AwardsData
 		$pilotid = intval($pilotid);
 		$awardid = intval($awardid);
 		
-		$sql = 'SELECT a.* 
+		$sql = 'SELECT g.id, g.pilotid, a.*
 					FROM '.TABLE_PREFIX.'awardsgranted g
 					INNER JOIN '.TABLE_PREFIX.'awards a ON a.awardid=g.awardid
 					WHERE g.`pilotid`='.$pilotid.'
@@ -134,20 +134,34 @@ class AwardsData
 	 */
 	public static function DeleteAward($awardid)
 	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."awards WHERE `awardid`=$awardid";
+		$sql = "DELETE FROM ".TABLE_PREFIX."awards 
+					WHERE `awardid`=$awardid";
 		DB::query($sql);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."awardsgranted WHERE `awardid`=$awardid";
+		$sql = "DELETE FROM ".TABLE_PREFIX."awardsgranted 
+					WHERE `awardid`=$awardid";
 		DB::query($sql);		
 	}
 	
 	
 	public static function AddAwardToPilot($pilotid, $awardid)
 	{
+		$pilotid = intval($pilotid);
+		$awardid = intval($awardid);
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX."awardsgranted
 					(`awardid`, `pilotid`, `dateissued`)
 				 VALUES ($awardid, $pilotid, NOW())";
+		
+		DB::query($sql);
+	}
+	
+	public static function DeletePilotAward($awardid)
+	{
+		$awardid = intval($awardid);
+		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'awardsgranted
+					WHERE `id`='.$awardid;
 		
 		DB::query($sql);
 	}

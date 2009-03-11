@@ -22,7 +22,7 @@ if(!$allawards)
 	<tr>
 		<td><?php echo $award->name .': '.$award->descrip?></td>
 		<td><a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pilotawards" action="deleteaward" 
-			id="<?php echo $award->id;?>" class="awardajaxcall">
+			id="<?php echo $award->id;?>" class="awardajaxcall" pilotid="<?php echo $award->pilotid?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
 		</td>
 	</tr>

@@ -60,6 +60,7 @@ class Util
 		$time2 = number_format($time2, 2);
 	
 		self::$trace[] = "Inputted as: $time1 + $time2";
+		
 		# Check if the times are fractions,
 		# Basing on that whether the minutes are > 60
 		$t1_ex = explode('.', $time1);
@@ -79,15 +80,19 @@ class Util
 			$time2 = $t2_ex[0].'.'.$t2_min;
 			
 		}
-		
+				
 		self::$trace[] = "After fraction check: $time1 + $time2";
 			
-		$totaltime = $time1 + $time2;
+		/*
 		$parts = explode('.', $totaltime);
 		$hours = $parts[0];
-		$mins = $parts[1];		
+		$mins = $parts[1];	*/
+		$parts1 = explode('.', $time1);
+		$parts2 = explode('.', $time2);
+		$hours = $parts1[0] + $parts2[0];
+		$mins = $parts1[1] + $parts2[1]; 	
 		
-		self::$trace[] = "Added, before conversion: $totaltime";
+		self::$trace[] = "Added, before conversion: $hours:$mins";
 					
 		if($mins!='')
 		{	

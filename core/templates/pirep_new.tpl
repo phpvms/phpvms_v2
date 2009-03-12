@@ -129,9 +129,7 @@ if($message!='')
 	<dd><textarea name="comment" style="width: 100%"><?php echo $_POST['comment'] ?></textarea></dd>
 	
 	<dt></dt>
-	<dd><?php 
-			$bidid = ($bid)?$bid->bidid:$_POST['bid'];
-		?>
+	<dd><?php $bidid = ($bid)?$bid->bidid:$_POST['bid']; ?>
 		<input type="hidden" name="bid" value="<?php echo $bidid ?>" />
 		<input type="submit" name="submit_pirep" value="File Flight Report" /></dd>
 </dl>

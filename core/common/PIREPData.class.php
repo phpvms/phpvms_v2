@@ -399,8 +399,8 @@ class PIREPData
 		self::PopulatePIREPFinance($pirepid);
 		
 		# Set the pilot's last PIREP date
-		PilotData::UpdateLastPIREPDate($pirepdata['pilotid']);
-		PilotData::UpdateFlightData($pirepdata['pilotid'], $pirepdata['flighttime'], 1);
+		//PilotData::UpdateLastPIREPDate($pirepdata['pilotid']);
+		//PilotData::UpdateFlightData($pirepdata['pilotid'], $pirepdata['flighttime'], 1);
 		
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
@@ -410,7 +410,7 @@ class PIREPData
 		$sub = 'PIREP Submitted';
 		$message = 'A PIREP has been submitted';
 		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
-		SchedulesData::IncrementFlownCount($pirepdata['code'], $pirepdata['flightnum']);
+		//SchedulesData::IncrementFlownCount($pirepdata['code'], $pirepdata['flightnum']);
 		
 		DB::$insert_id = $pirepid;
 		

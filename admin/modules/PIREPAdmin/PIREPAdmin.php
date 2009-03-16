@@ -191,7 +191,6 @@ class PIREPAdmin extends CodonModule
 		SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
-		
 		PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
 			
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);

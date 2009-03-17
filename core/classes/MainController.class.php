@@ -42,7 +42,8 @@ class MainController
 	public static $ModuleList = array();
 	public static $activeModule;
 	private static $stop_execute = false;
-	
+	private static $listSize;
+	private static $keys = array();	
 	
 	public static function loadEngineTasks()
 	{		
@@ -66,8 +67,8 @@ class MainController
 			}
 			
 			// If they specified the list, build it:
-			$list = array();
-			//for($i=0; $i<$count; $i++)
+			$list = array();	
+			
 			foreach($module_list as $key => $value)
 			{
 				# If they provide just a list, or include the entire path
@@ -82,47 +83,17 @@ class MainController
 				{
 					$modules[$key] = Config::Get('MODULE_PATH') . DIRECTORY_SEPARATOR . $value;
 				}
-			}
-			
+			}			
 		}
-							
-		/*if(Config::Get('RUN_SINGLE_MODULE') == true
-			&& in_array('modules', Config::Get('URL_REWRITE')) == false)
-		{
-			// Throw a mismatch error
-			Debug::ThrowFatal('RUN_SINGLE_MODULE is true, but you don\'t have a module variable set in your rewrite sc')
-		}*/
 		
-		// See what our default module is:
-		
+		// See what our default module is:		
 		if(Config::Get('RUN_SINGLE_MODULE') == true)
 		{
-			$module = CodonRewrite::$current_module; //Vars::GET('module');
-			/*if($module == '') // No module specified, so run the default
-			{
-				if(Config::Get('DEFAULT_MODULE') == '')
-				{
-					trigger_error('No Default module has been specified!
-									Please correct this in app.config.php', E_USER_ERROR);
-				}
-				
-				Config::Set('RUN_MODULE', strtoupper(Config::Get('DEFAULT_MODULE')));
-			}
-			else
-			{*/
-				Config::Set('RUN_MODULE', strtoupper($module));
-			//}
-			
-			
-			// Make sure it's valid,  ya know.. then throw the invalid page (basically 404 S.O.L.)
-			/*if(!isset(self::$ModuleList[Config::Get('RUN_MODULE')]))
-			{
-				echo 'Missing '.Config::Get('RUN_MODULE');
-				Template::Show('core_invalid_module.tpl');
-			}*/
+			$module = CodonRewrite::$current_module;
+			Config::Set('RUN_MODULE', strtoupper($module));
 		}
 		
-		self::loadModules($modules);
+		self::loadModules($modules);		
 		Config::LoadSettings();
 	}
 	
@@ -187,10 +158,14 @@ class MainController
 		global $HTMLHead;
 		
 		self::$ModuleList = $ModuleList;
-			
-		//load each module and initilize
-		foreach(self::$ModuleList as $ModuleName => $ModuleController)
+		self::$listSize = sizeof(self::$ModuleList);
+		self::$keys = array_keys(self::$ModuleList);
+		
+		for ($i=0; $i<self::$listSize; $i++)
 		{
+			$ModuleName = self::$keys[$i];
+			$ModuleController = self::$ModuleList[$ModuleName];
+			
 			//formulate proper module path
 			//$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
 					
@@ -230,7 +205,7 @@ class MainController
 				}
 			}
 		}
-		
+			
 		# Run the init tasks
 		ob_start();
 		self::Run(Config::Get('RUN_MODULE'), 'NavBar');
@@ -259,9 +234,9 @@ class MainController
 		}
 		else
 		{
-			//check if a module is defined
-			foreach(self::$ModuleList as $ModuleName => $ModuleController)
+			for ($i=0; $i<self::$listSize; $i++)
 			{
+				$ModuleName = self::$keys[$i];				
 				//skip over it if we called it already
 				if($ModuleName == $PModule)
 					continue;
@@ -274,29 +249,10 @@ class MainController
 				}
 				
 				self::Run($ModuleName, 'Controller');
-			}
+			}			
 		}
 		
-		return;
-			
-		/*//priority with specific module, call the rest later
-		$PModule = '';
-		if($module_priority!='')
-		{
-			$PModule = strtoupper(stripslashes($module_priority));
-			
-			//make sure the module exists, it's not just some bogus
-			// name they passed in
-			//if(self::valid_module($PModule))
-			//{
-				//it's valid, so do all the stuff for it
-				self::Run($PModule, 'Controller');
-				self::$activeModule = $PModule;
-			//}
-			
-			if(Config::Get('RUN_SINGLE_MODULE') == true)
-				return true;
-		}*/		
+		return true;	
 	}
 	
 	/**

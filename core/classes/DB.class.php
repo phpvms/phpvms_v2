@@ -82,7 +82,7 @@ class DB
 	
 	public function __destruct()
 	{
-		self::$DB->close();
+		@self::$DB->close();
 	}
 	
 	
@@ -208,7 +208,7 @@ class DB
 	 */
 	public static function close()
 	{
-		return self::$DB->close();
+		return @self::$DB->close();
 	}
 	
 	/**

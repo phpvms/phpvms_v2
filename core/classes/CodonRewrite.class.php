@@ -46,6 +46,7 @@ class CodonRewrite
 	
 	protected static $peices;
 	protected static $run=false;
+	
 		
 	/**
 	 * Add a rewrite rule for the module
@@ -70,7 +71,8 @@ class CodonRewrite
 				$set_params[$value]='string';
 			else
 				$set_params[$key]=$value;
-		}
+		}	
+		
 		
 		self::$rewrite_rules[$module] = $set_params;
 		
@@ -98,7 +100,7 @@ class CodonRewrite
 			
 		$params = explode('?', $preg_match);
 		$split_parameters = $params[0];
-		
+				
 		# Now check if there's anything there (we didn't just have
 		#	index.php?query_string=...
 		# If that's all, then we grab a configuration setting that
@@ -111,7 +113,7 @@ class CodonRewrite
 		
 		# Now we split it all out, and store the peices
 		self::$peices = explode('/', $split_parameters);
-	
+			
 		$module_name = strtolower(self::$peices[0]);
 		
 		if($module_name == '') # If it's blank, check $_GET
@@ -137,13 +139,14 @@ class CodonRewrite
 		
 		# And this tacks on our $_GET rules
 		parse_str($_SERVER['QUERY_STRING'], $get_extra);
-		$_GET = array_merge($_GET, $get_extra);
-		
+		$_GET = array_merge($_GET, $get_extra);		
+			
 		# Add the $_GET to our object
 		foreach($_GET as $key=>$value)
 		{
 			self::$get->$key = $value;
 		}
+
 		
 		self::$run = true;	
 	}
@@ -165,6 +168,7 @@ class CodonRewrite
 		{
 			# Walk through every peice of the array, $key is the 
 			#	index name, and $type is well, the type
+			
 			foreach(self::$rewrite_rules[$module_name] as $key=>$type)
 			{
 				$val = self::$peices[$i++];

@@ -41,11 +41,6 @@ class Registration extends CodonModule
 				if(Auth::LoggedIn()) // Make sure they don't over-ride it
 					break;
 					
-					
-				Template::Set('extrafields', RegistrationData::GetCustomFields());
-				Template::Set('allairlines', OperationsData::GetAllAirlines(true));
-				Template::Set('allhubs', OperationsData::GetAllHubs());
-				Template::Set('countries', Countries::getAllCountries());
 				
 				if(isset($_POST['submit']))
 				{
@@ -53,7 +48,7 @@ class Registration extends CodonModule
 				}
 				else
 				{
-					Template::Show('registration_mainform.tpl');
+					$this->ShowForm();
 				}
 					
 				//$this->ProcessRegistration();
@@ -77,13 +72,35 @@ class Registration extends CodonModule
 		}
 	}
 	
-	function ProcessRegistration()
+	protected function ShowForm()
+	{
+		
+		Template::Set('extrafields', RegistrationData::GetCustomFields());
+		Template::Set('allairlines', OperationsData::GetAllAirlines(true));
+		Template::Set('allhubs', OperationsData::GetAllHubs());
+		Template::Set('countries', Countries::getAllCountries());
+				
+		# Just a simple addition
+		$rand1 = rand(1, 10);
+		$rand2 = rand(1, 10);
+		
+		Template::Set('rand1', $rand1);
+		Template::Set('rand2', $rand2);		
+		
+		$tot = $rand1 + $rand2;
+		SessionManager::Set('captcha_sum', $tot);
+		
+		Template::Show('registration_mainform.tpl');
+		
+	}
+	
+	protected function ProcessRegistration()
 	{
 			
 		// Yes, there was an error
 		if(!$this->VerifyData())
 		{
-			Template::Show('registration_mainform.tpl');
+			$this->ShowForm();
 		}
 		else
 		{
@@ -143,6 +160,17 @@ class Registration extends CodonModule
 	function VerifyData()
 	{
 		$error = false;
+		
+		$captcha = SessionManager::Get('captcha_sum');
+		
+		echo "captcha: $captcha entered: {$this->post->captcha}";
+		if($this->post->captcha != $captcha)
+		{
+			$error = true;
+			Template::Set('captcha_error', 'You failed the human test!');			
+		}
+		else
+			Template::Set('captcha_error', '');
 		
 		/* Check the firstname and last name
 		 */

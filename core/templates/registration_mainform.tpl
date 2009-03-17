@@ -87,6 +87,14 @@
 	Template::Show('registration_customfields.tpl');
 	
 	?>
+	
+	<dt>What does this add up to? <?php echo $rand1 .' + '.$rand2?></dt>
+	<dd><input id="password" type="captcha" name="captcha" value="" />
+		<?php
+			if($captcha_error != '')
+				echo '<p class="error">'.$captcha_error.'</p>';
+		?>
+	</dd>
 		
 	<dt></dt>
 	<dd><p>By clicking register, you're agreeing to the terms and conditions</p></dd>

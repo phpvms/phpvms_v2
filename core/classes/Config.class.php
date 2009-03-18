@@ -114,7 +114,12 @@ class Config
 		while(list($key, $value) = each(self::$values))
 		{
 			if(!is_array($value))
-				define($key, $value);
+			{
+				if(!defined($key))
+				{
+					define($key, $value);
+				}
+			}
 		}
 			
 		return true;

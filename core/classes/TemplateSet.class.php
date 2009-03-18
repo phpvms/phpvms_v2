@@ -41,7 +41,7 @@ class TemplateSet
 {
 	public $template_path = '';
 	public $enable_caching = false;
-	public $cache_timeout = CACHE_TIMEOUT;
+	public $cache_timeout;
 	
 	protected $vars = array();
 	
@@ -90,7 +90,7 @@ class TemplateSet
 	{
 		// See if they're setting the template as a file
 		//	Check if the file exists 
-		if(!is_object($value) && strstr($value, '.'))
+		if((!is_object($value) && !is_array($value)) && strstr($value, '.'))
 		{
 			if(file_exists($this->template_path . DIRECTORY_SEPARATOR . $value))
 			{

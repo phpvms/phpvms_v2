@@ -82,7 +82,10 @@ class SessionManager
 	
 	public static function GetData($key)
 	{
-		return unserialize($_SESSION[$key]);
+		if(isset($_SESSION[$key]))
+			return unserialize($_SESSION[$key]);
+			
+		return '';
 	}
 	
 	public static function GetValue($key, $index)

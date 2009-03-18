@@ -39,7 +39,7 @@
  
 session_start();
 
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL);
 @ini_set('display_errors', 'on');
 
 define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));

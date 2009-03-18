@@ -37,6 +37,9 @@
  * @package codon_core
  */
 
+//require_once 'Benchmark/Timer.php';
+//$timer = new Benchmark_Timer(true);
+
 include 'core/codon.config.php';
 
 $BaseTemplate = new TemplateSet;
@@ -63,3 +66,6 @@ $BaseTemplate->ShowTemplate('footer.tpl');
 
 # Force connection close
 DB::close();
+
+//$timer->stop();
+//$timer->display();

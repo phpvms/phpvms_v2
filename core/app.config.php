@@ -114,7 +114,7 @@ Config::Set('TEMPLATE_CACHE_EXPIRE', '24');
 Config::Set('DBASE_USE_CACHE', false);
 Config::Set('CACHE_PATH', SITE_ROOT . '/core/cache');
 
-if(ADMIN_PANEL == true && defined('ADMIN_PANEL'))
+if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 {	
 	Template::SetTemplatePath(SITE_ROOT.'/admin/templates');
 	

@@ -49,7 +49,7 @@ class MainController
 	{		
 		CodonRewrite::ProcessRewrite();
 		Vars::setParameters();
-		ob_end_clean();
+		@ob_end_clean();
 		/**
 		 * load the modules from the modules, or the list.
 		 */
@@ -153,7 +153,6 @@ class MainController
 	 */
 	public static function loadModules(&$ModuleList)
 	{
-		ob_end_clean();
 		global $NAVBAR;
 		global $HTMLHead;
 		
@@ -200,7 +199,7 @@ class MainController
 						self::Run($ModuleName, 'HTMLHead');
 						$HTMLHead .= ob_get_clean();
 						
-						ob_end_clean();
+						@ob_end_clean();
 					}
 				}
 			}
@@ -216,7 +215,7 @@ class MainController
 		self::Run(Config::Get('RUN_MODULE'), 'HTMLHead');
 		$HTMLHead .= ob_get_clean();
 		
-		ob_end_clean();
+		@ob_end_clean();
 	}
 	
 	/**

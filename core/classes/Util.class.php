@@ -51,7 +51,6 @@ class Util
 	 */
 	public static function AddTime($time1, $time2)
 	{
-		
 		self::$trace = array();
 		$time1 = str_replace(':', '.', $time1);
 		$time2 = str_replace(':', '.', $time2);
@@ -59,7 +58,7 @@ class Util
 		$time1 = number_format($time1, 2);
 		$time2 = number_format($time2, 2);
 	
-		self::$trace[] = "Inputted as: $time1 + $time2";
+		#self::$trace[] = "Inputted as: $time1 + $time2";
 		
 		# Check if the times are fractions,
 		# Basing on that whether the minutes are > 60
@@ -78,44 +77,28 @@ class Util
 		{
 			$t2_min = intval((intval($t2_ex[1])*60)/100);
 			$time2 = $t2_ex[0].'.'.$t2_min;
-			
 		}
-				
-		self::$trace[] = "After fraction check: $time1 + $time2";
+		
+		#self::$trace[] = "After fraction check: $time1 + $time2";
 			
-		/*
-		$parts = explode('.', $totaltime);
-		$hours = $parts[0];
-		$mins = $parts[1];	*/
 		$parts1 = explode('.', $time1);
 		$parts2 = explode('.', $time2);
-		$hours = $parts1[0] + $parts2[0];
-		$mins = $parts1[1] + $parts2[1]; 	
 		
-		self::$trace[] = "Added, before conversion: $hours:$mins";
+		$hours = ($parts1[0] + $parts2[0]);// * 60;
+		$mins = $parts1[1] + $parts2[1];
 					
-		if($mins!='')
-		{	
-			if(strlen($mins) == 1)
-				$mins *= 10;
-				
-			if($mins >= 60)
-			{
-				$mins -= 60;
-				$mins = '0'.$mins;
-				$hours++;
-			}
-		
-			# Ugly hack but it works,
-			# If it shows 030 then jsut take the 20
-			if(strlen($mins) == 3)
-				$mins = $mins[1].$mins[2];
-		}
-		else {
-			$mins = '00';
+		#self::$trace[] = "Added, before conversion: $hours:$mins";
+			
+		if($mins >= 60)
+		{
+			$hours++;
+			$mins -= 60;		
 		}
 		
-		self::$trace[] = "Translated to $hours.$mins";
+		if(intval($mins) < 10)
+			$mins = '0'.$mins;
+		
+		#self::$trace[] = "Translated to $hours.$mins";
 		return $hours.'.'.$mins;		
 	}
 	

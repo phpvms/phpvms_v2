@@ -96,14 +96,10 @@ class CodonRewrite
 		
 		# Get everything after the .php/ and before the ?
 		$params = explode('.php/', $URL);
-		$split_parameters = '';
-		
-		if(sizeof($params) > 1)
-		{
-			$preg_match = $params[1];
-			$params = explode('?', $preg_match);
-			$split_parameters = $params[0];
-		}
+		$preg_match = $params[1];
+			
+		$params = explode('?', $preg_match);
+		$split_parameters = $params[0];
 				
 		# Now check if there's anything there (we didn't just have
 		#	index.php?query_string=...
@@ -175,9 +171,6 @@ class CodonRewrite
 			
 			foreach(self::$rewrite_rules[$module_name] as $key=>$type)
 			{
-				if(!isset(self::$peices[$i++]))
-					continue;
-					
 				$val = self::$peices[$i++];
 				
 				# Convert to type specified

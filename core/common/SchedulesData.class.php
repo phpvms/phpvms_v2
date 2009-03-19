@@ -427,8 +427,9 @@ class SchedulesData
 		if(!is_array($data))
 			return false;
 		
-		if($data['depicao'] == $data['arricao'])
-			return false;
+		# Commented out to allow flights to/from the same airport
+		#if($data['depicao'] == $data['arricao'])
+		#	return false;
 					
 		$data['code'] = strtoupper($data['code']);
 		$data['flightnum'] = strtoupper($data['flightnum']);			

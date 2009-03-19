@@ -60,41 +60,35 @@ class Util
 	
 		#self::$trace[] = "Inputted as: $time1 + $time2";
 		
-		# Check if the times are fractions,
-		# Basing on that whether the minutes are > 60
 		$t1_ex = explode('.', $time1);
-		# It's a fraction
+		$t2_ex = explode('.', $time2);
+		
+		# Check if the minutes are fractions
+		# If they are (minutes > 60), convert to minutes
 		if($t1_ex[1] > 60)
 		{
-			$t1_min = intval((intval($t1_ex[1])*60)/100);
-			$time1 = $t1_ex[0].'.'.$t1_min;
+			$t1_ex[1] = intval((intval($t1_ex[1])*60)/100);
 		}
-			
-		# Check if the times are fractions:
-		$t2_ex = explode('.', $time2);
-		# It's a fraction
+		
 		if($t2_ex[1] > 60)
 		{
-			$t2_min = intval((intval($t2_ex[1])*60)/100);
-			$time2 = $t2_ex[0].'.'.$t2_min;
+			$t2_ex[1] = intval((intval($t2_ex[1])*60)/100);
 		}
 		
 		#self::$trace[] = "After fraction check: $time1 + $time2";
-			
-		$parts1 = explode('.', $time1);
-		$parts2 = explode('.', $time2);
 		
-		$hours = ($parts1[0] + $parts2[0]);// * 60;
-		$mins = $parts1[1] + $parts2[1];
+		$hours = ($t1_ex[0] + $t2_ex[0]);
+		$mins = ($t1_ex[1] + $t2_ex[1]);
 					
 		#self::$trace[] = "Added, before conversion: $hours:$mins";
 			
-		if($mins >= 60)
+		while($mins >= 60)
 		{
 			$hours++;
 			$mins -= 60;		
 		}
 		
+		# Add the 0 padding
 		if(intval($mins) < 10)
 			$mins = '0'.$mins;
 		

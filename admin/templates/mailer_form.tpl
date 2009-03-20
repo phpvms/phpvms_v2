@@ -1,27 +1,15 @@
 <h3>Mass Mailer</h3>
 <form method="post" action="<?php echo SITE_URL ?>/admin/index.php/MassMailer">
-  <table width='100%' border='0'>
-    <!--Getting e-mail addresses will be handled in MassMailer.php-->
-	
-
-	<tr>
-		<td><strong>Subject: </strong></td>
-		<td><input type="text" name="subject" value=""</td>
-	
-	</tr>
-    <tr>
-      <td><strong>Message:</strong></td>
-      <td>
-		<textarea name="message" cols='60' rows='8'></textarea>
-      </td>
-    </tr>
-    <tr>
-		<td>
-			<input type="hidden" name="loggedin" value="<?php echo (Auth::LoggedIn())?'true':'false'?>" />
-		</td>
-		<td>
-          <input type="submit" name="submit" value='Send Message'>
-		</td>
-    </tr>
-  </table>
+<p>
+	<strong>Subject: </strong> <input type="text" name="subject" value="" />
+</p>
+<p>
+	<strong>Message:</strong>
+</p>
+<p>
+	<textarea name="message" id="editor" style="width: 600px; height: 250px;">To: {PILOT_FNAME} {PILOT_LNAME}, </textarea>
+</p>
+<p>
+	<input type="submit" name="submit" value="Send Email" />
+</p>
 </form>

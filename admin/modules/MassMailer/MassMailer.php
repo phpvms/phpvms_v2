@@ -22,12 +22,17 @@
 class MassMailer extends CodonModule 
 {
 	
+	public function HTMLHead()
+	{
+		Template::Set('sidebar', 'sidebar_mailer.tpl');
+	}
+	
 	public function Controller()
 	{
 		
 		if($this->post->submit)
 		{
-			
+			echo '<h3>Sending email</h3>';
 			if($this->post->subject == '' || trim($this->post->message) == '')
 			{
 				Template::Set('message', 'You must enter a subject and message!');
@@ -35,10 +40,10 @@ class MassMailer extends CodonModule
 				return;
 			}
 			
-			$subject = $this->post->subject;
-			$message = DB::escape($this->post->message) . PHP_EOL . PHP_EOL;
+			echo 'Sending email...<br />';
 			
-
+			$subject = DB::escape($this->post->subject);
+			$message = DB::escape($this->post->message) . PHP_EOL . PHP_EOL;
 			
 			//Begin the nice long assembly of e-mail addresses
 			$pilotarray = PilotData::GetAllPilots();
@@ -51,9 +56,12 @@ class MassMailer extends CodonModule
 
 			foreach($pilotarray as $pilot)
 			{
+				echo 'Sending for '.$pilot->firstname.' '.$pilot->lastname.'<br />';
+				
 				# Variable replacements
-				$send_message = str_replace('%%PILOT_NAME%%', $pilot->firstname.' '.$pilot->lastname, $message);
-				$send_message = str_replace('%%PILOT_ID%%', PilotData::GetPilotCode($pilot->code, $pilot->pilotid));
+				$send_message = str_replace('{PILOT_FNAME}', $pilot->firstname, $message);
+				$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $message);
+				$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $message);
 			    
 				$mail->Body = $send_message;
 				$mail->AltBody = strip_tags($send_message);
@@ -64,8 +72,7 @@ class MassMailer extends CodonModule
 				$mail->ClearAddresses();
 			}
 			
-			
-			Template::Show('mailer_sent.tpl');
+			echo 'Complete!';
 			return;
 		}		
 		

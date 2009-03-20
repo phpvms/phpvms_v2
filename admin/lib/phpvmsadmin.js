@@ -77,22 +77,25 @@ function calcDistance()
     });
 }
 
-
 $(document).ready(function() 
 { 		
-      // Show dialog box
-	
-	  $('#jqmdialog').jqm({
-	    ajax:'@href',
+	$(".addtoEditor").click(function(e) {
+		e.preventDefault();
+		$(".nicEdit-main").append($(this).html()); 
+		return false;
+	});
+
+	$('#jqmdialog').jqm({
+		ajax:'@href',
 		onLoad: function(h) 
 		{
-			 $("#form").ajaxForm({
+			$("#form").ajaxForm({
 				target: '#bodytext',
 				success: function() 
 				{
 					$('#jqmdialog').jqmAddTrigger('.jqModal');
 					//$.listen('dblclick','.jqModal', function() { return false; });
-		
+
 					$('#bodytext').fadeIn('slow');
 					$('#jqmdialog').jqmHide();
 				}
@@ -100,25 +103,25 @@ $(document).ready(function()
 
 			h.w.show();
 		},
-	    onHide: function(h) {
-            h.o.remove(); // remove overlay
-            h.w.fadeOut(100); // hide window 
-            $("#jqmdialog").html("");
-            //dialogInit();
-        }
-    });
-    
+		onHide: function(h) {
+			h.o.remove(); // remove overlay
+			h.w.fadeOut(100); // hide window 
+			$("#jqmdialog").html("");
+			//dialogInit();
+		}
+	});
+
 	formInit();
 	reloadGroups();
-	
+
 	$("#slidermenu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
-	
+
 	$(".tablesorter").tablesorter(); 
-	
+
 	$("#dialogform").ajaxForm({
 		target: '#results'
 	});
-	
+
 	$('.confirm').live('click', function() { return false; });
 	$('.confirm').live('click', function()
 	{
@@ -137,13 +140,13 @@ $(document).ready(function()
 		
 		return false;
 	});
-	
+
 	$('.deleteitem').live('click', function(){ return false; });
 	$('.deleteitem').live('dblclick', function(){	
 		var url = $(this).attr("href");
 		var action = $(this).attr("action");
 		var id = $(this).attr("id");
-		
+
 		$.prompt('Are you sure?', {
 			buttons: { Yes: true, Cancel: false },
 			callback: function(v,m)
@@ -158,39 +161,39 @@ $(document).ready(function()
 				$('#jqmdialog').jqmAddTrigger('.jqModal');
 			}			
 		});	
-		
+
 		return false;
 	});
-    
+
 	$('#jqmdialog').jqmAddTrigger('.jqModal');
-    $('.jqModal').live('dblclick', function() { return false; });
+	$('.jqModal').live('dblclick', function() { return false; });
 		
 	// Binding the AJAX call clicks
 	$('.ajaxcall').live('click', function() {
 		return false; // cancel the single click event
 	});
-	
+
 	$('.ajaxcall').live('dblclick', function() {
 		$("#bodytext").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
-	
+
 	$('.awardajaxcall').live('click', function() {
 		return false; // cancel the single click event
 	});
-	
+
 	$('.awardajaxcall').live('dblclick', function() {
 		$("#awardslist").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id"), pilotid:$(this).attr("pilotid")});
 	});
-	
+
 	// Binding the AJAX call clicks
 	$('.dialogajax').live('click', function() {
 		return false; // cancel the single click event
 	});
-	
+
 	$('.dialogajax').live('dblclick', function() {
 		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
 	});
-	
+
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
 		

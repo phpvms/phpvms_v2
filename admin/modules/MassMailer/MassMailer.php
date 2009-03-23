@@ -43,7 +43,7 @@ class MassMailer extends CodonModule
 			echo 'Sending email...<br />';
 			
 			$subject = DB::escape($this->post->subject);
-			$message = DB::escape($this->post->message) . PHP_EOL . PHP_EOL;
+			$message = html_entity_decode($this->post->message). PHP_EOL . PHP_EOL;
 			
 			//Begin the nice long assembly of e-mail addresses
 			$pilotarray = PilotData::GetAllPilots();
@@ -60,11 +60,10 @@ class MassMailer extends CodonModule
 				
 				# Variable replacements
 				$send_message = str_replace('{PILOT_FNAME}', $pilot->firstname, $message);
-				$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $message);
-				$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $message);
-			    
-				$mail->Body = $send_message;
-				$mail->AltBody = strip_tags($send_message);
+				$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $send_message);
+				$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $send_message);
+
+				$mail->MsgHTML($send_message);
 				
 				$mail->AddAddress($pilot->email);                 
 				$mail->Send();

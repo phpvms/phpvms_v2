@@ -18,7 +18,7 @@ foreach($allroutes as $route)
 {
 ?>
 <tr>
-	<td nowrap>
+	<td >
 		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>"><?php echo $route->code . $route->flightnum?><?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
 		<br />
 		
@@ -26,7 +26,7 @@ foreach($allroutes as $route)
 		<strong>Equipment: </strong><?php echo $route->aircraft; ?> (<?php echo $route->registration;?>)  <strong>Distance: </strong><?php echo $route->distance . Config::Get('UNITS');?>
 		<br />
 		<?php echo ($route->route=='')?'':'<strong>Route: </strong>'.$route->route.'<br />' ?>
-		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.$route->notes.'<br />' ?>
+		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.html_entity_decode($route->notes).'<br />' ?>
 	</td>
 	<td nowrap>
 		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>">View Details</a><br />

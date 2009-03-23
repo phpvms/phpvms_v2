@@ -290,6 +290,6 @@ class SiteCMS extends CodonModule
 		}
 		
 		Template::Set('message', 'News item deleted');
-		Template::Show('core_succcess.tpl');
+		Template::Show('core_success.tpl');
 	}
 }

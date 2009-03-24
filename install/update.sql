@@ -13,3 +13,5 @@ CREATE TABLE `phpvms_awardsgranted` (
 `dateissued` DATETIME NOT NULL ,
 PRIMARY KEY ( `id` )
 ) ENGINE = MYISAM;
+
+INSERT INTO `phpvms_settings` VALUES(9, 'phpVMS API Key', 'PHPVMS_API_KEY', '', 'This is your API key to access phpVMS services', 1);

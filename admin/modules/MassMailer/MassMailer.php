@@ -45,6 +45,10 @@ class MassMailer extends CodonModule
 			$subject = DB::escape($this->post->subject);
 			$message = html_entity_decode($this->post->message). PHP_EOL . PHP_EOL;
 			
+			
+			# Do some quick fixing of obvious formatting errors
+			$message = str_replace('<br>', '<br />', $message);
+			
 			//Begin the nice long assembly of e-mail addresses
 			$pilotarray = PilotData::GetAllPilots();
 

@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS `phpvms_fuelprices` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-
-INSERT INTO `phpvms_settings` VALUES(9, 'phpVMS API Key', 'PHPVMS_API_KEY', '', 'This is your API key to access phpVMS services', 1);
+INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
+		VALUES ('phpVMS API Key', 'PHPVMS_API_KEY', '', 'This is your API key to access phpVMS services', 1)

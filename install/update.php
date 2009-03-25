@@ -137,8 +137,6 @@ echo 'Starting the update...<br />';
 	
 	echo '<p>Updating your database...</p>';
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
-
-	
 	
 	# Specific Checks
 	$sql = 'SELECT * FROM '.TABLE_PREFIX."settings

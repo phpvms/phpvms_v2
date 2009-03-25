@@ -108,6 +108,9 @@ class FuelData
 	 *  This ignores the cache for retrieval, but does save
 	 *  to the cache on successful completion. Returns false
 	 *  if failed
+	 * 
+	 * Best practice is to use GetFuelPrice() which will
+	 *  check the cache before checking the server
 	 *
 	 * @param string $apt_icao Airport ICAO
 	 * @return float Returns the JET-A fuelprice
@@ -125,6 +128,7 @@ class FuelData
 		
 		$results = simplexml_load_string($resp);
 		
+		# Error message tag was there
 		if(isset($results->errormessage))
 		{
 			return false;

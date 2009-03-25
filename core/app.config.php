@@ -180,6 +180,8 @@ define('SECONDS_PER_DAY', 86400);
 
 define('GEONAME_URL', 'http://ws.geonames.org');
 
+define('PHPVMS_API_URL', 'http://api.phpvms.net');
+
 /*
  * Library Includes (from 3rd Party)
  */

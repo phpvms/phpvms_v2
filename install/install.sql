@@ -14,6 +14,15 @@ CREATE TABLE `phpvms_awardsgranted` (
 	PRIMARY KEY ( `id` )
 ) ENGINE = MYISAM;
 
+CREATE TABLE IF NOT EXISTS `phpvms_fuelprices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `icao` varchar(4) NOT NULL,
+  `lowlead` float NOT NULL,
+  `jeta` float NOT NULL,
+  `dateupdated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
 CREATE TABLE `phpvms_downloads` (
    `id` INT NOT NULL AUTO_INCREMENT,
    `pid` INT,

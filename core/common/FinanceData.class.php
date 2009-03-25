@@ -33,14 +33,14 @@ class FinanceData
 	public static function GetFuelPrice($fuel_amount, $apt_icao='')
 	{
 		
+		/* A few steps:
+			Check the local cache, if it's not there, or older
+			than three days, reach out to the API, if not there,
+			then use the localized price
+		 */
 		if($apt_icao != '')
 		{
-			$aptinfo = OperationsData::GetAirportInfo($apt_icao);
-			
-			if($aptinfo->fuelprice == '' || $aptinfo->fuelprice == 0)
-				$price = Config::Get('FUEL_DEFAULT_PRICE');
-			else
-				$price = $aptinfo->fuelprice;
+			$price = FuelData::GetFuelPrice($apt_icao);
 		}
 		else
 		{

@@ -83,13 +83,10 @@ class Util
 	 */
 	public static function AddTime($time1, $time2)
 	{
-		self::$trace = array();
+		#self::$trace = array();
 		$time1 = str_replace(':', '.', $time1);
 		$time2 = str_replace(':', '.', $time2);
-	
-		$time1 = number_format($time1, 2);
-		$time2 = number_format($time2, 2);
-	
+		
 		#self::$trace[] = "Inputted as: $time1 + $time2";
 		
 		$t1_ex = explode('.', $time1);

@@ -23,5 +23,9 @@ CREATE TABLE IF NOT EXISTS `phpvms_fuelprices` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
-		VALUES ('phpVMS API Key', 'PHPVMS_API_KEY', '', 'This is your API key to access phpVMS services', 1)
+
+UPDATE `phpvms_pilots` SET retired=0;
+
+ALTER TABLE `phpvms_pilots` ADD `transferhours` FLOAT NOT NULL AFTER `totalhours`;
+
+ALTER TABLE `phpvms_schedules` ADD `daysofweek` VARCHAR( 7 ) NOT NULL DEFAULT '0123456' AFTER `flighttime`; 

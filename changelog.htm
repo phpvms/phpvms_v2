@@ -79,6 +79,9 @@ ul li ul {
 	<li><strong>NEW</strong>: Fuel prices are pulled from  server (currently works only for US airports)</li>
 	<li><strong>NEW</strong>: Mass-mailer functionality, to email all pilots</li>
 	<li><strong>NEW</strong>: Captcha on registration page (update your registration_mainform.tpl)</li>
+	<li><strong>NEW</strong>: Transfer hours field added to pilot profile, to prevent conflicts</li>
+	<li><strong>NEW</strong>: Admin can now set a pilot as 'retired', won't allow login until admin reactivates</li>
+	<li><strong>NEW</strong>: Days of week indicator for schedule</li>
 	<li>Added maintenance option to reset VA hours (algorithm is now proper, I promise!)</li>
 	<li>Flights to/from the same airport allowed (to accomodate military flights)</li>
 	<li>Added maintenace option to reset pilot hours</li>
@@ -90,6 +93,13 @@ ul li ul {
 	<li>FSPax and FSACARS bug fixed when using offset for pilot ID</li>
 	<li>FSPax exported flights now use the default aircraft from the schedule, since FSP doesn't report an aircraft</li>
 	<li>Contact page error fixed</li>
+</ul>
+<p><strong>Templates Changed</strong>:</p>
+<ul>
+  <li>registration_mainform.tpl - Captcha added</li>
+  <li>profile_main.tpl - Changed total time to account for transfer hours</li>
+  <li>pilots_list.tpl - Changed total time to account for transfer hours</li>
+  <li>schedule_results.tpl - Skip over schedules which aren't for the current day, show the days of week it's flown</li>
 </ul>
 <h1>Build 610 (Version 1.2.610)</h1>
 <ul>

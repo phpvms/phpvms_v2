@@ -19,9 +19,9 @@
 			}
 			else
 			{
-					?>
-						<img src="<?php	echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" />
-				<?php
+			?>
+				<img src="<?php	echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" />
+			<?php
 			}
 			?>
 		</td>
@@ -124,11 +124,27 @@
 	</tr>
 	<tr>
 		<td>Total Hours</td>
-		<td><input type="text" name="totalhours" value="<?php echo $pilotinfo->totalhours;?>" /></td>
+		<td><?php echo $pilotinfo->totalhours;?>
+			<input type="hidden" name="totalhours" value="<?php echo $pilotinfo->totalhours;?>" />
+		</td>
+	</tr>
+	<tr>
+		<td>Transfer Hours</td>
+		<td><input type="text" name="transferhours" value="<?php echo $pilotinfo->transferhours;?>" /></td>
 	</tr>
 	<tr>
 		<td>Total Pay</td>
 		<td><input type="text" name="totalpay" value="<?php echo $pilotinfo->totalpay;?>" /></td>
+	</tr>
+	<tr>
+		<td>Pilot active?</td>
+		<td><?php if($pilotinfo->retired == 1) {  $retsel='selected'; $activesel = 'selected'; } ?>
+			<select name="retired">
+				<option value="0" <?php echo $activesel?>>Active</option>
+				<option value="1" <?php echo $retsel?>>Inactive</option>
+			</select>
+		
+		</td>
 	</tr>
 <?php
 if($customfields)

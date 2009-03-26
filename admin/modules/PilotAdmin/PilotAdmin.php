@@ -99,10 +99,10 @@ class PilotAdmin extends CodonModule
 						PilotData::ChangeName($this->post->pilotid, $this->post->firstname, $this->post->lastname);
 						
 						PilotData::SaveProfile($this->post->pilotid, $this->post->email , 
-													$this->post->location, $this->post->hub);
+													$this->post->location, $this->post->hub, $this->post->retired);
 													
 						PilotData::ReplaceFlightData($this->post->pilotid, $this->post->totalhours, 
-														$this->post->totalflights, $this->post->totalpay);
+														$this->post->totalflights, $this->post->totalpay, $this->post->transferhours);
 														
 						PilotData::SaveFields($this->post->pilotid, $_POST);
 						

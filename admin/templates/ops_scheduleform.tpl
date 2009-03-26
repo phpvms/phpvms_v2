@@ -86,6 +86,27 @@
 	</td>
 </tr>
 <tr>
+	<td valign="top"><strong>Days of Week: </strong></td>
+	<td>
+		<?php
+		$days = array('Sunday', 'Monday', 'Tuesday',
+					  'Wednesday', 'Thursday', 'Friday',
+					  'Saturday');
+		
+		for($i=0; $i<=6; $i++)
+		{
+			# Add blank string to typecast from int to string, otherwise it won't search
+			if(strpos($schedule->daysofweek, $i.'') === false)
+				$checked = '';
+			else
+				$checked = 'checked';
+			
+			echo '<input type="checkbox" name="daysofweek[]" value="'.$i.'" '.$checked.'>'.$days[$i].'  ';			
+		}
+		?>
+	</td>
+</tr>
+<tr>
 	<td valign="top"><strong>Distance:</strong> </td>
 	<td><input type="text" name="distance" id="distance" value="<?php echo $schedule->distance?>" />
 		<p><a href="#" onclick="calcDistance(); return false;">Calculate Distance</a>. Leaving blank or 0 (zero) will automatically calculate the distance.</p></td>
@@ -168,7 +189,7 @@
 	<td></td>
 	<td><input type="hidden" name="action" value="<?php echo $action?>" />
 		<input type="hidden" name="id" value="<?php echo $schedule->id?>" />
-		<input type="submit" name="submit" value="<?php echo $title?>" /> <input type="submit" class="jqmClose" value="Close" />
+		<input type="submit" name="submit" value="<?php echo $title?>" />
 	</td>
 </tr>
 </table>

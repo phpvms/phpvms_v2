@@ -511,6 +511,7 @@ class Operations extends CodonModule
 						'deptime'=>$this->post->deptime,
 						'arrtime'=>$this->post->arrtime,
 						'flighttime'=>$this->post->flighttime,
+						'daysofweek'=>implode('', $this->post->daysofweek),
 						'maxload'=>$this->post->maxload,
 						'price'=>$this->post->price,
 						'flighttype'=>$this->post->flighttype,
@@ -556,13 +557,13 @@ class Operations extends CodonModule
 						'deptime'=>$this->post->deptime,
 						'arrtime'=>$this->post->arrtime,
 						'flighttime'=>$this->post->flighttime,
+						'daysofweek'=>implode('', $_POST['daysofweek']),
 						'maxload'=>$this->post->maxload,
 						'price'=>$this->post->price,
 						'flighttype'=>$this->post->flighttype,
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
 		
-		//print_r($data);
 		$val = SchedulesData::EditSchedule($data);
 		if(!$val)
 		{

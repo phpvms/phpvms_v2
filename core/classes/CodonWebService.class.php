@@ -215,22 +215,22 @@ class CodonWebService
 		}
 		
 		//encode our url data properly
-		if(!$params) $params = array();
-		foreach($params as $key=>$value)
+		if(is_array($params))
 		{
-			unset($params[$key]);
-			
-			$key = urlencode($key);
-			$value = urlencode($value);
-			$params[$key] = $value;
+			foreach($params as $key=>$value)
+			{				
+				
+				$cleaned_params[$key] = urlencode($value);
+			}
 		}
+		else
+		{
+			$cleaned_params = urlencode($params);
+		}
+	
+		curl_setopt($this->curl, CURLOPT_POST, 1);
+		curl_setopt($this->curl, CURLOPT_POSTFIELDS, $cleaned_params);
 		
-		// See if it's post, add those options on
-		if(strtolower($type) == 'post')
-		{
-			curl_setopt($this->curl, CURLOPT_POST, 1);
-			curl_setopt($this->curl, CURLOPT_POSTFIELDS, $params);
-		}
 		
 		curl_setopt ($this->curl, CURLOPT_URL, $url);
 		if(($ret = curl_exec($this->curl)) === false)

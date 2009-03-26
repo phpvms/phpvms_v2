@@ -41,6 +41,38 @@ class Util
 {
 	
 	public static $trace;
+	
+	/**
+	 * Convert PHP 0-6 days to the Compact M T W R F S Su
+	 */
+	public static function GetDaysCompact($days)
+	{
+		$days = str_replace('0', 'Su ', $days);
+		$days = str_replace('1', 'M ', $days);
+		$days = str_replace('2', 'T ', $days);
+		$days = str_replace('3', 'W ', $days);
+		$days = str_replace('4', 'R ', $days);
+		$days = str_replace('5', 'F ', $days);
+		$days = str_replace('6', 'S ', $days);
+		
+		return $days;
+	}
+	
+	/**
+	 * Convert PHP 0-6 days to the full date string
+	 */
+	public static function GetDaysLong($days)
+	{
+		$days = str_replace('0', 'Sunday ', $days);
+		$days = str_replace('1', 'Monday ', $days);
+		$days = str_replace('2', 'Tuesday ', $days);
+		$days = str_replace('3', 'Wednesday ', $days);
+		$days = str_replace('4', 'Thursday ', $days);
+		$days = str_replace('5', 'Friday ', $days);
+		$days = str_replace('6', 'Saturday ', $days);
+		
+		return $days;
+	}
 	/**
 	 * Add two time's together (1:30 + 1:30 = 3 hours, not 2.6)
 	 *

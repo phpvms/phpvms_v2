@@ -123,7 +123,7 @@ if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 	Config::Set('DEFAULT_MODULE', 'Dashboard');
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
-				
+	
 	CodonRewrite::AddRule('default', array('page'));
 }
 else 
@@ -154,8 +154,8 @@ else
  */ 
 # Set the type of flights we have
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
-									'C'=>'Cargo',
-									'H'=>'Charter'));
+			'C'=>'Cargo',
+			'H'=>'Charter'));
 
 # Set the types of expenses we have
 Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
@@ -185,5 +185,6 @@ define('PHPVMS_API_URL', 'http://api.phpvms.net');
 /*
  * Library Includes (from 3rd Party)
  */
- 
- include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');
+
+# PHPMailer
+include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');

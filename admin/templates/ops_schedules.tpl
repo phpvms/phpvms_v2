@@ -12,6 +12,7 @@ if(!$schedules)
 	<th>Flight Number</th>
 	<th>Departure</th>
 	<th>Arrival</th>
+	<th>Days</th>
 	<th>Aircraft</th>
 	<th>Distance</th>
 	<th>Times Flown</th>
@@ -28,6 +29,7 @@ foreach($schedules as $sched)
 	<td align="left"><?php echo $sched->code . $sched->flightnum; ?></td>
 	<td align="left"><?php echo $sched->depicao; ?> (<?php echo $sched->deptime;?>)</td>
 	<td align="left"><?php echo $sched->arricao; ?> (<?php echo $sched->arrtime;?>)</td>
+	<td align="left"><?php echo Util::GetDaysCompact($sched->daysofweek)?></td>
 	<td align="left"><?php echo $sched->aircraft.' ('.$sched->registration.')'; ?></td>
 	<td align="center"><?php echo $sched->distance; ?></td>
 	<td align="center"><?php echo $sched->timesflown; ?></td>

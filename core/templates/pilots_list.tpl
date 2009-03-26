@@ -45,7 +45,7 @@ foreach($allpilots as $pilot)
 	</td>
 	<td><img src="<?php echo $pilot->rankimage?>" alt="<?php echo $pilot->rank;?>" /></td>
 	<td><?php echo $pilot->totalflights?></td>
-	<td><?php echo $pilot->totalhours?></td>
+	<td><?php echo Util::AddTime($pilot->totalhours, $pilot->transferhours); ?></td>
 <?php
 }
 ?>

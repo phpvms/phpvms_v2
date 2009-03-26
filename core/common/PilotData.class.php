@@ -173,7 +173,7 @@ class PilotData
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
-	public static function SaveProfile($pilotid, $email, $location, $hub='', $bgimage='')
+	public static function SaveProfile($pilotid, $email, $location, $hub='', $bgimage='', $retired='')
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
 					SET `email`='$email', `location`='$location' ";
@@ -183,6 +183,9 @@ class PilotData
 			
 		if($bgimage != '')
 			$sql.=",`bgimage`='$bgimage' ";
+		
+		if($retired != '')
+			$sql.=",`retired`=$retired ";
 			
 		$sql .= 'WHERE `pilotid`='.$pilotid;
 		
@@ -440,12 +443,23 @@ class PilotData
 	 * @return bool Success
 	 *
 	 */
-	public static function ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay)
+	public static function ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay, $transferhours='')
 	{
+		$pilotid = intval($pilotid);
+		$flighttime = floatval($flighttime);
+		$numflights = floatval($numflights);
+		$totalpay = floatval($totalpay);
+		$transferhours = floatval($transferhours);
 		
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=$flighttime, totalflights=$numflights, totalpay=$totalpay
-					WHERE pilotid=$pilotid";
+					SET totalhours=$flighttime, totalflights=$numflights, totalpay=$totalpay";
+		
+		if($transferhours != '')
+		{
+			$sql .=", transferhours=$transferhours";	
+		}	
+					
+		$sql .= " WHERE pilotid=$pilotid";
 		
 		$res = DB::query($sql);
 		

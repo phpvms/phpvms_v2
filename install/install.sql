@@ -1,4 +1,4 @@
-CREATE TABLE `phpvms_awards` (
+	CREATE TABLE `phpvms_awards` (
 	`awardid` INT NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR( 25 ) NOT NULL ,
 	`descrip` VARCHAR( 100 ) NOT NULL ,
@@ -132,6 +132,7 @@ CREATE TABLE `phpvms_schedules` (
   `deptime` varchar(15) NOT NULL default '',
   `arrtime` varchar(15) NOT NULL default '',
   `flighttime` FLOAT NOT NULL default '0',
+  `daysofweek` VARCHAR( 7 ) NOT NULL DEFAULT '0123456',
   `maxload` INT(11) NOT NULL,
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
@@ -194,6 +195,7 @@ CREATE TABLE `phpvms_pilots` (
   `totalflights` int(11) NOT NULL default '0',
   `totalhours` float NOT NULL default '0',
   `totalpay` float NOT NULL default '0',
+  `transferhours` float NOT NULL default '0',
   `rank` varchar(32) NOT NULL default 'Trainee Pilot',
   `confirmed` smallint(5) unsigned NOT NULL default '0',
   `retired` smallint(6) NOT NULL default '0',

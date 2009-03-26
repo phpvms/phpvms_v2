@@ -331,6 +331,40 @@ class SchedulesData
 	}
 	
 	/**
+	 * Get all the schedules, $limit is the number to return
+	 * 
+	 * This is really for the RPC
+	 */
+	public static function GetSchedulesAsArray($limit='', $onlyenabled=true)
+	{
+		
+		$limit = DB::escape($limit);
+		
+		if($onlyenabled)
+			$enabled = 'WHERE s.enabled=1';
+		else
+			$enabled = '';
+		
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM '.TABLE_PREFIX.'schedules AS s
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+					'.$enabled.'
+					ORDER BY s.depicao DESC';
+		
+		if($limit != '')
+			$sql .= ' LIMIT ' . $limit;
+		
+		$ret =  DB::get_results($sql, ARRAY_A);
+		
+		return $ret;
+		
+	}
+	
+	/**
 	 * This gets all of the schedules which are disabled
 	 */
 	public static function GetInactiveSchedules()
@@ -460,7 +494,7 @@ class SchedulesData
 						 `depicao`, `arricao`, 
 						 `route`, `aircraft`, `distance`, 
 						 `deptime`, `arrtime`, 
-						 `flighttime`, `maxload`, `price`, 
+						 `flighttime`, `daysofweek`, `maxload`, `price`, 
 						 `flighttype`, `notes`, `enabled`)
 					VALUES ('$data[code]', 
 							'$data[flightnum]',
@@ -472,6 +506,7 @@ class SchedulesData
 							'$data[deptime]', 
 							'$data[arrtime]',
 							'$data[flighttime]',
+							'$data[daysofweek]',
 							'$data[maxload]',
 							'$data[price]', 
 							'$data[flighttype]',
@@ -549,6 +584,7 @@ class SchedulesData
 						`deptime`='$data[deptime]',
 						`arrtime`='$data[arrtime]', 
 						`flighttime`='$data[flighttime]', 
+						`daysofweek`='$data[daysofweek]', 
 						`maxload`='$data[maxload]',
 						`price`='$data[price]',
 						`flighttype`='$data[flighttype]',

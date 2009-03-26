@@ -16,6 +16,12 @@ if(!$allroutes)
 <?php
 foreach($allroutes as $route)
 {
+	# Skip over a route if it's not for this day of week
+	#  Left this here, so it can be omitted if your VA
+	#  doesn't use this. Comment out these two lines if you
+	#  don't want to.
+	if(strpos($route->daysofweek, date('w')) === false)
+		continue;
 ?>
 <tr>
 	<td >
@@ -25,6 +31,7 @@ foreach($allroutes as $route)
 		<strong>Departure: </strong><?php echo $route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?php echo $route->arrtime;?><br />
 		<strong>Equipment: </strong><?php echo $route->aircraft; ?> (<?php echo $route->registration;?>)  <strong>Distance: </strong><?php echo $route->distance . Config::Get('UNITS');?>
 		<br />
+		<strong>Days Flown: </strong><?php echo Util::GetDaysCompact($route->daysofweek); ?><br />
 		<?php echo ($route->route=='')?'':'<strong>Route: </strong>'.$route->route.'<br />' ?>
 		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.html_entity_decode($route->notes).'<br />' ?>
 	</td>

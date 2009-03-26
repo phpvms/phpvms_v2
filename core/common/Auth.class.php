@@ -154,6 +154,12 @@ class Auth
 			self::$error_message = 'This user does not exist';
 			return false;
 		}
+		
+		if($userinfo->retired == 1)
+		{
+			self::$error_message = 'Your account was deactivated, please contact an admin';
+			return false;
+		}
 
 		//ok now check it
 		$hash = md5($password . $userinfo->salt);

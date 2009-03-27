@@ -39,7 +39,10 @@ class Registration extends CodonModule
 			case '':
 			
 				if(Auth::LoggedIn()) // Make sure they don't over-ride it
-					break;
+				{
+					Template::Show('login_already.tpl');
+					return;
+				}
 					
 				
 				if(isset($_POST['submit']))

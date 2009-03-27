@@ -299,6 +299,31 @@ class SchedulesData
 	}
 	
 	/**
+	 * Search schedules by day of week (0-6, Sunday- Sat)
+	 */
+	public static function GetSchedulesByDay($dayofweek, $onlyenabled=true, $limit='')
+	{
+		$arricao = strtoupper($arricao);
+		$arricao = DB::escape($arricao);
+		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+			
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM '.TABLE_PREFIX.'schedules s
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+					WHERE s.daysofweek LIKE \'%'.$dayofweek.'%\' '.$enabled;
+		
+		return DB::get_results($sql);
+	}
+	
+	/**
 	 * Get all the schedules, $limit is the number to return
 	 */
 	public static function GetSchedules($limit='', $onlyenabled=true)
@@ -325,40 +350,6 @@ class SchedulesData
 			$sql .= ' LIMIT ' . $limit;
 		
 		$ret =  DB::get_results($sql);
-		
-		return $ret;
-		
-	}
-	
-	/**
-	 * Get all the schedules, $limit is the number to return
-	 * 
-	 * This is really for the RPC
-	 */
-	public static function GetSchedulesAsArray($limit='', $onlyenabled=true)
-	{
-		
-		$limit = DB::escape($limit);
-		
-		if($onlyenabled)
-			$enabled = 'WHERE s.enabled=1';
-		else
-			$enabled = '';
-		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules AS s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					'.$enabled.'
-					ORDER BY s.depicao DESC';
-		
-		if($limit != '')
-			$sql .= ' LIMIT ' . $limit;
-		
-		$ret =  DB::get_results($sql, ARRAY_A);
 		
 		return $ret;
 		

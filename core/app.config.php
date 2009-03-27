@@ -163,6 +163,8 @@ Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
 
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
+Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
+
 define('SIGNATURE_PATH', '/lib/signatures');
 define('AVATAR_PATH', '/lib/avatars');
 
@@ -179,8 +181,6 @@ define('LOAD_VARIATION', 5);
 define('SECONDS_PER_DAY', 86400);
 
 define('GEONAME_URL', 'http://ws.geonames.org');
-
-define('PHPVMS_API_URL', 'http://api.phpvms.net');
 
 /*
  * Library Includes (from 3rd Party)

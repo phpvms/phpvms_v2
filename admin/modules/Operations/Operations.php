@@ -501,6 +501,7 @@ class Operations extends CodonModule
 			$this->post->distance = OperationsData::getAirportDistance($this->post->depicao, $this->post->arricao);
 		}
 
+	
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
 						'depicao'=>$this->post->depicao,
@@ -511,7 +512,7 @@ class Operations extends CodonModule
 						'deptime'=>$this->post->deptime,
 						'arrtime'=>$this->post->arrtime,
 						'flighttime'=>$this->post->flighttime,
-						'daysofweek'=>implode('', $this->post->daysofweek),
+						'daysofweek'=>implode('', $_POST['daysofweek']),
 						'maxload'=>$this->post->maxload,
 						'price'=>$this->post->price,
 						'flighttype'=>$this->post->flighttype,

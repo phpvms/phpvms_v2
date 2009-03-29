@@ -23,6 +23,12 @@ CREATE TABLE IF NOT EXISTS `phpvms_fuelprices` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
+CREATE TABLE `phpvms_updates` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`name` VARCHAR( 10 ) NOT NULL ,
+	`lastupdate` DATETIME NOT NULL ,
+	INDEX ( `name` )
+) ENGINE = MYISAM ;
 
 UPDATE `phpvms_pilots` SET retired=0;
 

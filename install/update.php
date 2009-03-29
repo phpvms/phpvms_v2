@@ -141,6 +141,7 @@ echo 'Starting the update...<br />';
 	$sql = 'SELECT * 
 				FROM '.TABLE_PREFIX."settings
 				WHERE name='TOTAL_HOURS'";
+				
 	$res = DB::get_row($sql);
 	
 	if(!$res)
@@ -148,10 +149,9 @@ echo 'Starting the update...<br />';
 		$sql = "INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
 		VALUES ('Total Hours', 'TOTAL_HOURS', '', 'These are the total hours your VA has flown', '0')";
 		DB::query($sql);
-	}
+	}	
 	
-	
-	echo 'Updating hours<br />';
+	echo '<strong>Updating hours</strong><br />';
 	
 	$allpilots = PilotData::GetAllPilots();
 
@@ -162,7 +162,7 @@ echo 'Starting the update...<br />';
 	}
 
 	echo "Pilots have a total of <strong>$total hours</strong><br /><br />";
-	echo "<strong>Now counting from PIREPS</strong><br />";
+	echo "<strong>Updating PIREPS  Hours</strong><br />";
 
 	StatsData::UpdateTotalHours();
 	

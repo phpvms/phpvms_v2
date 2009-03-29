@@ -61,6 +61,7 @@ class Profile extends CodonModule
 				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 				Template::Set('report', PIREPData::GetLastReports(Auth::$userinfo->pilotid));
 				Template::Set('nextrank', RanksData::GetNextRank(Auth::$userinfo->totalhours));
+				Template::Set('allawards', AwardsData::GetPilotAwards(Auth::$userinfo->pilotid));
 				Template::Set('userinfo', Auth::$userinfo);
 
 				Template::Show('profile_main.tpl');
@@ -87,6 +88,7 @@ class Profile extends CodonModule
 				Template::Set('allfields', PilotData::GetFieldData($pilotid, false));
 				Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
 				Template::Set('pilotcode', PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid));
+				Template::Set('allawards', AwardsData::GetPilotAwards(Auth::$userinfo->pilotid));
 				
 				Template::Show('pilot_public_profile.tpl');
 				Template::Show('pireps_viewall.tpl');

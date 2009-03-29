@@ -9,7 +9,7 @@ if(!$userinfo)
 <h3>Profile For <?php echo $userinfo->firstname . ' ' . $userinfo->lastname?></h3>
 <table>
 	<tr>
-		<td align="center">
+		<td align="center" valign="top">
 			<img src="<?php echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" alt="No Avatar" /> 
 			<br /><br />
 			<img src="<?php echo $userinfo->rankimage?>"  alt="" />
@@ -36,6 +36,29 @@ if(!$userinfo)
 				}
 				?>
 			</ul>
+			
+			<p>
+			<strong>Awards</strong>
+			<?php
+			if(is_array($allawards))
+			{			
+			?>
+			<ul>
+				<?php foreach($allawards as $award)
+				{ 
+					/* To show the image:
+					
+						<img src="<?php echo $award->image?>" alt="<?php echo $award->descrip?>" />
+					*/
+				
+				?>
+					<li><?php echo $award->name ?></li>
+				<?php } ?>
+			</ul>	
+			<?php
+			}
+			?>
+		</p>
 		</td>
 	
 	</tr>

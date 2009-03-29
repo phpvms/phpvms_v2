@@ -65,6 +65,25 @@
 			</ul>	
 		</p>
 		<p>
+			<strong>My Awards</strong>
+			<?php
+			if(!$allawards)
+			{
+				echo 'No awards yet';
+			}
+			else
+			{			
+			?>
+			<ul>
+				<?php foreach($allawards as $award){ ?>
+				<li><?php echo $award->name ?></li>
+				<?php } ?>
+			</ul>	
+			<?php
+			}
+			?>
+		</p>
+		<p>
 			<strong>ACARS Config</strong>
 			<ul>
 				<li><a href="<?php echo SITE_URL?>/action.php/acars/fsacarsconfig">Download FSACARS Config</a></li>

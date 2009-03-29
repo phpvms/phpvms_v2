@@ -52,7 +52,6 @@ if(!isset($_GET['force']) && !isset($_GET['test']))
 // Do the queries:
 echo 'Starting the update...<br />';
 
-
 	# Do updates based on version
 	#	But cascade the updates
 
@@ -139,9 +138,11 @@ echo 'Starting the update...<br />';
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 	
 	# Specific Checks
-	$sql = 'SELECT * FROM '.TABLE_PREFIX."settings
-			WHERE name='TOTAL_HOURS'";
+	$sql = 'SELECT * 
+				FROM '.TABLE_PREFIX."settings
+				WHERE name='TOTAL_HOURS'";
 	$res = DB::get_row($sql);
+	
 	if(!$res)
 	{
 		$sql = "INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
@@ -150,7 +151,8 @@ echo 'Starting the update...<br />';
 	}
 	
 	
-	echo "Updating hours<br />";
+	echo 'Updating hours<br />';
+	
 	$allpilots = PilotData::GetAllPilots();
 
 	foreach($allpilots as $pilot)
@@ -163,6 +165,7 @@ echo 'Starting the update...<br />';
 	echo "<strong>Now counting from PIREPS</strong><br />";
 
 	StatsData::UpdateTotalHours();
+	
 	echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';	
 		
 	
@@ -178,7 +181,8 @@ if(!isset($_GET['test']))
 
 echo '<p><strong>Update completed!</strong></p>
 		<hr>
-	  <p style="width:500px">If there were any errors, you may have to manually run the SQL update, or correct the errors, and click the following to re-run the update: <a href="update.php?force">update.php?force</a></p>
+	  <p style="width:500px">If there were any errors, you may have to manually run the SQL update, 
+		or correct the errors, and click the following to re-run the update: <a href="update.php?force">update.php?force</a></p>
 	  <p>Click here to <a href="'.SITE_URL.'">goto your site</a>, or <a href="'.SITE_URL.'/admin">your admin panel</a></p>  ';
 
 # Don't count forced updates

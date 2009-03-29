@@ -166,7 +166,6 @@ class Registration extends CodonModule
 		
 		$captcha = SessionManager::Get('captcha_sum');
 		
-		echo "captcha: $captcha entered: {$this->post->captcha}";
 		if($this->post->captcha != $captcha)
 		{
 			$error = true;

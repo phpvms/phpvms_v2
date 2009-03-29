@@ -88,6 +88,7 @@ class Import extends CodonModule
 					$notes = $fields[10];
 					$price = $fields[11];
 					$flighttype = $fields[12];
+					$daysofweek = $fields[13];
 									
 					if($code=='')
 					{
@@ -134,6 +135,8 @@ class Import extends CodonModule
 						$flighttype = 'P';
 					}
 					
+					if($daysofweek == '')
+						$daysofweek = '0123456';
 					
 					
 					# Check the distance
@@ -160,6 +163,7 @@ class Import extends CodonModule
 									'deptime'=>$deptime,
 									'arrtime'=>$arrtime,
 									'flighttime'=>$flighttime,
+									'daysofweek'=>$daysofweek,
 									'notes'=>$notes,
 									'enabled'=>true,
 									'maxload'=>$maxload,

@@ -42,6 +42,7 @@ class Dashboard extends CodonModule
 				*/
 				
 				$this->CheckForUpdates();
+				CentralData::send_vastats();
 				
 				Template::Show('dashboard.tpl');
 

@@ -63,7 +63,7 @@
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/customfields">Profile Fields</a></li>
 		<?php
 		if(Config::Get('PHPVMS_CENTRAL_ENABLED') == true)
-			echo '<li><a href="'.SITE_URL.'/admin/index.php/central">phpVMS Central Settings</a></li>';
+			echo '<li><a href="'.SITE_URL.'/admin/index.php/vacentral">phpVMS Central Settings</a></li>';
 		?>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard/about">About phpVMS</a></li>
 	</ul>

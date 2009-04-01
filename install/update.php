@@ -16,6 +16,8 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
+error_reporting(E_ALL ^ E_NOTICE);
+ 
 define('ADMIN_PANEL', true);
 
 include '../core/codon.config.php';
@@ -135,6 +137,9 @@ echo 'Starting the update...<br />';
 	}
 	
 	echo '<p>Updating your database...</p>';
+	
+	Installer::add_to_config('TRANSFER_HOURS_IN_RANKS', false, 'Include the transfer hours in ranks');
+	
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 	
 	# Specific Checks

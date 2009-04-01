@@ -15,6 +15,8 @@
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
+ 
+error_reporting(E_ALL ^ E_NOTICE);
 
 define('ADMIN_PANEL', true);
 define('INSTALLER_VERSION', '1.2.##REVISION##');

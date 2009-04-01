@@ -39,6 +39,8 @@ Config::Set('MAP_LINE_COLOR', '#ff0000');
 Config::Set('MAP_CENTER_LAT', '45.484400');
 Config::Set('MAP_CENTER_LNG', '-62.334821');
 
+Config::Set('TRANSFER_HOURS_IN_RANKS', false);
+
 # ACARS options
 #  Minutes, flights to show on the ACARS
 #  Default is 720 minutes (12 hours)

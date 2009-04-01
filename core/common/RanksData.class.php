@@ -141,7 +141,14 @@ class RanksData
 			
 			foreach($allranks as $rank)
 			{
-				if(intval($pilot->totalhours) >= intval($rank->minhours))
+				$pilothours = intval($pilot->totalhours);
+				
+				if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
+				{
+					$pilothours += $pilot->transferhours;
+				}
+				
+				if($pilothours >= intval($rank->minhours))
 				{
 					$last_rank = $rank->rank;
 				}
@@ -157,12 +164,20 @@ class RanksData
 	
 	public static function CalculateUpdatePilotRank($pilotid)
 	{
+		$pilotid = intval($pilotid);
 		$allranks = self::GetAllRanks();
 		$pilot = PilotData::GetPilotData($pilotid);
 		
 		foreach($allranks as $rank)
 		{
-			if(intval($pilot->totalhours) >= intval($rank->minhours))
+			$pilothours = intval($pilot->totalhours);
+			
+			if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
+			{
+				$pilothours += $pilot->transferhours;
+			}
+			
+			if($pilothours >= intval($rank->minhours))
 			{
 				$last_rank = $rank->rank;
 			}

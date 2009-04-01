@@ -39,6 +39,8 @@ Config::Set('UNITS', 'nm'); // Your units: nm, mi or km
 Config::Set('LOAD_FACTOR', '82'); 
 Config::Set('CARGO_UNITS', 'lbs');
 
+Config::Set('TRANSFER_HOURS_IN_RANKS', false);
+
 # Google Map Options
 Config::Set('MAP_WIDTH', '600px');
 Config::Set('MAP_HEIGHT', '400px');

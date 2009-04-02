@@ -217,8 +217,8 @@ class ACARSData extends CodonModule
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname
 					FROM ' . TABLE_PREFIX .'acarsdata a
 					LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
-					INNER JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`';
-					//WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
+					INNER JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
+					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 		

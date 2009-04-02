@@ -91,7 +91,9 @@ class CodonCondenser
 		
 		# The file is old, or we don't have it, so
 		#	build it
-		
+		if(!is_writable($this->path.'/'.$this->filename))
+			return false;
+			
 		$fp = fopen($this->path.'/'.$this->filename, 'w');
 		
 		if(!$fp)

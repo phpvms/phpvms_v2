@@ -212,7 +212,7 @@ class ACARSData extends CodonModule
 		
 		$cutofftime = $cutofftime / 60;			
 		//$time = strtotime('-'.$cutofftime .' hours');
-		
+				
 		$sql = 'SELECT a.*, c.name as aircraftname,
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname
 					FROM ' . TABLE_PREFIX .'acarsdata a

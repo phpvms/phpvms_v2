@@ -89,6 +89,14 @@ class Util
 		
 		#self::$trace[] = "Inputted as: $time1 + $time2";
 		
+		$time1 =  number_format($time1, 2);
+		$time2 = number_format($time2, 2);
+		
+		$time1 = str_replace(',', '', $time1);
+		$time2 = str_replace(',', '', $time2);
+		
+		#self::$trace[] = "After format: $time1 + $time2";
+		
 		$t1_ex = explode('.', $time1);
 		$t2_ex = explode('.', $time2);
 		
@@ -116,13 +124,21 @@ class Util
 			$hours++;
 			$mins -= 60;		
 		}
-		
+				
+		#self::$trace[] = "Minutes left: $mins";
+	
 		# Add the 0 padding
 		if(intval($mins) < 10)
 			$mins = '0'.$mins;
 		
+		$time = number_format($hours.'.'.$mins, 2);
+		$time = str_replace(',', '', $time);
+		
 		#self::$trace[] = "Translated to $hours.$mins";
-		return $hours.'.'.$mins;		
+		#self::$trace[] = "";
+		
+		return $time;
+		#return $hours.'.'.$mins;		
 	}
 	
 	

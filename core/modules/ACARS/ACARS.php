@@ -53,6 +53,12 @@ class ACARS extends CodonModule
 				
 				break;
 				
+			case 'data':
+			
+				$this->acars_json_data();
+				
+				break;
+				
 					
 			/**
 			 * Output the FSACARS config file from the template
@@ -116,6 +122,45 @@ class ACARS extends CodonModule
 				
 				break;	
 		}
+	}
+	
+	protected function acars_json_data()
+	{
+		
+		$flights = ACARSData::GetACARSData();
+		
+		if(!$flights) 
+			$flights = array();
+			
+		$outflights = array();
+		foreach($flights as $flight)
+		{	
+			$c = array();
+			$c['flightnum'] = $flight->flightnum;
+			$c['lat'] = $flight->lat;
+			$c['lng'] = $flight->lng;
+			$c['pilotid'] = $flight->pilotid;
+			$c['pilotname'] = $flight->pilotname;
+			$c['aircraft'] = $flight->aircraftname;
+			$c['depicao'] = $flight->depicao;
+			$c['deplat'] = $flight->deplat;
+			$c['deplng'] = $flight->deplng;
+			$c['arricao'] = $flight->arricao;
+			$c['arrlat'] = $flight->arrlat;
+			$c['arrlng'] = $flight->arrlng;
+			$c['phase'] = $flight->phase;
+			$c['alt'] = $flight->alt;
+			$c['gs'] = $flight->gs;
+			$c['distremain'] = $flight->distremain;
+			$c['timremain'] = $flight->timeremain;
+			
+			$outflights[] = $c;
+			
+			continue;
+		}
+		
+		echo json_encode($outflights);
+		
 	}
 }
 ?>

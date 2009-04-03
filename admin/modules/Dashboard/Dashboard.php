@@ -37,7 +37,7 @@ class Dashboard extends CodonModule
 		switch($this->get->page)
 		{
 			default:
-
+			
 				/* Dashboard.tpl calls the functions below
 				*/
 				

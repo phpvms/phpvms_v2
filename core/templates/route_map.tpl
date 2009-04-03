@@ -10,7 +10,7 @@
 		
 	$centerlat = ($mapdata->deplat + $mapdata->arrlat) / 2;
 	$centerlong = ($mapdata->deplong + $mapdata->arrlong) / 2;
-
+	
 	$map = new GoogleMapAPI('routemap', 'phpVMS');
 	$map->sidebar=false;
 	

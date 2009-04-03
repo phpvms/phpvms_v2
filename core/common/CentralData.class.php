@@ -101,9 +101,9 @@ class CentralData
 		if(!self::central_enabled())
 			return false;
 		
-		$lastupdate = self::check_lastupdate('update_vainfo');
-		if($lastupdate->days == 0)
-			return false;
+		//$lastupdate = self::check_lastupdate('update_vainfo');
+		//if($lastupdate->days == 0)
+		//	return false;
 			
 		$xml = '<schedules>'.PHP_EOL;
 		$xml .= self::xml_header('update_schedules');

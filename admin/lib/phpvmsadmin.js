@@ -123,7 +123,7 @@ $(document).ready(function()
 	});
 
 	$('.confirm').live('click', function() { return false; });
-	$('.confirm').live('click', function()
+	$('.confirm').live('dblclick', function()
 	{
 		var url = $(this).attr("href");
 		

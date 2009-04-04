@@ -64,7 +64,7 @@ class CentralData
 		$web_service = new CodonWebService();
 		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', $xml);
 	
-		echo $res;		
+		return $res;		
 	}
 		
 	private function xml_header($method)
@@ -92,8 +92,8 @@ class CentralData
 		$xml .= '</vainfo>';
 		
 		# Package and send
-		self::send_xml($xml);
 		self::set_lastupdate('update_vainfo');		
+		return self::send_xml($xml);
 	}	
 	
 	public function send_schedules()
@@ -140,8 +140,8 @@ class CentralData
 		$xml .= '</schedules>';
 		
 		# Package and send
-		self::send_xml($xml);
 		self::set_lastupdate('update_schedules');
+		return self::send_xml($xml);
 	}
 	
 	public function send_acars_data()
@@ -179,6 +179,7 @@ class CentralData
 		
 		$xml .= '</acarsdata>';
 		
-		self::send_xml($xml);
+		self::set_lastupdate('update_acars');
+		return self::send_xml($xml);
 	}	
 }

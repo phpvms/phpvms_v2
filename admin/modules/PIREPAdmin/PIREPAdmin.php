@@ -70,6 +70,38 @@ class PIREPAdmin extends CodonModule
 				
 				break;
 				
+			case 'approveall':
+			
+				echo '<h3>Approve All</h3>';
+			
+				$allpireps = PIREPData::GetAllReportsByAccept(PIREP_PENDING);
+				$total = count($allpireps);
+				$count = 0;
+				foreach($allpireps as $pirep_details)
+				{
+					if($pirep_details->aircraft == '')
+					{
+						continue;
+					}
+						
+					# Update pilot stats
+					SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
+					PIREPData::ChangePIREPStatus($pirep_details->pirepid, PIREP_ACCEPTED); // 1 is accepted
+					PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
+					PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
+					
+					RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
+					PilotData::GenerateSignature($pirep_details->pilotid);
+					StatsData::UpdateTotalHours();
+					
+					$count++;
+				}
+				
+				$skipped = $total - $count;
+				echo "$count of $total were approved ({$skipped} has errors)";
+			
+				break;
+				
 			case '':
 			case 'viewpending':
 				

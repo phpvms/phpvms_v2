@@ -10,7 +10,7 @@ if(!$pireps)
 	return;
 }
 ?>
-<p>There are a total of <?php echo count($pireps);?> flight reports in this category.</p>
+<p>There are a total of <?php echo count($pireps);?> flight reports in this category. <a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/approveall">Click to approve all</a></p>
 <?php
 if($paginate)
 {

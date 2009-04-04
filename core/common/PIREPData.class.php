@@ -186,7 +186,7 @@ class PIREPData
 
 		return DB::get_results($sql);
 	}
-
+	
 	/**
 	 * Change the status of a PIREP. For the status, use the
 	 * constants:

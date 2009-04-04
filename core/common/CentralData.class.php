@@ -92,7 +92,7 @@ class CentralData
 		$xml .= '</vainfo>';
 		
 		# Package and send
-		self::send_xml('schedules', $xml);
+		self::send_xml($xml);
 		self::set_lastupdate('update_vainfo');		
 	}	
 	

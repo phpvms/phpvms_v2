@@ -14,8 +14,6 @@ class VACentral extends CodonModule
 		
 		switch($this->get->page)
 		{
-			
-			
 			case '':
 			default:
 			
@@ -25,11 +23,26 @@ class VACentral extends CodonModule
 				
 			case 'sendschedules':
 			
+				echo '<h3>Sending schedules...</h3>';
 				$ret = CentralData::send_schedules();
-				echo 'Server returned '.$ret;
+				$this->parse_response($ret);
 				
 				break;
 		}	
+	}
+	
+	protected function parse_response($resp)
+	{
+		$xml = simplexml_load_string($resp);
+		
+		if($xml->type == 'Success')
+		{
+			echo "Successfully sent message! (Server said \"{$xml->detail}\")";
+		}
+		else
+		{
+			echo "There was an error, server said \"{$xml->detail}\"";
+		}		
 	}
 		
 	

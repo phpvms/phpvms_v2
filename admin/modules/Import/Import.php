@@ -207,6 +207,8 @@ class Import extends CodonModule
 					}
 				}
 				
+				CentralData::send_schedules();
+				
 				echo 'The import process is complete!<br />';
 				
 				foreach($errs as $error)

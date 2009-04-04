@@ -10,7 +10,16 @@ if(!$userinfo)
 <table>
 	<tr>
 		<td align="center" valign="top">
-			<img src="<?php echo SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png';?>" alt="No Avatar" /> 
+			<?php
+			if(!file_exists(SITE_ROOT.AVATAR_PATH.'/'.$pilotcode.'.png'))
+			{
+				echo 'No avatar';
+			}
+			else
+			{
+				echo '<img src="'.SITE_URL.AVATAR_PATH.'/'.$pilotcode.'.png'.'" alt="No Avatar" /> ';
+			}
+			?>
 			<br /><br />
 			<img src="<?php echo $userinfo->rankimage?>"  alt="" />
 		</td>

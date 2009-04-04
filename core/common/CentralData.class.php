@@ -80,9 +80,9 @@ class CentralData
 		if(!self::central_enabled())
 			return false;
 			
-		$lastupdate = self::check_lastupdate('update_vainfo');
+		/*$lastupdate = self::check_lastupdate('update_vainfo');
 		if($lastupdate->days == 0)
-			return false;
+			return false;*/
 			
 		$xml = '<vainfo>';
 		$xml .= self::xml_header('update_vainfo');

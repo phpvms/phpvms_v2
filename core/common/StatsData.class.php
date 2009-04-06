@@ -254,6 +254,17 @@ class StatsData
 			echo '<img src="'.$chart->draw(false).'" />';
 	}
 	
+	public static function PilotAircraftFlownCounts($pilotid)
+	{
+		//Select aircraft types
+		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count
+				FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
+				WHERE p.aircraft = a.id AND pilotid='.intval($pilotid).'
+				GROUP BY a.name';
+		
+		return DB::get_results($sql);		
+	}
+	
 	/**
 	 * Show pie chart for all of the aircraft flown
 	 *  by a certain pilot. Outputs image, unless $ret == true,
@@ -261,14 +272,9 @@ class StatsData
 	 */
 	public static function PilotAircraftFlownGraph($pilotid, $ret = false)
 	{
-		//Select aircraft types
-		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count
-					FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
-					WHERE p.aircraft = a.id AND pilotid='.intval($pilotid).'
-					GROUP BY a.name';
 		
-		$stats = DB::get_results($sql);
-
+		$stats = self::PilotAircraftFlownCounts($pilotid);
+		
 		if(!$stats)
 		{
 			return;

@@ -259,6 +259,9 @@ $maxcargo";
 			
 			$report = PIREPData::GetLastReports($pilotid, 1);
 			PIREPData::AppendToLog($report->pirepid, $_GET['log']);	
+			
+			DB::debug();
+			
 			echo 'OK';
 			return;
 		}

@@ -128,6 +128,12 @@ class FuelData
 		
 		$results = simplexml_load_string($resp);
 		
+		if($results  === false)
+		{
+			return false;
+		}
+			
+		
 		# Error message tag was there
 		if(isset($results->errormessage))
 		{

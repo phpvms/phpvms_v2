@@ -27,6 +27,7 @@
  *	unless debug = true in the function below
  */
  
+error_reporting(0);
 writedebug($_SERVER['QUERY_STRING']);
 
 ##################################
@@ -256,12 +257,9 @@ $maxcargo";
 			#
 			# We have more coming to the log
 			#
-			
 			$report = PIREPData::GetLastReports($pilotid, 1);
 			PIREPData::AppendToLog($report->pirepid, $_GET['log']);	
-			
-			DB::debug();
-			
+						
 			echo 'OK';
 			return;
 		}

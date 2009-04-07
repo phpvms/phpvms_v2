@@ -17,40 +17,8 @@
  */
 
 class CentralData
-{
-	
-	public function check_lastupdate($name)
-	{
-		$name = strtoupper($name);
-		$sql = 'SELECT *, DATEDIFF(NOW(), lastupdate) AS days,
-						  TIMEDIFF(NOW(), lastupdate) as timediff,
-				 FROM '.TABLE_PREFIX."updates
-				 WHERE name='{$name}'";
-				 
-		return DB::get_row($sql);
-	}
-
-	
-	public function set_lastupdate($name)
-	{
-		$name = strtoupper($name);
-		if(!self::check_lastupdate($name))
-		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."updates
-							(name, lastupdate)
-					VALUES	('{$name}', NOW())";
-		}
-		else
-		{
-			$sql = "UPDATE ".TABLE_PREFIX."updates
-						SET lastupdate=NOW()
-						WHERE name='{$name}'";
-		}
-		
-		DB::query($sql);
-	}
-	
-	private function central_enabled()
+{	
+	private static function central_enabled()
 	{
 		if(Config::Get('PHPVMS_CENTRAL_ENABLED')
 			&& Config::Get('PHPVMS_API_KEY') != '')
@@ -59,7 +27,7 @@ class CentralData
 		return false;
 	}
 	
-	private function send_xml($xml)
+	private static function send_xml($xml)
 	{
 		$xml = '<?xml version="1.0"?>'.$xml;
 		$web_service = new CodonWebService();
@@ -68,7 +36,7 @@ class CentralData
 		return $res;		
 	}
 		
-	private function xml_header($method)
+	private static function xml_header($method)
 	{
 		$xml = '<siteurl>'.SITE_URL.'</siteurl>'.PHP_EOL;
 		$xml .= '<apikey>'.Config::Get('PHPVMS_API_KEY').'</apikey>'.PHP_EOL;
@@ -76,12 +44,12 @@ class CentralData
 		return $xml;
 	}
 	
-	public function send_vastats()
+	public static function send_vastats()
 	{
 		if(!self::central_enabled())
 			return false;
 			
-		/*$lastupdate = self::check_lastupdate('update_vainfo');
+		/*$lastupdate = CronData::check_lastupdate('update_vainfo');
 		if($lastupdate->days == 0)
 			return false;*/
 			
@@ -93,16 +61,16 @@ class CentralData
 		$xml .= '</vainfo>';
 		
 		# Package and send
-		self::set_lastupdate('update_vainfo');		
+		CronData::set_lastupdate('update_vainfo');		
 		return self::send_xml($xml);
 	}	
 	
-	public function send_schedules()
+	public static function send_schedules()
 	{
 		if(!self::central_enabled())
 			return false;
 		
-		//$lastupdate = self::check_lastupdate('update_vainfo');
+		//$lastupdate = CronData::check_lastupdate('update_vainfo');
 		//if($lastupdate->days == 0)
 		//	return false;
 			
@@ -141,11 +109,11 @@ class CentralData
 		$xml .= '</schedules>';
 		
 		# Package and send
-		self::set_lastupdate('update_schedules');
+		CronData::set_lastupdate('update_schedules');
 		return self::send_xml($xml);
 	}
 	
-	public function send_acars_data()
+	public static function send_acars_data()
 	{
 		if(!self::central_enabled() && !is_array($acars_data))
 			return false;
@@ -180,7 +148,7 @@ class CentralData
 		
 		$xml .= '</acarsdata>';
 		
-		self::set_lastupdate('update_acars');
+		CronData::set_lastupdate('update_acars');
 		return self::send_xml($xml);
 	}	
 }

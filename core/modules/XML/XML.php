@@ -62,7 +62,11 @@ class XML extends CodonModule
 	public function GenerateACARSMapXML()
 	{
 		$output = '';
+		
+		CodonEvent::Dispatch('refresh_acars', 'XML');
+		
 		$flights = ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME'));
+		
 		//DB::debug();
 		
 		$output = '<livemap>';

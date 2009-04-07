@@ -219,7 +219,12 @@ class ACARSData extends CodonModule
 		
 		$cutofftime = $cutofftime / 60;			
 		//$time = strtotime('-'.$cutofftime .' hours');
-				
+		
+		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a
+					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) > a.`lastupdate`'";
+		
+		DB::query($sql);
+		*/	
 		$sql = 'SELECT a.*, c.name as aircraftname,
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname
 					FROM ' . TABLE_PREFIX .'acarsdata a

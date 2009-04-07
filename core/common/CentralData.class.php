@@ -19,10 +19,11 @@
 class CentralData
 {
 	
-	private function check_lastupdate($name)
+	public function check_lastupdate($name)
 	{
 		$name = strtoupper($name);
-		$sql = 'SELECT *, DATEDIFF(NOW(), lastupdate) AS days
+		$sql = 'SELECT *, DATEDIFF(NOW(), lastupdate) AS days,
+						  TIMEDIFF(NOW(), lastupdate) as timediff,
 				 FROM '.TABLE_PREFIX."updates
 				 WHERE name='{$name}'";
 				 
@@ -30,7 +31,7 @@ class CentralData
 	}
 
 	
-	private function set_lastupdate($name)
+	public function set_lastupdate($name)
 	{
 		$name = strtoupper($name);
 		if(!self::check_lastupdate($name))

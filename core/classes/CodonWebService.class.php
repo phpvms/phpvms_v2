@@ -185,7 +185,6 @@ class CodonWebService
 		
 		if(!$this->curl || $this->curl == null)
 		{
-			echo 'curl not init';
 			$this->error('cURL not installed or initialized!');
 			return false;
 		}

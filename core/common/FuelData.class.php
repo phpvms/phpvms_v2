@@ -13,13 +13,11 @@ class FuelData
 	 *
 	 */
 	public static function GetFuelPrice($apt_icao)
-	{
-		
+	{		
 		$price = self::get_cached_price($apt_icao);
 		
 		if(!$price)
-		{
-			
+		{			
 			$price = self::get_from_server($apt_icao);	
 						
 			if($price === false)
@@ -50,12 +48,10 @@ class FuelData
 	{
 		$apt_icao = strtoupper($apt_icao);
 		$sql = "SELECT * FROM `".TABLE_PREFIX."fuelprices`
-					WHERE `icao`='$apt_icao' AND (DATEDIFF(NOW(), `dateupdated`) < 3)";
+					WHERE `icao`='$apt_icao' 
+						AND (DATEDIFF(NOW(), `dateupdated`) < 3)";
 		
-		
-		return DB::get_row($sql);	
-		DB::debug();
-		return $ret;	
+		return DB::get_row($sql);
 	}
 	
 	
@@ -128,11 +124,10 @@ class FuelData
 		
 		$results = simplexml_load_string($resp);
 		
-		if($results  === false)
+		if($results === false)
 		{
 			return false;
 		}
-			
 		
 		# Error message tag was there
 		if(isset($results->errormessage))

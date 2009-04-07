@@ -540,7 +540,6 @@ class PIREPData
 		$expense_list = '';
 		
 		$allexpenses = FinanceData::GetFlightExpenses();
-		//DB::debug();
 		
 		if(!$allexpenses)
 		{

@@ -94,9 +94,9 @@ class CodonCondenser
 		if(!is_writable($this->path.'/'.$this->filename))
 			return $this->url.'/'.$this->filename;
 			
-		$fp = fopen($this->path.'/'.$this->filename, 'w');
+		$fp = @fopen($this->path.'/'.$this->filename, 'w');
 		
-		if(!$fp)
+		if(!$fp || $fp === false)
 			return $this->url.'/'.$this->filename;
 			
 		foreach($files as $file)

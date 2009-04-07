@@ -287,6 +287,7 @@ $maxcargo";
 		$ac = OperationsData::GetAircraftByReg($reg);
 		
 		# Get the fuel used
+		# Using $_GET['fuel'] instead
 		/*$pos = find_in_fsacars_log('Spent Fuel', $log);
 		preg_match('/^.*Spent Fuel: (\d*)/', $log[$pos], $matches);
 		$fuelused = $_GET['fuel'];*/
@@ -305,7 +306,6 @@ $maxcargo";
 			# Can't do it. They completely fucked this up
 			if(!$sched)
 			{
-				
 				return;
 			}
 			

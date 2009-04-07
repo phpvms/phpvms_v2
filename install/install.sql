@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `phpvms_fuelprices` (
 
 CREATE TABLE `phpvms_updates` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`name` VARCHAR( 10 ) NOT NULL ,
+	`name` VARCHAR( 25 ) NOT NULL ,
 	`lastupdate` DATETIME NOT NULL ,
 	INDEX ( `name` )
 ) ENGINE = MYISAM;
@@ -82,6 +82,7 @@ CREATE TABLE `phpvms_acarsdata` (
   `online` varchar(10) NOT NULL default '',
   `messagelog` text NOT NULL,
   `lastupdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `client` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `pilotid` (`pilotid`)
 ) ENGINE=INNODB; 

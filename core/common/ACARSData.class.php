@@ -24,7 +24,7 @@ class ACARSData extends CodonModule
 								   'aircraft', 'lat', 'lng', 'heading', 
 								   'alt', 'gs', 'depicao', 'depapt', 'arricao', 
 								   'arrapt', 'deptime', 'arrtime', 'distremain', 'timeremaining',
-								   'phasedetail', 'online', 'messagelog');
+								   'phasedetail', 'online', 'messagelog', 'client');
 	
 	
 	/**

@@ -49,11 +49,18 @@ class ACARSData extends CodonModule
 			return false;
 		}
 		
-		/*if($data['flightnum'] == '')
+		if($data['flightnum'] == '')
 		{
 			self::$lasterror = 'No flight number';
 			return false;
-		}*/
+		}
+		
+		if($data['depicao'] == '' || $data['arricao'] == ''
+			|| $data['lat'] == '' || $data['lng'] == '')
+		{
+			self::$lasterror = 'Airports are blank';
+			return;
+		}
 
 		if(!is_numeric($data['pilotid']))
 		{

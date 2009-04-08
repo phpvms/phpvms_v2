@@ -26,7 +26,7 @@ class Login extends CodonModule
 			case 'login':
 				if(Auth::LoggedIn() == true)
 				{
-					echo '<p>You\'re already logged in!</p>';
+					Template::Show('login_already.tpl');
 					return;
 				}
 				
@@ -47,10 +47,6 @@ class Login extends CodonModule
 			case 'logout':
 			
 				Auth::LogOut();
-				
-				/*redirect back to front page
-				*/
-				//Template::Set('redir', SITE_URL);
 				Template::Show('login_complete.tpl');
 				
 				break;

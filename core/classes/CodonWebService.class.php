@@ -189,6 +189,7 @@ class CodonWebService
 			return false;
 		}
 		
+		curl_setopt ($this->curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt ($this->curl, CURLOPT_URL, $url);
 		if(($ret = curl_exec($this->curl)) === false)
 		{

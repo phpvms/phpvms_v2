@@ -16,12 +16,39 @@ if(!$allroutes)
 <?php
 foreach($allroutes as $route)
 {
-	# Skip over a route if it's not for this day of week
-	#  Left this here, so it can be omitted if your VA
-	#  doesn't use this. Comment out these two lines if you
-	#  don't want to.
+	/*
+	Skip over a route if it's not for this day of week
+	Left this here, so it can be omitted if your VA
+	 doesn't use this. 
+	 
+	Comment out these two lines if you don't want to.
+	*/
+	
 	if(strpos($route->daysofweek, date('w')) === false)
 		continue;
+		
+	/* END DAY OF WEEK CHECK */
+	
+		
+	
+	/*
+	This will skip over a schedule if it's been bid on
+	This only runs if the below setting is enabled
+	
+	If you don't want it to skip, then comment out
+	this code below by adding // in front of each 
+	line until the END DISABLE SCHEDULE comment below
+	
+	If you do that, and want to show some text when
+	it's been bid on, see the comment below
+	*/
+	if(Config::Get('DISABLE_SCHED_ON_BID') == true && $route->bidid != 0)
+	{
+		continue;
+	}
+	/* END DISABLE SCHEDULE ON BID */
+	
+	/* THIS BEGINS ONE TABLE ROW */
 ?>
 <tr>
 	<td >
@@ -34,17 +61,32 @@ foreach($allroutes as $route)
 		<strong>Days Flown: </strong><?php echo Util::GetDaysCompact($route->daysofweek); ?><br />
 		<?php echo ($route->route=='')?'':'<strong>Route: </strong>'.$route->route.'<br />' ?>
 		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.html_entity_decode($route->notes).'<br />' ?>
+		
+		<?php
+		# Note: this will only show if the above code to
+		#	skip the schedule is commented out
+		if($route->bidid != 0)
+		{
+			echo 'This route has been bid on';
+		}
+		?>
 	</td>
 	<td nowrap>
 		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>">View Details</a><br />
-		<?php if (Auth::LoggedIn())
-		{ ?>
-		<a id="<?php echo $route->id; ?>" class="addbid" href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
-		<?php
-		} ?>
+		
+		<?php 
+		if (Auth::LoggedIn() && Config::Get('DISABLE_SCHED_ON_BID') == true && $route->bidid != 0)
+		{
+		 ?>
+			<a id="<?php echo $route->id; ?>" class="addbid" 
+				href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+		<?php			 
+		}
+		?>
 	</td>
 </tr>
 <?php
+ /* END OF ONE TABLE ROW */
 }
 ?>
 </tbody>

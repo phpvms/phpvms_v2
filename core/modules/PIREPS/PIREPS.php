@@ -198,11 +198,25 @@ class PIREPS extends CodonModule
 			return false;
 		}
 		
-		if(!SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum))
+		$sched_data = SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum);
+		if(!$sched_data)
 		{
 			Template::Set('message', 'The flight code and number you entered is not a valid route!');
 			Template::Show('core_error.tpl');
 			return false;
+		}
+		
+		/* Check the schedule and see if it's been bidded on */
+		if(Config::Get('DISABLE_SCHED_ON_BID') == true)
+		{
+			$biddata = SchedulesData::GetBid($sched_data->bidid);
+			
+			if($biddata->pilotid != $pilotid)
+			{
+				Template::Set('message', 'You are not the bidding pilot');
+				Template::Show('core_error.tpl');
+				return false;
+			}
 		}
 		
 		if($this->post->depicao == $this->post->arricao)

@@ -649,7 +649,7 @@ class SchedulesData
 	public static function GetBid($bidid)
 	{
 		$bidid = DB::escape($bidid);
-		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
+		$sql = 'SELECT s.*, b.bidid, b.pilotid, a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
 						'.TABLE_PREFIX.'aircraft a
 					WHERE b.routeid = s.id 
@@ -692,6 +692,20 @@ class SchedulesData
 		return DB::get_row($sql);
 	}
 	
+	public function SetBidOnSchedule($scheduleid, $bidid)
+	{
+		
+		$scheduleid = intval($scheduleid);
+		$bidid = intval($bidid);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX.'schedules
+					SET `bidid`='.$bidid.'
+					WHERE `id`='.$scheduleid;
+					
+		DB::query($sql);
+		
+	}
+	
 	
 	/**
 	 * Add a bid
@@ -715,6 +729,8 @@ class SchedulesData
 		
 		DB::query($sql);
 		
+		self::SetBidOnSchedule($routeid, DB::$insert_id);
+		
 		if(DB::errno() != 0)
 			return false;
 			
@@ -731,6 +747,7 @@ class SchedulesData
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids WHERE bidid='.$bidid;
 		
 		DB::query($sql);
+		self::SetBidOnSchedule($routeid, 0);
 		
 		if(DB::errno() != 0)
 			return false;

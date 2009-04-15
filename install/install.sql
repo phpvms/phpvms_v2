@@ -147,6 +147,7 @@ CREATE TABLE `phpvms_schedules` (
   `timesflown` int(11) NOT NULL default '0',
   `notes` text NOT NULL,
   `enabled` int(11) NOT NULL default '1',
+  `bidid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `depicao` (`depicao`),
   KEY `flightnum` (`flightnum`),

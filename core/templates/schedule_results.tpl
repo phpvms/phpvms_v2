@@ -75,13 +75,24 @@ foreach($allroutes as $route)
 		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>">View Details</a><br />
 		
 		<?php 
-		if (Auth::LoggedIn() && Config::Get('DISABLE_SCHED_ON_BID') == true && $route->bidid != 0)
+		# Don't allow overlapping bids and a bid exists
+		if(Config::Get('DISABLE_SCHED_ON_BID') == true && $route->bidid != 0)
 		{
-		 ?>
+		?>
 			<a id="<?php echo $route->id; ?>" class="addbid" 
 				href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
-		<?php			 
+		<?
 		}
+		else
+		{
+			if (Auth::LoggedIn())
+			{
+			 ?>
+				<a id="<?php echo $route->id; ?>" class="addbid" 
+					href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+			<?php			 
+			}
+		}		
 		?>
 	</td>
 </tr>

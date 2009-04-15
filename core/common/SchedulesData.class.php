@@ -487,22 +487,22 @@ class SchedulesData
 						 `deptime`, `arrtime`, 
 						 `flighttime`, `daysofweek`, `maxload`, `price`, 
 						 `flighttype`, `notes`, `enabled`)
-					VALUES ('$data[code]', 
-							'$data[flightnum]',
-							'$data[depicao]', 
-							'$data[arricao]', 
-							'$data[route]', 
-							'$data[aircraft]', 
-							'$data[distance]',
-							'$data[deptime]', 
-							'$data[arrtime]',
-							'$data[flighttime]',
-							'$data[daysofweek]',
-							'$data[maxload]',
-							'$data[price]', 
-							'$data[flighttype]',
-							'$data[notes]', 
-							$data[enabled])";
+				VALUES ('$data[code]', 
+						'$data[flightnum]',
+						'$data[depicao]', 
+						'$data[arricao]', 
+						'$data[route]', 
+						'$data[aircraft]', 
+						'$data[distance]',
+						'$data[deptime]', 
+						'$data[arrtime]',
+						'$data[flighttime]',
+						'$data[daysofweek]',
+						'$data[maxload]',
+						'$data[price]', 
+						'$data[flighttype]',
+						'$data[notes]', 
+						$data[enabled])";
 		
 		$res = DB::query($sql);
 		
@@ -565,23 +565,23 @@ class SchedulesData
 			
 		$data['flighttime'] = str_replace(':', '.', $data['flighttime']);
 		$sql = "UPDATE " . TABLE_PREFIX ."schedules 
-					SET `code`='$data[code]', 
-						`flightnum`='$data[flightnum]',
-						`depicao`='$data[depicao]', 
-						`arricao`='$data[arricao]',
-						`route`='$data[route]', 
-						`aircraft`='$data[aircraft]', 
-						`distance`='$data[distance]', 
-						`deptime`='$data[deptime]',
-						`arrtime`='$data[arrtime]', 
-						`flighttime`='$data[flighttime]', 
-						`daysofweek`='$data[daysofweek]', 
-						`maxload`='$data[maxload]',
-						`price`='$data[price]',
-						`flighttype`='$data[flighttype]',
-						`notes`='$data[notes]', 
-						`enabled`=$data[enabled]
-					WHERE `id`=$data[scheduleid]";
+				SET `code`='$data[code]', 
+					`flightnum`='$data[flightnum]',
+					`depicao`='$data[depicao]', 
+					`arricao`='$data[arricao]',
+					`route`='$data[route]', 
+					`aircraft`='$data[aircraft]', 
+					`distance`='$data[distance]', 
+					`deptime`='$data[deptime]',
+					`arrtime`='$data[arrtime]', 
+					`flighttime`='$data[flighttime]', 
+					`daysofweek`='$data[daysofweek]', 
+					`maxload`='$data[maxload]',
+					`price`='$data[price]',
+					`flighttype`='$data[flighttype]',
+					`notes`='$data[notes]', 
+					`enabled`=$data[enabled]
+				WHERE `id`=$data[scheduleid]";
 
 		$res = DB::query($sql);
 				
@@ -598,7 +598,7 @@ class SchedulesData
 	{
 		$scheduleid = DB::escape($scheduleid);
 		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules 
-					WHERE id='.$scheduleid;
+				WHERE id='.$scheduleid;
 
 		$res = DB::query($sql);
 		
@@ -615,12 +615,12 @@ class SchedulesData
 	public static function GetLatestBids($limit=5)
 	{
 		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
-						'.TABLE_PREFIX.'aircraft a
-					WHERE b.routeid = s.id 
-							AND s.aircraft=a.id
-					ORDER BY bidid DESC
-					LIMIT '.$limit;
+				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+					'.TABLE_PREFIX.'aircraft a
+				WHERE b.routeid = s.id 
+						AND s.aircraft=a.id
+				ORDER BY bidid DESC
+				LIMIT '.$limit;
 		
 		return DB::get_results($sql);
 	}
@@ -630,12 +630,12 @@ class SchedulesData
 		
 		$pilotid = DB::escape($pilotid);
 		$sql = 'SELECT s.*, b.bidid, a.id as aircraftid, a.name as aircraft, a.registration, a.maxpax, a.maxcargo
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
-						'.TABLE_PREFIX.'aircraft a
-					WHERE b.routeid = s.id 
-						AND s.aircraft=a.id
-						AND b.pilotid='.$pilotid.'
-						ORDER BY id ASC LIMIT 1';
+				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+					'.TABLE_PREFIX.'aircraft a
+				WHERE b.routeid = s.id 
+					AND s.aircraft=a.id
+					AND b.pilotid='.$pilotid.'
+				ORDER BY id ASC LIMIT 1';
 		
 		return DB::get_row($sql);
 		
@@ -649,12 +649,14 @@ class SchedulesData
 	public static function GetBid($bidid)
 	{
 		$bidid = DB::escape($bidid);
-		$sql = 'SELECT s.*, b.bidid, b.pilotid, a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
-						'.TABLE_PREFIX.'aircraft a
-					WHERE b.routeid = s.id 
-							AND s.aircraft=a.id
-							AND b.bidid='.$bidid;
+		
+		$sql = 'SELECT s.*, b.bidid, b.pilotid, b.routeid, 
+						a.name as aircraft, a.registration
+				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+					'.TABLE_PREFIX.'aircraft a
+				WHERE b.routeid = s.id 
+						AND s.aircraft=a.id
+						AND b.bidid='.$bidid;
 		
 		return DB::get_row($sql);
 	}
@@ -730,6 +732,7 @@ class SchedulesData
 		DB::query($sql);
 		
 		self::SetBidOnSchedule($routeid, DB::$insert_id);
+		//DB::debug();
 		
 		if(DB::errno() != 0)
 			return false;
@@ -742,12 +745,15 @@ class SchedulesData
 	 */
 	public static function RemoveBid($bidid)
 	{
-		$bidid = DB::escape($bidid);
+		$bidid = intval($bidid);
+		$bid_info = self::GetBid($bidid);
 		
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids WHERE bidid='.$bidid;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids 
+					WHERE bidid='.$bidid;
 		
 		DB::query($sql);
-		self::SetBidOnSchedule($routeid, 0);
+		
+		self::SetBidOnSchedule($bid_info->routeid, 0);
 		
 		if(DB::errno() != 0)
 			return false;

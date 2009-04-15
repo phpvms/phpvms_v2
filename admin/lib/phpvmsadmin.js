@@ -94,8 +94,7 @@ $(document).ready(function()
 				success: function() 
 				{
 					$('#jqmdialog').jqmAddTrigger('.jqModal');
-					//$.listen('dblclick','.jqModal', function() { return false; });
-
+			
 					$('#bodytext').fadeIn('slow');
 					$('#jqmdialog').jqmHide();
 				}

@@ -567,13 +567,14 @@ class PilotData
 	 */
 	public static function GetFieldData($pilotid, $inclprivate=false)
 	{
-		$sql = 'SELECT f.title, f.fieldname, v.value
+		$sql = 'SELECT f.title, f.fieldname, v.value, f.public
 					FROM '.TABLE_PREFIX.'customfields f
 					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
-						ON f.fieldid=v.fieldid AND v.pilotid='.$pilotid;
+						ON f.fieldid=v.fieldid
+						AND v.pilotid='.$pilotid;
 								
 		if($inclprivate == false)
-			$sql .= ' AND f.public=1';
+			$sql .= ' WHERE f.public=1 ';
 			
 		return DB::get_results($sql);
 	}

@@ -211,11 +211,14 @@ class PIREPS extends CodonModule
 		{
 			$biddata = SchedulesData::GetBid($sched_data->bidid);
 			
-			if($biddata->pilotid != $pilotid)
+			if($biddata)
 			{
-				Template::Set('message', 'You are not the bidding pilot');
-				Template::Show('core_error.tpl');
-				return false;
+				if($biddata->pilotid != $pilotid)
+				{
+					Template::Set('message', 'You are not the bidding pilot');
+					Template::Show('core_error.tpl');
+					return false;
+				}
 			}
 		}
 		

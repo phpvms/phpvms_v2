@@ -17,8 +17,7 @@
  */
  
 class SchedulesData
-{
-
+{	
 	/**
 	 * Return information about a schedule (pass the ID)
 	 */

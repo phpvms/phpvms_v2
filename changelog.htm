@@ -1,191 +1,173 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>phpVMS Changelog</title>
-<style type="text/css">
-<!--
-body  {
-	font-family: "Lucida Grande", Verdana, Geneva, Sans-serif;
-	font-size: 14px;
-	line-height: 1.4em;
-}
-.header {
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 13px;
-	line-height: 1.4em;
-}
-pre {
-	font-size: 10pt;
-	background-color: #E6E6E6;
-	margin-left: 15px;
-	padding: 5px;
-	text-align: left;
-	display: block;
-}
-li {
-	padding-bottom: 3px;
-}
-h1 {
-	font-size: 13pt;
-}
-ul {
-	padding: 0px;
-	list-style-type: square;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 15px;
-}
-.shadow {
-	color: #F60;
-	font-size: 16px;
-	filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10);
-}
-ul li ul {
-	margin-top: 10px;
-	margin-bottom: 8px;
-}
-.style1 {
-	color: #F60;
-	font-size: x-large;
-	filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10);
-}
-.style2 {
-	font-size: small;
-}
--->
-</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>phpVMS Changelog</title>
+	<style type="text/css">
+		<!
+		-- body { font-family: "Lucida Grande" , Verdana, Geneva, Sans-serif; font-size: 14px; line-height: 1.4em; }
+		.header { font-family: Tahoma, Geneva, sans-serif; font-size: 13px; line-height: 1.4em; }
+		pre { font-size: 10pt; background-color: #E6E6E6; margin-left: 15px; padding: 5px; text-align: left; display: block; }
+		li { padding-bottom: 3px; }
+		h1 { font-size: 13pt; }
+		ul { padding: 0px; list-style-type: square; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 15px; }
+		.shadow { color: #F60; font-size: 16px; filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10); }
+		ul li ul { margin-top: 10px; margin-bottom: 8px; }
+		.style1 { color: #F60; font-size: x-large; filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10); }
+		.style2 { font-size: small; }
+		-- ></style>
 </head>
-
 <body>
-<p class="header"><strong><span class="style1">phpVMS</span> 
-<span class="style2">Virtual Airline Administration Software</span></strong><br />
-  Copyright &copy; 2008 Nabeel Shahzad<br />
-  For more information, visit <a href="www.phpvms.net" target="_blank">www.phpvms.net</a><br />
-  &nbsp;&nbsp;&nbsp;&nbsp;Forums: <a href="http://www.phpvms.net/forum" target="_blank">http://www.phpvms.net/forum</a><br />
-  &nbsp;&nbsp;&nbsp;&nbsp;Documentation: <a href="http://www.phpvms.net/docs">http://www.phpvms.net/docs</a><br />
-&nbsp;&nbsp;&nbsp; Tutorials: <a href="http://www.phpvms.net/tutorials">http://www.phpvms.net/tutorials</a></p>
-<p class="header">  phpVMS is licensed under the:<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)<br />
-  &nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
-<p class="header"><em>Last Update: February 07, 2009</em><br />
-</p>
-<hr />
-<h1>Build ##REVISION## (Version 1.2.##REVISION##)</h1>
-<ul>
-	<li>Added &quot;Approve All&quot; in PIREPs</li>
-	<li>Awards on all pilot pages fixed</li>
-	<li>Time bug fixed</li>
-	<li>Page delete bug fixed</li>
-</ul>
-<h1>Build 661 (Version 1.2.661)</h1>
-<ul>
-	<li><strong>NEW</strong>: Pilot awards</li>
-	<li><strong>NEW</strong>: Fuel prices are pulled from  server (currently works only for US airports)</li>
-	<li><strong>NEW</strong>: Mass-mailer functionality, to email all pilots</li>
-	<li><strong>NEW</strong>: Captcha on registration page (update your registration_mainform.tpl)</li>
-	<li><strong>NEW</strong>: Transfer hours field added to pilot profile, to prevent conflicts</li>
-	<li><strong>NEW</strong>: Admin can now set a pilot as 'retired', won't allow login until admin reactivates</li>
-	<li><strong>NEW</strong>: Days of week indicator for schedule</li>
-	<li>Added maintenance option to reset VA hours (algorithm is now proper, I promise!)</li>
-	<li>Flights to/from the same airport allowed (to accomodate military flights)</li>
-	<li>Added maintenace option to reset pilot hours</li>
-	<li>Pilot hour aggregation bug fixed</li>
-	<li>Signature background image bug fixed (if there is no background image selected)</li>
-	<li>Contact form errors fixed</li>
-	<li>Schedules frequence chart fixed</li>
-	<li>FSACARS &quot;Flight From VA&quot; working, with pax counts. Retrieves latest bid</li>
-	<li>FSPax and FSACARS bug fixed when using offset for pilot ID</li>
-	<li>FSPax exported flights now use the default aircraft from the schedule, since FSP doesn't report an aircraft</li>
-	<li>Contact page error fixed</li>
-</ul>
-<p><strong>Templates Changed</strong>:</p>
-<ul>
-  <li>registration_mainform.tpl - Captcha added</li>
-  <li>profile_main.tpl - Changed total time to account for transfer hours</li>
-  <li>pilots_list.tpl - Changed total time to account for transfer hours</li>
-  <li>pilot_public_profile.tpl - Same as above</li>
-  <li>schedule_results.tpl - Skip over schedules which aren't for the current day, show the days of week it's flown</li>
-</ul>
-<h1>Build 610 (Version 1.2.610)</h1>
-<ul>
-  <li>NEW:<strong> FSPassengers Support</strong> - export your flight reports to phpVMS; downloadable config file</li>
-  <li> NEW: <strong>Download manager</strong> - create categories and add downloads, track # of downloads (<strong>Link: </strong><em>index.php/downloads</em>)</li>
-  <li>NEW: <strong>Contact Form </strong>- Easy way for members and non-members to contact, non-members see a simple Captcha  (<strong>Link: </strong><em>index.php/contact</em>)
-    <ul>
-      <ul>
-        <ul>
-          <li>Any extra fields added into form in the contact template will also be emailed to the webmaster email 
-		  (so you can add another &lt;input type=&quot;text&quot; name=&quot;custom&quot; /&gt; and that 
-		  will be included in the email</li>
-        </ul>
-      </ul>
-    </ul>
-  </li>
-  <li>NEW:<strong> Schedule Data</strong>: Added four fields to schedules and import: Type, Maxload, Price and FlightType- for financials later on.
-   
+	<p class="header">
+		<strong><span class="style1">phpVMS</span> <span class="style2">Virtual Airline Administration
+			Software</span></strong><br />
+		Copyright &copy; 2008 Nabeel Shahzad<br />
+		For more information, visit <a href="www.phpvms.net" target="_blank">www.phpvms.net</a><br />
+		&nbsp;&nbsp;&nbsp;&nbsp;Forums: <a href="http://www.phpvms.net/forum" target="_blank">
+			http://www.phpvms.net/forum</a><br />
+		&nbsp;&nbsp;&nbsp;&nbsp;Documentation: <a href="http://www.phpvms.net/docs">http://www.phpvms.net/docs</a><br />
+		&nbsp;&nbsp;&nbsp; Tutorials: <a href="http://www.phpvms.net/tutorials">http://www.phpvms.net/tutorials</a></p>
+	<p class="header">
+		phpVMS is licensed under the:<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;Creative Commons Attribution Non-commercial Share Alike
+		(by-nc-sa)<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"
+			target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
+	<p class="header">
+		<em>Last Update: February 07, 2009</em><br />
+	</p>
+	<hr />
+	<h1>
+		Build ##REVISION## (Version 1.2.##REVISION##)</h1>
 	<ul>
-		<ul>
-		<li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value of P or C, P is default)</li>
-			<li><strong>Price</strong> - This is the price per unit - if it's a passenger flight, it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT (ie, per lb/kg)</li>
-			<li><strong>Flight Type</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights operate at 100%  LOAD_FACTOR, 
+		<li><strong>NEW</strong>: Added option to allow only one bid per schedule, and hide schedule</li>
+		<li>Added &quot;Approve All&quot; in PIREPs</li>
+		<li>Awards on all pilot pages fixed</li>
+		<li>Time bug fixed (I know... again)</li>
+		<li>Page delete bug fixed</li>
+	</ul>
+	<h1>
+		Build 661 (Version 1.2.661)</h1>
+	<ul>
+		<li><strong>NEW</strong>: Pilot awards</li>
+		<li><strong>NEW</strong>: Fuel prices are pulled from server (currently works only for
+			US airports)</li>
+		<li><strong>NEW</strong>: Mass-mailer functionality, to email all pilots</li>
+		<li><strong>NEW</strong>: Captcha on registration page (update your registration_mainform.tpl)</li>
+		<li><strong>NEW</strong>: Transfer hours field added to pilot profile, to prevent conflicts</li>
+		<li><strong>NEW</strong>: Admin can now set a pilot as 'retired', won't allow login
+			until admin reactivates</li>
+		<li><strong>NEW</strong>: Days of week indicator for schedule</li>
+		<li>Added maintenance option to reset VA hours (algorithm is now proper, I promise!)</li>
+		<li>Flights to/from the same airport allowed (to accomodate military flights)</li>
+		<li>Added maintenace option to reset pilot hours</li>
+		<li>Pilot hour aggregation bug fixed</li>
+		<li>Signature background image bug fixed (if there is no background image selected)</li>
+		<li>Contact form errors fixed</li>
+		<li>Schedules frequence chart fixed</li>
+		<li>FSACARS &quot;Flight From VA&quot; working, with pax counts. Retrieves latest bid</li>
+		<li>FSPax and FSACARS bug fixed when using offset for pilot ID</li>
+		<li>FSPax exported flights now use the default aircraft from the schedule, since FSP
+			doesn't report an aircraft</li>
+		<li>Contact page error fixed</li>
+	</ul>
+	<p>
+		<strong>Templates Changed</strong>:</p>
+	<ul>
+		<li>registration_mainform.tpl - Captcha added</li>
+		<li>profile_main.tpl - Changed total time to account for transfer hours</li>
+		<li>pilots_list.tpl - Changed total time to account for transfer hours</li>
+		<li>pilot_public_profile.tpl - Same as above</li>
+		<li>schedule_results.tpl - Skip over schedules which aren't for the current day, show
+			the days of week it's flown</li>
+	</ul>
+	<h1>
+		Build 610 (Version 1.2.610)</h1>
+	<ul>
+		<li>NEW:<strong> FSPassengers Support</strong> - export your flight reports to phpVMS;
+			downloadable config file</li>
+		<li>NEW: <strong>Download manager</strong> - create categories and add downloads, track
+			# of downloads (<strong>Link: </strong><em>index.php/downloads</em>)</li>
+		<li>NEW: <strong>Contact Form </strong>- Easy way for members and non-members to contact,
+			non-members see a simple Captcha (<strong>Link: </strong><em>index.php/contact</em>)
+			<ul>
+				<ul>
+					<ul>
+						<li>Any extra fields added into form in the contact template will also be emailed to
+							the webmaster email (so you can add another &lt;input type=&quot;text&quot; name=&quot;custom&quot;
+							/&gt; and that will be included in the email</li>
+					</ul>
+				</ul>
+			</ul>
+		</li>
+		<li>NEW:<strong> Schedule Data</strong>: Added four fields to schedules and import:
+			Type, Maxload, Price and FlightType- for financials later on.
+			<ul>
+				<ul>
+					<li><strong>Type</strong> - This is whether it's a passenger or cargo flight (value
+						of P or C, P is default)</li>
+					<li><strong>Price</strong> - This is the price per unit - if it's a passenger flight,
+						it's the average ticket price; if it's a cargo flight, then it's the price per CARGO_UNIT
+						(ie, per lb/kg)</li>
+					<li><strong>Flight Type</strong> - Passenger (P), Cargo (C), Charter (H). Charter flights
+						operate at 100% LOAD_FACTOR, </li>
+				</ul>
+			</ul>
+			<li>NEW: <strong>Monthly Expenses</strong> area added under financials - itemize your
+				monthly, or per-flight expenses to be factored into calculations</li>
+			<li>NEW: <strong>Aircraft Details</strong><em> </em>added, including maximum number
+				of passengers and cargo, for passenger/charter and cargo flights</li>
+			<li>NEW: <strong>Per Flight Expenses</strong> - add expenses that are &quot;charged&quot;
+				per-flight (for example, de-icing, catering)</li>
+			<li>NEW: <strong>Fuel Used/Fuel Prices </strong>are taken into account for finances,
+				with per-airport fuel-prices for accurate pricing</li>
+			<li>NEW: <strong>Financial Data</strong> - View your VA&#39;s financial performance,
+				with per-Month/Year views, with detailed reports and charts
+				<ul>
+					<ul>
+						<ul>
+							<li>Based on PIREP and expenses data</li>
+							<li>Fuel costs are taken into account</li>
+							<li>Graphs, charts of average prices, expenses, fuel prices</li>
+							<li>Monthly expense breakdown</li>
+							<li>Yearly summary breakdown</li>
+						</ul>
+					</ul>
+				</ul>
 			</li>
-		</ul>
+			<li>NEW: <strong>Signature background images</strong> can be selected by a pilot (just
+				place your background png files (any filename) in /lib/signature/backgrounds)</li>
+			<li>Flight leg removed (if you&#39;re using legs now, it&#39;s just ignored)</li>
+			<li>Enabled/disable aircraft (retirement)</li>
+			<li>Revamped and reorganized Admin Panel</li>
+			<li>Backend optimizations, Javascript trimmed down, libraries removed.</li>
+			<li>New Javascript condensor to reduce HTTP requests (marked speed improvement)</li>
+			<li>Update to jQuery 1.3.0/1.3.1 - includes many optimizations and JS bugfixes</li>
+			<li>Admin Dashboard now shows news from the main site</li>
+			<li>Distance for flights can be automatically calculated</li>
+			<li>PIREPs ask for fuel used, required field. Automatically taken from FSACARS/FSPAX</li>
+			<li>Various FSACARS bug fixes and improvments</li>
+			<li>FSACARS retrieves flight information from most recent bid</li>
+			<li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
+			<li>You can now delete PIREPS (including ones already accepted, they will subtract from
+				the pilot's record)</li>
+			<li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
+			<li>PIREPS determine a passenger count based on a new config setting called LOAD_FACTOR
+				(explained below) </li>
+			<li>Duplicate schedules on import now overwrite previous existing schedule</li>
+			<li>Pilot (properly) notified of registration status</li>
+			<li>Customizable &quot;Registration Accepted&quot; email</li>
+			<li>Email sent to admin on registration/PIREP submission</li>
+			<li>Search list aircraft dupes and results fixed</li>
+			<li>Google Maps &quot;createMarkerIcon()&quot; error fixed</li>
+			<li>Fixed active/inactive schedules view</li>
+			<li>Update checking bug fixed</li>
+			<li>Several security fixes</li>
 	</ul>
-	<li>NEW: <strong>Monthly Expenses</strong> area added under financials - itemize your monthly, 
-  or per-flight expenses to be factored into calculations</li>
-	<li>NEW: <strong>Aircraft Details</strong><em> </em>added, including maximum 
-	number of passengers and cargo, for passenger/charter and cargo flights</li>
-	<li>NEW: <strong>Per Flight Expenses</strong> - add expenses that are 
-	&quot;charged&quot; per-flight (for example, de-icing, catering)</li>
-	<li>NEW: <strong>Fuel Used/Fuel Prices </strong>are taken into account for 
-	finances, with per-airport fuel-prices for accurate pricing</li>
-	<li>NEW: <strong>Financial Data</strong> - View your VA&#39;s financial 
-	performance, with per-Month/Year views, with detailed reports and charts
-	 <ul>
-		 <ul>
-			 <ul>
-				 <li>Based on PIREP and expenses data</li>
-				 <li>Fuel costs are taken into account</li>
-				 <li>Graphs, charts of average prices, expenses, fuel prices</li>
-				 <li>Monthly expense breakdown</li>
-				 <li>Yearly summary breakdown</li>
-			 </ul>
-		 </ul>
-	</ul>
-	</li>
-	<li>NEW: <strong>Signature background images</strong> can be selected by a pilot (just place your background png files (any filename) in /lib/signature/backgrounds)</li>
-	<li>Flight leg removed (if you&#39;re using legs now, it&#39;s just ignored)</li>
-	<li>Enabled/disable aircraft (retirement)</li>
-	<li>Revamped and reorganized Admin Panel</li>
-	<li>Backend optimizations, Javascript trimmed down, libraries removed.</li>
-	<li>New Javascript condensor to reduce HTTP requests (marked speed improvement)</li>
-	<li>Update to jQuery 1.3.0/1.3.1 - includes many optimizations and JS 
-	bugfixes</li>
-	<li>Admin Dashboard now shows news from the main site</li>
-	<li>Distance for flights can be automatically calculated</li>
-	<li>PIREPs ask for fuel used, required field. Automatically taken from FSACARS/FSPAX</li>
-	<li>Various FSACARS bug fixes and improvments</li>
-	<li>FSACARS retrieves flight information from most recent bid</li>
-	<li>Login using email or pilot ID (eg: VMA001 or bob@bobloblaw.com)</li>
-	<li>You can now delete PIREPS (including ones already accepted, they will subtract from the pilot's record)</li>
-	<li>Maintenance section to calculate distances for routes/pireps (for accurate stats)</li>
-	<li>PIREPS determine a passenger count based on a new config setting called LOAD_FACTOR (explained below)
-	</li>
-	<li>Duplicate schedules on import now overwrite previous existing schedule</li>
-	<li>Pilot (properly) notified of registration status</li>
-	<li>Customizable &quot;Registration Accepted&quot; email</li>
-	<li>Email sent to admin on registration/PIREP submission</li>
-	<li>Search list aircraft dupes and results fixed</li>
-	<li>Google Maps &quot;createMarkerIcon()&quot; error fixed</li>
-	<li>Fixed active/inactive schedules view</li>
-	<li>Update checking bug fixed</li>
-	<li>Several security fixes</li>
-</ul>
-<p><strong>New Settings:</strong></p>
-<pre>Config::Set('LOAD_FACTOR', '72'); 
+	<p>
+		<strong>New Settings:</strong></p>
+	<pre>Config::Set('LOAD_FACTOR', '72'); 
 	This setting determines the % of MAXLOAD which are on a flight. 
 	The system will generate a passenger/cargo load based off of this number.
 	The industry load factor at this time is 72% (according to ATA). 
@@ -211,73 +193,87 @@ Config::Set('MONEY_UNIT', '$');
 		Config::Set('MONEY_UNIT', '&amp;#8364;'); // For Euro
 
 There are also various settings for FSPAX, please make sure those are proper       </pre>
-<p><strong>Template Changes:</strong></p>
-<p>Added:</p>
-<pre><em>
-core_htmlhead.tpl </em>- Revert to the default one<em><br />contact_form.tpl </em>- The contact form. Any extra fields added here will also be emailed<em>
-downloads_list.tpl </em>- Shows the main list of categories and downloads
-<em>download_item.tpl</em> - This is the &quot;Downloading Now&quot; page<br />finance_balancesheet.tpl - BEWARE. Try NOT to edit this one<br />finance_header.tpl - Same as above<br />finance_summarysheet.tpl - Same as above</pre>
-<p>Changed:</p>
-<pre>profile_main.tpl - Added link to download page, financials, and FSPassengers config link:
+	<p>
+		<strong>Template Changes:</strong></p>
+	<p>
+		Added:</p>
+	<pre><em>core_htmlhead.tpl </em>- Revert to the default one<em>
+		<br />
+		contact_form.tpl </em>- The contact form. Any extra fields added here will also be emailed
+<em>downloads_list.tpl </em>- Shows the main list of categories and downloads
+<em>download_item.tpl</em> - This is the &quot;Downloading Now&quot; page<br />finance_balancesheet.tpl - BEWARE. Try NOT to edit this one
+<br />finance_header.tpl - Same as above
+<br />finance_summarysheet.tpl - Same as above</pre>
+	<p>
+		Changed:</p>
+	<pre>profile_main.tpl - Added link to download page, financials, and FSPassengers config link:
 
-	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/downloads&quot;&gt;View Downloads&lt;/a&gt;&lt;/li&gt;
+	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/downloads&quot;&gt;View
+		Downloads&lt;/a&gt;&lt;/li&gt; --- &lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL
+		?&gt;/index.php/finances&quot;&gt;View VA Finances&lt;/a&gt;&lt;/li&gt;</em>
 
 	---
 
-	&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL ?&gt;/index.php/finances&quot;&gt;View VA Finances&lt;/a&gt;&lt;/li&gt;</em>
-
-	---
-
-	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL?&gt;/action.php/acars/fspaxconfig&quot;&gt;Download FSPax Config&lt;/li&gt;</em>
+	<em>&lt;li&gt;&lt;a href=&quot;&lt;?php echo SITE_URL?&gt;/action.php/acars/fspaxconfig&quot;&gt;Download
+		FSPax Config&lt;/li&gt;</em>
 
 schedule_details.tpl - Chart change
 
 pirep_new.tpl - Added &quot;Fuel Used&quot; field, and removed flight leg field 
 
 profile_edit.tpl - Select box for signature background images</pre>
-<hr />
-<h1>Build 458 (Version 1.1.458)</h1>
-<ul> <li> Added page encoding option</li>
-  <li> Added option for changing pilot ID length</li>
-  <li> Added option to change signature text color</li>
-  <li> Admin can edit PIREPS</li>
-  <li> Some admin reports added</li>
-  <li> FSACARS bug fixes</li>
-  <li> Admin panel styles cleaned up</li>
-  <li> Bug fixes (alot of em!)</li>
-  <li>Template Changes:</li>
-</ul>
-<pre>core_htmlhead.tpl - added page encoding meta tag</pre>
-<hr />
-<h1><strong>Build 441 (Version 1.1.441)</strong></h1>
-<ul> <li> Basic stats in Admin Panel</li>
-  <li> View only active/inactive schedules</li>
-  <li> PIREP table fixed (major bug fix)</li>
-</ul>
-<p><strong>Template Changes:</strong></p>
-<pre>
+	<hr />
+	<h1>
+		Build 458 (Version 1.1.458)</h1>
+	<ul>
+		<li>Added page encoding option</li>
+		<li>Added option for changing pilot ID length</li>
+		<li>Added option to change signature text color</li>
+		<li>Admin can edit PIREPS</li>
+		<li>Some admin reports added</li>
+		<li>FSACARS bug fixes</li>
+		<li>Admin panel styles cleaned up</li>
+		<li>Bug fixes (alot of em!)</li>
+		<li>Template Changes:</li>
+	</ul>
+	<pre>core_htmlhead.tpl - added page encoding meta tag</pre>
+	<hr />
+	<h1>
+		<strong>Build 441 (Version 1.1.441)</strong></h1>
+	<ul>
+		<li>Basic stats in Admin Panel</li>
+		<li>View only active/inactive schedules</li>
+		<li>PIREP table fixed (major bug fix)</li>
+	</ul>
+	<p>
+		<strong>Template Changes:</strong></p>
+	<pre>
 pirep_new.tpl - the Aircraft option field value has changed
    				MAKE SURE YOU CHANGE THIS <strong>or else your PIREPS will fail</strong>
 
 pireps_viewall.tpl - Aircraft registration added to list
 
 pirep_viewreport.tpl - Aircraft added to view</pre>
-<hr />
-<h1>Build 437 (Version 1.1.437)</h1>
-<ul> <li> Aircraft registration options added</li>
-  <li> Routes can be assigned specific aircraft/registration</li>
-  <li> Pilot avatars added, with sizing options (<strong>/lib/avatars</strong> need write permissions)</li>
-  <li> Delete pilots (go in the Pilot Options in Admin Panel)</li>
-  <li> Pilot country with flag images added</li>
-  <li> Dynamic signatures generated, to use on forums, etc (<strong>/lib/signatures</strong> need write permissions)</li>
-  <li> Bug fixes for servers with short_open_tags off</li>
-  <li> ACARS map shows the proper map type/centers according to settings</li>
-  <li> Admin edit of profile didn't recalculate for new rank</li>
-  <li> Bids are removed now when PIREP is done through ACARS</li>
-  <li> Updates to the updater, will automatically put new options in your local config</li>
-  <li><strong>Template Changes: </strong>(use WinMerge to see changes):</li>
-</ul>
-<pre>registration_mainform.tpl
+	<hr />
+	<h1>
+		Build 437 (Version 1.1.437)</h1>
+	<ul>
+		<li>Aircraft registration options added</li>
+		<li>Routes can be assigned specific aircraft/registration</li>
+		<li>Pilot avatars added, with sizing options (<strong>/lib/avatars</strong> need write
+			permissions)</li>
+		<li>Delete pilots (go in the Pilot Options in Admin Panel)</li>
+		<li>Pilot country with flag images added</li>
+		<li>Dynamic signatures generated, to use on forums, etc (<strong>/lib/signatures</strong>
+			need write permissions)</li>
+		<li>Bug fixes for servers with short_open_tags off</li>
+		<li>ACARS map shows the proper map type/centers according to settings</li>
+		<li>Admin edit of profile didn't recalculate for new rank</li>
+		<li>Bids are removed now when PIREP is done through ACARS</li>
+		<li>Updates to the updater, will automatically put new options in your local config</li>
+		<li><strong>Template Changes: </strong>(use WinMerge to see changes):</li>
+	</ul>
+	<pre>registration_mainform.tpl
 profile_main.tpl
 profile_edit.tpl
 pilot_public_profile.tpl
@@ -285,52 +281,60 @@ pilots_list.tpl
 pirep_new.tpl
 pirep_viewreport.tpl (reorganized)
  </pre>
-<hr />
-<h1>Build 400 (Version 1.1.400)</h1>
-<ul> <li> FSACARS status updates and PIREPS support (thanks to Roger from <a href="http://www.fspaintshop.com" target="_blank">www.fspaintshop.com</a> for the icons!)</li>
-  <li> FSACARS configuration file automatically generated, specific to pilot (update your profile_main.tpl)</li>
-  <li> ACARS API so ACARS programs can be integrated through ACARS plugin</li>
-  <li> XML interface for custom applications (ACARS, flight data) and other data</li>
-  <li> Pilot pay! Pay rate adjustable to the rank (shows up in profile_main.tpl)</li>
-  <li> Schedules results improved (schedule_results.tpl), update to this!</li>
-  <li> Flight leg taken into account on checking schedule</li>
-  <li> Profile editing bugs fixed</li>
-  <li> Page deletes actually work (woo!)</li>
-  <li> Pilot deleted if registration is rejected</li>
-  <li> PIREP field insertion bug fixed</li>
-  <li> Registration anomolies (required fields marked with *)</li>
-  <li> PIREP submission fixed (missing flight leg)</li>
-  <li> Ranking fixes (ranks can be deleted)</li>
-  <li> Pages check for permission to view</li>
-  <li>Added stats functions:</li>
-</ul>
-<pre>
+	<hr />
+	<h1>
+		Build 400 (Version 1.1.400)</h1>
+	<ul>
+		<li>FSACARS status updates and PIREPS support (thanks to Roger from <a href="http://www.fspaintshop.com"
+			target="_blank">www.fspaintshop.com</a> for the icons!)</li>
+		<li>FSACARS configuration file automatically generated, specific to pilot (update your
+			profile_main.tpl)</li>
+		<li>ACARS API so ACARS programs can be integrated through ACARS plugin</li>
+		<li>XML interface for custom applications (ACARS, flight data) and other data</li>
+		<li>Pilot pay! Pay rate adjustable to the rank (shows up in profile_main.tpl)</li>
+		<li>Schedules results improved (schedule_results.tpl), update to this!</li>
+		<li>Flight leg taken into account on checking schedule</li>
+		<li>Profile editing bugs fixed</li>
+		<li>Page deletes actually work (woo!)</li>
+		<li>Pilot deleted if registration is rejected</li>
+		<li>PIREP field insertion bug fixed</li>
+		<li>Registration anomolies (required fields marked with *)</li>
+		<li>PIREP submission fixed (missing flight leg)</li>
+		<li>Ranking fixes (ranks can be deleted)</li>
+		<li>Pages check for permission to view</li>
+		<li>Added stats functions:</li>
+	</ul>
+	<pre>
  StatsData::TotalFlights();
  StatsData::TotalHours();
  StatsData::PilotCount();</pre>
-<p>  Example:</p>
-<pre> &lt;p&gt;This VA has a total of &lt;?php echo StatsData::TotalFlights();?&gt; flights&lt;/p&gt;</pre>
-<ul>
-  <li> New setting added: UNIT (Add it to your local.config.php)</li>
-</ul>
-<pre>Config::Set('UNITS', 'mi'); // Your units: mi or km</pre>
-<hr />
-<h1>Build 370 (Release!)</h1>
-<ul> <li> Bid deleted on PIREP submit</li>
-  <li> PIREP fields properly show in admin panel</li>
-  <li> PIREP fields can be edited</li>
-  <li> Airlines can be enabled/disabled (not deleted)</li>
-  <li> Airline names/ICAO can be changed</li>
-  <li> WYSIWYG editor for News and Pages</li>
-  <li> Default skin tweaks</li>
-  <li> Profile stats back (to be expanded)</li>
-  <li> PIREP submit form fixes</li>
-  <li> Registration code tidied up</li>
-  <li> Admin panel JS error fixed</li>
-  <li> Pages visibility bug fixed</li>
-  <li> Bug fixes</li>
-</ul>
-<p>=====<br />
-<a href="http://www.phpvms.net" target="_blank">http://www.phpvms.net</a></p>
+	<p>
+		Example:</p>
+	<pre> &lt;p&gt;This VA has a total of &lt;?php echo StatsData::TotalFlights();?&gt; flights&lt;/p&gt;</pre>
+	<ul>
+		<li>New setting added: UNIT (Add it to your local.config.php)</li>
+	</ul>
+	<pre>Config::Set('UNITS', 'mi'); // Your units: mi or km</pre>
+	<hr />
+	<h1>
+		Build 370 (Release!)</h1>
+	<ul>
+		<li>Bid deleted on PIREP submit</li>
+		<li>PIREP fields properly show in admin panel</li>
+		<li>PIREP fields can be edited</li>
+		<li>Airlines can be enabled/disabled (not deleted)</li>
+		<li>Airline names/ICAO can be changed</li>
+		<li>WYSIWYG editor for News and Pages</li>
+		<li>Default skin tweaks</li>
+		<li>Profile stats back (to be expanded)</li>
+		<li>PIREP submit form fixes</li>
+		<li>Registration code tidied up</li>
+		<li>Admin panel JS error fixed</li>
+		<li>Pages visibility bug fixed</li>
+		<li>Bug fixes</li>
+	</ul>
+	<p>
+		=====<br />
+		<a href="http://www.phpvms.net" target="_blank">http://www.phpvms.net</a></p>
 </body>
 </html>

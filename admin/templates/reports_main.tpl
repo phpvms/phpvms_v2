@@ -61,8 +61,9 @@ if(is_array($toproutes)) {
 		<td valign="top"><strong><?php echo $route->timesflown?></strong>
 			<span class="flownchart" style="margin-top: 15px; margin-left: 4px;">
 				<?php 
-					$tot = $route->timesflown*10;
-					echo ($tot+10).', '.$tot.','.($tot-2)?>
+				#$tot = $route->timesflown*10;
+				#echo ($tot+10).', '.$tot.','.($tot-2)
+				?>
 			</span>
 		</td>
 		</tr>

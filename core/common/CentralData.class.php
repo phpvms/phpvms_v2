@@ -113,6 +113,11 @@ class CentralData
 		return self::send_xml($xml);
 	}
 	
+	public function send_pirep($pirep_data)
+	{
+		
+	}
+	
 	public static function send_acars_data()
 	{
 		if(!self::central_enabled() && !is_array($acars_data))

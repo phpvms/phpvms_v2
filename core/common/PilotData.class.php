@@ -18,6 +18,9 @@
  
 class PilotData
 {
+	
+	public static $pilot_data = array();
+	
 	/**
 	 * Get all the pilots, or the pilots who's last names start
 	 * with the letter
@@ -93,15 +96,25 @@ class PilotData
 	
 	/**
 	 * The the basic pilot information
+	 * Quasi 'cached' in case it's called multiple times
+	 * for the same pilot in one script
 	 */
 	public static function GetPilotData($pilotid)
-	{					
-		$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
-					FROM ".TABLE_PREFIX."pilots p
-						LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank`
-					WHERE p.`pilotid`='$pilotid'";
+	{	
+		if(!isset(self::$pilot_data[$pilotid]))
+		{	
+			$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
+						FROM ".TABLE_PREFIX."pilots p
+							LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank`
+						WHERE p.`pilotid`='$pilotid'";
+			
+			$data = DB::get_row($sql);
+			
+			# "Cache" it
+			self::$pilot_data[$pilotid] = $data;
+		}
 		
-		return DB::get_row($sql);
+		return self::$pilot_data[$pilotid];
 	}
 	
 	/**

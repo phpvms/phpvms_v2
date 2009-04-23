@@ -122,7 +122,10 @@ class FuelData
 		$curl_loader = new CodonWebService();
 		$resp = $curl_loader->get($url);
 		
-		$results = simplexml_load_string($resp);
+		if($resp == '' || $resp === false)
+			return false;
+			
+		$results = @simplexml_load_string($resp);
 		
 		if($results === false)
 		{

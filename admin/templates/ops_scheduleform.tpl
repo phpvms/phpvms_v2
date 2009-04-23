@@ -121,9 +121,10 @@
 	<td><strong>Equipment: </strong></td>
 	<td><select name="aircraft">
 		<?php
+		
 		foreach($allaircraft as $aircraft)
 		{
-			if($aircraft->name == $schedule->aircraft)
+			if($aircraft->registration == $schedule->registration)
 				$sel = 'selected';
 			else
 				$sel = '';

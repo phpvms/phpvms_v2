@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Codon PHP Framework
  *	www.nsslive.net/codon
@@ -37,42 +38,20 @@
  * @package codon_core
  */
 
-//require_once 'Benchmark/Timer.php';
-//$timer = new Benchmark_Timer(true);
-
-	#$memory_start = xdebug_memory_usage();
-
-include 'core/codon.config.php';
-
-$BaseTemplate = new TemplateSet;
-
-# Load the main skin
-$settings_file = SKINS_PATH.DIRECTORY_SEPARATOR.CURRENT_SKIN . '.php';
-if(file_exists($settings_file))
-	include $settings_file;
-
-$BaseTemplate->template_path = SKINS_PATH;
-
-$BaseTemplate->Set('title', SITE_NAME);
-
-Template::Set('MODULE_NAV_INC', $NAVBAR);
-Template::Set('MODULE_HEAD_INC', $HTMLHead);
-
-$BaseTemplate->ShowTemplate('header.tpl');
-
-flush();
-
-MainController::RunAllActions(Config::Get('RUN_MODULE'));
-
-$BaseTemplate->ShowTemplate('footer.tpl');
-
-# Force connection close
-DB::close();
-
-	/*$run_time = xdebug_time_index();
-	$memory_end = xdebug_memory_usage();
-
-
-	echo 'TOTAL MEMORY: '.($memory_end - $memory_start).'<br />';
-	echo 'PEAK: '.xdebug_peak_memory_usage().'<br />';
-	echo 'RUN TIME: '.$run_time.'<br />';*/
+# Load stuff only when it's needed
+function __autoload($class_name)
+{
+	# Load a main class, if it exists
+	if(file_exists(CLASS_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php'))
+	{
+		require CLASS_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php';
+		return;
+	}
+	
+	# Check the common folder
+	if(file_exists(COMMON_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php'))
+	{
+		require COMMON_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php';
+		return;
+	}	
+}

@@ -51,40 +51,20 @@ define('COMMON_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'common');
 define('PAGES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'pages');
 define('LIB_PATH', SITE_ROOT.DIRECTORY_SEPARATOR.'lib');
 
-
 $version = phpversion();
 if($version[0] != '5')
 {
 	die('You are not running PHP 5+');
 }
 
-// Include all dependencies
-include CLASS_PATH.DIRECTORY_SEPARATOR.'Config.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonAJAX.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonCondenser.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonEvent.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonForm.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonModule.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonRewrite.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'CodonWebService.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'DB.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'Debug.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'MainController.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'SessionManager.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'Template.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'TemplateSet.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'Util.class.php';
-include CLASS_PATH.DIRECTORY_SEPARATOR.'Vars.class.php';
+require CLASS_PATH.DIRECTORY_SEPARATOR.'autoload.php';
 
 Config::Set('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
 Config::Set('MODULES_AUTOLOAD', true);
 
-include CORE_PATH.DIRECTORY_SEPARATOR.'app.config.php';
+require CORE_PATH.DIRECTORY_SEPARATOR.'app.config.php';
 @include CORE_PATH.DIRECTORY_SEPARATOR.'local.config.php';
 
-MainController::loadCommonFolder();
-
-//set_error_handler('CatchPHPError');
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
 

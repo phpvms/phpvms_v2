@@ -205,7 +205,8 @@ class PIREPData
 	 */
 	public static function GetReportDetails($pirepid)
 	{
-		$sql = 'SELECT p.*, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+		$sql = 'SELECT p.*, s.*, s.id AS scheduleid,
+						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
 					    p.code, p.flightnum, p.depicao, p.arricao, 
@@ -215,6 +216,7 @@ class PIREPData
 						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+						LEFT JOIN '.TABLE_PREFIX.'schedules s ON s.code = p.code AND s.flightnum = p.flightnum
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		return DB::get_row($sql);
@@ -398,6 +400,9 @@ class PIREPData
 		# Update the financial information for the PIREP:
 		self::PopulatePIREPFinance($pirepid);
 		
+		# Send to Central
+		CentralData::send_pirep($pirepid);
+		
 		# Set the pilot's last PIREP date
 		//PilotData::UpdateLastPIREPDate($pirepdata['pilotid']);
 		//PilotData::UpdateFlightData($pirepdata['pilotid'], $pirepdata['flighttime'], 1);
@@ -405,6 +410,7 @@ class PIREPData
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
 		self::UpdatePIREPFeed();
+		
 		
 		# Send an email to the admin that a PIREP was submitted
 		$sub = 'PIREP Submitted';

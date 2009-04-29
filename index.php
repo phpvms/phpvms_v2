@@ -40,7 +40,7 @@
 //require_once 'Benchmark/Timer.php';
 //$timer = new Benchmark_Timer(true);
 
-	#$memory_start = xdebug_memory_usage();
+	//$memory_start = xdebug_memory_usage();
 
 include 'core/codon.config.php';
 

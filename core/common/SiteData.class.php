@@ -260,7 +260,9 @@ class SiteData
 		}
 		else
 		{
+			flock($fp, LOCK_EX);
 			fwrite($fp, $content, strlen($content));
+			flock($fp, LOCK_UN);
 			fclose($fp);
 			return true;
 		}
@@ -294,4 +296,3 @@ class SiteData
 		return $skins;
 	}
 }
-?>

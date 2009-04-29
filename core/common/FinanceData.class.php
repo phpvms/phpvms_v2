@@ -172,7 +172,6 @@ class FinanceData
 			$ret['fuelcost'] = $ret['pirepfinance']->FuelCost;		
 			
 			
-			
 			# Save it, with all the above calculations
 			#	Remains intact
 			self::AddFinanceDataCache($monthstamp, $ret);

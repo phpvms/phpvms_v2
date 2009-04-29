@@ -561,10 +561,8 @@ class ezSQLcore
 				$this->register_error("Could not open cache dir: $this->cache_dir");
 				return false;
 			}
-			else
-			{																
-				error_log ( serialize($result_cache), 3, $cache_file);
-			}
+																			
+			error_log ( serialize($result_cache), 3, $cache_file);
 		}
 		
 		return true;		

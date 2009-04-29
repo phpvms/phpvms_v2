@@ -113,14 +113,46 @@ class CentralData
 		return self::send_xml($xml);
 	}
 	
-	public function send_pirep($pirep_data)
+	public function send_pirep($pirep_id)
 	{
+		if(!self::central_enabled())
+			return false;
 		
+		$xml = '<pirepdata>'.PHP_EOL;
+		$xml .= self::xml_header('add_pirep');
+		
+		$pirep = PIREPData::GetReportDetails($pirep_id);
+		
+		print_r($pirep);
+		
+		$xml .= '<pirep>';
+		
+		$xml .= '<pirep>'
+				.'<pilotid>'.PilotData::GetPilotCode($pirep->code, $pirep->pilotid).'</pilotid>'
+				.'<pilotname>'.$pirep->firstname.' '.$pirep->lastname.'</pilotname>'
+				.'<flightnum>'.$pirep->flightnum.'</flightnum>'
+				.'<depicao>'.$pirep->depicao.'</depicao>'
+				.'<arricao>'.$pirep->arricao.'</arricao>'
+				.'<aircraft>'.$pirep->aircraft.'</aircraft>'
+				.'<flighttime>'.$pirep->flighttime.'</flighttime>'
+				.'<submitdate>'.$pirep->submitdate.'</submitdate>'
+				.'<flighttype>'.$pirep->flighttype.'</flighttype>'
+				.'<load>'.$pirep->load.'</load>'
+				.'<fuelused>'.$pirep->fuelused.'</fuelused>'
+				.'<fuelprice>'.$pirep->fuelprice.'</fuelprice>'
+				.'<pilotpay>'.$pirep->pilotpay.'</pilotpay>'
+				.'<price>'.$pirep->price.'</price>'
+				.'</pirep>';
+		
+		$xml .= '</pirepdata>';
+		
+		CronData::set_lastupdate('add_pirep');
+		return self::send_xml($xml);		
 	}
 	
 	public static function send_acars_data()
 	{
-		if(!self::central_enabled() && !is_array($acars_data))
+		if(!self::central_enabled() || !is_array($acars_data))
 			return false;
 		
 		$xml = '<acarsdata>'.PHP_EOL;

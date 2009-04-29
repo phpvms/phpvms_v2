@@ -294,7 +294,7 @@ class StatsData
 		$data = substr($data, 0, strlen($data)-1);
 		$labels = substr($labels, 0, strlen($labels)-1);
 
-		$chart = new googleChart($data, 'pie');
+		$chart = new GoogleChart($data, 'pie');
 		$chart->dimensions = '350x200';
 		$chart->setLabels($labels);
 

@@ -252,7 +252,7 @@ include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
 	 */
 	protected function GoogleChart()
 	{
-		$chart = new googleChart(null, $this->type);
+		$chart = new GoogleChart(null, $this->type);
 			
 		# Loop through every set data
 		//foreach($this->data as $set)

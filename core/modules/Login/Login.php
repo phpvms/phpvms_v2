@@ -71,7 +71,7 @@ class Login extends CodonModule
 	
 	function ResetPassword()
 	{
-		$email = $this->post->emails;
+		$email = $this->post->email;
 		
 		if(!$email)
 		{

@@ -201,7 +201,7 @@ class StatsData
 	public static function AircraftUsage()
 	{
 		$sql = 'SELECT a.name AS aircraft, a.registration, 
-						COUNT(p.flighttime) AS hours, COUNT(p.distance) AS distance
+						SUM(p.flighttime) AS hours, COUNT(p.distance) AS distance
 					FROM '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'aircraft a ON p.aircraft = a.id
 					GROUP BY p.aircraft';
@@ -298,10 +298,14 @@ class StatsData
 		$chart->dimensions = '350x200';
 		$chart->setLabels($labels);
 
+		
+		$url = $chart->draw(false);
+		unset($chart);
+		
 		if($ret == true)
-			return $chart->draw(false);
+			return $url;
 		else
-			echo '<img src="'.$chart->draw(false).'" />';
+			echo '<img src="'.$url.'" />';
 	}
 }
 ?>

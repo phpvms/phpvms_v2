@@ -42,9 +42,9 @@
  */
 class CodonModule
 {
-	public $post;
-	public $get;
-	public $activeModule;
+	public static $post;
+	public static $get;
+	public static $activeModule;
 	
 	/**
 	 * Initialize the parent class. Called by the MainController

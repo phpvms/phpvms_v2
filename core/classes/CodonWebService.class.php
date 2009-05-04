@@ -99,7 +99,7 @@ class CodonWebService
 		if($txt != '')
 			$last = $txt;
 		else
-			$last = curl_error() .' ('.curl_errno().')';
+			$last = curl_error($this->curl) .' ('.curl_errno($this->curl).')';
 		
 		$this->errors[] = $last;
 	}

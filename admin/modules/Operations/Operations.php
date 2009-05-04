@@ -501,6 +501,7 @@ class Operations extends CodonModule
 			$this->post->distance = OperationsData::getAirportDistance($this->post->depicao, $this->post->arricao);
 		}
 
+		$this->post->route = strtoupper($this->post->route);
 	
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
@@ -546,6 +547,7 @@ class Operations extends CodonModule
 		}
 		
 		$enabled = ($this->post->enabled == 'on') ? true : false;
+		$this->post->route = strtoupper($this->post->route);
 		
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,

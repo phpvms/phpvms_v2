@@ -40,9 +40,12 @@
 //require_once 'Benchmark/Timer.php';
 //$timer = new Benchmark_Timer(true);
 
-	//$memory_start = xdebug_memory_usage();
-
 include 'core/codon.config.php';
+
+if(Config::Get('XDEBUG_BENCHMARK'))
+{
+	$memory_start = xdebug_memory_usage();
+}
 
 $BaseTemplate = new TemplateSet;
 
@@ -69,10 +72,13 @@ $BaseTemplate->ShowTemplate('footer.tpl');
 # Force connection close
 DB::close();
 
-	/*$run_time = xdebug_time_index();
+if(Config::Get('XDEBUG_BENCHMARK'))
+{
+	$run_time = xdebug_time_index();
 	$memory_end = xdebug_memory_usage();
 
 
 	echo 'TOTAL MEMORY: '.($memory_end - $memory_start).'<br />';
 	echo 'PEAK: '.xdebug_peak_memory_usage().'<br />';
-	echo 'RUN TIME: '.$run_time.'<br />';*/
+	echo 'RUN TIME: '.$run_time.'<br />';
+}

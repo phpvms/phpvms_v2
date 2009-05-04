@@ -122,9 +122,7 @@ class CentralData
 		$xml .= self::xml_header('add_pirep');
 		
 		$pirep = PIREPData::GetReportDetails($pirep_id);
-		
-		print_r($pirep);
-		
+				
 		$xml .= '<pirep>';
 		
 		$xml .= '<pirep>'

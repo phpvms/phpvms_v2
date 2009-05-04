@@ -48,6 +48,13 @@ function __autoload($class_name)
 		return;
 	}
 	
+	# Load a main class, if it exists
+	if(file_exists(MODULES_PATH.DIRECTORY_SEPARATOR.$class_name.DIRECTORY_SEPARATOR.$class_name.'.php'))
+	{
+		require MODULES_PATH.DIRECTORY_SEPARATOR.$class_name.DIRECTORY_SEPARATOR.$class_name.'.php';
+		return;
+	}
+	
 	# Check the common folder
 	if(file_exists(COMMON_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php'))
 	{

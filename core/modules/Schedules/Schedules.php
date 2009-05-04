@@ -75,6 +75,18 @@ class Schedules extends CodonModule
 				
 			
 				break;
+				
+			case 'brief':
+				
+				$routeid = $this->get->id;
+				
+				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+				
+				Template::Set('schedule', $scheddata);
+				
+				Template::Show('schedule_briefing.tpl');
+				
+				break;
 
 			// View bids for the pilot
 			case 'bids':

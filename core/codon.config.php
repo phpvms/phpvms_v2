@@ -46,6 +46,7 @@ define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
 define('CLASS_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'classes');
 define('TEMPLATES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'templates');
+define('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
 define('CACHE_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'cache');
 define('COMMON_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'common');
 define('PAGES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'pages');

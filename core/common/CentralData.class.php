@@ -18,6 +18,10 @@
 
 class CentralData
 {	
+
+	static $xml_data = '';
+	static $debug = false;
+	
 	private static function central_enabled()
 	{
 		if(Config::Get('PHPVMS_CENTRAL_ENABLED')
@@ -29,10 +33,14 @@ class CentralData
 	
 	private static function send_xml($xml)
 	{
-		$xml = '<?xml version="1.0"?>'.$xml;
-		$web_service = new CodonWebService();
-		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', $xml);
-	
+		self::$xml_data = '<?xml version="1.0"?>'.$xml;
+		
+		if(self::$debug == true)
+		{
+			$web_service = new CodonWebService();
+			$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', self::$xml_data);
+		}
+		
 		return $res;		
 	}
 		
@@ -107,7 +115,7 @@ class CentralData
 		}		
 		
 		$xml .= '</schedules>';
-		
+				
 		# Package and send
 		CronData::set_lastupdate('update_schedules');
 		return self::send_xml($xml);

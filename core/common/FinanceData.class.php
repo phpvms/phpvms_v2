@@ -124,7 +124,7 @@ class FinanceData
 		$ret = array();
 					
 		# Check if it's already in our financedata table
-		//$report = self::GetCachedFinanceData($monthstamp);
+		$report = self::GetCachedFinanceData($monthstamp);
 		if(is_object($report))
 		{
 			$ret = unserialize(stripslashes($report->data));
@@ -327,8 +327,6 @@ class FinanceData
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
 					
 		return DB::get_row($sql);
-		DB::debug();
-		return $ret;
 	}	
 	
 	/**

@@ -307,7 +307,7 @@ class OperationsData
 			
 		return true;
 	}
-	
+		
 	/**
 	 * Get information about an airport
 	 */

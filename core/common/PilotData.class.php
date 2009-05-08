@@ -109,6 +109,11 @@ class PilotData
 						WHERE p.`pilotid`='$pilotid'";
 			
 			$data = DB::get_row($sql);
+						
+			if(!is_object($data) || DB::errno() != 0)
+			{
+				return false;
+			}
 			
 			# "Cache" it
 			self::$pilot_data[$pilotid] = $data;
@@ -186,8 +191,11 @@ class PilotData
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
-	public static function SaveProfile($pilotid, $email, $location, $hub='', $bgimage='', $retired='')
+	public static function SaveProfile($pilotid, $email, $location, $hub='', $bgimage='', $retired=false)
 	{
+		
+		unset(self::$pilot_data[$pilotid]);
+		
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
 					SET `email`='$email', `location`='$location' ";
 		
@@ -197,19 +205,25 @@ class PilotData
 		if($bgimage != '')
 			$sql.=",`bgimage`='$bgimage' ";
 		
-		if($retired != '')
-			$sql.=",`retired`=$retired ";
+		if($retired === true)
+			$retired = 1;
+		else
+			$retired = 0;
+		
+		$sql.=", `retired`=$retired ";
 			
 		$sql .= 'WHERE `pilotid`='.$pilotid;
 		
 		$res = DB::query($sql);
-		
+					
+		if(DB::errno() != 0)
+		{
+			return false;
+		}
+			
 		# Generate a fresh signature
 		self::GenerateSignature($pilotid);
 		
-		if(DB::errno() != 0)
-			return false;
-			
 		return true;
 	}
 	
@@ -317,6 +331,7 @@ class PilotData
 	public static function DeletePilot($pilotid)
 	{
 		$sql = array();
+		unset(self::$pilot_data[$pilotid]);
 	
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'acarsdata WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'bids WHERE pilotid='.$pilotid;

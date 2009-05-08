@@ -1,4 +1,4 @@
-	CREATE TABLE `phpvms_awards` (
+CREATE TABLE `phpvms_awards` (
 	`awardid` INT NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR( 25 ) NOT NULL ,
 	`descrip` VARCHAR( 100 ) NOT NULL ,
@@ -211,7 +211,6 @@ CREATE TABLE `phpvms_pilots` (
   `joindate` datetime NOT NULL default '0000-00-00 00:00:00',
   `lastpirep` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`pilotid`),
-  UNIQUE KEY `email` (`email`),
   KEY `code` (`code`),
   KEY `rank` (`rank`)
 ) ENGINE=InnoDB;

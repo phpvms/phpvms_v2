@@ -98,8 +98,17 @@ class PilotAdmin extends CodonModule
 						# Save their profile
 						PilotData::ChangeName($this->post->pilotid, $this->post->firstname, $this->post->lastname);
 						
+						if(intval($this->post->retired) == 1)
+						{
+							$retired = true;
+						}
+						else
+						{
+							$retired = false;
+						}
+						
 						PilotData::SaveProfile($this->post->pilotid, $this->post->email , 
-													$this->post->location, $this->post->hub, $this->post->retired);
+													$this->post->location, $this->post->hub, $retired);
 													
 						PilotData::ReplaceFlightData($this->post->pilotid, $this->post->totalhours, 
 														$this->post->totalflights, $this->post->totalpay, $this->post->transferhours);

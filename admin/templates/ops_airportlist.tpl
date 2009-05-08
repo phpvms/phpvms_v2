@@ -25,7 +25,7 @@ foreach($airports as $airport)
 ?>
 <tr>
 	<td align="center"><?php echo $airport->icao; ?></td>
-	<td ><?php echo $airport->name; ?></td>
+	<td><?php if($airport->hub==1) { echo '<strong>'; } echo $airport->name; if($airport->hub==1) { echo '</strong>'; }  ?></td>
 	<td align="center"><?php echo $airport->country; ?></td>
 	<td align="center"><?php echo $airport->lat; ?></td>
 	<td align="center"><?php echo $airport->lng; ?></td>

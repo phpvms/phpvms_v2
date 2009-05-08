@@ -51,6 +51,14 @@ class RegistrationData
 	 */
 	public static function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=false)
 	{
+		
+		$exists = self::CheckUserEmail($email);
+		if (is_object($exists) )
+		{
+			self::$error = 'Email already exists';
+			return false;
+		}
+		
 		//Set the password, add some salt
 		$salt = md5(date('His'));
 		$password = md5($password . $salt);
@@ -83,6 +91,7 @@ class RegistrationData
 				return false;
 			}
 			
+			self::$error = DB::error();
 			return false;
 		}
 		

@@ -1,6 +1,6 @@
 <h3>Flight Briefing</h3>
 <script src="http://skyvector.com/linkchart.js"></script>
-<table width="90%" align="center" cellpadding="4">
+<table width="98%" align="center" cellpadding="4">
 	<!-- Flight ID -->
 	<tr style="background-color: #333; color: #FFF;">
 		<td colspan="2">Flight</td>
@@ -10,7 +10,6 @@
 		<?php echo $schedule->code.$schedule->flightnum; ?>
 		</td>
 	</tr>
-	
 	
 	<tr  style="background-color: #333; color: #FFF;">
 		<td>Departure</td>
@@ -104,7 +103,7 @@
 	
 </table>
 
-<table width="90%" align="center" padding="2">
+<table width="98%" align="center" padding="2">
 <tr style="background-color: #333; color: #FFF; padding: 5px;">
 	<td>Additional Data</td>
 </tr>
@@ -114,7 +113,7 @@
 </table>
 
 <h3>Procedures and Information</h3>
-<table width="90%" align="center">
+<table width="98%" align="center">
 
 	<tr style="background-color: #333; color: #FFF;">
 		<td>Charts for <?php echo $schedule->depicao?></td>
@@ -137,10 +136,11 @@
 
 <h3>Weather</h3>
 <div align="center">
-	<div><img src="http://flightaware.com/resources/wx/us_depiction.gif" /></div>
-	<div><img src="http://flightaware.com/resources/wx/national_radar.gif" /></div>
-	<div><img src="http://flightaware.com/resources/wx/us_high_level_weather_12z.gif" /></div>
-	<div><img src="http://flightaware.com/resources/wx/severe_outlook_day_1.gif" /></div>
+	<p><img src="http://flightaware.com/resources/wx/us_depiction.gif" /></p>
+	<p><img src="http://flightaware.com/resources/wx/surface_analysis.gif" /></p>
+	<p><img src="http://flightaware.com/resources/wx/national_radar.gif" /></p>
+	<p><img src="http://flightaware.com/resources/wx/us_high_level_weather_12z.gif" /></p>
+	<p><img src="http://flightaware.com/resources/wx/severe_outlook_day_1.gif" /></p>
 	<a href="http://flightaware.com/resources/weather_maps/" target="_blank">View additional weather graphs</a>
 </div>
 <div align="right" style="font-size: small;">Data Courtesy of <a href="http://flightaware.com" target="_new">FlightAware</a></div>

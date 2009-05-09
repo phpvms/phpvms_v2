@@ -35,12 +35,10 @@ class CentralData
 	{
 		self::$xml_data = '<?xml version="1.0"?>'.$xml;
 		
-		if(self::$debug == true)
-		{
-			$web_service = new CodonWebService();
-			$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', self::$xml_data);
-		}
 		
+		$web_service = new CodonWebService();
+		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', self::$xml_data);
+			
 		return $res;		
 	}
 		
@@ -89,7 +87,7 @@ class CentralData
 		
 		if(!is_array($schedules))
 			return false;
-			
+					
 		foreach($schedules as $sched)
 		{
 			$vars = get_object_vars($sched);
@@ -121,6 +119,75 @@ class CentralData
 		return self::send_xml($xml);
 	}
 	
+	public function send_pilots()
+	{
+		if(!self::central_enabled())
+			return false;
+		
+		$xml = '<pilotdata>'.PHP_EOL;
+		$xml .= self::xml_header('update_pilots');
+		
+		$allpilots = PilotData::GetAllPilots();
+		
+		$xml .= '<total>'.count($allpilots).'</total>';
+		
+		foreach($allpilots as $pilot)
+		{
+			$xml.='<pilot>'
+				 .'<pilotid>'.PilotData::GetPilotCode($pilot->code, $pilot->pilotid).'</pilotid>'
+				 .'<pilotname>'.$pilot->firstname.' '.$pilot->lastname.'</pilotname>'
+				 .'<location>'.$pilot->location.'</location>'
+				 .'</pilot>';
+		} 
+		
+		$xml.='</pilotdata>';
+		
+		CronData::set_lastupdate('update_pilots');
+		return self::send_xml($xml);	
+	}
+	
+	public function send_all_pireps()
+	{
+		if(!self::central_enabled())
+			return false;
+		
+		$xml = '<pirepdata>'.PHP_EOL;
+		$xml .= self::xml_header('update_pireps');
+		
+		
+		$allpireps = PIREPData::GetAllReports();
+		$xml .= '<total>'.count($allpireps).'</total>';
+		
+		foreach($allpireps as $pirep)
+		{
+			# Skip erronious entries
+			if($pirep->aircraft == '')
+				continue; 
+				
+			$xml .= '<pirep>'
+					.'<pilotid>'.PilotData::GetPilotCode($pirep->code, $pirep->pilotid).'</pilotid>'
+					.'<pilotname>'.$pirep->firstname.' '.$pirep->lastname.'</pilotname>'
+					.'<flightnum>'.$pirep->code.$pirep->flightnum.'</flightnum>'
+					.'<depicao>'.$pirep->depicao.'</depicao>'
+					.'<arricao>'.$pirep->arricao.'</arricao>'
+					.'<aircraft>'.$pirep->aircraft.'</aircraft>'
+					.'<flighttime>'.$pirep->flighttime.'</flighttime>'
+					.'<submitdate>'.$pirep->submitdate.'</submitdate>'
+					.'<flighttype>'.$pirep->flighttype.'</flighttype>'
+					.'<load>'.$pirep->load.'</load>'
+					.'<fuelused>'.$pirep->fuelused.'</fuelused>'
+					.'<fuelprice>'.$pirep->fuelprice.'</fuelprice>'
+					.'<pilotpay>'.$pirep->pilotpay.'</pilotpay>'
+					.'<price>'.$pirep->price.'</price>'
+					.'</pirep>';
+		}
+		
+		$xml .= '</pirepdata>';
+		
+		CronData::set_lastupdate('update_pireps');
+		return self::send_xml($xml);	
+	}
+	
 	public function send_pirep($pirep_id)
 	{
 		if(!self::central_enabled())
@@ -131,12 +198,10 @@ class CentralData
 		
 		$pirep = PIREPData::GetReportDetails($pirep_id);
 				
-		$xml .= '<pirep>';
-		
 		$xml .= '<pirep>'
 				.'<pilotid>'.PilotData::GetPilotCode($pirep->code, $pirep->pilotid).'</pilotid>'
 				.'<pilotname>'.$pirep->firstname.' '.$pirep->lastname.'</pilotname>'
-				.'<flightnum>'.$pirep->flightnum.'</flightnum>'
+				.'<flightnum>'.$pirep->code.$pirep->flightnum.'</flightnum>'
 				.'<depicao>'.$pirep->depicao.'</depicao>'
 				.'<arricao>'.$pirep->arricao.'</arricao>'
 				.'<aircraft>'.$pirep->aircraft.'</aircraft>'

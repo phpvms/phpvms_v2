@@ -4,8 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>phpVMS Changelog</title>
 	<style type="text/css">
-		<!
-		-- body { font-family: "Lucida Grande" , Verdana, Geneva, Sans-serif; font-size: 14px; line-height: 1.4em; }
+		body { font-family: "Lucida Grande" , Verdana, Geneva, Sans-serif; font-size: 14px; line-height: 1.4em; }
 		.header { font-family: Tahoma, Geneva, sans-serif; font-size: 13px; line-height: 1.4em; }
 		pre { font-size: 10pt; background-color: #E6E6E6; margin-left: 15px; padding: 5px; text-align: left; display: block; }
 		li { padding-bottom: 3px; }
@@ -15,7 +14,6 @@
 		ul li ul { margin-top: 10px; margin-bottom: 8px; }
 		.style1 { color: #F60; font-size: x-large; filter: DropShadow(Color=#000, OffX=5, OffY=5, Positive=10); }
 		.style2 { font-size: small; }
-		-- >
 	</style>
 </head>
 <body>
@@ -39,17 +37,25 @@
 		<em>Last Update: February 07, 2009</em><br />
 	</p>
 	<hr />
-	<h1>
-		Build ##REVISION## (Version 1.2.##REVISION##)</h1>
+	<h1>Build ##REVISION## (Version 1.2.##REVISION##)</h1>
 	<ul>
 		<li><strong>NEW</strong>: Pilot briefing page added, with weather maps, links to airport diagram (Unfortunately, only for US airports)</li>
+		<li><strong>NEW</strong>: Boarding pass available from bid page </li>
 		<li><strong>NEW</strong>: Added option to allow only one bid per schedule, and hide schedule</li>
-		<li>Memory usage enhancements (cut by about 50% overall)</li>
+		<li>Memory usage enhancements (cut by at least 50% overall)</li>
+		<li>Download change category bug fixed</li>
 		<li>Added &quot;Approve All&quot; in PIREPs</li>
 		<li>Awards on all pilot pages fixed</li>
 		<li>Time bug fixed (I know... again)</li>
 		<li>Admin aircraft stats bug fixed (thanks Nige!)</li>
+		<li>Page navigation bug fixed</li>
 		<li>Page delete bug fixed</li>
+	</ul>
+	<p>
+		<strong>Templates Changed</strong>:</p>
+	<ul>
+		<li>schedule_results.tpl - Added link to brief page</li>
+		<li>schedule_bids.tpl - Added link to boarding pass</li>
 	</ul>
 	<h1>
 		Build 661 (Version 1.2.661)</h1>

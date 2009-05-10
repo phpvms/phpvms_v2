@@ -83,10 +83,20 @@ class Schedules extends CodonModule
 				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 				
 				Template::Set('schedule', $scheddata);
-				
 				Template::Show('schedule_briefing.tpl');
 				
 				break;
+				
+			case 'boardingpass':
+			
+				$routeid = $this->get->id;
+				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+				
+				Template::Set('schedule', $scheddata);
+				Template::Show('schedule_boarding_pass.tpl');
+				
+				break;
+				
 
 			// View bids for the pilot
 			case 'bids':

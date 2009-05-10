@@ -128,16 +128,16 @@ class DownloadData
 					
 		DB::query($sql);
 	}
-	public static function AddDownload($categoryid, $name, $description='', $link='', $image='')
+	public static function AddDownload($parent_id, $name, $description='', $link='', $image='')
 	{
 		if($categoryid == '') return false;
 		
-		$categoryid = intval($categoryid);
+		$parent_id = intval($parent_id);
 		$name = DB::escape($name);
 		
 		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
-							(`pid`, `name`, `description`, `link`, `image`, `hits`)
-					VALUES	($categoryid, '$name', '$description', '$link', '$image', 0)";
+				(`pid`, `name`, `description`, `link`, `image`, `hits`)
+				VALUES	($parent_id, '$name', '$description', '$link', '$image', 0)";
 		
 		$res = DB::query($sql);
 		
@@ -147,15 +147,16 @@ class DownloadData
 		return true;
 	}
 	
-	public static function EditAsset($id, $name, $description='', $link='', $image='')
+	public static function EditAsset($id, $name, $parent_id, $description='', $link='', $image='')
 	{
 		if($id == '' || $name == '') return false;
 		
 		$id = intval($id);
 		$name = DB::escape($name);
+		$parent_id = intval($parent_id);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."downloads
-					SET name='$name', `description`='$description', link='$link', image='$image'
+					SET `pid`=$parent_id, `name`='$name', `description`='$description', link='$link', image='$image'
 					WHERE id=$id";
 		
 		$res = DB::query($sql);

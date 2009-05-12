@@ -31,7 +31,7 @@
 			if($nextrank)
 			{
 			?>
-				<p>You have <?php echo ($nextrank->minhours-$userinfo->totalhours)?> hours 
+				<p>You have <?php echo ($nextrank->minhours-$pilot_hours)?> hours 
 					left until your promotion to <?php echo $nextrank->rank?></p>
 			<?php
 			}

@@ -130,7 +130,7 @@ class DownloadData
 	}
 	public static function AddDownload($parent_id, $name, $description='', $link='', $image='')
 	{
-		if($categoryid == '') return false;
+		if($parent_id == '') return false;
 		
 		$parent_id = intval($parent_id);
 		$name = DB::escape($name);

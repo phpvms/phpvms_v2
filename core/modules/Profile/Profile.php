@@ -57,12 +57,22 @@ class Profile extends CodonModule
 					Template::Set('message', 'Password changed!');
 					Template::Show('core_success.tpl');
 				}
-
+				
+				if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
+				{
+					$totalhours = intval(Auth::$userinfo->totalhours) + intval(Auth::$userinfo->transferhours);
+				}
+				else
+				{
+					$totalhours = Auth::$userinfo->totalhours;
+				}
+				
 				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 				Template::Set('report', PIREPData::GetLastReports(Auth::$userinfo->pilotid));
-				Template::Set('nextrank', RanksData::GetNextRank(Auth::$userinfo->totalhours));
+				Template::Set('nextrank', RanksData::GetNextRank($totalhours));
 				Template::Set('allawards', AwardsData::GetPilotAwards(Auth::$userinfo->pilotid));
 				Template::Set('userinfo', Auth::$userinfo);
+				Template::Set('pilot_hours', $totalhours);
 
 				Template::Show('profile_main.tpl');
 				

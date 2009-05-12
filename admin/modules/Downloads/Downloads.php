@@ -181,8 +181,15 @@ class Downloads extends CodonModule
 			return;
 		}
 		
-		DownloadData::AddDownload($this->post->category, $this->post->name, $this->post->description,
+		$val = DownloadData::AddDownload($this->post->category, $this->post->name, $this->post->description,
 					$this->post->link, $this->post->image);
+		
+		if($val == false)
+		{
+			Template::Set('message', DB::$error);
+			Template::Show('core_error.tpl');
+			return;
+		}
 	}
 	
 	public function EditDownload()

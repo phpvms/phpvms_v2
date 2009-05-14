@@ -101,7 +101,7 @@ $("#dbcheck").bind('click', function()
 </head>
 <body>
 
-<table width="770px" style="padding: 0px" align="center" cellpadding="0" cellspacing="0">
+<table width="970px" style="padding: 0px" align="center" cellpadding="0" cellspacing="0">
 <tr style="padding: 0px; margin: 0px;">
 	<td class="header" style="padding: 0px; margin: 0px;">
 		<img src="../admin/lib/layout/images/admin_logo.png" />
@@ -109,6 +109,6 @@ $("#dbcheck").bind('click', function()
 </tr>
 </table>
 
-<table width="770px" align="center" style="padding-bottom: 10px;">
+<table width="970px" align="center" style="padding-bottom: 10px;">
 <tr>
 	<td align="" style="padding: 10px;">

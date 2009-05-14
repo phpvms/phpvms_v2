@@ -29,33 +29,6 @@ class UserGroups
 	 * user stuff
 	 */
 	 
-	 //load a comprehensive list of user permissions
-	 // store in the session
-	public static function GetAllUserPermissions($userid)
-	{
-		$userid = DB::escape($userid);
-		
-		$sql = "SELECT p.categoryid, p.perms
-				FROM " . TABLE_PREFIX."permissions p, " . TABLE_PREFIX ."users u
-				WHERE u.groupid = p.groupid
-					AND u.id=$userid";
-					
-		$res = DB::get_results($sql);
-		
-		if(!$res)
-		{
-			return false;
-		}
-		
-		//ok we have their permissions, load a array
-		$permissions_list = array();
-		foreach($res as $permlist)
-		{
-			$permissions_list[$permlist->categoryid] = $permlist->perms;
-		}
-		
-		return $permissions_list;
-	}
 	
 	public static function GetAllUsers()
 	{
@@ -74,57 +47,8 @@ class UserGroups
 		return DB::get_var($sql);
 	}
 		
-	function GetPermissionsForGroup($groupid, &$perms)
-	{
-		$groupid = DB::escape($groupid);
-		
-		$sql = 'SELECT g.groupstype AS type, p.id, p.groupid, p.categoryid, p.perms
-				 FROM ' . TABLE_PREFIX . 'permissions p, ' . TABLE_PREFIX . 'groups g
-				 WHERE p.groupid=g.id';
-		
-		if( is_numeric($groupid))
-			$sql .= 'AND g.id='.$groupid;
-		else
-			$sql .= 'g.name=\''.$groupid.'\'';
-							
-		$perms = DB::get_results($sql);
-		
-		if(!$perms)
-			return false;
-					
-		return $perms[0]->groupstype;
-	}
 	
-	function ChangePermissions($permid, $newperm)
-	{
-		$newperm = $this->ConvertPermissionsToInt($newperm);
-		
-		$sql = 'UPDATE ' . TABLE_PREFIX . 'permissions
-				 SET perms=\''.$newperm.'\'
-				 WHERE id='.$permid;
-	
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	function RemovePermissions($permid)
-	{
-		$sql = 'DELETE FROM ' . TABLE_PREFIX . 'permissions
-				 WHERE id='.$permid;
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	function GetAllGroups()
+	public static function GetAllGroups()
 	{
 		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups
 					ORDER BY name ASC';
@@ -132,7 +56,7 @@ class UserGroups
 		return DB::get_results($query);
 	}
 	
-	function GetGroupID($groupname)
+	public static function GetGroupID($groupname)
 	{
 		$query = 'SELECT id FROM ' . TABLE_PREFIX .'groups
 					WHERE name=\''.$groupname.'\'';
@@ -142,7 +66,27 @@ class UserGroups
 		return $res->id;
 	}
 	
-	function GetUserInfo($username)
+	public static function check_permission($set, $perm)
+	{
+		if(($set & $perm) === $perm)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static function set_permission($set, $perm)
+	{
+		return $set | $perm;
+	}
+	
+	public static function remove_permission($set, $perm)
+	{
+		$set = $set ^ $perm;		
+	}
+	
+	public static function GetUserInfo($username)
 	{
 		$username = DB::escape($username);
 		$query = 'SELECT * FROM ' . TABLE_PREFIX .'users
@@ -151,7 +95,7 @@ class UserGroups
 		return DB::get_results($query);
 	}
 	
-	function CheckUserInGroup($userid, $groupid)
+	public static function CheckUserInGroup($userid, $groupid)
 	{
 		$query = 'SELECT g.id
 				   FROM '.TABLE_PREFIX.'usergroups g
@@ -160,7 +104,7 @@ class UserGroups
 		return DB::get_row($query);
 	}
 	
-	function GetGroupInfo($groupid)
+	public static function GetGroupInfo($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		
@@ -174,7 +118,7 @@ class UserGroups
 		return DB::get_row($query);
 	}
 	
-	function GetUsersInGroup($groupid)
+	public static function GetUsersInGroup($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		
@@ -185,29 +129,8 @@ class UserGroups
 	
 		return DB::get_results($query);
 	}
-	
-	function RemoveGroup($groupid)
-	{
-		$groupid = DB::escape($groupid);
 		
-		//delete from groups table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'groups WHERE id='.$groupid;
-		DB::query($sql);
-		
-		//delete from permissions table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'permissions WHERE groupid='.$groupid;
-		DB::query($sql);
-		
-		//delete from usergroups table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'usergroups WHERE groupid='.$groupid;
-		DB::query($sql);
-		
-		//delete from application permissions table
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'appperms WHERE groupid='.$groupid;
-		DB::query($sql);
-	}
-	
-	function AddUser($displayname, $username, $password, $enabled=true)
+	public static function AddUser($displayname, $username, $password, $enabled=true)
 	{
 		$displayname = DB::escape($displayname);
 		$username = DB::escape($username);
@@ -235,7 +158,7 @@ class UserGroups
 		return true;
 	}
 	
-	function AddGroup($groupname, $type)
+	public static function AddGroup($groupname, $type)
 	{
 		$groupname = DB::escape($groupname);
 		
@@ -252,20 +175,7 @@ class UserGroups
 		return true;
 	}
 	
-	function AddPermissions($groupid, $catid, $perm)
-	{
-		$sql = "INSERT INTO " . TABLE_PREFIX ."permissions
-					(groupid, categoryid, perms) VALUES ('$groupid', '$catid', '$perm')";
-	
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	function AddUsertoGroup($userid, $groupidorname)
+	public static function AddUsertoGroup($userid, $groupidorname)
 	{
 		if($groupidorname == '') return false;
 		
@@ -287,12 +197,13 @@ class UserGroups
 		return true;
 	}
 	
-	function RemoveUserFromGroup($userid, $groupid)
+	public static function RemoveUserFromGroup($userid, $groupid)
 	{
 		$userid = DB::escape($userid);
 		$groupid = DB::escape($groupid);
 		
-		$sql = 'DELETE FROM '.APP_TABLE_PREFIX.'usergroups WHERE userid='.$userid.' AND groupid='.$groupid;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'usergroups 
+					WHERE userid='.$userid.' AND groupid='.$groupid;
 		
 		$res = DB::query($sql);
 		
@@ -301,20 +212,8 @@ class UserGroups
 			
 		return true;
 	}
-	
-	function SaveGroupType($groupid, $type)
-	{
-		$sql = 'UPDATE '. TABLE_PREFIX .'groups SET groupstype=\''.$type.'\' WHERE id='.$groupid;
 		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	function UpdateGroups(&$userlist, $groupid)
+	public static function UpdateGroups(&$userlist, $groupid)
 	{
 		//form our query:
 		$sql = 'UPDATE ' . TABLE_PREFIX .'users SET groupid='.$groupid. ' WHERE ';
@@ -335,9 +234,10 @@ class UserGroups
 		return true;
 	}
 	
-	function DeleteUser($userid)
+	public static function DeleteUser($userid)
 	{
-		$sql = "DELETE FROM " . TABLE_PREFIX . "users WHERE id=$userid";
+		$sql = "DELETE FROM " . TABLE_PREFIX . "users 
+				WHERE id=$userid";
 				
 		$res = DB::query($sql);
 		

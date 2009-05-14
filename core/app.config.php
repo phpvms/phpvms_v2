@@ -194,3 +194,31 @@ define('GEONAME_URL', 'http://ws.geonames.org');
 
 # PHPMailer
 include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');
+
+# Bit-masks for permission sets
+$perm_sets = array
+	 ('EDIT_NEWS'				=> 0x1, 
+	  'EDIT_PAGES'				=> 0x2, 
+	  'EDIT_DOWNLOADS'			=> 0x4,
+	  'EMAIL_PILOTS'			=> 0x8, 
+	  'EDIT_AIRLINES'			=> 0x10,
+	  'EDIT_FLEET'				=> 0x20,
+	  'EDIT_SCHEDULES'			=> 0x80,
+	  'IMPORT_SCHEDULES'		=> 0x100,
+	  'MODERATE_REGISTRATIONS'	=> 0x200,
+	  'EDIT_PILOTS'				=> 0x400,
+	  'EDIT_GROUPS'				=> 0x800,
+	  'EDIT_RANKS'				=> 0x1000,
+	  'EDIT_AWARDS'				=> 0x2000,
+	  'MODERATE_PIREPS'			=> 0x4000,
+	  'VIEW_FINANCES'			=> 0x8000,
+	  'EDIT_EXPENSES'			=> 0x10000,
+	  'EDIT_SETTINGS'			=> 0x20000,
+	  'EDIT_PIREPS_FIELDS'		=> 0x40000,
+	  'EDIT_PROFILE_FIELDS'		=> 0x80000,
+	  'EDIT_VACENTRAL'			=> 0x100000);
+	  
+foreach($perm_sets as $key=>$value)
+{
+	define($key, $value);
+}

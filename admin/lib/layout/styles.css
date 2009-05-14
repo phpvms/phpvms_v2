@@ -17,8 +17,8 @@ body  {
 } 
 #header { 
 	padding: 0;
-	background: url(images/background.png) repeat-x;
-	border-bottom: 2px solid #000;
+	background: #1D1D1D; /*url(images/background.png) repeat-x;*/
+	border-bottom: 2px solid #FF9033;
 } 
 #header h1 {
 	margin: 0; 

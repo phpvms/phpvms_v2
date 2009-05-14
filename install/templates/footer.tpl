@@ -1,7 +1,7 @@
 		</td>
 	</tr>
 </table>
-<table width="770px" align="center" class="footer">
+<table width="970px" align="center" class="footer">
 <tr>
 	<td align="right">
 	<div id="copyright">

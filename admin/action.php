@@ -46,8 +46,10 @@ define('ADMIN_PANEL', true);
 
 include '../core/codon.config.php';
 
-if(!Auth::LoggedIn() && !Auth::UserInGroup('Administrators'))
-        die('Unauthorized access!');
+if(!Auth::LoggedIn() && !PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
+{
+	die('Unauthorized access!');
+}
 
 Template::SetTemplatePath(dirname(__FILE__).'/templates');
 //$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');

@@ -66,43 +66,7 @@ class UserGroups
 		return $res->id;
 	}
 	
-	public static function check_permission($set, $perm)
-	{
-		if(($set & $perm) === $perm)
-		{
-			return true;
-		}
-		
-		return false;
-	}
 	
-	public static function set_permission($set, $perm)
-	{
-		return $set | $perm;
-	}
-	
-	public static function remove_permission($set, $perm)
-	{
-		$set = $set ^ $perm;		
-	}
-	
-	public static function GetUserInfo($username)
-	{
-		$username = DB::escape($username);
-		$query = 'SELECT * FROM ' . TABLE_PREFIX .'users
-					WHERE username=\''.$username.'\'';
-		
-		return DB::get_results($query);
-	}
-	
-	public static function CheckUserInGroup($userid, $groupid)
-	{
-		$query = 'SELECT g.id
-				   FROM '.TABLE_PREFIX.'usergroups g
-				   WHERE  g.userid='.$userid.' AND g.groupid='.$groupid;
-		
-		return DB::get_row($query);
-	}
 	
 	public static function GetGroupInfo($groupid)
 	{
@@ -117,47 +81,7 @@ class UserGroups
 			
 		return DB::get_row($query);
 	}
-	
-	public static function GetUsersInGroup($groupid)
-	{
-		$groupid = DB::escape($groupid);
 		
-		//multiple groups list
-		$query = 'SELECT u.id, u.displayname, u.username
-					FROM '.TABLE_PREFIX.'users u, '.TABLE_PREFIX.'usergroups g
-					WHERE g.groupid='.$groupid.' AND g.userid = u.id';
-	
-		return DB::get_results($query);
-	}
-		
-	public static function AddUser($displayname, $username, $password, $enabled=true)
-	{
-		$displayname = DB::escape($displayname);
-		$username = DB::escape($username);
-		
-		$salt =  self::CreateSalt();
-		$password = md5($password . $salt);
-		
-		if($enabled == 'on' || $enabled == true)
-		{
-			$enabled = 't';
-		}
-		else {
-			$enabled = 'f';
-		}
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX ."users
-						(displayname, username, password, salt, allowremote)
-				VALUES ('$displayname','$username', '$password','$salt', '$enabled')";
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
 	public static function AddGroup($groupname, $type)
 	{
 		$groupname = DB::escape($groupname);
@@ -167,78 +91,6 @@ class UserGroups
 					
 		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name, groupstype) VALUES ('$groupname', '$type')";
 		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	public static function AddUsertoGroup($userid, $groupidorname)
-	{
-		if($groupidorname == '') return false;
-		
-		// If group name is given, get the group ID
-		if(is_string($groupid))
-		{
-			$groupidorname = DB::escape($groupidorname);
-			$groupidorname = $this->GetGroupID($groupidorname);
-		}
-		
-		$sql = 'INSERT INTO '.APP_TABLE_PREFIX.'usergroups (userid, groupid)
-					VALUES ('.$userid.', '.$groupidorname.')';
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	public static function RemoveUserFromGroup($userid, $groupid)
-	{
-		$userid = DB::escape($userid);
-		$groupid = DB::escape($groupid);
-		
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'usergroups 
-					WHERE userid='.$userid.' AND groupid='.$groupid;
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-		
-	public static function UpdateGroups(&$userlist, $groupid)
-	{
-		//form our query:
-		$sql = 'UPDATE ' . TABLE_PREFIX .'users SET groupid='.$groupid. ' WHERE ';
-	
-		$total = count($userlist);
-		for($i=0;$i<$total;$i++)
-		{
-			$sql .= ' id='.$userlist[$i];
-			if($i!=$total-1)
-				$sql.= ' OR ';
-		}
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-	}
-	
-	public static function DeleteUser($userid)
-	{
-		$sql = "DELETE FROM " . TABLE_PREFIX . "users 
-				WHERE id=$userid";
-				
 		$res = DB::query($sql);
 		
 		if(DB::errno() != 0)

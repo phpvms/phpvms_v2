@@ -23,8 +23,9 @@ class PilotGroups
 	 */
 	public static function GetAllGroups()
 	{
-		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups
-						ORDER BY name ASC';
+		$query = 'SELECT * 
+					FROM ' . TABLE_PREFIX .'groups
+					ORDER BY name ASC';
 		
 		return DB::get_results($query);
 	}
@@ -32,9 +33,10 @@ class PilotGroups
 	/**
 	 * Add a group
 	 */
-	public static function AddGroup($groupname)
+	public static function AddGroup($groupname, $permissions)
 	{
-		$query = "INSERT INTO " . TABLE_PREFIX . "groups (name) VALUES ('$groupname')";
+		$query = "INSERT INTO " . TABLE_PREFIX . "groups 
+					(`name`, `permissions`) VALUES ('$groupname', $permissions)";
 		
 		$res = DB::query($query);
 				
@@ -42,6 +44,34 @@ class PilotGroups
 			return false;
 			
 		return true;
+	}
+	
+	public static function EditGroup($groupid, $groupname, $permissions)
+	{
+		$groupid = intval($groupid);
+		$groupname = DB::escape($groupname);
+		
+		$query = 'UPDATE '.TABLE_PREFIX."groups
+					SET `name`='$groupname', `permissions`=$permissions
+					WHERE `groupid`=$groupid";
+					
+		$res = DB::query($query);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
+	public static function GetGroup($groupid)
+	{
+		$groupid = intval($groupid);
+		
+		$query = 'SELECT *
+					FROM ' . TABLE_PREFIX .'groups
+					WHERE groupid='.$groupid;
+		
+		return DB::get_row($query);
 	}
 	
 	/**
@@ -81,6 +111,75 @@ class PilotGroups
 		return true;
 	}
 	
+	public static function group_has_perm($grouplist, $perm)
+	{
+		foreach($grouplist as $group)
+		{
+			# Check zero (NO_ADMIN_ACCESS === 0)
+			if($group->permissions === NO_ADMIN_ACCESS)
+				continue;
+			
+			# One of the group has full admin access
+			if($group->permissions === FULL_ADMIN)
+			{
+				return true;
+			}
+			
+			# Check individually
+			if(self::check_permission($group->permissions, $perm))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Check permissions against integer set 
+	 * (bit compare, ($set & $perm) === $perm)
+	 *
+	 * @param int $set Permission set &
+	 * @param int $perm Permission (intval)
+	 * @return bool Whether it's set or not
+	 *
+	 */
+	public static function check_permission($set, $perm)
+	{
+		if(($set & $perm) === $perm)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 * Set a permission ($set | $permission)
+	 *
+	 * @param int $set Integer set
+	 * @param int $perm Permission to remove
+	 * @return int New permission set
+	 *
+	 */
+	public static function set_permission($set, $perm)
+	{
+		return $set | $perm;
+	}
+	
+	
+	/**
+	 * Remove permission from set ($set ^ $perm)
+	 *
+	 * @param int $set Permission set
+	 * @param int $perm Permission to remove
+	 * @return int New permission set
+	 *
+	 */
+	public static function remove_permission($set, $perm)
+	{
+		$set = $set ^ $perm;		
+	}
+	
 	/**
 	 * Check if a user is in a group, pass the name or the id
 	 */
@@ -109,9 +208,9 @@ class PilotGroups
 	{
 		$pilotid = DB::escape($pilotid);
 		
-		$sql = 'SELECT g.groupid, g.name
-					FROM ' . TABLE_PREFIX . 'groupmembers u, ' . TABLE_PREFIX . 'groups g
-					WHERE u.pilotid='.$pilotid.' AND g.groupid=u.groupid';
+		$sql = 'SELECT g.*
+				FROM ' . TABLE_PREFIX . 'groupmembers u, ' . TABLE_PREFIX . 'groups g
+				WHERE u.pilotid='.$pilotid.' AND g.groupid=u.groupid';
 		
 		$ret = DB::get_results($sql);
 		

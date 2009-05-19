@@ -31,6 +31,8 @@ class PilotAdmin extends CodonModule
 				Template::Set('sidebar', 'sidebar_pending.tpl');
 				break;
 			case 'pilotgroups':
+			case 'editgroup':
+			case 'addgroup':
 				Template::Set('sidebar', 'sidebar_groups.tpl');
 				break;
 		}
@@ -161,8 +163,36 @@ class PilotAdmin extends CodonModule
 				{
 					$this->AddGroup();
 				}
+				if($this->post->action == 'editgroup')
+				{
+					# Process
+					$this->SaveGroup();
+				}
 				
 				$this->ShowGroups();
+				break;
+			
+			case 'addgroup':
+			
+				Template::Set('title', 'Add a Group ');
+				Template::Set('action', 'addgroup');
+				Template::Set('permission_set', Config::Get('permission_set'));
+				
+				Template::Show('groups_groupform.tpl');
+				
+				break;
+				
+			case 'editgroup':
+			
+				$group_info = PilotGroups::GetGroup($this->get->groupid);
+				
+				Template::Set('group', $group_info);
+				Template::Set('title', 'Editing '.$group_info->name);
+				Template::Set('action', 'editgroup');
+				Template::Set('permission_set', Config::Get('permission_set'));
+				
+				Template::Show('groups_groupform.tpl');
+			
 				break;
 				
 			case 'pilotawards':
@@ -233,7 +263,13 @@ class PilotAdmin extends CodonModule
 			return;
 		}
 		
-			$ret = PilotGroups::AddGroup($name);
+		$permissions = 0;
+		foreach($this->post->permissions as $perm)
+		{
+			$permissions = PilotGroups::set_permission($permissions, $perm);
+		}
+		
+		$ret = PilotGroups::AddGroup($name, $permissions);
 			
 		if(DB::errno() != 0)
 		{
@@ -246,6 +282,29 @@ class PilotAdmin extends CodonModule
 			Template::Show('core_success.tpl');
 		}		
 	}
+	
+	public function SaveGroup()
+	{		
+		$permissions = 0;
+		foreach($this->post->permissions as $perm)
+		{
+			$permissions = PilotGroups::set_permission($permissions, $perm);
+		}
+		
+		PilotGroups::EditGroup($this->post->groupid, $this->post->name, $permissions);
+		
+		if(DB::errno() != 0)
+		{
+			Template::Set('message', 'There was an error!');
+			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'The group "'.$this->post->name.'" has been saved');
+			Template::Show('core_success.tpl');
+		}		
+	}
+	
 	
 	public function AddPilotToGroup()
 	{
@@ -296,7 +355,6 @@ class PilotAdmin extends CodonModule
 	{
 		Template::Set('allgroups', PilotGroups::GetAllGroups());
 		Template::Show('groups_grouplist.tpl');
-		Template::Show('groups_addgroup.tpl');
 	}
 	
 	public function ApprovePilot()

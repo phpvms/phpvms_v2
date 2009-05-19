@@ -64,10 +64,10 @@ class Vars
 			self::$post->$key = self::cleaned($value);
 		}
 		
-		/*foreach($_GET as $key=>$value)
+		foreach($_GET as $key=>$value)
 		{
 			self::$get->$key = self::cleaned($value);
-		}*/
+		}
 		
 		foreach($_REQUEST as $key=>$value)
 		{
@@ -182,7 +182,9 @@ class Vars
 	
 	public static function cleaned(&$V)
 	{
-		return htmlspecialchars(addslashes(stripslashes($V)));
+		return $V;
+		
+		//return htmlspecialchars(addslashes(stripslashes($V)));
 	}
 	
 	/**

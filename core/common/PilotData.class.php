@@ -670,6 +670,11 @@ class PilotData
 		$pilot = self::GetPilotData($pilotid);
 		$pilotcode = self::GetPilotCode($pilot->code, $pilot->pilotid);
 		
+		if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
+			$totalhours = intval($pilot->totalhours) + intval($pilot->transferhours);
+		else
+			$totalhours = intval($pilot->totalhours);
+		
 		# Configure what we want to show on each line
 		$output = array();
 		$output[] = $pilotcode.' '. $pilot->firstname.' '.$pilot->lastname;

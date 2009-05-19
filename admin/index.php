@@ -43,21 +43,15 @@
  */
 	
 define('ADMIN_PANEL', true);
-
 include '../core/codon.config.php';
 
-if(!Auth::LoggedIn())
-{
-	header('Location: '.SITE_URL.'/index.php/Login/login/admin');
-}
-
-if(!Auth::UserInGroup('Administrators'))
+if(!Auth::LoggedIn() && !PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
 {
 	die('Unauthorized access!');
 }
 
-//$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');
-//MainController::loadModules($modules);
+#if(!Auth::UserInGroup('Administrators'))
+#	die('Unauthorized access!');
 
 $BaseTemplate = new TemplateSet;
 $tplname = 'layout';

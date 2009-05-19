@@ -27,7 +27,8 @@ foreach($allgroups as $group)
 	if($group->name!='Administrators')
 	{
 	?>
-	Rename | Delete
+		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/editgroup/?groupid=<?php echo $group->groupid?>">
+					<img src="<?echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>	
 	<?php
 	}
 	else

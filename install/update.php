@@ -136,42 +136,49 @@ echo 'Starting the update...<br />';
 		
 	}
 	
-	echo '<p>Updating your database...</p>';
+	if($version < 11700)
+	{
 	
-	Installer::add_to_config('TRANSFER_HOURS_IN_RANKS', false, 'Include the transfer hours in ranks');
+		echo '<p>Updating your database...</p>';
+		
+		Installer::add_to_config('TRANSFER_HOURS_IN_RANKS', false, 'Include the transfer hours in ranks');
+		
+		Installer::sql_file_update(SITE_ROOT . '/install/update_700.sql');
+		
+		# Specific Checks
+		$sql = 'SELECT * 
+					FROM '.TABLE_PREFIX."settings
+					WHERE name='TOTAL_HOURS'";
+					
+		$res = DB::get_row($sql);
+		
+		if(!$res)
+		{
+			$sql = "INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
+			VALUES ('Total Hours', 'TOTAL_HOURS', '', 'These are the total hours your VA has flown', '0')";
+			DB::query($sql);
+		}	
+		
+		echo '<strong>Updating hours</strong><br />';
+		
+		$allpilots = PilotData::GetAllPilots();
+
+		foreach($allpilots as $pilot)
+		{
+			$hours = PilotData::UpdateFlightHours($pilot->pilotid);
+			$total = Util::AddTime($total, $hours);
+		}
+
+		echo "Pilots have a total of <strong>$total hours</strong><br /><br />";
+		echo "<strong>Updating PIREPS  Hours</strong><br />";
+
+		StatsData::UpdateTotalHours();
+		
+		echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';	
+	}
+	
 	
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
-	
-	# Specific Checks
-	$sql = 'SELECT * 
-				FROM '.TABLE_PREFIX."settings
-				WHERE name='TOTAL_HOURS'";
-				
-	$res = DB::get_row($sql);
-	
-	if(!$res)
-	{
-		$sql = "INSERT INTO `phpvms_settings` (`friendlyname`, `name`, `value`,`descrip`,`core`)
-		VALUES ('Total Hours', 'TOTAL_HOURS', '', 'These are the total hours your VA has flown', '0')";
-		DB::query($sql);
-	}	
-	
-	echo '<strong>Updating hours</strong><br />';
-	
-	$allpilots = PilotData::GetAllPilots();
-
-	foreach($allpilots as $pilot)
-	{
-		$hours = PilotData::UpdateFlightHours($pilot->pilotid);
-		$total = Util::AddTime($total, $hours);
-	}
-
-	echo "Pilots have a total of <strong>$total hours</strong><br /><br />";
-	echo "<strong>Updating PIREPS  Hours</strong><br />";
-
-	StatsData::UpdateTotalHours();
-	
-	echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';	
 		
 	
 # Final version update

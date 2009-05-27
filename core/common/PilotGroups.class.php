@@ -113,6 +113,11 @@ class PilotGroups
 	
 	public static function group_has_perm($grouplist, $perm)
 	{
+		if(!is_array($grouplist) || count($grouplist) == 0)
+		{
+			return false;
+		}
+		
 		foreach($grouplist as $group)
 		{
 			# Check zero (NO_ADMIN_ACCESS === 0)

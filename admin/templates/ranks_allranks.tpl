@@ -4,6 +4,7 @@
 <tr>
 	<th>Rank Title</th>
 	<th>Minimum Hours</th>
+	<th>Rank Image</th>
 	<th>Pay Rate</th>
 	<th>Total Pilots</th>
 	<th>Options</th>
@@ -17,6 +18,7 @@ foreach($ranks as $rank)
 <tr>
 	<td align="center"><?php echo $rank->rank; ?></td>
 	<td align="center"><?php echo $rank->minhours; ?></td>
+	<td align="center"><img src="<?php echo $rank->rankimage; ?>" /></td>
 	<td align="center"><?php echo Config::Get('MONEY_UNIT').$rank->payrate.'/hr'; ?></td>
 	<td align="center"><?php echo $rank->totalpilots; ?></td>
 	<td align="center" width="1%" nowrap>

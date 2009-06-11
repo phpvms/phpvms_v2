@@ -375,6 +375,15 @@ class FinanceData
 		return DB::get_results($sql);		
 	}
 	
+	public static function get_total_monthly_expenses()
+	{
+		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
+				 FROM '.TABLE_PREFIX.'expenses
+				 WHERE `type`=\'M\'';
+		
+		return DB::get_row($sql);
+	}
+	
 	/** 
 	 * Get all of the expenses for a flight
 	 */

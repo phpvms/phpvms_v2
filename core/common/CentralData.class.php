@@ -34,8 +34,6 @@ class CentralData
 	private static function send_xml($xml)
 	{
 		self::$xml_data = '<?xml version="1.0"?>'.$xml;
-		
-		
 		$web_service = new CodonWebService();
 		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', self::$xml_data);
 			
@@ -64,6 +62,13 @@ class CentralData
 		$xml .= '<pilotcount>'.StatsData::PilotCount().'</pilotcount>';
 		$xml .= '<totalhours>'.StatsData::TotalHours().'</totalhours>';
 		$xml .= '<totalflights>'.StatsData::TotalFlights().'</totalflights>';
+		
+		# Expenses stuff
+		$exp_data = FinanceData::get_total_monthly_expenses();
+		
+		$xml .= '<expenses>'.$exp_data->total.'</expenses>';
+		$xml .= '<expensescost>'.$exp_data->cost.'</expensescost>';
+		
 		$xml .= '</vainfo>';
 		
 		# Package and send

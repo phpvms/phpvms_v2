@@ -31,15 +31,9 @@ CREATE TABLE `phpvms_updates` (
 ) ENGINE = MYISAM ;
 
 UPDATE `phpvms_pilots` SET retired=0;
-
 ALTER TABLE `phpvms_pilots` ADD `transferhours` FLOAT NOT NULL AFTER `totalhours`;
-
 ALTER TABLE `phpvms_schedules` ADD `daysofweek` VARCHAR( 7 ) NOT NULL DEFAULT '0123456' AFTER `flighttime`; 
-
 ALTER TABLE `phpvms_acarsdata` ADD `client` VARCHAR( 20 ) NOT NULL;
-
 ALTER TABLE `phpvms_updates` CHANGE `name` `name` VARCHAR( 25 ) NOT NULL;
-
 ALTER TABLE `phpvms_schedules` ADD `bidid` INT NOT NULL DEFAULT 0; 
-
 ALTER TABLE `phpvms_pilots` DROP INDEX `email` ;

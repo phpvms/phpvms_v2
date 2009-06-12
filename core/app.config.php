@@ -18,25 +18,29 @@
 
 /**
  * DO NOT MODIFY THESE SETTINGS HERE!!
- * They will get over-ridden in an update.
- *
- * So copy-paste and change the setting into your
- *  local.config.php
+ * They will get over-ridden in an update. These are just defaults *
+ * To change, copy-paste and change the line/option/setting into your
+ *  local.config.php file
  *
  * Most of these are in your local.config.php already
  * 
  * View the docs for details about these settings
  */
+ 
+
+# Debug mode is off by default
+Config::Set('DEBUG_MODE', false);
+Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
 
 # Page encoding options
-Config::Set('PAGE_ENCODING', 'ISO-8859-1');
+Config::Set('PAGE_ENCODING', 'UTF-8');
 
-Config::Set('PAGE_EXT', '.htm');
-Config::Set('PILOTID_OFFSET', 0); // Start the Pilot's ID from 1000
-Config::Set('PILOTID_LENGTH', 4);
-Config::Set('SHOW_LEG_TEXT', true);
-Config::Set('UNITS', 'nm'); // Your units: nm, mi or km
-Config::Set('LOAD_FACTOR', '82'); 
+# See more details about these in the docs
+Config::Set('PAGE_EXT', '.htm');	# .htm is fine. You can still run PHP
+Config::Set('PILOTID_OFFSET', 0);	# What # to start pilot ID's from
+Config::Set('PILOTID_LENGTH', 4);	# Length of the Pilot ID
+Config::Set('UNITS', 'nm');			# Your units: nm, mi or km
+Config::Set('LOAD_FACTOR', '82');	# %age load factor 
 Config::Set('CARGO_UNITS', 'lbs');
 
 # If someone places a bid, whether to disable that or not
@@ -57,7 +61,7 @@ Config::Set('MAP_CENTER_LNG', '-62.334821');
 #  Minutes, flights to show on the ACARS
 #  Default is 720 minutes (12 hours)
 Config::Set('ACARS_LIVE_TIME', 720); 
-Config::Set('ACARS_DEBUG', true);
+Config::Set('ACARS_DEBUG', false);
 
 /*
   This is the unit of money. For non-dollars, use :
@@ -69,7 +73,16 @@ Config::Set('ACARS_DEBUG', true);
   For example, to set EUROS:
 	Config::Set('MONEY_UNIT', '&#8364;');
  */
+ 
 Config::Set('MONEY_UNIT', '$');
+
+/*
+ To change the money format, look at:
+  http://us3.php.net/money_format
+ 
+ However, I do not recommend changing this
+ */
+ 
 Config::Set('MONEY_FORMAT', '%(#10n');
 
 
@@ -89,6 +102,7 @@ Config::Set('SpeedUnit', '1');		# 0=Km/H 1=Kts
 Config::Set('AltUnit', '1');		# 0=Meter 1=Feet 
 Config::Set('LiquidUnit', '2');		# 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
+Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
@@ -97,22 +111,79 @@ Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
 Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);
 
 # Avatar information
-Config::Set('AVATAR_FILE_SIZE', 50000);
-Config::Set('AVATAR_MAX_WIDTH', 80);
-Config::Set('AVATAR_MAX_HEIGHT', 80);
+Config::Set('AVATAR_FILE_SIZE', 50000);	# Maximum file-size they can upload
+Config::Set('AVATAR_MAX_WIDTH', 80);	# Resized width
+Config::Set('AVATAR_MAX_HEIGHT', 80);	# Resized height
 
-# Debug mode is off by default
-Config::Set('DEBUG_MODE', true);
-Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
+Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
+
+/* Days of the Week
+	The compacted view, and the full text
+ */
+
+Config::Set('DAYS_COMPACT',  array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su'));
+
+Config::Set('DAYS_LONG', 
+			array('Sunday',
+				  'Monday',
+				  'Tuesday',
+				  'Wednesday',
+				  'Thursday',
+				  'Friday',
+				  'Saturday',
+				  'Sunday'
+			)
+		);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * *******************************************************
+ * 
+ * 
+ * 
+ * 
+ * 
  * 
  * Advanced options, don't edit unless you
  * know what you're doing!!
  * 
  * Actually, don't change them, at all. Please.
  * For your sake. And mine. :)
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  */
 
 Config::Set('TEMPLATE_USE_CACHE', false);
@@ -142,6 +213,7 @@ else
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
 	
+	/* Rules for the controllers */
 	CodonRewrite::AddRule('default', array('page'));
 	CodonRewrite::AddRule('acars', array('page', 'action'));
 	CodonRewrite::AddRule('downloads', array('id'));
@@ -162,15 +234,11 @@ else
 Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
 			'C'=>'Cargo',
 			'H'=>'Charter'));
-
+			
 # Set the types of expenses we have
 Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
 			'F'=>'Per Flight'));
-
-Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
-
-Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
-
+			
 define('SIGNATURE_PATH', '/lib/signatures');
 define('AVATAR_PATH', '/lib/avatars');
 
@@ -188,7 +256,7 @@ define('SECONDS_PER_DAY', 86400);
 
 define('GEONAME_URL', 'http://ws.geonames.org');
 
-/*
+/**
  * Library Includes (from 3rd Party)
  */
 

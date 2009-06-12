@@ -47,13 +47,11 @@ class Util
 	 */
 	public static function GetDaysCompact($days)
 	{
-		$days = str_replace('0', 'Su ', $days);
-		$days = str_replace('1', 'M ', $days);
-		$days = str_replace('2', 'T ', $days);
-		$days = str_replace('3', 'W ', $days);
-		$days = str_replace('4', 'R ', $days);
-		$days = str_replace('5', 'F ', $days);
-		$days = str_replace('6', 'S ', $days);
+		$all_days = Config::Get('DAYS_COMPACT');
+		foreach($alldays as $index=>$day)
+		{
+			$days = str_replace($index, $day, $days);
+		}
 		
 		return $days;
 	}
@@ -63,13 +61,11 @@ class Util
 	 */
 	public static function GetDaysLong($days)
 	{
-		$days = str_replace('0', 'Sunday ', $days);
-		$days = str_replace('1', 'Monday ', $days);
-		$days = str_replace('2', 'Tuesday ', $days);
-		$days = str_replace('3', 'Wednesday ', $days);
-		$days = str_replace('4', 'Thursday ', $days);
-		$days = str_replace('5', 'Friday ', $days);
-		$days = str_replace('6', 'Saturday ', $days);
+		$all_days = Config::Get('DAYS_LONG');
+		foreach($alldays as $index=>$day)
+		{
+			$days = str_replace($index, $day, $days);
+		}
 		
 		return $days;
 	}

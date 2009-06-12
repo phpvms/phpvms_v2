@@ -89,9 +89,12 @@
 	<td valign="top"><strong>Days of Week: </strong></td>
 	<td>
 		<?php
-		$days = array('Sunday', 'Monday', 'Tuesday',
+		/*$days = array('Sunday', 'Monday', 'Tuesday',
 					  'Wednesday', 'Thursday', 'Friday',
 					  'Saturday');
+		*/
+		
+		$days = Config::Get('DAYS_LONG');
 		
 		for($i=0; $i<=6; $i++)
 		{

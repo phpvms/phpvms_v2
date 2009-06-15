@@ -48,9 +48,10 @@ class Util
 	public static function GetDaysCompact($days)
 	{
 		$all_days = Config::Get('DAYS_COMPACT');
-		foreach($alldays as $index=>$day)
+
+		foreach($all_days as $index=>$day)
 		{
-			$days = str_replace($index, $day, $days);
+			$days = str_replace($index, $day.' ', $days);
 		}
 		
 		return $days;
@@ -62,9 +63,9 @@ class Util
 	public static function GetDaysLong($days)
 	{
 		$all_days = Config::Get('DAYS_LONG');
-		foreach($alldays as $index=>$day)
+		foreach($all_days as $index=>$day)
 		{
-			$days = str_replace($index, $day, $days);
+			$days = str_replace($index, $day.' ', $days);
 		}
 		
 		return $days;

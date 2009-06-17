@@ -91,6 +91,7 @@ Config::Set('MONEY_FORMAT', '%(#10n');
 	And the surcharge percentage. View the docs
 	for more details about these
 */ 
+Config::Set('FUEL_GET_LIVE_PRICE', true);
 Config::Set('FUEL_DEFAULT_PRICE', '5.10');
 Config::Set('FUEL_SURCHARGE', '5');
 

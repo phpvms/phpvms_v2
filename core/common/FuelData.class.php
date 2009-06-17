@@ -17,23 +17,27 @@ class FuelData
 		$price = self::get_cached_price($apt_icao);
 		
 		if(!$price)
-		{			
-			$price = self::get_from_server($apt_icao);	
+		{	
+		
+			if(Config::Get('FUEL_GET_LIVE_PRICE') == true)
+			{		
+				$price = self::get_from_server($apt_icao);	
+			}
 						
 			if($price === false)
 			{
 				$aptinfo = OperationsData::GetAirportInfo($apt_icao);
 		
 				if($aptinfo->fuelprice == '' || $aptinfo->fuelprice == 0)
-					return Config::Get('FUEL_DEFAULT_PRICE');
+					return intval(Config::Get('FUEL_DEFAULT_PRICE'));
 				else
-					return $aptinfo->fuelprice;
+					return intval($aptinfo->fuelprice);
 			}
 			
-			return $price;
+			return intval($price);
 		}		
 		
-		return $price->jeta;
+		return intval($price->jeta);
 	}
 	
 	

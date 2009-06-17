@@ -28,6 +28,14 @@ class VACentral extends CodonModule
 				$this->parse_response($ret);
 				
 				break;
+				
+			case 'sendpireps':
+				
+				echo '<h3>Sending all PIREPS</h3>';
+				$ret = CentralData::send_all_pireps();
+				$this->parse_response($ret);
+				
+				break;
 		}	
 	}
 	

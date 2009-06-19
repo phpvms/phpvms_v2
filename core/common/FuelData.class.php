@@ -51,7 +51,7 @@ class FuelData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function get_cached_price($apt_icao)
+	protected static function get_cached_price($apt_icao)
 	{
 		$apt_icao = strtoupper($apt_icao);
 		$sql = "SELECT * FROM `".TABLE_PREFIX."fuelprices`
@@ -71,7 +71,7 @@ class FuelData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function save_cached_price($xmlObj)
+	protected static function save_cached_price($xmlObj)
 	{
 		$query = "SELECT * 
 					FROM `".TABLE_PREFIX."fuelprices`
@@ -119,7 +119,7 @@ class FuelData
 	 * @return float Returns the JET-A fuelprice
 	 *
 	 */
-	public static function get_from_server($apt_icao)
+	protected static function get_from_server($apt_icao)
 	{
 		if($apt_icao == '')
 			return false;

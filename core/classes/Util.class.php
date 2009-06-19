@@ -80,11 +80,11 @@ class Util
 	 */
 	public static function AddTime($time1, $time2)
 	{
-		#self::$trace = array();
+		self::$trace = array();
 		$time1 = str_replace(':', '.', $time1);
 		$time2 = str_replace(':', '.', $time2);
 		
-		#self::$trace[] = "Inputted as: $time1 + $time2";
+		self::$trace[] = "Inputted as: $time1 + $time2";
 		
 		$time1 =  number_format($time1, 2);
 		$time2 = number_format($time2, 2);
@@ -92,7 +92,7 @@ class Util
 		$time1 = str_replace(',', '', $time1);
 		$time2 = str_replace(',', '', $time2);
 		
-		#self::$trace[] = "After format: $time1 + $time2";
+		self::$trace[] = "After format: $time1 + $time2";
 		
 		$t1_ex = explode('.', $time1);
 		$t2_ex = explode('.', $time2);
@@ -109,12 +109,12 @@ class Util
 			$t2_ex[1] = intval((intval($t2_ex[1])*60)/100);
 		}
 		
-		#self::$trace[] = "After fraction check: $time1 + $time2";
+		self::$trace[] = "After fraction check: $time1 + $time2";
 		
 		$hours = ($t1_ex[0] + $t2_ex[0]);
 		$mins = ($t1_ex[1] + $t2_ex[1]);
 					
-		#self::$trace[] = "Added, before conversion: $hours:$mins";
+		self::$trace[] = "Added, before conversion: $hours:$mins";
 			
 		while($mins >= 60)
 		{
@@ -122,7 +122,7 @@ class Util
 			$mins -= 60;		
 		}
 				
-		#self::$trace[] = "Minutes left: $mins";
+		self::$trace[] = "Minutes left: $mins";
 	
 		# Add the 0 padding
 		if(intval($mins) < 10)
@@ -131,8 +131,8 @@ class Util
 		$time = number_format($hours.'.'.$mins, 2);
 		$time = str_replace(',', '', $time);
 		
-		#self::$trace[] = "Translated to $hours.$mins";
-		#self::$trace[] = "";
+		self::$trace[] = "Translated to $hours.$mins";
+		self::$trace[] = "";
 		
 		return $time;
 		#return $hours.'.'.$mins;		

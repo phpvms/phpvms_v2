@@ -201,7 +201,7 @@ class StatsData
 	public static function AircraftUsage()
 	{
 		$sql = 'SELECT a.name AS aircraft, a.registration, 
-						SUM(p.flighttime) AS hours, COUNT(p.distance) AS distance
+						SEC_TO_TIME(SUM(TIME_TO_SEC(p.flighttime))) AS hours, COUNT(p.distance) AS distance
 					FROM '.TABLE_PREFIX.'pireps p
 						INNER JOIN '.TABLE_PREFIX.'aircraft a ON p.aircraft = a.id
 					GROUP BY p.aircraft';

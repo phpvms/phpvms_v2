@@ -11,33 +11,36 @@ class FuelData
 	 * @param string $apt_icao ICAO of the airport
 	 * @return float Fuel price
 	 *
+	 * @version 709 rewritten
 	 */
 	public static function GetFuelPrice($apt_icao)
 	{		
-		$price = self::get_cached_price($apt_icao);
-		
-		if(!$price)
-		{	
-		
-			if(Config::Get('FUEL_GET_LIVE_PRICE') == true)
-			{		
-				$price = self::get_from_server($apt_icao);	
-			}
-						
-			if($price === false)
-			{
-				$aptinfo = OperationsData::GetAirportInfo($apt_icao);
-		
-				if($aptinfo->fuelprice == '' || $aptinfo->fuelprice == 0)
-					return intval(Config::Get('FUEL_DEFAULT_PRICE'));
-				else
-					return intval($aptinfo->fuelprice);
-			}
+		$price = false;
+		if(Config::Get('FUEL_GET_LIVE_PRICE') === true)
+		{
+			$price = self::get_cached_price($apt_icao);
 			
-			return intval($price);
-		}		
+			if(is_bool($price) && $price === false)
+			{				
+				$price = self::get_from_server($apt_icao);	
+
+				if(is_bool($price) && $price === false)
+				{	
+					return $price;
+				}
+			}		
+			else
+			{
+				return $price->jeta;
+			}
+		}
 		
-		return intval($price->jeta);
+		/* Live price stuff above failed or was "off" */
+		$aptinfo = OperationsData::GetAirportInfo($apt_icao);
+		if($aptinfo->fuelprice == '')
+			return Config::Get('FUEL_DEFAULT_PRICE');
+		else
+			return $aptinfo->fuelprice;
 	}
 	
 	

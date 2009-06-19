@@ -69,6 +69,9 @@ class CentralData
 		$xml .= '<expenses>'.$exp_data->total.'</expenses>';
 		$xml .= '<expensescost>'.$exp_data->cost.'</expensescost>';
 		
+		# Some of the settings
+		$xml .= '<livefuel>'.Config::Get('FUEL_GET_LIVE_PRICE').'</livefuel>';
+		
 		$xml .= '</vainfo>';
 		
 		# Package and send
@@ -104,9 +107,7 @@ class CentralData
 				
 				if($name == 'id' || $name == 'leg' || $name == 'enabled'
 						|| $name == 'flighttime' || $name == 'timesflown'
-						|| $name == 'depname' || $name == 'deplat'
-						|| $name == 'deplong' || $name == 'arrname' 
-						|| $name == 'arrlat' || $name == 'arrlong')
+						|| $name == 'depname' || $name == 'arrname' )
 				{
 					continue;
 				}

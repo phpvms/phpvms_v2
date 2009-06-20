@@ -271,11 +271,12 @@ CREATE TABLE `phpvms_fieldvalues` (
 CREATE TABLE `phpvms_groups` (
   `groupid` int(11) NOT NULL auto_increment,
   `name` varchar(25) NOT NULL default '',
+  `permissions` varchar(25) NOT NULL default '',
   PRIMARY KEY  (`groupid`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB ;
 
-INSERT INTO `phpvms_groups` (`name`) VALUES ('Administrators');
+INSERT INTO `phpvms_groups` (`name`, `permissions`) VALUES ('Administrators', '35651519');
 INSERT INTO `phpvms_groups` (`name`) VALUES ('Active Pilots');
 
 CREATE TABLE `phpvms_groupmembers` (

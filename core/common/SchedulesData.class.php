@@ -613,12 +613,14 @@ class SchedulesData
 	 
 	public static function GetLatestBids($limit=5)
 	{
-		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
-				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
-					'.TABLE_PREFIX.'aircraft a
-				WHERE b.routeid = s.id 
-						AND s.aircraft=a.id
-				ORDER BY bidid DESC
+		$sql = 'SELECT  p.*, s.*, 
+						b.bidid as bidid, a.name as aircraft, a.registration
+				FROM '.TABLE_PREFIX.'schedules s, 
+					 '.TABLE_PREFIX.'bids b,
+					 '.TABLE_PREFIX.'aircraft a,
+					 '.TABLE_PREFIX.'pilots p
+				WHERE b.routeid = s.id AND s.aircraft=a.id AND p.pilotid = b.pilotid
+				ORDER BY b.bidid DESC
 				LIMIT '.$limit;
 		
 		return DB::get_results($sql);
@@ -626,8 +628,8 @@ class SchedulesData
 	
 	public function GetLatestBid($pilotid)
 	{
-		
 		$pilotid = DB::escape($pilotid);
+		
 		$sql = 'SELECT s.*, b.bidid, a.id as aircraftid, a.name as aircraft, a.registration, a.maxpax, a.maxcargo
 				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
 					'.TABLE_PREFIX.'aircraft a

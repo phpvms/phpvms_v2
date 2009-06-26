@@ -69,6 +69,7 @@ class RegistrationData
 		$code = strtoupper($code);
 		$firstname = ucwords($firstname);
 		$lastname = ucwords($lastname);
+		$location = strtolower($location);
 		//Add this stuff in
 		
 		if($confirm == true)

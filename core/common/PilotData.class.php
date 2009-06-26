@@ -196,6 +196,8 @@ class PilotData
 		
 		unset(self::$pilot_data[$pilotid]);
 		
+		$location = strtolower($location);
+		
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
 					SET `email`='$email', `location`='$location' ";
 		
@@ -496,6 +498,27 @@ class PilotData
 			
 		return true;
 	}
+	
+	
+	/**
+	 * Get the total pay for a flight at a certain rate, 
+	 *	for a certain number of hours
+	 *
+	 * @param float $hours Number of hours in Hours.Minutes format
+	 * @param float $rate Hourly rate
+	 * @return float Returns the total
+	 *
+	 */
+	public static function get_pilot_pay($hours, $rate)
+	{
+		/* Hours are in hours.minutes
+			convert to minutes */
+		$peices = explode('.', $hours);
+		$minutes = ($peices[0] * 60) + $peices[1];
+		$payupdate = $minutes * ($rate/60);
+		
+		return $payupdate;
+	}
 		
 	/**
 	 * Update a pilot's pay. Pass the pilot ID, and the number of
@@ -506,7 +529,7 @@ class PilotData
 	 * @return bool Success
 	 *
 	 */
-	function UpdatePilotPay($pilotid, $flighthours)
+	public static function UpdatePilotPay($pilotid, $flighthours)
 	{
 		$sql = 'SELECT payrate 
 					FROM '.TABLE_PREFIX.'ranks r, '.TABLE_PREFIX.'pilots p 
@@ -514,12 +537,8 @@ class PilotData
 						AND p.pilotid='.$pilotid;
 						
 		$payrate = DB::get_row($sql);
-		$payrate = $payrate->payrate;
 		
-		# Convert the hours to fractions
-		$flighthours = ($flighthours/60)*100;
-		
-		$payupdate = floatval($flighthours * $payrate);
+		$payupdate = self::get_pilot_pay($flighthours, $payrate->payrate);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
 					SET totalpay=totalpay+'.$payupdate.'

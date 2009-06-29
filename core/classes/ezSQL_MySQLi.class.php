@@ -41,7 +41,7 @@
   * By Nabeel Shahzad
   */
 
-class ezSQL_mysqli extends ezSQLcore
+class ezSQL_mysqli extends ezSQL_Base
 {
 
 	/**

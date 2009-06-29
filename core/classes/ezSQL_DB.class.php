@@ -36,7 +36,8 @@
  * @license BSD License
  * @package codon_core
  */
- 
+
+include dirname(__FILE__).'/ezSQL_Base.class.php';
 
 class DB
 {
@@ -47,6 +48,8 @@ class DB
 	public static $num_rows;
 	public static $rows_affected;
 	public static $connected = false;
+	
+	public static $default_type = OBJECT;
 	
 	public static $table_prefix = '';
 	
@@ -82,9 +85,7 @@ class DB
 	 * @return boolean
 	 */
 	public static function init($type='mysql')
-	{
-		include dirname(__FILE__).'/ezSQL_SQL.class.php';
-		
+	{		
 		if($type == 'mysql' || $type == '')
 		{
 			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezSQL_MySQL.class.php';
@@ -236,20 +237,6 @@ class DB
 	}
 	
 	/**
-	 * Do a "quick update"
-	 * @see http://www.nsslive.net/codon/docs/database#quick_functions
-	 *
-	 * @param string $table Table name
-	 * @param array $fields Associative array (column=>value) to update
-	 * @param unknown_type $cond Conditions to update on
-	 * @return result
-	 */
-	public static function quick_update($table, $fields, $cond='')
-	{
-		return self::$DB->quick_update($table, $fields, $cond);
-	}
-	
-	/**
 	 * Do a quick insert into a table
 	 * @see http://www.nsslive.net/codon/docs/database#quick_functions
 	 *
@@ -258,9 +245,23 @@ class DB
 	 * @param string $flags INSERT flags (DELAYED, etc)
 	 * @return result
 	 */
-	public static function quick_insert($table, $fields, $flags= '')
+	public static function quick_insert($table, $fields, $flags= '', $allowed_cols='')
 	{
-		return self::$DB->quick_insert($table, $fields, $flags);
+		return self::$DB->quick_insert($table, $fields, $flags, $allowed_cols);
+	}
+	
+	/**
+	 * Do a "quick update"
+	 * @see http://www.nsslive.net/codon/docs/database#quick_functions
+	 *
+	 * @param string $table Table name
+	 * @param array $fields Associative array (column=>value) to update
+	 * @param unknown_type $cond Conditions to update on
+	 * @return result
+	 */
+	public static function quick_update($table, $fields, $cond='', $allowed_cols='')
+	{
+		return self::$DB->quick_update($table, $fields, $cond, $allowed_cols);
 	}
 	
 	/**
@@ -273,8 +274,10 @@ class DB
 	 * @param constant $type Return type
 	 * @return array/object
 	 */
-	public static function get_results($query, $type=OBJECT)
+	public static function get_results($query, $type='')
 	{
+		if($type == '') $type = self::$default_type;
+		
 		$ret = self::$DB->get_results($query, $type);
 		
 		self::$error = self::$DB->error;
@@ -292,8 +295,9 @@ class DB
 	 * @param offset $y
 	 * @return unknown
 	 */
-	public static function get_row($query, $type=OBJECT, $y=0)
+	public static function get_row($query, $type='', $y=0)
 	{
+		if($type == '') $type = self::$default_type;
 		$ret = self::$DB->get_row($query, $type, $y);
 		
 		self::$error = self::$DB->error;

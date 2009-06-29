@@ -45,7 +45,7 @@
 */
 
 
-class ezSQL_oracle8_9 extends ezSQLcore
+class ezSQL_oracle8_9 extends ezSQL_Base
 {
 	/**
 	 * Connects to database immediately, unless $dbname is blank

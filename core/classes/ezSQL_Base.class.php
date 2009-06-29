@@ -57,12 +57,40 @@ define('ARRAY_N','ARRAY_N', true);
 define('EZSQL_CORE_ERROR','ezSQLcore can not be used by itself (it is designed for use by database specific modules).');
 
 
-/**********************************************************************
-*  Core class containg common functions to manipulate query result
-*  sets once returned
-*/
+/**
+ *  Simple exception container class
+ *
+ */
+class ezSQL_Error extends Exception 
+{
+	public $last_query = '';
+	public $message;
+	public $code;
+	
+	public function __construct($message, $code, $query='')
+	{
+		parent::__construct($message, $code);
+		$this->last_query = $query;
+	}
+	
+	public function __toString()
+	{
+		$html .= '<blockquote>';
+		$html .= '<font face=arial size=2 color=000099><b>Last Error --</b> [<font color=000000><b>'.
+						$this->message . ' (' . $this->code . ')</b></font>]<br />';		
+		$html .= '[<font color=000000><b>'.$this->last_query.'</b></font>]</font><p>
+					</blockquote><hr noshade color=dddddd size=1>';
+			
+		return $html;
+	}
+}
 
-class ezSQLcore
+
+/**
+ * Base class for ezSQL
+ *
+ */
+class ezSQL_Base
 {
 	
 	public $trace            = false;  // same as $debug_all
@@ -92,6 +120,8 @@ class ezSQLcore
 	public $use_disk_cache   = false;
 	
 	public $memcache_status = true;
+	
+	public $default_type = OBJECT;
 	
 	public $get_col_info = false;
 	
@@ -258,8 +288,9 @@ class ezSQLcore
 	 * @return type Returns type as defined in $output
 	 *
 	 */
-	public function get_row($query=null,$output=OBJECT,$y=0)
+	public function get_row($query=null,$output='',$y=0)
 	{
+		if($output == '') $output = $this->default_type;
 		
 		// Log how the function was called
 		$this->func_call = "\$db->get_row(\"$query\",$output,$y)";
@@ -293,6 +324,26 @@ class ezSQLcore
 		
 	}
 	
+	
+	/**
+	 * Quote a value properly, check if its a function first though
+	 * For instance, passing NOW() will just return NOW. Just a simple
+	 * preg_match for string and a ( brace
+	 *
+	 * @param mixed $value Value to quote
+	 * @return mixed Returns a quoted or non quoted value
+	 *
+	 */
+	public function quote($value)
+	{
+		if(is_numeric($value))
+		{
+			return $value;
+		}
+		
+		return '\''.$value.'\'';
+	}	
+	
 	/**
 	 * Build a SELECT query, specifying the table, fields and extra conditions
 	 *
@@ -304,9 +355,10 @@ class ezSQLcore
 	 * @return type Array of results
 	 *
 	 */
-	public function quick_select($table, $fields, $cond='', $type=OBJECT)
+	public function quick_select($table, $fields, $cond='', $type='')
 	{
 		if($table ==  '') return false;
+		if($type == '') $type = $this->default_type;
 			
 		$sql = 'SELECT ';
 		
@@ -329,51 +381,6 @@ class ezSQLcore
 	
 	
 	/**
-	 * Build a UPDATE SQL Query. All values except for
-	 *  numeric and NOW() will be put in quotes
-	 * 
-	 * Values are NOT escaped
-	 *
-	 * @param string $table Table to build update on
-	 * @param array $fields Associative array, with [column]=value
-	 * @param string $cond Extra conditions, without WHERE
-	 * @return bool Results
-	 *
-	 */
-	public function quick_update($table, $fields, $cond='')
-	{
-		if($table ==  '') return false;
-		
-		$sql = 'UPDATE '.$table.' SET ';
-		
-		if(is_array($fields))
-		{
-			foreach($fields as $key=>$value)
-			{
-				$sql.= "$key=";
-				
-				if(is_numeric($value) || $value == 'NOW()')
-					$sql.=$value.',';
-				else
-					$sql.="'$value',";
-				
-			}
-			
-			$sql = substr($sql, 0, strlen($sql)-1);
-		}
-		else
-		{
-			$sql .= $fields;
-		}
-		
-		if($cond != '')
-			$sql .= ' WHERE '.$cond;
-		
-		return $this->query($sql, $type);
-	}
-	
-	
-	/**
 	 * Build a quick INSERT query. For simplistic INSERTs only,
 	 *  all values except numeric and NOW() are put in quotes
 	 * 
@@ -385,39 +392,98 @@ class ezSQLcore
 	 * @return bool Results
 	 *
 	 */
-	public function quick_insert($table, $fields, $flags= '')
+	public function quick_insert($table, $fields, $flags= '', $allowed_cols='')
 	{
 		if($table ==  '') return false;
-		//if(!is_array($fields) == false) return false;
-	
+		
 		$sql = 'INSERT '. $flags .' INTO '.$table.' ';
-
-		if(is_array($fields))
+		
+		if(is_array($allowed_cols) && count($allowed_cols) > 0)
 		{
-			foreach($fields as $key=>$value)
+			foreach($allowed_cols as $column)
 			{
-				// build both strings
-				$cols .= $key.',';
-							
-				// Quotes or none based on value
-				if(is_numeric($value) || $value == 'NOW()')
-					$col_values .= "$value,";
-				else
-				{
-					$col_values .= "'$value',";
-				}
-					
+				$cols .= $column.',';
+				$col_values .= $this->quote($fields[$column]).',';
 			}
-			
-			$cols = substr($cols, 0, strlen($cols)-1);
-			$col_values = substr($col_values, 0, strlen($col_values)-1);
-			
-			$sql .= '('.$cols.') VALUES ('.$col_values.')';
 		}
-
+		else
+		{
+			if(is_array($fields))
+			{
+				foreach($fields as $key=>$value)
+				{
+					// build both strings
+					$cols .= $key.',';
+					$col_values .= $this->quote($value).',';
+				}
+			}
+		}
+		
+		$cols[strlen($cols)-1] = ' ';
+		$col_values[strlen($col_values)-1] = ' ';
+		
+		$sql .= '('.$cols.') VALUES ('.$col_values.')';
+			
 		return $this->query($sql);
 	}
 	
+	
+	/**
+	 * Build a UPDATE SQL Query. All values except for
+	 *  numeric and NOW() will be put in quotes
+	 * 
+	 * Values are NOT escaped
+	 *
+	 * @param string $table Table to build update on
+	 * @param array $fields Associative array, with [column]=value
+	 * @param string $cond Extra conditions, without WHERE
+	 * @return bool Results
+	 *
+	 */
+	public function quick_update($table, $fields, $cond='', $allowed_cols='')
+	{
+		if($table ==  '') return false;
+		
+		$sql = 'UPDATE '.$table.' SET ';
+		
+		/* If they passed an associative array of col=>value */
+		if(is_array($fields))
+		{
+			/* Passed an array with the allowed columns */
+			if(is_array($allowed_cols) && count($allowed_cols) > 0)
+			{
+				foreach($allowed_cols as $column)
+				{
+					$sql .= $column.'=';
+					$sql .= $this->quote($fields[$column]).',';
+				}				
+			}
+			/* No specific columns, just process all the $fields */
+			else
+			{
+				foreach($fields as $key=>$value)
+				{
+					$sql.= "$key=";
+					$sql .= $this->quote($value).',';
+				}
+			}
+			
+			$sql = substr($sql, 0, strlen($sql)-1);
+		}
+		else
+		{
+			$sql .= $fields;
+		}
+		
+		$cols[strlen($cols)-1] = ' ';
+		$col_values[strlen($col_values)-1] = ' ';
+		
+		if($cond != '')
+			$sql .= ' WHERE '.$cond;
+		
+		return $this->query($sql);
+	}
+		
 	/**
 	 * Get the value of one column from a query
 	 *
@@ -453,9 +519,9 @@ class ezSQLcore
 	 * @return object Array of results, each array value being what $output is defined as
 	 *
 	 */
-	public function get_results($query=null, $output = OBJECT)
+	public function get_results($query=null, $output = '')
 	{
-		
+		if($output == '') $output = $this->default_type;		
 		// Log how the function was called
 		$this->func_call = "\$db->get_results(\"$query\", $output)";
 		

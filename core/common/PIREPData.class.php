@@ -464,6 +464,7 @@ class PIREPData
 					`flighttime`='$pirepdata[flighttime]',
 					`load`='$pirepdata[load]',
 					`fuelused`='$pirepdata[fuelused]',
+					`fuelcost`=`$pirepdata[fuelcost]',
 					`fuelprice`='$pirepdata[fuelprice]'
 				WHERE `pirepid`=$pirepid";
 

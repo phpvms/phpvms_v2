@@ -58,7 +58,9 @@ if($version[0] != '5')
 	die('You are not running PHP 5+');
 }
 
+
 require CLASS_PATH.DIRECTORY_SEPARATOR.'autoload.php';
+require CLASS_PATH.DIRECTORY_SEPARATOR.'ezSQL_DB.class.php';
 
 Config::Set('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
 Config::Set('MODULES_AUTOLOAD', true);

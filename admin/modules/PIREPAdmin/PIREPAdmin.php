@@ -301,8 +301,8 @@ class PIREPAdmin extends CodonModule
 			return false;
 		}		
 		
-		$fuelused = str_replace(' ', '', $this->post->fuelused);
-		$fuelused = str_replace(',', '', $fuelused);
+		$this->post->fuelused = str_replace(' ', '', $this->post->fuelused);
+		$this->post->fuelused = str_replace(',', '', $this->post->fuelused);
 		
 		# form the fields to submit
 		$data = array('pirepid'=>$this->post->pirepid,
@@ -314,8 +314,9 @@ class PIREPAdmin extends CodonModule
 					  'aircraft'=>$this->post->aircraft,
 					  'flighttime'=>$this->post->flighttime,
 					  'load'=>$this->post->load,
-					  'fuelused'=>$fuelused,
-					  'fuelprice'=>$this->post->fuelprice);
+					  'fuelused'=>$this->post->fuelused,
+					  'fuelcost'=>$this->post->fuelcost,
+					  'fuelprice'=>($this->post->fuelused * $this->post->fuelcost));
 		
 		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{

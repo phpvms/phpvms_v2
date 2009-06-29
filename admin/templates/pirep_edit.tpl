@@ -132,11 +132,15 @@ if($message!='')
 		
 	<dt>Fuel Used</dt>
 	<dd><input type="text" name="fuelused" value="<?php echo $pirep->fuelused; ?>" />
-		<p>This is the fuel used on this flight in <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>		
+		<p>This is the fuel used on this flight in <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>	
+		
 	<dt>Fuel Price</dt>
-	<dd><input type="text" name="fuelprice" value="<?php echo $pirep->fuelprice; ?>" />
+	<dd><input type="text" name="fuelcost" value="<?php echo $pirep->fuelcost; ?>" />
 		<p>This is the price of fuel, <?php echo Config::Get('MONEY_UNIT').' per '.Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>
 		
+	<dt>Total fuel cost</dt>
+	<dd><?php echo $pirep->fuelprice; ?> 
+		<p>Change the fuel cost above to edit this total price</p></dd>
 		
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" value="<?php echo $pirep->flighttime; ?>" />

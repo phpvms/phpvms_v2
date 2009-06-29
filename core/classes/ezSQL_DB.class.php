@@ -38,17 +38,6 @@
  */
  
 
-
-/* If not included:
- */
- 
-
-$THISBASE = dirname(__FILE__);
-include_once($THISBASE.'/SQL.class.php');
-include_once($THISBASE.'/MySQL.class.php');
-include_once($THISBASE.'/MySQLi.class.php');
-include_once($THISBASE.'/Oracle.class.php');
- 
 class DB
 {
 	public static $DB;
@@ -94,9 +83,12 @@ class DB
 	 */
 	public static function init($type='mysql')
 	{
+		include dirname(__FILE__).'/ezSQL_SQL.class.php';
 		
 		if($type == 'mysql' || $type == '')
 		{
+			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezSQL_MySQL.class.php';
+			
 			if(!self::$DB = new ezSQL_mysql())
 			{
 				self::$error = self::$DB->error;
@@ -108,6 +100,8 @@ class DB
 		}
 		elseif($type == 'mysqli')
 		{
+			include dirname(__FILE__).'/ezSQL_MySQLi.class.php';
+			
 			if(!self::$DB = new ezSQL_mysqli())
 			{
 				self::$error = self::$DB->error;
@@ -117,6 +111,8 @@ class DB
 		}
 		elseif($type == 'oracle')
 		{
+			include dirname(__FILE__).'/ezSQL_Oracle.class.php';
+			
 			if(!self::$DB = new ezSQL_oracle8_9())
 			{
 				self::$error = self::$DB->error;
@@ -126,9 +122,11 @@ class DB
 		}
 		else
 		{
+			include dirname(__FILE__).'/ezSQL_MySQL.class.php';
+			
 			self::$DB = new ezSQL_mysql();
 			self::$error = 'Invalid database type';
-			return false;
+			return true;
 		}
 		
 		return true;

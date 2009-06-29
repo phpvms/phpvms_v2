@@ -110,7 +110,10 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 		if (!$this->dbh = oci_new_connect($dbuser, $dbpassword, $dbname))
 		{
 			$err = ocierror();
-			throw new ezSQL_Error($err['message'], $err['code']);
+			
+			if($this->use_exceptions)
+				throw new ezSQL_Error($err['message'], $err['code']);
+			
 			$this->register_error($err['message'], $err['code']);
 			return false;
 		}
@@ -227,7 +230,9 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 		// If there is no existing database connection then try to connect
 		if ( ! $this->dbh )
 		{
-			throw new ezSQL_Error('No active connection', -1);
+			if($this->use_exceptions)
+				throw new ezSQL_Error('No active connection', -1);
+				
 			$this->register_error('There is no active database connection!');
 			return false;
 		}
@@ -244,7 +249,9 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 			}
 			else
 			{
-				throw new ezSQL_Error($error['message'], $error['code']);
+				if($this->use_exceptions)
+					throw new ezSQL_Error($error['message'], $error['code']);
+					
 				$this->register_error($error['message'], $error['code']);
 				return false;
 			}
@@ -261,7 +268,9 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 				return true;
 			}
 			
-			throw new ezSQL_Error($error['message'], $error['code']);
+			if($this->use_exceptions)
+				throw new ezSQL_Error($error['message'], $error['code']);
+				
 			$this->register_error($error['message'], $error['code']);
 			return false;
 		}

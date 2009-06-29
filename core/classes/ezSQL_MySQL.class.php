@@ -107,7 +107,9 @@ class ezSQL_mysql extends ezSQL_Base
 	{
 		if(!$this->dbh = mysql_connect($dbhost, $dbuser, $dbpassword, true))
 		{
-			throw new ezSQL_Error(mysql_error(), mysql_errno());
+			if($this->use_exceptions)
+				throw new ezSQL_Error(mysql_error(), mysql_errno());
+				
 			$this->register_error(mysql_error(), mysql_errno());
 			return false;
 		}
@@ -129,21 +131,27 @@ class ezSQL_mysql extends ezSQL_Base
 		// Must have a database name
 		if ($dbname == '')
 		{
-			throw new ezSQL_Error('No database specified!', -1);
+			if($this->use_exceptions)
+				throw new ezSQL_Error('No database specified!', -1);
+				
 			$this->register_error('No database name specified!');
 			return false;
 		}
 		// Must have an active database connection
 		if (!$this->dbh)
 		{
-			throw new ezSQL_Error('Invalid or inactive connection!');
+			if($this->use_exceptions)
+				throw new ezSQL_Error('Invalid or inactive connection!');
+				
 			$this->register_error('Can\'t select database, invalid or inactive connection', -1);
 			return false;
 		}
 
 		if(!@mysql_select_db($dbname, $this->dbh))
 		{
-			throw new ezSQL_Error(mysql_error(), mysql_errno());
+			if($this->use_exceptions)
+				throw new ezSQL_Error(mysql_error(), mysql_errno());
+			
 			$this->register_error(mysql_error($this->dbh), mysql_errno($this->dbh));
 			return false;
 		}
@@ -215,8 +223,10 @@ class ezSQL_mysql extends ezSQL_Base
 		// Make sure connection is ALIVEE!
 		if (!isset($this->dbh) || !$this->dbh )
 		{
+			if($this->use_exceptions)
+				throw new ezSQL_Error(mysql_error(), mysql_errno());
+			
 			$this->register_error('There is no active database connection!');
-			throw new ezSQL_Error(mysql_error(), mysql_errno());
 			return false;
 		}
 
@@ -226,8 +236,10 @@ class ezSQL_mysql extends ezSQL_Base
 		// If there is an error then take note of it..
 		if(!$this->result && mysql_errno() != 0)
 		{
-			// Something went wrong				
-			throw new ezSQL_Error(mysql_error(), mysql_errno(), $query);
+			// Something went wrong		
+			if($this->use_exceptions)		
+				throw new ezSQL_Error(mysql_error(), mysql_errno(), $query);
+				
 			$this->register_error(mysql_error(), $errno);
 			return false;
 		}

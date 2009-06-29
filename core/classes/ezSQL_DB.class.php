@@ -48,7 +48,9 @@ class DB
 	public static $num_rows;
 	public static $rows_affected;
 	public static $connected = false;
+	public static $last_query;
 	
+	public static $use_exceptions = true;
 	public static $default_type = OBJECT;
 	
 	public static $table_prefix = '';
@@ -177,6 +179,7 @@ class DB
 			return false;
 		}
 		
+		self::$DB->use_exceptions = self::$use_exceptions;
 		self::$connected = true;
 		return true;
 	}
@@ -190,6 +193,8 @@ class DB
 	 */
 	public static function select($dbname)
 	{
+		self::$DB->use_exceptions = self::$use_exceptions;
+		
 		$ret = self::$DB->select($dbname);
 		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
@@ -233,6 +238,7 @@ class DB
 	 */
 	public static function quick_select($table, $fields, $cond='', $type=OBJECT)
 	{
+		self::$DB->use_exceptions = self::$use_exceptions;
 		return self::$DB->quick_select($table, $fields, $cond, $type);
 	}
 	
@@ -247,6 +253,7 @@ class DB
 	 */
 	public static function quick_insert($table, $fields, $flags= '', $allowed_cols='')
 	{
+		self::$DB->use_exceptions = self::$use_exceptions;
 		return self::$DB->quick_insert($table, $fields, $flags, $allowed_cols);
 	}
 	
@@ -261,6 +268,7 @@ class DB
 	 */
 	public static function quick_update($table, $fields, $cond='', $allowed_cols='')
 	{
+		self::$DB->use_exceptions = self::$use_exceptions;
 		return self::$DB->quick_update($table, $fields, $cond, $allowed_cols);
 	}
 	
@@ -278,11 +286,13 @@ class DB
 	{
 		if($type == '') $type = self::$default_type;
 		
+		self::$DB->use_exceptions = self::$use_exceptions;
 		$ret = self::$DB->get_results($query, $type);
 		
 		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
 		self::$num_rows = self::$DB->num_rows;
+		self::$last_query = $query;
 		
 		return $ret;
 	}
@@ -298,10 +308,13 @@ class DB
 	public static function get_row($query, $type='', $y=0)
 	{
 		if($type == '') $type = self::$default_type;
+		self::$DB->use_exceptions = self::$use_exceptions;
+		
 		$ret = self::$DB->get_row($query, $type, $y);
 		
 		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
+		self::$last_query = $query;
 		
 		return $ret;
 	}
@@ -314,12 +327,14 @@ class DB
 	 */
 	public static function query($query)
 	{
+		self::$DB->use_exceptions = self::$use_exceptions;
 		$ret = self::$DB->query($query);
 		
 		self::$error = self::$DB->error;
 		self::$errno = self::$DB->errno;
 		self::$rows_affected = self::$num_rows = self::$DB->num_rows;
 		self::$insert_id = self::$DB->insert_id;
+		self::$last_query = $query;
 		
 		return $ret; //self::$insert_id;
 	}

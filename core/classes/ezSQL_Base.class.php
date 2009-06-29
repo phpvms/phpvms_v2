@@ -63,14 +63,17 @@ define('EZSQL_CORE_ERROR','ezSQLcore can not be used by itself (it is designed f
  */
 class ezSQL_Error extends Exception 
 {
+	/* Use these to keep it consistant with ezSQL_Base */
+	public $error;
+	public $errno;
 	public $last_query = '';
-	public $message;
-	public $code;
 	
 	public function __construct($message, $code, $query='')
 	{
 		parent::__construct($message, $code);
 		$this->last_query = $query;
+		$this->error = $message;
+		$this->errno = $code;
 	}
 	
 	public function __toString()
@@ -127,6 +130,7 @@ class ezSQL_Base
 	
 	// == TJH == default now needed for echo of debug function
 	public $debug_echo_is_on = true;
+	public $use_exceptions = true;
 	
 	
 	public function __construct()

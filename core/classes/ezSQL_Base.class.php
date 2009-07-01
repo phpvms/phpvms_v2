@@ -116,11 +116,11 @@ class ezSQL_Base
 	public $dbhost = false;
 	public $result;
 	
-	public $cache_type = 'file';
-	public $cache_dir        = false;
-	public $cache_queries    = false;
-	public $cache_inserts    = false;
-	public $use_disk_cache   = false;
+	public $cache_type		= 'file';
+	public $cache_dir       = false;
+	public $cache_queries   = false;
+	public $cache_inserts   = false;
+	public $use_disk_cache  = false;
 	
 	public $memcache_status = true;
 	

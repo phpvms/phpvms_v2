@@ -23,7 +23,7 @@ class SiteData
 	{
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'settings';
 		$all_settings = DB::get_results($sql);
-				
+		
 		if(!$all_settings)
 			return false;
 		

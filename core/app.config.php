@@ -137,7 +137,7 @@ Config::Set('DAYS_LONG',
 		);
 
 
-
+Config::Set('SITE_LANGUAGE', 'en');
 
 
 

@@ -54,12 +54,12 @@ class SiteCMS extends CodonModule
 				
 				if(SiteData::DeletePage($pageid) == false)
 				{
-					Template::Set('message', 'There was an error deleting the page!');
+					Template::Set('message', Lang::gs('page.error.delete'));
 					Template::Show('core_error.tpl');
 				}
 				else
 				{
-					Template::Set('message', 'The page was deleted');
+					Template::Set('message', Lang::gs('page.deleted'));
 					Template::Show('core_success.tpl');
 				}
 				
@@ -81,12 +81,12 @@ class SiteCMS extends CodonModule
 						
 						if($res == false)
 						{
-							Template::Set('message', 'There was an error editing the news item: '.DB::error());
+							Template::Set('message', Lang::gs('news.updated.error'));
 							Template::Show('core_error.tpl');
 						}
 						else
 						{
-							Template::Set('message', 'News edited successfully!');
+							Template::Set('message', Lang::gs('news.updated.success'));
 							Template::Show('core_success.tpl');
 						}						
 						break;
@@ -103,7 +103,7 @@ class SiteCMS extends CodonModule
 				break;
 				
 			case 'addnews':
-				Template::Set('title', 'Add News');
+				Template::Set('title', Lang::gs('news.add.title'));
 				Template::Set('action', 'addnews');
 				
 				Template::Show('news_additem.tpl');
@@ -111,7 +111,7 @@ class SiteCMS extends CodonModule
 				
 			case 'editnews':
 				
-				Template::Set('title', 'Edit News');
+				Template::Set('title', Lang::gs('news.edit.title'));
 				Template::Set('action', 'editnews');
 				Template::Set('newsitem', SiteData::GetNewsItem($this->get->id));
 				
@@ -121,7 +121,7 @@ class SiteCMS extends CodonModule
 			
 			case 'addpageform':
 
-				Template::Set('title', 'Add Page');
+				Template::Set('title', Lang::gs('page.add.title'));
 				Template::Set('action', 'addpage');
 				
 				Template::Show('pages_editpage.tpl');
@@ -194,11 +194,11 @@ class SiteCMS extends CodonModule
 		{
 			if(DB::$errno == 1062)
 			{
-				Template::Set('message', 'This page already exists!');
+				Template::Set('message', Lang::gs('page.exists'));
 			}
 			else
 			{
-				Template::Set('message', 'There was an error creating the file');
+				Template::Set('message', Lang::gs('page.create.error'));
 			}
 			
 			Template::Show('core_error.tpl');
@@ -211,13 +211,13 @@ class SiteCMS extends CodonModule
 	function EditPage()
 	{
 		$pageid = $this->post->pageid;
-		$content = $this->post->content; // Vars::POST('content'); // WE want this raw
+		$content = $this->post->content;
 		$public = ($this->post->public == 'true') ? true : false;
 		$enabled = ($this->post->enabled == 'true') ? true : false;
 		
 		if(!SiteData::EditFile($pageid, $content, $public, $enabled))
 		{
-			Template::Set('message', 'There was an error saving content');
+			Template::Set('message', Lang::gs('page.edit.error'));
 			Template::Show('core_error.tpl');
 		}
 		
@@ -234,7 +234,7 @@ class SiteCMS extends CodonModule
 		Template::Set('pagedata', $page);
 		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
 		
-		Template::Set('title', 'Edit Page');
+		Template::Set('title', Lang::gs('page.edit.title'));
 		Template::Set('action', 'savepage');
 		Template::Show('pages_editpage.tpl');
 	}
@@ -284,12 +284,12 @@ class SiteCMS extends CodonModule
 	{
 		if(!SiteData::DeleteItem($this->post->id))
 		{
-			Template::Set('message', 'There was an error deleting the item');
+			Template::Set('message', Lang::gs('news.delete.error'));
 			Template::Show('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('message', 'News item deleted');
+		Template::Set('message', Lang::gs('news.item.deleted'));
 		Template::Show('core_success.tpl');
 	}
 }

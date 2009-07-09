@@ -68,7 +68,7 @@ class Settings extends CodonModule
 			// Show the popup
 			case 'addfield':
 				
-				Template::Set('title', 'Add Field');
+				Template::Set('title', Lang::gs('settings.add.field'));
 				Template::Set('action', 'addfield');
 				
 				Template::Show('settings_addcustomfield.tpl');
@@ -76,7 +76,7 @@ class Settings extends CodonModule
 				
 			case 'editfield':
 				
-				Template::Set('title', 'Edit Field');
+				Template::Set('title', Lang::gs('settings.edit.field'));
 				Template::Set('action', 'savefield');
 				Template::Set('field', SettingsData::GetField($this->get->id));
 				
@@ -86,7 +86,7 @@ class Settings extends CodonModule
 				
 			case 'addpirepfield':
 				
-				Template::Set('title', 'Add PIREP Field');
+				Template::Set('title', Lang::gs('pirep.field.add'));
 				Template::Set('action', 'addfield');
 				Template::Show('settings_addpirepfield.tpl');
 				
@@ -94,7 +94,7 @@ class Settings extends CodonModule
 				
 			case 'editpirepfield':
 				
-				Template::Set('title', 'Edit PIREP Field');
+				Template::Set('title', Lang::gs('pirep.field.edit'));
 				Template::Set('action', 'savefields');
 				Template::Set('field', PIREPData::GetFieldInfo($this->get->id));
 				

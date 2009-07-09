@@ -39,13 +39,13 @@
 /**********************************************************************
 *  Author: Justin Vincent (justin@visunet.ie)
 *  Web...: http://php.justinvincent.com
-*  Name..: ezSQL_oracle8_9
-*  Desc..: Oracle 8i/9i component (part of ezSQL databse abstraction library)
+*  Name..: ezDB_oracle8_9
+*  Desc..: Oracle 8i/9i component (part of ezDB databse abstraction library)
 *
 */
 
 
-class ezSQL_oracle8_9 extends ezSQL_Base
+class ezDB_oracle8_9 extends ezDB_Base
 {
 	/**
 	 * Connects to database immediately, unless $dbname is blank
@@ -112,7 +112,7 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 			$err = ocierror();
 			
 			if($this->use_exceptions)
-				throw new ezSQL_Error($err['message'], $err['code']);
+				throw new ezDB_Error($err['message'], $err['code']);
 			
 			$this->register_error($err['message'], $err['code']);
 			return false;
@@ -231,7 +231,7 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 		if ( ! $this->dbh )
 		{
 			if($this->use_exceptions)
-				throw new ezSQL_Error('No active connection', -1);
+				throw new ezDB_Error('No active connection', -1);
 				
 			$this->register_error('There is no active database connection!');
 			return false;
@@ -250,7 +250,7 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 			else
 			{
 				if($this->use_exceptions)
-					throw new ezSQL_Error($error['message'], $error['code']);
+					throw new ezDB_Error($error['message'], $error['code']);
 					
 				$this->register_error($error['message'], $error['code']);
 				return false;
@@ -269,7 +269,7 @@ class ezSQL_oracle8_9 extends ezSQL_Base
 			}
 			
 			if($this->use_exceptions)
-				throw new ezSQL_Error($error['message'], $error['code']);
+				throw new ezDB_Error($error['message'], $error['code']);
 				
 			$this->register_error($error['message'], $error['code']);
 			return false;

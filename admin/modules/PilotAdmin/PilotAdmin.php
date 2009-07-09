@@ -70,7 +70,7 @@ class PilotAdmin extends CodonModule
 						
 						PilotData::DeletePilot($pilotid);
 						
-						Template::Set('message', 'Pilot has been deleted!');
+						Template::Set('message', Lang::gs('pilot.deleted'));
 						Template::Show('core_success.tpl');
 						
 						break;
@@ -258,7 +258,7 @@ class PilotAdmin extends CodonModule
 		
 		if($name == '')
 		{
-			Template::Set('message', 'You must enter a name!');
+			Template::Set('message', Lang::gs('group.no.name'));
 			Template::Show('core_error.tpl');
 			return;
 		}
@@ -273,12 +273,12 @@ class PilotAdmin extends CodonModule
 			
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error!');
+			Template::Set('message', sprintf(Lang::gs('error'), DB::$error));
 			Template::Show('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'The group "'.$name.'" has been added');
+			Template::Set('message', sprintf(Lang::gs('group.added'), $this->post->name));
 			Template::Show('core_success.tpl');
 		}		
 	}
@@ -295,12 +295,12 @@ class PilotAdmin extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error!');
+			Template::Set('message', sprintf(Lang::gs('error'), DB::$error));
 			Template::Show('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'The group "'.$this->post->name.'" has been saved');
+			Template::Set('message', sprintf(Lang::gs('group.saved'), $this->post->name));
 			Template::Show('core_success.tpl');
 		}		
 	}
@@ -313,7 +313,7 @@ class PilotAdmin extends CodonModule
 		
 		if(PilotGroups::CheckUserInGroup($pilotid, $groupname))
 		{
-			Template::Set('message', 'This user is already in this group!');
+			Template::Set('message', Lang::gs('group.pilot.already.in'));
 			Template::Show('core_error.tpl');
 			return;
 		}
@@ -322,12 +322,12 @@ class PilotAdmin extends CodonModule
 		
 		if(DB::errno() != 0 )
 		{
-			Template::Set('message', 'There was an error adding this user');
+			Template::Set('message', Lang::gs('group.add.error'));
 			Template::Show('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'User has been added to the group!');
+			Template::Set('message', Lang::gs('group.user.added'));
 			Template::Show('core_success.tpl');
 		}		
 	}
@@ -366,7 +366,7 @@ class PilotAdmin extends CodonModule
 		
 		# Send pilot notification
 		
-		$subject = 'Your registration was accepted - '.SITE_NAME;
+		$subject = Lang::gs('email.register.accepted.subject');
 		Template::Set('pilot', $pilot);
 		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true);
 	
@@ -380,7 +380,9 @@ class PilotAdmin extends CodonModule
 		
 		# Send pilot notification
 		
-		$subject = 'Your registration was denied - '.SITE_NAME;
+		$subject = Lang::gs('email.register.rejected.subject');
+				
+		Template::Set('pilot', $pilot);		
 		$message = "Dear $pilot->firstname $pilot->lastname,
 Your registration for ".SITE_NAME." was denied. Please contact an admin at <a href=\"".SITE_URL."\">".SITE_URL."</a> to dispute this. 
 				
@@ -401,7 +403,7 @@ Thanks!
 		// Check password length
 		if(strlen($password1) <= 5)
 		{
-			Template::Set('message', 'Password is less than 5 characters');
+			Template::Set('message', Lang::gs('password.wrong.length'));
 			Template::Show('core_message.tpl');
 			return;
 		}
@@ -409,7 +411,7 @@ Thanks!
 		// Check is passwords are the same
 		if($password1 != $password2)
 		{
-			Template::Set('message', 'The passwords do not match');
+			Template::Set('message', Lang::gs('password.no.match'));
 			Template::Show('core_message.tpl');
 			return;
 		}
@@ -423,7 +425,7 @@ Thanks!
 		}
 		else
 		{
-			Template::Set('message', 'Password has been successfully changed');
+			Template::Set('message', Lang::gs('password.changed'));
 			Template::Show('core_success.tpl');
 		}
 	}
@@ -438,7 +440,7 @@ Thanks!
 		$award = AwardsData::GetPilotAward($this->post->pilotid, $this->post->awardid);
 		if($award)
 		{
-			Template::Set('message', 'They already have this award!');
+			Template::Set('message', Lang::gs('award.exists'));
 			Template::Show('core_error.tpl');
 			return;
 		}
@@ -452,7 +454,7 @@ Thanks!
 		
 		if($award)
 		{
-			Template::Set('message', 'Award deleted!');
+			Template::Set('message', Lang::gs('award.deleted'));
 			Template::Show('core_success.tpl');
 			return;
 		}

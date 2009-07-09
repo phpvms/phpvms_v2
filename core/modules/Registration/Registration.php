@@ -124,7 +124,7 @@ class Registration extends CodonModule
 			
 			if($ret)
 			{
-				Template::Set('error', 'This email address is already in use');
+				Template::Set('error', Lang::gs('email.inuse'));
 				Template::Show('registration_error.tpl');
 				return false;
 			}

@@ -34,36 +34,35 @@
  * @copyright Copyright (c) 2008, Nabeel Shahzad
  * @link http://www.nsslive.net/codon
  * @license BSD License
- * @package codon_core
+ * 
+ * Based on ezDB, By Justin Vincent (justin@visunet.ie)
+*  Web...: http://php.justinvincent.com
  */
 
 /**********************************************************************
-*  Author: Justin Vincent (justin@visunet.ie)
-*  Web...: http://php.justinvincent.com
-*  Name..: ezSQL
-*  Desc..: ezSQL Core module - database abstraction library to make
+* 
+*  Name..: ezDB
+*  Desc..: ezDB Core module - database abstraction library to make
 *          it very easy to deal with databases.
 *
 */
 
 /**********************************************************************
-*  ezSQL Constants
+*  ezDB Constants
 */
 
 define('EZSQL_VERSION','2.03');
 define('OBJECT','OBJECT', true);
 define('ARRAY_A','ARRAY_A', true);
 define('ARRAY_N','ARRAY_N', true);
-define('EZSQL_CORE_ERROR','ezSQLcore can not be used by itself (it is designed for use by database specific modules).');
-
 
 /**
  *  Simple exception container class
  *
  */
-class ezSQL_Error extends Exception 
+class ezDB_Error extends Exception 
 {
-	/* Use these to keep it consistant with ezSQL_Base */
+	/* Use these to keep it consistant with ezDB_Base */
 	public $error;
 	public $errno;
 	public $last_query = '';
@@ -90,10 +89,10 @@ class ezSQL_Error extends Exception
 
 
 /**
- * Base class for ezSQL
+ * Base class for ezDB
  *
  */
-class ezSQL_Base
+class ezDB_Base
 {
 	
 	public $trace            = false;  // same as $debug_all
@@ -107,7 +106,6 @@ class ezSQL_Base
 	public $errno			  = null;
 	public $col_info         = null;
 	public $captured_errors  = array();
-	public $cache_timeout    = 24; // hours
 	public $insert_id;
 	
 	public $table_prefix = '';
@@ -118,26 +116,50 @@ class ezSQL_Base
 	public $dbhost = false;
 	public $result;
 	
-	public $cache_type		= 'file';
-	public $cache_dir       = false;
+	public $default_type = OBJECT;
+	public $get_col_info = false;
+	
+	public $debug_echo_is_on = true;
+	public $throw_exceptions = true;
+	
+	/* These settings are handled by __set() below, but can still
+		be called as $db->cache_type = '...';, just under-go some
+		checking to make sure that they're valid */
+	protected $settings = array(
+		'cache_type'	=> 'file',
+		);
+		
+	public $cache_timeout	= 3600;		# In seconds
+	public $cache_dir       = false;	# Directory to cache to if using 'file'
 	public $cache_queries   = false;
 	public $cache_inserts   = false;
 	public $use_disk_cache  = false;
 	
-	public $memcache_status = true;
-	
-	public $default_type = OBJECT;
-	
-	public $get_col_info = false;
-	
-	// == TJH == default now needed for echo of debug function
-	public $debug_echo_is_on = true;
-	public $throw_exceptions = true;
-	
+	protected $last_result;	
 	
 	public function __construct()
 	{
 		# Check for memcache support
+	}
+	
+	public function __set($name, $value)
+	{
+		switch($name)
+		{
+			case 'cache_type':
+				$this->set_cache_type($value);
+				break;
+				
+			default:
+				$this->settings[$name] = $value;
+				break;
+		}
+		
+	}
+	
+	public function __get($name)
+	{
+		return $this->settings[$name];
 	}
 	
 	/**
@@ -197,15 +219,42 @@ class ezSQL_Base
 	}
 	
 	/**
-	 * Set the cache type (file, memcache)
+	 * Set the cache type (file, memcache, check)
 	 *
 	 * @param string $type Caching type
 	 * @return none 
 	 *
 	 */
-	public function cache_type($type)
+	public function set_cache_type($type)
 	{
-		$this->cache_type = $type;
+		if($type == 'memcache')
+		{
+			$this->settings['cache_type'] = 'file'; # Not enabled for now
+			
+			if($this->throw_exceptions)
+				throw new ezDB_Error('memcache not available', -1);
+				
+			return false;
+		}
+		elseif($type == 'apc')
+		{
+			if(!function_exists('apc_add'))
+			{
+				$this->settings['cache_type'] = 'file';
+				
+				if($this->throw_exceptions)
+					throw new ezDB_Error('apc not available', -1);
+					
+				return false;
+			}
+		}
+		else
+		{
+			# Default to file if they selected anythign weird
+			$this->settings['cache_type'] = 'file';
+		}
+		
+		return true;
 	}
 	
 	
@@ -219,6 +268,11 @@ class ezSQL_Base
 	public function set_cache_dir($path)
 	{
 		$this->cache_dir = $path;
+	}
+	
+	public function set_cache_timeout($timeout)
+	{
+		$this->cache_timeout= $timeout;
 	}
 	
 	
@@ -600,7 +654,8 @@ class ezSQL_Base
 	 */
 	public function get_results($query=null, $output = '')
 	{
-		if($output == '') $output = $this->default_type;		
+		if($output == '') $output = $this->default_type;
+		
 		// Log how the function was called
 		$this->func_call = "\$db->get_results(\"$query\", $output)";
 		
@@ -609,7 +664,7 @@ class ezSQL_Base
 		{
 			$this->query($query);
 		}
-		
+				
 		// Send back array of objects. Each row is an object
 		if ( $output == OBJECT )
 		{
@@ -683,7 +738,7 @@ class ezSQL_Base
 	 */
 	public function store_cache($query,$is_insert)
 	{
-		if(!$this->cache_queries || $is_insert)
+		if($this->cache_queries === false || $is_insert)
 			return false;
 			
 		$result_cache = array('col_info' => $this->col_info,
@@ -691,11 +746,13 @@ class ezSQL_Base
 								'num_rows' => $this->num_rows,
 								'return_value' => $this->num_rows);
 		
-		# Use memcache for our caching, make sure memcache is
-		#	available too (this check is done in the constructor)
-		if($this->cache_type == 'memcache' && $memcache_status)
+		if($this->cache_type == 'memcache')
 		{
 			
+		}
+		elseif($this->cache_type == 'apc')
+		{
+			apc_add(md5($query), $result_cache, $this->cache_timeout);
 		}
 		else
 		{
@@ -723,11 +780,17 @@ class ezSQL_Base
 	 */
 	public function get_cache($query)
 	{
+		if($this->cache_queries === false || $is_insert)
+			return false;
 		
 		# Check if we want to us memcache, and whether it's available
-		if($this->cache_type == 'memcache' && $memcache_status)
+		if($this->cache_type == 'memcache')
 		{
 			
+		}
+		elseif($this->cache_type == 'apc')
+		{
+			$result_cache = apc_fetch(md5($query), $ret);
 		}
 		# Use type "file" for any other cache_type
 		else
@@ -739,27 +802,24 @@ class ezSQL_Base
 			if (file_exists($cache_file) )
 			{
 				// Only use this cache file if less than 'cache_timeout' (hours)
-				if ( (time() - filemtime($cache_file)) > ($this->cache_timeout*3600) )
+				if (time() - filemtime($cache_file) > $this->cache_timeout )
 				{
 					unlink($cache_file);
 				}
 				else
 				{
 					$result_cache = unserialize(file_get_contents($cache_file));
-					
-					$this->col_info = $result_cache['col_info'];
-					$this->last_result = $result_cache['last_result'];
-					$this->num_rows = $result_cache['num_rows'];
-					
-					$this->from_disk_cache = true;
-					
-					// If debug ALL queries
-					$this->trace || $this->debug_all ? $this->debug() : null ;
-					
-					return $result_cache['return_value'];
 				}
 			}
 		}	
+		
+		$this->from_cache = true;
+		$this->col_info = $result_cache['col_info'];
+		$this->last_result = $result_cache['last_result'];
+		$this->num_rows = $result_cache['num_rows'];
+		
+		$this->trace || $this->debug_all ? $this->debug() : null ;
+		return $result_cache['return_value'];
 	}
 	
 	
@@ -782,7 +842,7 @@ class ezSQL_Base
 		
 		if ( ! $this->vardump_called )
 		{
-			echo "<font color=800080><b>ezSQL</b> (v".EZSQL_VERSION.") <b>Variable Dump..</b></font>\n\n";
+			echo "<font color=800080><b>ezDB</b> (v".ezDB_VERSION.") <b>Variable Dump..</b></font>\n\n";
 		}
 		
 		$var_type = gettype ($mixed);
@@ -840,10 +900,10 @@ class ezSQL_Base
 		
 		echo "<blockquote>";
 		
-		// Only show ezSQL credits once..
+		// Only show ezDB credits once..
 		if ( ! $this->debug_called )
 		{
-			echo "<font color=800080 face=arial size=2><b>ezSQL</b> (v".EZSQL_VERSION.") <b>Debug..</b></font><p>\n";
+			echo "<font color=800080 face=arial size=2><b>ezDB</b> (v".ezDB_VERSION.") <b>Debug..</b></font><p>\n";
 		}
 		
 		if ( $this->error )
@@ -937,7 +997,7 @@ class ezSQL_Base
 	
 	public function donation()
 	{
-		return "<font size=1 face=arial color=000000>If ezSQL has helped <a href=\"https://www.paypal.com/xclick/business=justin%40justinvincent.com&item_name=ezSQL&no_note=1&tax=0\" style=\"color: 0000CC;\">make a donation!?</a> &nbsp;&nbsp;<!--[ go on! you know you want to! ]--></font>";
+		return "<font size=1 face=arial color=000000>If ezDB has helped <a href=\"https://www.paypal.com/xclick/business=justin%40justinvincent.com&item_name=ezDB&no_note=1&tax=0\" style=\"color: 0000CC;\">make a donation!?</a> &nbsp;&nbsp;<!--[ go on! you know you want to! ]--></font>";
 	}
 	
 }

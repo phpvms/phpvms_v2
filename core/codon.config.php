@@ -42,15 +42,16 @@ session_start();
 error_reporting(E_ALL ^ E_NOTICE);
 @ini_set('display_errors', 'on');
 
+define('DS', DIRECTORY_SEPARATOR);
 define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
-define('CLASS_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'classes');
-define('TEMPLATES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'templates');
-define('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
-define('CACHE_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'cache');
-define('COMMON_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'common');
-define('PAGES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'pages');
-define('LIB_PATH', SITE_ROOT.DIRECTORY_SEPARATOR.'lib');
+define('CLASS_PATH', CORE_PATH.DS.'classes');
+define('TEMPLATES_PATH', CORE_PATH.DS.'templates');
+define('MODULES_PATH', CORE_PATH.DS.'modules');
+define('CACHE_PATH', CORE_PATH.DS.'cache');
+define('COMMON_PATH', CORE_PATH.DS.'common');
+define('PAGES_PATH', CORE_PATH.DS.'pages');
+define('LIB_PATH', SITE_ROOT.DS.'lib');
 
 $version = phpversion();
 if($version[0] != '5')
@@ -58,15 +59,17 @@ if($version[0] != '5')
 	die('You are not running PHP 5+');
 }
 
-
 require CLASS_PATH.DIRECTORY_SEPARATOR.'autoload.php';
-require CLASS_PATH.DIRECTORY_SEPARATOR.'ezSQL_DB.class.php';
+require CLASS_PATH.DIRECTORY_SEPARATOR.'ezDB.class.php';
 
 Config::Set('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
 Config::Set('MODULES_AUTOLOAD', true);
 
 require CORE_PATH.DIRECTORY_SEPARATOR.'app.config.php';
 @include CORE_PATH.DIRECTORY_SEPARATOR.'local.config.php';
+
+/* Set the language */
+Lang::set_language(Config::Get('SITE_LANGUAGE'));
 
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
@@ -76,6 +79,7 @@ DB::$throw_exceptions = false;
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {
 	DB::init(DBASE_TYPE);
+	DB::set_caching(false);
 	DB::$table_prefix = TABLE_PREFIX;
 	DB::setCacheDir(CACHE_PATH);
 	DB::$DB->debug_all = false;
@@ -86,8 +90,8 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 		DB::hide_errors();
 		
 	if(!DB::connect(DBASE_USER, DBASE_PASS, DBASE_NAME, DBASE_SERVER))
-	{
-		die('Database connection failed! ('.DB::$errno.': '.DB::$error.')');
+	{	
+		die(Lang::gs('database.connection.failed').' ('.DB::$errno.': '.DB::$error.')');
 	}
 }
 

@@ -62,7 +62,7 @@ class PIREPAdmin extends CodonModule
 				break;
 				
 			case 'viewrecent':
-				Template::Set('title', 'Recent Reports');
+				Template::Set('title', Lang::gs('pireps.view.recent'));
 				Template::Set('pireps', PIREPData::GetRecentReports());
 				Template::Set('descrip', 'These pilot reports are from the past 48 hours');
 				
@@ -294,12 +294,12 @@ class PIREPAdmin extends CodonModule
 			return false;
 		}
 			
-		if($this->post->depicao == $this->post->arricao)
+		/*if($this->post->depicao == $this->post->arricao)
 		{
 			Template::Set('message', 'The departure airport is the same as the arrival airport!');
 			Template::Show('core_error.tpl');
 			return false;
-		}		
+		}*/
 		
 		$this->post->fuelused = str_replace(' ', '', $this->post->fuelused);
 		$this->post->fuelused = str_replace(',', '', $this->post->fuelused);

@@ -37,7 +37,7 @@
  * @package codon_core
  */
 
-include dirname(__FILE__).'/ezSQL_Base.class.php';
+include dirname(__FILE__).'/ezDB_Base.class.php';
 
 
 /**
@@ -113,9 +113,9 @@ class DB
 	{		
 		if($type == 'mysql' || $type == '')
 		{
-			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezSQL_MySQL.class.php';
+			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_MySQL.class.php';
 			
-			if(!self::$DB = new ezSQL_mysql())
+			if(!self::$DB = new ezDB_mysql())
 			{
 				self::$error = self::$DB->error;
 				self::$errno = self::$DB->errno;
@@ -127,9 +127,9 @@ class DB
 		}
 		elseif($type == 'mysqli')
 		{
-			include dirname(__FILE__).'/ezSQL_MySQLi.class.php';
+			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_MySQLi.class.php';
 			
-			if(!self::$DB = new ezSQL_mysqli())
+			if(!self::$DB = new ezDB_mysqli())
 			{
 				self::$error = self::$DB->error;
 				self::$errno = self::$DB->errno;
@@ -140,9 +140,9 @@ class DB
 		}
 		elseif($type == 'oracle')
 		{
-			include dirname(__FILE__).'/ezSQL_Oracle.class.php';
+			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_Oracle.class.php';
 			
-			if(!self::$DB = new ezSQL_oracle8_9())
+			if(!self::$DB = new ezDB_oracle8_9())
 			{
 				self::$error = self::$DB->error;
 				self::$errno = self::$DB->errno;
@@ -153,9 +153,9 @@ class DB
 		}
 		else
 		{
-			include dirname(__FILE__).'/ezSQL_MySQL.class.php';
+			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_MySQL.class.php';
 			
-			self::$DB = new ezSQL_mysql();
+			self::$DB = new ezDB_mysql();
 			self::$error = 'Invalid database type';
 			return true;
 		}

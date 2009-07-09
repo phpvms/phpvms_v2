@@ -39,7 +39,6 @@ class RegistrationData
 	
 	public static function CheckUserEmail($email)
 	{
-		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
 					WHERE email=\''.$email.'\'';
 					
@@ -51,7 +50,6 @@ class RegistrationData
 	 */
 	public static function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=false)
 	{
-		
 		$exists = self::CheckUserEmail($email);
 		if (is_object($exists) )
 		{

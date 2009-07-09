@@ -37,7 +37,7 @@ class SchedulesData
 		$code = strtoupper($code);
 		$flightnum = strtoupper($flightnum);
 		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+		$sql = 'SELECT s.*, a.id as aircraftid, a.name as aircraft, a.registration,
 							dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 					FROM '.TABLE_PREFIX.'schedules s

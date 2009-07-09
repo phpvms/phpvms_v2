@@ -39,6 +39,11 @@
 
 include dirname(__FILE__).'/ezSQL_Base.class.php';
 
+
+/**
+ * This is the < PHP 5.3 version
+ *
+ */
 class DB
 {
 	public static $DB;
@@ -50,7 +55,7 @@ class DB
 	public static $connected = false;
 	public static $last_query;
 	
-	public static $use_exceptions = true;
+	public static $throw_exceptions = true;
 	public static $default_type = OBJECT;
 	
 	public static $table_prefix = '';
@@ -64,22 +69,40 @@ class DB
 		return;
 	}
 	
-	/**
-	 * Return the singleton instance of the DB class
-	 *
-	 * @return object
-	 */
-	public static function getInstance()
-	{
-		return self::$DB;
-	}
-	
 	public function __destruct()
 	{
 		@self::$DB->close();
 	}
 	
+	/* So it passes through to the main class */
+	/*public function __get($name)
+	{
+		return self::$DB->{$name};
+	}
 	
+	public function __set($name, $value)
+	{
+		self::$DB->{$name} = $value;
+	}
+	
+	public static function __call($name, $arguments)
+	{
+		if(method_exists(self::$DB, $name))
+		{
+			return call_user_func_array(array(self::$DB, $name), $arguments);
+		}
+	}*/
+	
+	/**
+	 * Return the singleton instance of the DB class
+	 *
+	 * @return object
+	 */
+	public static function get_instance()
+	{
+		return self::$DB;
+	}
+		
 	/**
 	 * Initialize the database connection
 	 *
@@ -100,6 +123,7 @@ class DB
 				return false;
 			}
 			
+			return true;
 		}
 		elseif($type == 'mysqli')
 		{
@@ -111,6 +135,8 @@ class DB
 				self::$errno = self::$DB->errno;
 				return false;
 			}
+			
+			return true;
 		}
 		elseif($type == 'oracle')
 		{
@@ -122,6 +148,8 @@ class DB
 				self::$errno = self::$DB->errno;
 				return false;
 			}
+			
+			return true;
 		}
 		else
 		{
@@ -134,23 +162,61 @@ class DB
 		
 		return true;
 	}
-	
-	public static function setCacheDir($dir)
+		
+	/**
+	 * Enable or disable caching, can be set per-query
+	 * 
+	 * @param bool $bool True/False
+	 * @return none
+	 */
+	public static function set_caching($bool)
 	{
-		self::$DB->cache_dir = $dir;
+		self::$DB->set_caching($bool);
+	}
+	
+	/**
+	 * Set the cache type (file, memcache)
+	 *
+	 * @param string $type Caching type
+	 * @return none 
+	 *
+	 */
+	public static function cache_type($type)
+	{
+		self::$DB->cache_type($type);
+	}
+	
+	/**
+	 * Set the path of the cache
+	 *
+	 * @param mixed $path This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */	
+	public static function set_cache_dir($path)
+	{
+		self::$DB->set_cache_dir($path);
+	}
+	
+		
+	/* Aliases for above, backwards compat */
+	
+	public static function setCacheDir($path)
+	{
+		self::set_cache_dir($path);
 	}
 	
 	public static function enableCache()
 	{
-		self::$DB->cache_query = true;
-		self::$DB->use_disk_cache = true;
+		self::$DB->set_caching(true);
 	}
 	
 	public static function disableCache()
 	{
-		self::$DB->cache_query = false;
-		self::$DB->use_disk_cache = false;
+		self::$DB->set_caching(false);
 	}
+	
+	/* End aliases */
 	
 	/**
 	 * Connect to database
@@ -179,7 +245,7 @@ class DB
 			return false;
 		}
 		
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
 		self::$connected = true;
 		return true;
 	}
@@ -193,7 +259,7 @@ class DB
 	 */
 	public static function select($dbname)
 	{
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
 		
 		$ret = self::$DB->select($dbname);
 		self::$error = self::$DB->error;
@@ -238,7 +304,8 @@ class DB
 	 */
 	public static function quick_select($table, $fields, $cond='', $type=OBJECT)
 	{
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
+		
 		return self::$DB->quick_select($table, $fields, $cond, $type);
 	}
 	
@@ -253,7 +320,8 @@ class DB
 	 */
 	public static function quick_insert($table, $fields, $flags= '', $allowed_cols='')
 	{
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
+		
 		return self::$DB->quick_insert($table, $fields, $flags, $allowed_cols);
 	}
 	
@@ -268,7 +336,7 @@ class DB
 	 */
 	public static function quick_update($table, $fields, $cond='', $allowed_cols='')
 	{
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
 		return self::$DB->quick_update($table, $fields, $cond, $allowed_cols);
 	}
 	
@@ -286,7 +354,8 @@ class DB
 	{
 		if($type == '') $type = self::$default_type;
 		
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
+		
 		$ret = self::$DB->get_results($query, $type);
 		
 		self::$error = self::$DB->error;
@@ -308,7 +377,8 @@ class DB
 	public static function get_row($query, $type='', $y=0)
 	{
 		if($type == '') $type = self::$default_type;
-		self::$DB->use_exceptions = self::$use_exceptions;
+		
+		self::$DB->throw_exceptions = self::$throw_exceptions;
 		
 		$ret = self::$DB->get_row($query, $type, $y);
 		
@@ -327,7 +397,8 @@ class DB
 	 */
 	public static function query($query)
 	{
-		self::$DB->use_exceptions = self::$use_exceptions;
+		self::$DB->throw_exceptions = self::$throw_exceptions;
+		
 		$ret = self::$DB->query($query);
 		
 		self::$error = self::$DB->error;
@@ -447,4 +518,3 @@ class DB
 		return self::$DB->debug($return);
 	}
 }
-?>

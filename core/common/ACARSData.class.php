@@ -150,6 +150,7 @@ class ACARSData extends CodonModule
 		
 			DB::query($query);
 			
+			writedebug(DB::Debug(true));
 		}
 		
 		

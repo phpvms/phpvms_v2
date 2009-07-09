@@ -110,6 +110,8 @@ class ezSQL_Base
 	public $cache_timeout    = 24; // hours
 	public $insert_id;
 	
+	public $table_prefix = '';
+	
 	public $dbuser = false;
 	public $dbpassword = false;
 	public $dbname = false;
@@ -130,7 +132,7 @@ class ezSQL_Base
 	
 	// == TJH == default now needed for echo of debug function
 	public $debug_echo_is_on = true;
-	public $use_exceptions = true;
+	public $throw_exceptions = true;
 	
 	
 	public function __construct()
@@ -146,6 +148,79 @@ class ezSQL_Base
 		$this->error = '';
 		$this->errno = 0;
 	}	
+	
+	
+	/**
+	 * Set a table prefix for quick_*() functions
+	 *
+	 * @param string $prefix Table prefix
+	 * @return none 
+	 *
+	 */
+	public function set_table_prefix($prefix='')
+	{
+		$this->table_prefix = $prefix;
+	}
+	
+	
+	/**
+	 * Set the option to throw exceptions or not
+	 *
+	 * @param bool $bool True or false
+	 * @return none 
+	 *
+	 */
+	public function throw_exceptions($bool=true)
+	{
+		$this->throw_exceptions = $bool;
+	}
+	
+	/**
+	 * Enable or disable caching, can be set per-query
+	 * 
+	 * @param bool $bool True/False
+	 * @return none
+	 */
+	public function set_caching($bool)
+	{
+		
+		if($bool === true)
+		{
+			$this->cache_query = true;
+			$this->use_disk_cache = true;
+		}
+		else
+		{
+			$this->cache_query = false;
+			$this->use_disk_cache = false;			
+		}
+	}
+	
+	/**
+	 * Set the cache type (file, memcache)
+	 *
+	 * @param string $type Caching type
+	 * @return none 
+	 *
+	 */
+	public function cache_type($type)
+	{
+		$this->cache_type = $type;
+	}
+	
+	
+	/**
+	 * Set the path of the cache
+	 *
+	 * @param mixed $path This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public function set_cache_dir($path)
+	{
+		$this->cache_dir = $path;
+	}
+	
 	
 	/**
 	 * Save an error that occurs in our log

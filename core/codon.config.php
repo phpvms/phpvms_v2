@@ -71,7 +71,7 @@ require CORE_PATH.DIRECTORY_SEPARATOR.'app.config.php';
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
 
-DB::$use_exceptions = false;
+DB::$throw_exceptions = false;
 
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {

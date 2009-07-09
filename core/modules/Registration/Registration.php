@@ -107,13 +107,13 @@ class Registration extends CodonModule
 		}
 		else
 		{
-			$firstname = $this->post->firstname;
-			$lastname = $this->post->lastname;
-			$email = $this->post->email;
-			$code = $this->post->code;
-			$location = $this->post->location;
-			$hub = $this->post->hub;
-			$password = $this->post->password1;
+			$firstname = addslashes($this->post->firstname);
+			$lastname = addslashes($this->post->lastname);
+			$email = addslashes($this->post->email);
+			$code = addslashes($this->post->code);
+			$location = addslashes($this->post->location);
+			$hub = addslashes($this->post->hub);
+			$password = addslashes($this->post->password1);
 			
 			if(CodonEvent::Dispatch('registration_precomplete', 'Registration', $_POST) == false)
 			{

@@ -11,7 +11,8 @@ define('CLASS_PATH', CORE_PATH . 'classes/');
 
 if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.config.php') == 0)
 {
-	include CLASS_PATH . '/DB.class.php';
+	/* Include just some basic files to get the install going */
+	include CLASS_PATH . '/ezDB.class.php';
 	include CLASS_PATH . '/Template.class.php';
 	include CLASS_PATH . '/TemplateSet.class.php';
 	include CLASS_PATH . '/Vars.class.php';

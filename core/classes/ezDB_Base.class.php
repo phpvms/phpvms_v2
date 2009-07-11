@@ -51,7 +51,7 @@
 *  ezDB Constants
 */
 
-define('EZSQL_VERSION','2.03');
+define('ezDB_VERSION','3.00');
 define('OBJECT','OBJECT', true);
 define('ARRAY_A','ARRAY_A', true);
 define('ARRAY_N','ARRAY_N', true);
@@ -1001,5 +1001,3 @@ class ezDB_Base
 	}
 	
 }
-
-?>

@@ -64,10 +64,10 @@ class RegistrationData
 		//Stuff it into here, the confirmation email will use it.
 		self::$salt = $salt;
 		
-		$code = strtoupper($code);
-		$firstname = ucwords($firstname);
-		$lastname = ucwords($lastname);
-		$location = strtolower($location);
+		$code = DB::escape(strtoupper($code));
+		$firstname = DB::escape(ucwords($firstname));
+		$lastname = DB::escape(ucwords($lastname));
+		$location = DB::escape(strtoupper($location));
 		//Add this stuff in
 		
 		if($confirm == true)

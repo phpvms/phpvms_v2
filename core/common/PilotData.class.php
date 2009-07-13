@@ -196,7 +196,7 @@ class PilotData
 		
 		unset(self::$pilot_data[$pilotid]);
 		
-		$location = strtolower($location);
+		$location = strtoupper($location);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
 					SET `email`='$email', `location`='$location' ";
@@ -745,7 +745,10 @@ class PilotData
 		$stepsize = imagefontheight($font);
 		$fontwidth = imagefontwidth($font);
 		
-		imageantialias($img, true);
+		if(function_exists('imageantialias'))
+		{
+			imageantialias($img, true);
+		}
 		
 		$currline = $yoffset;
 		foreach($output as $line)

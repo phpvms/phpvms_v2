@@ -66,9 +66,9 @@ Config::Set('ACARS_DEBUG', false);
 /*
   This is the unit of money. For non-dollars, use :
 	Dollars ($), enter "$"
-	Euro (€), enter "&#8364;"
-	Yen (¥), enter "&yen;"
-	Pounds (£), enter "&pound;"
+	Euro (ï¿½), enter "&#8364;"
+	Yen (ï¿½), enter "&yen;"
+	Pounds (ï¿½), enter "&pound;"
 	
   For example, to set EUROS:
 	Config::Set('MONEY_UNIT', '&#8364;');
@@ -116,12 +116,15 @@ Config::Set('AVATAR_FILE_SIZE', 50000);	# Maximum file-size they can upload
 Config::Set('AVATAR_MAX_WIDTH', 80);	# Resized width
 Config::Set('AVATAR_MAX_HEIGHT', 80);	# Resized height
 
+# Cookie information
+Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in seconds
+//Config::Set('SESSION_COOKIE_NAME', 'VMS_AUTH_COOKIE');
+
 Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
 
 /* Days of the Week
 	The compacted view, and the full text
  */
-
 Config::Set('DAYS_COMPACT',  array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su'));
 
 Config::Set('DAYS_LONG', 
@@ -138,15 +141,6 @@ Config::Set('DAYS_LONG',
 
 
 Config::Set('SITE_LANGUAGE', 'en');
-
-
-
-
-
-
-
-
-
 
 
 
@@ -256,6 +250,8 @@ define('LOAD_VARIATION', 5);
 define('SECONDS_PER_DAY', 86400);
 
 define('GEONAME_URL', 'http://ws.geonames.org');
+
+define('VMS_AUTH_COOKIE', 'VMSAUTH');
 
 /**
  * Library Includes (from 3rd Party)

@@ -61,12 +61,13 @@ $BaseTemplate->Set('title', SITE_NAME);
 Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
-$BaseTemplate->ShowTemplate('header.tpl');
-
-flush();
-
+ob_start();
 MainController::RunAllActions(Config::Get('RUN_MODULE'));
+$page_data = ob_get_clean();
+ob_end_flush();
 
+$BaseTemplate->ShowTemplate('header.tpl');
+echo $page_data;
 $BaseTemplate->ShowTemplate('footer.tpl');
 
 # Force connection close

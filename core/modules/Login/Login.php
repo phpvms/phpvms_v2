@@ -107,14 +107,14 @@ class Login extends CodonModule
 	{
 		$email = $this->post->email;
 		$password = $this->post->password;
-		
+			
 		if($email == '' || $password == '')
 		{
 			Template::Set('message', 'You must fill out both your username and password');
 			Template::Show('login_form.tpl');
 			return false;
 		}
-		
+
 		if(!Auth::ProcessLogin($email, $password))
 		{
 			Template::Set('message', Auth::$error_message);
@@ -123,9 +123,6 @@ class Login extends CodonModule
 		}
 		else
 		{
-			//TODO: check if unconfirmed or not
-			//TODO: add to sessions table
-
 			if(Auth::$userinfo->confirmed == PILOT_PENDING)
 			{
 				Template::Show('login_unconfirmed.tpl');
@@ -140,9 +137,13 @@ class Login extends CodonModule
 			}
 			else
 			{
-				//error_reporting(E_ALL);
-							
 				PilotData::UpdateLogin(SessionManager::GetValue('userinfo', 'pilotid'));
+
+				# If they choose to be "remembered", then assign a cookie
+				if($this->post->remember == 'on')
+				{
+				   Auth::set_session(SessionManager::GetValue('userinfo', 'pilotid'));
+				}
 				
 				Template::Set('redir', SITE_URL . '/' . $this->post->redir);
 				Template::Show('login_complete.tpl');

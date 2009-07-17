@@ -2,6 +2,14 @@
 -- phpVMS Update file;
 
 
+-- add sessions table;
+CREATE TABLE `phpvms_sessions` (
+   `id` INT NOT NULL ,
+   `pilotid` INT NOT NULL ,
+   `ipaddress` VARCHAR( 25 ) NOT NULL ,
+   `logintime` DATETIME NOT NULL
+) ENGINE = MYISAM ;
+
 -- add permissions and default permission for admin group;
 
 ALTER TABLE `phpvms_groups` ADD `permissions` INT NOT NULL ;

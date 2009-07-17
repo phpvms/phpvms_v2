@@ -11,11 +11,16 @@ if($message)
 	
 	<dt>Password:</dt>
 	<dd><input type="password" name="password" value="" />
-	
+	   
+	<dt></dt>
+	<dd>Remember Me? <input type="checkbox" name="remember" /></dd>
+
 	<dt></dt>
 	<dd><input type="hidden" name="redir" value="index.php/profile" />
 		<input type="hidden" name="action" value="login" />
 		<input type="submit" name="submit" value="Log In" />
+
+	
 		
 	<dt></dt>
 	<dd><a href="<?php echo SITE_URL ?>/index.php/Login/forgotpassword">I forgot my password</a></dd>

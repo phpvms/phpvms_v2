@@ -29,6 +29,6 @@ function pre_module_load()
 
 function post_module_load()
 {
-	return;
+   return true;
 }
 ?>

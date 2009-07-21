@@ -170,7 +170,7 @@ class RanksData
 		
 		foreach($allranks as $rank)
 		{
-			$pilothours = intval($pilot->totalhours);
+			$pilothours = $pilot->totalhours;
 			
 			if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
 			{

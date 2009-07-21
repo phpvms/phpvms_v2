@@ -272,28 +272,26 @@ class ezDB_mysql extends ezDB_Base
 			// Take note of column info
 			$i=0;
 			
-			if(!$this->result)
+			if($this->result)
 			{
-				return;
-			}
-			
-			while ($i < mysql_num_fields($this->result))
-			{
-				$this->col_info[$i] = mysql_fetch_field($this->result);
-				$i++;
-			}
-			
-			// Store Query Results
-			$num_rows=0;
-			
-			while($row = mysql_fetch_object($this->result))
-			{
-				// Store relults as an objects within main array
-				$this->last_result[$num_rows] = $row;
-				$num_rows++;
-			}
+				while ($i < mysql_num_fields($this->result))
+				{
+					$this->col_info[$i] = mysql_fetch_field($this->result);
+					$i++;
+				}
+				
+				// Store Query Results
+				$num_rows=0;
+				
+				while($row = mysql_fetch_object($this->result))
+				{
+					// Store relults as an objects within main array
+					$this->last_result[$num_rows] = $row;
+					$num_rows++;
+				}
 
-			mysql_free_result($this->result);
+				mysql_free_result($this->result);
+			}
 			
 			// Log number of rows the query returned
 			$this->rows_affected = $num_rows;

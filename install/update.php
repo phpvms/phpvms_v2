@@ -132,7 +132,7 @@ echo 'Starting the update...<br />';
 		Installer::add_to_config('COMMENT', 'Monetary Units');
 		Installer::add_to_config('MONEY_UNIT', '$', '$, €, etc');
 		
-		Installer::sql_file_update(SITE_ROOT . '/install/update628.sql');
+		Installer::sql_file_update(dirname(__FILE__). '/update_628.sql');
 		
 	}
 	

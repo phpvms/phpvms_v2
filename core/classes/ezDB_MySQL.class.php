@@ -272,7 +272,8 @@ class ezDB_mysql extends ezDB_Base
 			// Take note of column info
 			$i=0;
 			
-			if($this->result)
+			
+			if(is_resource($this->result))
 			{
 				while ($i < mysql_num_fields($this->result))
 				{

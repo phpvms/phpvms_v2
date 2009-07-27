@@ -59,14 +59,14 @@ if($version[0] != '5')
 	die('You are not running PHP 5+');
 }
 
-require CLASS_PATH.DIRECTORY_SEPARATOR.'autoload.php';
-require CLASS_PATH.DIRECTORY_SEPARATOR.'ezDB.class.php';
+require CLASS_PATH.DS.'autoload.php';
+require CLASS_PATH.DS.'ezDB.class.php';
 
-Config::Set('MODULES_PATH', CORE_PATH.DIRECTORY_SEPARATOR.'modules');
+Config::Set('MODULES_PATH', CORE_PATH.DS.'modules');
 Config::Set('MODULES_AUTOLOAD', true);
 
-require CORE_PATH.DIRECTORY_SEPARATOR.'app.config.php';
-@include CORE_PATH.DIRECTORY_SEPARATOR.'local.config.php';
+require CORE_PATH.DS.'app.config.php';
+@include CORE_PATH.DS.'local.config.php';
 
 /* Set the language */
 Lang::set_language(Config::Get('SITE_LANGUAGE'));

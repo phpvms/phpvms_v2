@@ -159,6 +159,17 @@ class ACARSData extends CodonModule
 	}
 	
 	
+	public static function get_flight($code, $flight_num)
+	{
+		$code = DB::escape($code);
+		$flight_num = DB::escape($flight_num);
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."acarsdata 
+					WHERE flightnum='{$code}{$flight_num}'";
+		
+		return DB::get_row($sql);		
+	}
+	
 	/**
 	 * File a PIREP from an ACARS program
 	 *

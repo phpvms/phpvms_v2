@@ -85,7 +85,7 @@ class Auth
 
 	public static function set_session($pilot_id)
 	{
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
+	   $sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
 			WHERE pilotid = '{$pilot_id}'";
 
 	   $session_data = DB::get_row($sql);

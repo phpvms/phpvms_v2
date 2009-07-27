@@ -75,7 +75,9 @@ class ACARS extends CodonModule
 				
 				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 				Template::Set('userinfo', Auth::$userinfo);
+				
 				$fsacars_config = Template::GetTemplate('fsacars_config.tpl', true);
+				$fsacars_config = str_replace("\n", "\r\n", $fsacars_config);
 				
 				# Set the headers so the browser things a file is being sent
 				header('Content-Type: text/plain');
@@ -83,6 +85,7 @@ class ACARS extends CodonModule
 				header('Content-Length: ' . strlen($fsacars_config));
 				
 				//error_reporting(0);
+				
 				echo $fsacars_config;
 				
 				break;
@@ -101,6 +104,7 @@ class ACARS extends CodonModule
 				Template::Set('userinfo', Auth::$userinfo);
 				
 				$fspax_config = Template::GetTemplate('fspax_config.tpl', true);
+				$fspax_config = str_replace("\n", "\r\n", $fspax_config);
 				
 				# Set the headers so the browser things a file is being sent
 				header('Content-Type: text/plain');
@@ -108,6 +112,29 @@ class ACARS extends CodonModule
 				header('Content-Length: ' . strlen($fspax_config));
 				
 				echo $fspax_config;
+				
+				break;
+				
+			case 'xacarsconfig':
+				
+				if(!Auth::LoggedIn())
+				{
+					echo 'You are not logged in!';
+					break;
+				}
+				
+				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+				Template::Set('userinfo', Auth::$userinfo);
+				
+				$xacars_config = Template::GetTemplate('xacars_config.tpl', true);
+				$xacars_config = str_replace("\n", "\r\n", $xacars_config);
+				
+				# Set the headers so the browser things a file is being sent
+				header('Content-Type: text/plain');
+				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'_config.cfg"');
+				header('Content-Length: ' . strlen($xacars_config));
+				
+				echo $xacars_config;
 				
 				break;
 				

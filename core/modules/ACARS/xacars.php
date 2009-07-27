@@ -266,7 +266,7 @@ $route->registration
 		$load = $data[14];
 		
 		# Convert the time to xx.xx 
-		$flighttime = number_format(floatval(str_replace(':', '.', $data[11])), 2);
+		$flighttime = floatval(str_replace(':', '.', $data[11])) * 1.00;
 		
 		$data = array('pilotid'=>$data[0],
 				'code'=>$code,

@@ -339,7 +339,6 @@ $maxcargo";
 		$data = array('pilotid'=>$pilotid,
 						'code'=>$code,
 						'flightnum'=>$flightnum,
-						'leg'=>$leg,
 						'depicao'=>$_GET['origin'],
 						'arricao'=>$_GET['dest'],
 						'aircraft'=>$ac->id,

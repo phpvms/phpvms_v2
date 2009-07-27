@@ -20,6 +20,9 @@ writedebug($_SERVER['QUERY_STRING']);
 writedebug($_SERVER['REQUEST_URI']);
 writedebug(print_r($_REQUEST, true));
 
+$_REQUEST = array('DATA1'=>'XACARS|1.1',
+				  'DATA2'=>'VMA001~~VMA001~F100~24000~IFR~LOWW~LOWI~EDDM~01.07.2009 18:32~02:04~01:27~1980~1456~72~2100~VATSIM');
+
 class Coords {
 	public $lat;
 	public $lng;
@@ -130,12 +133,7 @@ $route->registration
 ";
 		
 		break;
-		
-	case 'pirep':
-	
-	
-		break;
-		
+				
 	case 'acars':
 	
 		if($_REQUEST['DATA2'] == 'TEST')
@@ -172,7 +170,6 @@ $route->registration
 		elseif(strtoupper($_REQUEST['DATA2']) == 'MESSAGE')
 		{
 			$data = $_REQUEST['DATA4'];
-			var_dump($data);
 			
 			/* Get the flight information, from ACARS, need to
 				pull the latest flight data via the flight number
@@ -231,13 +228,60 @@ $route->registration
 			'client'=>'xacars'
 		);
 		
-		var_dump($fields);
-				
 		writedebug($fields);
 		
 		ACARSData::UpdateFlightData($fields);
 		
 		echo '1|Success';
 		break;
-	
+		
+	case 'pirep':
+		
+		$data = explode('~', $_REQUEST['DATA2']);
+				
+		preg_match('/^([A-Za-z]*)(\d*)/', $data[2], $matches);
+		$code = $matches[1];
+		$flightnum = $matches[2];
+		
+		# Make sure airports exist:
+		#  If not, add them.
+		$depicao = $data[6];
+		$arricao = $data[7];
+		
+		if(!OperationsData::GetAirportInfo($depicao))
+		{
+			OperationsData::RetrieveAirportInfo($depicao);
+		}
+		
+		if(!OperationsData::GetAirportInfo($arricao))
+		{
+			OperationsData::RetrieveAirportInfo($arricao);
+		}
+		
+		# Get aircraft information
+		$reg = trim($data[3]);
+		$ac = OperationsData::GetAircraftByReg($reg);
+		
+		# Load info
+		$load = $data[14];
+		
+		# Convert the time to xx.xx 
+		$flighttime = number_format(floatval(str_replace(':', '.', $data[11])), 2);
+		
+		$data = array('pilotid'=>$data[0],
+				'code'=>$code,
+				'flightnum'=>$flightnum,
+				'depicao'=>$depicao,
+				'arricao'=>$arricao,
+				'aircraft'=>$ac->id,
+				'flighttime'=>$flighttime,
+				'submitdate'=>'NOW()',
+				'comment'=>$comment,
+				'fuelused'=>$data[12],
+				'source'=>'xacars',
+				'load'=>$load,
+				'log'=> $_GET['log']);
+				
+		echo '1|Success';
+		break;
 }

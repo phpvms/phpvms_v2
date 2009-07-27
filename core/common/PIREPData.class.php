@@ -304,7 +304,6 @@ class PIREPData
 		/*$pirepdata = array('pilotid'=>'',
 					  'code'=>'',
 					  'flightnum'=>'',
-					  'leg'=>'',
 					  'depicao'=>'',
 					  'arricao'=>'',
 					  'aircraft'=>'',

@@ -28,6 +28,7 @@ class AircraftStats
 	 */
 	public static function getAircraftDetails()
 	{
+	
 		$sql = 'SELECT a.*,
 					   COUNT(p.pirepid) AS routesflown,
 					   SUM(p.distance) AS totaldistance,

@@ -131,7 +131,7 @@ class ACARS extends CodonModule
 				
 				# Set the headers so the browser things a file is being sent
 				header('Content-Type: text/plain');
-				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'_config.cfg"');
+				header('Content-Disposition: attachment; filename="xacars.ini"');
 				header('Content-Length: ' . strlen($xacars_config));
 				
 				echo $xacars_config;

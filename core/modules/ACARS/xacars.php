@@ -20,9 +20,6 @@ writedebug($_SERVER['QUERY_STRING']);
 writedebug($_SERVER['REQUEST_URI']);
 writedebug(print_r($_REQUEST, true));
 
-$_REQUEST = array('DATA1'=>'XACARS|1.1',
-				  'DATA2'=>'VMA001~~VMA001~F100~24000~IFR~LOWW~LOWI~EDDM~01.07.2009 18:32~02:04~01:27~1980~1456~72~2100~VATSIM');
-
 class Coords {
 	public $lat;
 	public $lng;

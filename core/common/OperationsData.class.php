@@ -262,9 +262,13 @@ class OperationsData
 	public static function AddAirport($icao, $name, $country, $lat, $long, $hub, $fuelprice=0)
 	{
 	
+		if($icao == '')
+			return false;
+			
 		$icao = strtoupper($icao);
+			
 
-		if($hub == true)
+		if($hub === true)
 			$hub = 1;
 		else
 			$hub = 0;
@@ -294,9 +298,12 @@ class OperationsData
 			$hub = 1;
 		else
 			$hub = 0;
+		
+		$icao = strtoupper(DB::escape($icao));
+		$name = DB::escape($name);
 
 		$sql = "UPDATE " . TABLE_PREFIX . "airports
-					SET `name`='$name', `country`='$country', 
+					SET `icao`='$icao', `name`='$name', `country`='$country', 
 						`lat`=$lat, `lng`=$long, `hub`=$hub, `fuelprice`=$fuelprice
 					WHERE `icao`='$icao'";
 

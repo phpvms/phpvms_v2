@@ -229,13 +229,17 @@ class CentralData
 	
 	public static function send_acars_data()
 	{
-		if(!self::central_enabled() || !is_array($acars_data))
+		if(!self::central_enabled())
 			return false;
 		
 		$xml = '<acarsdata>'.PHP_EOL;
 		$xml .= self::xml_header('update_acars');
 		
 		$acars_flights = ACARSData::GetACARSData();
+			
+		if(!$acars_flights)
+			return false;
+		
 		foreach($acars_flights as $flight)
 		{
 			$xml.='<flight>';

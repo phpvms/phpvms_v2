@@ -20,7 +20,7 @@ class PIREPS extends CodonModule
 {
 	public $pirep;
 	
-	function Controller()
+	public function Controller()
 	{
 		switch($this->get->page)
 		{

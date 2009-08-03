@@ -226,7 +226,7 @@ class ACARSData extends CodonModule
 	public static function GetACARSData($cutofftime = '')
 	{
 		//cutoff time in days
-		if($cutofftime == '')
+		if($cutofftime == '' && $cutofftime != null)
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
 		$cutofftime = $cutofftime / 60;			
@@ -245,7 +245,5 @@ class ACARSData extends CodonModule
 					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
-		
-		return $ret;
 	}
 }

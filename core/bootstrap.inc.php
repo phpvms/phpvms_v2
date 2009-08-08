@@ -18,7 +18,12 @@
 
 function pre_module_load()
 {	
-	if(!file_exists(CORE_PATH.'/local.config.php')|| filesize(CORE_PATH.'/local.config.php') == 0)
+	if(is_dir(CORE_PATH.'/local.config.php'))
+	{
+		die ('core/local.config.php is a folder, not a file. Please delete and create as a file');
+	}
+	
+	if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.config.php') == 0)
 	{
 		header('Location: install/install.php');
 	}

@@ -689,10 +689,14 @@ class PilotData
 		$pilot = self::GetPilotData($pilotid);
 		$pilotcode = self::GetPilotCode($pilot->code, $pilot->pilotid);
 		
-		if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
-			$totalhours = intval($pilot->totalhours) + intval($pilot->transferhours);
+		if(Config::Get('TRANSFER_HOURS_IN_RANKS') === true)
+		{
+			$totalhours = floatval($pilot->totalhours) + floatval($pilot->transferhours);
+		}
 		else
-			$totalhours = intval($pilot->totalhours);
+		{
+			$totalhours = floatval($pilot->totalhours);
+		}
 		
 		# Configure what we want to show on each line
 		$output = array();

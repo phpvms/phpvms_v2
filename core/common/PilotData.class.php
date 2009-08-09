@@ -703,7 +703,7 @@ class PilotData
 		$output[] = $pilotcode.' '. $pilot->firstname.' '.$pilot->lastname;
 		$output[] = $pilot->rank.', '.$pilot->hub;
 		$output[] = 'Total Flights: ' . $pilot->totalflights;
-		$output[] = 'Total Hours: ' . $pilot->totalhours;
+		$output[] = 'Total Hours: ' . $totalhours;
 		
 		if(Config::Get('SIGNATURE_SHOW_EARNINGS') == true)
 		{

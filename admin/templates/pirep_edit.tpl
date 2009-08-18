@@ -130,13 +130,17 @@ if($message!='')
 	<dd><input type="text" name="load" value="<?php echo $pirep->load; ?>" />
 		<p>This is the load of this flight. It's automatically determined, though you can adjust it here</p></dd>
 		
+	<dt>Price</dt>
+	<dd><input type="text" name="price" value="<?php echo $pirep->price; ?>" />
+		<p>This is the load of this flight. It's automatically determined, though you can adjust it here</p></dd>
+		
 	<dt>Fuel Used</dt>
 	<dd><input type="text" name="fuelused" value="<?php echo $pirep->fuelused; ?>" />
 		<p>This is the fuel used on this flight in <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>	
 		
 	<dt>Fuel Price</dt>
-	<dd><input type="text" name="fuelcost" value="<?php echo $pirep->fuelcost; ?>" />
-		<p>This is the price of fuel, <?php echo Config::Get('MONEY_UNIT').' per '.Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?></p></dd>
+	<dd><input type="text" name="fuelunitcost" value="<?php echo $pirep->fuelunitcost?>" />
+		<p>This is the price of fuel, <?php echo Config::Get('MONEY_UNIT').' per '.Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?>. If you change this, the total fuel cost amount below will be calculated and replaced</p></dd>
 		
 	<dt>Total fuel cost</dt>
 	<dd><?php echo $pirep->fuelprice; ?> 

@@ -316,10 +316,11 @@ class PIREPAdmin extends CodonModule
 					  'aircraft'=>$this->post->aircraft,
 					  'flighttime'=>$this->post->flighttime,
 					  'load'=>$this->post->load,
+					  'price'=>$this->post->price,
 					  'fuelused'=>$this->post->fuelused,
-					  'fuelcost'=>$this->post->fuelcost,
-					  'fuelprice'=>($this->post->fuelused * $this->post->fuelcost));
-		
+					  'fuelunitcost'=>$this->post->fuelunitcost,
+					  'fuelprice'=>$this->post->fuelcost);
+					 		
 		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{
 			Template::Set('message', 'There was an error adding your PIREP');

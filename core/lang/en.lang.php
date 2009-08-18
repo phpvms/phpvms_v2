@@ -29,6 +29,10 @@ $trans = array(
 	'email.register.accepted.subject'	=> 'Your registration was accepted!',
 	'email.register.rejected.subject'	=> 'Your registration was denied!',
 	
+	/* Expenses */
+	
+	
+	
 	/* Registration Errors */
 	'password.wrong.length'				=> 'Password is less than 5 characters',
 	'password.no.match'					=> 'The passwords do not match',
@@ -79,4 +83,6 @@ $trans = array(
 	/*
 	 * Template language replacements
 	 */
+	 
+	
 );

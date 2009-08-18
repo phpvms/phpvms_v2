@@ -334,6 +334,8 @@ class PIREPData
 			$pirepdata['load'] = FinanceData::GetLoadCount($pirepdata['aircraft'], $sched->flighttype);
 		}
 		
+		$pirepdata['fuelunitcost'] = FuelData::GetFuelPrice($pirepdata['depicao']);
+		
 		# Get the fuelprice
 		if($pirepdata['fuelprice'] == '')
 		{
@@ -359,6 +361,7 @@ class PIREPData
 							`log`,
 							`load`,
 							`fuelused`,
+							`fuelunitcost`,
 							`fuelprice`,
 							`source`)
 					VALUES ($pirepdata[pilotid], 
@@ -373,6 +376,7 @@ class PIREPData
 							'$pirepdata[log]',
 							'$pirepdata[load]',
 							'$pirepdata[fuelused]',
+							'$pirepdata[fuelunitcost]',
 							'$pirepdata[fuelprice]',
 							'$pirepdata[source]')";
 
@@ -446,12 +450,7 @@ class PIREPData
 			return false;
 		}
 		
-		# Get the fuelprice
-		if($pirepdata['fuelprice'] == '')
-		{
-			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice();
-		}
-		
+		$pirepdata['fuelprice'] = $pirepdata['fuelused'] * $pirepdata['fuelunitcost'];
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		$sql = "UPDATE ".TABLE_PREFIX."pireps 
@@ -463,7 +462,7 @@ class PIREPData
 					`flighttime`='$pirepdata[flighttime]',
 					`load`='$pirepdata[load]',
 					`fuelused`='$pirepdata[fuelused]',
-					`fuelcost`=`$pirepdata[fuelcost]',
+					`fuelunitcost`='$pirepdata[fuelunitcost]',
 					`fuelprice`='$pirepdata[fuelprice]'
 				WHERE `pirepid`=$pirepid";
 

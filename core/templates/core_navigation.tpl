@@ -23,7 +23,7 @@ else
 <?php
 if(Auth::LoggedIn())
 {
-	if(Auth::UserInGroup('Administrators'))
+	if(PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
 	{
 		echo '<li><a href="'.SITE_URL.'/admin/">Admin Center</a></li>';
 	}

@@ -34,18 +34,23 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"
 			target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 	<p class="header">
-		<em>Last Update: February 07, 2009</em><br />
+		<em>Last Update: August 11, 2009</em><br />
 	</p>
 	<hr />
 	<h1>Build ##REVISION## (Version 1.2.##REVISION##)</h1>
 	<ul>
+		<li><strong>New</strong>: <a href="http://www.vacentral.net" target="_blank">vaCentral</a> support - the virtual airline community</li>
 		<li><strong>NEW</strong>: <a href="http://www.xacars.net" target="_blank">XAcars</a> position and PIREP support</li>
-		<li><strong>NEW</strong>: Language/translation files for admin panel (english language included)</li>
+		<li><strong>NEW</strong>: Selective access to admin panel options based on group</li>
+		<li>Partial language/translation files for admin panel (english language included)</li>
+		<li>Database layer updates, reduced memory usage</li>
 		<li>Fixed incorrect new line characters in ACARS config files</li>
-		<li>"Remember Me" login option added</li>
+		<li>"Remember Me" login option added, session tracking</li>
+		<li>Current online users</li>
 		<li>Added option to disable live fuel prices</li>
 		<li>Aircraft statistics hours bug-fix</li>
-		<li>Pilot salary big fixed</li>
+		<li>Signatures account for transfer hours if enabled</li>
+		<li>Pilot salary bug fixed</li>
 	</ul>
 
 	<p>
@@ -72,6 +77,7 @@
 	<p>
 		<strong>Templates Changed</strong>:</p>
 	<ul>
+		<li>core_navigation.tpl - Allow access roles to admin panel (<a href="http://forum.phpvms.net/index.php?topic=1082.msg6170" target="_new">link</a></li>
 		<li>schedule_results.tpl - Added link to brief page</li>
 		<li>schedule_bids.tpl - Added link to boarding pass</li>
 	</ul>

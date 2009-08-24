@@ -316,6 +316,8 @@ class PIREPData
 					  
 		if(!is_array($pirepdata))
 			return false;
+			
+		#echo '<pre>';
 	
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		
@@ -345,6 +347,7 @@ class PIREPData
 		
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 		
+		#var_dump($pirepdata);
 		# Escape the comment field
 		$comment = DB::escape($pirepdata['comment']);
 				
@@ -382,6 +385,7 @@ class PIREPData
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
+		
 		// Add the comment if its not blank
 		if($comment != '')
 		{

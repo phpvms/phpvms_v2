@@ -20,7 +20,7 @@ class FuelData
 		{
 			$price = self::get_cached_price($apt_icao);
 			
-			if(is_bool($price) && $price === false)
+			if(!$price)
 			{				
 				$price = self::get_from_server($apt_icao);	
 
@@ -128,11 +128,12 @@ class FuelData
 		
 		$curl_loader = new CodonWebService();
 		$resp = $curl_loader->get($url);
-		
+			
 		if($resp == '' || $resp === false)
 			return false;
 			
 		$results = @simplexml_load_string($resp);
+	
 		
 		if($results === false)
 		{

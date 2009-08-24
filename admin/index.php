@@ -45,13 +45,15 @@
 define('ADMIN_PANEL', true);
 include '../core/codon.config.php';
 
-if(!Auth::LoggedIn() && !PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
+if(!Auth::LoggedIn())
 {
-	die('Unauthorized access!');
+	die('Please login first');
 }
 
-#if(!Auth::UserInGroup('Administrators'))
-#	die('Unauthorized access!');
+if(!PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
+{
+	die('Unauthorized access');
+}
 
 $BaseTemplate = new TemplateSet;
 $tplname = 'layout';

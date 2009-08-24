@@ -81,6 +81,7 @@ class CentralData
 		
 		$xml .= '</vainfo>';
 		
+		
 		# Package and send
 		CronData::set_lastupdate('update_vainfo');		
 		return self::send_xml($xml);
@@ -169,6 +170,9 @@ class CentralData
 		
 		
 		$allpireps = PIREPData::GetAllReports();
+		if(!$allpireps)
+			return false;
+		
 		$xml .= '<total>'.count($allpireps).'</total>';
 		
 		foreach($allpireps as $pirep)
@@ -195,6 +199,10 @@ class CentralData
 		$xml .= self::xml_header('add_pirep');
 		
 		$pirep = PIREPData::GetReportDetails($pirep_id);
+		
+		if(!$pirep)
+			return false;
+			
 		$xml .= self::get_pirep_xml($pirep);
 		
 		$xml .= '</pirepdata>';
@@ -226,24 +234,49 @@ class CentralData
 				.'</pirep>';		
 	}
 	
-	public static function send_acars_data()
+	public static function send_all_acars()
+	{
+		if(!self::central_enabled())
+			return false;
+			
+		$acars_flights = ACARSData::GetAllFlights();
+		
+		if(!$acars_flights)
+			return false;
+		
+		$xml = '<acarsdata>'.PHP_EOL;
+		$xml .= self::xml_header('update_acars');
+				
+		foreach($acars_flights as $flight)
+		{			
+			$xml .= self::create_acars_flight($flight);
+		}
+		
+		$xml .= '</acarsdata>';
+		CronData::set_lastupdate('update_acars');
+		return self::send_xml($xml);
+	}
+	
+	public static function send_acars_data($flight)
 	{
 		if(!self::central_enabled())
 			return false;
 		
 		$xml = '<acarsdata>'.PHP_EOL;
-		$xml .= self::xml_header('update_acars');
+		$xml .= self::xml_header('update_acars_flight');
+		$xml .= self::create_acars_flight($flight);
+		$xml .= '</acarsdata>';
 		
-		$acars_flights = ACARSData::GetACARSData();
-			
-		if(!$acars_flights)
-			return false;
-		
-		foreach($acars_flights as $flight)
-		{			
-			$xml.='<flight>'
-				.'<aircraft>'.$flight->aircraftname.'</aircraft>'
+		CronData::set_lastupdate('update_acars');
+		return self::send_xml($xml);
+	}	
+	
+	protected function create_acars_flight($flight)
+	{
+		return '<flight>'
+				.'<unique_id>'.$flight->id.'</unique_id>'
 				.'<flightnum>'.$flight->flightnum.'</flightnum>'
+				.'<aircraft>'.$flight->aircraftname.'</aircraft>'
 				.'<lat>'.$flight->lat.'</lat>'
 				.'<lng>'.$flight->lng.'</lng>'
 				.'<pilotid>'.PilotData::GetPilotCode($flight->code, $flight->pilotid).'</pilotid>'
@@ -259,12 +292,6 @@ class CentralData
 				.'<distremain>'.$flight->distremain.'</distremain>'
 				.'<timeremaining>'.$flight->timeremaining.'</timeremaining>'
 				.'<lastupdate>'.$flight->lastupdate.'</lastupdate>'
-				.'</flight>';
+			  .'</flight>';
 		}
-		
-		$xml .= '</acarsdata>';
-		
-		CronData::set_lastupdate('update_acars');
-		return self::send_xml($xml);
-	}	
 }

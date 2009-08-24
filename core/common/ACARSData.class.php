@@ -74,9 +74,12 @@ class ACARSData extends CodonModule
 								FROM '.TABLE_PREFIX.'acarsdata 
 								WHERE `pilotid`=\''.$data['pilotid'].'\'');
 		
+		
+		$flight_id = '';
 		if($exist)
 		{ // update
 			
+			$flight_id = $exist->id;
 			$upd = '';
 			// form the query
 			foreach(self::$fields as $field)
@@ -150,11 +153,13 @@ class ACARSData extends CodonModule
 		
 			DB::query($query);
 			
-			writedebug(DB::Debug(true));
+			$flight_id = DB::$insert_id;
 		}
 		
+		// Add this cuz we need it
+		$data['unique_id'] = $flight_id;
 		
-		CentralData::send_acars_data();
+		CentralData::send_acars_data($data);
 		return true;
 	}
 	
@@ -213,6 +218,17 @@ class ACARSData extends CodonModule
 		}
 		
 		return true;
+	}
+	
+	public static function GetAllFlights()
+	{
+		$sql = 'SELECT a.*, c.name as aircraftname,
+					p.code, p.pilotid as pilotid, p.firstname, p.lastname
+					FROM ' . TABLE_PREFIX .'acarsdata a
+					LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
+					LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`';
+		
+		return DB::get_results($sql);
 	}
 
 	

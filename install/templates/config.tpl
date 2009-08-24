@@ -16,7 +16,7 @@ define('DBASE_TYPE', '$DBASE_TYPE');
 
 define('TABLE_PREFIX', '$TABLE_PREFIX');
 
-define('SITE_URL', 'http://$SITE_URL');
+define('SITE_URL', '$SITE_URL');
 
 # Page encoding options
 Config::Set('PAGE_ENCODING', 'ISO-8859-1');

@@ -382,7 +382,6 @@ class PIREPData
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
-		
 		// Add the comment if its not blank
 		if($comment != '')
 		{

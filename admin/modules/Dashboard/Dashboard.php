@@ -93,8 +93,7 @@ class Dashboard extends CodonModule
 	{
 		if(NOTIFY_UPDATE == true)
 		{
-			
-			$url = 'http://update.phpvms.net/version.php';
+			$url = Config::Get('PHPVMS_API_SERVER').'/version';
 			
 			# Default to fopen(), if that fails it'll use CURL
 			$file = new CodonWebService();

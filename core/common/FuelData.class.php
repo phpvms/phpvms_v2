@@ -124,7 +124,7 @@ class FuelData
 		if($apt_icao == '')
 			return false;
 			
-		$url = Config::Get('PHPVMS_API_SERVER').'/index.php/fuel/get/'.$apt_icao;
+		$url = Config::Get('PHPVMS_API_SERVER').'/fuel/get/'.$apt_icao;
 		
 		$curl_loader = new CodonWebService();
 		$resp = $curl_loader->get($url);

@@ -35,7 +35,7 @@ class CentralData
 	{
 		self::$xml_data = '<?xml version="1.0"?>'.$xml;
 		$web_service = new CodonWebService();
-		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/index.php/update', self::$xml_data);
+		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/update', self::$xml_data);
 			
 		return $res;		
 	}

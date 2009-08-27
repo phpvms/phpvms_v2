@@ -338,7 +338,7 @@ class Installer
 					  'mysql'=>@mysql_get_server_info(),
 					  'ext'=>$ext);
 					  
-		$url = 'http://update.phpvms.net/register.php';
+		$url = 'http://api.phpvms.net/register';
 					
 		# Do fopen(), if that fails then it'll default to 
 		#	curl

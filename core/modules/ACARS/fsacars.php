@@ -28,6 +28,7 @@
  */
  
 error_reporting(0);
+ini_set('display_errors', 'off');
 writedebug($_SERVER['QUERY_STRING']);
 
 ##################################
@@ -222,7 +223,7 @@ $maxcargo";
 	#
 	case 'pirep':
 	
-		ini_set('display_errors', 'off');
+		
 
 		writedebug("PIREP FILE");
 			
@@ -285,13 +286,7 @@ $maxcargo";
 		# Get our aircraft
 		$reg = trim($_GET['reg']);
 		$ac = OperationsData::GetAircraftByReg($reg);
-		
-		# Get the fuel used
-		# Using $_GET['fuel'] instead
-		/*$pos = find_in_fsacars_log('Spent Fuel', $log);
-		preg_match('/^.*Spent Fuel: (\d*)/', $log[$pos], $matches);
-		$fuelused = $_GET['fuel'];*/
-		
+				
 		# Do some cleanup
 		$_GET['origin'] = DB::escape($_GET['origin']);
 		$_GET['dest'] = DB::escape($_GET['dest']);

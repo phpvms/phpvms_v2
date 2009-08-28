@@ -279,6 +279,12 @@ $route->registration
 				'load'=>$load,
 				'log'=> $_GET['log']);
 				
+		writedebug($data);
+		$ret = ACARSData::FilePIREP($data[0], $data);
+		
+		if(!$res)
+			writedebug(DB::error());
+				
 		echo '1|Success';
 		break;
 }

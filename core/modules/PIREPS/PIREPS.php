@@ -173,7 +173,7 @@ class PIREPS extends CodonModule
 		Template::Set('bid', SchedulesData::GetBid($this->get->id)); // get the bid info
 		Template::Set('allairports', OperationsData::GetAllAirports());
 		Template::Set('allairlines', OperationsData::GetAllAirlines(true));
-		Template::Set('allaircraft', OperationsData::GetAllAircraft());
+		Template::Set('allaircraft', OperationsData::GetAllAircraft(true));
 		
 		Template::Show('pirep_new.tpl');
 	}

@@ -14,11 +14,14 @@
  * SDK Docs: http://www.xacars.net/index.php?Client-Server-Protocol
  */
  
+$_REQUEST['DATA1'] = 'XACARS_MSFS|1.1';
+$_REQUEST['DATA2'] = 'TAY0001Password =~~TAY009~OO-TAA~7956~IFR~EBLG~EBBR~EBBR~30.08.2009 21:04~00:16~00:11~1901~1250~0~20078~OFFLINE';
 
 error_reporting(0);
 writedebug($_SERVER['QUERY_STRING']);
 writedebug($_SERVER['REQUEST_URI']);
 writedebug(print_r($_REQUEST, true));
+
 
 class Coords {
 	public $lat;
@@ -240,6 +243,20 @@ $route->registration
 		$code = $matches[1];
 		$flightnum = $matches[2];
 		
+		
+		if(!is_numeric($data[0]))
+		{
+			# see if they are a valid pilot:
+			preg_match('/^([A-Za-z]*)(\d*)/', $data[0], $matches);
+			$pilot_code = $matches[1];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+		}
+		else
+		{
+			$pilotid = $data[0];
+		}
+		
+		
 		# Make sure airports exist:
 		#  If not, add them.
 		$depicao = $data[6];
@@ -265,7 +282,7 @@ $route->registration
 		# Convert the time to xx.xx 
 		$flighttime = floatval(str_replace(':', '.', $data[11])) * 1.00;
 		
-		$data = array('pilotid'=>$data[0],
+		$data = array('pilotid'=>$pilotid,
 				'code'=>$code,
 				'flightnum'=>$flightnum,
 				'depicao'=>$depicao,
@@ -280,6 +297,7 @@ $route->registration
 				'log'=> $_GET['log']);
 				
 		writedebug($data);
+		
 		$ret = ACARSData::FilePIREP($data[0], $data);
 		
 		if(!$res)

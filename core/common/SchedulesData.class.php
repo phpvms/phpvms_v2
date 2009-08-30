@@ -687,6 +687,10 @@ class SchedulesData
 	 */
 	public static function GetBidWithRoute($pilotid, $code, $flightnum)
 	{
+		
+		if($pilotid == '')
+			return;
+			
 		$sql = 'SELECT b.bidid 
 					FROM '.TABLE_PREFIX.'bids b, '.TABLE_PREFIX.'schedules s
 					WHERE b.pilotid='.$pilotid.' AND b.routeid=s.id

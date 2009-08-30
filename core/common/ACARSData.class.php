@@ -201,6 +201,7 @@ class ACARSData extends CodonModule
 		#  
 		$ret = PIREPData::FileReport($data);
 		
+		
 		if(!$ret)
 			return false;
 		
@@ -211,7 +212,6 @@ class ACARSData extends CodonModule
 		# Close out a bid if it exists
 		#
 		$bidid = SchedulesData::GetBidWithRoute($pilotid, $data['code'], $data['flightnum']);
-		
 		if($bidid)
 		{
 			SchedulesData::RemoveBid($bidid->bidid);

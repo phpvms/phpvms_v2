@@ -14,9 +14,6 @@
  * SDK Docs: http://www.xacars.net/index.php?Client-Server-Protocol
  */
  
-$_REQUEST['DATA1'] = 'XACARS_MSFS|1.1';
-$_REQUEST['DATA2'] = 'TAY0001Password =~~TAY009~OO-TAA~7956~IFR~EBLG~EBBR~EBBR~30.08.2009 21:04~00:16~00:11~1901~1250~0~20078~OFFLINE';
-
 error_reporting(0);
 writedebug($_SERVER['QUERY_STRING']);
 writedebug($_SERVER['REQUEST_URI']);

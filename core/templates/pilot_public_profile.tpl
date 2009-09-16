@@ -34,6 +34,7 @@ if(!$userinfo)
 								alt="<?php echo Countries::getCountryName($userinfo->location);?>" />
 					<?php echo Countries::getCountryName($userinfo->location);?> 
 				</li>
+			
 				<?php
 				// Show the public fields
 				if($allfields)

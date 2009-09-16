@@ -47,7 +47,7 @@ class Util
 	 */
 	public static function GetDaysCompact($days)
 	{
-		$all_days = Config::Get('DAYS_COMPACT');
+		$all_days = array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su');
 
 		foreach($all_days as $index=>$day)
 		{

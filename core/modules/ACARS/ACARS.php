@@ -65,28 +65,11 @@ class ACARS extends CodonModule
 			 *	Tell the browser its <code>.ini for the airline that
 			 *	the pilot is registered to
 			 */
+			
+			/* cleaned up @revision 744 */
 			case 'fsacarsconfig':
-				
-				if(!Auth::LoggedIn())
-				{
-					echo 'You are not logged in!';
-					break;
-				}
-				
-				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-				Template::Set('userinfo', Auth::$userinfo);
-				
-				$fsacars_config = Template::GetTemplate('fsacars_config.tpl', true);
-				$fsacars_config = str_replace("\n", "\r\n", $fsacars_config);
-				
-				# Set the headers so the browser things a file is being sent
-				header('Content-Type: text/plain');
-				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'.ini"');
-				header('Content-Length: ' . strlen($fsacars_config));
-				
-				//error_reporting(0);
-				
-				echo $fsacars_config;
+			
+				$this->write_config('fsacars_config.tpl', Auth::$userinfo->code.'.ini');
 				
 				break;
 			/**
@@ -94,47 +77,13 @@ class ACARS extends CodonModule
 			 */
 			case 'fspaxconfig':
 			
-				if(!Auth::LoggedIn())
-				{
-					echo 'You are not logged in!';
-					break;
-				}
-				
-				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-				Template::Set('userinfo', Auth::$userinfo);
-				
-				$fspax_config = Template::GetTemplate('fspax_config.tpl', true);
-				$fspax_config = str_replace("\n", "\r\n", $fspax_config);
-				
-				# Set the headers so the browser things a file is being sent
-				header('Content-Type: text/plain');
-				header('Content-Disposition: attachment; filename="'.Auth::$userinfo->code.'_config.cfg"');
-				header('Content-Length: ' . strlen($fspax_config));
-				
-				echo $fspax_config;
+				$this->write_config('fspax_config.tpl', Auth::$userinfo->code.'_config.cfg');
 				
 				break;
 				
 			case 'xacarsconfig':
-				
-				if(!Auth::LoggedIn())
-				{
-					echo 'You are not logged in!';
-					break;
-				}
-				
-				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-				Template::Set('userinfo', Auth::$userinfo);
-				
-				$xacars_config = Template::GetTemplate('xacars_config.tpl', true);
-				$xacars_config = str_replace("\n", "\r\n", $xacars_config);
-				
-				# Set the headers so the browser things a file is being sent
-				header('Content-Type: text/plain');
-				header('Content-Disposition: attachment; filename="xacars.ini"');
-				header('Content-Length: ' . strlen($xacars_config));
-				
-				echo $xacars_config;
+			
+				$this->write_config('xacars_config.tpl', 'xacars.ini');
 				
 				break;
 				
@@ -149,6 +98,39 @@ class ACARS extends CodonModule
 				
 				break;	
 		}
+	}
+	
+	
+	/**
+	 * Write out a config file to the user, give the template name and
+	 *	the filename to save the template as to the user
+	 *
+	 * @param mixed $template_name Template to use for config (fspax_config.tpl)
+	 * @param mixed $save_as File to save as (xacars.ini)
+	 * @return mixed Nothing, sends the file to the user
+	 *
+	 */
+	protected function write_config($template_name, $save_as)
+	{
+		if(!Auth::LoggedIn())
+		{
+			echo 'You are not logged in!';
+			break;
+		}
+		
+		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+		Template::Set('userinfo', Auth::$userinfo);
+		
+		$acars_config = Template::GetTemplate($template_name, true);
+		$acars_config = str_replace("\n", "\r\n", $acars_config);
+		
+		# Set the headers so the browser things a file is being sent
+		header('Content-Type: text/plain');
+		header('Content-Disposition: attachment; filename="'.$save_as.'"');
+		header('Content-Length: ' . strlen($acars_config));
+		
+		echo $acars_config;
+		
 	}
 	
 	protected function acars_json_data()
@@ -190,4 +172,3 @@ class ACARS extends CodonModule
 		
 	}
 }
-?>

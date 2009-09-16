@@ -45,6 +45,7 @@ Config::Set('CARGO_UNITS', 'lbs');
 
 # If someone places a bid, whether to disable that or not
 Config::Set('DISABLE_SCHED_ON_BID', true);
+Config::Set('DISABLE_BIDS_ON_BID', false);
 
 # If you want to count transfer hours in rank calculations
 Config::Set('TRANSFER_HOURS_IN_RANKS', false);

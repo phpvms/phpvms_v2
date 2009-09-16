@@ -118,6 +118,19 @@ class Schedules extends CodonModule
 					return;
 				}
 				
+				/* Block any other bids if they've already made a bid
+				 */
+				if(Config::Get('DISABLE_BIDS_ON_BID') == true)
+				{
+					$bids = SchedulesData::GetBids(Auth::$userinfo->pilotid);
+					
+					# They've got somethin goin on
+					if(count($bids) > 0)
+					{
+						return;
+					}					
+				}
+				
 				SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
 				
 				CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);

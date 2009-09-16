@@ -36,4 +36,3 @@ function post_module_load()
 {
    return true;
 }
-?>

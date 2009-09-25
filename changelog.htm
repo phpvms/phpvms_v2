@@ -34,19 +34,21 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"
 			target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
 	<p class="header">
-		<em>Last Update: August 11, 2009</em><br />
+		<em>Last Update: Sept 25, 2009</em><br />
 	</p>
 	<hr />
 	<h1>Build ##REVISION## (Version 1.2.##REVISION##)</h1>
 	<ul>
 		<li><strong>New</strong>: <a href="http://www.vacentral.net" target="_blank">vaCentral</a> support - the virtual airline community</li>
 		<li><strong>NEW</strong>: <a href="http://www.xacars.net" target="_blank">XAcars</a> position and PIREP support</li>
-		<li><strong>NEW</strong>: Selective access to admin panel options based on group</li>
+		<li><strong>NEW</strong>: Selective access to admin panel, permission options based on group</li>
+		<li>Google Maps updated to support new v3 API, no API key required (yay!) - required change in core_htmlhead.tpl</li>
+		<li>Various ACARS updates and fixes</li>
+		<li>"Remember Me" login option added, session tracking</li>
+		<li>Current online users in stats</li>
 		<li>Partial language/translation files for admin panel (english language included)</li>
 		<li>Database layer updates, reduced memory usage</li>
 		<li>Fixed incorrect new line characters in ACARS config files</li>
-		<li>"Remember Me" login option added, session tracking</li>
-		<li>Current online users</li>
 		<li>Added option to disable live fuel prices</li>
 		<li>Aircraft statistics hours bug-fix</li>
 		<li>Signatures account for transfer hours if enabled</li>
@@ -56,6 +58,7 @@
 	<p>
 		<strong>Templates Changed</strong>:</p>
 	<ul>
+		<li>core_htmlhead.tpl - Path to Google Maps API changed</li>
 		<li>profile_main.tpl - Added link to XAcars config file</li>
 		<li>login_form.tpl - Added input checkbox for "Remember Me"</li>
 	</ul>

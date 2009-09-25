@@ -28,8 +28,8 @@ class OperationsData
 		else $where = '';
 		
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines 
-									'.$where.' 
-									ORDER BY `code` ASC');
+								'.$where.' 
+								ORDER BY `code` ASC');
 	}
 	
 	/**
@@ -38,8 +38,8 @@ class OperationsData
 	public static function GetAllHubs()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
-					WHERE `hub`=1
-					ORDER BY `icao` ASC';
+				WHERE `hub`=1
+				ORDER BY `icao` ASC';
 		return DB::get_results($sql);
 	}
 	
@@ -49,7 +49,7 @@ class OperationsData
 	public static function GetAllAircraft($onlyenabled=false)
 	{
 		$sql = 'SELECT * 
-					FROM ' . TABLE_PREFIX .'aircraft';
+				FROM ' . TABLE_PREFIX .'aircraft';
 					
 		if($onlyenabled == true)
 		{
@@ -88,8 +88,8 @@ class OperationsData
 		$registration = DB::escape(strtoupper($registration));
 		
 		$sql = 'SELECT * 
-					FROM ' . TABLE_PREFIX .'aircraft 
-					WHERE `registration`=\''.$registration.'\'';
+				FROM ' . TABLE_PREFIX .'aircraft 
+				WHERE `registration`=\''.$registration.'\'';
 								
 		return DB::get_row($sql);
 	}
@@ -105,8 +105,8 @@ class OperationsData
 	 {
 		# Search for reg that's not on the AC supplied
 		$sql = "SELECT * FROM ".TABLE_PREFIX."aircraft
-					WHERE `id` != $acid
-						AND `registration`='$reg'";
+				WHERE `id` != $acid
+					AND `registration`='$reg'";
 		
 		return DB::get_results($sql);
 	}
@@ -117,7 +117,7 @@ class OperationsData
 	public static function GetAllAirports()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports 
-									ORDER BY `icao` ASC');
+								ORDER BY `icao` ASC');
 	}
 	
 	/**
@@ -128,20 +128,20 @@ class OperationsData
 		$id = DB::escape($id);
 		
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'aircraft 
-								WHERE `id`='.$id);
+							WHERE `id`='.$id);
 	}
 	
 	public static function GetAirlineByCode($code)
 	{
 		$code = strtoupper($code);
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
-								WHERE `code`=\''.$code.'\'');
+							WHERE `code`=\''.$code.'\'');
 	}
 	
 	public static function GetAirlineByID($id)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
-								WHERE `id`=\''.$id.'\'');
+							WHERE `id`=\''.$id.'\'');
 	}	
 	
 	/**
@@ -154,8 +154,8 @@ class OperationsData
 		$name = DB::escape($name);
 		
 		$sql = "INSERT INTO " .TABLE_PREFIX."airlines (
-						`code`, `name`) 
-					VALUES ('$code', '$name')";
+					`code`, `name`) 
+				VALUES ('$code', '$name')";
 		
 		$res = DB::query($sql);
 		
@@ -174,8 +174,8 @@ class OperationsData
 		else $enabled = 0;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."airlines 
-					SET `code`='$code', `name`='$name', `enabled`=$enabled 
-					WHERE id=$id";
+				SET `code`='$code', `name`='$name', `enabled`=$enabled 
+				WHERE id=$id";
 		
 		$res = DB::query($sql);
 		
@@ -241,12 +241,12 @@ class OperationsData
 			$enabled = 0;
 
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft 
-					SET `icao`='$icao', `name`='$name', `fullname`='$fullname',
-						`registration`='$registration', `downloadlink`='$downloadlink', 
-						`imagelink`='$imagelink', `range`='$range', `weight`='$weight',
-						`cruise`='$cruise', `maxpax`='$maxpax', `maxcargo`='$maxcargo',
-						`enabled`=$enabled
-					WHERE `id`=$id";
+				SET `icao`='$icao', `name`='$name', `fullname`='$fullname',
+					`registration`='$registration', `downloadlink`='$downloadlink', 
+					`imagelink`='$imagelink', `range`='$range', `weight`='$weight',
+					`cruise`='$cruise', `maxpax`='$maxpax', `maxcargo`='$maxcargo',
+					`enabled`=$enabled
+				WHERE `id`=$id";
 		
 		$res = DB::query($sql);
 		
@@ -352,7 +352,12 @@ class OperationsData
 	{
 		$url = GEONAME_URL.'/search?maxRows=1&featureCode=AIRP&q=';
 		
-		$reader = simplexml_load_file($url.$icao);
+		# Updated to use CodonWebServer instead of simplexml_load_url() straight
+		#	Could cause errors
+		$file = new CodonWebService();
+		$contents = @$file->get($url.$icao);
+		
+		$reader = simplexml_load_string($contents);
 		if($reader->totalResultsCount == 0 || !$reader)
 		{
 			return false;

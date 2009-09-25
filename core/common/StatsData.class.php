@@ -21,9 +21,9 @@ class StatsData
 	
 	public static function GetStartDate()
 	{
-		$sql = 'SELECT pirepid, submitdate
+		$sql = 'SELECT `pirepid`, `submitdate`
 					FROM '.TABLE_PREFIX.'pireps
-					ORDER BY submitdate ASC
+					ORDER BY `submitdate` ASC
 					LIMIT 1';
 					
 		return DB::get_row($sql);
@@ -165,8 +165,9 @@ class StatsData
 	public static function TotalFlights()
 	{
 		$sql = 'SELECT COUNT(*) AS total 
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE accepted='.PIREP_ACCEPTED;
+				FROM '.TABLE_PREFIX.'pireps
+				WHERE accepted='.PIREP_ACCEPTED;
+				
 		$res = DB::get_row($sql);
 		return $res->total;
 	}
@@ -178,9 +179,9 @@ class StatsData
 	public function TopRoutes()
 	{
 		$sql = 'SELECT * 
-					FROM '.TABLE_PREFIX.'schedules
-					ORDER BY timesflown DESC
-					LIMIT 10';
+				FROM '.TABLE_PREFIX.'schedules
+				ORDER BY timesflown DESC
+				LIMIT 10';
 		
 		return DB::get_results($sql);
 	}
@@ -190,7 +191,8 @@ class StatsData
 	 */
 	public static function PilotCount()
 	{
-		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pilots';
+		$sql = 'SELECT COUNT(*) AS total 
+				FROM '.TABLE_PREFIX.'pilots';
 		$res = DB::get_row($sql);
 		return $res->total;
 	}
@@ -201,10 +203,11 @@ class StatsData
 	public static function AircraftUsage()
 	{
 		$sql = 'SELECT a.name AS aircraft, a.registration, 
-						SEC_TO_TIME(SUM(TIME_TO_SEC(p.flighttime))) AS hours, COUNT(p.distance) AS distance
-					FROM '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON p.aircraft = a.id
-					GROUP BY p.aircraft';
+					SEC_TO_TIME(SUM(TIME_TO_SEC(p.flighttime))) AS hours, 
+					COUNT(p.distance) AS distance
+				FROM '.TABLE_PREFIX.'pireps p
+					INNER JOIN '.TABLE_PREFIX.'aircraft a ON p.aircraft = a.id
+				GROUP BY p.aircraft';
 		
 		return DB::get_results($sql);
 		return $ret;
@@ -272,7 +275,6 @@ class StatsData
 	 */
 	public static function PilotAircraftFlownGraph($pilotid, $ret = false)
 	{
-		
 		$stats = self::PilotAircraftFlownCounts($pilotid);
 		
 		if(!$stats)
@@ -307,5 +309,128 @@ class StatsData
 		else
 			echo '<img src="'.$url.'" />';
 	}
+	
+	
+	/* These contributed by simpilot from phpVMS forums
+	 */
+	
+	
+	/**
+	 * Return the total number of passengers carried
+	 *
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function TotalPaxCarried()
+	{
+		$query = 'SELECT SUM(`load`) AS `total`
+					FROM '.TABLE_PREFIX.'pireps
+					WHERE `accepted`='.PIREP_ACCEPTED.'
+						AND `flighttype`=\'P\'';
+		
+		$result=DB::get_results($query);
+		
+		return $result->total;		
+	}
+	
+	
+	/**
+	 * Return the number of flights flown today
+	 *
+	 * @return int Total number of flights
+	 *
+	 */
+	public static function TotalFlightsToday()
+	{
+		$query = 'SELECT COUNT(*) AS `total`
+					FROM '.TABLE_PREFIX.'pireps
+					WHERE DATE(`submitdate`) = CURDATE()';
+					
+		$result=DB::get_row($query);
+		if(!$result) return 0;
+		
+		return $result->total;
+		
+	}
+	
+	
+	/**
+	 * Total amount of fuel burned among all accepted PIREPS
+	 *
+	 * @return float In units specified in config
+	 *
+	 */
+	public static function TotalFuelBurned()
+	{
+		$query = 'SELECT SUM(`fuelused`) AS `total`
+					FROM '.TABLE_PREFIX.'pireps
+					WHERE `accepted`='.PIREP_ACCEPTED;
+		
+		$result=DB::get_results($query);
+		
+		return $result->total;
+	}
+	
+	
+	/**
+	 * Get the total miles/km flown
+	 *
+	 * @return float Total distance flown in units in config
+	 *
+	 */
+	public static function TotalMilesFlown()
+	{
+		$query = 'SELECT SUM(`distance`) AS `total`
+					FROM '.TABLE_PREFIX.'pireps
+					WHERE `accepted`='.PIREP_ACCEPTED;
+		
+		$result=DB::get_results($query);
+		
+		return $result->total;
+	}
+	
+	
+	/**
+	 * Return the total number of aircraft in the fleet
+	 *
+	 * @return int Total
+	 *
+	 */
+	public static function TotalAircraftInFleet()
+	{
+		$query = 'SELECT COUNT(`id`) AS `total` 
+					FROM '.TABLE_PREFIX.'aircraft';
+		$result=DB::get_row($query);
+		return $result->total;
+	}
+	
+	
+	/**
+	 * Return the total number of news stories
+	 *
+	 * @return int Total
+	 *
+	 */
+	public static function TotalNewsItems()
+	{
+		$query = 'SELECT COUNT(`id`) AS `total` 
+					FROM '.TABLE_PREFIX.'news';
+		$result=DB::get_row($query);
+		return $result->total;
+	}
+	
+	
+	/**
+	 * Return the total number of schedules in the system
+	 *
+	 * @return int Total number
+	 *
+	 */
+	public static function TotalSchedules()
+	{
+		$query = 'SELECT COUNT(`id`) AS `total` 
+					FROM '.TABLE_PREFIX.'schedules';
+		$result=DB::get_row($query);
+		return $result->total;
+	}
 }
-?>

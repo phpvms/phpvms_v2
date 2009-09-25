@@ -51,9 +51,9 @@ Config::Set('DISABLE_BIDS_ON_BID', false);
 Config::Set('TRANSFER_HOURS_IN_RANKS', false);
 
 # Google Map Options
-Config::Set('MAP_WIDTH', '600px');
-Config::Set('MAP_HEIGHT', '400px');
-Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
+Config::Set('MAP_WIDTH', '800px');
+Config::Set('MAP_HEIGHT', '600px');
+Config::Set('MAP_TYPE', '\'\'');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
 Config::Set('MAP_CENTER_LAT', '45.484400');
 Config::Set('MAP_CENTER_LNG', '-62.334821');

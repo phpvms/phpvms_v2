@@ -102,9 +102,11 @@ class ACARSData extends CodonModule
 				}
 			}
 			
-			// remove the extra , 
-			//$upd = substr($upd, 0, strlen($upd)-1);
-			$upd.='lastupdate=NOW() ';
+			#Airports update
+			$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
+			$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
+			
+			$upd = " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
 
 			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata 
 						SET '.$upd.' 
@@ -143,9 +145,11 @@ class ACARSData extends CodonModule
 				//}
 			}
 			
+			$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
+			$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
 			// last set
-			$fields .=' lastupdate ';
-			$values .= ' NOW()';
+			$fields .=' `lastupdate`, `depapt`, `arrapt` ';
+			$values .= " NOW(), '{$dep_apt->name}', '{$arr_apt->name}'";
 			
 			$query = 'INSERT INTO '.TABLE_PREFIX.'acarsdata (
 							'.$fields.') 
@@ -245,6 +249,7 @@ class ACARSData extends CodonModule
 		if($cutofftime == '' && $cutofftime != null)
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
+		$cutofftime = 90000000;
 		$cutofftime = $cutofftime / 60;			
 		//$time = strtotime('-'.$cutofftime .' hours');
 		

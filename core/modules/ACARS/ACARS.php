@@ -59,6 +59,10 @@ class ACARS extends CodonModule
 				
 				break;
 				
+			case 'routeinfo':
+				$this->routeinfo();
+				
+				break;				
 					
 			/**
 			 * Output the FSACARS config file from the template
@@ -144,25 +148,10 @@ class ACARS extends CodonModule
 		$outflights = array();
 		foreach($flights as $flight)
 		{	
-			$c = array();
-			$c['flightnum'] = $flight->flightnum;
-			$c['lat'] = $flight->lat;
-			$c['lng'] = $flight->lng;
-			$c['pilotid'] = $flight->pilotid;
-			$c['pilotname'] = $flight->pilotname;
-			$c['aircraft'] = $flight->aircraftname;
-			$c['depicao'] = $flight->depicao;
-			$c['deplat'] = $flight->deplat;
-			$c['deplng'] = $flight->deplng;
-			$c['arricao'] = $flight->arricao;
-			$c['arrlat'] = $flight->arrlat;
-			$c['arrlng'] = $flight->arrlng;
-			$c['phase'] = $flight->phase;
-			$c['alt'] = $flight->alt;
-			$c['gs'] = $flight->gs;
-			$c['distremain'] = $flight->distremain;
-			$c['timremain'] = $flight->timeremain;
+			$c = (array) $flight; // Convert the object to an array
 			
+			$c['pilotid'] = PilotData::GetPilotCode($c['code'], $c['pilotid']);
+						
 			$outflights[] = $c;
 			
 			continue;
@@ -170,5 +159,30 @@ class ACARS extends CodonModule
 		
 		echo json_encode($outflights);
 		
+	}
+	
+	protected function routeinfo()
+	{		
+		if($this->get->depicao == '' || $this->get->arricao == '')
+			return;
+		
+		$depinfo = OperationsData::GetAirportInfo($this->get->depicao);
+		if(!$depinfo)
+		{
+			$depinfo = OperationsData::RetrieveAirportInfo($this->get->depicao);
+		}
+		
+		$arrinfo = OperationsData::GetAirportInfo($this->get->arricao);
+		if(!$arrinfo)
+		{
+			$arrinfo = OperationsData::RetrieveAirportInfo($this->get->arricao);
+		}
+		
+		// Convert to json format
+		$c = array();
+		$c['depapt'] = (array) $depinfo;
+		$c['arrapt'] = (array) $arrinfo;
+		
+		echo json_encode($c);
 	}
 }

@@ -6,11 +6,6 @@ var geourl = "<?php echo GEONAME_URL; ?>";
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Config::Get('PAGE_ENCODING');?>">
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <?php
-if(GOOGLE_KEY!='') {
-//echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='.GOOGLE_KEY.'" type="text/javascript"></script>';
-}
-?>
-<?php
 $files = array(	'jquery.min.js',
 				'jquery.form.js',
 				'jquery-ui.js');

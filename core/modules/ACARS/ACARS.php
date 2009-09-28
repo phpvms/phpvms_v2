@@ -149,8 +149,21 @@ class ACARS extends CodonModule
 		foreach($flights as $flight)
 		{	
 			$c = (array) $flight; // Convert the object to an array
-			
+								
 			$c['pilotid'] = PilotData::GetPilotCode($c['code'], $c['pilotid']);
+			
+			// Normalize the data
+			if($c['timeremaining'] == '')
+			{
+				$c['timeremaining'] ==  '-';
+			}
+			
+			if(trim($c['phasedetail']) == '')
+			{
+				$c['phasedetail'] = 'Enroute';
+			}
+			
+			unset($c['messagelog']);
 						
 			$outflights[] = $c;
 			

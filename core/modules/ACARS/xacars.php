@@ -220,7 +220,7 @@ $route->registration
 			'arrtime'=>'',
 			'distremain'=>$_GET['disdestapt'],
 			'timeremaining'=>$_GET['timedestapt'],
-			'phasedetail'=>$phase_detail[$_GET['detailph']],
+			'phasedetail'=>'Enroute',
 			'online'=>$_GET['Online'],
 			'client'=>'xacars'
 		);

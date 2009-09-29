@@ -249,7 +249,7 @@ class ACARSData extends CodonModule
 		if($cutofftime == '' && $cutofftime != null)
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 		
-		$cutofftime = 90000000;
+		//$cutofftime = 90000000;
 		$cutofftime = $cutofftime / 60;			
 		//$time = strtotime('-'.$cutofftime .' hours');
 		

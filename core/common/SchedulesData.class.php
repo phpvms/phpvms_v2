@@ -219,7 +219,37 @@ class SchedulesData
 		return DB::get_results($sql);
 	}
 	
+	/**
+	 * Return all of the schedules with the code
+	 */
+	public static function GetSchedulesWithCode($code, $onlyenabled=true, $limit='')
+	{
+		$code = strtoupper($code);
+		$code = DB::escape($code);
+		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+		
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM '.TABLE_PREFIX.'schedules s
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+					WHERE s.code\''.$code.'\' '.$enabled;
+		
+		return DB::get_results($sql);
+	}
+	
 	public static function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
+	{
+		return self::GetScheduleWithArrival($arricao, $onlyenabled, $limit);
+	}
+	
+	public static function GetSchedulesWithArrival($arricao, $onlyenabled=true, $limit='')
 	{
 		$arricao = strtoupper($arricao);
 		$arricao = DB::escape($arricao);

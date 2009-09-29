@@ -36,7 +36,7 @@ class Schedules extends CodonModule
 		}
 	}
 	
-	function Controller()
+	public function Controller()
 	{
 		switch($this->get->page)
 		{
@@ -147,7 +147,7 @@ class Schedules extends CodonModule
 		}
 	}
 	
-	function ShowSchedules()
+	public function ShowSchedules()
 	{
 		$depapts = OperationsData::GetAllAirports();
 		$equip = OperationsData::GetAllAircraftSearchList(true);
@@ -163,7 +163,7 @@ class Schedules extends CodonModule
 		Template::Show('schedule_list.tpl');
 	}
 	
-	function FindFlight()
+	public function FindFlight()
 	{
 		
 		if($this->post->depicao != '')
@@ -191,17 +191,14 @@ class Schedules extends CodonModule
 			Template::Set('allroutes', SchedulesData::GetSchedulesByDistance($this->post->distance, $type));
 		}
 		
-		/*DB::debug();*/
-		
 		Template::Show('schedule_results.tpl');
 	}
 	
 	
-	function ShowBids()
+	public function ShowBids()
 	{
 		Template::Set('bids', SchedulesData::GetBids(Auth::$userinfo->pilotid));
 		Template::Show('schedule_bids.tpl');
 	}
 }
-
 ?>

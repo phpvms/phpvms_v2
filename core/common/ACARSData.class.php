@@ -22,8 +22,8 @@ class ACARSData extends CodonModule
 	public static $lasterror;
 	public static $fields = array('pilotid', 'flightnum', 'pilotname', 
 								   'aircraft', 'lat', 'lng', 'heading', 
-								   'alt', 'gs', 'depicao', 'depapt', 'arricao', 
-								   'arrapt', 'deptime', 'arrtime', 'distremain', 'timeremaining',
+								   'alt', 'gs', 'depicao', 'arricao', 
+								   'deptime', 'arrtime', 'distremain', 'timeremaining',
 								   'phasedetail', 'online', 'messagelog', 'client');
 	
 	
@@ -73,8 +73,7 @@ class ACARSData extends CodonModule
 		$exist = DB::get_row('SELECT `id`
 								FROM '.TABLE_PREFIX.'acarsdata 
 								WHERE `pilotid`=\''.$data['pilotid'].'\'');
-		
-		
+			
 		$flight_id = '';
 		if($exist)
 		{ // update
@@ -106,13 +105,14 @@ class ACARSData extends CodonModule
 			$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
 			$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
 			
-			$upd = " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
+			$upd .= " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
 
 			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata 
 						SET '.$upd.' 
 						WHERE `pilotid`=\''.$data['pilotid'].'\'';
 						
 			DB::query($query);
+
 		}
 		else
 		{
@@ -160,6 +160,8 @@ class ACARSData extends CodonModule
 			$flight_id = DB::$insert_id;
 		}
 		
+		//writedebug(DB::debug(true));
+		
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;
 		
@@ -167,6 +169,15 @@ class ACARSData extends CodonModule
 		return true;
 	}
 	
+	public static function get_flight_by_pilot($pilotid)
+	{
+		$pilotid = intval($pilotid);
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."acarsdata 
+					WHERE `pilotid`='{$pilotid}'";
+		
+		return DB::get_row($sql);		
+		
+	}
 	
 	public static function get_flight($code, $flight_num)
 	{
@@ -247,10 +258,17 @@ class ACARSData extends CodonModule
 	{
 		//cutoff time in days
 		if($cutofftime == '' && $cutofftime != null)
-			$cutofftime = Config::Get('ACARS_LIVE_TIME');
+		{
+			$cutofftime = Config::Get('ACARS_LIVE_TIME') / 60;
+			$cutofftime = $cutofftime / 60;			
+		}
+		else
+		{
+			$cutofftime = 16; // hours
+		}
 		
 		//$cutofftime = 90000000;
-		$cutofftime = $cutofftime / 60;			
+		
 		//$time = strtotime('-'.$cutofftime .' hours');
 		
 		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a

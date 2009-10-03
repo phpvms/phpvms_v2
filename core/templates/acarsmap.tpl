@@ -1,4 +1,5 @@
 <script type="text/javascript">
+var map_zoom_level = 2;
 var map_center_lat = "<?php echo Config::Get('MAP_CENTER_LAT'); ?>";
 var map_center_lng = "<?php echo Config::Get('MAP_CENTER_LNG'); ?>";
 var map_type = <?php echo Config::Get('MAP_TYPE'); ?>;

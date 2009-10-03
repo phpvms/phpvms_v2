@@ -19,6 +19,12 @@ writedebug($_SERVER['QUERY_STRING']);
 writedebug($_SERVER['REQUEST_URI']);
 writedebug(print_r($_REQUEST, true));
 
+if(isset($_GET['debug']))
+{
+	$_REQUEST['DATA2'] = 'BEGINFLIGHT';
+	$_REQUEST['DATA3'] = 'VMA001||VMS1234|B744||EGLL~-~KORD|N51 28.3444 W0 28.9596|91||||255337|92|24110|12|IFR|0||';
+}
+
 
 class Coords {
 	public $lat;
@@ -29,6 +35,8 @@ function get_coordinates($line)
 {
 	/* Get the lat/long */
 	preg_match('/^([A-Za-z])(\d*).(\d*.\d*).([A-Za-z])(\d*).(\d*.\d*)/', $line, $coords);
+	
+	writedebug(print_r($coords, true));
 	
 	$lat_dir = $coords[1];
 	$lat_deg = $coords[2];
@@ -133,16 +141,21 @@ $route->registration
 				
 	case 'acars':
 	
+		# Pass success by default
+		$outstring = 'Success';
+
+	
 		if($_REQUEST['DATA2'] == 'TEST')
 		{
 			
 		}
 		
-		if(strtoupper($_REQUEST['DATA2']) == 'BEGINFLIGHT')
+		elseif(strtoupper($_REQUEST['DATA2']) == 'BEGINFLIGHT')
 		{
 			/*	
 			VMA001||VMW5421|N123K5||KORD~~KMIA|N51 28.3151 W0 26.8892|88||||59|328|00000|14|IFR|0||
 			*/
+			writedebug('BEGINFLIGHT');
 			$data = explode('|', $_REQUEST['DATA3']);
 			
 			/* Get the pilot info */
@@ -152,7 +165,7 @@ $route->registration
 			
 			/* Get Coordinates */
 			$coords = get_coordinates($data[6]);
-			
+						
 			/* Get route */
 			$route = explode('~', $data[5]);
 			$depicao = $route[0];
@@ -163,6 +176,7 @@ $route->registration
 			$heading = $data[12];
 			$alt = $data[7];
 			
+			$outstring = $pilotid;			
 		}
 		elseif(strtoupper($_REQUEST['DATA2']) == 'MESSAGE')
 		{
@@ -172,17 +186,17 @@ $route->registration
 				pull the latest flight data via the flight number
 				since acars messages don't transmit the pilot ID */
 			preg_match("/Flight ID:.([A-Za-z]*)([0-9]*)\n/", $data, $matches);
-			$flight_data = ACARSData::get_flight($matches[1], $matches[2]);
+			$flight_data = ACARSData::get_flight_by_pilot($_REQUEST['DATA3']);
 					
-			$pilotid = $flight_data->pilotid;
+			$pilotid = $_REQUEST['DATA3'];
 			$flightnum = $flight_data->flightnum;
 			$aircraft = $flight_data->aircraft;
 			$depicao = $flight_data->depicao;
 			$arricao = $flight_data->arricao;
 					
 			// Get coordinates from ACARS message
-			preg_match("/\/POS.(.*)\n/", $data, $matches);
-			$coords = get_coordinates($matches[1]);
+			preg_match("/POS(.*)\n/", $data, $matches);
+			$coords = get_coordinates(trim($matches[1]));
 			
 			// Get our heading
 			preg_match("/\/HDG.(.*)\n/", $data, $matches);
@@ -193,12 +207,16 @@ $route->registration
 			$alt = $matches[1];
 			
 			// Get our  speed
-			preg_match("/\/IAS.(.*)\n/", $data, $matches);
+			preg_match("/\/IAS.(.*)\//", $data, $matches);
 			$gs = $matches[1];
 			
 			// Get the OUT time
 			preg_match("/OUT.(.*) \/ZFW/", $data, $matches);
 			$deptime = $matches[1];
+		}
+		else
+		{
+			return;
 		}
 
 		ob_start();
@@ -222,14 +240,14 @@ $route->registration
 			'timeremaining'=>$_GET['timedestapt'],
 			'phasedetail'=>'Enroute',
 			'online'=>$_GET['Online'],
-			'client'=>'xacars'
+			'client'=>'xacars',
 		);
 		
-		writedebug($fields);
+		writedebug(print_r($fields, true));
 		
 		ACARSData::UpdateFlightData($fields);
 		
-		echo '1|Success';
+		echo '1|'.$outstring;
 		break;
 		
 	case 'pirep':

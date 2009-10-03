@@ -246,7 +246,7 @@ class SchedulesData
 	
 	public static function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
 	{
-		return self::GetScheduleWithArrival($arricao, $onlyenabled, $limit);
+		return self::GetSchedulesWithArrival($arricao, $onlyenabled, $limit);
 	}
 	
 	public static function GetSchedulesWithArrival($arricao, $onlyenabled=true, $limit='')

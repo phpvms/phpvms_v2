@@ -275,6 +275,7 @@ class CentralData
 	{
 		return '<flight>'
 				.'<unique_id>'.$flight->id.'</unique_id>'
+				.'<client>'.$flight->client.'</client>'
 				.'<flightnum>'.$flight->flightnum.'</flightnum>'
 				.'<aircraft>'.$flight->aircraftname.'</aircraft>'
 				.'<lat>'.$flight->lat.'</lat>'

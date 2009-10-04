@@ -68,6 +68,32 @@ class ACARSData extends CodonModule
 			$code = $matches[1];
 			$data['pilotid'] = $matches[2];
 		}
+		
+		
+		// Get the airports data
+		$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
+		$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
+		
+		/* Check the heading for the flight
+			If none is specified, then point it straight to the arrival airport */
+		if($data['heading'] == '' || $data['heading'] == null || !isset($data['heading']))
+		{
+			/* Calculate an angle based on current coords and the
+				destination coordinates */
+			
+			$data['heading'] = intval(atan2(($data['lat'] - $arr_apt->lat), ($data['lng'] - $arr_apt->lng)) * 180/3.14);
+			//$flight->heading *= intval(180/3.14159);
+			
+			if(($data['lat'] - $data['lng']) < 0)
+			{
+				$data['heading'] += 180;
+			}
+			
+			if($data['heading'] < 0)
+			{
+				$data['heading'] += 360;
+			}
+		}
 	
 		// first see if we exist:
 		$exist = DB::get_row('SELECT `id`
@@ -101,10 +127,7 @@ class ACARSData extends CodonModule
 				}
 			}
 			
-			#Airports update
-			$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
-			$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
-			
+			// Update Airports		
 			$upd .= " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
 
 			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata 
@@ -165,7 +188,8 @@ class ACARSData extends CodonModule
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;
 		
-		CentralData::send_acars_data($data);
+		$res = CentralData::send_acars_data($data);
+		writedebug($res);
 		return true;
 	}
 	
@@ -241,6 +265,8 @@ class ACARSData extends CodonModule
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname
 					FROM ' . TABLE_PREFIX .'acarsdata a
 					LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
+					LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
+					LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
 					LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`';
 		
 		return DB::get_results($sql);
@@ -277,11 +303,15 @@ class ACARSData extends CodonModule
 		DB::query($sql);
 		*/	
 		$sql = 'SELECT a.*, c.name as aircraftname,
-					p.code, p.pilotid as pilotid, p.firstname, p.lastname
-					FROM ' . TABLE_PREFIX .'acarsdata a
-					LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
-					LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
-					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
+					p.code, p.pilotid as pilotid, p.firstname, p.lastname,
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng
+				FROM ' . TABLE_PREFIX .'acarsdata a
+				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
+				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
+				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
+				WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 	}

@@ -201,9 +201,6 @@ class ACARSData extends CodonModule
 			$data['deptime'] = time();
 			$flight_id = DB::$insert_id;
 		}
-		
-		DB::debug();
-		
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;
 			

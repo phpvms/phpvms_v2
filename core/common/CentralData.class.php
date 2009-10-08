@@ -19,8 +19,11 @@
 class CentralData
 {	
 
-	static $xml_data = '';
-	static $debug = false;
+	public static $xml_data = '';
+	public static $xml_response = '';
+	public static $debug = false;
+	public static $response;
+	public static $last_error;
 	
 	private static function central_enabled()
 	{
@@ -35,9 +38,23 @@ class CentralData
 	{
 		self::$xml_data = '<?xml version="1.0"?>'.$xml;
 		$web_service = new CodonWebService();
-		$res = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/update', self::$xml_data);
+		self::$xml_response = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/update', self::$xml_data);
 			
-		return $res;		
+		self::$response = @simplexml_load_string(self::$xml_response);
+		
+		if(!is_object(self::$response))
+		{
+			self::$last_error = 'No response from API server';
+			return false;
+		}
+		
+		if((int)self::$response->responsecode != 200)
+		{
+			self::$last_error = self::$response->message->detail;
+			return false;
+		}
+		
+		return true;
 	}
 		
 	private static function xml_header($method)
@@ -173,6 +190,9 @@ class CentralData
 		if(!$allpireps)
 			return false;
 		
+		// Set them all to have not been exported
+		PIREPData::setAllExportStatus(false);
+		
 		$xml .= '<total>'.count($allpireps).'</total>';
 		
 		foreach($allpireps as $pirep)
@@ -187,18 +207,31 @@ class CentralData
 		$xml .= '</pirepdata>';
 		
 		CronData::set_lastupdate('update_pireps');
-		return self::send_xml($xml);	
+		$resp = self::send_xml($xml);	
+		
+		// Only if we get a valid response, set the PIREPs to exported
+		if($resp === true)
+		{
+			PIREPData::setAllExportStatus(true);
+			return true;
+		}
 	}
 	
 	public function send_pirep($pirep_id)
 	{
 		if(!self::central_enabled())
 			return false;
+			
+		if($pirep_id == '')
+		{
+			return;
+		}
 		
 		$xml = '<pirepdata>'.PHP_EOL;
 		$xml .= self::xml_header('add_pirep');
 		
 		$pirep = PIREPData::GetReportDetails($pirep_id);
+		PIREPData::setExportedStatus($pirep_id, false);
 		
 		if(!$pirep)
 			return false;
@@ -208,7 +241,13 @@ class CentralData
 		$xml .= '</pirepdata>';
 		
 		CronData::set_lastupdate('add_pirep');
-		return self::send_xml($xml);		
+		$resp = self::send_xml($xml);	
+		
+		if($resp === true)
+		{
+			PIREPData::setExportedStatus($pirep_id, true);
+			return true;
+		}
 	}
 	
 	protected function get_pirep_xml($pirep)
@@ -273,26 +312,37 @@ class CentralData
 	
 	protected function create_acars_flight($flight)
 	{
-		return '<flight>'
-				.'<unique_id>'.$flight->id.'</unique_id>'
-				.'<client>'.$flight->client.'</client>'
-				.'<flightnum>'.$flight->flightnum.'</flightnum>'
-				.'<aircraft>'.$flight->aircraftname.'</aircraft>'
-				.'<lat>'.$flight->lat.'</lat>'
-				.'<lng>'.$flight->lng.'</lng>'
-				.'<pilotid>'.PilotData::GetPilotCode($flight->code, $flight->pilotid).'</pilotid>'
-				.'<pilotname>'. $flight->firstname.' '.$flight->lastname.'</pilotname>'
-				.'<depicao>'.$flight->depicao.'</depicao>'
-				.'<arricao>'.$flight->arricao.'</arricao>'
-				.'<deptime>'.$flight->deptime.'</deptime>'
-				.'<arrtime>'.$flight->arrtime.'</arrtime>'
-				.'<heading>'.$flight->heading.'</heading>'
-				.'<phase>'.$flight->phasedetail.'</phase>'
-				.'<alt>'.$flight->alt.'</alt>'
-				.'<gs>'.$flight->gs.'</gs>'
-				.'<distremain>'.$flight->distremain.'</distremain>'
-				.'<timeremaining>'.$flight->timeremaining.'</timeremaining>'
-				.'<lastupdate>'.$flight->lastupdate.'</lastupdate>'
-			  .'</flight>';
+		if(is_object($flight))
+		{
+			$flight = (array) $flight;
 		}
+		
+		// If a unique was specified
+		if(isset($flight['unique_id']))
+		{
+			$flight['id'] = $flight['unique_id'];
+		}
+				
+		return '<flight>'
+				.'<unique_id>'.$flight['id'].'</unique_id>'
+				.'<client>'.$flight['client'].'</client>'
+				.'<flightnum>'.$flight['flightnum'].'</flightnum>'
+				.'<aircraft>'.$flight['aircraft'].'</aircraft>'
+				.'<lat>'.$flight['lat'].'</lat>'
+				.'<lng>'.$flight['lng'].'</lng>'
+				.'<pilotid>'.PilotData::GetPilotCode($flight['code'], $flight['pilotid']).'</pilotid>'
+				.'<pilotname>'. $flight['firstname'].' '.$flight['lastname'].'</pilotname>'
+				.'<depicao>'.$flight['depicao'].'</depicao>'
+				.'<arricao>'.$flight['arricao'].'</arricao>'
+				.'<deptime>'.$flight['deptime'].'</deptime>'
+				.'<arrtime>'.$flight['arrtime'].'</arrtime>'
+				.'<heading>'.$flight['heading'].'</heading>'
+				.'<phase>'.$flight['phasedetail'].'</phase>'
+				.'<alt>'.$flight['alt'].'</alt>'
+				.'<gs>'.$flight['gs'].'</gs>'
+				.'<distremain>'.$flight['distremain'].'</distremain>'
+				.'<timeremaining>'.$flight['timeremaining'].'</timeremaining>'
+				.'<lastupdate>'.$flight['lastupdate'].'</lastupdate>'
+			  .'</flight>';
+	}
 }

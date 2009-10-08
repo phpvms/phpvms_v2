@@ -17,19 +17,13 @@
  */
 
 function writedebug($msg)
-{
-	$debug = Config::Get('ACARS_DEBUG');
+{	
+	$old_value = Config::Get('DEBUG_MODE');
+	Config::Set('DEBUG_MODE', $debug);
 	
-	/*if(!$debug)
-		return;*/
+	Debug::log($msg, 'acars.txt');
 	
-	$fp = fopen(dirname(__FILE__).'/log.txt', 'a+');
-	$msg .= '
-			';
-	
-	fwrite($fp, $msg, strlen($msg));
-	
-	fclose($fp);
+	Config::Set('DEBUG_MODE', $old_value);
 }
 
 class ACARS extends CodonModule

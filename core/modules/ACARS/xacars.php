@@ -175,6 +175,7 @@ $route->registration
 			$aircraft = $data[3];
 			$heading = $data[12];
 			$alt = $data[7];
+			$deptime = time();
 			
 			$outstring = $pilotid;			
 		}

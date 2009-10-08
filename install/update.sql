@@ -17,6 +17,7 @@ UPDATE `phpvms_groups` SET `permissions` = '35651519' WHERE `groupid` =1 LIMIT 1
 
 -- PIREP update for invdividual fuel cost per unit;
 ALTER TABLE `phpvms_pireps` ADD `fuelunitcost` FLOAT NOT NULL AFTER `fuelused` ;
+ALTER TABLE `phpvms_pireps` ADD `exported` TINYINT NOT NULL;
 
 -- Add total hours
 INSERT INTO `phpvms_settings` (`id` ,`friendlyname` ,`name` , `value` ,`descrip` ,`core`)

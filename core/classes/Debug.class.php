@@ -72,6 +72,20 @@ class Debug
 	public static $bt; // backtrace
 	public static $count = 1;
 	
+	protected static $fp;
+	
+	public static function log($string, $filename = 'log.txt')
+	{
+		if(Config::Get('DEBUG_MODE') == false)
+			return;
+			
+		if($filename == '')
+			$filename = 'log.txt';
+			
+		self::$fp = fopen(SITE_ROOT.'/core/logs/'.$filename, 'a');
+		fwrite(self::$fp, $string."\n");
+	}
+	
 	/**
 	 * Show the CSS and JS code for the debug box
 	 * Is set to only show once on the page

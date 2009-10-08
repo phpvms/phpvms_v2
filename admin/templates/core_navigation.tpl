@@ -166,7 +166,7 @@
 		?>
 		<?php
 		if(Config::Get('PHPVMS_CENTRAL_ENABLED') == true)
-			echo '<li><a href="'.SITE_URL.'/admin/index.php/vacentral">phpVMS Central Settings</a></li>';
+			echo '<li><a href="'.SITE_URL.'/admin/index.php/vacentral">vaCentral Settings</a></li>';
 		?>
 		<?php }
 		?>

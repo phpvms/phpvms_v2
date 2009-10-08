@@ -230,6 +230,9 @@ class PIREPAdmin extends CodonModule
 		PilotData::GenerateSignature($pirep_details->pilotid);
 		StatsData::UpdateTotalHours();
 		PilotData::UpdateLastPIREPDate($pirep_details->pilotid);
+		
+		# Send to Central
+		CentralData::send_pirep($pirepid);
 	}
 	
 	/** 

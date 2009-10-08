@@ -18,6 +18,18 @@ Loading...
 				<li><strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?></li>
 				<li><strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?></li>
 			</ul>
+			
+			<?php
+			if(Config::Get('PHPVMS_CENTRAL_ENABLED') == true)
+			{
+			?>
+			<h3>vaCentral Status: </h3>
+				<p>You have <strong><?php echo $unexported_count?></strong> PIREPS waiting for export to vaCentral. 
+				<a href="<?php echo SITE_URL ?>/admin/index.php/vacentral/sendqueuedpireps">Click here to send them</a> </p>
+			
+			<?php
+			}
+			?>
 		</td>
 		<td valign="top" width="50%">
 			<h3 style="margin-bottom: 0px;">Latest News</h3>

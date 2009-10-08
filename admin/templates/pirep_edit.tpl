@@ -12,14 +12,14 @@ if($message!='')
 	<dd>
 		<select name="code" id="code">
 			<option value="">Select your airline</option>
-		<?php
-		foreach($allairlines as $airline)
-		{
-			$sel = ($pirep->code == $airline->code)?'selected':'';
-				
-			echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->name.'</option>';
-		}
-		?>
+			<?php
+			foreach($allairlines as $airline)
+			{
+				$sel = ($pirep->code == $airline->code)?'selected':'';
+					
+				echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->name.'</option>';
+			}
+			?>
 		</select>
 	</dd>
 	
@@ -34,6 +34,7 @@ if($message!='')
 			<?php
 			foreach($allairports as $airport)
 			{
+				
 				$sel = ($pirep->depicao == $airport->icao)?'selected':'';
 				
 				echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao . ' - '.$airport->name .'</option>';

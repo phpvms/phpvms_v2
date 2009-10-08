@@ -35,6 +35,33 @@ class VACentral extends CodonModule
 			
 				break;
 				
+			case 'sendqueuedpireps':
+				
+				$pireps = PIREPData::getReportsByExportStatus(false);
+				
+				if(!$pireps)
+				{
+					echo 'You have no PIREPs waiting to be exported!';
+					return;
+				}
+				
+				foreach($pireps as $pirep)
+				{
+					$resp = CentralData::send_pirep($pirep->pirepid);
+					if($resp === true)
+					{
+						echo "Exported PIREP #{$pirep->pirepid}<br />";
+					}
+					else 
+					{
+						echo "FAILED exporting PIREP #{$pirep->pirepid} - ".CentralData::$last_error.'<br />';
+					}
+				}
+				
+				echo "Completed";
+				
+				break;
+				
 			case 'sendschedules':
 			
 				echo '<h3>Sending schedules...</h3>';
@@ -55,15 +82,13 @@ class VACentral extends CodonModule
 	
 	protected function parse_response($resp)
 	{
-		$xml = simplexml_load_string($resp);
-		
-		if($xml->type == 'Success')
+		if((int)CentralData::$response->responsecode == 200)
 		{
-			echo "Successfully sent message! (Server said \"{$xml->detail}\")";
+			echo "Successfully sent message! (Server said \"".CentralData::$response->detail."\")";
 		}
 		else
 		{
-			echo "There was an error, server said \"{$xml->detail}\"";
+			echo "There was an error, server said \"".CentralData::$response->detail."\"";
 		}		
 	}
 		

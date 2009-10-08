@@ -245,6 +245,7 @@ CREATE TABLE `phpvms_pireps` (
   `expenses` FLOAT NOT NULL,
   `expenselist` BLOB NOT NULL,
   `source` VARCHAR(25) NOT NULL,
+  `exported` TINYINT NOT NULL,
   PRIMARY KEY  (`pirepid`)
 ) ENGINE=InnoDB;
 

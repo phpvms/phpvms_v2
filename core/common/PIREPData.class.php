@@ -50,7 +50,7 @@ class PIREPData
 		DB::debug();
 		return $ret;
 	}
-	
+		
 	/**
 	 * Get all of the reports by the accepted status. Use the
 	 * constants:
@@ -117,6 +117,26 @@ class PIREPData
 
 		return DB::get_results($sql);
 	}
+	
+	/**
+	 * Get all of the reports by the exported status (true or false)
+	 */
+	public static function getReportsByExportStatus($status)
+	{
+		if($status === true)
+			$status = 1;
+		else
+			$status = 0;
+		
+		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
+						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+						a.name as aircraft, a.registration
+					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+					WHERE p.pilotid=u.pilotid AND p.exported='.$status;
+
+		return DB::get_results($sql);
+	}
 
 	/**
 	 * Get the number of reports on a certain date
@@ -131,7 +151,7 @@ class PIREPData
 		if(!$row)
 			return 0;
 			
-		return ($row->count=='')?0:$row->count;
+		return ($row->count=='') ? 0 : $row->count;
 	}
 	
 	/**
@@ -195,7 +215,8 @@ class PIREPData
 	public static function ChangePIREPStatus($pirepid, $status)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
-					SET accepted='.$status.' WHERE pirepid='.$pirepid;
+				SET `accepted`='.$status.' 
+				WHERE `pirepid`='.$pirepid;
 
 		return DB::query($sql);
 	}
@@ -278,6 +299,34 @@ class PIREPData
 			return 0;
 		
 		return $total;
+	}
+	
+	
+	public static function setAllExportStatus($status)
+	{
+		if($status === true)
+			$status = 1;
+		else
+			$status = 0;
+			
+		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
+				SET `exported`='.$status;
+		
+		return DB::query($sql);
+	}
+	
+	public static function setExportedStatus($pirep_id, $status)
+	{
+		if($status === true)
+			$status = 1;
+		else
+			$status = 0;
+			
+		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
+				SET `exported`='.$status.'
+				WHERE `pirepid`='.$pirep_id;
+		
+		return DB::query($sql);
 	}
 	
 
@@ -366,7 +415,8 @@ class PIREPData
 							`fuelused`,
 							`fuelunitcost`,
 							`fuelprice`,
-							`source`)
+							`source`,
+							`exported`)
 					VALUES ($pirepdata[pilotid], 
 							'$pirepdata[code]', 
 							'$pirepdata[flightnum]', 
@@ -381,7 +431,8 @@ class PIREPData
 							'$pirepdata[fuelused]',
 							'$pirepdata[fuelunitcost]',
 							'$pirepdata[fuelprice]',
-							'$pirepdata[source]')";
+							'$pirepdata[source]',
+							0)";
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
@@ -405,9 +456,6 @@ class PIREPData
 		
 		# Update the financial information for the PIREP:
 		self::PopulatePIREPFinance($pirepid);
-		
-		# Send to Central
-		CentralData::send_pirep($pirepid);
 		
 		# Set the pilot's last PIREP date
 		//PilotData::UpdateLastPIREPDate($pirepdata['pilotid']);

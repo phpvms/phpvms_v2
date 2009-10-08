@@ -44,6 +44,8 @@ class Dashboard extends CodonModule
 				$this->CheckForUpdates();
 				CentralData::send_vastats();
 				
+				Template::Set('unexported_count', count(PIREPData::getReportsByExportStatus(false)));
+				
 				Template::Show('dashboard.tpl');
 
                 /*Template::Set('allpilots', PilotData::GetPendingPilots());
@@ -125,7 +127,29 @@ class Dashboard extends CodonModule
 				Template::Set('updateinfo', Template::GetTemplate('core_error.tpl', true));
 			}
 			
-			# Always show the latest news	
+			/* Retrieve latest news from Feedburner RSS, in case the phpVMS site is down
+			 */
+			$contents = $file->get(Config::Get('PHPVMS_NEWS_FEED'));
+			$feed = simplexml_load_string($contents);
+			$contents = '';
+			
+			$i=1;
+			$count = 5; // Show the last 5
+			foreach($feed->channel->item as $news)
+			{
+				$news_content = (string) $news->description;
+				$date_posted = str_replace('-0400', '', (string) $news->pubDate);
+				
+				$contents.="<div class=\"newsitem\">
+								<b>{$news->title}</b> {$news_content}
+								<br /><br />
+								Posted: {$date_posted}
+							</div>";
+				
+				if($i++ == $count)
+					break;
+			}
+			
 			Template::Set('latestnews', $contents);
 		}
 	}

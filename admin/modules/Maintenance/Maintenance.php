@@ -38,6 +38,13 @@ class Maintenance extends CodonModule
 			
 				break;
 				
+			case 'checkairports':
+			
+				
+			
+			
+				break;
+				
 			case 'resetdistances':
 			
 				echo '<h3>Updating and Calculating Distances</h3>';

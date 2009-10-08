@@ -122,6 +122,7 @@ Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in sec
 //Config::Set('SESSION_COOKIE_NAME', 'VMS_AUTH_COOKIE');
 
 Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
+Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
 
 /* Days of the Week
 	The compacted view, and the full text

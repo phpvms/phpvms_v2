@@ -55,8 +55,7 @@ class ACARSData extends CodonModule
 			return false;
 		}
 		
-		if($data['depicao'] == '' || $data['arricao'] == ''
-			|| $data['lat'] == '' || $data['lng'] == '')
+		if($data['depicao'] == '' || $data['arricao'] == '' || $data['lat'] == '' || $data['lng'] == '')
 		{
 			self::$lasterror = 'Airports are blank';
 			return;
@@ -69,10 +68,22 @@ class ACARSData extends CodonModule
 			$data['pilotid'] = $matches[2];
 		}
 		
+		// Add pilot info		
+		$pilotinfo = PilotData::GetPilotData($data['pilotid']);
+		$data['firstname'] = $pilotinfo->firstname;
+		$data['lastname'] = $pilotinfo->lastname;
+		$data['pilotname'] = $pilotinfo->firstname . ' ' . $pilotinfo->lastname;
 		
 		// Get the airports data
 		$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
 		$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
+		
+		// Clean up times
+		if(!is_numeric($data['deptime']))
+			$data['deptime'] = strtotime($data['deptime']);
+			
+		if(!is_numeric($data['arrtime']))
+			$data['arrtime'] = strtotime($data['arrtime']);
 		
 		/* Check the heading for the flight
 			If none is specified, then point it straight to the arrival airport */
@@ -97,8 +108,8 @@ class ACARSData extends CodonModule
 	
 		// first see if we exist:
 		$exist = DB::get_row('SELECT `id`
-								FROM '.TABLE_PREFIX.'acarsdata 
-								WHERE `pilotid`=\''.$data['pilotid'].'\'');
+							FROM '.TABLE_PREFIX.'acarsdata 
+							WHERE `pilotid`=\''.$data['pilotid'].'\'');
 			
 		$flight_id = '';
 		if($exist)
@@ -106,24 +117,33 @@ class ACARSData extends CodonModule
 			
 			$flight_id = $exist->id;
 			$upd = '';
-			// form the query
+			
 			foreach(self::$fields as $field)
 			{
-				// append the message log
+				// update only the included fields
+				if(!isset($data[$field]))
+				{
+					continue;
+				}
+				
+				$data[$field] = DB::escape($data[$field]);
+				// Append the message log
 				if($field == 'messagelog')
 				{
-					$upd.='`messagelog`=CONCAT(`messagelog`, \''.DB::escape($data['field']).'\'), ';
+					$upd.="`messagelog`=CONCAT(`messagelog`, '{$data[$field]}'), ";
+				}
+				// Update times
+				elseif($field == 'deptime' || $field == 'arrtime')
+				{
+					/* If undefined, set a default time to now (penalty for malformed data?)
+						Won't be quite accurate.... */
+					if($data[$field] == '') $data[$field] = time();
+					
+					$upd.="`{$field}`=FROM_UNIXTIME({$data[$field]}), ";
 				}
 				else 
-				{
-					// update only the included fields
-					if(!isset($data[$field]))
-					{
-						continue;
-					}
-					
-					// field=\'value\',
-					$upd.=$field.'=\''.DB::escape($data[$field]).'\', ';
+				{					
+					$upd.="`{$field}='{data[$field]}', ";
 				}
 			}
 			
@@ -155,22 +175,20 @@ class ACARSData extends CodonModule
 					continue;
 				}
 				
-				$ins[$field] = $data[$field];
-				$fields.='`'.$field.'`,';
+				$fields.="`{$field}`, ";
 				
-				/*if(is_numeric($data[$field]))
+				if($field == 'deptime' || $field == 'arrtime')
 				{
-					$values.=$data[$field].', ';
+					$values .= "FROM_UNIXTIME({$data[$field]}), ";
 				}
-				else 
-				{*/
-					$values .= '\''.$data[$field].'\', ';
-				//}
+				else
+				{
+					$ins[$field] = $data[$field];
+					$values .= "'{$data[$field]}', ";
+				}
 			}
 			
-			$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
-			$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
-			// last set
+			// Manually add the last set
 			$fields .=' `lastupdate`, `depapt`, `arrapt` ';
 			$values .= " NOW(), '{$dep_apt->name}', '{$arr_apt->name}'";
 			
@@ -180,16 +198,14 @@ class ACARSData extends CodonModule
 		
 			DB::query($query);
 			
+			$data['deptime'] = time();
 			$flight_id = DB::$insert_id;
 		}
 		
-		//writedebug(DB::debug(true));
-		
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;
-		
+			
 		$res = CentralData::send_acars_data($data);
-		writedebug($res);
 		return true;
 	}
 	
@@ -200,7 +216,6 @@ class ACARSData extends CodonModule
 					WHERE `pilotid`='{$pilotid}'";
 		
 		return DB::get_row($sql);		
-		
 	}
 	
 	public static function get_flight($code, $flight_num)
@@ -293,15 +308,12 @@ class ACARSData extends CodonModule
 			$cutofftime = 16; // hours
 		}
 		
-		//$cutofftime = 90000000;
-		
-		//$time = strtotime('-'.$cutofftime .' hours');
-		
 		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a
 					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) > a.`lastupdate`'";
 		
 		DB::query($sql);
 		*/	
+		
 		$sql = 'SELECT a.*, c.name as aircraftname,
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname,
 					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,

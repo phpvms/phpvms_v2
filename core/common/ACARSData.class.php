@@ -139,20 +139,20 @@ class ACARSData extends CodonModule
 						Won't be quite accurate.... */
 					if($data[$field] == '') $data[$field] = time();
 					
-					$upd.="`{$field}`=FROM_UNIXTIME({$data[$field]}), ";
+					$upd.="`{$field}`=FROM_UNIXTIME(".$data[$field]."), ";
 				}
 				else 
 				{					
-					$upd.="`{$field}='{data[$field]}', ";
+					$upd.="`{$field}`='".$data[$field]."', ";
 				}
 			}
 			
 			// Update Airports		
 			$upd .= " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
 
-			$query = 'UPDATE '.TABLE_PREFIX.'acarsdata 
-						SET '.$upd.' 
-						WHERE `pilotid`=\''.$data['pilotid'].'\'';
+			$query = 'UPDATE '.TABLE_PREFIX."acarsdata 
+						SET {$upd} 
+						WHERE `pilotid`='{$data['pilotid']}'";
 						
 			DB::query($query);
 
@@ -179,12 +179,12 @@ class ACARSData extends CodonModule
 				
 				if($field == 'deptime' || $field == 'arrtime')
 				{
-					$values .= "FROM_UNIXTIME({$data[$field]}), ";
+					$values .= "FROM_UNIXTIME(".$data[$field]."), ";
 				}
 				else
 				{
 					$ins[$field] = $data[$field];
-					$values .= "'{$data[$field]}', ";
+					$values .= "'".$data[$field]."', ";
 				}
 			}
 			
@@ -201,6 +201,8 @@ class ACARSData extends CodonModule
 			$data['deptime'] = time();
 			$flight_id = DB::$insert_id;
 		}
+		
+		DB::debug();
 		
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;

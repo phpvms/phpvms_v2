@@ -267,6 +267,9 @@ class PIREPS extends CodonModule
 		# Call the event
 		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);
 		
+		# Send to Central
+		CentralData::send_pirep($pirepid);
+		
 		# Delete the bid, if the value for it is set
 		if($this->post->bid != '')
 		{

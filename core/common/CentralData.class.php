@@ -255,6 +255,7 @@ class CentralData
 		$pilotid = PilotData::GetPilotCode($pirep->code, $pirep->pilotid);
 		
 		return '<pirep>'
+				.'<uniqueid>'.$pirep->pirepid.'</uniqueid>'
 				.'<pilotid>'.$pilotid.'</pilotid>'
 				.'<pilotname>'.$pirep->firstname.' '.$pirep->lastname.'</pilotname>'
 				.'<flightnum>'.$pirep->code.$pirep->flightnum.'</flightnum>'

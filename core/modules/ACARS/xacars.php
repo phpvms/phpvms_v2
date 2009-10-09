@@ -36,8 +36,6 @@ function get_coordinates($line)
 	/* Get the lat/long */
 	preg_match('/^([A-Za-z])(\d*).(\d*.\d*).([A-Za-z])(\d*).(\d*.\d*)/', $line, $coords);
 	
-	writedebug(print_r($coords, true));
-	
 	$lat_dir = $coords[1];
 	$lat_deg = $coords[2];
 	$lat_min = $coords[3];
@@ -147,9 +145,12 @@ $route->registration
 	
 		if($_REQUEST['DATA2'] == 'TEST')
 		{
-			
+			return;
 		}
-		
+		elseif($_REQUEST['DATA2'] == 'ENDFLIGHT')
+		{
+			return;
+		}
 		elseif(strtoupper($_REQUEST['DATA2']) == 'BEGINFLIGHT')
 		{
 			/*	

@@ -19,9 +19,9 @@
 function writedebug($msg)
 {	
 	$old_value = Config::Get('DEBUG_MODE');
-	Config::Set('DEBUG_MODE', $debug);
+	Config::Set('DEBUG_MODE', Config::Set('ACARS_DEBUG'));
 	
-	Debug::log($msg, 'acars.txt');
+	Debug::log($msg, 'acars');
 	
 	Config::Set('DEBUG_MODE', $old_value);
 }

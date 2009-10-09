@@ -179,6 +179,7 @@ class ACARSData extends CodonModule
 				
 				if($field == 'deptime' || $field == 'arrtime')
 				{
+					if($data[$field] == '') $data[$field] = time();
 					$values .= "FROM_UNIXTIME(".$data[$field]."), ";
 				}
 				else
@@ -201,6 +202,13 @@ class ACARSData extends CodonModule
 			$data['deptime'] = time();
 			$flight_id = DB::$insert_id;
 		}
+		
+		if(DB::errno() != 0)
+		{
+			writedebug($query);
+			writedebug(DB::error());
+		}
+		
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;
 			
@@ -299,12 +307,13 @@ class ACARSData extends CodonModule
 		//cutoff time in days
 		if($cutofftime == '' && $cutofftime != null)
 		{
+			// Go from minutes to hours
 			$cutofftime = Config::Get('ACARS_LIVE_TIME') / 60;
-			$cutofftime = $cutofftime / 60;			
+			//$cutofftime = $cutofftime / 60;			
 		}
 		else
 		{
-			$cutofftime = 16; // hours
+			$cutofftime = 12; // hours
 		}
 		
 		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a

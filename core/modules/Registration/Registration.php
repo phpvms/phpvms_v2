@@ -140,7 +140,12 @@ class Registration extends CodonModule
 				Template::Show('registration_sentconfirmation.tpl');
 			}
 			
-			CodonEvent::Dispatch('registration_complete', 'Registration', $_POST);			
+			CodonEvent::Dispatch('registration_complete', 'Registration', $_POST);
+			
+			// Registration email/show user is waiting for confirmation
+			$sub = 'A user has registered';
+			$message = 'A user has registered, and is awaiting confirmation';
+			Util::SendEmail(ADMIN_EMAIL, $sub, $message);
 			
 			$rss = new RSSFeed('Latest Pilot Registrations', SITE_URL, 'The latest pilot registrations');
 			$allpilots = PilotData::GetLatestPilots();

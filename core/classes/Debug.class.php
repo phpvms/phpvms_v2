@@ -74,15 +74,16 @@ class Debug
 	
 	protected static $fp;
 	
-	public static function log($string, $filename = 'log.txt')
+	public static function log($string, $filename = 'log')
 	{
-		if(Config::Get('DEBUG_MODE') == false)
+		if(Config::Get('DEBUG_MODE') === false){
 			return;
+		}
 			
 		if($filename == '')
-			$filename = 'log.txt';
-			
-		self::$fp = fopen(SITE_ROOT.'/core/logs/'.$filename, 'a');
+			$filename = 'log';
+					
+		self::$fp = fopen(SITE_ROOT.'/core/logs/'.$filename.'.txt', 'a');
 		fwrite(self::$fp, $string."\n");
 	}
 	

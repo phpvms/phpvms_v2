@@ -142,16 +142,23 @@ $route->registration
 		# Pass success by default
 		$outstring = 'Success';
 
-	
+		$_REQUEST['DATA2'] = strtoupper($_REQUEST['DATA2']);	
 		if($_REQUEST['DATA2'] == 'TEST')
 		{
+			echo '1|OK';
 			return;
 		}
 		elseif($_REQUEST['DATA2'] == 'ENDFLIGHT')
 		{
+			echo '1|OK';
 			return;
 		}
-		elseif(strtoupper($_REQUEST['DATA2']) == 'BEGINFLIGHT')
+		elseif($_REQUEST['DATA2'] == 'PAUSEFLIGHT')
+		{
+			echo '1|OK';
+			return;
+		}
+		elseif($_REQUEST['DATA2'] == 'BEGINFLIGHT')
 		{
 			/*	
 			VMA001||VMW5421|N123K5||KORD~~KMIA|N51 28.3151 W0 26.8892|88||||59|328|00000|14|IFR|0||

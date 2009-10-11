@@ -44,6 +44,47 @@ class Import extends CodonModule
 				
 				break;
 				
+			case 'export':
+			
+			
+				Template::Show('export_form.tpl');
+				
+				
+				break;
+			
+			case 'processexport':
+			
+			
+			
+				$export='';
+				
+				$all_schedules = SchedulesData::GetSchedules('', false);
+				
+				if(!$all_schedules)
+				{
+					echo 'No schedules found!';
+					return;
+				}
+				
+				$export=file_get_contents(SITE_ROOT.'/admin/lib/template.csv');
+				$export.="\n";
+				foreach($all_schedules as $s)
+				{
+					$export .="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
+							."{$s->route},{$s->registration},{$s->distance},"
+							."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
+							."{$s->prices}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
+					
+				}
+			
+				header('Content-Type: text/plain');
+				header('Content-Disposition: attachment; filename="schedules.csv"');
+				header('Content-Length: ' . strlen($export));
+				
+				echo $export;
+			
+				break;
+				
 			case 'processimport':
 				
 				echo '<h3>Processing Import</h3>';
@@ -65,6 +106,10 @@ class Import extends CodonModule
 				
 				if(isset($_POST['header'])) $skip = true;
 				
+				
+				$added = 0;
+				$updated = 0;
+				$total = 0;
 				while($fields = fgetcsv($fp, 1000, ','))
 				{
 					// Skip the first line
@@ -89,6 +134,7 @@ class Import extends CodonModule
 					$price = $fields[11];
 					$flighttype = $fields[12];
 					$daysofweek = $fields[13];
+					$enabled = $fields[14];
 									
 					if($code=='')
 					{
@@ -148,6 +194,12 @@ class Import extends CodonModule
 					
 					$flighttype = strtoupper($flighttype);
 					
+					
+					if($enabled == '0')
+						$enabled = false;
+					else
+						$enabled = true;
+					
 					# This is our 'struct' we're passing into the schedule function
 					#	to add or edit it
 					
@@ -165,7 +217,7 @@ class Import extends CodonModule
 									'flighttime'=>$flighttime,
 									'daysofweek'=>$daysofweek,
 									'notes'=>$notes,
-									'enabled'=>true,
+									'enabled'=>$enabled,
 									'maxload'=>$maxload,
 									'price'=>$price,
 									'flighttype'=>$flighttype);
@@ -175,6 +227,7 @@ class Import extends CodonModule
 					{
 						# Update the schedule instead
 						$val = SchedulesData::EditSchedule($data);
+						$updated++;
 					
 					}
 					else
@@ -184,6 +237,7 @@ class Import extends CodonModule
 						/*$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
 										$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);*/
 						$val = SchedulesData::AddSchedule($data);
+						$added++;
 										
 					}
 					
@@ -196,20 +250,21 @@ class Import extends CodonModule
 						else
 						{
 							$error = (DB::error() != '') ? DB::error() : 'Route already exists';
-							echo "$code$flightnum was not added, reason: $error";
+							echo "$code$flightnum was not added, reason: $error<br />";
 						}
 						
 						echo '<br />';
 					}
 					else
 					{
+						$total++;
 						echo "Imported $code$flightnum ($depicao to $arricao)<br />";
 					}
 				}
 				
 				CentralData::send_schedules();
 				
-				echo 'The import process is complete!<br />';
+				echo "The import process is complete, added {$added} schedules, updated {$updated}, for a total of {$total}<br />";
 				
 				foreach($errs as $error)
 				{

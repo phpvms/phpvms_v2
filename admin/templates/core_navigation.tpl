@@ -59,7 +59,8 @@
 			if(PilotGroups::group_has_perm(Auth::$usergroups, IMPORT_SCHEDULES)) 
 			{
 		?>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/import">Import Schedules</a></li>
+			<li><a href="<?php echo SITE_URL?>/admin/index.php/import">Import Schedules</a></li>
+			<li><a href="<?php echo SITE_URL?>/admin/index.php/import/export">Export Schedules</a></li>
 		<?php }
 		?>
 	</ul>

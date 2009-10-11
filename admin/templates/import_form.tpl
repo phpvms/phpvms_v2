@@ -11,7 +11,9 @@ must be done:</p>
 	<li>Aircraft must be added by registration</li>
 	<li>Flight Type can be "P" (Passenger), "C" (Cargo) or "H" (Charter). Enter it without quotes</li>
 	<li>Days of week - last column - enter 0-6 for Sunday (0) to Saturday (6): ie: Monday, Wed, Fri, Sat flights will be: 1356 as the value</li>
+	<li>Enabled column - 1 for enabled, 0 for disabled. Blank defaults to enabled</li>
 	<li><strong>Remove the leg column</strong> - legs are no longer counted, so please remove that column</li>
+	
 </ol>
 
 <form enctype="multipart/form-data" action="<?php echo SITE_URL?>/admin/index.php/import/processimport" method="post">

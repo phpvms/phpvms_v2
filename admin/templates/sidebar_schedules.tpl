@@ -11,8 +11,7 @@
 	</span></li>
 	<li><span class="file">
 		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetdistances">Recalculate Distances</a>
-	</span></li>
-	
+	</span></li>	
 </ul>
 <h3>Help</h3>
 <p>These are all the schedules your airlines currently server. When you add a schedule, you can add it on a per-airline basis.</p>

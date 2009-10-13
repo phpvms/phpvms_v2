@@ -73,7 +73,7 @@ class Import extends CodonModule
 					$export .="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
 							."{$s->route},{$s->registration},{$s->distance},"
 							."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
-							."{$s->prices}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
+							."{$s->price}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
 					
 				}
 			

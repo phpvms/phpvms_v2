@@ -230,7 +230,7 @@ class PIREPData
 						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-					    p.code, p.flightnum, p.depicao, p.arricao, 
+					    p.code, p.flightnum, p.depicao, p.arricao,  p.price AS price,
 					    a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
 					    p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
 					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
@@ -395,7 +395,7 @@ class PIREPData
 		
 		
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
-		
+				
 		#var_dump($pirepdata);
 		# Escape the comment field
 		$comment = DB::escape($pirepdata['comment']);
@@ -504,20 +504,34 @@ class PIREPData
 		$pirepdata['fuelprice'] = $pirepdata['fuelused'] * $pirepdata['fuelunitcost'];
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
-		$sql = "UPDATE ".TABLE_PREFIX."pireps 
-				SET `code`='$pirepdata[code]', 
-					`flightnum`='$pirepdata[flightnum]',	
-					`depicao`='$pirepdata[depicao]', 
-					`arricao`='$pirepdata[arricao]', 
-					`aircraft`='$pirepdata[aircraft]', 
-					`flighttime`='$pirepdata[flighttime]',
-					`load`='$pirepdata[load]',
-					`fuelused`='$pirepdata[fuelused]',
-					`fuelunitcost`='$pirepdata[fuelunitcost]',
-					`fuelprice`='$pirepdata[fuelprice]'
+		$data = array(
+			'price' => $pirepdata['price'],
+			'load' => $pirepdata['load'],
+			'fuelprice' => $pirepdata['fuelprice'],
+			'pilotpay' => $pilot->payrate,
+			'flighttime' => $pirepdata['flighttime'],
+			);
+		
+		$revenue = self::getPIREPRevenue($data);
+		
+		$sql = "UPDATE `".TABLE_PREFIX."pireps`
+				SET `code`='{$pirepdata['code']}', 
+					`flightnum`='{$pirepdata['flightnum']}',
+					`depicao`='{$pirepdata['depicao']}', 
+					`arricao`='{$pirepdata['arricao']}', 
+					`aircraft`='{$pirepdata['aircraft']}', 
+					`flighttime`='{$pirepdata['flighttime']}',
+					`load`='{$pirepdata['load']}',
+					`price`='{$pirepdata['price']}',
+					`fuelused`='{$pirepdata['fuelused']}',
+					`fuelunitcost`='{$pirepdata['fuelunitcost']}',
+					`fuelprice`='{$pirepdata['fuelprice']}',
+					`revenue`='{$revenue}'
 				WHERE `pirepid`=$pirepid";
 
 		$ret = DB::query($sql);
+		
+		//DB::debug();
 		
 		return true;
 	}
@@ -614,6 +628,17 @@ class PIREPData
 			$expense_list = serialize($allexpenses);
 		}
 		
+		
+		$data = array(
+			'price' => $sched->price,
+			'load' => $load,
+			'fuelprice' => $fuelused,
+			'pilotpay' => $pilot->payrate,
+			'flighttime' => $pirep->flighttime,
+		);
+			
+		$revenue = self::getPIREPRevenue($data);
+		
 		# Update it
 		$sql = 'UPDATE '.TABLE_PREFIX."pireps
 					SET `price`='$sched->price', 
@@ -621,7 +646,8 @@ class PIREPData
 						`expenses`=$total_ex,
 						`expenselist`='$expense_list',
 						`flighttype`='$sched->flighttype', 
-						`pilotpay`='$pilot->payrate'";
+						`pilotpay`='$pilot->payrate',
+						`revenue`='$revenue'";
 		
 		if($load != '')
 			$sql .= ", `load`='$load'";
@@ -629,6 +655,19 @@ class PIREPData
 		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
+	}
+	
+	
+	public static function getPIREPRevenue($data)
+	{			
+	
+		$gross = $data['price'] * $data['load'];
+		$pilotpay = $data['pilotpay'] * $data['flighttime'];
+		
+		$revenue = $gross - $data['fuelprice'] - $pilotpay;
+		
+		return $revenue;
+		
 	}
 	
 	/**

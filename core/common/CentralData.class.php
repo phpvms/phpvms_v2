@@ -270,6 +270,7 @@ class CentralData
 				.'<fuelprice>'.$pirep->fuelprice.'</fuelprice>'
 				.'<pilotpay>'.$pirep->pilotpay.'</pilotpay>'
 				.'<price>'.$pirep->price.'</price>'
+				.'<revenue>'.$pirep->revenue.'</revenue>'
 				.'<uniqueid>'.md5($pirep->submitdate.$pilotid).'</uniqueid>'
 				.'</pirep>';		
 	}

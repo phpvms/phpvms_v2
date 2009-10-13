@@ -177,8 +177,29 @@ echo 'Starting the update...<br />';
 		echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';	
 	}
 	
-	
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
+
+	/* Manually specify a revenue value for all PIREPs */
+	$allpireps = PIREPData::GetAllReports();
+	foreach($allpireps as $pirep)
+	{	
+		$data = array(
+			'price' => $pirep->price,
+			'load' => $pirep->load,
+			'fuelprice' => $pirep->fuelprice,
+			'pilotpay' => $pirep->pilotpay,
+			'flighttime' => $pirep->flighttime,
+			);
+
+		$revenue = self::getPIREPRevenue($data);
+		
+		$update = "UPDATE ".TABLE_PREFIX."pireps 
+					SET `revenue`={$revenue} 
+					WHERE `pirepid`={$pirep->pirepid}";
+					
+		DB::query($update);
+		
+	}
 		
 	
 # Final version update

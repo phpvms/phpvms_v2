@@ -244,6 +244,7 @@ CREATE TABLE `phpvms_pireps` (
   `pilotpay` FLOAT NOT NULL,
   `expenses` FLOAT NOT NULL,
   `expenselist` BLOB NOT NULL,
+  `revenue` FLOAT NOT NULL,
   `source` VARCHAR(25) NOT NULL,
   `exported` TINYINT NOT NULL,
   PRIMARY KEY  (`pirepid`)

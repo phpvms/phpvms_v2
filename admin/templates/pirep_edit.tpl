@@ -145,11 +145,11 @@ if($message!='')
 		<p>This is the price of fuel, <?php echo Config::Get('MONEY_UNIT').' per '.Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?>. If you change this, the total fuel cost amount below will be calculated and replaced</p></dd>
 		
 	<dt>Gross Revenue:</dt>
-	<dd><?php echo Config::Get('MONEY_UNIT').floatval($pirep->load) * floatval($pirep->price) ?>
+	<dd><?php echo FinanceData::FormatMoney($pirep->revenue); ?>
 		<p>Change the load and price variables above to adjust this value.</p></dd>
 	
 	<dt>Total fuel cost</dt>
-	<dd><?php echo Config::Get('MONEY_UNIT').$pirep->fuelprice; ?> 
+	<dd><?php echo FinanceData::FormatMoney($pirep->fuelprice); ?> 
 		<p>Change the fuel cost above to edit this total price</p></dd>
 		
 	<dt>Pilot Pay</dt>
@@ -157,8 +157,7 @@ if($message!='')
 		<p>This is what the pilot was paid for this flight</p></dd>
 		
 	<dt>Total Revenue for flight:</dt>
-	<dd><?php echo Config::Get('MONEY_UNIT')
-		.((floatval($pirep->load) * floatval($pirep->price)) - floatval($pirep->fuelprice) - ($pirep->pilotpay * $pirep->flighttime))?> 
+	<dd><?php echo FinanceData::FormatMoney((floatval($pirep->load) * floatval($pirep->price)) - floatval($pirep->fuelprice) - ($pirep->pilotpay * $pirep->flighttime)); ?> 
 		<p></p></dd>
 		
 	<dt>Flight Time</dt>

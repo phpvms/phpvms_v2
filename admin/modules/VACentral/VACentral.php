@@ -48,7 +48,8 @@ class VACentral extends CodonModule
 				foreach($pireps as $pirep)
 				{
 					$resp = CentralData::send_pirep($pirep->pirepid);
-					if($resp === true)
+					
+					if((int)CentralData::$response->responsecode == 200)
 					{
 						echo "Exported PIREP #{$pirep->pirepid}<br />";
 					}

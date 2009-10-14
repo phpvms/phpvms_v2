@@ -363,6 +363,12 @@ class DB
 		self::$num_rows = self::$DB->num_rows;
 		self::$last_query = $query;
 		
+		// Log any erronious queries
+		if(self::$DB->errno != 0)
+		{
+			Debug::log($query."\n".self::$DB->error);
+		}
+		
 		return $ret;
 	}
 	
@@ -386,6 +392,12 @@ class DB
 		self::$errno = self::$DB->errno;
 		self::$last_query = $query;
 		
+		// Log any erronious queries
+		if(self::$DB->errno != 0)
+		{
+			Debug::log($query."\n".self::$DB->error);
+		}
+		
 		return $ret;
 	}
 	
@@ -406,6 +418,12 @@ class DB
 		self::$rows_affected = self::$num_rows = self::$DB->num_rows;
 		self::$insert_id = self::$DB->insert_id;
 		self::$last_query = $query;
+		
+		// Log any erronious queries
+		if(self::$DB->errno != 0)
+		{
+			Debug::log($query."\n".self::$DB->error);
+		}
 		
 		return $ret; //self::$insert_id;
 	}

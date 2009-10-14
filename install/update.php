@@ -191,7 +191,7 @@ echo 'Starting the update...<br />';
 			'flighttime' => $pirep->flighttime,
 			);
 
-		$revenue = self::getPIREPRevenue($data);
+		$revenue = PIREPData::getPIREPRevenue($data);
 		
 		$update = "UPDATE ".TABLE_PREFIX."pireps 
 					SET `revenue`={$revenue} 

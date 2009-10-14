@@ -271,7 +271,6 @@ class CentralData
 				.'<pilotpay>'.$pirep->pilotpay.'</pilotpay>'
 				.'<price>'.$pirep->price.'</price>'
 				.'<revenue>'.$pirep->revenue.'</revenue>'
-				.'<uniqueid>'.md5($pirep->submitdate.$pilotid).'</uniqueid>'
 				.'</pirep>';		
 	}
 	
@@ -343,7 +342,7 @@ class CentralData
 				.'<alt>'.$flight['alt'].'</alt>'
 				.'<gs>'.$flight['gs'].'</gs>'
 				.'<distremain>'.$flight['distremain'].'</distremain>'
-				.'<timeremaining>'.$flight['timeremaining'].'</timeremaining>'
+				.'<timeremain>'.$flight['timeremaining'].'</timeremain>'
 				.'<lastupdate>'.$flight['lastupdate'].'</lastupdate>'
 			  .'</flight>';
 	}

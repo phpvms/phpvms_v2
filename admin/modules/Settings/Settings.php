@@ -20,7 +20,13 @@
 class Settings extends CodonModule
 {
 
-	function HTMLHead()
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
+	
+	public function HTMLHead()
 	{
 		switch($this->get->page)
 		{
@@ -39,114 +45,107 @@ class Settings extends CodonModule
 		}
 		
 	}
-	function Controller()
-	{
 	
-		switch($this->get->page)
+	public function index()
+	{
+		$this->settings();
+	}
+	
+	public function settings()
+	{
+		switch($this->post->action)
 		{
-			case '':
-			case 'settings':
-				
-				switch($this->post->action)
-				{
-					case 'addsetting':
-						$this->AddSetting();
-						break;
-					case 'savesettings':
-						$this->SaveSettings();
-						
-						break;
-				}
-				
-				$this->ShowSettings();
-			
+			case 'addsetting':
+				$this->AddSetting();
 				break;
-		
-			/* CustomFields Section
-			 */
-			 
-			// Show the popup
-			case 'addfield':
-				
-				Template::Set('title', Lang::gs('settings.add.field'));
-				Template::Set('action', 'addfield');
-				
-				Template::Show('settings_addcustomfield.tpl');
-				break;
-				
-			case 'editfield':
-				
-				Template::Set('title', Lang::gs('settings.edit.field'));
-				Template::Set('action', 'savefield');
-				Template::Set('field', SettingsData::GetField($this->get->id));
-				
-				Template::Show('settings_addcustomfield.tpl');
-				
-				break;
-				
-			case 'addpirepfield':
-				
-				Template::Set('title', Lang::gs('pirep.field.add'));
-				Template::Set('action', 'addfield');
-				Template::Show('settings_addpirepfield.tpl');
-				
-				break;
-				
-			case 'editpirepfield':
-				
-				Template::Set('title', Lang::gs('pirep.field.edit'));
-				Template::Set('action', 'savefields');
-				Template::Set('field', PIREPData::GetFieldInfo($this->get->id));
-				
-				Template::Show('settings_addpirepfield.tpl');
-				
-				break;
-				
-			case 'pirepfields':
-				
-				switch(Vars::POST('action'))
-				{
-					case 'savefields':
-						$this->PIREP_SaveFields();
-						break;
-						
-					case 'addfield':
-						$this->PIREP_AddField();
-						break;
-						
-					case 'deletefield':
-						$this->PIREP_DeleteField();
-						break;
-				}
-				
-				$this->PIREP_ShowFields();
-				
-				break;
-				
-			case 'customfields':
-		
-				switch(Vars::POST('action'))
-				{
-					case 'savefield':
-						$this->SaveFields();
-						break;
-						
-					case 'addfield':
-						$this->AddField();
-						break;
-						
-					case 'deletefield':
-						$this->DeleteField();
-						break;
-				}
-				
-				$this->ShowFields();
+			case 'savesettings':
+				$this->SaveSettings();
 				
 				break;
 		}
-	}
 		
-	function SaveSettings()
+		$this->ShowSettings();
+	}
+	
+	
+	public function addfield()
+	{
+		Template::Set('title', Lang::gs('settings.add.field'));
+		Template::Set('action', 'addfield');
+		
+		Template::Show('settings_addcustomfield.tpl');
+	}
+	
+	public function editfield()
+	{
+		Template::Set('title', Lang::gs('settings.edit.field'));
+		Template::Set('action', 'savefield');
+		Template::Set('field', SettingsData::GetField($this->get->id));
+		
+		Template::Show('settings_addcustomfield.tpl');
+	}
+	
+	
+	public function addpirepfield()
+	{
+		Template::Set('title', Lang::gs('pirep.field.add'));
+		Template::Set('action', 'addfield');
+		Template::Show('settings_addpirepfield.tpl');
+	}
+	
+	public function editpirepfield()
+	{
+		Template::Set('title', Lang::gs('pirep.field.edit'));
+		Template::Set('action', 'savefields');
+		Template::Set('field', PIREPData::GetFieldInfo($this->get->id));
+		
+		Template::Show('settings_addpirepfield.tpl');
+	}
+	
+	public function pirepfields()
+	{
+		switch($this->post->action)
+		{
+			case 'savefields':
+				$this->PIREP_SaveFields();
+				break;
+				
+			case 'addfield':
+				$this->PIREP_AddField();
+				break;
+				
+			case 'deletefield':
+				$this->PIREP_DeleteField();
+				break;
+		}
+		
+		$this->PIREP_ShowFields();
+	}
+	
+	public function customfields()
+	{
+		switch($this->post->action)
+		{
+			case 'savefield':
+				$this->save_fields_post();
+				break;
+				
+			case 'addfield':
+				$this->add_field_post();
+				break;
+				
+			case 'deletefield':
+				$this->delete_field_post();
+				break;
+		}
+		
+		$this->ShowFields();
+	}
+	
+	/* Utility functions */	
+	
+		
+	protected function save_settings_post()
 	{
 		while(list($name, $value) = each($_POST))
 		{
@@ -162,7 +161,7 @@ class Settings extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	function AddField()
+	protected function add_field_post()
 	{
 		if($this->post->title == '')
 		{
@@ -199,9 +198,9 @@ class Settings extends CodonModule
 		}
 	}
 	
-	function SaveFields()
+	protected function save_fields_post()
 	{
-	if($this->post->title == '')
+		if($this->post->title == '')
 		{
 			echo 'No field name entered!';
 			return;
@@ -236,7 +235,7 @@ class Settings extends CodonModule
 		}
 	}
 	
-	function DeleteField()
+	protected function delete_field_post()
 	{
 		$id = DB::escape($this->post->id);
 		
@@ -253,27 +252,27 @@ class Settings extends CodonModule
 		}
 	}
 	
-	function ShowSettings()
+	protected function ShowSettings()
 	{
 		Template::Set('allsettings', SettingsData::GetAllSettings());
 		Template::ShowTemplate('settings_mainform.tpl');
 	}
 	
-	function ShowFields()
+	protected function ShowFields()
 	{
 		Template::Set('allfields', SettingsData::GetAllFields());
 		
 		Template::ShowTemplate('settings_customfieldsform.tpl');
 	}
 	
-	function PIREP_ShowFields()
+	protected function PIREP_ShowFields()
 	{
 		Template::Set('allfields', PIREPData::GetAllFields());
 		
 		Template::ShowTemplate('settings_pirepfieldsform.tpl');
 	}
 	
-	function PIREP_AddField()
+	protected function PIREP_AddField()
 	{
 		if($this->post->title == '')
 		{
@@ -295,7 +294,7 @@ class Settings extends CodonModule
 		}
 	}
 	
-	function PIREP_SaveFields()
+	protected function PIREP_SaveFields()
 	{
 		
 		if($this->post->title == '')
@@ -319,7 +318,7 @@ class Settings extends CodonModule
 		}		
 	}
 	
-	function PIREP_DeleteField()
+	protected function PIREP_DeleteField()
 	{
 		$id = DB::escape($this->post->id);
 		
@@ -337,4 +336,3 @@ class Settings extends CodonModule
 		}
 	}
 }
-?>

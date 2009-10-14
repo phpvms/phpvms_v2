@@ -29,7 +29,46 @@ class Dashboard extends CodonModule
 		Template::Set('sidebar', 'sidebar_dashboard.tpl');
 	}
 	
-	function Controller()
+	public function index()
+	{
+		/* Dashboard.tpl calls the functions below
+				*/
+		
+		$this->CheckForUpdates();
+		CentralData::send_vastats();
+		
+		Template::Set('unexported_count', count(PIREPData::getReportsByExportStatus(false)));
+		Template::Show('dashboard.tpl');
+		
+		
+		/*Template::Set('allpilots', PilotData::GetPendingPilots());
+		Template::Show('pilots_pending.tpl');*/
+	}
+	
+	public function pirepcounts()
+	{
+		# Create the chart
+		//$reportcounts = '';
+		$reportcounts = PIREPData::ShowReportCounts();
+		if(!$reportcounts)
+		{
+			$reportcounts = array();
+		}
+		
+		$graph = new ChartGraph('pchart', 'line', 680, 180);
+		$graph->setFontSize(8);
+		$graph->AddData($reportcounts, array_keys($reportcounts));
+		$graph->setTitles('PIREPS Filed');
+		$graph->GenerateGraph();
+	}
+	
+	public function about()
+	{
+		Template::Show('core_about.tpl');
+
+	}
+	
+	public function Controller()
 	{
 		/*
 		 * Check for updates
@@ -37,44 +76,15 @@ class Dashboard extends CodonModule
 		switch($this->get->page)
 		{
 			default:
-			
-				/* Dashboard.tpl calls the functions below
-				*/
-				
-				$this->CheckForUpdates();
-				CentralData::send_vastats();
-				
-				Template::Set('unexported_count', count(PIREPData::getReportsByExportStatus(false)));
-				
-				Template::Show('dashboard.tpl');
-
-                /*Template::Set('allpilots', PilotData::GetPendingPilots());
-				Template::Show('pilots_pending.tpl');*/
+				$this->index();
 				break;
 				
 			case 'pirepcounts':
-		
-			
-				# Create the chart
-				//$reportcounts = '';
-				$reportcounts = PIREPData::ShowReportCounts();
-				if(!$reportcounts)
-				{
-					$reportcounts = array();
-				}
-				
-				$graph = new ChartGraph('pchart', 'line', 680, 180);
-				$graph->setFontSize(8);
-				$graph->AddData($reportcounts, array_keys($reportcounts));
-				$graph->setTitles('PIREPS Filed');
-				$graph->GenerateGraph();
-				
+				$this->pirepcounts();				
 				break;
 
 			case 'about':
-
-				Template::Show('core_about.tpl');
-
+				$this->about();				
 				break;
 		}
 	}

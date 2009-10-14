@@ -224,12 +224,45 @@ class MainController
 	 *	in the parameter
 	 *
 	 * @param string $module_priority Module that is called first
+	 * 
+	 * Change - Oct 14 2009
+	 *	Makes this more "cake-esque" - check if the "Controller" function
+	 *	exists (for backwards compat), if it doesn't then run the function
+	 *	defined by the "action" bit in the URL
 	 */
 	public static function RunAllActions($module_priority='')
 	{
 		if(Config::Get('RUN_SINGLE_MODULE') === true)
 		{
-			self::Run(Config::Get('RUN_MODULE'), 'Controller');
+			$call_function = 'Controller';
+			$ModuleName = strtoupper(Config::Get('RUN_MODULE'));
+			global $$ModuleName;
+			
+			if(!method_exists($$ModuleName, $call_function))
+			{
+				// Check if we have a function for the page we are calling
+				$name = $$ModuleName->get->page;
+				if($name == '')
+				{
+					$call_function = 'index';
+				}
+				else
+				{
+					if(method_exists($$ModuleName, $name))
+					{
+						$call_function = $name;
+						
+						
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			
+			
+			self::Run($ModuleName, $call_function);
 		}
 		else
 		{

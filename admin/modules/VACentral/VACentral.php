@@ -23,63 +23,53 @@ class VACentral extends CodonModule
 		Template::Set('sidebar', 'sidebar_central.tpl');
 	}
 	
-	public function Controller()
+	public function index()
 	{
-		
-		switch($this->get->page)
-		{
-			case '':
-			default:
-			
-				Template::Show('central_main.tpl');
-			
-				break;
-				
-			case 'sendqueuedpireps':
-				
-				$pireps = PIREPData::getReportsByExportStatus(false);
-				
-				if(!$pireps)
-				{
-					echo 'You have no PIREPs waiting to be exported!';
-					return;
-				}
-				
-				foreach($pireps as $pirep)
-				{
-					$resp = CentralData::send_pirep($pirep->pirepid);
-					
-					if((int)CentralData::$response->responsecode == 200)
-					{
-						echo "Exported PIREP #{$pirep->pirepid}<br />";
-					}
-					else 
-					{
-						echo "FAILED exporting PIREP #{$pirep->pirepid} - ".CentralData::$last_error.'<br />';
-					}
-				}
-				
-				echo "Completed";
-				
-				break;
-				
-			case 'sendschedules':
-			
-				echo '<h3>Sending schedules...</h3>';
-				$ret = CentralData::send_schedules();
-				$this->parse_response($ret);
-				
-				break;
-				
-			case 'sendpireps':
-				
-				echo '<h3>Sending all PIREPS</h3>';
-				$ret = CentralData::send_all_pireps();
-				$this->parse_response($ret);
-				
-				break;
-		}	
+		Template::Show('central_main.tpl');
 	}
+	
+	public function sendqueuedpireps()
+	{
+		$pireps = PIREPData::getReportsByExportStatus(false);
+				
+		if(!$pireps)
+		{
+			echo 'You have no PIREPs waiting to be exported!';
+			return;
+		}
+		
+		foreach($pireps as $pirep)
+		{
+			$resp = CentralData::send_pirep($pirep->pirepid);
+			
+			if((int)CentralData::$response->responsecode == 200)
+			{
+				echo "Exported PIREP #{$pirep->pirepid}<br />";
+			}
+			else 
+			{
+				echo "FAILED exporting PIREP #{$pirep->pirepid} - ".CentralData::$last_error.'<br />';
+			}
+		}
+		
+		echo "Completed";
+	}
+	
+	public function sendschedules()
+	{
+		echo '<h3>Sending schedules...</h3>';
+		$ret = CentralData::send_schedules();
+		$this->parse_response($ret);
+	}
+	
+	public function sendpireps()
+	{
+		echo '<h3>Sending all PIREPS</h3>';
+		$ret = CentralData::send_all_pireps();
+		$this->parse_response($ret);
+	}
+	
+	/* Utility functions */
 	
 	protected function parse_response($resp)
 	{

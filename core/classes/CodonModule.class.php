@@ -46,12 +46,17 @@ class CodonModule
 	public static $get;
 	public static $activeModule;
 	
+	public function __construct()
+	{
+		
+	}
+	
 	/**
 	 * Initialize the parent class. Called by the MainController
 	 *  when the module is created
 	 *
 	 */
-	function init($module_name='')
+	public function init($module_name='')
 	{
 		$module_name = strtolower($module_name);
 				

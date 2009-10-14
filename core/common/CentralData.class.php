@@ -27,7 +27,7 @@ class CentralData
 	
 	private static function central_enabled()
 	{
-		if(Config::Get('PHPVMS_CENTRAL_ENABLED')
+		if(Config::Get('PHPVMS_CENTRAL_ENABLED') 
 			&& Config::Get('PHPVMS_API_KEY') != '')
 			return true;
 		

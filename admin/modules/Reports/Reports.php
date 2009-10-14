@@ -24,27 +24,23 @@ class Reports extends CodonModule
 		Template::Set('sidebar', 'sidebar_reports.tpl');
 	}
 	
-	function Controller()
+	public function index()
 	{
-		switch($this->get->page)
-		{
-			case '':
-			case 'reports':
-			
-				Template::Set('acstats', StatsData::AircraftUsage());
-				Template::Set('toproutes', StatsData::TopRoutes());
-				Template::Show('reports_main.tpl');
-				
-				break;
-				
-			case 'aircraft':
-				
-				$acstats = AircraftStats::getAircraftDetails();
-								
-				Template::Set('acstats', $acstats);
-				Template::Show('reports_aircraft.tpl');
-				
-				break;
-		}
+		$this->overview();
+	}
+	
+	public function overview()
+	{
+		Template::Set('acstats', StatsData::AircraftUsage());
+		Template::Set('toproutes', StatsData::TopRoutes());
+		Template::Show('reports_main.tpl');
+	}
+	
+	public function aircraft()
+	{
+		$acstats = AircraftStats::getAircraftDetails();
+		
+		Template::Set('acstats', $acstats);
+		Template::Show('reports_aircraft.tpl');
 	}
 }

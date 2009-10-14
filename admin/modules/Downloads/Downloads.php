@@ -24,95 +24,83 @@ class Downloads extends CodonModule
 		Template::Set('sidebar', 'sidebar_downloads.tpl');
 	}
 	
-	public function Controller()
+	public function index()
 	{
-		switch($this->get->page)
+		$this->overview();
+	}
+	
+	public function overview()
+	{
+		switch($this->post->action)
 		{
-			case '':
-			case 'overview':
-			
-				switch($this->post->action)
-				{
-					case 'addcategory':
-						$this->AddCategory();
-						break;
-					
-					case 'editcategory':
-						$this->EditCategory();
-						break;
-						
-					case 'deletecategory':
-						$this->DeleteCategory();
-						break;
-						
-					case 'adddownload':
-						$this->AddDownload();
-						break;
-						
-					case 'editdownload':
-						$this->EditDownload();
-						break;
-						
-					case 'deletedownload':
-						$this->DeleteDownload();
-						break;
-										
-				}
-			
-				Template::Set('allcategories', DownloadData::GetAllCategories());
-				Template::Show('downloads_overview.tpl');
-				
-				break;
-				
 			case 'addcategory':
+				$this->AddCategoryPost();
+				break;
 			
-				Template::Set('title', 'Add Category');
-				Template::Set('action', 'addcategory');
-				
-				Template::Show('downloads_categoryform.tpl');
+			case 'editcategory':
+				$this->EditCategoryPost();
+				break;
 			
+			case 'deletecategory':
+				$this->DeleteCategoryPost();
 				break;
 			
 			case 'adddownload':
-			
-				Template::Set('title', 'Add Download');
-				Template::Set('allcategories', DownloadData::GetAllCategories());
-				Template::Set('action', 'adddownload');
-				
-				Template::Show('downloads_downloadform.tpl');
-			
+				$this->AddDownloadPost();
 				break;
-				
-			case 'editcategory':
 			
-				Template::Set('title', 'Edit Category');
-				Template::Set('action', 'editcategory');
-				Template::Set('category', DownloadData::GetAsset($this->get->id));
-				
-				Template::Show('downloads_categoryform.tpl');
-				
-				break;
-				
 			case 'editdownload':
-			
-				Template::Set('title', 'Edit Download');
-				Template::Set('action', 'editdownload');
-				Template::Set('allcategories', DownloadData::GetAllCategories());
-				Template::Set('download', DownloadData::GetAsset($this->get->id));
-				
-				Template::Show('downloads_downloadform.tpl');
-			
+				$this->EditDownloadPost();
 				break;
-				
+			
 			case 'deletedownload':
-			
+				$this->DeleteDownloadPost();
 				break;
-				
+			
 		}
+		
+		Template::Set('allcategories', DownloadData::GetAllCategories());
+		Template::Show('downloads_overview.tpl');
+	}
+	
+	public function addcategory()
+	{
+		Template::Set('title', 'Add Category');
+		Template::Set('action', 'addcategory');
+		
+		Template::Show('downloads_categoryform.tpl');
 		
 	}
 	
-	public function AddCategory()
+	public function adddownload()
+	{
+		Template::Set('title', 'Add Download');
+		Template::Set('allcategories', DownloadData::GetAllCategories());
+		Template::Set('action', 'adddownload');
+		
+		Template::Show('downloads_downloadform.tpl');
+	}
+	
+	public function editcategory()
+	{
+		Template::Set('title', 'Edit Category');
+		Template::Set('action', 'editcategory');
+		Template::Set('category', DownloadData::GetAsset($this->get->id));
+		
+		Template::Show('downloads_categoryform.tpl');
+	}
+	
+	public function editdownload()
+	{
+		Template::Set('title', 'Edit Download');
+		Template::Set('action', 'editdownload');
+		Template::Set('allcategories', DownloadData::GetAllCategories());
+		Template::Set('download', DownloadData::GetAsset($this->get->id));
+		
+		Template::Show('downloads_downloadform.tpl');
+	}
+		
+	protected function AddCategoryPost()
 	{
 		if($this->post->name == '')
 		{
@@ -134,7 +122,7 @@ class Downloads extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	public function EditCategory()
+	protected function EditCategoryPost()
 	{
 		if($this->post->name == '')
 		{
@@ -157,7 +145,7 @@ class Downloads extends CodonModule
 		
 	}
 	
-	public function DeleteCategory()
+	protected function DeleteCategoryPost()
 	{
 		if($this->post->id=='')
 		{
@@ -172,7 +160,7 @@ class Downloads extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	public function AddDownload()
+	protected function AddDownloadPost()
 	{
 		if($this->post->name == '' || $this->post->link == '')
 		{
@@ -192,7 +180,7 @@ class Downloads extends CodonModule
 		}
 	}
 	
-	public function EditDownload()
+	protected function EditDownloadPost()
 	{
 		if($this->post->name == '' || $this->post->link == '')
 		{
@@ -208,7 +196,7 @@ class Downloads extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	public function DeleteDownload()
+	protected function DeleteDownloadPost()
 	{
 		if($this->post->id=='')
 		{

@@ -46,225 +46,204 @@ class Operations extends CodonModule
 		}
 	}
 
-	public function Controller()
+	public function addaircraft()
 	{
-		switch($this->get->page)
-		{
-			
-			/**
-			 * These are for the popup boxes
-			 */
-			
-			/* Aircraft Operations
-			 */
-			case 'addaircraft':
-			
-				Template::Set('title', 'Add Aircraft');
-				Template::Set('action', 'addaircraft');
-				Template::Show('ops_aircraftform.tpl');
-				
-				break;
-
-			case 'editaircraft':
-			
-				$id = $this->get->id;
-				
-				Template::Set('aircraft', OperationsData::GetAircraftInfo($id));
-				Template::Set('title', 'Edit Aircraft');
-				Template::Set('action', 'editaircraft');
-				Template::Show('ops_aircraftform.tpl');
-				
-				break;
-			
-			/* Aircraft Operations
-			 */
-			case 'addairline':
-				
-				Template::Set('title', 'Add Airline');
-				Template::Set('action', 'addairline');
-				Template::Show('ops_airlineform.tpl');
-				break;
-				
-			case 'editairline':
-				
-				
-				Template::Set('title', 'Edit Airline');
-				Template::Set('action', 'editairline');
-				Template::Set('airline', OperationsData::GetAirlineByID($this->get->id));
-				
-				Template::Show('ops_airlineform.tpl');
-				
-				break;
-				
-				
-			case 'calculatedistance':
-			
-				echo OperationsData::getAirportDistance($this->get->depicao, $this->get->arricao);
-				
-				break;
-				
-			
-			/**
-			 * These are the main form
-			 */
-			
-			case 'airlines':
-				
-				if($this->post->action == 'addairline')
-				{
-					$this->AddAirline();
-				}
-				if($this->post->action == 'editairline')
-				{
-					$this->EditAirline();
-				}
-				
-				Template::Set('allairlines', OperationsData::GetAllAirlines());
-				Template::Show('ops_airlineslist.tpl');
-				
-				break;
-				
-			case 'aircraft':
-			
-				
-				/* If they're adding an aircraft, go through this pain
-				*/
-				switch($this->post->action)
-				{
-					case 'addaircraft':
-						
-						$this->AddAircraft();
-						
-						break;
-					
-					case 'editaircraft':
-						
-						$this->EditAircraft();
-						
-						break;
-				}
-			
-				Template::Set('allaircraft', OperationsData::GetAllAircraft());
-				Template::Show('ops_aircraftlist.tpl');
-							
-				break;
-			
-			case 'addairport':
-				Template::Set('title', 'Add Airport');
-				Template::Set('action', 'addairport');
-
-				Template::Show('ops_airportform.tpl');
-				break;
-
-			case 'editairport':
-                Template::Set('title', 'Edit Airport');
-				Template::Set('action', 'editairport');
-				Template::Set('airport', OperationsData::GetAirportInfo(Vars::GET('icao')));
-
-				Template::Show('ops_airportform.tpl');
-				break;
-
-			case 'airports':
-				
-				/* If they're adding an airport, go through this pain
-				*/
-				switch($this->post->action)
-				{
-					case 'addairport':
-						
-						$this->AddAirport();
-						
-						break;
-					
-					case 'editairport':
-						
-						$this->EditAirport();
-						
-						break;
-				}
-								
-				Template::Set('airports', OperationsData::GetAllAirports());
-				
-				Template::Show('ops_airportlist.tpl');
-				
-				break;
-				
-			case 'addschedule':
-			
-				Template::Set('title', 'Add Schedule');
-				Template::Set('action', 'addschedule');
-
-                Template::Set('allairlines', OperationsData::GetAllAirlines());
-				Template::Set('allaircraft', OperationsData::GetAllAircraft());
-				Template::Set('allairports', OperationsData::GetAllAirports());
-				Template::Set('flighttypes', Config::Get('FLIGHT_TYPES'));
-
-				Template::Show('ops_scheduleform.tpl');
-
-				break;
-
-            case 'editschedule':
-
-				$id = $this->get->id;
-
-				Template::Set('title', 'Edit Schedule');
-				Template::Set('schedule', SchedulesData::GetSchedule($id));
-				
-				Template::Set('action', 'editschedule');
-
-                Template::Set('allairlines', OperationsData::GetAllAirlines());
-				Template::Set('allaircraft', OperationsData::GetAllAircraft());
-				Template::Set('allairports', OperationsData::GetAllAirports());
-				Template::Set('flighttypes', Config::Get('FLIGHT_TYPES'));
-				
-				Template::Show('ops_scheduleform.tpl');
-
-				break;
-
-			case 'activeschedules':
-			case 'inactiveschedules':
-			case 'schedules':
-
-				/* These are loaded in popup box */
-				if($this->get->action == 'viewroute')
-				{
-					$id = $this->get->id;
-					return;
-				}
-				
-				switch($this->post->action)
-				{
-					case 'addschedule':
-						$this->AddSchedule();
-						break;
-						
-					case 'editschedule':
-						$this->EditSchedule();
-						break;
-						
-					case 'deleteschedule':
-						$this->DeleteSchedule();
-						break;
-				}
-			
-				if($this->get->page == 'schedules' || $this->get->page == 'activeschedules')
-				{
-					Template::Set('title', 'Viewing Active Schedules');
-					Template::Set('schedules', SchedulesData::GetSchedules('', true));
-				}
-				else
-				{
-					Template::Set('title', 'Viewing Inactive Schedules');
-					Template::Set('schedules', SchedulesData::GetInactiveSchedules());
-				}
-				
-				Template::Show('ops_schedules.tpl');
-
-				break;
-		}
+		Template::Set('title', 'Add Aircraft');
+		Template::Set('action', 'addaircraft');
+		Template::Show('ops_aircraftform.tpl');	
 	}
 	
-	public function AddAirline()
+	public function editaircraft()
+	{
+		$id = $this->get->id;
+				
+		Template::Set('aircraft', OperationsData::GetAircraftInfo($id));
+		Template::Set('title', 'Edit Aircraft');
+		Template::Set('action', 'editaircraft');
+		Template::Show('ops_aircraftform.tpl');	
+	}
+	
+	public function addairline()
+	{
+		Template::Set('title', 'Add Airline');
+		Template::Set('action', 'addairline');
+		Template::Show('ops_airlineform.tpl');
+	}
+	
+	public function editairline()
+	{
+		Template::Set('title', 'Edit Airline');
+		Template::Set('action', 'editairline');
+		Template::Set('airline', OperationsData::GetAirlineByID($this->get->id));
+		
+		Template::Show('ops_airlineform.tpl');
+	}
+	
+	
+	public function calculateddistance()
+	{
+		echo OperationsData::getAirportDistance($this->get->depicao, $this->get->arricao);
+	}
+	
+	
+	public function airlines()
+	{
+		if($this->post->action == 'addairline')
+		{
+			$this->add_airline_post();
+		}
+		if($this->post->action == 'editairline')
+		{
+			$this->edit_airline_post();
+		}
+		
+		Template::Set('allairlines', OperationsData::GetAllAirlines());
+		Template::Show('ops_airlineslist.tpl');
+	}
+	
+	public function aircraft()
+	{
+		/* If they're adding an aircraft, go through this pain
+		*/
+		switch($this->post->action)
+		{
+			case 'addaircraft':
+				
+				$this->add_aircraft_post();
+				
+				break;
+			
+			case 'editaircraft':
+				
+				$this->edit_aircraft_post();
+				
+				break;
+		}
+	
+		Template::Set('allaircraft', OperationsData::GetAllAircraft());
+		Template::Show('ops_aircraftlist.tpl');
+	}
+	
+	public function addairport()
+	{
+		Template::Set('title', 'Add Airport');
+		Template::Set('action', 'addairport');
+
+		Template::Show('ops_airportform.tpl');
+	}
+	
+	public function editairport()
+	{
+		Template::Set('title', 'Edit Airport');
+		Template::Set('action', 'editairport');
+		Template::Set('airport', OperationsData::GetAirportInfo($this->get->icao));
+
+		Template::Show('ops_airportform.tpl');
+	}
+	
+	public function airports()
+	{
+		/* If they're adding an airport, go through this pain
+		*/
+		switch($this->post->action)
+		{
+			case 'addairport':
+				
+				$this->add_airport_post();
+				
+				break;
+			
+			case 'editairport':
+				
+				$this->edit_airport_post();
+				
+				break;
+		}
+						
+		Template::Set('airports', OperationsData::GetAllAirports());
+		
+		Template::Show('ops_airportlist.tpl');
+	}
+	
+	public function addschedule()
+	{
+		Template::Set('title', 'Add Schedule');
+		Template::Set('action', 'addschedule');
+
+        Template::Set('allairlines', OperationsData::GetAllAirlines());
+		Template::Set('allaircraft', OperationsData::GetAllAircraft());
+		Template::Set('allairports', OperationsData::GetAllAirports());
+		Template::Set('flighttypes', Config::Get('FLIGHT_TYPES'));
+
+		Template::Show('ops_scheduleform.tpl');
+	}
+	
+	public function editschedule()
+	{
+		$id = $this->get->id;
+
+		Template::Set('title', 'Edit Schedule');
+		Template::Set('schedule', SchedulesData::GetSchedule($id));
+		
+		Template::Set('action', 'editschedule');
+
+        Template::Set('allairlines', OperationsData::GetAllAirlines());
+		Template::Set('allaircraft', OperationsData::GetAllAircraft());
+		Template::Set('allairports', OperationsData::GetAllAirports());
+		Template::Set('flighttypes', Config::Get('FLIGHT_TYPES'));
+		
+		Template::Show('ops_scheduleform.tpl');
+	}
+	
+	public function activeschedules()
+	{
+		$this->schedules();
+	}
+	
+	public function inactiveschedules()
+	{
+		$this->schedules();
+	}
+	
+	public function schedules()
+	{
+		/* These are loaded in popup box */
+		if($this->get->action == 'viewroute')
+		{
+			$id = $this->get->id;
+			return;
+		}
+		
+		switch($this->post->action)
+		{
+			case 'addschedule':
+				$this->add_schedule_post();
+				break;
+				
+			case 'editschedule':
+				$this->edit_schedule_post();
+				break;
+				
+			case 'deleteschedule':
+				$this->delete_schedule_post();
+				break;
+		}
+	
+		if($this->get->page == 'schedules' || $this->get->page == 'activeschedules')
+		{
+			Template::Set('title', 'Viewing Active Schedules');
+			Template::Set('schedules', SchedulesData::GetSchedules('', true));
+		}
+		else
+		{
+			Template::Set('title', 'Viewing Inactive Schedules');
+			Template::Set('schedules', SchedulesData::GetInactiveSchedules());
+		}
+		
+		Template::Show('ops_schedules.tpl');
+	}
+		
+	protected function add_airline_post()
 	{
 		$code = strtoupper($this->post->code);
 		$name = $this->post->name;
@@ -300,7 +279,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	public function EditAirline()
+	protected function edit_airline_post()
 	{
 		$id = $this->post->id;
 		$code = $this->post->code;
@@ -338,7 +317,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 			
-	public function AddAircraft()
+	protected function add_aircraft_post()
 	{		
 		if($this->post->icao == '' || $this->post->name == '' 
 			|| $this->post->fullname == ''
@@ -364,7 +343,6 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		//TODO: clean this up
 		$data = array(	'icao'=>$this->post->icao,
 						'name'=>$this->post->name,
 						'fullname'=>$this->post->fullname,
@@ -399,7 +377,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	public function AddAirport()
+	protected function add_airport_post()
 	{
 		
 		if($this->post->icao == '' || $this->post->name == '' 
@@ -431,11 +409,10 @@ class Operations extends CodonModule
 		}
 
 		Template::Set('message', 'The airport has been added');
-
 		Template::Show('core_success.tpl');
 	}
 
-	public function EditAirport()
+	protected function edit_airport_post()
 	{
 		$icao = $this->post->icao;
 		$name = $this->post->name;
@@ -472,7 +449,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	public function AddSchedule()
+	protected function add_schedule_post()
 	{	
 		if($this->post->code == '' || $this->post->flightnum == '' 
 			|| $this->post->deptime == '' || $this->post->arrtime == ''
@@ -535,7 +512,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	public function EditSchedule()
+	protected function edit_schedule_post()
 	{
 		if($this->post->code == '' || $this->post->flightnum == '' 
 			|| $this->post->deptime == '' || $this->post->arrtime == ''
@@ -580,7 +557,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	public function DeleteSchedule()
+	protected function delete_schedule_post()
 	{
 		$id = $this->post->id;
 		
@@ -597,7 +574,7 @@ class Operations extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 
-	public function EditAircraft()
+	protected function edit_aircraft_post()
 	{
 		if($this->post->id == '')
 		{

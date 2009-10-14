@@ -28,164 +28,160 @@ class PIREPAdmin extends CodonModule
 		}
 	}
 	
-	public function Controller()
+	public function index()
 	{
-		// Post actions
+		$this->viewpending();
+	}
+	
+	public function viewpending()
+	{
+		
 		switch($this->post->action)
 		{
 			case 'addcomment':
-				$this->AddComment();
+				$this->add_comment_post();
 				break;
-				
+			
 			case 'approvepirep':
-				$this->ApprovePIREP();
+				$this->approve_pirep_post();
 				break;
-				
+			
 			case 'deletepirep':
 				
-				$this->DeletePIREP();
+				$this->delete_pirep_post();
 				break;
-				
+			
 			case 'rejectpirep':
-				$this->RejectPIREP();
+				$this->reject_pirep_post();
 				break;
 		}
 		
-		// Views
-		switch($this->get->page)
+		
+		$hub = $this->get->hub;
+		
+		if($this->post->action == 'editpirep')
 		{
-			case 'rejectpirep':
-
-				Template::Set('pirepid', $this->get->pirepid);
-				Template::Show('pirep_reject.tpl');
-				
-				break;
-				
-			case 'viewrecent':
-				Template::Set('title', Lang::gs('pireps.view.recent'));
-				Template::Set('pireps', PIREPData::GetRecentReports());
-				Template::Set('descrip', 'These pilot reports are from the past 48 hours');
-				
-				Template::Show('pireps_list.tpl');
-				
-				break;
-				
-			case 'approveall':
-			
-				echo '<h3>Approve All</h3>';
-			
-				$allpireps = PIREPData::GetAllReportsByAccept(PIREP_PENDING);
-				$total = count($allpireps);
-				$count = 0;
-				foreach($allpireps as $pirep_details)
-				{
-					if($pirep_details->aircraft == '')
-					{
-						continue;
-					}
-						
-					# Update pilot stats
-					SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
-					PIREPData::ChangePIREPStatus($pirep_details->pirepid, PIREP_ACCEPTED); // 1 is accepted
-					PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
-					PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
-					
-					RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
-					RanksData::CalculatePilotRanks();
-					PilotData::GenerateSignature($pirep_details->pilotid);
-					StatsData::UpdateTotalHours();
-					
-					$count++;
-				}
-				
-				$skipped = $total - $count;
-				echo "$count of $total were approved ({$skipped} has errors)";
-			
-				break;
-				
-			case '':
-			case 'viewpending':
-				
-				$hub = $this->get->hub;
-				
-				if($this->post->action == 'editpirep')
-				{
-					$this->EditPIREP();
-				}
-				
-				Template::Set('title', 'Pending Reports');
-				
-				if($hub != '')
-				{
-					Template::Set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $hub));
-				}
-				else
-				{
-					Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
-				}
-					
-				Template::Show('pireps_list.tpl');
-				
-				break;
-				
-			case 'viewall':
-				
-				if($this->get->start == '')
-					$this->get->start = 0;
-				
-				$num_per_page = 20;
-				$allreports = PIREPData::GetAllReports($this->get->start, $num_per_page);
-				
-				if(count($allreports) >= $num_per_page)
-				{
-					Template::Set('paginate', true);
-					Template::Set('admin', 'viewall');
-					Template::Set('start', $this->get->start+20);
-				}
-				
-				Template::Set('title', 'PIREPs List');
-				Template::Set('pireps', $allreports);
-				Template::Show('pireps_list.tpl');
-				
-				break;
-				
-			case 'editpirep':
-			
-				Template::Set('pirep', PIREPData::GetReportDetails($this->get->pirepid));
-				Template::Set('allairlines', OperationsData::GetAllAirlines());
-				Template::Set('allairports', OperationsData::GetAllAirports());
-				Template::Set('allaircraft', OperationsData::GetAllAircraft());
-				Template::Set('fielddata', PIREPData::GetFieldData($this->get->pirepid));
-				Template::Set('pirepfields', PIREPData::GetAllFields());
-				Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
-				
-				Template::Show('pirep_edit.tpl');
-			
-				break;
-				
-			case 'viewcomments':
-				
-				Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
-				Template::Show('pireps_comments.tpl');
-				
-				break;
-				
-			case 'viewlog':
-				
-				Template::Set('report', PIREPData::GetReportDetails($this->get->pirepid));
-				Template::Show('pirep_log.tpl');
-				
-				break;
-				
-			case 'addcomment':
-				Template::Set('pirepid', $this->get->pirepid);
-				
-				Template::Show('pirep_addcomment.tpl');
-				break;
+			$this->EditPIREP();
 		}
+		
+		Template::Set('title', 'Pending Reports');
+		
+		if($hub != '')
+		{
+			Template::Set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $hub));
+		}
+		else
+		{
+			Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
+		}
+		
+		Template::Show('pireps_list.tpl');
 	}
 	
-	public function AddComment()
+	
+	public function rejectpirep()
+	{
+		Template::Set('pirepid', $this->get->pirepid);
+		Template::Show('pirep_reject.tpl');
+	}
+	
+	public function viewrecent()
+	{
+		Template::Set('title', Lang::gs('pireps.view.recent'));
+		Template::Set('pireps', PIREPData::GetRecentReports());
+		Template::Set('descrip', 'These pilot reports are from the past 48 hours');
+		
+		Template::Show('pireps_list.tpl');
+	}
+	
+	public function approveall()
+	{
+		echo '<h3>Approve All</h3>';
+		
+		$allpireps = PIREPData::GetAllReportsByAccept(PIREP_PENDING);
+		$total = count($allpireps);
+		$count = 0;
+		foreach($allpireps as $pirep_details)
+		{
+			if($pirep_details->aircraft == '')
+			{
+				continue;
+			}
+			
+			# Update pilot stats
+			SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
+			PIREPData::ChangePIREPStatus($pirep_details->pirepid, PIREP_ACCEPTED); // 1 is accepted
+			PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
+			PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
+			
+			RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
+			RanksData::CalculatePilotRanks();
+			PilotData::GenerateSignature($pirep_details->pilotid);
+			StatsData::UpdateTotalHours();
+			
+			$count++;
+		}
+		
+		$skipped = $total - $count;
+		echo "$count of $total were approved ({$skipped} has errors)";
+	}
+	
+	public function viewall()
+	{
+		if($this->get->start == '')
+			$this->get->start = 0;
+		
+		$num_per_page = 20;
+		$allreports = PIREPData::GetAllReports($this->get->start, $num_per_page);
+		
+		if(count($allreports) >= $num_per_page)
+		{
+			Template::Set('paginate', true);
+			Template::Set('admin', 'viewall');
+			Template::Set('start', $this->get->start+20);
+		}
+		
+		Template::Set('title', 'PIREPs List');
+		Template::Set('pireps', $allreports);
+		Template::Show('pireps_list.tpl');
+	}
+	
+	public function editpirep()
+	{
+		Template::Set('pirep', PIREPData::GetReportDetails($this->get->pirepid));
+		Template::Set('allairlines', OperationsData::GetAllAirlines());
+		Template::Set('allairports', OperationsData::GetAllAirports());
+		Template::Set('allaircraft', OperationsData::GetAllAircraft());
+		Template::Set('fielddata', PIREPData::GetFieldData($this->get->pirepid));
+		Template::Set('pirepfields', PIREPData::GetAllFields());
+		Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
+		
+		Template::Show('pirep_edit.tpl');
+	}
+	
+	public function viewcomments()
+	{
+		Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
+		Template::Show('pireps_comments.tpl');
+	}
+	
+	public function viewlog()
+	{
+		Template::Set('report', PIREPData::GetReportDetails($this->get->pirepid));
+		Template::Show('pirep_log.tpl');
+		
+	}
+		
+	public function addcomment()
+	{
+		Template::Set('pirepid', $this->get->pirepid);
+		Template::Show('pirep_addcomment.tpl');
+	}
+		
+		
+	/* Utility functions */
+	
+	protected function add_comment_post()
 	{
 		$comment = $this->post->comment;
 		$commenter = Auth::$userinfo->pilotid;
@@ -210,7 +206,7 @@ class PIREPAdmin extends CodonModule
 	 * Approve the PIREP, and then update
 	 * the pilot's data
 	 */
-	public function ApprovePIREP()
+	protected function approve_pirep_post()
 	{
 		$pirepid = $this->post->id;
 		
@@ -236,7 +232,7 @@ class PIREPAdmin extends CodonModule
 	 * Delete a PIREP
 	 */
 	 
-	public function DeletePIREP()
+	protected function delete_pirep_post()
 	{
 		$pirepid = $this->post->id;
 		if($pirepid == '') return;
@@ -249,7 +245,7 @@ class PIREPAdmin extends CodonModule
 	 * Reject the report, and then send them the comment
 	 * that was entered into the report
 	 */
-	public function RejectPIREP()
+	protected function reject_pirep_post()
 	{
 		$pirepid = $this->post->pirepid;
 		$comment = $this->post->comment;
@@ -284,7 +280,7 @@ class PIREPAdmin extends CodonModule
 		}
 	}
 	
-	public function EditPIREP()
+	protected function edit_pirep_post()
 	{
 				
 		if($this->post->code == '' || $this->post->flightnum == '' 

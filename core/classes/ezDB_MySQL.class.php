@@ -214,6 +214,9 @@ class ezDB_mysql extends ezDB_Base
 
 		// Count how many queries there have been
 		$this->num_queries++;
+		
+		// Reset ourselves
+		$this->clear_errors();
 
 		// Use core file cache function
 		if($cache = $this->get_cache($query))
@@ -241,7 +244,7 @@ class ezDB_mysql extends ezDB_Base
 			if($this->use_exceptions)		
 				throw new ezDB_Error(mysql_error(), mysql_errno(), $query);
 				
-			$this->register_error(mysql_error(), $errno);
+			$this->register_error(mysql_error(), mysql_errno());
 			return false;
 		}
 		else

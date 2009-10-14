@@ -32,247 +32,229 @@ class Import extends CodonModule
 		}
 	}
 	
-	function Controller()
+	public function index()
 	{
+		Template::Show('import_form.tpl');
+	}
+	
+	public function export()
+	{
+		Template::Show('export_form.tpl');
+	}
+	
+	public function processexport()
+	{
+		$export='';
+		$all_schedules = SchedulesData::GetSchedules('', false);
 		
-		switch($this->get->page)
+		if(!$all_schedules)
 		{
-			default:
-			case '':
-				
-				Template::Show('import_form.tpl');
-				
-				break;
-				
-			case 'export':
+			echo 'No schedules found!';
+			return;
+		}
+		
+		$export=file_get_contents(SITE_ROOT.'/admin/lib/template.csv');
+		$export.="\n";
+		foreach($all_schedules as $s)
+		{
+			$export .="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
+					."{$s->route},{$s->registration},{$s->distance},"
+					."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
+					."{$s->price}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
 			
-			
-				Template::Show('export_form.tpl');
-				
-				
-				break;
-			
-			case 'processexport':
-			
-			
-			
-				$export='';
-				
-				$all_schedules = SchedulesData::GetSchedules('', false);
-				
-				if(!$all_schedules)
-				{
-					echo 'No schedules found!';
-					return;
-				}
-				
-				$export=file_get_contents(SITE_ROOT.'/admin/lib/template.csv');
-				$export.="\n";
-				foreach($all_schedules as $s)
-				{
-					$export .="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
-							."{$s->route},{$s->registration},{$s->distance},"
-							."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
-							."{$s->price}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
-					
-				}
-			
-				header('Content-Type: text/plain');
-				header('Content-Disposition: attachment; filename="schedules.csv"');
-				header('Content-Length: ' . strlen($export));
-				
-				echo $export;
-			
-				break;
-				
-			case 'processimport':
-				
-				echo '<h3>Processing Import</h3>';
-				
-				if(!file_exists($_FILES['uploadedfile']['tmp_name']))
-				{
-					Template::Set('message', 'File upload failed!');
-					Template::Show('core_error.tpl');
-					return;
-				}
-				
-				echo '<p><strong>DO NOT REFRESH OR STOP THIS PAGE</strong></p>';
-				
-				set_time_limit(270);
-				$errs = array();
+		}
+	
+		header('Content-Type: text/plain');
+		header('Content-Disposition: attachment; filename="schedules.csv"');
+		header('Content-Length: ' . strlen($export));
+		
+		echo $export;
+	}
+	
+	public function processimport()
+	{
+		echo '<h3>Processing Import</h3>';
+		
+		if(!file_exists($_FILES['uploadedfile']['tmp_name']))
+		{
+			Template::Set('message', 'File upload failed!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		echo '<p><strong>DO NOT REFRESH OR STOP THIS PAGE</strong></p>';
+		
+		set_time_limit(270);
+		$errs = array();
+		$skip = false;
+		
+		$fp = fopen($_FILES['uploadedfile']['tmp_name'], 'r');
+		
+		if(isset($_POST['header'])) $skip = true;
+		
+		
+		$added = 0;
+		$updated = 0;
+		$total = 0;
+		while($fields = fgetcsv($fp, 1000, ','))
+		{
+			// Skip the first line
+			if($skip == true)
+			{
 				$skip = false;
+				continue;
+			}
+			
+			// list fields:
+			$code = $fields[0];
+			$flightnum = $fields[1];
+			$depicao = $fields[2];
+			$arricao = $fields[3];
+			$route = $fields[4];
+			$aircraft = $fields[5];
+			$distance = $fields[6];
+			$deptime = $fields[7];
+			$arrtime = $fields[8];
+			$flighttime = $fields[9];
+			$notes = $fields[10];
+			$price = $fields[11];
+			$flighttype = $fields[12];
+			$daysofweek = $fields[13];
+			$enabled = $fields[14];
+							
+			if($code=='')
+			{
+				continue;
+			}
+			
+			// Check the code:
+			if(!OperationsData::GetAirlineByCode($code))
+			{
+				echo "Airline with code $code does not exist! Skipping...<br />";
+				continue;
+			}
+			
+			// Make sure airports exist:
+			if(!($depapt = OperationsData::GetAirportInfo($depicao)))
+			{
+				echo "ICAO $depicao not added... retriving information: <br />";						
+				$aptinfo = OperationsData::RetrieveAirportInfo($depicao);
 				
-				$fp = fopen($_FILES['uploadedfile']['tmp_name'], 'r');
+				echo "Found: $depicao - ".$aptinfo->name
+					.' ('.$aptinfo->lat.','.$aptinfo->lng.'), airport added<br /><br />';
+			}
+			
+			if(!($arrapt = OperationsData::GetAirportInfo($arricao)))
+			{
+				echo "ICAO $arricao not added... retriving information: <br />";
+				$aptinfo = OperationsData::RetrieveAirportInfo($arricao);						
+			}
+			
+			# Check the aircraft
+			$aircraft = trim($aircraft);
+			$ac_info = OperationsData::GetAircraftByReg($aircraft);
+			
+			# If the aircraft doesn't exist, skip it
+			if(!$ac_info)
+			{
+				echo 'Aircraft "'.$aircraft.'" does not exist! Skipping<br />';
+				continue;
+			}
+			$ac = $ac_info->id;
+			
+			if($flighttype == '')
+			{
+				$flighttype = 'P';
+			}
+			
+			if($daysofweek == '')
+				$daysofweek = '0123456';
+			
+			
+			# Check the distance
+			
+			if($distance == 0 || $distance == '')
+			{
+				$distance = OperationsData::getAirportDistance($depicao, $arricao);
+			}
+			
+			$flighttype = strtoupper($flighttype);
+			
+			
+			if($enabled == '0')
+				$enabled = false;
+			else
+				$enabled = true;
+			
+			# This is our 'struct' we're passing into the schedule function
+			#	to add or edit it
+			
+			$data = array(	'scheduleid'=>$schedinfo->id,
+							'code'=>$code,
+							'flightnum'=>$flightnum,
+							'leg'=>$leg,
+							'depicao'=>$depicao,
+							'arricao'=>$arricao,
+							'route'=>$route,
+							'aircraft'=>$ac,
+							'distance'=>$distance,
+							'deptime'=>$deptime,
+							'arrtime'=>$arrtime,
+							'flighttime'=>$flighttime,
+							'daysofweek'=>$daysofweek,
+							'notes'=>$notes,
+							'enabled'=>$enabled,
+							'maxload'=>$maxload,
+							'price'=>$price,
+							'flighttype'=>$flighttype);
 				
-				if(isset($_POST['header'])) $skip = true;
-				
-				
-				$added = 0;
-				$updated = 0;
-				$total = 0;
-				while($fields = fgetcsv($fp, 1000, ','))
+			# Check if the schedule exists:
+			if(($schedinfo = SchedulesData::GetScheduleByFlight($code, $flightnum)))
+			{
+				# Update the schedule instead
+				$val = SchedulesData::EditSchedule($data);
+				$updated++;
+			
+			}
+			else
+			{
+				# Add it
+			
+				/*$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
+								$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);*/
+				$val = SchedulesData::AddSchedule($data);
+				$added++;
+								
+			}
+			
+			if($val === false)
+			{
+				if(DB::errno() == 1216)
 				{
-					// Skip the first line
-					if($skip == true)
-					{
-						$skip = false;
-						continue;
-					}
-					
-					// list fields:
-					$code = $fields[0];
-					$flightnum = $fields[1];
-					$depicao = $fields[2];
-					$arricao = $fields[3];
-					$route = $fields[4];
-					$aircraft = $fields[5];
-					$distance = $fields[6];
-					$deptime = $fields[7];
-					$arrtime = $fields[8];
-					$flighttime = $fields[9];
-					$notes = $fields[10];
-					$price = $fields[11];
-					$flighttype = $fields[12];
-					$daysofweek = $fields[13];
-					$enabled = $fields[14];
-									
-					if($code=='')
-					{
-						continue;
-					}
-					
-					// Check the code:
-					if(!OperationsData::GetAirlineByCode($code))
-					{
-						echo "Airline with code $code does not exist! Skipping...<br />";
-						continue;
-					}
-					
-					// Make sure airports exist:
-					if(!($depapt = OperationsData::GetAirportInfo($depicao)))
-					{
-						echo "ICAO $depicao not added... retriving information: <br />";						
-						$aptinfo = OperationsData::RetrieveAirportInfo($depicao);
-						
-						echo "Found: $depicao - ".$aptinfo->name
-							.' ('.$aptinfo->lat.','.$aptinfo->lng.'), airport added<br /><br />';
-					}
-					
-					if(!($arrapt = OperationsData::GetAirportInfo($arricao)))
-					{
-						echo "ICAO $arricao not added... retriving information: <br />";
-						$aptinfo = OperationsData::RetrieveAirportInfo($arricao);						
-					}
-					
-					# Check the aircraft
-					$aircraft = trim($aircraft);
-					$ac_info = OperationsData::GetAircraftByReg($aircraft);
-					
-					# If the aircraft doesn't exist, skip it
-					if(!$ac_info)
-					{
-						echo 'Aircraft "'.$aircraft.'" does not exist! Skipping<br />';
-						continue;
-					}
-					$ac = $ac_info->id;
-					
-					if($flighttype == '')
-					{
-						$flighttype = 'P';
-					}
-					
-					if($daysofweek == '')
-						$daysofweek = '0123456';
-					
-					
-					# Check the distance
-					
-					if($distance == 0 || $distance == '')
-					{
-						$distance = OperationsData::getAirportDistance($depicao, $arricao);
-					}
-					
-					$flighttype = strtoupper($flighttype);
-					
-					
-					if($enabled == '0')
-						$enabled = false;
-					else
-						$enabled = true;
-					
-					# This is our 'struct' we're passing into the schedule function
-					#	to add or edit it
-					
-					$data = array(	'scheduleid'=>$schedinfo->id,
-									'code'=>$code,
-									'flightnum'=>$flightnum,
-									'leg'=>$leg,
-									'depicao'=>$depicao,
-									'arricao'=>$arricao,
-									'route'=>$route,
-									'aircraft'=>$ac,
-									'distance'=>$distance,
-									'deptime'=>$deptime,
-									'arrtime'=>$arrtime,
-									'flighttime'=>$flighttime,
-									'daysofweek'=>$daysofweek,
-									'notes'=>$notes,
-									'enabled'=>$enabled,
-									'maxload'=>$maxload,
-									'price'=>$price,
-									'flighttype'=>$flighttype);
-						
-					# Check if the schedule exists:
-					if(($schedinfo = SchedulesData::GetScheduleByFlight($code, $flightnum)))
-					{
-						# Update the schedule instead
-						$val = SchedulesData::EditSchedule($data);
-						$updated++;
-					
-					}
-					else
-					{
-						# Add it
-					
-						/*$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
-										$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);*/
-						$val = SchedulesData::AddSchedule($data);
-						$added++;
-										
-					}
-					
-					if($val === false)
-					{
-						if(DB::errno() == 1216)
-						{
-							echo "Error adding $code$flightnum: The airline code, airports, or aircraft does not exist";
-						}
-						else
-						{
-							$error = (DB::error() != '') ? DB::error() : 'Route already exists';
-							echo "$code$flightnum was not added, reason: $error<br />";
-						}
-						
-						echo '<br />';
-					}
-					else
-					{
-						$total++;
-						echo "Imported $code$flightnum ($depicao to $arricao)<br />";
-					}
+					echo "Error adding $code$flightnum: The airline code, airports, or aircraft does not exist";
+				}
+				else
+				{
+					$error = (DB::error() != '') ? DB::error() : 'Route already exists';
+					echo "$code$flightnum was not added, reason: $error<br />";
 				}
 				
-				CentralData::send_schedules();
-				
-				echo "The import process is complete, added {$added} schedules, updated {$updated}, for a total of {$total}<br />";
-				
-				foreach($errs as $error)
-				{
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;'.$error.'<br />';
-				}
-				
-				break;
+				echo '<br />';
+			}
+			else
+			{
+				$total++;
+				echo "Imported $code$flightnum ($depicao to $arricao)<br />";
+			}
+		}
+		
+		CentralData::send_schedules();
+		
+		echo "The import process is complete, added {$added} schedules, updated {$updated}, for a total of {$total}<br />";
+		
+		foreach($errs as $error)
+		{
+			echo '&nbsp;&nbsp;&nbsp;&nbsp;'.$error.'<br />';
 		}
 	}
 }
-?>

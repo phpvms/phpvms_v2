@@ -19,8 +19,7 @@
  
 class PilotRanking extends CodonModule
 {
-
-	function HTMLHead()
+	public function HTMLHead()
 	{
 		if($this->get->page == 'pilotranks'
 			|| $this->get->page == 'calculateranks')
@@ -33,17 +32,22 @@ class PilotRanking extends CodonModule
 		}
 	}
 	
-	function Controller()
+	public function index()
+	{
+		$this->pilotranks();
+	}
+	
+	public function pilotranks()
 	{
 		switch($this->post->action)
 		{
 			case 'addrank':
-				$this->AddRank();
+				$this->add_rank_post();
 				break;
 			case 'editrank':
-				$this->EditRank();
+				$this->edit_rank_post();
 				break;
-				
+			
 			case 'deleterank':
 				
 				$ret = RanksData::DeleteRank($this->post->id);
@@ -51,12 +55,12 @@ class PilotRanking extends CodonModule
 				Template::Set('message', 'Rank deleted!');
 				Template::Show('core_success.tpl');
 				break;
-				
+			
 			case 'addaward':
-				$this->AddAward();
+				$this->add_award_post();
 				break;				
 			case 'editaward':
-				$this->EditAward();
+				$this->edit_award_post();
 				break;				
 			case 'deleteaward':
 				$ret = AwardsData::DeleteAward($this->post->id);
@@ -65,61 +69,61 @@ class PilotRanking extends CodonModule
 				break;
 		}
 		
-		switch($this->get->page)
-		{
-			case 'addrank':
-				Template::Set('title', 'Add Rank');
-				Template::Set('action', 'addrank');
-				
-				Template::Show('ranks_rankform.tpl');
-				break;
-				
-			case 'editrank':
-				Template::Set('title', 'Edit Rank');
-				Template::Set('action', 'editrank');
-				Template::Set('rank', RanksData::GetRankInfo($this->get->rankid));
-				
-				Template::Show('ranks_rankform.tpl');
-				break;
-
-			case 'calculateranks':
-				RanksData::CalculatePilotRanks();				
-			case '':
-			case 'pilotranks':
-				
-				Template::Set('ranks', RanksData::GetAllRanks());
-				Template::Show('ranks_allranks.tpl');
-				
-				break;
-				
-			case 'awards':
-				
-				Template::Set('awards', AwardsData::GetAllAwards());
-				Template::Show('awards_allawards.tpl');
-				
-				break;
-				
-			case 'addaward':
-				Template::Set('title', 'Add Award');
-				Template::Set('action', 'addaward');
-				
-				Template::Show('awards_awardform.tpl');
-				break;
-				
-			case 'editaward':
-			
-				Template::Set('title', 'Edit Award');
-				Template::Set('action', 'editaward');
-				Template::Set('award', AwardsData::GetAwardDetail($this->get->awardid));
-				
-				Template::Show('awards_awardform.tpl');
-			
-				break;
-				
-		}
+		Template::Set('ranks', RanksData::GetAllRanks());
+		Template::Show('ranks_allranks.tpl');
 	}
 	
-	protected function AddRank()
+	public function addrank()
+	{
+		Template::Set('title', 'Add Rank');
+		Template::Set('action', 'addrank');
+		
+		Template::Show('ranks_rankform.tpl');
+	}
+	
+	public function editrank()
+	{
+		Template::Set('title', 'Edit Rank');
+		Template::Set('action', 'editrank');
+		Template::Set('rank', RanksData::GetRankInfo($this->get->rankid));
+		
+		Template::Show('ranks_rankform.tpl');
+	}
+	
+	public function calculateranks()
+	{
+		RanksData::CalculatePilotRanks();
+	}
+	
+	public function awards()
+	{
+		Template::Set('awards', AwardsData::GetAllAwards());
+		Template::Show('awards_allawards.tpl');
+	}
+	
+	public function addaward()
+	{
+		
+		Template::Set('title', 'Add Award');
+		Template::Set('action', 'addaward');
+		
+		Template::Show('awards_awardform.tpl');
+		
+	}
+	
+	public function editaward()
+	{
+		Template::Set('title', 'Edit Award');
+		Template::Set('action', 'editaward');
+		Template::Set('award', AwardsData::GetAwardDetail($this->get->awardid));
+		
+		Template::Show('awards_awardform.tpl');
+		
+	}
+	
+	/* Utility functions */
+	
+	protected function add_rank_post()
 	{
 		
 		if($this->post->minhours == '' || $this->post->rank == '')
@@ -149,7 +153,7 @@ class PilotRanking extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	protected function EditRank()
+	protected function edit_rank_post()
 	{
 		if($this->post->minhours == '' || $this->post->rank == '')
 		{
@@ -179,7 +183,7 @@ class PilotRanking extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	protected function AddAward()
+	protected function add_award_post()
 	{
 		if($this->post->name == '' || $this->post->image == '')
 		{
@@ -194,7 +198,7 @@ class PilotRanking extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	protected function EditAward()
+	protected function edit_award_post()
 	{		
 		if($this->post->name == '' || $this->post->image == '')
 		{

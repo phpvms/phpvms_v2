@@ -422,7 +422,7 @@ class DB
 		// Log any erronious queries
 		if(self::$DB->errno != 0)
 		{
-			Debug::log($query."\n".self::$DB->error);
+			Debug::log($query."\n".self::$DB->error."\n\n");
 		}
 		
 		return $ret; //self::$insert_id;

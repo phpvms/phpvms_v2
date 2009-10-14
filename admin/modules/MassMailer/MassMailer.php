@@ -27,7 +27,7 @@ class MassMailer extends CodonModule
 		Template::Set('sidebar', 'sidebar_mailer.tpl');
 	}
 	
-	public function Controller()
+	public function index()
 	{
 		
 		if($this->post->submit)

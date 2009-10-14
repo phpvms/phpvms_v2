@@ -135,8 +135,8 @@
 	<?php
 			if(PilotGroups::group_has_perm(Auth::$usergroups, VIEW_FINANCES)) 
 			{
-		?>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports">Overview</a></li>
+	?>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports/overview">Overview</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/finance/viewcurrent">Financial Reports</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/reports/aircraft">Aircraft Reports</a></li>
 		<?php }

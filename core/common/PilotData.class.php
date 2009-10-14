@@ -191,30 +191,49 @@ class PilotData
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
-	public static function SaveProfile($pilotid, $email, $location, $hub='', $bgimage='', $retired=false)
+	
+	public static function SaveProfile($data)
 	{
+		/*$data = array(			
+			'pilotid' => '',
+			'code' => '',
+			'email' => '',
+			'location' => '',
+			'hub' => '',
+			'bgimage' => '',
+			'retired' => false,
+		);*/
+			
 		
 		unset(self::$pilot_data[$pilotid]);
 		
-		$location = strtoupper($location);
+		$location = strtoupper($data['location']);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
-					SET `email`='$email', `location`='$location' ";
+					SET ";
+					
+		foreach($data as $field=>$value)
+		{
+			if($field == 'pilotid' || $field == 'retired')
+				continue;
+				
+			if($value != '')
+			{
+				$sql .= "`{$field}`='{$value}',";
+			}
+		}
 		
-		if($hub!= '')
-			$sql.=", `hub`='$hub' ";
+		/* Default to not retired */
+		if($data['retired'] == '')
+			$retired = false;
 			
-		if($bgimage != '')
-			$sql.=",`bgimage`='$bgimage' ";
-		
-		if($retired === true)
+		if($data['retired'] === true)
 			$retired = 1;
 		else
 			$retired = 0;
 		
-		$sql.=", `retired`=$retired ";
-			
-		$sql .= 'WHERE `pilotid`='.$pilotid;
+		$sql.=" `retired`=$retired ";
+		$sql .= 'WHERE `pilotid`='.$data['pilotid'];
 		
 		$res = DB::query($sql);
 					
@@ -224,7 +243,7 @@ class PilotData
 		}
 			
 		# Generate a fresh signature
-		self::GenerateSignature($pilotid);
+		self::GenerateSignature($data['pilotid']);
 		
 		return true;
 	}

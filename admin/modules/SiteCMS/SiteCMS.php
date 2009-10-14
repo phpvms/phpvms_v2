@@ -44,138 +44,142 @@ class SiteCMS extends CodonModule
 		}
 	}
 	
-	function Controller()
+	public function viewnews()
 	{
-		
-		switch($this->get->page)
+		switch ($this->post->action)
 		{
-			case 'deletepage':
-				$pageid = $this->get->pageid;
+			case 'addnews':
 				
-				if(SiteData::DeletePage($pageid) == false)
+				$this->AddNewsItem();
+				
+				break;
+			
+			case 'editnews':
+				
+				$res = SiteData::EditNewsItem($this->post->id, $this->post->subject, $this->post->body);
+				
+				if($res == false)
 				{
-					Template::Set('message', Lang::gs('page.error.delete'));
+					Template::Set('message', Lang::gs('news.updated.error'));
 					Template::Show('core_error.tpl');
 				}
 				else
 				{
-					Template::Set('message', Lang::gs('page.deleted'));
+					Template::Set('message', Lang::gs('news.updated.success'));
 					Template::Show('core_success.tpl');
-				}
-				
-				break;
-				
-			case 'viewnews':
-			
-				switch ($this->post->action)
-				{
-					case 'addnews':
-				
-						$this->AddNewsItem();
-						
-						break;
-						
-					case 'editnews':
-						
-						$res = SiteData::EditNewsItem($this->post->id, $this->post->subject, $this->post->body);
-						
-						if($res == false)
-						{
-							Template::Set('message', Lang::gs('news.updated.error'));
-							Template::Show('core_error.tpl');
-						}
-						else
-						{
-							Template::Set('message', Lang::gs('news.updated.success'));
-							Template::Show('core_success.tpl');
-						}						
-						break;
-						
-					case 'deleteitem':
-						
-						$this->DeleteNewsItem();
-						
-						break;
-				}
-				
-				$this->ViewNews();
-				
-				break;
-				
-			case 'addnews':
-				Template::Set('title', Lang::gs('news.add.title'));
-				Template::Set('action', 'addnews');
-				
-				Template::Show('news_additem.tpl');
-				break; 
-				
-			case 'editnews':
-				
-				Template::Set('title', Lang::gs('news.edit.title'));
-				Template::Set('action', 'editnews');
-				Template::Set('newsitem', SiteData::GetNewsItem($this->get->id));
-				
-				Template::Show('news_additem.tpl');
-				
+				}						
 				break;
 			
-			case 'addpageform':
-
-				Template::Set('title', Lang::gs('page.add.title'));
-				Template::Set('action', 'addpage');
+			case 'deleteitem':
 				
-				Template::Show('pages_editpage.tpl');
-				break;
-				
-			case 'editpage':
-				
-				$this->EditPageForm();
-				
-				break;
-			case 'viewpages':
-						
-				/* This is the actual adding page process
-				 */
-				switch($this->post->action)
-				{
-					case 'addpage':
-						$this->AddPage();
-						break;
-					case 'savepage':
-						$this->EditPage();
-						break;
-				}
-				
-				
-				/* this is the popup form edit form
-				 */
-				switch($this->get->action)
-				{
-					case 'editpage':
-				
-						$this->EditPageForm();
-						return;
-						
-						break;
-					case 'deletepage':
-				
-						$pageid = $this->get->pageid;
-						SiteData::DeletePage($pageid);
-						
-						break;
-				}
-				
-				
-				$this->ViewPages();
+				$this->DeleteNewsItem();
 				
 				break;
 		}
+		
+		$allnews = SiteData::GetAllNews();
+		Template::Set('allnews', $allnews);
+		Template::Show('news_list.tpl');
+		
+	}
+	
+	public function addnews()
+	{
+		Template::Set('title', Lang::gs('news.add.title'));
+		Template::Set('action', 'addnews');
+		
+		Template::Show('news_additem.tpl');
+	}
+	
+	public function editnews()
+	{
+		Template::Set('title', Lang::gs('news.edit.title'));
+		Template::Set('action', 'editnews');
+		Template::Set('newsitem', SiteData::GetNewsItem($this->get->id));
+		
+		Template::Show('news_additem.tpl');
+	}
+	
+	public function addpageform()
+	{
+		
+		Template::Set('title', Lang::gs('page.add.title'));
+		Template::Set('action', 'addpage');
+		
+		Template::Show('pages_editpage.tpl');
+	}
+	
+	public function editpage()
+	{
+		$pageid = $this->get->pageid;
+		
+		$page = SiteData::GetPageData($pageid);
+		Template::Set('pagedata', $page);
+		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
+		
+		Template::Set('title', Lang::gs('page.edit.title'));
+		Template::Set('action', 'savepage');
+		Template::Show('pages_editpage.tpl');
+	}
+	
+	public function deletepage()
+	{
+		$pageid = $this->get->pageid;
+				
+		if(SiteData::DeletePage($pageid) == false)
+		{
+			Template::Set('message', Lang::gs('page.error.delete'));
+			Template::Show('core_error.tpl');
+		}
+		else
+		{
+			Template::Set('message', Lang::gs('page.deleted'));
+			Template::Show('core_success.tpl');
+		}
+	}
+	
+	public function viewpages()
+	{
+		/* This is the actual adding page process
+				 */
+		switch($this->post->action)
+		{
+			case 'addpage':
+				$this->add_page_post();
+				break;
+			case 'savepage':
+				$this->edit_page_post();
+				break;
+		}
+		
+		
+		/* this is the popup form edit form
+		 */
+		switch($this->get->action)
+		{
+			case 'editpage':
+		
+				$this->edit_page_form();
+				return;
+				
+				break;
+			case 'deletepage':
+		
+				$pageid = $this->get->pageid;
+				SiteData::DeletePage($pageid);
+				
+				break;
+		}
+		
+		
+		Template::Set('allpages', SiteData::GetAllPages());
+		Template::Show('pages_allpages.tpl');
 	}
 	
 	/**
 	 * This is the function for adding the actual page
 	 */
-	function AddPage()
+	protected function add_page_post()
 	{
 		$title = $this->post->pagename;
 		$content = $this->post->content;
@@ -208,7 +212,7 @@ class SiteCMS extends CodonModule
 		Template::Show('core_success.tpl');
 	}
 	
-	function EditPage()
+	protected function edit_page_post()
 	{
 		$pageid = $this->post->pageid;
 		$content = $this->post->content;
@@ -226,35 +230,7 @@ class SiteCMS extends CodonModule
 	}
 				
 	
-	function EditPageForm()
-	{
-		$pageid = $this->get->pageid;
-		
-		$page = SiteData::GetPageData($pageid);
-		Template::Set('pagedata', $page);
-		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
-		
-		Template::Set('title', Lang::gs('page.edit.title'));
-		Template::Set('action', 'savepage');
-		Template::Show('pages_editpage.tpl');
-	}
-	
-	function ViewPages()
-	{
-		Template::Set('allpages', SiteData::GetAllPages());
-		
-		Template::Show('pages_allpages.tpl');
-	}
-	
-	function ViewNews()
-	{
-		$allnews = SiteData::GetAllNews();
-			
-		Template::Set('allnews', $allnews);
-		Template::Show('news_list.tpl');
-	}
-	
-	function AddNewsItem()
+	protected function AddNewsItem()
 	{
 		$subject = $this->post->subject;
 		$body = $this->post->body;
@@ -273,14 +249,7 @@ class SiteCMS extends CodonModule
 		Template::Show('core_message.tpl');
 	}
 	
-	function EditNewsItem()
-	{
-		
-		
-		
-	}
-	
-	function DeleteNewsItem()
+	protected function DeleteNewsItem()
 	{
 		if(!SiteData::DeleteItem($this->post->id))
 		{

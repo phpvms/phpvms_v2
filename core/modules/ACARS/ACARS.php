@@ -28,76 +28,149 @@ function writedebug($msg)
 
 class ACARS extends CodonModule
 {
-		
-	public function Controller()
+	
+	public function index()
 	{
-		switch($this->get->page)		
+		$this->viewmap();
+	}
+	
+	public function viewmap()
+	{
+		Template::Set('acarsdata', ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME')));
+		Template::Show('acarsmap.tpl');
+	}
+	
+	/**
+	 *  We didn't list a function for each ACARS client,
+	 *	so call this, which will include the acars peice in
+	 */
+	public function __call($name, $args)
+	{
+		$acars_action = $args[0];
+		
+		if(file_exists(CORE_PATH.'/modules/ACARS/'.$name.'.php'))
 		{
-			#
-			# Just view the generic ACARS map
-			#
-			case '':
-			case 'viewmap':
-				
-				// fancy
-				
-				// Show the main ACARS map with all the positions, etc
-				Template::Set('acarsdata', ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME')));
-				Template::Show('acarsmap.tpl');
-				
-				break;
-				
-			case 'data':
-			
-				$this->acars_json_data();
-				
-				break;
-				
-			case 'routeinfo':
-				$this->routeinfo();
-				
-				break;				
-					
-			/**
-			 * Output the FSACARS config file from the template
-			 *	Tell the browser its <code>.ini for the airline that
-			 *	the pilot is registered to
-			 */
-			
-			/* cleaned up @revision 744 */
-			case 'fsacarsconfig':
-			
-				$this->write_config('fsacars_config.tpl', Auth::$userinfo->code.'.ini');
-				
-				break;
-			/**
-			 * Output the fsacars config
-			 */
-			case 'fspaxconfig':
-			
-				$this->write_config('fspax_config.tpl', Auth::$userinfo->code.'_config.cfg');
-				
-				break;
-				
-			case 'xacarsconfig':
-			
-				$this->write_config('xacars_config.tpl', 'xacars.ini');
-				
-				break;
-				
-			// default handles the connectors as plugins
-			default:
-				
-				if(file_exists(CORE_PATH.'/modules/ACARS/'.$this->get->page.'.php'))
-				{
-					include_once CORE_PATH.'/modules/ACARS/'.$this->get->page.'.php';
-					return;
-				}
-				
-				break;	
+			include_once CORE_PATH.'/modules/ACARS/'.$name.'.php';
+			return;
 		}
 	}
 	
+	public function data()
+	{
+		$flights = ACARSData::GetACARSData();
+		
+		if(!$flights) 
+			$flights = array();
+		
+		$outflights = array();
+		foreach($flights as $flight)
+		{	
+			$c = (array) $flight; // Convert the object to an array
+			
+			$c['pilotid'] = PilotData::GetPilotCode($c['code'], $c['pilotid']);
+			
+			// Normalize the data
+			if($c['timeremaining'] == '')
+			{
+				$c['timeremaining'] ==  '-';
+			}
+			
+			if(trim($c['phasedetail']) == '')
+			{
+				$c['phasedetail'] = 'Enroute';
+			}
+			
+			/*if($flight->phasedetail != 'Boarding' && $flight->phasedetail != 'Taxiing'
+				&& $flight->phasedetail != 'FSACARS Closed' && $flight->phasedetail != 'Taxiiing to gate'
+				&& $flight->phasedetail != 'Landed' && $flight->phasedetail != 'Arrived')
+			{*/
+			
+			//$flight->heading = ''; // Ignore for now
+			/* If no heading was passed via ACARS app then calculate it
+				This should probably move to inside the ACARSData function, so then
+				 the heading is always there for no matter what the calcuation is
+				*/
+			if($flight->heading == '')
+			{
+				/* Calculate an angle based on current coords and the
+					destination coordinates */
+				
+				$flight->heading = intval(atan2(($flight->lat - $flight->arrlat), ($flight->lng - $flight->arrlng)) * 180/3.14);
+				//$flight->heading *= intval(180/3.14159);
+				
+				if(($flight->lng - $flight->arrlng) < 0)
+				{
+					$flight->heading += 180;
+				}
+				
+				if($flight->heading < 0)
+				{
+					$flight->heading += 360;
+				}
+			}
+			
+			$c['icon'] = SITE_URL.'/lib/images/inair/'.$flight->heading.'.png';
+			/*}
+			else
+			{
+				$c['icon'] = SITE_URL.'/lib/images/onground.png';
+			}*/
+			
+			
+			// Little one-off fixes to normalize data
+			
+			$c['distremaining'] = $c['distremain'];
+			$c['pilotname'] = $c['firstname'] . ' ' . $c['lastname'];
+			
+			unset($c['messagelog']);
+			
+			$outflights[] = $c;
+			
+			continue;
+		}
+		
+		echo json_encode($outflights);
+	}
+	
+	public function routeinfo()
+	{		
+		if($this->get->depicao == '' || $this->get->arricao == '')
+			return;
+		
+		$depinfo = OperationsData::GetAirportInfo($this->get->depicao);
+		if(!$depinfo)
+		{
+			$depinfo = OperationsData::RetrieveAirportInfo($this->get->depicao);
+		}
+		
+		$arrinfo = OperationsData::GetAirportInfo($this->get->arricao);
+		if(!$arrinfo)
+		{
+			$arrinfo = OperationsData::RetrieveAirportInfo($this->get->arricao);
+		}
+		
+		// Convert to json format
+		$c = array();
+		$c['depapt'] = (array) $depinfo;
+		$c['arrapt'] = (array) $arrinfo;
+		
+		echo json_encode($c);
+	}
+		
+	public function fsacarsconfig()
+	{
+		$this->write_config('fsacars_config.tpl', Auth::$userinfo->code.'.ini');
+	}
+	
+	public function fspaxconfig()
+	{
+		$this->write_config('fspax_config.tpl', Auth::$userinfo->code.'_config.cfg');
+	}
+	
+	public function xacarsconfig()
+	{
+		$this->write_config('xacars_config.tpl', 'xacars.ini');
+	}
 	
 	/**
 	 * Write out a config file to the user, give the template name and
@@ -128,110 +201,5 @@ class ACARS extends CodonModule
 		header('Content-Length: ' . strlen($acars_config));
 		
 		echo $acars_config;
-		
-	}
-	
-	protected function acars_json_data()
-	{
-		
-		$flights = ACARSData::GetACARSData();
-		
-		if(!$flights) 
-			$flights = array();
-			
-		$outflights = array();
-		foreach($flights as $flight)
-		{	
-			$c = (array) $flight; // Convert the object to an array
-								
-			$c['pilotid'] = PilotData::GetPilotCode($c['code'], $c['pilotid']);
-			
-			// Normalize the data
-			if($c['timeremaining'] == '')
-			{
-				$c['timeremaining'] ==  '-';
-			}
-			
-			if(trim($c['phasedetail']) == '')
-			{
-				$c['phasedetail'] = 'Enroute';
-			}
-			
-			/*if($flight->phasedetail != 'Boarding' && $flight->phasedetail != 'Taxiing'
-				&& $flight->phasedetail != 'FSACARS Closed' && $flight->phasedetail != 'Taxiiing to gate'
-				&& $flight->phasedetail != 'Landed' && $flight->phasedetail != 'Arrived')
-			{*/
-			
-			//$flight->heading = ''; // Ignore for now
-			/* If no heading was passed via ACARS app then calculate it
-				This should probably move to inside the ACARSData function, so then
-				 the heading is always there for no matter what the calcuation is
-				*/
-			if($flight->heading == '')
-			{
-				/* Calculate an angle based on current coords and the
-					destination coordinates */
-					
-				$flight->heading = intval(atan2(($flight->lat - $flight->arrlat), ($flight->lng - $flight->arrlng)) * 180/3.14);
-				//$flight->heading *= intval(180/3.14159);
-				
-				if(($flight->lng - $flight->arrlng) < 0)
-				{
-					$flight->heading += 180;
-				}
-				
-				if($flight->heading < 0)
-				{
-					$flight->heading += 360;
-				}
-			}
-					
-			$c['icon'] = SITE_URL.'/lib/images/inair/'.$flight->heading.'.png';
-			/*}
-			else
-			{
-				$c['icon'] = SITE_URL.'/lib/images/onground.png';
-			}*/
-			
-			
-			// Little one-off fixes to normalize data
-			
-			$c['distremaining'] = $c['distremain'];
-			$c['pilotname'] = $c['firstname'] . ' ' . $c['lastname'];
-			
-			unset($c['messagelog']);
-						
-			$outflights[] = $c;
-			
-			continue;
-		}
-		
-		echo json_encode($outflights);
-		
-	}
-	
-	protected function routeinfo()
-	{		
-		if($this->get->depicao == '' || $this->get->arricao == '')
-			return;
-		
-		$depinfo = OperationsData::GetAirportInfo($this->get->depicao);
-		if(!$depinfo)
-		{
-			$depinfo = OperationsData::RetrieveAirportInfo($this->get->depicao);
-		}
-		
-		$arrinfo = OperationsData::GetAirportInfo($this->get->arricao);
-		if(!$arrinfo)
-		{
-			$arrinfo = OperationsData::RetrieveAirportInfo($this->get->arricao);
-		}
-		
-		// Convert to json format
-		$c = array();
-		$c['depapt'] = (array) $depinfo;
-		$c['arrapt'] = (array) $arrinfo;
-		
-		echo json_encode($c);
 	}
 }

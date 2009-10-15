@@ -20,7 +20,7 @@
 class Downloads extends CodonModule
 {
 	
-	public function Controller()
+	public function index()
 	{
 		if(!Auth::LoggedIn())
 		{
@@ -28,31 +28,25 @@ class Downloads extends CodonModule
 			return;
 		}
 		
-		switch($this->get->id)
-		{
-			case '':				
-			
-				Template::Set('allcategories', DownloadData::GetAllCategories());
-				Template::Show('downloads_list.tpl');
-				break;	
-				
-			default:
-			
-				# Download the item, but "one up" the download count
-				
-				DownloadData::IncrementDLCount($this->get->id);
-				
-				Template::Set('download', DownloadData::GetAsset($this->get->id));
-				Template::Show('download_item.tpl');
-				
-				break;	
-		}
-		
-		# Retrieve our download ID and download it
-		if($this->get->id != '')
-		{
-						
-		}
+		Template::Set('allcategories', DownloadData::GetAllCategories());
+		Template::Show('downloads_list.tpl');
 	}
 	
+	public function dl($id='')
+	{
+		$this->download($id);
+	}
+	
+	public function download($id='')
+	{
+		if($id == '')
+		{
+			$this->index();
+		}
+		
+		DownloadData::IncrementDLCount($id);
+				
+		Template::Set('download', DownloadData::GetAsset($id));
+		Template::Show('download_item.tpl');
+	}
 }

@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
   
-class UserGroups
+class UserGroups extends CodonData
 {
 	public $user_permissions;
 		

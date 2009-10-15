@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
-class PIREPData
+class PIREPData extends CodonData
 {	
 	public static $lasterror;
 	public $pirepid;

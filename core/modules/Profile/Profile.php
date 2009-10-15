@@ -18,125 +18,114 @@
  
 class Profile extends CodonModule
 {
-	function Controller()
-	{
-		switch($this->get->page)
-		{
-			/**
-			 * This is the public profile for the pilot
-			 */
-			/**
-			 * This is the profile for the pilot
-			 *	They can edit their profile from  here.
-			 */
-			case '':
-
-				if(!Auth::LoggedIn())
-				{
-					echo 'Not logged in';
-					return;
-				}
-
-				/*
-				 * This is from /profile/editprofile
-				 */
-				if($this->post->action == 'saveprofile')
-				{
-					$this->SaveProfile();
-					
-					Template::Set('message', 'Profile saved!');
-					Template::Show('core_success.tpl');
-				}
-				
-				/* this comes from /profile/changepassword
-				*/
-				if($this->post->action == 'changepassword')
-				{
-					$this->ChangePassword();
-					
-					Template::Set('message', 'Password changed!');
-					Template::Show('core_success.tpl');
-				}
-				
-				if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
-				{
-					$totalhours = intval(Auth::$userinfo->totalhours) + intval(Auth::$userinfo->transferhours);
-				}
-				else
-				{
-					$totalhours = Auth::$userinfo->totalhours;
-				}
-				
-				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-				Template::Set('report', PIREPData::GetLastReports(Auth::$userinfo->pilotid));
-				Template::Set('nextrank', RanksData::GetNextRank($totalhours));
-				Template::Set('allawards', AwardsData::GetPilotAwards(Auth::$userinfo->pilotid));
-				Template::Set('userinfo', Auth::$userinfo);
-				Template::Set('pilot_hours', $totalhours);
-
-				Template::Show('profile_main.tpl');
-				
-				CodonEvent::Dispatch('profile_viewed', 'Profile');
-				
-				break;
-								
-			/*
-			 * View a different pilot's profile
-			 */
-			case 'view':
-			
-				$pilotid = $this->get->pilotid;
 	
-				if(preg_match('/^([A-Za-z]{3})(\d*)/', $pilotid, $matches) > 0)
-				{
-					$pilotid = $matches[2];
-				}
-				
-				$userinfo = PilotData::GetPilotData($pilotid);
-				
-				Template::Set('userinfo', $userinfo);
-				Template::Set('allfields', PilotData::GetFieldData($pilotid, false));
-				Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
-				Template::Set('pilotcode', PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid));
-				Template::Set('allawards', AwardsData::GetPilotAwards($userinfo->pilotid));
-				
-				Template::Show('pilot_public_profile.tpl');
-				Template::Show('pireps_viewall.tpl');
-				
-				break;
-				
-			case 'editprofile':
-
-				if(!Auth::LoggedIn())
-				{
-					echo 'Not logged in';
-					return;
-				}
-
-				Template::Set('userinfo', Auth::$userinfo);
-				Template::Set('customfields', PilotData::GetFieldData(Auth::$pilotid, true));
-				Template::Set('bgimages', PilotData::GetBackgroundImages());
-				Template::Set('countries', Countries::getAllCountries());
-				Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-
-				Template::Show('profile_edit.tpl');
-				break;
-
-			case 'changepassword':
-
-				if(!Auth::LoggedIn())
-				{
-					echo 'Not logged in';
-					return;
-				}
-
-				Template::Show('profile_changepassword.tpl');
-				break;
-
+	public function index()
+	{
+		if(!Auth::LoggedIn())
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
 		}
-	}
 
-	function SaveProfile()
+		/*
+		 * This is from /profile/editprofile
+		 */
+		if($this->post->action == 'saveprofile')
+		{
+			$this->save_profile_post();
+			
+			Template::Set('message', 'Profile saved!');
+			Template::Show('core_success.tpl');
+		}
+		
+		/* this comes from /profile/changepassword
+		*/
+		if($this->post->action == 'changepassword')
+		{
+			$this->change_password_post();
+			
+			Template::Set('message', 'Password changed!');
+			Template::Show('core_success.tpl');
+		}
+		
+		if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
+		{
+			$totalhours = intval(Auth::$userinfo->totalhours) + intval(Auth::$userinfo->transferhours);
+		}
+		else
+		{
+			$totalhours = Auth::$userinfo->totalhours;
+		}
+		
+		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+		Template::Set('report', PIREPData::GetLastReports(Auth::$userinfo->pilotid));
+		Template::Set('nextrank', RanksData::GetNextRank($totalhours));
+		Template::Set('allawards', AwardsData::GetPilotAwards(Auth::$userinfo->pilotid));
+		Template::Set('userinfo', Auth::$userinfo);
+		Template::Set('pilot_hours', $totalhours);
+
+		Template::Show('profile_main.tpl');
+		
+		CodonEvent::Dispatch('profile_viewed', 'Profile');
+	}
+	
+	/**
+	 * This is the public profile for the pilot
+	 */
+	public function view($pilotid='')
+	{
+		$pilotid = $this->get->pilotid;
+	
+		if(preg_match('/^([A-Za-z]{3})(\d*)/', $pilotid, $matches) > 0)
+		{
+			$pilotid = $matches[2];
+		}
+		
+		$userinfo = PilotData::GetPilotData($pilotid);
+		
+		Template::Set('userinfo', $userinfo);
+		Template::Set('allfields', PilotData::GetFieldData($pilotid, false));
+		Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+		Template::Set('pilotcode', PilotData::GetPilotCode($userinfo->code, $userinfo->pilotid));
+		Template::Set('allawards', AwardsData::GetPilotAwards($userinfo->pilotid));
+		
+		Template::Show('pilot_public_profile.tpl');
+		Template::Show('pireps_viewall.tpl');
+	}
+	
+	
+	public function editprofile()
+	{
+		if(!Auth::LoggedIn())
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+
+		Template::Set('userinfo', Auth::$userinfo);
+		Template::Set('customfields', PilotData::GetFieldData(Auth::$pilotid, true));
+		Template::Set('bgimages', PilotData::GetBackgroundImages());
+		Template::Set('countries', Countries::getAllCountries());
+		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+
+		Template::Show('profile_edit.tpl');
+	}
+	
+	public function changepassword()
+	{
+		if(!Auth::LoggedIn())
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+
+		Template::Show('profile_changepassword.tpl');
+	}
+	
+	protected function save_profile_post()
 	{
 		$userinfo = Auth::$userinfo;
 		
@@ -159,20 +148,20 @@ class Profile extends CodonModule
 		PilotData::SaveAvatar($userinfo->code, $userinfo->pilotid, $_FILES);
 	}
 
-	function ChangePassword()
+	protected function change_password_post()
 	{
 		// Verify
 		if($this->post->oldpassword == '')
 		{
 			Template::Set('message', 'You must enter your current password');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			return;
 		}
 
 		if($this->post->password1 != $this->post->password2)
 		{
 			Template::Set('message', 'Your passwords do not match');
-			Template::Show('core_message.tpl');
+			Template::Show('core_error.tpl');
 			return;
 		}
 
@@ -192,4 +181,3 @@ class Profile extends CodonModule
 		Template::Show('core_message.tpl');
 	}
 }
-?>

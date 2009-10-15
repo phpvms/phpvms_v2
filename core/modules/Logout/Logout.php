@@ -17,24 +17,13 @@
 
 class Logout extends CodonModule 
 {
-	
-	function Controller()
+	public function index()
 	{
-		// Very simple, just handle a logout
-		switch($this->get)
-		{
-			case '':
-			default:
-				
-				Auth::LogOut();
-				
-				/*redirect back to front page
-				*/
-				Template::Set('redir', SITE_URL);
-				Template::Show('login_complete.tpl');
-				
-				break;
-		}		
+		Auth::LogOut();
+		
+		/*redirect back to front page
+		*/
+		Template::Set('redir', SITE_URL);
+		Template::Show('login_complete.tpl');
 	}
 }
-?>

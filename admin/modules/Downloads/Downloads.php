@@ -138,7 +138,16 @@ class Downloads extends CodonModule
 			return;
 		}
 		
-		DownloadData::EditAsset($this->post->id, $this->post->name, '', '');
+		$data = array(
+			'id' => $this->post->id,
+			'name' => $this->post->name,
+			'parent_id' => '',
+			'description' => '',
+			'link' => '',
+			'image' => '',
+			);
+			
+		DownloadData::EditAsset($data);
 		
 		Template::Set('message', 'Category edited!');
 		Template::Show('core_success.tpl');
@@ -169,8 +178,15 @@ class Downloads extends CodonModule
 			return;
 		}
 		
-		$val = DownloadData::AddDownload($this->post->category, $this->post->name, $this->post->description,
-					$this->post->link, $this->post->image);
+		$data = array(
+			'parent_id' => $this->post->category,
+			'name' => $this->post->name,
+			'description' => $this->post->description,
+			'link' => $this->post->link,
+			'image' => $this->post->image,
+		);
+		
+		$val = DownloadData::AddDownload($data);
 		
 		if($val == false)
 		{
@@ -189,8 +205,16 @@ class Downloads extends CodonModule
 			return;
 		}
 			
-		DownloadData::EditAsset($this->post->id, $this->post->name,  $this->post->category, $this->post->description, 
-									$this->post->link, $this->post->image);
+		$data = array(
+			'id' => $this->post->id,
+			'parent_id' => $this->post->category,
+			'name' => $this->post->name,
+			'description' => $this->post->description,
+			'link' => $this->post->link,
+			'image' => $this->post->image,
+		);
+		
+		DownloadData::EditAsset($data);
 		
 		Template::Set('message', 'Download edited!');
 		Template::Show('core_success.tpl');

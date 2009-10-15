@@ -87,7 +87,9 @@ class PilotAdmin extends CodonModule
 				
 				$this->SetGroupsData($this->post->pilotid);
 				Template::Show('pilots_groups.tpl');
+				
 				return;
+				
 				break;
 			
 			case 'saveprofile':
@@ -111,12 +113,14 @@ class PilotAdmin extends CodonModule
 					'location' => $this->post->location,
 					'hub' => $this->post->hub,
 					'retired' => $retired,
+					'totalhours' => $this->post->totalhours,
+					'totalflights' => $this->post->totalflights,
+					'totalpay' => $this->post->totalpay,
+					'transferhours' => $this->post->transferhours,
 				);
 					
 				PilotData::SaveProfile($data);
-				
-				PilotData::ReplaceFlightData($this->post->pilotid, $this->post->totalhours, 
-					$this->post->totalflights, $this->post->totalpay, $this->post->transferhours);
+				PilotData::ReplaceFlightData($data);
 				
 				PilotData::SaveFields($this->post->pilotid, $_POST);
 				

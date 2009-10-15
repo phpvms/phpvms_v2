@@ -138,7 +138,18 @@
 	</tr>
 	<tr>
 		<td>Pilot active?</td>
-		<td><?php if($pilotinfo->retired == 1) {  $retsel='selected'; $activesel = 'selected'; } ?>
+		<td><?php 
+			if(intval($pilotinfo->retired) == 1) 
+			{  
+				$retsel='selected'; 
+				$activesel = ''; 
+			}
+			else
+			{
+				$activesel = 'selected'; 
+				$retsel = '';
+			}
+			?>
 			<select name="retired">
 				<option value="0" <?php echo $activesel?>>Active</option>
 				<option value="1" <?php echo $retsel?>>Inactive</option>

@@ -18,56 +18,52 @@
  
 class Pilots extends CodonModule
 {
-
-	function Controller()
+	
+	public function index()
 	{
+		// Get all of our hubs, and list pilots by hub
+		$allhubs = OperationsData::GetAllHubs();
 		
-		switch($this->get->page)
+		if(!$allhubs) $allhubs = array();
+		
+		foreach($allhubs as $hub)
 		{
-			case '':
-						
-				// Get all of our hubs, and list pilots by hub
-				$allhubs = OperationsData::GetAllHubs();
-				
-				if(!$allhubs) $allhubs = array();
-				
-				foreach($allhubs as $hub)
-				{
-					Template::Set('title', $hub->name);
-					Template::Set('icao', $hub->icao);
-					
-					Template::Set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
-										
-					Template::Show('pilots_list.tpl');
-				}
-				
-				$nohub = PilotData::GetAllPilotsByHub('');
-				if(!$nohub)
-				{
-					break;
-				}
-				
-				Template::Set('title', 'No Hub');
-				Template::Set('icao', '');
-				Template::Set('allpilots', $nohub);
-				Template::Show('pilots_list.tpl');
-				
-				break;
-				
-			case 'reports':
+			Template::Set('title', $hub->name);
+			Template::Set('icao', $hub->icao);
 			
-				$id = $this->get->pilotid;
-				
-				Template::Set('pireps', PIREPData::GetAllReportsForPilot($id));
-				Template::Show('pireps_viewall.tpl');
-				break;
+			Template::Set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
+								
+			Template::Show('pilots_list.tpl');
 		}
+		
+		$nohub = PilotData::GetAllPilotsByHub('');
+		if(!$nohub)
+		{
+			return;
+		}
+		
+		Template::Set('title', 'No Hub');
+		Template::Set('icao', '');
+		Template::Set('allpilots', $nohub);
+		Template::Show('pilots_list.tpl');
 	}
 	
-	function RecentFrontPage($count = 5)
+	public function reports($pilotid='')
+	{
+		if($pilotid == '')
+		{
+			Template::Set('message', 'No pilot specified!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+		Template::Show('pireps_viewall.tpl');
+	}
+	
+	public function RecentFrontPage($count = 5)
 	{
 		Template::Set('pilots', PilotData::GetLatestPilots($count));
-		
 		Template::Show('frontpage_recentpilots.tpl');
 	}
 }

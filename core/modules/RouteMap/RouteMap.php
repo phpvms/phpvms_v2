@@ -8,7 +8,7 @@ class RouteMap extends CodonModule
 		CodonRewrite::AddRule('routemap', array('maptype', 'hub'));		
 	}
 	
-	public function Controller()
+	public function index()
 	{
 		
 		if($this->get->maptype == 'hubmap')
@@ -87,5 +87,4 @@ class RouteMap extends CodonModule
 		$map->printMap();
 		$map->printOnLoad();
 	}
-	
 }

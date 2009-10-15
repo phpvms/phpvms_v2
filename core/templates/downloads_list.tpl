@@ -27,7 +27,7 @@ foreach($allcategories as $category)
 	{
 ?>
 	<li>
-		<a href="<?php echo SITE_URL;?>/index.php/downloads/<?php echo $download->id?>">
+		<a href="<?php echo SITE_URL;?>/index.php/downloads/dl/<?php echo $download->id?>">
 			<?php echo $download->name?></a><br />
 	      <?php echo $download->description?><br />
           <em>Downloaded <?php echo $download->hits?> times</em></li>

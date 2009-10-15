@@ -18,98 +18,67 @@
 
 class Finances extends CodonModule
 {
-	public function Controller()
+	
+	public function index()
 	{
-		
-		switch($this->get->page)
+		$this->viewreport();
+	}
+	
+	public function viewcurrent()
+	{
+		$this->viewreport();
+	}
+	
+	public function viewreport()
+	{
+		$type = $this->get->type;
+					
+		/**
+		 * Check the first letter in the type
+		 * m#### - month
+		 * y#### - year
+		 * 
+		 * No type indicates to view the 'overall'
+		 */
+		if($type[0] == 'm')
 		{
-			case 'viewcurrent':
-			case 'viewreport':
-			case '':
-			default:
-		
-				$type = $this->get->type;
-							
-				/**
-				 * Check the first letter in the type
-				 * m#### - month
-				 * y#### - year
-				 * 
-				 * No type indicates to view the 'overall'
-				 */
-				if($type[0] == 'm')
-				{
-					$type = str_replace('m', '', $type);
-					$period = date('F Y', $type);
-					
-					$data = FinanceData::GetMonthBalanceData($period);
-					
-					Template::Set('title', 'Balance Sheet for '.$period);
-					Template::Set('allfinances', $data);
-					
-					Template::Show('finance_balancesheet.tpl');
-				}
-				elseif($type[0] == 'y')
-				{
-					$type = str_replace('y', '', $type);
+			$type = str_replace('m', '', $type);
+			$period = date('F Y', $type);
+			
+			$data = FinanceData::GetMonthBalanceData($period);
+			
+			Template::Set('title', 'Balance Sheet for '.$period);
+			Template::Set('allfinances', $data);
+			
+			Template::Show('finance_balancesheet.tpl');
+		}
+		elseif($type[0] == 'y')
+		{
+			$type = str_replace('y', '', $type);
 
-					$data = FinanceData::GetYearBalanceData($type);
-					
-					Template::Set('title', 'Balance Sheet for Year '.date('Y', $type));
-					Template::Set('allfinances', $data);
-					Template::Set('year', date('Y', $type));
-					
-					Template::Show('finance_summarysheet.tpl');
-				}
-				else
-				{
-					// This should be the last 3 months overview
-					
-					$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
-					
-					Template::Set('title', 'Balance Sheet for Last 3 Months');
-					Template::Set('allfinances', $data);					
-					Template::Show('finance_summarysheet.tpl');
-				}			
-				
-				
-				break;
-				
-			case 'viewexpenses':
+			$data = FinanceData::GetYearBalanceData($type);
 			
-				if($this->post->action == 'addexpense' || $this->post->action == 'editexpense')
-				{
-					$this->ProcessExpense();
-				}
-				
-				if($this->get->action == 'deleteexpense')
-				{
-					FinanceData::RemoveExpense($this->post->id);
-				}
+			Template::Set('title', 'Balance Sheet for Year '.date('Y', $type));
+			Template::Set('allfinances', $data);
+			Template::Set('year', date('Y', $type));
 			
-				Template::Set('allexpenses', FinanceData::GetAllExpenses());
-				Template::Show('finance_expenselist.tpl');
+			Template::Show('finance_summarysheet.tpl');
+		}
+		else
+		{
+			// This should be the last 3 months overview
 			
-				break;
-				
-			case 'addexpense':
-				
-				Template::Set('title', 'Add Expense');
-				Template::Set('action', 'addexpense');
-				
-				Template::Show('finance_expenseform.tpl');
-				
-				break;
-				
-			case 'editexpense':
+			$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
 			
-				Template::Set('title', 'Edit Expense');
-				Template::Set('action', 'editexpense');
-				Template::Set('expense', FinanceData::GetExpenseDetail($this->get->id));
-				
-				Template::Show('finance_expenseform.tpl');
-							
-				break;
+			Template::Set('title', 'Balance Sheet for Last 3 Months');
+			Template::Set('allfinances', $data);					
+			Template::Show('finance_summarysheet.tpl');
 		}		
+	}
+	
+	public function viewexpenses()
+	{
+		Template::Set('allexpenses', FinanceData::GetAllExpenses());
+		Template::Show('finance_expenselist.tpl');
 	}
 }

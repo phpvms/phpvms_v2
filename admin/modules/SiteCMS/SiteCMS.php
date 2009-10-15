@@ -46,6 +46,7 @@ class SiteCMS extends CodonModule
 	
 	public function viewnews()
 	{
+		echo 'call';
 		switch ($this->post->action)
 		{
 			case 'addnews':
@@ -140,6 +141,7 @@ class SiteCMS extends CodonModule
 	
 	public function viewpages()
 	{
+		
 		/* This is the actual adding page process
 				 */
 		switch($this->post->action)

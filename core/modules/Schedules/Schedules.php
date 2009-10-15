@@ -23,6 +23,7 @@ class Schedules extends CodonModule
 	
 	public function __construct()
 	{
+		parent::__construct();
 		$this->gMap = new GoogleMapAPI('routemap', 'phpVMS');
 		$this->gMap->setAPIKey(GOOGLE_KEY);
 	}
@@ -36,117 +37,141 @@ class Schedules extends CodonModule
 		}
 	}
 	
-	public function Controller()
+	public function index()
 	{
-		switch($this->get->page)
-		{
-			case '':
-			case 'view':
-								
-				if($this->post->action == 'findflight')
-				{
-					$this->FindFlight();
-					return;
-				}
-				
-				$this->ShowSchedules();
-				
-				break;
-				
-			case 'detail':
-			case 'details':
-				
-				$routeid = $this->get->id;
-				
-				if(!is_numeric($routeid))
-				{
-					preg_match('/^([A-Za-z]{3})(\d*)/', $routeid, $matches);
-					$routeid = $matches[2];
-				}
-				
-				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
-				$counts = SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum);
-											
-				Template::Set('schedule', $scheddata);
-				Template::Set('scheddata', $counts); // past 30 days
-				
-				Template::Show('schedule_details.tpl');
-				Template::Show('route_map.tpl');
-				
-			
-				break;
-				
-			case 'brief':
-				
-				$routeid = $this->get->id;
-				
-				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
-				
-				Template::Set('schedule', $scheddata);
-				Template::Show('schedule_briefing.tpl');
-				
-				break;
-				
-			case 'boardingpass':
-			
-				$routeid = $this->get->id;
-				$scheddata = SchedulesData::GetScheduleDetailed($routeid);
-				
-				Template::Set('schedule', $scheddata);
-				Template::Show('schedule_boarding_pass.tpl');
-				
-				break;
-				
-
-			// View bids for the pilot
-			case 'bids':
-				
-				if(!Auth::LoggedIn()) return;
-			
-				$this->ShowBids();
-		
-				break;
-				
-			case 'addbid':
-				
-				if(!Auth::LoggedIn()) return;
-				
-				$routeid = $this->post->id;
-				
-				if(CodonEvent::Dispatch('bid_preadd', 'Schedules', $routeid)==false)
-				{
-					return;
-				}
-				
-				/* Block any other bids if they've already made a bid
-				 */
-				if(Config::Get('DISABLE_BIDS_ON_BID') == true)
-				{
-					$bids = SchedulesData::GetBids(Auth::$userinfo->pilotid);
-					
-					# They've got somethin goin on
-					if(count($bids) > 0)
-					{
-						return;
-					}					
-				}
-				
-				SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
-				
-				CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
-				
-				break;
-				
-			case 'removebid':
-				
-				if(!Auth::LoggedIn()) return;
-				
-				SchedulesData::RemoveBid($this->post->id);
-				
-				break;
-		}
+		$this->view();
 	}
 	
+	public function view()
+	{
+		if($this->post->action == 'findflight')
+		{
+			$this->FindFlight();
+			return;
+		}
+		
+		$this->ShowSchedules();
+	}
+	
+	public function detail($routeid='')
+	{
+		$this->details($routeid);
+	}
+	
+	public function details($routeid = '')
+	{
+		//$routeid = $this->get->id;
+		
+		if($routeid == '')
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+				
+		if(!is_numeric($routeid))
+		{
+			preg_match('/^([A-Za-z]{3})(\d*)/', $routeid, $matches);
+			$routeid = $matches[2];
+		}
+		
+		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+		$counts = SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum);
+									
+		Template::Set('schedule', $scheddata);
+		Template::Set('scheddata', $counts); // past 30 days
+		
+		Template::Show('schedule_details.tpl');
+		Template::Show('route_map.tpl');
+	}
+	
+	public function brief($routeid = '')
+	{	
+		if($routeid == '')
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+		
+		Template::Set('schedule', $scheddata);
+		Template::Show('schedule_briefing.tpl');
+	}
+	
+	public function boardingpass($routeid)
+	{
+		if($routeid == '')
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+				
+		Template::Set('schedule', $scheddata);
+		Template::Show('schedule_boarding_pass.tpl');
+	}
+	
+	public function bids()
+	{
+		if(!Auth::LoggedIn()) return;
+			
+		Template::Set('bids', SchedulesData::GetBids(Auth::$userinfo->pilotid));
+		Template::Show('schedule_bids.tpl');
+	}
+	
+	public function addbid()
+	{
+		if(!Auth::LoggedIn()) return;
+				
+		$routeid = $this->post->id;
+		
+		if($routeid == '')
+		{
+			return;
+		}
+		
+		
+		// See if this is a valid route
+		$routeid = SchedulesData::GetSchedule($routeid);
+		if(!$routeid)
+		{
+			return;
+		}
+		
+		if(CodonEvent::Dispatch('bid_preadd', 'Schedules', $routeid)==false)
+		{
+			return;
+		}
+		
+		/* Block any other bids if they've already made a bid
+		 */
+		if(Config::Get('DISABLE_BIDS_ON_BID') == true)
+		{
+			$bids = SchedulesData::GetBids(Auth::$userinfo->pilotid);
+			
+			# They've got somethin goin on
+			if(count($bids) > 0)
+			{
+				return;
+			}					
+		}
+		
+		SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
+		
+		CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
+	}
+	
+	public function removebid()
+	{
+		if(!Auth::LoggedIn()) return;
+				
+		SchedulesData::RemoveBid($this->post->id);
+	}
+
 	public function ShowSchedules()
 	{
 		$depapts = OperationsData::GetAllAirports();
@@ -194,11 +219,5 @@ class Schedules extends CodonModule
 		Template::Show('schedule_results.tpl');
 	}
 	
-	
-	public function ShowBids()
-	{
-		Template::Set('bids', SchedulesData::GetBids(Auth::$userinfo->pilotid));
-		Template::Show('schedule_bids.tpl');
-	}
+
 }
-?>

@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class PilotData
+class PilotData extends CodonData
 {
 	
 	public static $pilot_data = array();
@@ -210,18 +210,8 @@ class PilotData
 		$location = strtoupper($data['location']);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
-					SET ";
-					
-		foreach($data as $field=>$value)
-		{
-			if($field == 'pilotid' || $field == 'retired')
-				continue;
-				
-			if($value != '')
-			{
-				$sql .= "`{$field}`='{$value}',";
-			}
-		}
+					SET `code`='{$data['code']}', `email`='{$data['email']}', `location`='{$data['location']}',
+						`hub`='{$data['hub']}', `bgimage`='{$data['bgimage']}', ";
 		
 		/* Default to not retired */
 		if($data['retired'] == '')
@@ -233,10 +223,10 @@ class PilotData
 			$retired = 0;
 		
 		$sql.=" `retired`=$retired ";
-		$sql .= 'WHERE `pilotid`='.$data['pilotid'];
+		$sql .= ' WHERE `pilotid`='.$data['pilotid'];
 		
 		$res = DB::query($sql);
-					
+		
 		if(DB::errno() != 0)
 		{
 			return false;
@@ -485,6 +475,14 @@ class PilotData
 	 * Don't update the pilot's flight data, but just replace it
 	 * 	with the values given
 	 *
+	 * $data = array(
+			'pilotid' => '',
+			'flighttime' => '',
+			'numflights' => '',
+			'totalpay' => '',
+			'transferhours' => '',
+		);
+	 *
 	 * @param int $pilotid Pilot ID
 	 * @param int $flighttime Number of flight hours
 	 * @param int $numflights Number of flights
@@ -492,23 +490,33 @@ class PilotData
 	 * @return bool Success
 	 *
 	 */
-	public static function ReplaceFlightData($pilotid, $flighttime, $numflights, $totalpay, $transferhours='')
+	public static function ReplaceFlightData($data)
 	{
-		$pilotid = intval($pilotid);
-		$flighttime = floatval($flighttime);
-		$numflights = floatval($numflights);
-		$totalpay = floatval($totalpay);
-		$transferhours = floatval($transferhours);
+		
+		/*$data = array(
+			'pilotid' => '',
+			'flighttime' => '',
+			'numflights' => '',
+			'totalpay' => '',
+			'transferhours' => '',
+		);*/
+		
+		$data['pilotid'] = intval($data['pilotid']);
+		$data['totalhours'] = floatval($data['totalhours']);
+		$data['totalflights'] = floatval($data['totalflights']);
+		$data['totalpay'] = floatval($data['totalpay']);
+		$data['transferhours'] = floatval($data['transferhours']);
 		
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=$flighttime, totalflights=$numflights, totalpay=$totalpay";
+					SET `totalhours`={$data['totalhours']}, `totalflights`={$data['totalflights']}, 
+						`totalpay`={$data['totalpay']}";
 		
-		if($transferhours != '')
+		if($data['transferhours'] != '')
 		{
-			$sql .=", transferhours=$transferhours";	
+			$sql .=", `transferhours`={$data['transferhours']}";	
 		}	
 					
-		$sql .= " WHERE pilotid=$pilotid";
+		$sql .= " WHERE pilotid={$data['pilotid']}";
 		
 		$res = DB::query($sql);
 		

@@ -42,10 +42,14 @@ class CodonRewrite
 {
 	public static $rewrite_rules = array();
 	public static $get;
-	public static $current_module;
 	
-	protected static $peices;
-	protected static $run=false;
+	public static $current_module;
+	public static $current_action;
+	
+	public static $params;
+	
+	public static $peices;
+	public static $run=false;
 	
 		
 	/**
@@ -122,10 +126,25 @@ class CodonRewrite
 		}
 		
 		self::$current_module = $module_name;
+		self::$current_action = self::$peices[1];
+		
 		$_GET['module'] = $module_name;
+		$_GET['action'] = self::$current_action;
+		
+		unset(self::$peices[0]);
+		unset(self::$peices[1]);
+		self::$params = array();
+		
+		foreach(self::$peices as $peice)
+		{
+			self::$params[] = $peice;
+		}
 		
 		# Create the object to hold all of our stuff
 		self::$get = new stdClass;
+		
+		// Backwards compat
+		self::$get->page = self::$current_action; 
 		
 		# If we haven't specified specific rules for a module,
 		#	Then we use the rules we made for "default"
@@ -147,13 +166,15 @@ class CodonRewrite
 			self::$get->$key = $value;
 		}
 
-		
 		self::$run = true;	
 	}
 	
-		
+	
+	
+	
 	/**
 	 * Process an individual module based on the latest rules	
+	 * DEPRECATED
 	 *
 	 * @param string $module_name Name of the module to re-process
 	 * @return mixed This is the return value description

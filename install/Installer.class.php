@@ -201,10 +201,32 @@ class Installer
 			return false;
 		}
 		
+		// Add an initial airport/hub
+		$data = array(
+			'icao' => 'KJFK',
+			'name' => 'Kennedy International',
+			'country' => 'USA',
+			'lat' => '40.6398',
+			'lng' => '-73.7787',
+			'hub' => false,
+			'fuelprice' => 0
+		);
+		
+		$ret = OperationsData::AddAirport($data);
+		
 		// add the user
+		$data = array(
+			'firstname' => $_POST['firstname'],
+			'lastname' => $_POST['lastname'],
+			'email' => $_POST['email'],l,
+			'password' => $_POST['password'],
+			'code' => $_POST['vacode'],
+			'location' => 'US',
+			'hub' => 'KJFK',
+			'confirm' => true);
+			
 
-		if(!RegistrationData::AddUser($_POST['firstname'], $_POST['lastname'],
-				$_POST['email'], $_POST['vacode'], '', '', $_POST['password'], PILOT_ACCEPTED))
+		if(!RegistrationData::AddUser($data))
 		{
 			self::$error = DB::$error;
 			return false;

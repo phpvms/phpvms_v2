@@ -18,7 +18,7 @@
  
 class Registration extends CodonModule
 {
-	function HTMLHead()
+	public function HTMLHead()
 	{
 		/*Show our password strength checker
 			*/
@@ -28,53 +28,26 @@ class Registration extends CodonModule
 		}
 	}
 		
-	function Controller()
-	{
-	
-		/* Verify the confirmation code from the email
-		 */
 		
-		switch($this->get->page)
+	public function index()
+	{
+		if(Auth::LoggedIn()) // Make sure they don't over-ride it
 		{
-			case '':
+			Template::Show('login_already.tpl');
+			return;
+		}
 			
-				if(Auth::LoggedIn()) // Make sure they don't over-ride it
-				{
-					Template::Show('login_already.tpl');
-					return;
-				}
-					
-				
-				if(isset($_POST['submit']))
-				{
-					$this->ProcessRegistration();
-				}
-				else
-				{
-					$this->ShowForm();
-				}
-					
-				//$this->ProcessRegistration();
-				break;
-				
-			/*
-			case 'confirm':
-
-				if(RegistrationData::ValidateConfirm())
-				{
-					Template::Show('registration_complete.tpl');
-				}
-				else
-				{
-					//TODO: error template, notify admin
-					DB::debug();
-				}
-
-				break;
-			*/
+		
+		if(isset($_POST['submit']))
+		{
+			$this->ProcessRegistration();
+		}
+		else
+		{
+			$this->ShowForm();
 		}
 	}
-	
+		
 	protected function ShowForm()
 	{
 		
@@ -107,20 +80,22 @@ class Registration extends CodonModule
 		}
 		else
 		{
-			$firstname = ($this->post->firstname);
-			$lastname = ($this->post->lastname);
-			$email = ($this->post->email);
-			$code = ($this->post->code);
-			$location = ($this->post->location);
-			$hub = ($this->post->hub);
-			$password = ($this->post->password1);
-			
+			$data = array(
+				'firstname' => $this->post->firstname,
+				'lastname' => $this->post->lastname,
+				'email' => $this->post->email,
+				'password' => $this->post->password1,
+				'code' => $this->post->code,
+				'location' => $this->post->location,
+				'hub' => $this->post->hub,
+				'confirm' => false);
+				
 			if(CodonEvent::Dispatch('registration_precomplete', 'Registration', $_POST) == false)
 			{
 				return false;
 			}
 			
-			$ret = RegistrationData::CheckUserEmail($email);
+			$ret = RegistrationData::CheckUserEmail($data['email']);
 			
 			if($ret)
 			{
@@ -129,7 +104,8 @@ class Registration extends CodonModule
 				return false;
 			}
 			
-			if(RegistrationData::AddUser($firstname, $lastname, $email, $code, $location, $hub, $password) == false)
+			
+			if(RegistrationData::AddUser($data) == false)
 			{
 				Template::Set('error', RegistrationData::$error);
 				Template::Show('registration_error.tpl');
@@ -165,7 +141,7 @@ class Registration extends CodonModule
 	/*
 	 * Process all the registration data
 	 */
-	function VerifyData()
+	protected function VerifyData()
 	{
 		$error = false;
 		
@@ -255,4 +231,3 @@ class Registration extends CodonModule
 		return true;
 	}
 }
-?>

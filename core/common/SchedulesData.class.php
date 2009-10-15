@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class SchedulesData
+class SchedulesData extends CodonData
 {	
 	/**
 	 * Return information about a schedule (pass the ID)

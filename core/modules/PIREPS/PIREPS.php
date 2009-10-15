@@ -20,152 +20,160 @@ class PIREPS extends CodonModule
 {
 	public $pirep;
 	
-	public function Controller()
+	public function index()
 	{
-		switch($this->get->page)
-		{
-			case '':
-			case 'mine':
-			case 'viewpireps':
-			
-				if(!Auth::LoggedIn())
-				{
-					Template::Set('message', 'You are not logged in!');
-					Template::Show('core_error.tpl');
-					return;
-				}
-				
-				if(isset($_POST['submit_pirep']))
-				{
-					if(!$this->SubmitPIREP())
-					{
-						$this->FilePIREPForm();
-						return false;
-					}
-				}
-				
-				// Show PIREPs filed
-							
-				Template::Set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
-				Template::Show('pireps_viewall.tpl');
-				
-				break;
-			
-			case 'view':
-			case 'viewreport':
-			
-				$pirepid = $this->get->id;
-				$pirep = PIREPData::GetReportDetails($pirepid);
-				
-				if(!$pirep)
-				{
-					echo '<p>This PIREP does not exist!</p>';
-					return;
-				}
-				
-				Template::Set('pirep', $pirep);
-				Template::Set('fields', PIREPData::GetFieldData($pirepid));
-				Template::Set('comments', PIREPData::GetComments($pirepid));
-												
-				Template::Show('pirep_viewreport.tpl');
-				Template::Show('route_map.tpl');
-				break;
-			
-			/* Show map with all of their routes
-			*/
-			case 'routesmap':
-			
-				echo '<h3>All flights</h3>';
-				$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
-				
-				if(!$pireps)
-				{
-					echo '<p>There are no pilot reports</p>';
-					return;
-				}
-				
-				$map = new GoogleMap;
-				
-				$map->maptype = Config::Get('MAP_TYPE');
-				$map->linecolor = Config::Get('MAP_LINE_COLOR');
-				
-				foreach($pireps as $pirep)
-				{
-					$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
-					$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
-					$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
-				}
-				
-				$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
-				
-				break;
-			
-			case 'file':
-			case 'new':
-			case 'filepirep':
-			
-				if(!Auth::LoggedIn())
-				{
-					Template::Set('message', 'You must be logged in to access this feature!');
-					Template::Show('core_error.tpl');
-					return;
-				}
-				
-				$this->FilePIREPForm();
-				
-				break;
-				
-			# These next two are accessed via AJAX
-			case 'getdeptapts':
-				
-				$code = $this->get->id;
-				
-				if($code=='') return;
-				
-				$allapts = SchedulesData::GetDepartureAirports($code);
-				
-				if(!$allapts)
-				{
-					echo 'There are no routes for this airline<br />';
-					return;
-				}
-				
-				echo '<select id="depicao" name="depicao">
-						<option value="">Select a Departure Airport';
-				
-				foreach($allapts as $airport)
-				{
-					echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
-				}
-				echo '</select>';
-				
-				break;
-				
-			case 'getarrapts':
-			
-				$code = $this->get->id;
-				$icao = $this->get->icao;
-				
-				if($icao == '') return;
-				
-				$allapts = SchedulesData::GetArrivalAiports($icao, $code);
-				
-				if(!$allapts)
-					return;
-					
-				echo '<select name="arricao">
-						<option value="">Select an Arrival Airport';
-				foreach($allapts as $airport)
-				{
-					echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
-				}
-				echo '</select>';
-				
-				break;
-		}
+		$this->viewpireps();
 	}
 	
-	function FilePIREPForm()
+	public function mine()
+	{
+		$this->viewpireps();
+	}
+	
+	public function viewpireps()
+	{
+		if(!Auth::LoggedIn())
+		{
+			Template::Set('message', 'You are not logged in!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		if($this->post->submit_pirep)
+		{
+			if(!$this->SubmitPIREP())
+			{
+				$this->FilePIREPForm();
+				return false;
+			}
+		}
+		
+		// Show PIREPs filed
+		
+		Template::Set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
+		Template::Show('pireps_viewall.tpl');
+	}
+	
+	public function view($pirepid='')
+	{
+		$this->viewreport($pirepid);
+	}
+	
+	public function viewreport($pirepid='')
+	{
+		if($pirepid == '')
+		{
+			Template::Set('message', 'No report ID specified!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$pirep = PIREPData::GetReportDetails($pirepid);
+		
+		if(!$pirep)
+		{
+			Template::Set('message', 'This PIREP does not exist!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		Template::Set('pirep', $pirep);
+		Template::Set('fields', PIREPData::GetFieldData($pirepid));
+		Template::Set('comments', PIREPData::GetComments($pirepid));
+										
+		Template::Show('pirep_viewreport.tpl');
+		Template::Show('route_map.tpl');
+	}
+	
+	
+	public function routesmap()
+	{
+		echo '<h3>All flights</h3>';
+		$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
+		
+		if(!$pireps)
+		{
+			Template::Set('message', 'There are no PIREPs for this pilot!!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$map = new GoogleMap;
+		
+		$map->maptype = Config::Get('MAP_TYPE');
+		$map->linecolor = Config::Get('MAP_LINE_COLOR');
+		
+		foreach($pireps as $pirep)
+		{
+			$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
+			$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
+			$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
+		}
+		
+		$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
+	}
+	
+	public function file()
+	{
+		$this->filepirep();
+	}
+		
+	public function filepirep()
+	{
+		if(!Auth::LoggedIn())
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+			return;
+		}
+		
+		$this->FilePIREPForm();
+	}
+	
+	public function getdeptapts($code)
+	{
+		if($code=='') return;
+		
+		$allapts = SchedulesData::GetDepartureAirports($code);
+		
+		if(!$allapts)
+		{
+			echo 'There are no routes for this airline<br />';
+			return;
+		}
+		
+		echo '<select id="depicao" name="depicao">
+				<option value="">Select a Departure Airport';
+		
+		foreach($allapts as $airport)
+		{
+			echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
+		}
+		echo '</select>';
+		
+	}
+	
+	public function getarrapts($code = '', $icao = '')
+	{
+		if($icao == '') return;
+				
+		$allapts = SchedulesData::GetArrivalAiports($icao, $code);
+		
+		if(!$allapts)
+			return;
+			
+		echo '<select name="arricao">
+				<option value="">Select an Arrival Airport';
+				
+		foreach($allapts as $airport)
+		{
+			echo '<option value="'.$airport->icao.'">'.$airport->icao . ' - '.$airport->name .'</option>';
+		}
+		echo '</select>';
+		
+	}
+		
+	protected function FilePIREPForm()
 	{
 		Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
 		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
@@ -178,7 +186,7 @@ class PIREPS extends CodonModule
 		Template::Show('pirep_new.tpl');
 	}
 	
-	function SubmitPIREP()
+	protected function SubmitPIREP()
 	{
 		$pilotid = Auth::$userinfo->pilotid;
 		
@@ -282,10 +290,9 @@ class PIREPS extends CodonModule
 	/**
 	 *
 	 */
-	function RecentFrontPage($count = 10)
+	public function RecentFrontPage($count = 10)
 	{
 		Template::Set('reports', PIREPData::GetRecentReportsByCount($count));
-		
 		Template::Show('frontpage_reports.tpl');
 	}
 }

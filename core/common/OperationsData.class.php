@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class OperationsData
+class OperationsData extends CodonData
 {
 	/**
 	 * Get all aircraft from database
@@ -187,33 +187,56 @@ class OperationsData
 	
 	/**
 	 * Add an aircraft
+	 * 
+	 * $data = array(	'icao'=>$this->post->icao,
+						'name'=>$this->post->name,
+						'fullname'=>$this->post->fullname,
+						'registration'=>$this->post->registration,
+						'downloadlink'=>$this->post->downloadlink,
+						'imagelink'=>$this->post->imagelink,
+						'range'=>$this->post->range,
+						'weight'=>$this->post->weight,
+						'cruise'=>$this->post->cruise,
+						'maxpax'=>$this->post->maxpax,
+						'maxcargo'=>$this->post->maxcargo,
+						'enabled'=>$this->post->enabled);
 	 */
-	public static function AddAircaft($icao, $name, $fullname, $registration, $downloadlink,
-										$imagelink, $range, $weight, $cruise, 
-										$maxpax, $maxcargo,
-										$enabled=true)
+	public static function AddAircaft($data)
 	{
-		$icao = DB::escape(strtoupper($icao));
-		$name = DB::escape(strtoupper($name));
-		$registration = DB::escape(strtoupper($registration));
+		/*$data = array(	'icao'=>$this->post->icao,
+						'name'=>$this->post->name,
+						'fullname'=>$this->post->fullname,
+						'registration'=>$this->post->registration,
+						'downloadlink'=>$this->post->downloadlink,
+						'imagelink'=>$this->post->imagelink,
+						'range'=>$this->post->range,
+						'weight'=>$this->post->weight,
+						'cruise'=>$this->post->cruise,
+						'maxpax'=>$this->post->maxpax,
+						'maxcargo'=>$this->post->maxcargo,
+						'enabled'=>$this->post->enabled);*/
+						
+		$data['icao'] = DB::escape(strtoupper($data['icao']));
+		$data['name'] = DB::escape(strtoupper($data['name']));
+		$data['registration'] = DB::escape(strtoupper($data['registration']));
 		
-		$range = ($range == '') ? 0 : $range;
-		$weight = ($weight == '') ? 0 : $weight;
-		$cruise = ($cruise == '') ? 0 : $cruise;
+		$data['range'] = ($data['range'] == '') ? 0 : $data['range'];
+		$data['weight'] = ($data['weight'] == '') ? 0 : $data['weight'];
+		$data['cruise'] = ($data['cruise'] == '') ? 0 : $data['cruise'];
 		
-		if($enabled == true)
-			$enabled = 1;
+		if($data['enabled'] === true)
+			$data['enabled'] = 1;
 		else
-			$enabled = 0;
+			$data['enabled'] = 0;
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."aircraft (
 					`icao`, `name`, `fullname`, `registration`, `downloadlink`,
 					`imagelink`, `range`, `weight`, `cruise`, 
 					`maxpax`, `maxcargo`, `enabled`)
 				VALUES (
-					'$icao', '$name', '$fullname', '$registration', '$downloadlink', 
-					'$imagelink', '$range', '$weight', '$cruise', 
-					'$maxpax', '$maxcargo', $enabled)";
+					'{$data['icao']}', '{$data['name']}', '{$data['fullname']}', '{$data['registration']}', 
+					'{$data['downloadlink']}', '{$data['imagelink']}', '{$data['range']}', '{$data['weight']}', 
+					'{$data['cruise']}', '{$data['maxpax']}', '{$data['maxcargo']}', {$data['enabled']})";
 		
 		$res = DB::query($sql);
 		
@@ -226,27 +249,28 @@ class OperationsData
 	/**
 	 * Edit an aircraft
 	 */
-	public static function EditAircraft($id, $icao, $name, $fullname, 
-										$registration, $downloadlink, $imagelink,
-										$range, $weight, $cruise, 
-										$maxpax, $maxcargo, $enabled=true)
+	public static function EditAircraft($data)
 	{
-		$icao = DB::escape(strtoupper($icao));
-		$name = DB::escape(strtoupper($name));
-		$registration = DB::escape(strtoupper($registration));
+		$data['icao'] = DB::escape(strtoupper($data['icao']));
+		$data['name'] = DB::escape(strtoupper($data['name']));
+		$data['registration'] = DB::escape(strtoupper($data['registration']));
 		
-		if($enabled == true)
-			$enabled = 1;
+		$data['range'] = ($data['range'] == '') ? 0 : $data['range'];
+		$data['weight'] = ($data['weight'] == '') ? 0 : $data['weight'];
+		$data['cruise'] = ($data['cruise'] == '') ? 0 : $data['cruise'];
+		
+		if($data['enabled'] === true)
+			$data['enabled'] = 1;
 		else
-			$enabled = 0;
+			$data['enabled'] = 0;
 
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft 
-				SET `icao`='$icao', `name`='$name', `fullname`='$fullname',
-					`registration`='$registration', `downloadlink`='$downloadlink', 
-					`imagelink`='$imagelink', `range`='$range', `weight`='$weight',
-					`cruise`='$cruise', `maxpax`='$maxpax', `maxcargo`='$maxcargo',
-					`enabled`=$enabled
-				WHERE `id`=$id";
+				SET `icao`='{$data['icao']}', `name`='{$data['name']}', `fullname`='{$data['fullname']}',
+					`registration`='{$data['registration']}', `downloadlink`='{$data['downloadlink']}', 
+					`imagelink`='{$data['imagelink']}', `range`='{$data['range']}', `weight`='{$data['weight']}',
+					`cruise`='{$data['cruise']}', `maxpax`='{$data['maxpax']}', `maxcargo`='{$data['maxcargo']}',
+					`enabled`={$data['enabled']}
+				WHERE `id`={$data['id']}";
 		
 		$res = DB::query($sql);
 		
@@ -254,32 +278,54 @@ class OperationsData
 			return false;
 			
 		return true;
-	}
+}
 	
 	/**
 	 * Add an airport
+	 * 
+	 * $data = array(
+			'icao' => 'KJFK',
+			'name' => 'Kennedy International',
+			'country' => 'USA',
+			'lat' => '40.6398',
+			'lng' => '-73.7787',
+			'hub' => 0,
+			'fuelprice' => 0
+		);
+		
 	 */
-	public static function AddAirport($icao, $name, $country, $lat, $long, $hub, $fuelprice=0)
+	public static function AddAirport($data)
 	{
+		
+		/*$data = array(
+			'icao' => 'KJFK',
+			'name' => 'Kennedy International',
+			'country' => 'USA',
+			'lat' => '40.6398',
+			'lng' => '-73.7787',
+			'hub' => false,
+			'fuelprice' => 0
+		);
+		*/
 	
-		if($icao == '')
+		if($data['icao'] == '')
 			return false;
 			
-		$icao = strtoupper($icao);
-			
+		$data['icao'] = strtoupper($data['icao']);
 
-		if($hub === true)
-			$hub = 1;
+		if($data['hub'] === true)
+			$data['hub'] = 1;
 		else
-			$hub = 0;
+			$data['hub'] = 0;
 			
-		if($fuelprice == '')
-			$fuelprice = 0;
+		if($data['fuelprice'] == '')
+			$data['fuelprice'] = 0;
 
 		$sql = "INSERT INTO " . TABLE_PREFIX ."airports 
 					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`, `fuelprice`)
 					VALUES (
-						'$icao', '$name', '$country', $lat, $long, $hub, $fuelprice)";
+						'{$data['icao']}', '{$data['name']}', '{$data['country']}', 
+						{$data['lat']}, {$data['lng']}, {$data['hub']}, {$data['fuelprice']})";
 
 		$res = DB::query($sql);
 		
@@ -291,21 +337,33 @@ class OperationsData
 
 	/**
 	 * Edit the airport
+	 * $data = array(
+			'icao' => 'KJFK',
+			'name' => 'Kennedy International',
+			'country' => 'USA',
+			'lat' => '40.6398',
+			'lng' => '-73.7787',
+			'hub' => false,
+			'fuelprice' => 0
+		);
 	 */
-	public static function EditAirport($icao, $name, $country, $lat, $long, $hub, $fuelprice=0)
+	public static function EditAirport($data)
 	{
-        if($hub == true)
-			$hub = 1;
-		else
-			$hub = 0;
+		$data['icao'] = strtoupper(DB::escape($data['icao']));
+		$data['name'] = DB::escape($data['name']);
 		
-		$icao = strtoupper(DB::escape($icao));
-		$name = DB::escape($name);
+		if($data['hub'] === true)
+			$data['hub'] = 1;
+		else
+			$data['hub'] = 0;
+			
+		if($data['fuelprice'] == '')
+			$data['fuelprice'] = 0;
 
 		$sql = "UPDATE " . TABLE_PREFIX . "airports
-					SET `icao`='$icao', `name`='$name', `country`='$country', 
-						`lat`=$lat, `lng`=$long, `hub`=$hub, `fuelprice`=$fuelprice
-					WHERE `icao`='$icao'";
+					SET `icao`='{$data['icao']}', `name`='{$data['name']}', `country`='{$data['country']}', 
+						`lat`={$data['lat']}, `lng`={$data['lng']}, `hub`={$data['hub']}, `fuelprice`={$data['fuelprice']}
+					WHERE `icao`='{$data['icao']}'";
 
 		$res = DB::query($sql);
 		
@@ -365,8 +423,17 @@ class OperationsData
 		else
 		{
 			// Add the AP
-			OperationsData::AddAirport($icao, $reader->geoname->name, $reader->geoname->countryName,
-					$reader->geoname->lat, $reader->geoname->lng, false);
+			$data = array(
+				'icao' => $icao,
+				'name' => $reader->geoname->name,
+				'country' => $reader->geoname->countryName,
+				'lat' => $reader->geoname->lat,
+				'lng' => $reader->geoname->lng,
+				'hub' => false,
+				'fuelprice' => 0
+			);
+			
+			OperationsData::AddAirport($data);
 		}
 		
 		return self::GetAirportInfo($icao);

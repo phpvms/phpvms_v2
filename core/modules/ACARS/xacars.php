@@ -61,7 +61,7 @@ function get_coordinates($line)
 	return $coords;
 }
 
-switch($_GET['action'])
+switch($acars_action)
 {
 	
 	/* Request data about a flight */

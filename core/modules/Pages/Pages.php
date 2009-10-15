@@ -19,45 +19,43 @@
 
 class Pages extends CodonModule
 {
-	function NavBar()
+	public function NavBar()
 	{
 		Template::Set('allpages', SiteData::GetAllPages(true, Auth::$loggedin));
 		Template::Show('pages_items.tpl');
 		
 	}
 	
-	function Controller()
+	public function __call($name, $args)
 	{
-		if($this->get->page != '')
+		// Page here is the filename, but we don't call it in directly
+		//	for security reasons
+		
+		$page = DB::escape($name);
+		$pageinfo = SiteData::GetPageDataByName($page);
+		
+		if($pageinfo->public == 0 && Auth::LoggedIn() == false)
 		{
-			// Page here is the filename, but we don't call it in directly
-			//	for security reasons
-			
-			$page = DB::escape($this->get->page);
-			$pageinfo = SiteData::GetPageDataByName($page);
-			
-			if($pageinfo->public == 0 && Auth::LoggedIn() == false)
-			{
-				Template::Show('pages_nopermission.tpl');
-				return;
-			}
-			
-			$content = SiteData::GetPageContent($page);
-			if(!$content)
-			{
-				Template::Show('pages_notfound.tpl');
-			}
-			else
-			{
-				// Do it this way, so then that this page/template
-				//	can be customized on a skin-by-skin basis
-				
-				Template::Set('pagename', $content->pagename);
-				Template::Set('content', $content->content);
-				
-				Template::Show('pages_content.tpl');
-			}
+			Template::Show('pages_nopermission.tpl');
+			return;
 		}
+		
+		$content = SiteData::GetPageContent($page);
+		if(!$content)
+		{
+			Template::Show('pages_notfound.tpl');
+		}
+		else
+		{
+			// Do it this way, so then that this page/template
+			//	can be customized on a skin-by-skin basis
+			
+			Template::Set('pagename', $content->pagename);
+			Template::Set('content', $content->content);
+			
+			Template::Show('pages_content.tpl');
+		}
+		
 	}
 }
 ?>

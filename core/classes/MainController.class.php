@@ -241,30 +241,29 @@ class MainController
 			if(!method_exists($$ModuleName, $call_function))
 			{
 				// Check if we have a function for the page we are calling
-				$name = $$ModuleName->get->page;
+				//$name = $$ModuleName->get->page;
+				$name = CodonRewrite::$current_action;
 				if($name == '')
 				{
 					$call_function = 'index';
 				}
 				else
 				{
-					if(method_exists($$ModuleName, $name))
-					{
-						$call_function = $name;
-						
-						
-					}
+					/*if(method_exists($$ModuleName, $name))
+					{*/
+					$call_function = $name;
+					/*}
 					else
 					{
 						return false;
-					}
+					}*/
 				}
 			}
 			
-			
-			self::Run($ModuleName, $call_function);
+			return call_user_method_array($call_function, $$ModuleName, CodonRewrite::$params);
+			//self::Run($ModuleName, $call_function, CodonRewrite::$peices);
 		}
-		else
+		/*else
 		{
 			for ($i=0; $i<self::$listSize; $i++)
 			{
@@ -282,7 +281,7 @@ class MainController
 				
 				self::Run($ModuleName, 'Controller');
 			}			
-		}
+		}*/
 		
 		return true;	
 	}

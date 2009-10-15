@@ -19,7 +19,7 @@
 class News extends CodonModule
 {
 	// This function gets called directly in the template
-	function ShowNewsFront($count=5)
+	public function ShowNewsFront($count=5)
 	{
 		
 		$sql = 'SELECT id, subject, body, postedby, UNIX_TIMESTAMP(postdate) AS postdate

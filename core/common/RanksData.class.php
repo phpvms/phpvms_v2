@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
-class RanksData
+class RanksData extends CodonData
 {
 	static $lasterror;
 	

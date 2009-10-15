@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class SiteData
+class SiteData extends CodonData
 {
 	
 	public static function loadSiteSettings()

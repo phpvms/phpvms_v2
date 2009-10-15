@@ -26,7 +26,7 @@
  *  Anything inside the output buffering regions is thrown out
  *	unless debug = true in the function below
  */
- 
+
 error_reporting(0);
 ini_set('display_errors', 'off');
 writedebug($_SERVER['QUERY_STRING']);
@@ -62,7 +62,7 @@ function find_in_fsacars_log($txt, $log)
 	}
 }
 
-switch($_GET['action'])
+switch($acars_action)
 {
 	#
 	# ACARS status change message
@@ -71,7 +71,7 @@ switch($_GET['action'])
 	#
 	
 	case 'acars':
-	
+		
 		writedebug('ACARS UPDATE');
 		writedebug(print_r($_GET, true));
 

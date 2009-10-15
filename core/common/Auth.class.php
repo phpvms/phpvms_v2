@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class Auth  
+class Auth extends CodonData
 {
 	public static $init=false;
 	public static $loggedin=false;

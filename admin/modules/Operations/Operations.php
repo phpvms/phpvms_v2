@@ -357,10 +357,7 @@ class Operations extends CodonModule
 						'enabled'=>$this->post->enabled);
 						
 			
-		OperationsData::AddAircaft($this->post->icao, $this->post->name, $this->post->fullname, 
-					$this->post->registration, $this->post->downloadlink, $this->post->imagelink,
-					$this->post->range, $this->post->weight, $this->post->cruise, 
-					$this->post->maxpax, $this->post->maxcargo, $this->post->enabled);
+		OperationsData::AddAircaft($data);
 		
 		if(DB::errno() != 0)
 		{
@@ -393,9 +390,17 @@ class Operations extends CodonModule
 		else
 			$this->post->hub = false;
 	
-		OperationsData::AddAirport($this->post->icao, $this->post->name, $this->post->country, 
-									$this->post->lat, $this->post->long, 
-									$this->post->hub, $this->post->fuelprice);
+		$data = array(
+			'icao' => $this->post->icao,
+			'name' => $this->post->name,
+			'country' => $this->post->country,
+			'lat' => $this->post->lat,
+			'lng' => $this->post->long,
+			'hub' => $this->post->hub,
+			'fuelprice' => $this->post->fuelprice
+			);
+			
+		OperationsData::AddAirport($data);
 		
 		if(DB::errno() != 0)
 		{
@@ -414,13 +419,6 @@ class Operations extends CodonModule
 
 	protected function edit_airport_post()
 	{
-		$icao = $this->post->icao;
-		$name = $this->post->name;
-		$country = $this->post->country;
-		$lat = $this->post->lat;
-		$long = $this->post->long;
-		$hub = $this->post->hub;
-
 		if($this->post->icao == '' || $this->post->name == '' 
 				|| $this->post->country == '' || $this->post->lat == '' || $this->post->long == '')
 		{
@@ -433,9 +431,19 @@ class Operations extends CodonModule
 			$this->post->hub = true;
 		else
 			$this->post->hub = false;
+			
+			
+		$data = array(
+			'icao' => $this->post->icao,
+			'name' => $this->post->name,
+			'country' => $this->post->country,
+			'lat' => $this->post->lat,
+			'lng' => $this->post->long,
+			'hub' => $this->post->hub,
+			'fuelprice' => $this->post->fuelprice
+		);
 
-		OperationsData::EditAirport($this->post->icao, $this->post->name, $this->post->country, 
-									$this->post->lat, $this->post->long, $this->post->hub, $this->post->fuelprice);
+		OperationsData::EditAirport($data);
 		
 		if(DB::errno() != 0)
 		{
@@ -604,11 +612,23 @@ class Operations extends CodonModule
 		else
 			$this->post->enabled = false;
 			
-		OperationsData::EditAircraft($this->post->id, $this->post->icao, $this->post->name, 
-										$this->post->fullname, $this->post->registration, $this->post->downloadlink,
-										$this->post->imagelink, $this->post->range, 
-										$this->post->weight, $this->post->cruise, 
-										$this->post->maxpax, $this->post->maxcargo, $this->post->enabled);
+		$data = array(	
+			'id' => $this->post->id,
+			'icao'=>$this->post->icao,
+			'name'=>$this->post->name,
+			'fullname'=>$this->post->fullname,
+			'registration'=>$this->post->registration,
+			'downloadlink'=>$this->post->downloadlink,
+			'imagelink'=>$this->post->imagelink,
+			'range'=>$this->post->range,
+			'weight'=>$this->post->weight,
+			'cruise'=>$this->post->cruise,
+			'maxpax'=>$this->post->maxpax,
+			'maxcargo'=>$this->post->maxcargo,
+			'enabled'=>$this->post->enabled
+		);
+			
+		OperationsData::EditAircraft($data);
 		
 		if(DB::errno() != 0)
 		{

@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
-class Countries
+class Countries extends CodonData
 {
 	public static $countries = array('AF' => 'Afghanistan', 'AL' => 'Albania', 'DZ' => 'Algeria',
 		'AS' => 'American Samoa', 'AD' => 'Andorra', 'AO' => 'Angola', 'AI' => 'Anguilla',

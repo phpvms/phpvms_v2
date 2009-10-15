@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
-class RegistrationData
+class RegistrationData extends CodonData
 {
 
 	static public $salt;
@@ -47,10 +47,31 @@ class RegistrationData
 	
 	/**
 	 * Add a  User
+	 * 
+	 * $data = array(
+			'firstname' => '',
+			'lastname' => '',
+			'email' => '',
+			'password' => '',
+			'code' => '',
+			'location' => '',
+			'hub' => '',
+			'confirm' => false);
 	 */
-	public static function AddUser($firstname, $lastname, $email, $code, $location, $hub, $password, $confirm=false)
+	public static function AddUser($data)
 	{
-		$exists = self::CheckUserEmail($email);
+		
+		/*$data = array(
+			'firstname' => '',
+			'lastname' => '',
+			'email' => '',
+			'password' => '',
+			'code' => '',
+			'location' => '',
+			'hub' => '',
+			'confirm' => false);*/
+			
+		$exists = self::CheckUserEmail($data['email']);
 		if (is_object($exists) )
 		{
 			self::$error = 'Email already exists';
@@ -59,18 +80,18 @@ class RegistrationData
 		
 		//Set the password, add some salt
 		$salt = md5(date('His'));
-		$password = md5($password . $salt);
+		$password = md5($data['password'] . $salt);
 		
 		//Stuff it into here, the confirmation email will use it.
 		self::$salt = $salt;
 		
-		$code = DB::escape(strtoupper($code));
-		$firstname = DB::escape(ucwords($firstname));
-		$lastname = DB::escape(ucwords($lastname));
-		$location = DB::escape(strtoupper($location));
+		$code = DB::escape(strtoupper($data['code']));
+		$firstname = DB::escape(ucwords($data['firstname']));
+		$lastname = DB::escape(ucwords($data['lastname']));
+		$location = DB::escape(strtoupper($data['location']));
 		//Add this stuff in
 		
-		if($confirm == true)
+		if($confirm === true)
 			$confirm = 1;
 		else
 			$confirm = 0;

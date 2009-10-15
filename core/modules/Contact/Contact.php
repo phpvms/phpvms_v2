@@ -19,9 +19,8 @@
 class Contact extends CodonModule 
 {
 	
-	public function Controller()
+	public function index()
 	{
-		
 		if($this->post->submit)
 		{
 			$captcha = SessionManager::Get('captcha_sum');

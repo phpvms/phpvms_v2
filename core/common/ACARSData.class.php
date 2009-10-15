@@ -16,7 +16,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-class ACARSData extends CodonModule
+class ACARSData extends CodonData
 {
 	
 	public static $lasterror;

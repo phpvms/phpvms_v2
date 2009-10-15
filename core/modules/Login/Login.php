@@ -17,59 +17,54 @@
  
 class Login extends CodonModule
 {
-		
-	function Controller()
+	public function __construct()
 	{
-		switch($this->get->page)
+		parent::__construct();
+	}
+	
+	public function index()
+	{
+		$this->login();
+	}
+	
+	public function login($redir='')
+	{
+		if(Auth::LoggedIn() == true)
 		{
-			case '':
-			case 'login':
-				if(Auth::LoggedIn() == true)
-				{
-					Template::Show('login_already.tpl');
-					return;
-				}
-				
-				Template::Set('redir', $this->get->redir);
-			
-				if($this->post->action == 'login')
-				{
-					$this->ProcessLogin();
-				}
-				else
-				{
-					Template::Show('login_form.tpl');
-				}
-				
-				
-				break;
-				
-			case 'logout':
-			
-				Auth::LogOut();
-				Template::Show('login_complete.tpl');
-				
-				break;
-			
-			case 'forgotpassword':
-			
-				if($this->post->action == 'resetpass')
-				{
-					$this->ResetPassword();
-					return;
-				}
-				
-				$this->ForgotPassword();
-				break;
+			Template::Show('login_already.tpl');
+			return;
+		}
+		
+		Template::Set('redir', $redir);
+	
+		if($this->post->action == 'login')
+		{
+			$this->ProcessLogin();
+		}
+		else
+		{
+			Template::Show('login_form.tpl');
 		}
 	}
-
-	function ForgotPassword()
+	
+	public function logout()
 	{
+		Auth::LogOut();
+		Template::Show('login_complete.tpl');
+	}
+	
+	public function forgotpassword()
+	{
+		if($this->post->action == 'resetpass')
+		{
+			$this->ResetPassword();
+			return;
+		}
+		
 		Template::Show('login_forgotpassword.tpl');
 	}
 	
-	function ResetPassword()
+	public function ResetPassword()
 	{
 		$email = $this->post->email;
 		
@@ -103,7 +98,7 @@ class Login extends CodonModule
 		}
 	}
 	
-	function ProcessLogin()
+	public function ProcessLogin()
 	{
 		$email = $this->post->email;
 		$password = $this->post->password;
@@ -154,6 +149,4 @@ class Login extends CodonModule
 			return;
 		}
 	}
-	
 }
-?>

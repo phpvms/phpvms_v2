@@ -21,7 +21,7 @@
  * This class is the model for the Downloads
  *
  */
-class DownloadData
+class DownloadData extends CodonData
 {
 	
 	/**
@@ -128,16 +128,36 @@ class DownloadData
 					
 		DB::query($sql);
 	}
-	public static function AddDownload($parent_id, $name, $description='', $link='', $image='')
+	
+	/**
+	 * $data = array(
+			'parent_id' => '',
+			'name' => '',
+			'description' => '',
+			'link' => '',
+			'image' => '',
+		);
+	*/
+	public static function AddDownload($data)
 	{
-		if($parent_id == '') return false;
+		/*$data = array(
+			'parent_id' => '',
+			'name' => '',
+			'description' => '',
+			'link' => '',
+			'image' => '',
+		);*/
 		
-		$parent_id = intval($parent_id);
-		$name = DB::escape($name);
+		if($data['parent_id'] == '') return false;
+		if($data['name'] == '') return false;
+		
+		$data['parent_id'] = intval($data['parent_id']);
+		$data['name'] = DB::escape($data['name']);
 		
 		$sql = 	"INSERT INTO ".TABLE_PREFIX."downloads
 				(`pid`, `name`, `description`, `link`, `image`, `hits`)
-				VALUES	($parent_id, '$name', '$description', '$link', '$image', 0)";
+				VALUES	({$data['parent_id']}, '{$data['name']}', '{$data['description']}', 
+						'{$data['link']}', '{$data['image']}', 0)";
 		
 		$res = DB::query($sql);
 		
@@ -147,17 +167,42 @@ class DownloadData
 		return true;
 	}
 	
-	public static function EditAsset($id, $name, $parent_id, $description='', $link='', $image='')
+	
+	/**
+	 * $data = array(
+			'id' => ''
+			'parent_id' => '',
+			'name' => '',
+			'description' => '',
+			'link' => '',
+			'image' => '',
+		);
+	 *
+	 * @param mixed $data This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function EditAsset($data)
 	{
-		if($id == '' || $name == '') return false;
+		/*$data = array(
+			'id' => ''
+			'parent_id' => '',
+			'name' => '',
+			'description' => '',
+			'link' => '',
+			'image' => '',
+		);
+		*/
+		if($data['id'] == '' || $data['name'] == '') return false;
 		
-		$id = intval($id);
-		$name = DB::escape($name);
-		$parent_id = intval($parent_id);
+		$data['id'] = intval($data['id']);
+		$data['name'] = DB::escape($data['name']);
+		$data['parent_id'] = intval($data['parent_id']);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."downloads
-					SET `pid`=$parent_id, `name`='$name', `description`='$description', link='$link', image='$image'
-					WHERE id=$id";
+					SET `pid`={$data['parent_id']}, `name`='{$data['name']}', 
+						`description`='{$data['description']}', link='{$data['link']}', image='{$data['image']}'
+					WHERE id={$data['id']}";
 		
 		$res = DB::query($sql);
 		

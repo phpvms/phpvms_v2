@@ -63,9 +63,10 @@ class CodonModule
 		$this->post = Vars::$post;
 		$this->get = CodonRewrite::$get;
 		$this->request = Vars::$request;
+		
+		//echo '<pre>'; print_r($this->get); echo '</pre>';
 			
 		$this->init = true;
 		$this->activeModule = MainController::$activeModule;
 	}
 }
-?>

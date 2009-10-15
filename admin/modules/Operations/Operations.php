@@ -34,6 +34,7 @@ class Operations extends CodonModule
 			case 'airports':
 				Template::Set('sidebar', 'sidebar_airports.tpl');
 				break;
+			case '':
 			case 'addschedule':
 			case 'activeschedules':
 			case 'inactiveschedules':
@@ -197,15 +198,15 @@ class Operations extends CodonModule
 	
 	public function activeschedules()
 	{
-		$this->schedules();
+		$this->schedules('activeschedules');
 	}
 	
 	public function inactiveschedules()
 	{
-		$this->schedules();
+		$this->schedules('inactiveschedules');
 	}
 	
-	public function schedules()
+	public function schedules($type='activeschedules')
 	{
 		/* These are loaded in popup box */
 		if($this->get->action == 'viewroute')
@@ -229,7 +230,7 @@ class Operations extends CodonModule
 				break;
 		}
 	
-		if($this->get->page == 'schedules' || $this->get->page == 'activeschedules')
+		if($type == 'schedules' || $type == 'activeschedules')
 		{
 			Template::Set('title', 'Viewing Active Schedules');
 			Template::Set('schedules', SchedulesData::GetSchedules('', true));

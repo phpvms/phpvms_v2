@@ -24,7 +24,7 @@
 
 class Dashboard extends CodonModule
 {
-	function HTMLHead()
+	public function HTMLHead()
 	{
 		Template::Set('sidebar', 'sidebar_dashboard.tpl');
 	}
@@ -68,28 +68,8 @@ class Dashboard extends CodonModule
 
 	}
 	
-	public function Controller()
-	{
-		/*
-		 * Check for updates
-		 */
-		switch($this->get->page)
-		{
-			default:
-				$this->index();
-				break;
-				
-			case 'pirepcounts':
-				$this->pirepcounts();				
-				break;
 
-			case 'about':
-				$this->about();				
-				break;
-		}
-	}
-
-	function CheckInstallFolder()
+	public function CheckInstallFolder()
 	{
 		if(file_exists(SITE_ROOT.'/install'))
 		{
@@ -101,7 +81,7 @@ class Dashboard extends CodonModule
 	/**
 	 * Show the notification that an update is available
 	 */
-	function CheckForUpdates()
+	public function CheckForUpdates()
 	{
 		if(NOTIFY_UPDATE == true)
 		{
@@ -164,4 +144,3 @@ class Dashboard extends CodonModule
 		}
 	}
 }
-?>

@@ -75,13 +75,12 @@ class MainController
 				#	in Name=>Path format
 				if(is_numeric($key))
 				{
-					$path = Config::Get('MODULE_PATH') . DIRECTORY_SEPARATOR 
-								. $module_list[$key] . DIRECTORY_SEPARATOR . $module_list[$i] .'.php';
+					$path = Config::Get('MODULE_PATH').DS.$module_list[$key].DS.$module_list[$i].'.php';
 					$modules[$module_list[$i]] = $path;
 				}
 				else
 				{
-					$modules[$key] = Config::Get('MODULE_PATH') . DIRECTORY_SEPARATOR . $value;
+					$modules[$key] = Config::Get('MODULE_PATH').DS.$value;
 				}
 			}			
 		}

@@ -126,10 +126,13 @@ class CodonRewrite
 		}
 		
 		self::$current_module = $module_name;
-		self::$current_action = self::$peices[1];
+		self::$current_action = strtolower(self::$peices[1]);
+		
+		//echo '<pre>'; print_r(self::$peices); echo '</pre>';
 		
 		$_GET['module'] = $module_name;
 		$_GET['action'] = self::$current_action;
+		$_GET['page'] = self::$current_action;
 		
 		unset(self::$peices[0]);
 		unset(self::$peices[1]);
@@ -142,10 +145,8 @@ class CodonRewrite
 		
 		# Create the object to hold all of our stuff
 		self::$get = new stdClass;
-		
-		// Backwards compat
-		self::$get->page = self::$current_action; 
-		
+		self::$get->action = self::$current_action;
+					
 		# If we haven't specified specific rules for a module,
 		#	Then we use the rules we made for "default"
 		if(!array_key_exists($module_name, self::$rewrite_rules))
@@ -155,7 +156,7 @@ class CodonRewrite
 		
 		# This parses now the rules for a specific module
 		self::ProcessModuleRewrite($module_name);
-		
+				
 		# And this tacks on our $_GET rules
 		parse_str($_SERVER['QUERY_STRING'], $get_extra);
 		$_GET = array_merge($_GET, $get_extra);		
@@ -165,6 +166,9 @@ class CodonRewrite
 		{
 			self::$get->$key = $value;
 		}
+		
+		// Backwards compat
+		self::$get->page = self::$current_action;
 
 		self::$run = true;	
 	}

@@ -54,15 +54,14 @@ class PIREPAdmin extends CodonModule
 			case 'rejectpirep':
 				$this->reject_pirep_post();
 				break;
+				
+			case 'editpirep':
+				$this->edit_pirep_post();
+				break;
 		}
 		
 		
 		$hub = $this->get->hub;
-		
-		if($this->post->action == 'editpirep')
-		{
-			$this->EditPIREP();
-		}
 		
 		Template::Set('title', 'Pending Reports');
 		

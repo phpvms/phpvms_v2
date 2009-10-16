@@ -198,7 +198,6 @@ echo 'Starting the update...<br />';
 					WHERE `pirepid`={$pirep->pirepid}";
 					
 		DB::query($update);
-		
 	}
 		
 	
@@ -214,8 +213,9 @@ if(!isset($_GET['test']))
 
 echo '<p><strong>Update completed!</strong></p>
 		<hr>
-	  <p style="width:500px">If there were any errors, you may have to manually run the SQL update, 
-		or correct the errors, and click the following to re-run the update: <a href="update.php?force">update.php?force</a></p>
+	  <p >If there were any errors, you may have to manually run the SQL update, 
+		or correct the errors, and click the following to re-run the update: <br />
+		<a href="update.php?force">Click here to force the update to run again</a></p>
 	  <p>Click here to <a href="'.SITE_URL.'">goto your site</a>, or <a href="'.SITE_URL.'/admin">your admin panel</a></p>  ';
 
 # Don't count forced updates

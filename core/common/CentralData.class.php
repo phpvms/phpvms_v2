@@ -132,7 +132,9 @@ class CentralData extends CodonData
 				
 				if($name == 'id' || $name == 'leg' || $name == 'enabled'
 						|| $name == 'flighttime' || $name == 'timesflown'
-						|| $name == 'depname' || $name == 'arrname' )
+						|| $name == 'depname' || $name == 'arrname'
+						|| $name == 'deplat' || $name == 'deplong'
+						|| $name == 'arrlat' || $name == 'arrlng' )
 				{
 					continue;
 				}

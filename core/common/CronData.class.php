@@ -28,9 +28,9 @@ class CronData extends CodonData
 	{
 		$name = strtoupper($name);
 		$sql = 'SELECT *, DATEDIFF(NOW(), lastupdate) AS days,
-						  TIMEDIFF(NOW(), lastupdate) as timediff,
-				 FROM '.TABLE_PREFIX."updates
-				 WHERE name='{$name}'";
+						  TIMEDIFF(NOW(), lastupdate) as timediff
+				 FROM `'.TABLE_PREFIX."updates`
+				 WHERE `name`='{$name}'";
 				 
 		return DB::get_row($sql);
 	}

@@ -239,7 +239,7 @@ class SchedulesData extends CodonData
 						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.code\''.$code.'\' '.$enabled;
+					WHERE s.code=\''.$code.'\' '.$enabled;
 		
 		return DB::get_results($sql);
 	}

@@ -34,9 +34,6 @@ class Profile extends CodonModule
 		if($this->post->action == 'saveprofile')
 		{
 			$this->save_profile_post();
-			
-			Template::Set('message', 'Profile saved!');
-			Template::Show('core_success.tpl');
 		}
 		
 		/* this comes from /profile/changepassword
@@ -44,9 +41,6 @@ class Profile extends CodonModule
 		if($this->post->action == 'changepassword')
 		{
 			$this->change_password_post();
-			
-			Template::Set('message', 'Password changed!');
-			Template::Show('core_success.tpl');
 		}
 		
 		if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
@@ -137,6 +131,7 @@ class Profile extends CodonModule
 
 		$data = array(			
 			'pilotid' => Auth::$pilotid,
+			'code' => Auth::$userinfo->code,
 			'email' => $this->post->email,
 			'location' => $this->post->location,
 			'bgimage' => $this->post->bgimage
@@ -146,6 +141,9 @@ class Profile extends CodonModule
 		PilotData::SaveFields(Auth::$pilotid, $_POST);
 		
 		PilotData::SaveAvatar($userinfo->code, $userinfo->pilotid, $_FILES);
+		
+		Template::Set('message', 'Profile saved!');
+		Template::Show('core_success.tpl');
 	}
 
 	protected function change_password_post()
@@ -178,6 +176,6 @@ class Profile extends CodonModule
 			Template::Set('message', 'You entered an invalid password');
 		}
 
-		Template::Show('core_message.tpl');
+		Template::Show('core_success.tpl');
 	}
 }

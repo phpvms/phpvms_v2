@@ -20,9 +20,8 @@ ALTER TABLE `phpvms_pireps` ADD `fuelunitcost` FLOAT NOT NULL AFTER `fuelused` ;
 ALTER TABLE `phpvms_pireps` ADD `exported` TINYINT NOT NULL;
 ALTER TABLE `phpvms_pireps` ADD `revenue` FLOAT NOT NULL AFTER `expenselist` 
 
--- ADD TO INSTALL LIST!!;
 
--- Add total hours
+-- Add total hours;
 INSERT INTO `phpvms_settings` (`id` ,`friendlyname` ,`name` , `value` ,`descrip` ,`core`)
 	VALUES (NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your VA''s Total Hours', '0');
 

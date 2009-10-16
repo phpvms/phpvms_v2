@@ -135,6 +135,7 @@ class Installer
 		
 		// first connect:
 		
+		
 		if(!DB::init($_POST['DBASE_TYPE']))
 		{
 			self::$error = DB::$error;
@@ -154,6 +155,8 @@ class Installer
 			self::$error = DB::$error;
 			return false;
 		}
+		
+		DB::$throw_exceptions = false;
 		
 		// 1 table at a time - read upto a ; and then
 		//	run the query
@@ -214,7 +217,7 @@ class Installer
 		
 		$ret = OperationsData::AddAirport($data);
 		
-		// add the user
+		// Add the user
 		$data = array(
 			'firstname' => $_POST['firstname'],
 			'lastname' => $_POST['lastname'],
@@ -268,8 +271,16 @@ class Installer
 				$sql = str_replace('phpvms_', TABLE_PREFIX, $sql);
 				
 				DB::query($sql);
+				$errno = DB::errno();
 				
-				if(DB::errno() != 0 && DB::errno() != 1060)
+				
+				// Ignore errors
+				//	1050 - Duplicate table
+				//	1062 - Duplicate entry for key
+				
+				// Ignore errors...
+				
+				/*if($errno != 0 && $errno != 1060 && $errno != 1050 && $errno != 1062)
 				{
 					echo '<p style="border-top: solid 1px #000; border-bottom: solid 1px #000; padding: 5px;">
 							There was an error, with the following message: <br /><br />
@@ -278,7 +289,7 @@ class Installer
 							<span style="margin: 10px;"><i>'.$sql.'</i></span><br /><br />
 							Try running it manually<br />
 							</p>';
-				}
+				}*/
 				
 				$sql = '';
 			}

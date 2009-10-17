@@ -91,17 +91,19 @@ class RegistrationData extends CodonData
 		$location = DB::escape(strtoupper($data['location']));
 		//Add this stuff in
 		
-		if($confirm === true)
+		if($data['confirm'] === true)
 			$confirm = 1;
 		else
 			$confirm = 0;
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email,
 					code, location, hub, password, salt, confirmed, joindate)
-				  VALUES ('$firstname', '$lastname', '$email', '$code',
-							'$location', '$hub', '$password', '$salt', $confirm, NOW())";
+				  VALUES ('{$firstname}', '{$lastname}', '{$data['email']}', '{$code}',
+							'{$location}', '{$data['hub']}', '{$password}', '{$salt}', {$confirm}, NOW())";
+		
 		
 		$res = DB::query($sql);
+		DB::debug();
 		
 		if(DB::errno() != 0)
 		{

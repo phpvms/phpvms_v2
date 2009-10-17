@@ -38,6 +38,12 @@ class PilotAdmin extends CodonModule
 		}
 	}
 	
+	public function index()
+	{
+		$this->viewpilots();
+	}
+	
+	
 	public function viewpilots()
 	{
 		/* This function is called for *ANYTHING* in that popup box

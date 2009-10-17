@@ -103,7 +103,6 @@ class RegistrationData extends CodonData
 		
 		
 		$res = DB::query($sql);
-		DB::debug();
 		
 		if(DB::errno() != 0)
 		{

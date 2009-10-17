@@ -57,6 +57,7 @@ class DB
 	
 	public static $throw_exceptions = true;
 	public static $default_type = OBJECT;
+	public static $show_errors = false;
 	
 	public static $table_prefix = '';
 	
@@ -533,6 +534,7 @@ class DB
 	
 	public static function debug($return = false)
 	{
-		return self::$DB->debug($return);
+		if(self::$show_errors === true)
+			return self::$DB->debug($return);
 	}
 }

@@ -311,10 +311,10 @@ class ACARSData extends CodonData
 			$cutofftime = Config::Get('ACARS_LIVE_TIME') / 60;
 			//$cutofftime = $cutofftime / 60;			
 		}
-		else
+		/*else
 		{
 			$cutofftime = 12; // hours
-		}
+		}*/
 		
 		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a
 					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) > a.`lastupdate`'";

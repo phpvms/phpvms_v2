@@ -14,7 +14,7 @@ body
 	margin: 0 auto;
 	padding: 0 0 0 0;
 	background: #ffffff;
-	
+	font-size: 12px;
 	border-top: none;
 	border-bottom: none;
 	padding-bottom: 10px;
@@ -26,7 +26,7 @@ h3
 	height: 26px;
 	font-size: 20px;
 	padding-left: 36px;
-	padding-bottom: 3px;
+	padding-bottom: 0px;
 	margin-top: 7px;
 }
 
@@ -36,9 +36,9 @@ h3
 	width: 970px;
 	background: #fff;
 	float: right;
-	border-bottom: solid 5px #000;
-	border: solid 1px #CCCCCC;
+	/*border: solid 1px #CCCCCC;
 	border-top: none;
+	border-bottom: none;*/
 }
 
 #topBanner
@@ -50,7 +50,7 @@ h3
 
 #topNav
 {
-	background: url(images/navbg.jpg) repeat-x;
+	/*background: url(images/navbg.jpg) repeat-x;*/
 	width: 970px;
 	margin: 0 auto;
 	height: 37px;
@@ -70,7 +70,7 @@ h3
 	height: 37px;
 	float: left;
 	padding: 0px;
-	background: url(images/navbg.jpg) repeat-x 0 0 #292929;
+	/*background: url(images/navbg.jpg) repeat-x 0 0 #292929;*/
 	font: bold 12px/37px Arial, Helvetica, sans-serif;
 }
 
@@ -81,7 +81,7 @@ h3
 	float: left;
 	text-decoration: none;
 	display: block;
-	background: url(images/navbg.jpg) repeat-x 0 0 #292929;
+	/*background: url(images/navbg.jpg) repeat-x 0 0 #292929;*/
 	color: #666666;
 	font: 17px/37px Arial, Helvetica, sans-serif;
 }
@@ -102,14 +102,15 @@ h3
 
 #mainbox
 {
-	width: 580px;
+	width: 620px;
 	float: left;
+	padding-right: 20px;
 }
 
 #sidebar
 {
 	float: left;
-	width: 350px;
+	width: 290px;
 	
 }
 
@@ -187,12 +188,12 @@ dd input
 #footer
 {
 	width: 970px;
-	background: url(images/bottombg.jpg) repeat-x 0 0 #ffffff;
+	/*background: url(images/bottombg.jpg) repeat-x 0 0 #ffffff;*/
 	height: 148px;
 	margin: 0 auto;
 	padding: 10px 0 0 0;
 	clear: both;
-	
+	text-align: right;
 	border-left: none;
 	border-right: none;
 }
@@ -265,11 +266,11 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   margin: 0;
   padding: 0;
   position: relative;
-  background: url(images/navbg.jpg) repeat-x 0 0 #292929;
+  /*background: url(images/navbg.jpg) repeat-x 0 0 #292929;*/
 }
 .nav li a, .nav li a:link, .nav li a:active, .nav li a:visited {
   font: bold 1.22em/25px Arial, Helvetica, sans-serif;
-  background: #565656;
+  /*background: #565656;*/
   color: #959595;
   display: block;
   padding: 0 9px;
@@ -278,8 +279,8 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 
 .nav li a:hover {
-  background: #ccc;
-  color: #000;	
+  background: #f2f2f2;
+  color: #999;	
 
 }
 #nav-one li:hover a, 

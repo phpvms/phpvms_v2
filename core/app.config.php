@@ -50,6 +50,9 @@ Config::Set('DISABLE_BIDS_ON_BID', false);
 # If you want to count transfer hours in rank calculations
 Config::Set('TRANSFER_HOURS_IN_RANKS', false);
 
+# The StatsData::UserOnline() function - how many minutes to check
+Config::Set('USERS_ONLINE_TIME', 20);
+
 # Google Map Options
 Config::Set('MAP_WIDTH', '800px');
 Config::Set('MAP_HEIGHT', '600px');

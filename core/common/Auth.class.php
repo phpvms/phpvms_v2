@@ -15,7 +15,7 @@
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
- 
+
 class Auth extends CodonData
 {
 	public static $init=false;
@@ -38,7 +38,7 @@ class Auth extends CodonData
 		self::$init = true;
 
 		/* Check if they're logged in */
-		if(SessionManager::GetData('loggedin') == 'true')
+		if(SessionManager::GetData('loggedin') == true)
 		{
 			self::$loggedin = true;
 			self::$userinfo = SessionManager::GetData('userinfo');
@@ -52,83 +52,96 @@ class Auth extends CodonData
 		}
 		else
 		{			   
-		   	# Load cookie data
+			# Load cookie data
 			if($_COOKIE[VMS_AUTH_COOKIE] != '')
 			{
-			   $data = explode('|', $_COOKIE[VMS_AUTH_COOKIE]);
-			   $session_id = $data[0];
-			   $pilot_id = $data[1];
-			   $ip_address = $data[2];
+				$data = explode('|', $_COOKIE[VMS_AUTH_COOKIE]);
+				$session_id = $data[0];
+				$pilot_id = $data[1];
+				$ip_address = $data[2];
 
-			   // TODO: Determine data reliability from IP addresses marked
-			   
-			   $session_info = self::get_session($session_id, $pilot_id, $ip_address);
-			   if($session_info)
-			   {
-				/* Populate session info */
-				$userinfo = PilotData::GetPilotData($pilot_id);
+				// TODO: Determine data reliability from IP addresses marked
+				$session_info = self::get_session($session_id, $pilot_id, $ip_address);
+				
+				if($session_info)
+				{
+					/* Populate session info */
+					$userinfo = PilotData::GetPilotData($pilot_id);
 
-				SessionManager::AddData('loggedin', 'true');
-				SessionManager::AddData('userinfo', $userinfo);
-				SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
-				PilotData::UpdateLogin($userinfo->pilotid);
-			   }
+					self::$loggedin = true;
+					self::$userinfo = $userinfo;
+					self::$pilotid = self::$userinfo->pilotid;
+					self::$usergroups = SessionManager::GetData('usergroups');
+					
+					if(self::$usergroups == '')
+					{
+						self::$usergroups = PilotGroups::GetUserGroups($userinfo->pilotid);
+					}
+					
+					SessionManager::AddData('loggedin', true);
+					SessionManager::AddData('userinfo', $userinfo);
+					SessionManager::AddData('usergroups', self::$usergroups);
+					PilotData::UpdateLogin($userinfo->pilotid);
+					self::set_session($userinfo->pilotid);
+				}
 			}
 			else
 			{
-			   self::$loggedin = false;
-			   return false;
+				self::$loggedin = false;
+				return false;
 			}
 		}
 		
 	}
 
-	public static function set_session($pilot_id)
+	public static function set_session($pilot_id, $remember)
 	{
-	   $sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
-			WHERE pilotid = '{$pilot_id}'";
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
+				WHERE pilotid = '{$pilot_id}'";
 
-	   $session_data = DB::get_row($sql);
-	   if($session_data)
-	   {
-		$sql = 'UPDATE '.TABLE_PREFIX."sessions
-			   SET logintime=NOW(), ipaddress='{$_SERVER['REMOTE_ADDR']}'
-			   WHERE pilotid={$pilot_id}";
-		
-		DB::query($sql);
-		$session_id = $session_data->id;
-	   }
-	   else
-	   {
-		$sql = "INSERT INTO ".TABLE_PREFIX."sessions
-			   (pilotid, ipaddress, logintime)
-			   VALUES ({$pilot_id}, NOW(), '{$_SERVER['REMOTE_ADDR']}')";
+		$session_data = DB::get_row($sql);
+		if($session_data)
+		{
+			$sql = 'UPDATE '.TABLE_PREFIX."sessions
+				    SET logintime=NOW(), ipaddress='{$_SERVER['REMOTE_ADDR']}'
+				    WHERE pilotid={$pilot_id}";
+			
+			DB::query($sql);
+			$session_id = $session_data->id;
+		}
+		else
+		{
+			$sql = "INSERT INTO ".TABLE_PREFIX."sessions
+				   (pilotid, ipaddress, logintime)
+				   VALUES ({$pilot_id},'{$_SERVER['REMOTE_ADDR']}', NOW())";
 
-		DB::query($sql);
-		$session_id = DB::$insert_id;
-	   }
+			DB::query($sql);
+			$session_id = DB::$insert_id;
+		}
 
-	   # Write out the cookie
-	   $cookie = "{$session_id}|{$pilot_id}|{$_SERVER['REMOTE_ADDR']}";
-	   $res = setrawcookie(VMS_AUTH_COOKIE, $cookie, time() + Config::Get('SESSION_LOGIN_TIME'), '/');
+		# Write out the cookie
+		if($remember == true)
+		{
+			$cookie = "{$session_id}|{$pilot_id}|{$_SERVER['REMOTE_ADDR']}";
+			$res = setrawcookie(VMS_AUTH_COOKIE, $cookie, time() + Config::Get('SESSION_LOGIN_TIME'), '/');
+		}
 	}
 
 	public static function get_session($session_id, $pilot_id, $ip_address)
 	{
-	   $sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
-			WHERE id = '{$session_id}'
-			   AND pilotid = '{$pilot_id}'
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
+				WHERE id = '{$session_id}' AND pilotid = '{$pilot_id}'
 			   "; //AND ipaddress = '{$ip_address}'
 
-	   $results = DB::get_row($sql);
-	   return $results;
+		$results = DB::get_row($sql);
+		return $results;
 	}
 
 	public static function remove_sessions($pilot_id)
 	{
-	   $sql = "DELETE FROM ".TABLE_PREFIX."sessions
+		$sql = "DELETE FROM ".TABLE_PREFIX."sessions
 			WHERE pilotid={$pilot_id}";
-	   DB::query($sql);
+		DB::query($sql);
 	}
 	
 	/**
@@ -219,7 +232,7 @@ class Auth extends CodonData
 				return false;
 			}
 		}
-	
+		
 		$password = DB::escape($password);
 		$userinfo = DB::get_row($sql);
 
@@ -237,7 +250,7 @@ class Auth extends CodonData
 
 		//ok now check it
 		$hash = md5($password . $userinfo->salt);
-				
+		
 		if($hash == $userinfo->password)
 		{	
 			self::$userinfo =  $userinfo;
@@ -246,7 +259,7 @@ class Auth extends CodonData
 			SessionManager::AddData('userinfo', $userinfo);
 			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
 			PilotData::UpdateLogin($userinfo->pilotid);
-						
+			
 			return true;
 		}			
 		else 

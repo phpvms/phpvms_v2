@@ -755,7 +755,7 @@ class SchedulesData extends CodonData
 		if(DB::get_row('SELECT bidid FROM '.TABLE_PREFIX.'bids
 				WHERE pilotid='.$pilotid.' AND routeid='.$routeid))
 		{
-			return;
+			return false;
 		}
 			
 		$pilotid = DB::escape($pilotid);

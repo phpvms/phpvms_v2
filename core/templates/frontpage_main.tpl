@@ -16,4 +16,22 @@
 	
 	<?php MainController::Run('Pilots', 'RecentFrontPage', 5); ?>
 	
+	<h3>Users Online</h3>
+	<p><i>There have been <?php echo count($usersonline)?> user(s) in the past <?php echo Config::Get('USERS_ONLINE_TIME')?> minutes.</i></p>
+	
+	<?php
+	/* $usersonline also has the list of users -
+		really simple example
+		
+		Or if you're not on the frontpage:
+		$usersonline = StatsData::UsersOnline();
+		
+	
+	foreach($usersonline as $pilot)	
+	{
+		echo "{$pilot->firstname} {$pilot->lastname}<br />";
+	}
+	*/
+	?>
+	
 </div>

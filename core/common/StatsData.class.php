@@ -176,12 +176,28 @@ class StatsData extends CodonData
 	 * Get the top routes
 	 */
 	 
-	public function TopRoutes()
+	public static function TopRoutes()
 	{
 		$sql = 'SELECT * 
 				FROM '.TABLE_PREFIX.'schedules
 				ORDER BY timesflown DESC
 				LIMIT 10';
+		
+		return DB::get_results($sql);
+	}
+	
+	
+	public static function UsersOnline()
+	{
+		$minutes = Config::Get('USERS_ONLINE_TIME');
+		
+		if($minutes == '')
+			$minutes = 20;
+			
+		$sql = "SELECT p.*
+				FROM ".TABLE_PREFIX."pilots p, ".TABLE_PREFIX."sessions s
+				WHERE s.pilotid = p.pilotid
+				AND DATE_SUB(NOW(), INTERVAL {$minutes} MINUTE) <= s.`logintime`";
 		
 		return DB::get_results($sql);
 	}

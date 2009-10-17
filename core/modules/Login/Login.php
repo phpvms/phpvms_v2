@@ -133,12 +133,19 @@ class Login extends CodonModule
 			else
 			{
 				PilotData::UpdateLogin(SessionManager::GetValue('userinfo', 'pilotid'));
-
-				# If they choose to be "remembered", then assign a cookie
+				
 				if($this->post->remember == 'on')
 				{
-				   Auth::set_session(SessionManager::GetValue('userinfo', 'pilotid'));
+					$rem = true;
 				}
+				else
+				{
+					$rem = false;
+				}
+
+				Auth::set_session(SessionManager::GetValue('userinfo', 'pilotid'), $rem);
+				# If they choose to be "remembered", then assign a cookie
+				
 				
 				Template::Set('redir', SITE_URL . '/' . $this->post->redir);
 				Template::Show('login_complete.tpl');

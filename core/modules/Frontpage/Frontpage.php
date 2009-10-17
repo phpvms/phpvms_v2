@@ -22,12 +22,7 @@ class Frontpage extends CodonModule
 {
 	public function index()
 	{
-		// Assume we're on the front page is no page is set
-		if($this->get->page == '')
-		{
-			
-			// This organizes the items on the front-page
-			Template::Show('frontpage_main.tpl');
-		}
+		Template::Set('usersonline', StatsData::UsersOnline());
+		Template::Show('frontpage_main.tpl');
 	}
 }

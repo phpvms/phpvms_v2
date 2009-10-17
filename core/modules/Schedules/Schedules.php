@@ -131,14 +131,18 @@ class Schedules extends CodonModule
 		
 		if($routeid == '')
 		{
+			Template::Set('message', 'No route!');
+			Template::Show('core_error.tpl');
 			return;
 		}
 		
 		
 		// See if this is a valid route
-		$routeid = SchedulesData::GetSchedule($routeid);
-		if(!$routeid)
+		$route = SchedulesData::GetSchedule($routeid);
+		if(!$route)
 		{
+			Template::Set('message', 'Invalid route!');
+			Template::Show('core_error.tpl');
 			return;
 		}
 		
@@ -160,9 +164,19 @@ class Schedules extends CodonModule
 			}					
 		}
 		
-		SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
-		
+		$ret = SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
 		CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
+		
+		if($ret === true)
+		{
+			Template::Set('message', 'Bid Added!');
+			Template::Show('core_success.tpl');
+		}
+		else
+		{
+			Template::Set('message', 'You must be logged in to access this feature!');
+			Template::Show('core_error.tpl');
+		}
 	}
 	
 	public function removebid()

@@ -132,20 +132,16 @@ class Login extends CodonModule
 			}
 			else
 			{
-				PilotData::UpdateLogin(SessionManager::GetValue('userinfo', 'pilotid'));
+				$pilotid = Auth::$userinfo->pilotid;
+				PilotData::UpdateLogin($pilotid);
 				
+				# If they choose to be "remembered", then assign a cookie
 				if($this->post->remember == 'on')
 				{
-					$rem = true;
+					$session_id = Auth::set_session($pilotid);
+					$cookie = "{$session_id}|{$pilotid}|{$_SERVER['REMOTE_ADDR']}";
+					$res = setrawcookie(VMS_AUTH_COOKIE, $cookie, time() + Config::Get('SESSION_LOGIN_TIME'), '/');
 				}
-				else
-				{
-					$rem = false;
-				}
-
-				Auth::set_session(SessionManager::GetValue('userinfo', 'pilotid'), $rem);
-				# If they choose to be "remembered", then assign a cookie
-				
 				
 				Template::Set('redir', SITE_URL . '/' . $this->post->redir);
 				Template::Show('login_complete.tpl');

@@ -36,7 +36,7 @@ class ACARS extends CodonModule
 	
 	public function viewmap()
 	{
-		Template::Set('acarsdata', ACARSData::GetACARSData(Config::Get('ACARS_LIVE_TIME')));
+		Template::Set('acarsdata', ACARSData::GetACARSData());
 		Template::Show('acarsmap.tpl');
 	}
 	

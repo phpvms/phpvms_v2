@@ -20,14 +20,19 @@ body
 	padding-bottom: 10px;
 }
 
+h1 {
+	color: #FF6633;
+}
+
 h3
 {
 	background: url(images/h3.jpg) no-repeat left;
-	height: 26px;
+	height: 25px;
 	font-size: 20px;
-	padding-left: 36px;
+	padding-left: 28px;
 	padding-bottom: 0px;
 	margin-top: 7px;
+	color: #FF6633;
 }
 
 

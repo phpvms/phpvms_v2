@@ -24,8 +24,8 @@ class Auth extends CodonData
 	
 	public static $pilotid;
 	public static $userinfo;
+	public static $session_id;
 	public static $usergroups;
-	
 	
 	/**
 	 * Start the "auth engine", see if anyone is logged in and grab their info
@@ -94,7 +94,7 @@ class Auth extends CodonData
 		
 	}
 
-	public static function set_session($pilot_id, $remember)
+	public static function set_session($pilot_id/*, $remember=false*/)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
 				WHERE pilotid = '{$pilot_id}'";
@@ -117,14 +117,10 @@ class Auth extends CodonData
 
 			DB::query($sql);
 			$session_id = DB::$insert_id;
+			self::$session_id = $session_id;
 		}
 
-		# Write out the cookie
-		if($remember == true)
-		{
-			$cookie = "{$session_id}|{$pilot_id}|{$_SERVER['REMOTE_ADDR']}";
-			$res = setrawcookie(VMS_AUTH_COOKIE, $cookie, time() + Config::Get('SESSION_LOGIN_TIME'), '/');
-		}
+		return $session_id;
 	}
 
 	public static function get_session($session_id, $pilot_id, $ip_address)

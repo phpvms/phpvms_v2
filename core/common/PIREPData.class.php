@@ -367,11 +367,30 @@ class PIREPData extends CodonData
 			return false;
 			
 		#echo '<pre>';
+		
+		/* Check if this PIREP was just submitted, check the last 10 minutes 
+		*/
+		
+		$sql = "SELECT `pirepid` FROM ".TABLE_PREFIX."pireps
+				WHERE `pilotid`={$pirepdata['pilotid']} 
+					AND `code`='{$pirepdata['code']}'
+					AND `flightnum`='{$pirepdata['flightnum']}' 
+					AND DATE_SUB(NOW(), INTERVAL 10 MINUTE) <= `submitdate`";
+					  
+		$res = DB::get_row($sql);
+		
+		if($res)
+		{
+			self::$lasterror = 'This PIREP was just submitted!';
+			return;
+		}
+				  
 	
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
 		{
+			self::$lasterror = 'The departure or arrival airports are blank';
 			return false;
 		}
 		
@@ -432,7 +451,6 @@ class PIREPData extends CodonData
 							'$pirepdata[fuelprice]',
 							'$pirepdata[source]',
 							0)";
-
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
 				

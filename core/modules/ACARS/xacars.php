@@ -301,7 +301,10 @@ $route->registration
 		$ac = OperationsData::GetAircraftByReg($reg);
 		
 		# Load info
+		/* If no passengers set, then set it to the cargo */
 		$load = $data[14];
+		if($load == '' || $load == 0)
+			$load = $data[15];
 		
 		# Convert the time to xx.xx 
 		$flighttime = floatval(str_replace(':', '.', $data[11])) * 1.00;

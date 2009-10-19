@@ -119,39 +119,6 @@ class Finance extends CodonModule
 		Template::Show('finance_expenseform.tpl');	
 	}
 	
-	/*public function Controller()
-	{
-		
-		switch($this->get->page)
-		{
-			case 'viewcurrent':
-			case 'viewreport':
-		
-					
-				
-				
-				break;
-				
-			case 'viewexpenses':
-			
-				
-			
-				break;
-				
-			case 'addexpense':
-				
-				
-				
-				break;
-				
-			case 'editexpense':
-			
-				
-							
-				break;
-		}		
-	}*/
-	
 	public function ProcessExpense()
 	{
 		

@@ -363,22 +363,24 @@ class Installer
 			$version = PHPVMS_VERSION;
 			
 		$ext = serialize(get_loaded_extensions());
-		$params=array('name'=>SITE_NAME,
-					  'url'=>SITE_URL,
-					  'email'=>SettingsData::GetSettingValue('ADMIN_EMAIL'),
-					  'version'=>$version,
-					  'php'=>phpversion(),
-					  'mysql'=>@mysql_get_server_info(),
-					  'ext'=>$ext);
-					  
+		
+		$params = new SimpleXMLElement('<registration/>');
+		$params->addChild('name', SITE_NAME);
+		$params->addChild('url', SITE_URL);
+		$params->addChild('email', SettingsData::GetSettingValue('ADMIN_EMAIL'));
+		$params->addChild('version', $version);
+		$params->addChild('php', phpversion());
+		$params->addChild('mysql', @mysql_get_server_info());
+		$params->addChild('ext', $ext);
+							  
 		$url = 'http://api.phpvms.net/register';
 					
 		# Do fopen(), if that fails then it'll default to 
 		#	curl
 		
 		error_reporting(0);
+		
 		$file = new CodonWebService();
-		//$file->setType('fopen'); 
-		$response = $file->get($url, $params);
+		$response = $file->post($url, $params->asXML());
 	}
 }

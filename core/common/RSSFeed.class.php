@@ -60,8 +60,12 @@ class RSSFeed
 	
 	public function BuildFeed($filepath)
 	{
-		$fp = fopen($filepath, 'w');
-		if(!$fp) return false;
+		$fp = @fopen($filepath, 'w');
+		if(!$fp) 
+		{
+			Debug::showCritical("{$filepath} is not writeable!");
+			return;
+		}
 		
 		$writestring = '<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel>';
 		

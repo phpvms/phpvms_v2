@@ -1,6 +1,10 @@
 
 <h3>Flight <?php echo $pirep->code . $pirep->flightnum; ?></h3>
 
+<table>
+<tr>
+
+<td width="50%">
 <ul>
 	<li><strong>Submitted By: </strong><a href="<?php echo SITE_URL.'/index.php/profile/view/'.$pirep->pilotid?>">
 			<?php echo $pirep->firstname.' '.$pirep->lastname?></a></li>
@@ -23,6 +27,27 @@
 		?>
 	</li>
 </ul>
+</td>
+<td valign="top">
+<table class="balancesheet" cellpadding="0" cellspacing="0" width="100%">
+
+	<tr class="balancesheet_header">
+		<td align="" colspan="2">Flight Details</td>
+	</tr>
+	<tr>
+		<td align="right">Gross Revenue: <br /> 
+			(<?php echo $pirep->load;?> load / <?php echo FinanceData::FormatMoney($pirep->price);?> per unit  <br />
+		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($pirep->load * $pirep->price);?></td>
+	</tr>
+	<tr>
+		<td align="right">Fuel Cost: <br />
+			(<?php echo $pirep->fuelused;?> fuel used @ <?php echo $pirep->fuelunitcost?> / unit)<br />
+		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($pirep->fuelused * $pirep->fuelunitcost);?></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
 
 <?php
 if($fields)

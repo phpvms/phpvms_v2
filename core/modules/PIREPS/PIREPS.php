@@ -272,8 +272,8 @@ class PIREPS extends CodonModule
 		
 		if(!PIREPData::FileReport($data))
 		{
-			Template::Set('message', 'There was an error adding your PIREP : '.DB::error());
-			Template::Show('core_error.tpl');
+			Template::Set('message', 'There was an error adding your PIREP : '.PIREPData::$lasterror);
+			//Template::Show('core_error.tpl');
 			return false;
 		}
 		

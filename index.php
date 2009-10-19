@@ -50,13 +50,11 @@ if(Config::Get('XDEBUG_BENCHMARK'))
 $BaseTemplate = new TemplateSet;
 
 # Load the main skin
-$settings_file = SKINS_PATH.DIRECTORY_SEPARATOR.CURRENT_SKIN . '.php';
+$settings_file = SKINS_PATH.DS.CURRENT_SKIN . '.php';
 if(file_exists($settings_file))
 	include $settings_file;
 
 $BaseTemplate->template_path = SKINS_PATH;
-
-$BaseTemplate->Set('title', SITE_NAME);
 
 Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
@@ -65,6 +63,8 @@ ob_start();
 MainController::RunAllActions(Config::Get('RUN_MODULE'));
 $page_data = ob_get_clean();
 ob_end_flush();
+
+$BaseTemplate->Set('title', MainController::$page_title .' - '.SITE_NAME);
 
 $BaseTemplate->ShowTemplate('header.tpl');
 echo $page_data;

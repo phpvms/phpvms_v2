@@ -59,7 +59,7 @@ class Settings extends CodonModule
 				$this->AddSetting();
 				break;
 			case 'savesettings':
-				$this->SaveSettings();
+				$this->save_settings_post();
 				
 				break;
 		}

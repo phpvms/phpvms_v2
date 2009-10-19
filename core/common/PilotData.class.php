@@ -58,9 +58,19 @@ class PilotData extends CodonData
 	 */
 	public static function GetPilotAvatar($pilotid)
 	{
-		$pilot = self::GetPilotData($pilotid);
-		$link = SITE_URL.'/lib/avatars/'.$pilot->code.$pilot->pilotid.'.'.$pilot->ext;
-		return $link;
+		if(is_numeric($pilotid)){
+			$pilot = self::GetPilotData($pilotid);
+			$pilotid = self::GetPilotCode($pilot->code, $pilot->pilotid);
+		}
+		
+		$link = AVATAR_PATH.'/'.$pilotid.'.png';
+		
+		if(!file_exists(SITE_ROOT.'/'.$link))
+		{
+			return SITE_URL.'/lib/images/noavatar.png';
+		}
+		
+		return SITE_URL.'/'.$link;
 	}
 	
 	/**
@@ -381,6 +391,7 @@ class PilotData extends CodonData
 			
 		return true;
 	}
+	
 	
 		
 	/**

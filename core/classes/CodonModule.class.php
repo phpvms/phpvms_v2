@@ -46,6 +46,8 @@ class CodonModule
 	public static $get;
 	public static $activeModule;
 	
+	public $title;
+	
 	public function __construct()
 	{
 		

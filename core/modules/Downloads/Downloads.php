@@ -32,6 +32,11 @@ class Downloads extends CodonModule
 		Template::Show('downloads_list.tpl');
 	}
 	
+	public function __call($name, $args)
+	{
+		$this->download($name);
+	}
+	
 	public function dl($id='')
 	{
 		$this->download($id);

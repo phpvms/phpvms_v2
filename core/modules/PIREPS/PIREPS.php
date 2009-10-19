@@ -20,6 +20,14 @@ class PIREPS extends CodonModule
 {
 	public $pirep;
 	
+	public function __call($name, $args)
+	{
+		if($name == 'new')
+		{
+			$this->filepirep();
+		}
+	}
+	
 	public function index()
 	{
 		$this->viewpireps();

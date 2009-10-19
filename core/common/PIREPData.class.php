@@ -393,7 +393,6 @@ class PIREPData extends CodonData
 			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice($pirepdata['fuelused'], $pirepdata['depicao']);
 		}
 		
-		
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		#var_dump($pirepdata);
@@ -456,19 +455,21 @@ class PIREPData extends CodonData
 		
 		# Update the financial information for the PIREP:
 		self::PopulatePIREPFinance($pirepid);
-		
-		# Set the pilot's last PIREP date
-		//PilotData::UpdateLastPIREPDate($pirepdata['pilotid']);
-		//PilotData::UpdateFlightData($pirepdata['pilotid'], $pirepdata['flighttime'], 1);
-		
+				
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
 		self::UpdatePIREPFeed();
 		
+		$pilotinfo = PilotData::GetPilotData($pirepdata['pilotid']);
+		$pilotcode = PilotData::GetPilotCode($pilotinfo->code, $pilotinfo->pilotid);
 		
 		# Send an email to the admin that a PIREP was submitted
-		$sub = 'PIREP Submitted';
-		$message = 'A PIREP has been submitted';
+		$sub = 'A PIREP has been submitted';
+		$message="A PIREP has been submitted by {$pilotcode} ({$pilotinfo->firstname} {$pilotinfo->lastname})\n\n"
+				."{$pirepdata['code']}{$pirepdata['flightnum']}: {$pirepdata['depicao']} to {$pirepdata['arricao']}\n"
+				."Aircraft: {$pirepdata['aircraft']}, Flight Time: {$pirepdata['flighttime']}\n"
+				."File using: {$pirepdata['source']}\n";
+				 
 		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
 		//SchedulesData::IncrementFlownCount($pirepdata['code'], $pirepdata['flightnum']);
 		

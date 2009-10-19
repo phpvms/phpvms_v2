@@ -19,7 +19,7 @@
 function writedebug($msg)
 {	
 	$old_value = Config::Get('DEBUG_MODE');
-	Config::Set('DEBUG_MODE', Config::Set('ACARS_DEBUG'));
+	Config::Set('DEBUG_MODE', Config::Get('ACARS_DEBUG'));
 	
 	Debug::log($msg, 'acars');
 	
@@ -28,6 +28,7 @@ function writedebug($msg)
 
 class ACARS extends CodonModule
 {
+	public $title = 'ACARS';
 	
 	public function index()
 	{
@@ -36,6 +37,7 @@ class ACARS extends CodonModule
 	
 	public function viewmap()
 	{
+		$this->title = 'ACARS Map';
 		Template::Set('acarsdata', ACARSData::GetACARSData());
 		Template::Show('acarsmap.tpl');
 	}
@@ -47,6 +49,8 @@ class ACARS extends CodonModule
 	public function __call($name, $args)
 	{
 		$acars_action = $args[0];
+		
+		writedebug("here");
 		
 		if(file_exists(CORE_PATH.'/modules/ACARS/'.$name.'.php'))
 		{
@@ -80,12 +84,7 @@ class ACARS extends CodonModule
 				$c['phasedetail'] = 'Enroute';
 			}
 			
-			/*if($flight->phasedetail != 'Boarding' && $flight->phasedetail != 'Taxiing'
-				&& $flight->phasedetail != 'FSACARS Closed' && $flight->phasedetail != 'Taxiiing to gate'
-				&& $flight->phasedetail != 'Landed' && $flight->phasedetail != 'Arrived')
-			{*/
 			
-			//$flight->heading = ''; // Ignore for now
 			/* If no heading was passed via ACARS app then calculate it
 				This should probably move to inside the ACARSData function, so then
 				 the heading is always there for no matter what the calcuation is
@@ -110,15 +109,8 @@ class ACARS extends CodonModule
 			}
 			
 			$c['icon'] = SITE_URL.'/lib/images/inair/'.$flight->heading.'.png';
-			/*}
-			else
-			{
-				$c['icon'] = SITE_URL.'/lib/images/onground.png';
-			}*/
-			
-			
+		
 			// Little one-off fixes to normalize data
-			
 			$c['distremaining'] = $c['distremain'];
 			$c['pilotname'] = $c['firstname'] . ' ' . $c['lastname'];
 			

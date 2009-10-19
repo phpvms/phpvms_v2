@@ -158,10 +158,13 @@ class Util
 		$mail->FromName = ($fromname == '') ? SITE_NAME : $fromname; 
 		$mail->Mailer = 'mail';
 		
+		$message = nl2br($message);
+		$alt = strip_tags($message);
+		
 		$mail->AddAddress($email); 
 		$mail->Subject = $subject;
 		$mail->Body = $message;
-		$mail->AltBody = strip_tags($message);
+		$mail->AltBody = $alt;
 		
 		$mail->Send();
 		

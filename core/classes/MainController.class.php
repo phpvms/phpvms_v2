@@ -45,6 +45,8 @@ class MainController
 	private static $listSize;
 	private static $keys = array();	
 	
+	public static $page_title;
+	
 	public static function loadEngineTasks()
 	{		
 		CodonRewrite::ProcessRewrite();
@@ -63,7 +65,7 @@ class MainController
 		{
 			if(!is_array(Config::Get('MODULE_LIST')))
 			{
-				die('No modules defined');
+				Debug::showCritical('No modules found to run!');
 			}
 			
 			// If they specified the list, build it:
@@ -129,7 +131,7 @@ class MainController
 		    {
 		    	if(is_dir($path.'/'.$file))
 		    	{
-					$fullpath = $path . DIRECTORY_SEPARATOR . $file . DIRECTORY_SEPARATOR . $file . '.php';
+					$fullpath = $path . DS . $file . DS . $file . '.php';
 					
 					if(file_exists($fullpath))
 					{
@@ -184,7 +186,7 @@ class MainController
 					if(Config::Get('RUN_MODULE') == $ModuleName)
 					{
 						# Skip it for now, run it last since it's the active
-						#	one, and may overwrite
+						#	one, and may overwrite some other parameters
 						continue;
 					}
 					else
@@ -224,7 +226,7 @@ class MainController
 	 *
 	 * @param string $module_priority Module that is called first
 	 * 
-	 * Change - Oct 14 2009
+	 * Change - Oct 2009
 	 *	Makes this more "cake-esque" - check if the "Controller" function
 	 *	exists (for backwards compat), if it doesn't then run the function
 	 *	defined by the "action" bit in the URL
@@ -237,6 +239,13 @@ class MainController
 			$ModuleName = strtoupper(Config::Get('RUN_MODULE'));
 			global $$ModuleName;
 			
+			// Make sure this module is valid
+			if(!is_object($$ModuleName))
+			{	
+				Debug::showCritical("The module \"{$ModuleName}\" doesn't exist!");
+				return;
+			}
+			
 			if(!method_exists($$ModuleName, $call_function))
 			{
 				// Check if we have a function for the page we are calling
@@ -248,18 +257,30 @@ class MainController
 				}
 				else
 				{
-					/*if(method_exists($$ModuleName, $name))
-					{*/
 					$call_function = $name;
-					/*}
-					else
-					{
-						return false;
-					}*/
 				}
 			}
+						
+			/*if(!method_exists($$ModuleName, $call_function))
+			{
+				Debug::showCritical("Function \"{$call_function}()\" in module {$ModuleName} doesn't exist!");
+				return;
+			}*/
 			
-			return call_user_method_array($call_function, $$ModuleName, CodonRewrite::$params);
+			/* Don't call self::Run() - parameters could change. They have to stay the same
+				due to the fact that outside modules, etc will still use Run(), so it has
+				to stay the same */
+			
+			$ret = call_user_method_array($call_function, $$ModuleName, CodonRewrite::$params);
+			
+			/* Set the title, based on what the module has, if it's blank,
+				then just set it to the module name */
+			self::$page_title = $$ModuleName->title;
+			if(self::$page_title == '')
+			{
+				self::$page_title = ucwords(strtolower($ModuleName));
+			}
+		
 			//self::Run($ModuleName, $call_function, CodonRewrite::$peices);
 		}
 		/*else
@@ -317,7 +338,6 @@ class MainController
 				array_push($vals, $param);
 			}
 			
-			//@todo: replacement, as call_user_method_array() is being depr.
 			return call_user_method_array($MethodName,  $$ModuleName, $vals);
 		}
 		else

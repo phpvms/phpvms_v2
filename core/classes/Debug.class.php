@@ -87,6 +87,15 @@ class Debug
 		fwrite(self::$fp, $string."\n");
 	}
 	
+	public static function showCritical($message)
+	{
+		?><div id="codon_crit_error" style="border:	#999 1px solid;background-color:#fff;padding:20px 20px 12px 20px;">
+			<h1 style="font-weight:normal;font-size:14px;color:#990000;margin:0 0 4px 0;">An Error Was Encountered</h1>
+			<p><?php echo $message;?></p>
+			</div>
+		<?php		
+	}
+	
 	/**
 	 * Show the CSS and JS code for the debug box
 	 * Is set to only show once on the page

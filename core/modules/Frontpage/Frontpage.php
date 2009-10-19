@@ -20,6 +20,8 @@ include dirname(__FILE__) . '/News.php';
 
 class Frontpage extends CodonModule
 {
+	public $title = 'Welcome';
+	
 	public function index()
 	{
 		Template::Set('usersonline', StatsData::UsersOnline());

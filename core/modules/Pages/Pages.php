@@ -49,7 +49,7 @@ class Pages extends CodonModule
 		{
 			// Do it this way, so then that this page/template
 			//	can be customized on a skin-by-skin basis
-			
+			$this->title = $content->pagename;
 			Template::Set('pagename', $content->pagename);
 			Template::Set('content', $content->content);
 			

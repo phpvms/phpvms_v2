@@ -234,6 +234,7 @@ CREATE TABLE `phpvms_pireps` (
   `arricao` varchar(4) NOT NULL default '',
   `aircraft` varchar(12) NOT NULL default '',
   `flighttime` varchar(10) NOT NULL default '',
+  `flighttime_stamp` TIME NOT NULL,
   `distance` smallint(6) NOT NULL default '0',
   `submitdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `accepted` smallint(6) NOT NULL default '0',

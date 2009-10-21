@@ -201,6 +201,23 @@ echo 'Starting the update...<br />';
 					
 		DB::query($update);
 	}
+	
+	
+	/* Update times */
+	$sql = "SELECT pirepid, flighttime FROM ".TABLE_PREFIX."pireps";
+	$results = DB::get_results($sql);
+
+	foreach($results as $row)
+	{
+		$flighttime = str_replace('.', ':', $row->flighttime);
+		$flighttime .= ':00';
+		$sql = "UPDATE ".TABLE_PREFIX."pireps 
+				SET `flighttime_stamp`='{$flighttime}'
+				WHERE `pirepid`={$row->pirepid}";
+
+		DB::query($sql);
+	}
+
 		
 	
 # Final version update

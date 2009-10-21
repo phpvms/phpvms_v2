@@ -23,6 +23,12 @@
 	distances are required for some reports.<br /></dd>
 	
 	<dt><strong>
+		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpilotpay">Reset Pilot Payments</a>:
+		</strong>
+	</dt>
+	<dd>Scans the PIREPs and flighttimes, adjust pilot pay to the rate indicated for that pilot in that PIREP.<br /></dd>
+	
+	<dt><strong>
 		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpirepfinance">Reset PIREP Finances</a>:
 		</strong>
 	</dt>

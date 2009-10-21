@@ -537,27 +537,47 @@ class PilotData extends CodonData
 		return true;
 	}
 	
-	
-	/**
-	 * Get the total pay for a flight at a certain rate, 
-	 *	for a certain number of hours
-	 *
-	 * @param float $hours Number of hours in Hours.Minutes format
-	 * @param float $rate Hourly rate
-	 * @return float Returns the total
-	 *
-	 */
-	public static function get_pilot_pay($hours, $rate)
+	public static function resetPilotPay($pilotid)
 	{
-		/* Hours are in hours.minutes
-			convert to minutes */
-		$peices = explode('.', $hours);
-		$minutes = ($peices[0] * 60) + $peices[1];
-		$payupdate = $minutes * ($rate/60);
+		/*$sql = 'SELECT payrate 
+				FROM '.TABLE_PREFIX.'ranks r, '.TABLE_PREFIX.'pilots p 
+				WHERE p.rank=r.rank 
+					AND p.pilotid='.$pilotid;
+					
+		$payrate = DB::get_row($sql);
+		$rate = $payrate->payrate;
+		unset($payrate);*/
+
+		$total = 0;
+		DB::query("UPDATE `".TABLE_PREFIX."pilots` SET `totalpay`=0 WHERE `pilotid`={$pilotid}");
+
 		
-		return $payupdate;
+		$sql = "SELECT `pirepid`, `flighttime`, `pilotpay`
+				FROM ".TABLE_PREFIX."pireps
+				WHERE `pilotid`={$pilotid}";
+		
+		$results = DB::get_results($sql);
+		
+		if(!$results)
+		{
+			return $total;
+		}
+			
+		foreach($results as $row)
+		{
+			$payupdate = self::get_pilot_pay($row->flighttime, $row->pilotpay);
+			$total += $payupdate;
+			
+			$sql = 'UPDATE `'.TABLE_PREFIX.'pilots` 
+					SET `totalpay`=`totalpay`+'.$payupdate.'
+					WHERE `pilotid`='.$pilotid;
+			
+			DB::query($sql);
+		}
+		
+		return $total;
 	}
-		
+			
 	/**
 	 * Update a pilot's pay. Pass the pilot ID, and the number of
 	 * hours they are being paid for
@@ -587,8 +607,27 @@ class PilotData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 		
-		return true;
+		return true;	
+	}
+	
+	/**
+	 * Get the total pay for a flight at a certain rate, 
+	 *	for a certain number of hours
+	 *
+	 * @param float $hours Number of hours in Hours.Minutes format
+	 * @param float $rate Hourly rate
+	 * @return float Returns the total
+	 *
+	 */
+	public static function get_pilot_pay($hours, $rate)
+	{
+		/* Hours are in hours.minutes
+			convert to minutes */
+		$peices = explode('.', $hours);
+		$minutes = ($peices[0] * 60) + $peices[1];
+		$payupdate = $minutes * ($rate/60);
 		
+		return $payupdate;
 	}
 	
 	

@@ -103,6 +103,22 @@ class Maintenance extends CodonModule
 		echo '<p>Completed!</p><br />';
 	}
 	
+	public function resetpilotpay()
+	{
+		echo '<h3>Resetting Pilot Pay</h3>';
+		$allpilots = PilotData::GetAllPilots();
+		
+		foreach($allpilots as $p)
+		{
+			$total = PilotData::resetPilotPay($p->pilotid);
+			
+			echo "{$p->firstname} {$p->lastname} - total $ {$total}<br />";
+		}
+		
+		echo 'Done';
+	}
+	
+	
 	public function resetsignatures()
 	{
 		$allpilots = PilotData::GetAllPilots();

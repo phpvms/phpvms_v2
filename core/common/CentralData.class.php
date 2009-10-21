@@ -100,10 +100,6 @@ class CentralData extends CodonData
 	{
 		if(!self::central_enabled())
 			return false;
-		
-		//$lastupdate = CronData::check_lastupdate('update_vainfo');
-		//if($lastupdate->days == 0)
-		//	return false;
 
 		self::set_xml('update_schedules');
 		
@@ -131,7 +127,6 @@ class CentralData extends CodonData
 			$schedule_xml->addChild('arrtime', $sched->arrtime);
 		}		
 		
-				
 		# Package and send
 		CronData::set_lastupdate('update_schedules');
 		return self::send_xml();
@@ -238,7 +233,7 @@ class CentralData extends CodonData
 		$pirep_xml->addChild('arricao', $pirep->arricao);
 		$pirep_xml->addChild('aircraft', $pirep->aircraft);
 		$pirep_xml->addChild('registration', $pirep->registration);
-		$pirep_xml->addChild('flighttime', $pirep->flighttime);
+		$pirep_xml->addChild('flighttime', $pirep->flighttime_stamp);
 		$pirep_xml->addChild('submitdate', $pirep->submitdate);
 		$pirep_xml->addChild('flighttype', $pirep->flighttype);
 		$pirep_xml->addChild('load', $pirep->load);

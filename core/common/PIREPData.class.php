@@ -425,6 +425,7 @@ class PIREPData extends CodonData
 			$pirepdata['load'] = FinanceData::GetLoadCount($pirepdata['aircraft'], $sched->flighttype);
 		}
 	
+		$flighttime_stamp = $pirepdata['flighttime'].':00';
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		#var_dump($pirepdata);
@@ -439,6 +440,7 @@ class PIREPData extends CodonData
 							`arricao`, 
 							`aircraft`, 
 							`flighttime`, 
+							`flighttime_stamp`,
 							`submitdate`, 
 							`accepted`, 
 							`log`,
@@ -453,6 +455,7 @@ class PIREPData extends CodonData
 							'$pirepdata[arricao]', 
 							'$pirepdata[aircraft]', 
 							'$pirepdata[flighttime]', 
+							'$flighttime_stamp',
 							NOW(), 
 							".PIREP_PENDING.", 
 							'$pirepdata[log]',
@@ -533,11 +536,14 @@ class PIREPData extends CodonData
 		}
 		
 		$pirepdata['fuelprice'] = $pirepdata['fuelused'] * $pirepdata['fuelunitcost'];
+		
+		$flighttime_stamp = $pirepdata['flighttime'].':00';
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		$data = array(
 			'price' => $pirepdata['price'],
 			'load' => $pirepdata['load'],
+			'expenses' => $pirepdata['expenses'],
 			'fuelprice' => $pirepdata['fuelprice'],
 			'pilotpay' => $pilot->payrate,
 			'flighttime' => $pirepdata['flighttime'],
@@ -552,11 +558,13 @@ class PIREPData extends CodonData
 					`arricao`='{$pirepdata['arricao']}', 
 					`aircraft`='{$pirepdata['aircraft']}', 
 					`flighttime`='{$pirepdata['flighttime']}',
+					`flighttime_stamp`='{$flighttime_stamp}',
 					`load`='{$pirepdata['load']}',
 					`price`='{$pirepdata['price']}',
 					`fuelused`='{$pirepdata['fuelused']}',
 					`fuelunitcost`='{$pirepdata['fuelunitcost']}',
 					`fuelprice`='{$pirepdata['fuelprice']}',
+					`expenses`='{$pirepdata['expenses']}',
 					`revenue`='{$revenue}'
 				WHERE `pirepid`={$pirepid}";
 
@@ -657,15 +665,17 @@ class PIREPData extends CodonData
 				$total_ex += $ex->cost;				
 			}
 			
+			/* Don't need to anymore
 			# Serialize and package it, so we can store it
 			#	with the PIREP
-			$expense_list = serialize($allexpenses);
+			$expense_list = serialize($allexpenses);*/
 		}
 		
 		$data = array(
 			'price' => $sched->price,
 			'load' => $load,
 			'fuelprice' => $pirep->fuelused,
+			'expenses' => $total_ex,
 			'pilotpay' => $pilot->payrate,
 			'flighttime' => $pirep->flighttime,
 		);
@@ -679,7 +689,6 @@ class PIREPData extends CodonData
 						`fuelprice`='{$pirep->fuelprice}',
 						`fuelunitcost`='{$pirep->fuelunitcost}',
 						`expenses`={$total_ex},
-						`expenselist`='{$expense_list}',
 						`pilotpay`='{$pilot->payrate}',
 						`revenue`='{$revenue}'";
 		
@@ -699,7 +708,10 @@ class PIREPData extends CodonData
 		$gross = $data['price'] * $data['load'];
 		$pilotpay = $data['pilotpay'] * $data['flighttime'];
 		
-		$revenue = $gross - $data['fuelprice'] - $pilotpay;
+		if($data['expenses'] == '')
+			$data['expenses'] = 0;
+		
+		$revenue = $gross - $data['expenses'] - $data['fuelprice'] - $pilotpay;
 		
 		return $revenue;
 		

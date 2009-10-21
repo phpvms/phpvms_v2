@@ -152,12 +152,16 @@ if($message!='')
 	<dd><?php echo FinanceData::FormatMoney($pirep->fuelprice); ?> 
 		<p>Change the fuel cost above to edit this total price</p></dd>
 		
+	<dt>Expenses</dt>
+	<dd><input type="text" name="expenses" value="<?php echo $pirep->expenses?>" />
+		<p>Additional expenses for this flight (catering, cleaning, etc)</p></dd>
+		
 	<dt>Pilot Pay</dt>
 	<dd><?php echo Config::Get('MONEY_UNIT').($pirep->pilotpay * $pirep->flighttime);?>
 		<p>This is what the pilot was paid for this flight</p></dd>
 		
 	<dt>Total Revenue for flight:</dt>
-	<dd><?php echo FinanceData::FormatMoney((floatval($pirep->load) * floatval($pirep->price)) - floatval($pirep->fuelprice) - ($pirep->pilotpay * $pirep->flighttime)); ?> 
+	<dd><?php echo FinanceData::FormatMoney($pirep->revenue); ?> 
 		<p></p></dd>
 		
 	<dt>Flight Time</dt>

@@ -233,6 +233,7 @@ class PIREPAdmin extends CodonModule
 		PilotData::GenerateSignature($pirep_details->pilotid);
 		StatsData::UpdateTotalHours();
 		PilotData::UpdateLastPIREPDate($pirep_details->pilotid);
+		PilotData::resetPilotPay($pirep_details->pilotid);
 	}
 	
 	/** 
@@ -269,6 +270,7 @@ class PIREPAdmin extends CodonModule
 		}
 
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
+		PilotData::resetPilotPay($pirep_details->pilotid);
 		StatsData::UpdateTotalHours();
 		
 		// Send comment for rejection
@@ -322,7 +324,9 @@ class PIREPAdmin extends CodonModule
 					  'price'=>$this->post->price,
 					  'fuelused'=>$this->post->fuelused,
 					  'fuelunitcost'=>$this->post->fuelunitcost,
-					  'fuelprice'=>$this->post->fuelcost);
+					  'fuelprice'=>$this->post->fuelcost,
+					  'expenses'=>$this->post->expenses
+				);
 					 		
 		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{

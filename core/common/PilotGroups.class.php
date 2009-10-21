@@ -131,8 +131,10 @@ class PilotGroups extends CodonData
 			}
 			
 			# Check individually
-			if(self::check_permission($group->permissions, $perm))
+			if(self::check_permission($group->permissions, $perm) == true)
+			{
 				return true;
+			}
 		}
 		
 		return false;
@@ -149,7 +151,7 @@ class PilotGroups extends CodonData
 	 */
 	public static function check_permission($set, $perm)
 	{
-		if(($set & $perm) === $perm)
+		if(($perm & $set) === $perm)
 		{
 			return true;
 		}

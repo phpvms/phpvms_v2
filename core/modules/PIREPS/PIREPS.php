@@ -201,7 +201,7 @@ class PIREPS extends CodonModule
 		if($pilotid == '' || Auth::LoggedIn() == false)
 		{
 			Template::Set('message', 'You must be logged in to access this feature!!');
-			Template::Show('core_error.tpl');
+			//Template::Show('core_error.tpl');
 			return false;
 		}		
 		
@@ -210,7 +210,7 @@ class PIREPS extends CodonModule
 				|| $this->post->aircraft == '' || $this->post->flighttime == '')
 		{
 			Template::Set('message', 'You must fill out all of the required fields!');
-			Template::Show('core_error.tpl');
+			//Template::Show('core_error.tpl');
 			return false;
 		}
 		
@@ -218,7 +218,7 @@ class PIREPS extends CodonModule
 		if(!$sched_data)
 		{
 			Template::Set('message', 'The flight code and number you entered is not a valid route!');
-			Template::Show('core_error.tpl');
+			//Template::Show('core_error.tpl');
 			return false;
 		}
 		
@@ -232,7 +232,7 @@ class PIREPS extends CodonModule
 				if($biddata->pilotid != $pilotid)
 				{
 					Template::Set('message', 'You are not the bidding pilot');
-					Template::Show('core_error.tpl');
+					//Template::Show('core_error.tpl');
 					return false;
 				}
 			}
@@ -248,7 +248,7 @@ class PIREPS extends CodonModule
 		if(!is_numeric($this->post->flighttime) && !is_numeric($this->post->flightnum))
 		{
 			Template::Set('message', 'The flight time has to be a number!');
-			Template::Show('core_error.tpl');
+			//Template::Show('core_error.tpl');
 			return false;
 		}
 		

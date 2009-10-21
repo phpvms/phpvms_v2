@@ -173,6 +173,16 @@ class PIREPAdmin extends CodonModule
 		
 	public function addcomment()
 	{
+		
+		if(isset($this->post->submit))
+		{
+			$this->add_comment_post();
+			
+			Template::Set('message', 'Comment added to PIREP!');
+			Template::Show('core_success.tpl');
+			return;
+		}
+		
 		Template::Set('pirepid', $this->get->pirepid);
 		Template::Show('pirep_addcomment.tpl');
 	}
@@ -197,8 +207,6 @@ class PIREPAdmin extends CodonModule
 		
 		$message = Template::GetTemplate('email_commentadded.tpl', true);
 		Util::SendEmail($pirep_details->email, 'Comment Added', $message);
-		
-		
 	}
 	
 	/**

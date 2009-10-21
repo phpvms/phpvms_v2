@@ -26,6 +26,14 @@ function formInit()
 		}
 	});
 	
+	 $("#flashForm").ajaxForm({
+		target: '#results',
+		success: function() 
+		{
+			formInit();
+		}
+	});
+	
 		
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult',
@@ -96,6 +104,15 @@ $(document).ready(function()
 					$('#jqmdialog').jqmAddTrigger('.jqModal');
 			
 					$('#bodytext').fadeIn('slow');
+					$('#jqmdialog').jqmHide();
+				}
+			});
+			
+			$("#flashForm").ajaxForm({
+				target: '#results',
+				success: function() 
+				{
+					$('#jqmdialog').jqmAddTrigger('.jqModal');
 					$('#jqmdialog').jqmHide();
 				}
 			});

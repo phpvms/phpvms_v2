@@ -1,7 +1,7 @@
 
 <h3>Flight <?php echo $pirep->code . $pirep->flightnum; ?></h3>
 
-<table>
+<table width="100%">
 <tr>
 
 <td width="50%">
@@ -28,7 +28,7 @@
 	</li>
 </ul>
 </td>
-<td valign="top">
+<td width="50%" valign="top" align="right">
 <table class="balancesheet" cellpadding="0" cellspacing="0" width="100%">
 
 	<tr class="balancesheet_header">

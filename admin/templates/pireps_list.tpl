@@ -42,27 +42,26 @@ foreach($pireps as $report)
 		$class = 'error';
 ?>
 
-<tr class="<?php echo $class?>">
-	<td align="left" valign="top" width="10%" nowrap>
-		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a><br />
-		<strong>Flight: <?php echo $report->code . $report->flightnum; ?></strong> - 
-					<?php echo date(DATE_FORMAT, $report->submitdate); ?><br />
+<tr class="<?php echo $class?> pirep_list">
+	<td align="left" valign="top" width="25%" nowrap>
+		<img style="margin-right: 5px;" height="50px" width="50px" src="<?php echo PilotData::GetPilotAvatar($report->pilotid);?>" align="left" />
+		<strong><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a></strong><br />
+		<strong>Flight: <?php echo $report->code . $report->flightnum; ?></strong> - <br />
 		Dep/Arr: <?php echo $report->depicao; ?>/<?php echo $report->arricao; ?><br />
 		Flight Time: <?php echo $report->flighttime; ?><br />
 		<strong>Current Status:	</strong>
-			<?php 
-			
-			if($report->accepted == PIREP_ACCEPTED)
-				echo 'Accepted';
-			elseif($report->accepted == PIREP_REJECTED)
-				echo 'Rejected';
-			elseif($report->accepted == PIREP_PENDING)
-				echo 'Approval Pending';
-			elseif($report->accepted == PIREP_INPROGRESS)
-				echo 'In Progress';
-			
-			?><br />
-		Comments: <?php echo PIREPData::getCommentCount($report->pirepid); ?><br />
+		<?php 
+		
+		if($report->accepted == PIREP_ACCEPTED)
+			echo 'Accepted';
+		elseif($report->accepted == PIREP_REJECTED)
+			echo 'Rejected';
+		elseif($report->accepted == PIREP_PENDING)
+			echo 'Approval Pending';
+		elseif($report->accepted == PIREP_INPROGRESS)
+			echo 'In Progress';
+		
+		?><br />
 		<?php
 		if($report->log != '')
 		{
@@ -77,12 +76,14 @@ foreach($pireps as $report)
 		<span style="float: right">
 		<a id="dialog" class="jqModal"
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/viewcomments.png" alt="View Comments" /></a>
+				<img src="<?php echo SITE_URL?>/admin/lib/images/viewcomments.png" alt="View Comments" /></a> <span style="font-size: 12px; margin-top: -3px">(<?php echo PIREPData::getCommentCount($report->pirepid); ?>)</span>
 		
 		<a id="dialog" class="jqModal"
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/addcomment?pirepid=<?php echo $report->pirepid;?>">
 				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.png" alt="Add Comment" /></a>
 		</span>
+		
+		<strong>Submit Date: </strong><?php echo date(DATE_FORMAT, $report->submitdate); ?><br />
 		
 		<strong>Aircraft: </strong>
 		<?php 
@@ -104,6 +105,10 @@ foreach($pireps as $report)
 		<strong>Fuel Used: </strong>
 		<?php
 			echo ($report->fuelused!='')?$report->fuelused . Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit')):'-';
+		?><br />
+		<strong>Client: </strong>
+		<?php
+		echo $report->source;
 		?><br />
 		
 		

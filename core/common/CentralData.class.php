@@ -81,6 +81,7 @@ class CentralData extends CodonData
 		self::$xml->addChild('pilotcount', StatsData::PilotCount());
 		self::$xml->addChild('totalhours', StatsData::TotalHours());
 		self::$xml->addChild('totalflights', StatsData::TotalFlights());
+		self::$xml->addChild('totalschedules', StatsData::TotalSchedules());
 				
 		# Expenses stuff
 		$exp_data = FinanceData::get_total_monthly_expenses();
@@ -114,9 +115,8 @@ class CentralData extends CodonData
 		foreach($schedules as $sched)
 		{
 			$schedule_xml = self::$xml->addChild('schedule');
-			
-			$schedule_xml->addChild('code', $sched->code);
-			$schedule_xml->addChild('flightnum', $sched->flightnum);
+		
+			$schedule_xml->addChild('flightnum', $sched->code.$sched->flightnum);
 			$schedule_xml->addChild('depicao', $sched->depicao);
 			$schedule_xml->addChild('arricao', $sched->arricao);
 			$schedule_xml->addChild('aircraft', $sched->aircraft);
@@ -237,6 +237,7 @@ class CentralData extends CodonData
 		$pirep_xml->addChild('depicao', $pirep->depicao);
 		$pirep_xml->addChild('arricao', $pirep->arricao);
 		$pirep_xml->addChild('aircraft', $pirep->aircraft);
+		$pirep_xml->addChild('registration', $pirep->registration);
 		$pirep_xml->addChild('flighttime', $pirep->flighttime);
 		$pirep_xml->addChild('submitdate', $pirep->submitdate);
 		$pirep_xml->addChild('flighttype', $pirep->flighttype);
@@ -296,13 +297,12 @@ class CentralData extends CodonData
 		
 		$acars_xml = self::$xml->addChild('flight');
 		$acars_xml->addChild('unique_id', $flight['id']);
-		$acars_xml->addChild('client', $flight['client']);
+		$acars_xml->addChild('pilotid', PilotData::GetPilotCode($flight['code'], $flight['pilotid']));
+		$acars_xml->addChild('pilotname', $flight['firstname'].' '.$flight['lastname']);
 		$acars_xml->addChild('flightnum', $flight['flightnum']);
 		$acars_xml->addChild('aircraft', $flight['aircraft']);
 		$acars_xml->addChild('lat', $flight['lat']);
 		$acars_xml->addChild('lng', $flight['lng']);
-		$acars_xml->addChild('pilotid', PilotData::GetPilotCode($flight['code'], $flight['pilotid']));
-		$acars_xml->addChild('pilotname', $flight['firstname'].' '.$flight['lastname']);
 		$acars_xml->addChild('depicao', $flight['depicao']);
 		$acars_xml->addChild('arricao', $flight['arricao']);
 		$acars_xml->addChild('deptime', $flight['deptime']);
@@ -313,6 +313,7 @@ class CentralData extends CodonData
 		$acars_xml->addChild('gs', $flight['gs']);
 		$acars_xml->addChild('distremain', $flight['distremain']);
 		$acars_xml->addChild('timeremain', $flight['timeremaining']);
+		$acars_xml->addChild('client', $flight['client']);
 		$acars_xml->addChild('lastupdate', $flight['lastupdate']);
 	}
 }

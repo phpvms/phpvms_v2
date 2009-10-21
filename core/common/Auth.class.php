@@ -42,7 +42,7 @@ class Auth extends CodonData
 		{
 			self::$loggedin = true;
 			self::$userinfo = SessionManager::GetData('userinfo');
-			self::$usergroups = SessionManager::GetData('usergroups');
+			self::$usergroups = PilotGroups::GetUserGroups(self::$userinfo->pilotid);
 			self::$pilotid = self::$userinfo->pilotid;
 			
 			# Bugfix, in case user updates their profile info, grab the latest

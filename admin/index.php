@@ -52,7 +52,8 @@ if(!Auth::LoggedIn())
 
 if(!PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
 {
-	die('Unauthorized access');
+	Debug::showCritical('Unauthorized access');
+	die();
 }
 
 $BaseTemplate = new TemplateSet;

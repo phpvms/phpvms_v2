@@ -151,7 +151,7 @@
 		<img src="<?echo SITE_URL?>/admin/lib/layout/images/settings_icon.gif" />Site & Settings</a>
 	<ul>
 	<?php 
-			if(PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN)) 
+			if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
 			{
 		?>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings">General Settings</a></li>
@@ -162,7 +162,7 @@
 		?>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings/customfields">Profile Fields</a></li>
 		<?php }
-			if(PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN)) 
+			if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
 			{
 		?>
 		<?php

@@ -94,6 +94,20 @@ class OperationsData extends CodonData
 		return DB::get_row($sql);
 	}
 	
+	/**
+	 * Get an aircraft by name
+	 */
+	public static function GetAircraftByName($name)
+	{
+		$name = DB::escape(strtoupper($name));
+		
+		$sql = 'SELECT * 
+				FROM ' . TABLE_PREFIX .'aircraft 
+				WHERE UPPER(`name`)=\''.$name.'\'';
+		
+		return DB::get_row($sql);
+	}
+	
 	/** 
 	 * Check an aircraft registration, against an ID and a 
 	 *  registration. For instance, editing an aircraft with a 

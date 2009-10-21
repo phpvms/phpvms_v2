@@ -48,7 +48,8 @@ include '../core/codon.config.php';
 
 if(!Auth::LoggedIn() && !PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
 {
-	die('Unauthorized access!');
+	Debug::showCritical('Unauthorized access!');
+	die();
 }
 
 Template::SetTemplatePath(dirname(__FILE__).'/templates');

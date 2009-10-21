@@ -47,7 +47,8 @@ include '../core/codon.config.php';
 
 if(!Auth::LoggedIn())
 {
-	die('Please login first');
+	Debug::showCritical('Please login first');
+	die();
 }
 
 if(!PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))

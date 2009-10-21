@@ -89,9 +89,9 @@ class Debug
 	
 	public static function showCritical($message)
 	{
-		?><div id="codon_crit_error" style="border:	#999 1px solid;background-color:#fff;padding:20px 20px 12px 20px;">
-			<h1 style="font-weight:normal;font-size:14px;color:#990000;margin:0 0 4px 0;">An Error Was Encountered</h1>
-			<p><?php echo $message;?></p>
+		?><div id="codon_crit_error" style="font-family: 'Lucida Sans', verdana; border:	#999 1px solid;background-color:#fff;padding:20px 20px 12px 20px;">
+			<h1 style="font-family: verdana; font-weight:16px;font-size:14px;color:#990000;margin:0 0 4px 0;">An Error Was Encountered</h1>
+			<p style="font-size: 12px"><?php echo $message;?></p>
 			</div>
 		<?php		
 	}

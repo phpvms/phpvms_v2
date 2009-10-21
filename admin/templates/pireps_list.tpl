@@ -44,7 +44,7 @@ foreach($pireps as $report)
 
 <tr class="<?php echo $class?> pirep_list">
 	<td align="left" valign="top" width="25%" nowrap>
-		<img style="margin-right: 5px;" height="50px" width="50px" src="<?php echo PilotData::GetPilotAvatar($report->pilotid);?>" align="left" />
+		<img style="margin-right: 5px; margin-top: 5px;" height="50px" width="50px" src="<?php echo PilotData::GetPilotAvatar($report->pilotid);?>" align="left" />
 		<strong><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a></strong><br />
 		<strong>Flight: <?php echo $report->code . $report->flightnum; ?></strong> - <br />
 		Dep/Arr: <?php echo $report->depicao; ?>/<?php echo $report->arricao; ?><br />

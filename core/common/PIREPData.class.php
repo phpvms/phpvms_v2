@@ -394,8 +394,29 @@ class PIREPData extends CodonData
 			return false;
 		}
 		
+		# Check the aircraft
+		if(!is_numeric($pirepdata['aircraft']))
+		{
+			// Check by registration 
+			$ac = OperationsData::GetAircraftByReg($pirepdata['aircraft']);
+			if($ac)
+			{
+				$pirepdata['aircraft'] = $ac->id;
+			}
+			else
+			{
+				// Check by name
+				$ac = OperationsData::GetAircraftByName($pirepdata['aircraft']);
+				if($ac)
+				{
+					$pirepdata['aircraft'] = $ac->id;
+				}
+			}
+		}
+
 		# Look up the schedule
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
+		
 		
 		# Check the load, if it's blank then look it up
 		#	Based on the aircraft that was flown
@@ -403,15 +424,7 @@ class PIREPData extends CodonData
 		{
 			$pirepdata['load'] = FinanceData::GetLoadCount($pirepdata['aircraft'], $sched->flighttype);
 		}
-		
-		$pirepdata['fuelunitcost'] = FuelData::GetFuelPrice($pirepdata['depicao']);
-		
-		# Get the fuelprice
-		if($pirepdata['fuelprice'] == '')
-		{
-			$pirepdata['fuelprice'] = FinanceData::GetFuelPrice($pirepdata['fuelused'], $pirepdata['depicao']);
-		}
-		
+	
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		#var_dump($pirepdata);
@@ -431,8 +444,6 @@ class PIREPData extends CodonData
 							`log`,
 							`load`,
 							`fuelused`,
-							`fuelunitcost`,
-							`fuelprice`,
 							`source`,
 							`exported`)
 					VALUES ($pirepdata[pilotid], 
@@ -447,12 +458,13 @@ class PIREPData extends CodonData
 							'$pirepdata[log]',
 							'$pirepdata[load]',
 							'$pirepdata[fuelused]',
-							'$pirepdata[fuelunitcost]',
-							'$pirepdata[fuelprice]',
 							'$pirepdata[source]',
 							0)";
+							
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
+		
+		DB::debug();
 				
 		// Add the comment if its not blank
 		if($comment != '')
@@ -546,12 +558,12 @@ class PIREPData extends CodonData
 					`fuelunitcost`='{$pirepdata['fuelunitcost']}',
 					`fuelprice`='{$pirepdata['fuelprice']}',
 					`revenue`='{$revenue}'
-				WHERE `pirepid`=$pirepid";
+				WHERE `pirepid`={$pirepid}";
 
 		$ret = DB::query($sql);
-		
 		//DB::debug();
 		
+		#self::PopulatePIREPFinance($pirepid);
 		return true;
 	}
 	
@@ -562,9 +574,8 @@ class PIREPData extends CodonData
 	 
 	public static function PopulateEmptyPIREPS()
 	{		
-		$sql = 'SELECT  `pirepid`, `pilotid`, `code`, `flightnum`,
-						`load`, `price`, `expenses`, `flighttype`, `pilotpay`
-					FROM '.TABLE_PREFIX.'pireps';
+		$sql = 'SELECT  *
+				FROM '.TABLE_PREFIX.'pireps ';
 					
 		$results = DB::get_results($sql);
 		
@@ -612,16 +623,20 @@ class PIREPData extends CodonData
 		$pilot = PilotData::GetPilotData($pirep->pilotid);
 		
 		# Get the load factor for this flight
-		$load = '';
 		if($pirep->load == '' || $pirep->load == 0)
 		{
-			$load = FinanceData::GetLoadCount($pirep->aircraft, $sched->flighttype);
+			$pirep->load = FinanceData::GetLoadCount($pirep->aircraft, $sched->flighttype);
+		}
+		
+		if($pirep->fuelunitcost == '' || $pirep->fuelunitcost == 0)
+		{
+			$pirep->fuelunitcost = FuelData::GetFuelPrice($pirep->depicao);
 		}
 		
 		# Check the fuel
-		if($pirep->fuelused != '')
+		if($pirep->fuelprice != '')
 		{
-			$fuelused = FinanceData::GetFuelPrice($pirep->fuelused, $pirep->depicao);
+			$pirep->fuelprice = FinanceData::GetFuelPrice($pirep->fuelused, $pirep->depicao);
 		}
 		
 		# Get the expenses for a flight
@@ -647,11 +662,10 @@ class PIREPData extends CodonData
 			$expense_list = serialize($allexpenses);
 		}
 		
-		
 		$data = array(
 			'price' => $sched->price,
 			'load' => $load,
-			'fuelprice' => $fuelused,
+			'fuelprice' => $pirep->fuelused,
 			'pilotpay' => $pilot->payrate,
 			'flighttime' => $pirep->flighttime,
 		);
@@ -660,13 +674,14 @@ class PIREPData extends CodonData
 		
 		# Update it
 		$sql = 'UPDATE '.TABLE_PREFIX."pireps
-					SET `price`='$sched->price', 
-						`fuelprice`='$fuelused',
-						`expenses`=$total_ex,
-						`expenselist`='$expense_list',
-						`flighttype`='$sched->flighttype', 
-						`pilotpay`='$pilot->payrate',
-						`revenue`='$revenue'";
+					SET `price`='{$sched->price}',
+						`load`={$pirep->load},
+						`fuelprice`='{$pirep->fuelprice}',
+						`fuelunitcost`='{$pirep->fuelunitcost}',
+						`expenses`={$total_ex},
+						`expenselist`='{$expense_list}',
+						`pilotpay`='{$pilot->payrate}',
+						`revenue`='{$revenue}'";
 		
 		if($load != '')
 			$sql .= ", `load`='$load'";
@@ -674,6 +689,7 @@ class PIREPData extends CodonData
 		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
+		DB::debug();
 	}
 	
 	

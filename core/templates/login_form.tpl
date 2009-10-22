@@ -1,5 +1,5 @@
 <h1>Login</h1>
-<form name="loginform" action="<?php echo SITE_URL?>/index.php/Login" method="post">
+<form name="loginform" action="<?php echo url('/login');?>" method="post">
 <?php echo "<?xml version='1.0'?>"; ?>
 <?php
 if($message)
@@ -23,6 +23,6 @@ if($message)
 	
 		
 	<dt></dt>
-	<dd><a href="<?php echo SITE_URL ?>/index.php/Login/forgotpassword">I forgot my password</a></dd>
+	<dd><a href="<?php echo url('Login/forgotpassword'); ?>">I forgot my password</a></dd>
 </dl>
 </form>

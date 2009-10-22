@@ -36,3 +36,55 @@ function post_module_load()
 {
    return true;
 }
+
+function url($path)
+{
+	$url = SITE_URL;
+	
+	/* Automatically add the /admin/ to the URL */
+	/*if(defined('ADMIN_PANEL'))
+	{
+		$url.='/admin';
+	}*/
+	
+	if($path[0] != '/')
+		$path='/'.$path;
+			
+	if(Config::Get('URL_REWRITE') == true)
+	{
+		return $url.$path;
+	}
+		
+	return $url.'/index.php'.$path;
+}
+
+function actionurl($path)
+{
+	$url = SITE_URL;
+	
+	if($path[0] != '/')
+		$path='/'.$path;
+	
+	if(Config::Get('URL_REWRITE') == true)
+	{
+		return $url.$path;
+	}
+	
+	return $url.'/action.php'.$path;
+}
+
+function fileurl($path)
+{
+	$url = SITE_URL;
+		
+	if($path[0]!='/')
+		$path='/'.$path;
+	
+	return $url.$path;
+}
+
+
+function html_url($title, $url)
+{
+	return '<a href="'.url($url).'" >'.$title.'</a>';
+}

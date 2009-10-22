@@ -60,7 +60,7 @@ class TemplateSet
 	{
 		# Remove trailing directory separator
 		$len = strlen($path);
-		if($path[$len-1] == DIRECTORY_SEPARATOR)
+		if($path[$len-1] == DS)
 			$path=substr($path, 0, $len-1);
 			
 		$this->template_path = $path;
@@ -92,7 +92,7 @@ class TemplateSet
 		//	Check if the file exists 
 		if((!is_object($value) && !is_array($value)) && strstr($value, '.'))
 		{
-			if(file_exists($this->template_path . DIRECTORY_SEPARATOR . $value))
+			if(file_exists($this->template_path . DS . $value))
 			{
 				$value = $this->GetTemplate($value, true);
 			}
@@ -128,7 +128,7 @@ class TemplateSet
 	{		
 		if($this->enable_caching == true)
 		{
-			$cached_file = CACHE_PATH . DIRECTORY_SEPARATOR . $tpl_name;
+			$cached_file = CACHE_PATH . DS . $tpl_name;
 			
 			// The cache has expired
 			if((time() - filemtime($cached_file)) > ($this->cache_timeout*3600))
@@ -191,14 +191,14 @@ class TemplateSet
 
 		if(!defined('ADMIN_PANEL') && $checkskin == true)
 		{
-			if(file_exists(SKINS_PATH . DIRECTORY_SEPARATOR . $tpl_name))
-				$tpl_path = SKINS_PATH . DIRECTORY_SEPARATOR . $tpl_name;
+			if(file_exists(SKINS_PATH . DS . $tpl_name))
+				$tpl_path = SKINS_PATH . DS . $tpl_name;
 			else
-				$tpl_path = $this->template_path . DIRECTORY_SEPARATOR . $tpl_name;
+				$tpl_path = $this->template_path . DS . $tpl_name;
 		}
 		else
 		{
-			$tpl_path = $this->template_path . DIRECTORY_SEPARATOR . $tpl_name;
+			$tpl_path = $this->template_path . DS . $tpl_name;
 		}
 
 		if(!file_exists($tpl_path))

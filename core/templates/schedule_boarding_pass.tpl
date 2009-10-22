@@ -9,7 +9,7 @@ if(!isset($_GET['newwindow']))
 <p>To proceed through Security Checkpoint, you will need a government-issued photo ID and either a Boarding Pass or Security Document. Customers under 18 years of age are not required to show government-issued photo ID.</p>
 
 <p><a href="#" 
-	onclick="window.open('<?php echo SITE_URL?>/action.php/schedules/boardingpass/<?php echo $schedule->id?>?newwindow'); return false;">Open in new window for printing</a></p>
+	onclick="window.open('<?php echo actionurl('/schedules/boardingpass/'.$schedule->id.'?newwindow');?>'); return false;">Open in new window for printing</a></p>
 <?php
 }
 ?>

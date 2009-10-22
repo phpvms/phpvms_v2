@@ -52,7 +52,7 @@ foreach($allroutes as $route)
 ?>
 <tr>
 	<td >
-		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>"><?php echo $route->code . $route->flightnum?><?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
+		<a href="<?php echo url('/schedules/details/'.$route->id);?>"><?php echo $route->code . $route->flightnum?><?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
 		<br />
 		
 		<strong>Departure: </strong><?php echo $route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?php echo $route->arrtime;?><br />
@@ -72,8 +72,8 @@ foreach($allroutes as $route)
 		?>
 	</td>
 	<td nowrap>
-		<a href="<?php echo SITE_URL?>/index.php/schedules/details/<?php echo $route->id?>">View Details</a><br />
-		<a href="<?php echo SITE_URL?>/index.php/schedules/brief/<?php echo $route->id?>">Pilot Brief</a><br />
+		<a href="<?php echo url('/schedules/details/'.$route->id);?>">View Details</a><br />
+		<a href="<?php echo url('/schedules/brief/'.$route->id);?>">Pilot Brief</a><br />
 		
 		<?php 
 		# Don't allow overlapping bids and a bid exists
@@ -81,7 +81,7 @@ foreach($allroutes as $route)
 		{
 		?>
 			<a id="<?php echo $route->id; ?>" class="addbid" 
-				href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+				href="<?php echo actionurl('/schedules/addbid');?>">Add to Bid</a>
 		<?
 		}
 		else
@@ -90,7 +90,7 @@ foreach($allroutes as $route)
 			{
 			 ?>
 				<a id="<?php echo $route->id; ?>" class="addbid" 
-					href="<?php echo SITE_URL?>/action.php/Schedules/addbid/">Add to Bid</a>
+					href="<?php echo url('/schedules/addbid');?>">Add to Bid</a>
 			<?php			 
 			}
 		}		

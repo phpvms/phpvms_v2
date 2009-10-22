@@ -103,6 +103,9 @@ class CentralData extends CodonData
 
 		self::set_xml('update_schedules');
 		
+		if(Config::Get('VAC_RETRIEVE_AIRPORTS') == true)
+			self::$xml->addChild('retrieve_airports', 1);
+		
 		$schedules = SchedulesData::GetSchedules('', true);
 		
 		if(!is_array($schedules))
@@ -125,14 +128,43 @@ class CentralData extends CodonData
 			$schedule_xml->addChild('notes', $sched->notes);
 			$schedule_xml->addChild('deptime', $sched->deptime);
 			$schedule_xml->addChild('arrtime', $sched->arrtime);
-		}		
-		
+		}
+				
 		# Package and send
 		CronData::set_lastupdate('update_schedules');
-		return self::send_xml();
+		$res = self::send_xml();
+		
+		if(Config::Get('VAC_RETRIEVE_AIRPORTS') == true)
+		{
+			self::process_airport_list();
+		}
+		
+		return $res;
 	}
 	
-	public function send_pilots()
+	protected static function process_airport_list()
+	{
+		self::set_xml('process_airport_list');
+		
+		foreach(self::$response->airport as $apt)
+		{
+			// Get from API
+			$apt = OperationsData::GetAirportInfo($apt->icao);
+			if($apt)
+			{
+				$airport = self::$xml->addChild('airport');
+				$airport->addChild('icao', $apt->icao);
+				$airport->addChild('name', $apt->name);	
+				$airport->addChild('location', $apt->country);
+				$airport->addChild('lat', $apt->lat);
+				$airport->addChild('lng', $apt->lng);
+			}
+		}
+		
+		self::send_xml();
+	}
+	
+	public static function send_pilots()
 	{
 		if(!self::central_enabled())
 			return false;

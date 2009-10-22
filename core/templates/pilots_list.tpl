@@ -34,7 +34,7 @@ foreach($allpilots as $pilot)
 	 */
 ?>
 <tr>
-	<td width="1%" nowrap><a href="<?php echo SITE_URL?>/index.php/profile/view/<?php echo $pilot->pilotid?>">
+	<td width="1%" nowrap><a href="<?php echo url('/profile/view/'.$pilot->pilotid);?>">
 			<?php echo PilotData::GetPilotCode($pilot->code, $pilot->pilotid)?></a>
 	</td>
 	<td>

@@ -126,6 +126,9 @@ Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in sec
 
 Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
 Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
+Config::Set('VAC_RETRIEVE_AIRPORTS', true);
+
+Config::Set('URL_REWRITE', false);
 
 /* Days of the Week
 	The compacted view, and the full text
@@ -231,13 +234,17 @@ else
  *	Do not modify these! All sorts of weird shit can happen
  */ 
 # Set the type of flights we have
-Config::Set('FLIGHT_TYPES', array(	'P'=>'Passenger',
-			'C'=>'Cargo',
-			'H'=>'Charter'));
+Config::Set('FLIGHT_TYPES', array(	
+		'P'=>'Passenger',
+		'C'=>'Cargo',
+		'H'=>'Charter')
+	);
 			
 # Set the types of expenses we have
-Config::Set('EXPENSE_TYPES', array( 'M'=>'Monthly',
-			'F'=>'Per Flight'));
+Config::Set('EXPENSE_TYPES', array( 
+	'M'=>'Monthly',
+	'F'=>'Per Flight')
+);
 			
 define('SIGNATURE_PATH', '/lib/signatures');
 define('AVATAR_PATH', '/lib/avatars');

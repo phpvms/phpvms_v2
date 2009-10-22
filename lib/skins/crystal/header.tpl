@@ -43,8 +43,8 @@
 		if(Auth::LoggedIn() == false)
 		{ ?>
 		
-			<form name="loginform" action="<?php echo SITE_URL?>/index.php/login" method="post">
-				Sign-in with your pilot id or email, or <a href="<?php SITE_URL?>/index.php/registration">register</a><br />
+			<form name="loginform" action="<?php echo url('/login'); ?>" method="post">
+				Sign-in with your pilot id or email, or <a href="<?php url('/registration'); ?>">register</a><br />
 				<input type="text" name="email" value="" onClick="this.value=''" />
 				<input type="password" name="password" value="" />
 				<input type="hidden" name="remember" value="on" />
@@ -71,9 +71,9 @@
 			<strong>Rank: </strong><?php echo Auth::$userinfo->rank;?><br />
 			<strong>Total Flights: </strong><?php echo Auth::$userinfo->totalflights?>, <strong>Total Hours: </strong><?php echo Auth::$userinfo->totalhours;?><br />
 			
-			<a href="<?php SITE_URL?>/index.php/pireps/new">File a New PIREP</a> | 
-			<a href="<?php SITE_URL?>/index.php/schedules/bids">View My Bids</a> | 
-			<a href="<?php SITE_URL?>/index.php/profile/">View Pilot Center</a>
+			<a href="<?php echo url('/pireps/new');?>">File a New PIREP</a> | 
+			<a href="<?php echo url('/schedules/bids');?>">View My Bids</a> | 
+			<a href="<?php echo url('/profile/');?>">View Pilot Center</a>
 		<?php
 		} /* End the else */
 		?>

@@ -1,5 +1,5 @@
 <span style="float: right;">
-<form action="<?php echo SITE_URL?>/index.php/finances/viewreport" method="get">
+<form action="<?php echo url('/finances/viewreport');?>" method="get">
 <strong>Select Report: </strong>
 <?php
 $years = StatsData::GetYearsSinceStart();

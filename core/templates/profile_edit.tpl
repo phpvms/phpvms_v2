@@ -1,5 +1,5 @@
 <h3>Edit Profile</h3>
-<form action="<?php echo SITE_URL?>/index.php/profile" method="post" enctype="multipart/form-data">
+<form action="<?php echo url('/profile');?>" method="post" enctype="multipart/form-data">
 <dl>
 	<dt>Name</dt>
 	<dd><?php echo $userinfo->firstname . ' ' . $userinfo->lastname;?></dd>

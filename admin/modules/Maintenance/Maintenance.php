@@ -18,7 +18,7 @@
 
 class Maintenance extends CodonModule
 {
-	
+
 	public function HTMLHead()
 	{
 		Template::Set('sidebar', 'sidebar_maintenance.tpl');		

@@ -26,7 +26,7 @@ foreach($pireps as $report)
 ?>
 <tr>
 	<td align="center">
-		<a href="<?php echo SITE_URL?>/index.php/pireps/view/<?php echo $report->pirepid?>"><?php echo $report->code . $report->flightnum; ?></a>
+		<a href="<?php echo url('/pireps/view/'.$report->pirepid);?>"><?php echo $report->code . $report->flightnum; ?></a>
 	</td>
 	<td align="center"><?php echo $report->depicao; ?></td>
 	<td align="center"><?php echo $report->arricao; ?></td>

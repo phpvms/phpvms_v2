@@ -2,7 +2,7 @@
 var baseurl = "<?php echo SITE_URL;?>";
 var geourl = "<?php echo GEONAME_URL; ?>";
 </script>
-<link rel="stylesheet" media="all" type="text/css" href="<?php echo SITE_URL?>/lib/css/phpvms.css" />
+<link rel="stylesheet" media="all" type="text/css" href="<?php echo fileurl('lib/css/phpvms.css')?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Config::Get('PAGE_ENCODING');?>">
 <?php
 if(GOOGLE_KEY!='') {
@@ -24,6 +24,6 @@ $cache_url = $condenser->GetCondensedFile($files, 'jquery-front.js', true);
 
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>-->
 <script type="text/javascript" src="<?php echo $cache_url?>"></script>
-<script type="text/javascript" src="<?php echo SITE_URL?>/lib/js/phpvms.js"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/phpvms.js');?>"></script>
 
 <?php echo $MODULE_HEAD_INC;?>

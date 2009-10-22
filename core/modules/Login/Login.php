@@ -50,6 +50,7 @@ class Login extends CodonModule
 	public function logout()
 	{
 		Auth::LogOut();
+		Template::Set('redir', SITE_URL);
 		Template::Show('login_complete.tpl');
 	}
 	

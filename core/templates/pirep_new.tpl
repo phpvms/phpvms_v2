@@ -3,7 +3,7 @@
 if($message!='')
 	echo '<div id="error">'.$message.'</div>';
 ?>
-<form action="<?php echo SITE_URL?>/index.php/pireps/mine" method="post">
+<form action="<?php echo url('/pireps/mine');?>" method="post">
 <dl>
 	<dt>Pilot:</dt>
 	<dd><strong><?php echo Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname;?></strong></dd>

@@ -1,4 +1,4 @@
-<form action="?page=forgotpassword" method="post">
+<form action="<?php echo url('/login/forgotpassword');?>" method="post">
 <p><strong>Enter your email address to get a new password: </strong>
 	<input type="text" name="email" />
 </p>

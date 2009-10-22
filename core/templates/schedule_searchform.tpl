@@ -1,5 +1,5 @@
 <h3>Search Schedules</h3>
-<form id="form" action="<?php echo SITE_URL?>/action.php/Schedules/view" method="post">
+<form id="form" action="<?php echo actionurl('/schedules/view');?>" method="post">
 
 <div id="tabcontainer">
 	<ul>

@@ -30,10 +30,10 @@ foreach($bids as $bid)
 	<td><?php echo $bid->deptime;?></td>
 	<td><?php echo $bid->arrtime;?></td>
 	<td><?php echo $bid->distance;?></td>
-	<td><a href="<?php echo SITE_URL?>/index.php/PIREPS/filepirep/<?php echo $bid->bidid ?>/">File PIREP</a><br />
-		<a id="<?php echo $bid->bidid; ?>" class="deleteitem" href="<?php echo SITE_URL?>/action.php/Schedules/removebid/">Remove Bid *</a><br />
-		<a href="<?php echo SITE_URL?>/index.php/schedules/brief/<?php echo $bid->id ?>">Pilot Brief</a><br />
-		<a href="<?php echo SITE_URL?>/index.php/schedules/boardingpass/<?php echo $bid->id;?>" />Boarding Pass</a>
+	<td><a href="<?php echo url('/pireps/filepirep/'.$bid->bidid);?>">File PIREP</a><br />
+		<a id="<?php echo $bid->bidid; ?>" class="deleteitem" href="<?php echo url('/schedules/removebid');?>">Remove Bid *</a><br />
+		<a href="<?php echo url('/schedules/brief/'.$bid->id);?>">Pilot Brief</a><br />
+		<a href="<?php echo url('/schedules/boardingpass/'.$bid->id);?>" />Boarding Pass</a>
 		
 	</td>
 </tr>

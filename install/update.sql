@@ -24,6 +24,10 @@ ALTER TABLE `phpvms_pireps` ADD `revenue` FLOAT NOT NULL AFTER `expenselist` ;
 -- Date added for bids;
 ALTER TABLE `phpvms_bids` ADD `dateadded` DATE NOT NULL;
 
+-- Chart link for airport;
+
+ALTER TABLE `phpvms_airports` ADD `chartlink` TEXT NOT NULL;
+
 -- Add total hours;
 INSERT INTO `phpvms_settings` (`id` ,`friendlyname` ,`name` , `value` ,`descrip` ,`core`)
 	VALUES (NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your VA''s Total Hours', '0');

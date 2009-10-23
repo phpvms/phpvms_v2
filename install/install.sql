@@ -122,6 +122,7 @@ CREATE TABLE `phpvms_airports` (
   `lng` float NOT NULL default '0',
   `hub` smallint(6) NOT NULL default '0',
   `fuelprice` FLOAT NOT NULL default '0',
+  `chartlink` TEXT NOT NULL, 
   PRIMARY KEY  (`id`),
   UNIQUE KEY `icao` (`icao`)
 ) ENGINE=InnoDB;

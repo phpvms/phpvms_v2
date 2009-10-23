@@ -20,6 +20,9 @@
 <dt>Longitude *</dt>
 <dd><input id="airportlong" name="long" type="text" value="<?php echo $airport->lng?>" /></dd>
 
+<dt>Chart Link</dt>
+<dd><input id="chartlink" name="chartlink" type="text" value="<?php echo $airport->chartlink?>" /></dd>
+
 <dt>Fuel Price *</dt>
 <dd><input id="fuelprice" name="fuelprice" type="text" value="<?php echo $airport->fuelprice?>" />
 <p>This is the price per <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?>. Leave blank or 0 (zero) to use the default value of <?php echo Config::Get('FUEL_DEFAULT_PRICE');?>.</p>

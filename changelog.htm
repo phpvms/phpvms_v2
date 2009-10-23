@@ -33,7 +33,7 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 		&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"
 			target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
-	<p class="header"><em>Last Update: Sept 25, 2009</em><br /></p>
+	<p class="header"><em>Last Update: Oct 23, 2009</em><br /></p>
 	<hr />
 	
 	<h1>Build ##REVISION## (Version 1.2.##REVISION##)</h1>
@@ -41,6 +41,8 @@
 		<li><strong>New</strong>: <a href="http://www.vacentral.net" target="_blank">vaCentral</a> support - the virtual airline community</li>
 		<li><strong>NEW</strong>: <a href="http://www.xacars.net" target="_blank">XAcars</a> position and PIREP support</li>
 		<li><strong>NEW</strong>: Group based permissions access to admin panel</li>
+		<li>Bids screen in admin panel</li>
+		<li>Finance fixes</li>
 		<li>Overhauled backend and code cleanup (see the template changes)</li>
 		<li>ACARS map icons now point in the heading of the airplane (calculated for FSACARS)</li>
 		<li>"Remember Me" login option added, session tracking</li>
@@ -55,10 +57,12 @@
 		<li>Signatures account for transfer hours if enabled</li>
 		<li>Pilot salary bug fixed</li>
 		<li>ACARS uses JSON instead of XML, more lightweight and bandwidth-friendly</li>
+		<li>...numerous other bug fixes and improvements!</li>
 	</ul>
 
 	<p>
 	<strong>Templates Changed</strong>:</p>
+	<p>Every template has been touched, to use the new url() function. Instead of including SITE_URL/index.php/module/path, it is now just url('/module/path'). Specific changes are left below:</p>
 	<ul>
 		<li>core_htmlhead.tpl - Path to Google Maps API changed</li>
 		<li>profile_main.tpl - Added link to XAcars config file, changed avatar link to use PilotData::getPilotAvatar (if there's no avatar, uses /lib/images/noavatar.png)</li>

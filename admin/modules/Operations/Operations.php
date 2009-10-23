@@ -398,6 +398,7 @@ class Operations extends CodonModule
 			'lat' => $this->post->lat,
 			'lng' => $this->post->long,
 			'hub' => $this->post->hub,
+			'chartlink' => $this->post->chartlink,
 			'fuelprice' => $this->post->fuelprice
 			);
 			
@@ -441,6 +442,7 @@ class Operations extends CodonModule
 			'lat' => $this->post->lat,
 			'lng' => $this->post->long,
 			'hub' => $this->post->hub,
+			'chartlink' => $this->post->chartlink,
 			'fuelprice' => $this->post->fuelprice
 		);
 

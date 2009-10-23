@@ -621,8 +621,6 @@ class PIREPData extends CodonData
 		# Set the PIREP ID
 		$pirepid = $pirep->pirepid;
 		
-		var_dump($pirep);
-		
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, '');
 		if(!$sched)
 		{

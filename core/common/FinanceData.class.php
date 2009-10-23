@@ -20,8 +20,6 @@ class FinanceData extends CodonData
 {
 	public static $lasterror;
 	
-	
-	
 	/**
 	 * Get the fuel cost, given the airport and the amount of fuel
 	 *
@@ -319,6 +317,15 @@ class FinanceData extends CodonData
 	 */
 	public static function CalculatePIREPS($where='')
 	{
+		if($where == '')
+		{
+			$where = ' WHERE p.accepted='.PIREP_ACCEPTED;
+		}
+		else
+		{
+			$where .= ' AND p.accepted='.PIREP_ACCEPTED;
+		}
+		
 		$sql = 'SELECT COUNT(*) AS TotalFlights,
 					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
 					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue,

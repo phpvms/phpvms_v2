@@ -336,10 +336,10 @@ class OperationsData extends CodonData
 			$data['fuelprice'] = 0;
 
 		$sql = "INSERT INTO " . TABLE_PREFIX ."airports 
-					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`, `fuelprice`)
+					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`, `chartlink`, `fuelprice`)
 					VALUES (
 						'{$data['icao']}', '{$data['name']}', '{$data['country']}', 
-						{$data['lat']}, {$data['lng']}, {$data['hub']}, {$data['fuelprice']})";
+						{$data['lat']}, {$data['lng']}, {$data['hub']}, '{$data['chartlink']}', {$data['fuelprice']})";
 
 		$res = DB::query($sql);
 		
@@ -376,7 +376,8 @@ class OperationsData extends CodonData
 
 		$sql = "UPDATE " . TABLE_PREFIX . "airports
 					SET `icao`='{$data['icao']}', `name`='{$data['name']}', `country`='{$data['country']}', 
-						`lat`={$data['lat']}, `lng`={$data['lng']}, `hub`={$data['hub']}, `fuelprice`={$data['fuelprice']}
+						`lat`={$data['lat']}, `lng`={$data['lng']}, `hub`={$data['hub']}, 
+						`chartlink`='{$data['chartlink']}', `fuelprice`={$data['fuelprice']}
 					WHERE `icao`='{$data['icao']}'";
 
 		$res = DB::query($sql);

@@ -69,6 +69,11 @@
 		<img src="<?echo SITE_URL?>/admin/lib/layout/images/pilots_icon.png" />Pilots & Groups</a>
 	<ul>
 		<?php
+		if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)) 
+			{
+		?>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewbids">View Bids</a></li>
+		<?php }
 			if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_REGISTRATIONS)) 
 			{
 		?>

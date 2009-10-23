@@ -311,6 +311,8 @@ class PIREPAdmin extends CodonModule
 		$this->post->fuelused = str_replace(' ', '', $this->post->fuelused);
 		$this->post->fuelused = str_replace(',', '', $this->post->fuelused);
 		
+		$fuelcost = $this->post->fuelused * $this->post->fuelunitcost;
+		
 		# form the fields to submit
 		$data = array('pirepid'=>$this->post->pirepid,
 					  'code'=>$this->post->code,
@@ -324,7 +326,7 @@ class PIREPAdmin extends CodonModule
 					  'price'=>$this->post->price,
 					  'fuelused'=>$this->post->fuelused,
 					  'fuelunitcost'=>$this->post->fuelunitcost,
-					  'fuelprice'=>$this->post->fuelcost,
+					  'fuelprice'=>$fuelcost,
 					  'expenses'=>$this->post->expenses
 				);
 					 		

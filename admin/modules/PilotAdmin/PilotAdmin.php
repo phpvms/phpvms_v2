@@ -171,6 +171,28 @@ class PilotAdmin extends CodonModule
 		Template::Show('pilots_pending.tpl');
 	}
 	
+	public function viewbids()
+	{
+		if($this->post->action == 'deletebid')
+		{
+			$ret = SchedulesData::RemoveBid($this->post->id);
+			
+			if($ret == true)
+			{
+				Template::Set('message', 'Bid removed!');
+				Template::Show('core_success.tpl');
+			}
+			else
+			{
+				Template::Set('message', 'There was an error!');
+				Template::Show('core_error.tpl');
+			}
+		}
+		
+		Template::Set('allbids', SchedulesData::getAllBids());
+		Template::Show('pilots_viewallbids.tpl');
+	}
+	
 	public function pilotgroups()
 	{
 		if($this->post->action == 'addgroup')

@@ -183,39 +183,44 @@ echo 'Starting the update...<br />';
 
 	/* Manually specify a revenue value for all PIREPs */
 	$allpireps = PIREPData::GetAllReports();
-	foreach($allpireps as $pirep)
-	{	
-		$data = array(
-			'price' => $pirep->price,
-			'load' => $pirep->load,
-			'fuelprice' => $pirep->fuelprice,
-			'pilotpay' => $pirep->pilotpay,
-			'flighttime' => $pirep->flighttime,
-			);
+	if(is_array($allpireps))
+	{
+		foreach($allpireps as $pirep)
+		{	
+			$data = array(
+				'price' => $pirep->price,
+				'load' => $pirep->load,
+				'fuelprice' => $pirep->fuelprice,
+				'pilotpay' => $pirep->pilotpay,
+				'flighttime' => $pirep->flighttime,
+				);
 
-		$revenue = PIREPData::getPIREPRevenue($data);
-		
-		$update = "UPDATE ".TABLE_PREFIX."pireps 
-					SET `revenue`={$revenue} 
-					WHERE `pirepid`={$pirep->pirepid}";
-					
-		DB::query($update);
+			$revenue = PIREPData::getPIREPRevenue($data);
+			
+			$update = "UPDATE ".TABLE_PREFIX."pireps 
+						SET `revenue`={$revenue} 
+						WHERE `pirepid`={$pirep->pirepid}";
+						
+			DB::query($update);
+		}
 	}
 	
 	
 	/* Update times */
 	$sql = "SELECT pirepid, flighttime FROM ".TABLE_PREFIX."pireps";
 	$results = DB::get_results($sql);
-
-	foreach($results as $row)
+	if(is_array($results))
 	{
-		$flighttime = str_replace('.', ':', $row->flighttime);
-		$flighttime .= ':00';
-		$sql = "UPDATE ".TABLE_PREFIX."pireps 
-				SET `flighttime_stamp`='{$flighttime}'
-				WHERE `pirepid`={$row->pirepid}";
+		foreach($results as $row)
+		{
+			$flighttime = str_replace('.', ':', $row->flighttime);
+			$flighttime .= ':00';
+			$sql = "UPDATE ".TABLE_PREFIX."pireps 
+					SET `flighttime_stamp`='{$flighttime}'
+					WHERE `pirepid`={$row->pirepid}";
 
-		DB::query($sql);
+			DB::query($sql);
+		}
 	}
 
 		

@@ -637,6 +637,20 @@ class SchedulesData extends CodonData
 		return true;
 	}
 	
+	public static function getAllBids()
+	{
+		$sql = 'SELECT  p.*, s.*, 
+						b.bidid as bidid, a.name as aircraft, a.registration
+				FROM '.TABLE_PREFIX.'schedules s, 
+					 '.TABLE_PREFIX.'bids b,
+					 '.TABLE_PREFIX.'aircraft a,
+					 '.TABLE_PREFIX.'pilots p
+				WHERE b.routeid = s.id AND s.aircraft=a.id AND p.pilotid = b.pilotid
+				ORDER BY b.bidid DESC';
+		
+		return DB::get_results($sql);
+	}
+	
 	/**
 	 * Get the latest bids
 	 */
@@ -671,6 +685,7 @@ class SchedulesData extends CodonData
 		return DB::get_row($sql);
 		
 	}
+	
 	/**
 	 * Get a specific bid with route information
 	 *
@@ -740,9 +755,7 @@ class SchedulesData extends CodonData
 					WHERE `id`='.$scheduleid;
 					
 		DB::query($sql);
-		
 	}
-	
 	
 	/**
 	 * Add a bid
@@ -761,13 +774,12 @@ class SchedulesData extends CodonData
 		$pilotid = DB::escape($pilotid);
 		$routeid = DB::escape($routeid);
 		
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'bids (pilotid, routeid)
-					VALUES ('.$pilotid.', '.$routeid.')';
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'bids (pilotid, routeid, dateadded)
+					VALUES ('.$pilotid.', '.$routeid.', CURDATE())';
 		
 		DB::query($sql);
 		
 		self::SetBidOnSchedule($routeid, DB::$insert_id);
-		//DB::debug();
 		
 		if(DB::errno() != 0)
 			return false;

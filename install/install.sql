@@ -322,6 +322,7 @@ CREATE TABLE `phpvms_bids` (
 	`bidid` INT NOT NULL AUTO_INCREMENT ,
 	`pilotid` int(11) NOT NULL default '0',
 	`routeid` int(11) NOT NULL default '0',
+	`dateadded` DATE NOT NULL,
 	PRIMARY KEY ( `bidid` )
 ) ENGINE = INNODB; 
 

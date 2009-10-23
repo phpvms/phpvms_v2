@@ -284,4 +284,3 @@ class Auth extends CodonData
 		self::$loggedin = false;
 	}
 }
-?>

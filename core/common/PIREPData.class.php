@@ -47,7 +47,7 @@ class PIREPData extends CodonData
 		}
 
 		return DB::get_results($sql);
-		DB::debug();
+		
 		return $ret;
 	}
 		
@@ -466,9 +466,7 @@ class PIREPData extends CodonData
 							
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
-		
-		DB::debug();
-				
+						
 		// Add the comment if its not blank
 		if($comment != '')
 		{
@@ -535,6 +533,8 @@ class PIREPData extends CodonData
 			return false;
 		}
 		
+		$pirepinfo = self::GetReportDetails($pirepid);
+		
 		$pirepdata['fuelprice'] = $pirepdata['fuelused'] * $pirepdata['fuelunitcost'];
 		
 		$flighttime_stamp = $pirepdata['flighttime'].':00';
@@ -545,7 +545,7 @@ class PIREPData extends CodonData
 			'load' => $pirepdata['load'],
 			'expenses' => $pirepdata['expenses'],
 			'fuelprice' => $pirepdata['fuelprice'],
-			'pilotpay' => $pilot->payrate,
+			'pilotpay' => $pirepinfo->pilotpay,
 			'flighttime' => $pirepdata['flighttime'],
 			);
 		
@@ -608,7 +608,7 @@ class PIREPData extends CodonData
 	public static function PopulatePIREPFinance($pirep)
 	{
 				
-		if(!is_object($pirep))
+		if(!is_object($pirep) && is_numeric($pirep))
 		{
 			$pirep = PIREPData::GetReportDetails($pirep);
 			if(!$pirep)
@@ -620,6 +620,8 @@ class PIREPData extends CodonData
 		
 		# Set the PIREP ID
 		$pirepid = $pirep->pirepid;
+		
+		var_dump($pirep);
 		
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, '');
 		if(!$sched)
@@ -673,8 +675,8 @@ class PIREPData extends CodonData
 		
 		$data = array(
 			'price' => $sched->price,
-			'load' => $load,
-			'fuelprice' => $pirep->fuelused,
+			'load' => $pirep->load,
+			'fuelprice' => $pirep->fuelprice,
 			'expenses' => $total_ex,
 			'pilotpay' => $pilot->payrate,
 			'flighttime' => $pirep->flighttime,
@@ -698,13 +700,11 @@ class PIREPData extends CodonData
 		$sql .= " WHERE `pirepid`=$pirepid";
 					
 		DB::query($sql);
-		DB::debug();
 	}
 	
 	
 	public static function getPIREPRevenue($data)
-	{			
-	
+	{
 		$gross = $data['price'] * $data['load'];
 		$pilotpay = $data['pilotpay'] * $data['flighttime'];
 		

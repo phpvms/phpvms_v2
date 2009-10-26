@@ -87,6 +87,7 @@ class Auth extends CodonData
 			}
 			else
 			{
+				self::set_session(0);
 				self::$loggedin = false;
 				return false;
 			}

@@ -71,7 +71,7 @@ switch($acars_action)
 		writedebug('FLIGHT PLAN REQUEST');
 		
 		# They requested latest bid
-		if(strtolower($_REQUEST['DATA2']) == 'bid')
+		if(strtolower($flight) == 'bid')
 		{
 			preg_match('/^([A-Za-z]*)(\d*)/', $_REQUEST['DATA4'], $matches);
 			$code = $matches[1];
@@ -87,6 +87,13 @@ switch($acars_action)
 		}
 		else
 		{
+			
+			if(is_numeric($flight))
+			{
+				echo '0|No airline code entered!';
+				return;
+			}
+			
 			# split the flight request:
 			preg_match('/^([A-Za-z]*)(\d*)/', $flight, $matches);
 			$code = $matches[1];
@@ -98,7 +105,7 @@ switch($acars_action)
 			
 			if(!$route)
 			{
-				echo '0|Flight not found!';
+				echo '0|Flight not found, make sure you include the flight code!';
 				return;
 			}
 		}

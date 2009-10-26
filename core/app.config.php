@@ -124,9 +124,16 @@ Config::Set('AVATAR_MAX_HEIGHT', 80);	# Resized height
 Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in seconds
 //Config::Set('SESSION_COOKIE_NAME', 'VMS_AUTH_COOKIE');
 
+/* Can be 'geonames' or 'phpvms'.
+	Geonames will use the geonames.org server to look up the airport info
+	phpvms will use the phpVMS API server
+*/
+
+Config::Set('AIRPORT_LOOKUP_SERVER', 'geonames'); 
 Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
 Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
 Config::Set('VAC_RETRIEVE_AIRPORTS', true);
+Config::Set('GEONAME_API_SERVER', 'http://ws.geonames.org');
 
 Config::Set('URL_REWRITE', false);
 

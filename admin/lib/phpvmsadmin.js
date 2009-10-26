@@ -232,11 +232,18 @@ function lookupICAO()
 	$("#statusbox").html("Fetching airport data...");
 	$("#lookupicao").hide();
 	
-	$.getJSON(geourl+"/searchJSON?style=medium&maxRows=10&featureCode=AIRP&type=json&q="+icao+"&callback=?", 
+	if(airport_lookup == "geonames")
+	{
+	    url = geourl+"/searchJSON?style=medium&maxRows=10&featureCode=AIRP&type=json&q="+icao+"&callback=?";
+	}
+	else
+	{
+	    url = phpvms_api_server+"/airport/get/"+icao+"&callback=?";
+    }
+	
+	$.getJSON(url, 
 		function(data){
 		
-		 //$("#airportname").autocomplete(data.geonames);
-		 
 		if(data.totalResultsCount == 0)
 		{
 			$("#statusbox").html("Nothing found. Try entering the full 4 letter ICAO");
@@ -244,7 +251,11 @@ function lookupICAO()
 			return;
 		}
 	
-		$.each(data.geonames, function(i,item){
+	    if(data.geonames) {
+	        data.airports = data.geonames;
+	    }
+	    
+		$.each(data.airports, function(i,item){
 			$("#airporticao").val(icao);
 			$("#airportname").val(item.name);
 			$("#airportcountry").val(item.countryName);

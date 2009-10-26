@@ -1,6 +1,8 @@
 <script type="text/javascript">
 var baseurl="<?php echo SITE_URL;?>";
-var geourl="<?php echo GEONAME_URL; ?>";
+var geourl="<?php echo Config::Get('GEONAME_API_SERVER'); ?>";
+var airport_lookup = "<?php echo Config::Get('AIRPORT_LOOKUP_SERVER'); ?>";
+var phpvms_api_server = "<?php echo Config::Get('PHPVMS_API_SERVER'); ?>";
 </script>
 <?php
 $files = array(	'jquery.min.js',

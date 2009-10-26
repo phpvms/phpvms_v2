@@ -2,6 +2,9 @@
 -- phpVMS Update file;
 
 
+-- drop index, if exists;
+ALTER TABLE `phpvms_aircraft` DROP INDEX `name`;
+ 
 -- add sessions table;
 CREATE TABLE `phpvms_sessions` (
    `id` INT NOT NULL ,

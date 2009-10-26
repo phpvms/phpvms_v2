@@ -187,13 +187,11 @@ class StatsData extends CodonData
 	}
 	
 	
-	public static function UsersOnline()
+	public static function UsersOnline($minutes = '')
 	{
-		$minutes = Config::Get('USERS_ONLINE_TIME');
-		
 		if($minutes == '')
-			$minutes = 20;
-			
+			$minutes = Config::Get('USERS_ONLINE_TIME');
+		
 		$sql = "SELECT p.*
 				FROM ".TABLE_PREFIX."pilots p, ".TABLE_PREFIX."sessions s
 				WHERE s.pilotid = p.pilotid

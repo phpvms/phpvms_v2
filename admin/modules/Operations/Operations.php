@@ -80,12 +80,17 @@ class Operations extends CodonModule
 		Template::Show('ops_airlineform.tpl');
 	}
 	
-	
-	public function calculateddistance()
+	public function calculatedistance($depicao='', $arricao='')
 	{
-		echo OperationsData::getAirportDistance($this->get->depicao, $this->get->arricao);
+		if($depicao == '')
+			$depicao = $this->get->depicao;
+		
+		if($arricao == '')
+			$arricao = $this->get->arricao;
+			
+			
+		echo OperationsData::getAirportDistance($depicao, $arricao);
 	}
-	
 	
 	public function airlines()
 	{

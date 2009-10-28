@@ -194,10 +194,11 @@ CREATE TABLE `phpvms_ranks` (
 INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire','', 0, 10.0);
 
 CREATE TABLE `phpvms_sessions` (
-   `id` INT NOT NULL ,
+   `id` INT NOT NULL auto_increment ,
    `pilotid` INT NOT NULL ,
    `ipaddress` VARCHAR( 25 ) NOT NULL ,
-   `logintime` DATETIME NOT NULL
+   `logintime` DATETIME NOT NULL,
+   PRIMARY KEY (`id`)
 ) ENGINE = MYISAM ;
 
 CREATE TABLE `phpvms_pilots` (

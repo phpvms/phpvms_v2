@@ -36,23 +36,13 @@ class Auth extends CodonData
 	public static function StartAuth()
 	{	
 		self::$init = true;
-
-		/* Check if they're logged in */
-		if(SessionManager::GetData('loggedin') == true)
+		self::$session_id = SessionManager::GetData('session_id');
+		
+		$assign_id = false;
+		
+		if(self::$session_id == '')
 		{
-			self::$loggedin = true;
-			self::$userinfo = SessionManager::GetData('userinfo');
-			self::$usergroups = PilotGroups::GetUserGroups(self::$userinfo->pilotid);
-			self::$pilotid = self::$userinfo->pilotid;
-			
-			# Bugfix, in case user updates their profile info, grab the latest
-			self::$userinfo = PilotData::GetPilotData(self::$pilotid);
-
-			return true;
-		}
-		else
-		{			   
-			# Load cookie data
+			// Check the cookie to see if they're logged in/have an ID
 			if($_COOKIE[VMS_AUTH_COOKIE] != '')
 			{
 				$data = explode('|', $_COOKIE[VMS_AUTH_COOKIE]);
@@ -72,6 +62,7 @@ class Auth extends CodonData
 					self::$userinfo = $userinfo;
 					self::$pilotid = self::$userinfo->pilotid;
 					self::$usergroups = SessionManager::GetData('usergroups');
+					self::$session_id = $session_id;
 					
 					if(self::$usergroups == '')
 					{
@@ -82,20 +73,78 @@ class Auth extends CodonData
 					SessionManager::AddData('userinfo', $userinfo);
 					SessionManager::AddData('usergroups', self::$usergroups);
 					PilotData::UpdateLogin($userinfo->pilotid);
-					self::set_session($userinfo->pilotid);
+					
+					self::update_session(self::$session_id, self::$userinfo->pilotid);
+					
+					return true;
 				}
+			}
+			
+			// No session ID was found so assign one
+			$assign_id = true;
+		}
+		else
+		{
+			// There's a session ID, so double check that they're logged in
+			if(SessionManager::GetData('loggedin') == true)
+			{
+				self::$loggedin = true;
+				self::$userinfo = SessionManager::GetData('userinfo');
+				self::$usergroups = PilotGroups::GetUserGroups(self::$userinfo->pilotid);
+				self::$pilotid = self::$userinfo->pilotid;
+				
+				# Bugfix, in case user updates their profile info, grab the latest
+				self::$userinfo = PilotData::GetPilotData(self::$pilotid);
+				self::update_session(self::$session_id, self::$userinfo->pilotid);
+				DB::debug();
+				
+				return true;
 			}
 			else
 			{
-				self::set_session(0);
+				// Already been assigned a session ID, and not signed in...
 				self::$loggedin = false;
-				return false;
+				$assign_id = false;
 			}
 		}
 		
+		// Empty session so start one up, and they're not logged in
+		if($assign_id == true)
+		{
+			self::$session_id = self::start_session(0);
+			SessionManager::AddData('session_id', self::$session_id);
+		}
+		
+		return true;
 	}
+	
+	public static function start_session($pilot_id)
+	{
+		$sql = "INSERT INTO ".TABLE_PREFIX."sessions
+				   (`pilotid`, `ipaddress`, `logintime`)
+				   VALUES ({$pilot_id},'{$_SERVER['REMOTE_ADDR']}', NOW())";
 
-	public static function set_session($pilot_id/*, $remember=false*/)
+		DB::query($sql);
+		$session_id =  DB::$insert_id;
+
+		return $session_id;
+	}
+	
+	
+	public static function update_session($session_id, $pilot_id)
+	{
+		$sql = 'UPDATE '.TABLE_PREFIX."sessions
+				    SET `pilotid`={$pilot_id}, `logintime`=NOW(), `ipaddress`='{$_SERVER['REMOTE_ADDR']}'
+				    WHERE `id`={$session_id}";
+			
+		DB::query($sql);
+		$session_id = $session_data->id;
+	}
+	
+	
+	
+	
+	/*public static function set_session($pilot_id)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
 				WHERE pilotid = '{$pilot_id}'";
@@ -122,7 +171,7 @@ class Auth extends CodonData
 		}
 
 		return $session_id;
-	}
+	}*/
 
 	public static function get_session($session_id, $pilot_id, $ip_address)
 	{
@@ -251,6 +300,8 @@ class Auth extends CodonData
 		if($hash == $userinfo->password)
 		{	
 			self::$userinfo =  $userinfo;
+			
+			self::update_session(self::$session_id, self::$userinfo->pilotid);
 
 			SessionManager::AddData('loggedin', 'true');	
 			SessionManager::AddData('userinfo', $userinfo);
@@ -280,6 +331,7 @@ class Auth extends CodonData
 		SessionManager::AddData('usergroups', '');
 
 		# Delete cookie
+		$_COOKIE[VMS_AUTH_COOKIE] = '';
 		setcookie(VMS_AUTH_COOKIE, false);
 		
 		self::$loggedin = false;

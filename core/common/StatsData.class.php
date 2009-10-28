@@ -199,6 +199,19 @@ class StatsData extends CodonData
 		
 		return DB::get_results($sql);
 	}
+	public static function GuestsOnline($minutes = '')
+	{
+		if($minutes == '')
+			$minutes = Config::Get('USERS_ONLINE_TIME');
+		
+		$sql = "SELECT s.*
+				FROM ".TABLE_PREFIX."sessions s
+				WHERE s.pilotid = 0
+				AND DATE_SUB(NOW(), INTERVAL {$minutes} MINUTE) <= s.`logintime`";
+		
+		return DB::get_results($sql);
+	}
+	
 	
 	/**
 	 * Get the total number of pilots

@@ -53,10 +53,13 @@ class Maintenance extends CodonModule
 		foreach($allschedules as $sched)
 		{
 			$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
-																$sched->arrlat, $sched->arrlong);							
+																$sched->arrlat, $sched->arrlong);	
+																
+			$distance = sprintf("%.2f", $distance);						
 			echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname "
 				."is $distance ".Config::Get('UNIT').'<br />';
 				
+			
 			SchedulesData::UpdateDistance($sched->id, $distance);
 		}
 		
@@ -88,6 +91,8 @@ class Maintenance extends CodonModule
 			{
 				$distance = $sched->distance;
 			}
+			
+			$distance = sprintf("%.2f", $distance);
 											
 			echo "PIREP Number $pirep->pirepid ($pirep->code$pirep->flightnum) "
 				."$pirep->depname to $pirep->arrname is $distance ".Config::Get('UNIT').'<br />';

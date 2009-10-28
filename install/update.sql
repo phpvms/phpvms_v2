@@ -31,6 +31,10 @@ ALTER TABLE `phpvms_bids` ADD `dateadded` DATE NOT NULL;
 
 ALTER TABLE `phpvms_airports` ADD `chartlink` TEXT NOT NULL;
 
+-- Sessions additions;
+ALTER TABLE `phpvms_sessions` ADD PRIMARY KEY ( `id` ) ;
+ALTER TABLE `phpvms_sessions` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;		
+
 -- Add total hours;
 INSERT INTO `phpvms_settings` (`id` ,`friendlyname` ,`name` , `value` ,`descrip` ,`core`)
 	VALUES (NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your VA''s Total Hours', '0');

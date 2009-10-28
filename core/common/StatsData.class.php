@@ -194,7 +194,7 @@ class StatsData extends CodonData
 		
 		$sql = "SELECT p.*
 				FROM ".TABLE_PREFIX."pilots p, ".TABLE_PREFIX."sessions s
-				WHERE s.pilotid = p.pilotid
+				WHERE s.pilotid = p.pilotid 
 				AND DATE_SUB(NOW(), INTERVAL {$minutes} MINUTE) <= s.`logintime`";
 		
 		return DB::get_results($sql);

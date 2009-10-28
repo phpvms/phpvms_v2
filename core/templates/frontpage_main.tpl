@@ -17,7 +17,7 @@
 	<?php MainController::Run('Pilots', 'RecentFrontPage', 5); ?>
 	
 	<h3>Users Online</h3>
-	<p><i>There have been <?php echo count($usersonline)?> user(s), and <?php echo count(StatsData::GuestsOnline());?> guest(s) online in the past <?php echo Config::Get('USERS_ONLINE_TIME')?> minutes.</i></p>
+	<p><i>There have been <?php echo count($usersonline)?> user(s), and <?php echo count($guestsonline);?> guest(s) online in the past <?php echo Config::Get('USERS_ONLINE_TIME')?> minutes.</i></p>
 	
 	<?php
 	/* $usersonline also has the list of users -

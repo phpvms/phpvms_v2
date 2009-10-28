@@ -96,7 +96,6 @@ class Auth extends CodonData
 				# Bugfix, in case user updates their profile info, grab the latest
 				self::$userinfo = PilotData::GetPilotData(self::$pilotid);
 				self::update_session(self::$session_id, self::$userinfo->pilotid);
-				DB::debug();
 				
 				return true;
 			}
@@ -104,6 +103,7 @@ class Auth extends CodonData
 			{
 				// Already been assigned a session ID, and not signed in...
 				self::$loggedin = false;
+				self::update_session(self::$session_id, 0);
 				$assign_id = false;
 			}
 		}
@@ -132,7 +132,7 @@ class Auth extends CodonData
 	
 	
 	public static function update_session($session_id, $pilot_id)
-	{
+	{	
 		$sql = 'UPDATE '.TABLE_PREFIX."sessions
 				    SET `pilotid`={$pilot_id}, `logintime`=NOW(), `ipaddress`='{$_SERVER['REMOTE_ADDR']}'
 				    WHERE `id`={$session_id}";
@@ -324,7 +324,7 @@ class Auth extends CodonData
 	 */	
 	public static function LogOut()
 	{
-		self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
+		#self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
 
 		SessionManager::AddData('loggedin', false);
 		SessionManager::AddData('userinfo', '');

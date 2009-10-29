@@ -205,7 +205,7 @@ CREATE TABLE `phpvms_pilots` (
   `pilotid` int(11) NOT NULL auto_increment,
   `firstname` varchar(25) NOT NULL default '',
   `lastname` varchar(25) NOT NULL default '',
-  `email` varchar(32) NOT NULL default '',
+  `email` varchar(100) NOT NULL default '',
   `code` char(3) NOT NULL default '',
   `location` varchar(32) NOT NULL default '',
   `hub` varchar(4) NOT NULL default '',

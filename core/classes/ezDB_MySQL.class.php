@@ -105,7 +105,7 @@ class ezDB_mysql extends ezDB_Base
 	 */
 	public function connect($dbuser='', $dbpassword='', $dbhost='localhost')
 	{
-		$this->dbh = mysql_connect($dbhost, $dbuser, $dbpassword, true);
+		$this->dbh = @mysql_connect($dbhost, $dbuser, $dbpassword, true);
 	
 		if(!$this->dbh)
 		{

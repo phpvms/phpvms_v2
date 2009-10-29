@@ -20,7 +20,8 @@ function pre_module_load()
 {	
 	if(is_dir(CORE_PATH.'/local.config.php'))
 	{
-		die ('core/local.config.php is a folder, not a file. Please delete and create as a file');
+		Debug::showCritical('core/local.config.php is a folder, not a file. Please delete and create as a file');
+		die();
 	}
 	
 	if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.config.php') == 0)
@@ -34,19 +35,37 @@ function pre_module_load()
 
 function post_module_load()
 {
+	/* Misc tasks which need to get done */
+	
+	/* If the setting to auto-retired pilots is on, then do that
+	 */
+	if(Config::Get('PILOT_AUTO_RETIRE') == true)
+	{
+		PilotData::findRetiredPilots();
+	}
+	
+	
+	// @TODO: Clean ACARS records older than one month
+	
+	
+	/* Finally, check if we're in maintenance mode, disable the site
+		to non-admins */
+		
+	if(Config::Get('MAINTENANCE_MODE') == true  && !Auth::LoggedIn() && !PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN))
+	{
+		echo '<html><head><title>Down for maintenance - '.SITE_NAME.'</title></head><body>';
+		Debug::showCritical(Config::Get('MAINTENANCE_MESSAGE'), 'Down for maintenance');
+		echo '</body></html>';
+		die();
+	}
+	
    return true;
 }
 
 function url($path)
 {
 	$url = SITE_URL;
-	
-	/* Automatically add the /admin/ to the URL */
-	/*if(defined('ADMIN_PANEL'))
-	{
-		$url.='/admin';
-	}*/
-	
+		
 	if($path[0] != '/')
 		$path='/'.$path;
 			

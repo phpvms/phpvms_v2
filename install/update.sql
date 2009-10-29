@@ -1,11 +1,7 @@
 --
 -- phpVMS Update file;
-
-
--- drop index, if exists;
-ALTER TABLE `phpvms_aircraft` DROP INDEX `name`;
  
--- add sessions table;
+-- Add sessions table;
 CREATE TABLE `phpvms_sessions` (
    `id` INT NOT NULL ,
    `pilotid` INT NOT NULL ,
@@ -13,7 +9,12 @@ CREATE TABLE `phpvms_sessions` (
    `logintime` DATETIME NOT NULL
 ) ENGINE = MYISAM ;
 
--- add permissions and default permission for admin group;
+-- Sessions additions;
+DELETE FROM `phpvms_sessions`;
+ALTER TABLE `phpvms_sessions` ADD PRIMARY KEY ( `id` ) ;
+ALTER TABLE `phpvms_sessions` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
+
+-- Add permissions and default permission for admin group;
 
 ALTER TABLE `phpvms_groups` ADD `permissions` INT NOT NULL ;
 UPDATE `phpvms_groups` SET `permissions` = '35651519' WHERE `groupid` =1 LIMIT 1 ;
@@ -28,16 +29,13 @@ ALTER TABLE `phpvms_pireps` ADD `revenue` FLOAT NOT NULL AFTER `expenselist` ;
 ALTER TABLE `phpvms_bids` ADD `dateadded` DATE NOT NULL;
 
 -- Chart link for airport;
+ALTER TABLE `phpvms_airports` ADD `chartlink` TEXT NOT NULL;		
 
-ALTER TABLE `phpvms_airports` ADD `chartlink` TEXT NOT NULL;
-
--- Sessions additions;
-ALTER TABLE `phpvms_sessions` ADD PRIMARY KEY ( `id` ) ;
-ALTER TABLE `phpvms_sessions` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;		
-
--- Add total hours;
+-- Add total hours setting;
 INSERT INTO `phpvms_settings` (`id` ,`friendlyname` ,`name` , `value` ,`descrip` ,`core`)
 	VALUES (NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your VA''s Total Hours', '0');
 
--- misc updates;
+-- Misc updates;
 DELETE FROM `phpvms_settings` WHERE `name`='PHPVMS_API_KEY';
+ALTER TABLE `phpvms_aircraft` DROP INDEX `name`;
+ALTER TABLE `phpvms_pilots` CHANGE `email` `email` VARCHAR( 100 ) NOT NULL;

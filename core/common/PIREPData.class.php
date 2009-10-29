@@ -384,8 +384,7 @@ class PIREPData extends CodonData
 			self::$lasterror = 'This PIREP was just submitted!';
 			return;
 		}
-				  
-	
+		
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')

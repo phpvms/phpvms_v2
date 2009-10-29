@@ -87,13 +87,18 @@ class Debug
 		fwrite(self::$fp, $string."\n");
 	}
 	
-	public static function showCritical($message)
+	public static function showCritical($message, $title='')
 	{
-		?><div id="codon_crit_error" style="font-family: 'Lucida Sans', verdana; border:	#999 1px solid;background-color:#fff;padding:20px 20px 12px 20px;">
-			<h1 style="font-family: verdana; font-weight:16px;font-size:14px;color:#990000;margin:0 0 4px 0;">An Error Was Encountered</h1>
-			<p style="font-size: 12px"><?php echo $message;?></p>
-			</div>
-		<?php		
+		if($title == '')
+			$title = 'An Error Was Encountered';
+			
+		echo <<<MESSAGE
+		<div id="codon_crit_error" 
+			style="font-family: 'Lucida Sans',Verdana;border:#999 1px solid;background-color:#fff;padding:20px 20px 12px 20px;">
+			<h1 style="font-family: verdana; font-weight:16px;font-size:18px;color:#6B001B;margin:0 0 4px 0;">$title</h1>
+			<p style="font-size: 16px; color: #001B6B">$message</p>
+		</div>
+MESSAGE;
 	}
 	
 	/**
@@ -262,6 +267,5 @@ class Debug
 					.'() from line '.self::$callinfo['line']
 					.' in '.str_replace(SITE_ROOT, '', self::$callinfo['file'])
 					.'</div>';
-	}
-	
+	}	
 }

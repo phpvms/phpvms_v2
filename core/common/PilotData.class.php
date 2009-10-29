@@ -392,8 +392,6 @@ class PilotData extends CodonData
 		return true;
 	}
 	
-	
-		
 	/**
 	 * Get the total number of hours for a pilot, add them up
 	 *
@@ -565,7 +563,7 @@ class PilotData extends CodonData
 			
 		foreach($results as $row)
 		{
-			$payupdate = self::get_pilot_pay($row->flighttime, $row->pilotpay);
+			$payupdate = self::getPilotPay($row->flighttime, $row->pilotpay);
 			$total += $payupdate;
 			
 			$sql = 'UPDATE `'.TABLE_PREFIX.'pilots` 
@@ -596,7 +594,7 @@ class PilotData extends CodonData
 						
 		$payrate = DB::get_row($sql);
 		
-		$payupdate = self::get_pilot_pay($flighthours, $payrate->payrate);
+		$payupdate = self::getPilotPay($flighthours, $payrate->payrate);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
 					SET totalpay=totalpay+'.$payupdate.'
@@ -619,7 +617,7 @@ class PilotData extends CodonData
 	 * @return float Returns the total
 	 *
 	 */
-	public static function get_pilot_pay($hours, $rate)
+	public static function getPilotPay($hours, $rate)
 	{
 		/* Hours are in hours.minutes
 			convert to minutes */
@@ -628,6 +626,35 @@ class PilotData extends CodonData
 		$payupdate = $minutes * ($rate/60);
 		
 		return $payupdate;
+	}
+	
+	
+	/**
+	 * Find and set any pilots as retired
+	 *
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function findRetiredPilots()
+	{
+		$days = Config::Get('PILOT_INACTIVE_TIME');
+		
+		if($days == '')
+			$days = 90;
+			
+		$sql = 'UPDATE '.TABLE_PREFIX."pilots
+				SET `retired`=1
+				WHERE DATE_SUB(CURDATE(), INTERVAL {$days} DAY) > `lastpirep`
+					AND `lastpirep` != '0000-00-00 00:00:00'";
+		
+		DB::query($sql);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX."pilots
+				SET `retired`=1
+				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `joindate` 
+					AND `lastpirep` = '0000-00-00 00:00:00'";
+		
+		DB::query($sql);
 	}
 	
 	

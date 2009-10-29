@@ -6,6 +6,9 @@
  * You can add any additional modules at the bottom
  * This file won't be modified/touched by future versions
  * of phpVMS, you can change your settings here
+ * 
+ * There may also be additional settings in app.config.php
+ * To change it, copy the line into this file here
  *
  */
 define('DBASE_USER', '$DBASE_USER');
@@ -21,25 +24,41 @@ define('SITE_URL', '$SITE_URL');
 # Page encoding options
 Config::Set('PAGE_ENCODING', 'ISO-8859-1');
 
-Config::Set('PILOTID_OFFSET', 0); // This is where to start the pilot ID from
-Config::Set('PILOTID_LENGTH', 4); // The length of PID, including 0's
-Config::Set('SHOW_LEG_TEXT', true); // Show the leg text or not
-Config::Set('PAGE_EXT', '.htm'); // The page extension
-Config::Set('UNITS', 'mi'); // Your units: mi or km
+# Maintenance mode - this disables the site to non-admins
+Config::Set('MAINTENANCE_MODE', false);
+Config::Set('MAINTENANCE_MESSAGE', 'We are currently down for maintenance, please check back soon.');
+
+# See more details about these in the docs
+Config::Set('PAGE_EXT', '.htm');	# .htm is fine. You can still run PHP
+Config::Set('PILOTID_OFFSET', 0);	# What # to start pilot ID's from
+Config::Set('PILOTID_LENGTH', 4);	# Length of the Pilot ID
+Config::Set('UNITS', 'nm');			# Your units: nm, mi or km
+Config::Set('LOAD_FACTOR', '82');	# %age load factor 
+Config::Set('CARGO_UNITS', 'lbs');
+
+# After how long to mark a pilot inactive, in days
+Config::Set('PILOT_AUTO_RETIRE', true);
+Config::Set('PILOT_INACTIVE_TIME', 90);
+
+# If someone places a bid, whether to disable that or not
+Config::Set('DISABLE_SCHED_ON_BID', true);
+Config::Set('DISABLE_BIDS_ON_BID', false);
+
+# If you want to count transfer hours in rank calculations
+Config::Set('TRANSFER_HOURS_IN_RANKS', false);
+
+# The StatsData::UserOnline() function - how many minutes to check
+Config::Set('USERS_ONLINE_TIME', 20);
 
 # Google Map Options
-
-/*
- * Valid types are G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_PHYSICAL_MAP
- */
-Config::Set('MAP_WIDTH', '600px');
-Config::Set('MAP_HEIGHT', '400px');
+Config::Set('MAP_WIDTH', '800px');
+Config::Set('MAP_HEIGHT', '600px');
+# Valid types are G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_PHYSICAL_MAP
 Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
 Config::Set('MAP_CENTER_LAT', '45.484400');
 Config::Set('MAP_CENTER_LNG', '-62.334821');
-
-Config::Set('TRANSFER_HOURS_IN_RANKS', false);
+Config::Set('MAP_ZOOM_LEVEL', 12);
 
 # ACARS options
 #  Minutes, flights to show on the ACARS
@@ -84,3 +103,23 @@ Config::Set('AVATAR_MAX_HEIGHT', 80);
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', false);
 Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
+
+Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in seconds
+
+/* Days of the Week
+	The compacted view, and the full text
+	DON'T CHANGE THE ORDER!! And yes, Sunday is in there twice
+ */
+Config::Set('DAYS_COMPACT',  array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su'));
+
+Config::Set('DAYS_LONG', 
+		array('Sunday',
+			  'Monday',
+			  'Tuesday',
+			  'Wednesday',
+			  'Thursday',
+			  'Friday',
+			  'Saturday',
+			  'Sunday'
+		)
+	);

@@ -35,6 +35,10 @@ Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
 # Page encoding options
 Config::Set('PAGE_ENCODING', 'UTF-8');
 
+# Maintenance mode - this disables the site to non-admins
+Config::Set('MAINTENANCE_MODE', false);
+Config::Set('MAINTENANCE_MESSAGE', 'We are currently down for maintenance, please check back soon.');
+
 # See more details about these in the docs
 Config::Set('PAGE_EXT', '.htm');	# .htm is fine. You can still run PHP
 Config::Set('PILOTID_OFFSET', 0);	# What # to start pilot ID's from
@@ -42,6 +46,10 @@ Config::Set('PILOTID_LENGTH', 4);	# Length of the Pilot ID
 Config::Set('UNITS', 'nm');			# Your units: nm, mi or km
 Config::Set('LOAD_FACTOR', '82');	# %age load factor 
 Config::Set('CARGO_UNITS', 'lbs');
+
+# After how long to mark a pilot inactive, in days
+Config::Set('PILOT_AUTO_RETIRE', true);
+Config::Set('PILOT_INACTIVE_TIME', 90);
 
 # If someone places a bid, whether to disable that or not
 Config::Set('DISABLE_SCHED_ON_BID', true);
@@ -56,10 +64,11 @@ Config::Set('USERS_ONLINE_TIME', 20);
 # Google Map Options
 Config::Set('MAP_WIDTH', '800px');
 Config::Set('MAP_HEIGHT', '600px');
-Config::Set('MAP_TYPE', '\'\'');
+Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
 Config::Set('MAP_CENTER_LAT', '45.484400');
 Config::Set('MAP_CENTER_LNG', '-62.334821');
+Config::Set('MAP_ZOOM_LEVEL', 12);
 
 # ACARS options
 #  Minutes, flights to show on the ACARS

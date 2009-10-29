@@ -96,7 +96,8 @@ class PIREPS extends CodonModule
 	
 	public function routesmap()
 	{
-		echo '<h3>All flights</h3>';
+		$this->title = 'My Flight Map';
+		
 		$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
 		
 		if(!$pireps)
@@ -106,19 +107,8 @@ class PIREPS extends CodonModule
 			return;
 		}
 		
-		$map = new GoogleMap;
-		
-		$map->maptype = Config::Get('MAP_TYPE');
-		$map->linecolor = Config::Get('MAP_LINE_COLOR');
-		
-		foreach($pireps as $pirep)
-		{
-			$map->AddPoint($pirep->deplat, $pirep->deplong, "$pirep->depname ($pirep->depicao)");
-			$map->AddPoint($pirep->arrlat, $pirep->arrlong, "$pirep->arrname ($pirep->arricao)");
-			$map->AddPolylineFromTo($pirep->deplat, $pirep->deplong, $pirep->arrlat, $pirep->arrlong);
-		}
-		
-		$map->ShowMap(MAP_WIDTH, MAP_HEIGHT);
+		Template::Set('allroutes', $pireps);
+		Template::Show('profile_myroutesmap.tpl');
 	}
 	
 	public function file()

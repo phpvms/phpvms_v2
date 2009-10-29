@@ -272,25 +272,6 @@ class Installer
 				
 				DB::query($sql);
 				$errno = DB::errno();
-				
-				
-				// Ignore errors
-				//	1050 - Duplicate table
-				//	1062 - Duplicate entry for key
-				
-				// Ignore errors...
-				
-				/*if($errno != 0 && $errno != 1060 && $errno != 1050 && $errno != 1062)
-				{
-					echo '<p style="border-top: solid 1px #000; border-bottom: solid 1px #000; padding: 5px;">
-							There was an error, with the following message: <br /><br />
-							<span style="margin: 10px;"><i>"'.DB::error().' ('.DB::errno().')"</i></span><br /><br />
-							On the following query: <br /><br />
-							<span style="margin: 10px;"><i>'.$sql.'</i></span><br /><br />
-							Try running it manually<br />
-							</p>';
-				}*/
-				
 				$sql = '';
 			}
 			else

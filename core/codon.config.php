@@ -73,9 +73,8 @@ Lang::set_language(Config::Get('SITE_LANGUAGE'));
 
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
-
-DB::$throw_exceptions = false;
 DB::$show_errors = Config::Get('DEBUG_MODE');
+DB::$throw_exceptions = false;
 
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {
@@ -92,11 +91,12 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 		
 	if(!DB::connect(DBASE_USER, DBASE_PASS, DBASE_NAME, DBASE_SERVER))
 	{	
-		die(Lang::gs('database.connection.failed').' ('.DB::$errno.': '.DB::$error.')');
+		Debug::showCritical(Lang::gs('database.connection.failed').' ('.DB::$errno.': '.DB::$error.')');
+		die();
 	}
 }
 
-include CORE_PATH.DIRECTORY_SEPARATOR.'bootstrap.inc.php';
+include CORE_PATH.DS.'bootstrap.inc.php';
 
 if(function_exists('pre_module_load'))
 	pre_module_load();
@@ -106,4 +106,4 @@ MainController::loadEngineTasks();
 if(function_exists('post_module_load'))
 	post_module_load();
 
-define('SKINS_PATH', LIB_PATH.DIRECTORY_SEPARATOR.'skins'.DIRECTORY_SEPARATOR.CURRENT_SKIN);
+define('SKINS_PATH', LIB_PATH.DS.'skins'.DS.CURRENT_SKIN);

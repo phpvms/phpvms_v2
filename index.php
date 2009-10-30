@@ -37,10 +37,18 @@
  * @package codon_core
  */
 
-//require_once 'Benchmark/Timer.php';
-//$timer = new Benchmark_Timer(true);
-
 include 'core/codon.config.php';
+
+# Check if we're in maintenance mode, disable the site to non-admins
+if(Config::Get('MAINTENANCE_MODE') == true  
+	&& !Auth::LoggedIn() 
+	&& !PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN))
+{
+	echo '<html><head><title>Down for maintenance - '.SITE_NAME.'</title></head><body>';
+	Debug::showCritical(Config::Get('MAINTENANCE_MESSAGE'), 'Down for maintenance');
+	echo '</body></html>';
+	die();
+}
 
 if(Config::Get('XDEBUG_BENCHMARK'))
 {

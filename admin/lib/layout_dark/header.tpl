@@ -14,13 +14,6 @@
 <?php
 Template::Show('core_htmlhead.tpl');
 ?>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	val = $("table.tablesorter tbody tr:odd").css("background-color", "#E5ECFF");
-});
-</script>
-
 <link href="<?php echo SITE_URL?>/admin/lib/layout/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
 <style type="text/css"> 
@@ -38,7 +31,6 @@ Template::Show('core_htmlreq.tpl');
  	<div id="header">
     	<img src="<?php echo SITE_URL?>/admin/lib/layout/images/admin_logo.png" />
 	</div>
-	<div id="cols">
   <div id="sidebar">
 	<?php
 	Template::Show('core_sidebar.tpl');
@@ -52,9 +44,9 @@ Template::Show('core_htmlreq.tpl');
 		</li>
 	</ul>
 	<ul id="slidermenu" class="menu">
-	<?php
-	Template::Show('core_navigation.tpl');
-	?>
+		<?php
+		Template::Show('core_navigation.tpl');
+		?>
 	</ul>
 	<ul class="menu">
 		<li><a style="border-top: none" href="<?php echo SITE_URL?>/index.php">View Your Site</a></li>

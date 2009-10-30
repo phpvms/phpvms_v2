@@ -46,7 +46,6 @@ class SiteCMS extends CodonModule
 	
 	public function viewnews()
 	{
-		echo 'call';
 		switch ($this->post->action)
 		{
 			case 'addnews':

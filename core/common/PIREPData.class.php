@@ -643,6 +643,16 @@ class PIREPData extends CodonData
 		# Check the fuel
 		if($pirep->fuelprice != '')
 		{
+			# If FSACARS and in kg, convert it to lbs for the fuel calc
+			# @version 783
+			if($pirep->source == 'fsacars')
+			{
+				if(Config::Get('WeightUnit') == 0)
+				{
+					$pirep->fuelused = $pirep->fuelused / .45359237;
+				}
+			}
+			
 			$pirep->fuelprice = FinanceData::GetFuelPrice($pirep->fuelused, $pirep->depicao);
 		}
 		

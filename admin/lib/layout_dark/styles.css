@@ -1,7 +1,7 @@
 @charset "utf-8";
 body  {
-	font-family: "segoe ui", tahoma, arial,helvetica,clean,sans-serif; font-size: 14px;
-	background: url(images/background.png) repeat-x 0 0 #FFF;
+	font: 100% Verdana, Arial, Helvetica, sans-serif;
+	background: #666666;
 	margin: 0;
 	padding: 0;
 	text-align: center; 
@@ -9,24 +9,28 @@ body  {
 }
 
 #container { 
-	width: 100%;	
+	width: 95%; 
+	background: #FFFFFF;
+	margin: 0 auto; 
 	border: none;
 	text-align: left; 
-	height: 100%
 } 
 #header { 
 	padding: 0;
-	background: url(images/background.png) repeat-x 0 0 #fff;	
+	background: #1D1D1D; /*url(images/background.png) repeat-x;*/
+	border-bottom: 2px solid #FF9033;
 } 
 #header h1 {
 	margin: 0; 
 	padding: 10px 0; 
 }
+
 #sidebar {
 	float: left; 
 	width: 200px;
-	border-right: solid 1px #CCC;
-	padding: 0;
+	background: #EBEBEB; 
+	padding: 0; 
+	font-size: 8pt;
 }
 #sidebar h3, #sidebar p {
 	margin-left: 10px; 
@@ -35,10 +39,10 @@ body  {
 
 #sidebar h3
 {
-	background: #BFBFBF;
+	background: #333;
 	font-weight: none;
 	font-size: 8pt;
-	color: #000;	
+	color: #fff;	
 	padding: 5px;
 	margin: 0;
 	width: 195px;
@@ -63,8 +67,13 @@ a:hover {
 
 #mainContent { 
 	margin: 0 15px 0 160pt; 
-	font-size: 12px;
-	height: 100%
+	font-size: 8pt;	
+} 
+
+#mainContent h3 {
+	color: #339933;
+	font-size: 16px;
+	font-family: Arial;
 }
 
 #mainContent tr.disabled td {
@@ -81,11 +90,12 @@ a:hover {
 	padding: 0px;
 	margin: 0px
 }
+
+
 #mainContent h3 {
-	color: #3366FF;
-	font-size: 16px;
+	font-size: 11pt;
 	border-bottom: 1px solid #999;
-	padding-bottom: 8px;
+	padding-bottom: 4px;
 }
 
 #mainContent a {
@@ -125,7 +135,6 @@ table.balancesheet td  {
 	text-align: center;
 	width: auto;
 	margin-top: 10px;
-	font-size: 14px;
 }
 
 #success
@@ -136,13 +145,13 @@ table.balancesheet td  {
 	text-align: center;
 	width: auto;
 	margin-top: 10px;
-	font-size: 14px;
 }
 
 .indent 
 {
 	padding-left: 32px;
 }
+
 
 #footer { 
 	padding: 0 10px;
@@ -210,11 +219,9 @@ ul.menu img {
 	padding-right: 5px;
 }
 ul.menu li a {
-  background: #F0F4FF;
-  background: url(images/heading.png) repeat-x 0 0 #fff;
-  color: #000;	
+  background: #333;
+  color: #fff;	
   padding: 0.5em;
-  font-size: 14px;
 }
 ul.menu li a img
 {
@@ -222,11 +229,11 @@ ul.menu li a img
 }
 
 ul.menu li a:hover {
-  background: #FFF;
+  background: #000;
 }
 
 ul.menu li ul li a {
-  background: #F0F4FF;
+  background: #ccc;
   color: #000;
   padding-left: 20px;
 }
@@ -242,41 +249,39 @@ ul.menu li ul li a:hover {
 {
 	border: none;
 }
-
 table.tablesorter {
 	border: none;
 	font-family:arial;
-	background: url(images/heading.png) repeat-x 0 0 #fff;
+	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
-	font-size: 14px;
+	font-size: 8pt;
 	width: 100%;
 	text-align: left;
 }
-
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background: url(images/heading.png) repeat-x 0 0 #fff;
-	color: #000;	
+	background: #333;
+	color: #fff;	
 	padding: 0.5em;
 }
-
 table.tablesorter thead tr .header {
+	/*background-image: url(images/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;*/
 	cursor: pointer;
-	color: #333;
-	font-size: 15px;
+	background: #333;
+	color: #fff;	
 	padding: 0.5em;
+	background-repeat: no-repeat;
+	background-position: center right;
 }
-
 table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
 	background-color: #FFF;
 	vertical-align: top;
 	border: none;
-	border-bottom: solid 1px #ccc;
-	padding-top: 6px;
-	padding-bottom: 6px;
 }
-table.tablesorter tbody tr:odd  {
+table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;
 	border: none;
 }

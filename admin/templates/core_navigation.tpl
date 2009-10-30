@@ -1,10 +1,3 @@
-<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/dashboard_icon.png" />Dashboard
-	</a>
-	<ul>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard">Site Overview</a></li>
-	</ul>
-</li>
 <li><a class="menu" href="#">
 		<img src="<?echo SITE_URL?>/admin/lib/layout/images/site_icon.png" />News & Content
 	</a>

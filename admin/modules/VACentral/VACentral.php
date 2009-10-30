@@ -30,14 +30,15 @@ class VACentral extends CodonModule
 	
 	public function sendqueuedpireps()
 	{
+		echo '<h3>vaCentral PIREP Export</h3>';
 		$pireps = PIREPData::getReportsByExportStatus(false);
-				
+		
 		if(!$pireps)
 		{
 			echo 'You have no PIREPs waiting to be exported!';
 			return;
 		}
-		
+		echo '<p>';
 		foreach($pireps as $pirep)
 		{
 			$resp = CentralData::send_pirep($pirep->pirepid);
@@ -52,7 +53,8 @@ class VACentral extends CodonModule
 			}
 		}
 		
-		echo "Completed";
+		
+		echo "Completed</p>";
 	}
 	
 	public function sendschedules()

@@ -1,6 +1,6 @@
 	</div>
 	</div>
-	</div>
+	
 	<br class="clearfloat" />
 	<div id="footer">
 	<p>
@@ -18,6 +18,5 @@
 <?php
 Template::Show('core_footer.tpl');
 ?>
-
 </body>
 </html>

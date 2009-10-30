@@ -28,22 +28,20 @@ body  {
 	border-right: solid 1px #CCC;
 	padding: 0;
 }
+
 #sidebar h3, #sidebar p {
 	margin-left: 10px; 
 	margin-right: 10px;
 }
-
-#sidebar h3
-{
-	background: #BFBFBF;
-	font-weight: none;
-	font-size: 8pt;
+#sidebar h3 {
+	background: url(images/heading.png) repeat-x 0 0 #fff;	
+	font-size: 12pt;
 	color: #000;	
 	padding: 5px;
 	margin: 0;
 	width: 195px;
 	padding-right: 0;
-	border-bottom: 4px solid #999;
+	border-bottom: 4px solid #FF6633;
 }
 
 #sidebar h3 a
@@ -115,6 +113,11 @@ table.balancesheet td  {
 	background-color: #333;
 	color: #FFF;
 	text-align: right;
+}
+
+table tbody tr.background_yellow td
+{
+	background-color: #FFFFB3;
 }
 
 #error
@@ -190,7 +193,6 @@ ul.menu, ul.menu ul {
   margin: 0;
   padding: 0;
   width: 100%;
-  border-bottom: 1px solid #FFF;
 }
 
 ul.menu a {
@@ -210,30 +212,31 @@ ul.menu img {
 	padding-right: 5px;
 }
 ul.menu li a {
-  background: #F0F4FF;
   background: url(images/heading.png) repeat-x 0 0 #fff;
   color: #000;	
   padding: 0.5em;
   font-size: 14px;
+  border-bottom: solid 1px #999;
 }
 ul.menu li a img
 {
 	padding: none;
 }
 
-ul.menu li a:hover {
-  background: #FFF;
+ul.menu li a:hover 
+{
+	/*border-left: solid 5px #FF6633;*/
+	font-weight: bold;
 }
 
 ul.menu li ul li a {
-  background: #F0F4FF;
+  background: #FFFFFF;
   color: #000;
   padding-left: 20px;
 }
 
 ul.menu li ul li a:hover {
-  background: #aaa;
-  border-left: 5px #000 solid;
+  border-left: solid 5px #FF6633;
   padding-left: 15px;
 }
 
@@ -475,19 +478,29 @@ div#mb_caption
     margin-left: -300px;
     width: 600px;
     
-    background-color: #EEE;
+    background-color: #FFF;
     color: #333;
-    border: 1px solid black;
+    border: solid 3px #3366FF;
     padding: 12px;
-    font-size: 8pt;
+    padding-top: 6px;
+    font-size: 12px;
     text-align: left;
+}
+
+.jqmWindow h3  
+{
+	color: #3366FF;
+	margin: 5px 0px 5px 0px;
+	font-size: 16px;
+	border-bottom: solid 1px #f2f2f2;
+	padding-bottom: 7px;
 }
 
 .jqmWindow dl {
 	width: 570px;
 }
 
-.jqmOverlay { background-color: #000; }
+.jqmOverlay { background-color: #F2f2f2; }
 
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
 * iframe.jqm {position:absolute;top:0;left:0;z-index:-1;

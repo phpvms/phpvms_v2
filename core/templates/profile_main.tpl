@@ -26,7 +26,7 @@
 			
 			<li><strong>Total Flights: </strong><?php echo $userinfo->totalflights?></li>
 			<li><strong>Total Hours: </strong><?php echo $userinfo->totalhours; ?></li>
-			<li><strong>Total Transfer Hours:</strong><?php echo $userinfo->transferhours?></li>
+			<li><strong>Total Transfer Hours: </strong><?php echo $userinfo->transferhours?></li>
 			<li><strong>Total Money: </strong><?php echo FinanceData::FormatMoney($userinfo->totalpay) ?></li>
 		
 			<?php

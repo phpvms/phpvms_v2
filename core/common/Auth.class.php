@@ -36,7 +36,7 @@ class Auth extends CodonData
 	public static function StartAuth()
 	{	
 		self::$init = true;
-		self::$session_id = SessionManager::GetData('session_id');
+		self::$session_id = SessionManager::Get('session_id');
 		
 		$assign_id = false;
 		
@@ -57,11 +57,17 @@ class Auth extends CodonData
 				{
 					/* Populate session info */
 					$userinfo = PilotData::GetPilotData($pilot_id);
+					
+					if(!$userinfo)
+					{
+						self::$loggedin = false;
+						return false;
+					}
 
 					self::$loggedin = true;
 					self::$userinfo = $userinfo;
 					self::$pilotid = self::$userinfo->pilotid;
-					self::$usergroups = SessionManager::GetData('usergroups');
+					self::$usergroups = SessionManager::Get('usergroups');
 					self::$session_id = $session_id;
 					
 					if(self::$usergroups == '')
@@ -69,9 +75,9 @@ class Auth extends CodonData
 						self::$usergroups = PilotGroups::GetUserGroups($userinfo->pilotid);
 					}
 					
-					SessionManager::AddData('loggedin', true);
-					SessionManager::AddData('userinfo', $userinfo);
-					SessionManager::AddData('usergroups', self::$usergroups);
+					SessionManager::Set('loggedin', true);
+					SessionManager::Set('userinfo', $userinfo);
+					SessionManager::Set('usergroups', self::$usergroups);
 					PilotData::UpdateLogin($userinfo->pilotid);
 					
 					self::update_session(self::$session_id, self::$userinfo->pilotid);
@@ -80,16 +86,19 @@ class Auth extends CodonData
 				}
 			}
 			
-			// No session ID was found so assign one
+			// No session ID was found anywhere so assign one
 			$assign_id = true;
+			self::$session_id = self::start_session(0);
+			SessionManager::Set('session_id', self::$session_id);
 		}
 		else
 		{
 			// There's a session ID, so double check that they're logged in
-			if(SessionManager::GetData('loggedin') == true)
+			if(SessionManager::Get('loggedin') == true)
 			{
 				self::$loggedin = true;
-				self::$userinfo = SessionManager::GetData('userinfo');
+				self::$userinfo = SessionManager::Get('userinfo');
+				
 				self::$usergroups = PilotGroups::GetUserGroups(self::$userinfo->pilotid);
 				self::$pilotid = self::$userinfo->pilotid;
 				
@@ -111,8 +120,7 @@ class Auth extends CodonData
 		// Empty session so start one up, and they're not logged in
 		if($assign_id == true)
 		{
-			self::$session_id = self::start_session(0);
-			SessionManager::AddData('session_id', self::$session_id);
+			
 		}
 		
 		return true;
@@ -303,9 +311,9 @@ class Auth extends CodonData
 			
 			self::update_session(self::$session_id, self::$userinfo->pilotid);
 
-			SessionManager::AddData('loggedin', 'true');	
-			SessionManager::AddData('userinfo', $userinfo);
-			SessionManager::AddData('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
+			SessionManager::Set('loggedin', 'true');	
+			SessionManager::Set('userinfo', $userinfo);
+			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
 			PilotData::UpdateLogin($userinfo->pilotid);
 			
 			return true;
@@ -327,9 +335,9 @@ class Auth extends CodonData
 		#self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
 		self::update_session(self::$session_id, 0);
 
-		SessionManager::AddData('loggedin', false);
-		SessionManager::AddData('userinfo', '');
-		SessionManager::AddData('usergroups', '');
+		SessionManager::Set('loggedin', false);
+		SessionManager::Set('userinfo', '');
+		SessionManager::Set('usergroups', '');
 
 		# Delete cookie
 		$_COOKIE[VMS_AUTH_COOKIE] = '';

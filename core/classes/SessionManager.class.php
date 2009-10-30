@@ -37,17 +37,6 @@
  * @package codon_core
  */
 
-/**
-  * Session Manager Module
-  *		This handles the backbone of the authentication stuff
-  *
-  * Sona CMS Framework
-  *
-  * @author Nabeel Shahzad
-  * @link www.sonacms.net
-  */
-
-
 class SessionManager
 {
 	public static $error_message;
@@ -75,9 +64,10 @@ class SessionManager
 		$_SESSION[$key] = serialize($value);
 	}
 	
+	
 	public static function Get($key)
 	{
-		return unserialize($_SESSION[$key]);
+		return self::GetData($key);
 	}
 	
 	public static function GetData($key)

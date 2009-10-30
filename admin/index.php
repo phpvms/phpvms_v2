@@ -58,7 +58,9 @@ if(!PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
 }
 
 $BaseTemplate = new TemplateSet;
-$tplname = 'layout';
+$tplname = Config::Get('ADMIN_SKIN');
+if($tplname == '')
+	$tplname = 'layout';
 
 //load the main skin
 $settings_file = SITE_ROOT . '/admin/lib/'.$tplname.'/'.$tplname.'.php';

@@ -1,3 +1,12 @@
+--
+-- phpVMS Installer;
+-- 
+-- DO NOT MANUALLY RUN THIS FILE!!!
+-- To install, goto /install/install.php
+--
+-- Manually running this will screw up your install;
+
+
 CREATE TABLE `phpvms_awards` (
 	`awardid` INT NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR( 25 ) NOT NULL ,
@@ -356,12 +365,11 @@ ALTER TABLE `phpvms_pirepcomments`
 ALTER TABLE `phpvms_schedules`
   ADD CONSTRAINT `phpvms_schedules_ibfk_1` FOREIGN KEY (`code`) REFERENCES `phpvms_airlines` (`code`) ON UPDATE CASCADE;
 
-INSERT INTO `phpvms_settings` VALUES(1, 'phpVMS Version', 'PHPVMS_VERSION', '1.2.##REVISION##', '', 1);
-INSERT INTO `phpvms_settings` VALUES(2, 'Virtual Airline Name', 'SITE_NAME', 'PHPVMS', 'The name of your site. This will show up in the browser title bar.', 1);
-INSERT INTO `phpvms_settings` VALUES(3, 'Webmaster Email Address', 'ADMIN_EMAIL', '', 'This is the email address that email will get sent to/from', 1);
-INSERT INTO `phpvms_settings` VALUES(4, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 1);
-INSERT INTO `phpvms_settings` VALUES(5, 'Notify for Updates', 'NOTIFY_UPDATE', 'true', 'This will notify in the admin panel if an update is available', 1);
-INSERT INTO `phpvms_settings` VALUES(6, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 1);
-INSERT INTO `phpvms_settings` VALUES(7, 'Google API Key', 'GOOGLE_KEY', '', 'This is your Google API key. You need it for the maps functionality to work', 1);
-INSERT INTO `phpvms_settings` VALUES(8, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 1);
-INSERT INTO `phpvms_settings` VALUES(9, 'phpVMS API Key', 'PHPVMS_API_KEY', '', 'This is your API key to access phpVMS services', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'phpVMS Version', 'PHPVMS_VERSION', '1.3.##REVISION##', '', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Virtual Airline Name', 'SITE_NAME', 'PHPVMS', 'The name of your site. This will show up in the browser title bar.', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Webmaster Email Address', 'ADMIN_EMAIL', '', 'This is the email address that email will get sent to/from', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Notify for Updates', 'NOTIFY_UPDATE', 'true', 'This will notify in the admin panel if an update is available', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Google API Key', 'GOOGLE_KEY', '', 'This is your Google API key. You need it for the maps functionality to work', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 1);

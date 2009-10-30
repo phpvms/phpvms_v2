@@ -23,8 +23,8 @@ if(!$airports)
 foreach($airports as $airport)
 {
 ?>
-<tr>
-	<td align="center"><?php echo $airport->icao; ?></td>
+<tr class="<?php if($airport->hub==1) { echo 'background_yellow'; } ?>">
+	<td align="center"><?php if($airport->hub==1) { echo '<strong>'; } echo $airport->icao; if($airport->hub==1) { echo '</strong>'; }  ?></td>
 	<td><?php if($airport->hub==1) { echo '<strong>'; } echo $airport->name; if($airport->hub==1) { echo '</strong>'; }  ?></td>
 	<td align="center"><?php echo $airport->country; ?></td>
 	<td align="center"><?php echo $airport->lat; ?></td>

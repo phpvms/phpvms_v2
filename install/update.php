@@ -25,7 +25,7 @@ include dirname(__FILE__).'/Installer.class.php';
  
 # phpVMS Updater 
 define('INSTALLER_VERSION', '1.3.##REVISION##');
-define('UPDATE_VERSION', '1.3.REVISION##');
+define('UPDATE_VERSION', '1.3.##REVISION##');
 define('REVISION', '##REVISION##');
 
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');

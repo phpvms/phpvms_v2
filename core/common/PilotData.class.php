@@ -248,6 +248,24 @@ class PilotData extends CodonData
 		return true;
 	}
 	
+	public static function setPilotRetired($pilotid, $retired)
+	{
+		if($retired == true)
+		{
+			$retired = 1;
+		}
+		else
+		{
+			$retired = 0;
+		}
+		
+		$sql = "UPDATE ".TABLE_PREFIX."pilots
+				SET `retired`={$retired}
+				WHERE `pilotid`={$pilotid}";
+		
+		return DB::query($sql);
+	}
+	
 	
 	/**
 	 * Returns an array with a list of background images available

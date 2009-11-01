@@ -30,7 +30,16 @@ $cache_url = $condenser->GetCondensedFile($files, 'jquery-admin.js');
 */
 ?>
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>-->
-<script type="text/javascript" src="<?php echo $cache_url?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jqModal.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.form.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.bigiframe.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.tablesorter.pack.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.metadata.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.impromptu.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery-ui.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.dimensions.pack.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('lib/js/nicEdit.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo SITE_URL?>/admin/lib/phpvmsadmin.js"></script>
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo SITE_URL?>/lib/rss/latestpireps.rss">

@@ -15,7 +15,7 @@ if($schedule->route!='')
 <div id="<?php echo $schedule->arricao ?>" class="metar">Getting current METAR information for <?php echo $schedule->arricao ?></div>
 <br />
 <strong>Schedule Frequency</strong>
-
+<div align="center">
 <?php
 	$data = array();
 	$labels = array();
@@ -31,3 +31,4 @@ if($schedule->route!='')
 	
 	echo '<img align="center" src="'.$chart->GenerateGraph().'" />';
 ?>
+</div>

@@ -235,7 +235,7 @@ class PIREPS extends CodonModule
 			return false;
 		}*/
 		
-		if(!is_numeric($this->post->flighttime) && !is_numeric($this->post->flightnum))
+		if(!is_numeric($this->post->flighttime))
 		{
 			Template::Set('message', 'The flight time has to be a number!');
 			//Template::Show('core_error.tpl');
@@ -272,6 +272,9 @@ class PIREPS extends CodonModule
 		
 		# Call the event
 		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);
+		
+		# Set them as non-retired
+		PilotData::setPilotRetired($pilotid, false);
 		
 		# Send to Central
 		CentralData::send_pirep($pirepid);

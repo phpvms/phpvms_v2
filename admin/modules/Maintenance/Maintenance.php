@@ -108,6 +108,13 @@ class Maintenance extends CodonModule
 		echo '<p>Completed!</p><br />';
 	}
 	
+	public function calculateranks()
+	{
+		echo '<h3>Resetting Ranks</h3>';
+		RanksData::CalculatePilotRanks();
+		echo 'Done!';
+	}
+	
 	public function resetpilotpay()
 	{
 		echo '<h3>Resetting Pilot Pay</h3>';

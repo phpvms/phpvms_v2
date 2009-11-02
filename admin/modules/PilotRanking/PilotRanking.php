@@ -90,11 +90,6 @@ class PilotRanking extends CodonModule
 		Template::Show('ranks_rankform.tpl');
 	}
 	
-	public function calculateranks()
-	{
-		RanksData::CalculatePilotRanks();
-	}
-	
 	public function awards()
 	{
 		Template::Set('awards', AwardsData::GetAllAwards());

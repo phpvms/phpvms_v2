@@ -412,6 +412,17 @@ class PIREPData extends CodonData
 				}
 			}
 		}
+		
+		# Check the airports, add to database if they don't exist
+		if(!($depapt = OperationsData::GetAirportInfo($pirepdata['depicao'])))
+		{						
+			$aptinfo = OperationsData::RetrieveAirportInfo($pirepdata['depicao']);
+		}
+		
+		if(!($arrapt = OperationsData::GetAirportInfo($pirepdata['arricao'])))
+		{
+			$aptinfo = OperationsData::RetrieveAirportInfo($pirepdata['arricao']);						
+		}
 
 		# Look up the schedule
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);

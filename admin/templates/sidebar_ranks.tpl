@@ -4,7 +4,7 @@
 		<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/pilotranking/addrank">Add Rank</a>
 	</span></li>
 	<li><span class="file">
-		<a href="<?php echo SITE_URL?>/admin/action.php/pilotranking/calculateranks">Recalculate Ranks</a>
+		<a href="<?php echo SITE_URL?>/admin/action.php/maintenance/calculateranks">Recalculate Ranks</a>
 	</span></li>
 </ul>
 <h3>Help</h3>

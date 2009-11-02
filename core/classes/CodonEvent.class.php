@@ -95,8 +95,6 @@ class CodonEvent
 					unset(self::$stopList[$eventname]);
 					return false;
 				}
-				
-				return true;
 			}
 		}
 		

@@ -71,4 +71,19 @@ class CodonModule
 		$this->init = true;
 		$this->activeModule = MainController::$activeModule;
 	}
+	
+	public function set($name, $value)
+	{
+		Template::Set($name, $value);
+	}
+	
+	public function show($tpl)
+	{
+		Template::Show($tpl);
+	}
+	
+	public function render($tpl)
+	{
+		Template::Show($tpl);
+	}
 }

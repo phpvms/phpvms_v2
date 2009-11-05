@@ -377,7 +377,7 @@ class PilotData extends CodonData
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pireps WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pilots WHERE pilotid='.$pilotid;
 		
-		# These SHOULD delete on cascade
+		# These SHOULD delete on cascade, but incase they don't
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'fieldvalues WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'groupmembers WHERE pilotid='.$pilotid;
 		$sql[] = 'DELETE FROM '.TABLE_PREFIX.'pirepcomments WHERE pilotid='.$pilotid;
@@ -410,6 +410,26 @@ class PilotData extends CodonData
 		return true;
 	}
 	
+	public static function getPilotHours($pilotid)
+	{
+		$sql = 'SELECT `flighttime` FROM '.TABLE_PREFIX.'pireps
+				WHERE `accepted`='.PIREP_ACCEPTED.'
+					AND `pilotid`='.$pilotid;
+		
+		$pireps = DB::get_results($sql);
+		
+		if(!$pireps)
+			return '0.0';
+			
+		$total = 0;	
+		foreach($pireps as $report)
+		{
+			$total = Util::AddTime($total, $report->flighttime);
+		}
+	
+		return $total;	
+	}
+	
 	/**
 	 * Get the total number of hours for a pilot, add them up
 	 *
@@ -418,26 +438,13 @@ class PilotData extends CodonData
 	 *
 	 */
 	public static function UpdateFlightHours($pilotid)
-	{
-		$pireps = PIREPData::GetAllReportsForPilot($pilotid);
-		$total = 0;
-		
-		$allflights = count($pireps);
-		if($allflights != 0)
-		{
-			foreach($pireps as $report)
-			{
-				if($report->accepted != PIREP_ACCEPTED)
-					continue;
-					
-				$total = Util::AddTime($total, $report->flighttime);
-			}
-		}
+	{				
+		$total = self::getPilotHours($pilotid);
 		
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=$total, totalflights=$allflights
-					WHERE pilotid=$pilotid";
-		
+				SET `totalhours`=$total
+				WHERE `pilotid`=$pilotid";
+					
 		$res = DB::query($sql);
 		
 		return $total;

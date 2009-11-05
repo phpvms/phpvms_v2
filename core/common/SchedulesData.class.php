@@ -738,8 +738,10 @@ class SchedulesData extends CodonData
 			
 		$sql = 'SELECT b.bidid 
 					FROM '.TABLE_PREFIX.'bids b, '.TABLE_PREFIX.'schedules s
-					WHERE b.pilotid='.$pilotid.' AND b.routeid=s.id
-						AND s.code=\''.$code.'\' AND s.flightnum=\''.$flightnum.'\'';
+					WHERE b.pilotid='.$pilotid.' 
+						AND b.routeid=s.id
+						AND s.code=\''.$code.'\' 
+						AND s.flightnum=\''.$flightnum.'\'';
 		
 		return DB::get_row($sql);
 	}

@@ -52,6 +52,7 @@ define('CACHE_PATH', CORE_PATH.DS.'cache');
 define('COMMON_PATH', CORE_PATH.DS.'common');
 define('PAGES_PATH', CORE_PATH.DS.'pages');
 define('LIB_PATH', SITE_ROOT.DS.'lib');
+define('DOCTRINE_MODELS_PATH', CORE_PATH.DS.'models');
 
 $version = phpversion();
 if($version[0] != '5')
@@ -60,7 +61,7 @@ if($version[0] != '5')
 }
 
 require CLASS_PATH.DS.'autoload.php';
-require CLASS_PATH.DS.'ezDB.class.php';
+spl_autoload_register('codon_autoload');
 
 Config::Set('MODULES_PATH', CORE_PATH.DS.'modules');
 Config::Set('MODULES_AUTOLOAD', true);
@@ -73,11 +74,13 @@ Lang::set_language(Config::Get('SITE_LANGUAGE'));
 
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
-DB::$show_errors = Config::Get('DEBUG_MODE');
-DB::$throw_exceptions = false;
 
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {
+	require CLASS_PATH.DS.'ezDB.class.php';
+	DB::$show_errors = Config::Get('DEBUG_MODE');
+	DB::$throw_exceptions = false;
+	
 	DB::init(DBASE_TYPE);
 	DB::set_caching(false);
 	DB::$table_prefix = TABLE_PREFIX;
@@ -94,6 +97,13 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 		Debug::showCritical(Lang::gs('database.connection.failed').' ('.DB::$errno.': '.DB::$error.')');
 		die();
 	}
+	
+	/* Include doctrine and all of it's options */
+	/*include CORE_PATH.DS.'lib'.DS.'doctrine'.DS.'Doctrine.php';
+	spl_autoload_register(array('Doctrine', 'autoload'));
+	$conn = Doctrine_Manager::connection(DBASE_TYPE.'://'.DBASE_USER.':'.DBASE_PASS.'@'.DBASE_SERVER.'/'.DBASE_NAME);
+	$conn->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
+	Doctrine::loadModels(DOCTRINE_MODELS_PATH);*/
 }
 
 include CORE_PATH.DS.'bootstrap.inc.php';

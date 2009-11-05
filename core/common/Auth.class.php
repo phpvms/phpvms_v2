@@ -333,7 +333,9 @@ class Auth extends CodonData
 	public static function LogOut()
 	{
 		#self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
-		self::update_session(self::$session_id, 0);
+		
+		# Don't mark as guest, just yet
+		//self::update_session(self::$session_id, 0);
 
 		SessionManager::Set('loggedin', false);
 		SessionManager::Set('userinfo', '');

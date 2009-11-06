@@ -1,5 +1,5 @@
 <h3>PIREPs List</h3>
-<p><?php echo $descrip;?></p>
+<p><?php if(isset($descrip)) { echo $descrip; }?></p>
 <?php
 if(!$pireps)
 {

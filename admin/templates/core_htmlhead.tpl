@@ -44,4 +44,7 @@ $cache_url = $condenser->GetCondensedFile($files, 'jquery-admin.js');
 
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo SITE_URL?>/lib/rss/latestpireps.rss">
 
-<?php echo $MODULE_HEAD_INC;?>
+<?php 
+if(isset($MODULE_HEAD_INC))
+	echo $MODULE_HEAD_INC;
+?>

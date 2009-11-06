@@ -70,7 +70,6 @@ Template::Set('MODULE_HEAD_INC', $HTMLHead);
 ob_start();
 MainController::RunAllActions(Config::Get('RUN_MODULE'));
 $page_data = ob_get_clean();
-ob_end_flush();
 
 $BaseTemplate->Set('title', MainController::$page_title .' - '.SITE_NAME);
 

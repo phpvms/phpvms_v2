@@ -95,9 +95,13 @@ switch($acars_action)
 			}
 			
 			# split the flight request:
-			preg_match('/^([A-Za-z]*)(\d*)/', $flight, $matches);
+			/*preg_match('/^([A-Za-z]*)(\d*)/', $flight, $matches);
 			$code = $matches[1];
-			$flight_num = $matches[2];
+			$flight_num = $matches[2];*/
+			
+			$flightinfo = SchedulesData::getProperFlightNum($flight);
+			$code = $flightinfo['code'];
+			$flight_num = $flightinfo['flightnum'];
 			
 			$route = SchedulesData::GetScheduleByFlight($code, $flight_num);
 			
@@ -201,7 +205,8 @@ $route->registration
 			/* Get the flight information, from ACARS, need to
 				pull the latest flight data via the flight number
 				since acars messages don't transmit the pilot ID */
-			preg_match("/Flight ID:.([A-Za-z]*)([0-9]*)\n/", $data, $matches);
+			#preg_match("/Flight ID:.([A-Za-z]*)([0-9]*)\n/", $data, $matches);
+			preg_match("/Flight ID:.(.*)\n/", $data, $matches);
 			$flight_data = ACARSData::get_flight_by_pilot($_REQUEST['DATA3']);
 					
 			$pilotid = $_REQUEST['DATA3'];
@@ -270,10 +275,13 @@ $route->registration
 		
 		$data = explode('~', $_REQUEST['DATA2']);
 				
-		preg_match('/^([A-Za-z]*)(\d*)/', $data[2], $matches);
+		/*preg_match('/^([A-Za-z]*)(\d*)/', $data[2], $matches);
 		$code = $matches[1];
-		$flightnum = $matches[2];
+		$flightnum = $matches[2];*/
 		
+		$flightinfo = SchedulesData::getProperFlightNum($data[2]);
+		$code = $flightinfo['code'];
+		$flightnum = $flightinfo['flightnum'];
 		
 		if(!is_numeric($data[0]))
 		{

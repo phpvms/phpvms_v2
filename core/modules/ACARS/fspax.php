@@ -88,14 +88,15 @@ writedebug(print_r($_POST, true));
 		}
 		
 		# Get the flight ID
-		if(preg_match('/^([A-Za-z]*)(\d*)/', $_POST['FlightId'], $matches) == 0)
+		$flightinfo = SchedulesData::getProperFlightNum($_POST['FlightId']);
+		$code = $flightinfo['code'];
+		$flightnum = $flightinfo['flightnum'];
+		/*if(preg_match('/^([A-Za-z]*)(\d*)/', $_POST['FlightId'], $matches) == 0)
 		{
 			echo "#Answer# Error - Invalid flight ID;";
 			return;
-		}
+		}*/
 		
-		$code = trim($matches[1]);
-		$flightnum = trim($matches[2]);
 					
 		preg_match('/^([A-Za-z]*) - .*/', $_POST['DepartureIcaoName'], $aptinfo);
 		$depicao = $aptinfo[1];

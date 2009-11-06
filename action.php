@@ -43,6 +43,7 @@
 
 define('SITE_ROOT', dirname(__FILE__));
 include 'core/codon.config.php';
+error_reporting(E_ALL ^ E_NOTICE);
  
 $BaseTemplate = new TemplateSet;
 

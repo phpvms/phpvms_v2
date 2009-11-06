@@ -149,38 +149,6 @@ class Auth extends CodonData
 		$session_id = $session_data->id;
 	}
 	
-	
-	
-	
-	/*public static function set_session($pilot_id)
-	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
-				WHERE pilotid = '{$pilot_id}'";
-
-		$session_data = DB::get_row($sql);
-		if($session_data)
-		{
-			$sql = 'UPDATE '.TABLE_PREFIX."sessions
-				    SET logintime=NOW(), ipaddress='{$_SERVER['REMOTE_ADDR']}'
-				    WHERE pilotid={$pilot_id}";
-			
-			DB::query($sql);
-			$session_id = $session_data->id;
-		}
-		else
-		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."sessions
-				   (pilotid, ipaddress, logintime)
-				   VALUES ({$pilot_id},'{$_SERVER['REMOTE_ADDR']}', NOW())";
-
-			DB::query($sql);
-			$session_id = DB::$insert_id;
-			self::$session_id = $session_id;
-		}
-
-		return $session_id;
-	}*/
-
 	public static function get_session($session_id, $pilot_id, $ip_address)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."sessions
@@ -335,7 +303,8 @@ class Auth extends CodonData
 		#self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
 		
 		# Don't mark as guest, just yet
-		//self::update_session(self::$session_id, 0);
+		self::update_session(self::$session_id, 0);
+		self::start_session(self::$userinfo->pilotid); // Orphaned?
 
 		SessionManager::Set('loggedin', false);
 		SessionManager::Set('userinfo', '');

@@ -66,6 +66,34 @@ class SchedulesData extends CodonData
 		return DB::get_row($sql);		
 	}
 	
+	public static function getProperFlightNum($flightnum)
+	{
+		if($flightnum == '')
+			return false;
+			
+		$ret = array();	
+		$flightnum = strtoupper($flightnum);
+		$airlines = OperationsData::GetAllAirlines(false);
+				
+		foreach($airlines as $a)
+		{
+			$a->code = strtoupper($a->code);
+			
+			if(strpos($flightnum, $a->code) === false)
+			{
+				continue;
+			}
+			
+			$ret['code'] = $a->code;
+			$ret['flightnum'] = str_ireplace($a->code, '', $flightnum);
+			
+			return $ret;
+		}
+		
+		# Invalid flight number
+		return false;
+	}
+	
 	
 	/**
 	 * Increment the flown count for a schedule

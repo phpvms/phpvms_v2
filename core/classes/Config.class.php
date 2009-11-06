@@ -94,6 +94,9 @@ class Config
 				return self::$values[$name]->$key;
 		}
 		
+		if(!isset(self::$values[$name]))
+			return '';
+			
 		return self::$values[$name];
 	}
 	

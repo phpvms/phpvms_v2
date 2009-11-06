@@ -314,6 +314,7 @@ $permission_set = array
 	  'FULL_ADMIN'				=> 35651519);
 
 Config::Set('permission_set', $permission_set);  
+define('NO_ADMIN_ACCESS', 0);
 foreach($permission_set as $key=>$value)
 {
 	define($key, $value);

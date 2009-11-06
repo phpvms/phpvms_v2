@@ -78,6 +78,7 @@ Debug::$debug_enabled = Config::Get('DEBUG_MODE');
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {
 	require CLASS_PATH.DS.'ezDB.class.php';
+	
 	DB::$show_errors = Config::Get('DEBUG_MODE');
 	DB::$throw_exceptions = false;
 	

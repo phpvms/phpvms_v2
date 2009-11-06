@@ -31,16 +31,19 @@ class Profile extends CodonModule
 		/*
 		 * This is from /profile/editprofile
 		 */
-		if($this->post->action == 'saveprofile')
-		{
-			$this->save_profile_post();
-		}
-		
-		/* this comes from /profile/changepassword
-		*/
-		if($this->post->action == 'changepassword')
-		{
-			$this->change_password_post();
+		 if(isset($this->post->action))
+		 {
+			if($this->post->action == 'saveprofile')
+			{
+				$this->save_profile_post();
+			}
+			
+			/* this comes from /profile/changepassword
+			*/
+			if($this->post->action == 'changepassword')
+			{
+				$this->change_password_post();
+			}
 		}
 		
 		if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)

@@ -2,7 +2,7 @@
 <form name="loginform" action="<?php echo url('/login');?>" method="post">
 <?php echo "<?xml version='1.0'?>"; ?>
 <?php
-if($message)
+if(isset($message))
 	echo '<p class="error">'.$message.'</p>';
 ?>
 <dl>

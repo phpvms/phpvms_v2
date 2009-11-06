@@ -191,7 +191,7 @@ class TemplateSet
 
 		if(!defined('ADMIN_PANEL') && $checkskin == true)
 		{
-			if(file_exists(SKINS_PATH . DS . $tpl_name))
+			if(defined('SKINS_PATH') && file_exists(SKINS_PATH . DS . $tpl_name))
 				$tpl_path = SKINS_PATH . DS . $tpl_name;
 			else
 				$tpl_path = $this->template_path . DS . $tpl_name;

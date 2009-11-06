@@ -172,4 +172,7 @@
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard/about">About phpVMS</a></li>
 	</ul>
 </li>
-<?php echo $MODULE_NAV_INC;?>
+<?php 
+if(isset($MODULE_NAV_INC))
+	echo $MODULE_NAV_INC;
+?>

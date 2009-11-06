@@ -47,7 +47,7 @@ class PIREPS extends CodonModule
 			return;
 		}
 		
-		if($this->post->submit_pirep)
+		if(isset($this->post->submit_pirep) && $this->post->submit_pirep)
 		{
 			if(!$this->SubmitPIREP())
 			{

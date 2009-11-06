@@ -45,6 +45,7 @@ class CodonModule
 	public static $post;
 	public static $get;
 	public static $activeModule;
+	public $action;
 	
 	public $title;
 	

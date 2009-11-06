@@ -1,14 +1,14 @@
 <?php
 
+$test->addTestCase(new TimesTester);
 
 class TimesTester extends UnitTestCase 
 {
-	
 	public $added_time = '';
+	
 	public function __construct()
 	{
 		parent::__construct();
-		//$this->UnitTestCase('Checking PIREP Time Additions');
 	}
 	
 	public function testTimesAdded()
@@ -24,8 +24,10 @@ class TimesTester extends UnitTestCase
 			$this->added_time = Util::AddTime($this->added_time, $row->flighttime);
 		}
 
+		heading('Time added, all PIREPS at once');
 		$this->assertNotEqual(0, $this->added_time);
 		
+		heading('Time added, pilot by pilot');
 		// Now calculate by PIREP
 		$allpilots = PilotData::GetAllPilots();
 		
@@ -37,6 +39,10 @@ class TimesTester extends UnitTestCase
 		}
 		
 		$this->assertNotEqual(0, $total);
+		
+		heading('Comparing pilot to pilot vs all PIREPS');
 		$this->assertEqual($total, $this->added_time);		
+		echo '<br />';
 	}
 }
+

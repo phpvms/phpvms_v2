@@ -196,7 +196,13 @@ class CodonRewrite
 			
 			foreach(self::$rewrite_rules[$module_name] as $key=>$type)
 			{
-				$val = self::$peices[$i++];
+				if(!isset(self::$peices[$i]))
+				{
+					continue;
+				}
+				
+				$val = self::$peices[$i];
+				$i++;
 				
 				# Convert to type specified
 				if($type == 'int')

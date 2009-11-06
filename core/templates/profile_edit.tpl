@@ -12,7 +12,7 @@
 	<dt>Email Address</dt>
 	<dd><input type="text" name="email" value="<?php echo $userinfo->email;?>" />
 		<?php
-			if($email_error == true)
+			if(isset($email_error) && $email_error == true)
 				echo '<p class="error">Please enter your email address</p>';
 		?>
 	</dd>
@@ -32,7 +32,7 @@
 		?>
 		</select>
 		<?php
-			if($location_error == true)
+			if(isset($location_error) &&  $location_error == true)
 				echo '<p class="error">Please enter your location</p>';
 		?>
 	</dd>

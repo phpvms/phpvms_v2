@@ -37,7 +37,7 @@ class Login extends CodonModule
 		
 		Template::Set('redir', $redir);
 	
-		if($this->post->action == 'login')
+		if(isset($this->post->action) && $this->post->action == 'login')
 		{
 			$this->ProcessLogin();
 		}

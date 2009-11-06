@@ -274,9 +274,11 @@ $maxcargo";
 		# And extract the code and flight number
 		$pos = find_in_fsacars_log('Flight IATA', $log);
 		$flightnum = str_replace('Flight IATA:', '', $log[$pos]);
-		preg_match('/^([A-Za-z]*)(\d*)/', $flightnum, $matches);
-		$code = $matches[1];
-		$flightnum = $matches[2];
+		//preg_match('/^([A-Za-z]*)(\d*)/', $flightnum, $matches);
+		
+		$flightinfo = SchedulesData::getProperFlightNum($flightnum);
+		$code = $flightinfo['code'];
+		$flightnum = $flightinfo['flightnum'];
 		
 		# Get the passenger count:
 		# Find where flight IATA is

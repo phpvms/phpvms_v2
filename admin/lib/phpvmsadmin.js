@@ -90,11 +90,11 @@ $(document).ready(function()
     
    $("#sidebar, #mainContent").equalHeights(400)
     
-	$(".addtoEditor").click(function(e) {
-		e.preventDefault();
-		$(".nicEdit-main").append($(this).html()); 
-		return false;
-	});
+//	$(".addtoEditor").click(function(e) {
+//		e.preventDefault();
+//		$(".nicEdit-main").append($(this).html()); 
+//		return false;
+//	});
 
 	$('#jqmdialog').jqm({
 		ajax:'@href',
@@ -216,10 +216,10 @@ $(document).ready(function()
 	//Tablize any lists
 	$("#tabledlist").tablesorter();
 		
-	if(document.getElementById('editor'))
+	/*if(document.getElementById('editor'))
 	{
 		new nicEditor({iconsPath : baseurl+'/lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
-	}
+	}*/
 });
 
 function lookupICAO()

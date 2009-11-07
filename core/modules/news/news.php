@@ -21,8 +21,10 @@ class News extends CodonModule
 	// This function gets called directly in the template
 	public function ShowNewsFront($count=5)
 	{
-		$sql = 'SELECT id, subject, body, postedby, UNIX_TIMESTAMP(postdate) AS postdate
-				 FROM ' . TABLE_PREFIX .'news ORDER BY postdate DESC LIMIT '.$count;
+		$sql='SELECT id, subject, body, postedby, UNIX_TIMESTAMP(postdate) AS postdate
+				FROM ' . TABLE_PREFIX .'news 
+				ORDER BY postdate DESC 
+				LIMIT '.$count;
 		
 		$res = DB::get_results($sql);
 		
@@ -32,12 +34,12 @@ class News extends CodonModule
 		foreach($res as $row)
 		{
 			//TODO: change the date format to a setting in panel
-			template::set('subject', $row->subject);
-			template::set('body', $row->body);
-			template::set('postedby', $row->postedby);
-			template::set('postdate', date('m/d/Y', $row->postdate));
+			$this->set('subject', $row->subject);
+			$this->set('body', $row->body);
+			$this->set('postedby', $row->postedby);
+			$this->set('postdate', date('m/d/Y', $row->postdate));
 		
-			template::show('news_newsitem.tpl');
+			$this->show('news_newsitem.tpl');
 		}
 	}
 }

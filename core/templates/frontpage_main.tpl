@@ -4,7 +4,7 @@
 	// Show the News module, call the function ShowNewsFront
 	//	This is in the modules/Frontpage folder
 	
-	News::ShowNewsFront(5);
+	MainController::Run('News', 'ShowNewsFront', 5);
 ?>
 </div>
 <div id="sidebar">

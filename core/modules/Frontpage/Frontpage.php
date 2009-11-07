@@ -16,8 +16,6 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/ * @package module_frontpage
  */
 
-include dirname(__FILE__) . '/News.php';
-
 class Frontpage extends CodonModule
 {
 	public $title = 'Welcome';

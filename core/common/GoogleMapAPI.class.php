@@ -979,7 +979,7 @@ class GoogleMapAPI {
                 {
                     $_output .= "icon[$i] = new GIcon();\n";   
                     $_output .= sprintf('icon[%s].image = "%s";',$i,$info['image']) . "\n";   
-                    if($info['shadow']) {
+                    if(isset($info['shadow'])) {
                         $_output .= sprintf('icon[%s].shadow = "%s";',$i,$info['shadow']) . "\n";
                         $_output .= sprintf('icon[%s].shadowSize = new GSize(%s,%s);',$i,$info['shadowWidth'],$info['shadowHeight']) . "\n";   
                     }

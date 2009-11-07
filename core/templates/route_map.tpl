@@ -3,9 +3,9 @@
 <?php
 
     # I do this because they can both contain the coordinates
-    if($pirep)
+    if(isset($pirep))
         $mapdata = $pirep;
-    if($schedule)
+    if(isset($schedule))
         $mapdata = $schedule;
         
     $centerlat = ($mapdata->deplat + $mapdata->arrlat) / 2;

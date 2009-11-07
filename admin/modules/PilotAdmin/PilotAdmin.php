@@ -193,14 +193,17 @@ class PilotAdmin extends CodonModule
 	
 	public function pilotgroups()
 	{
-		if($this->post->action == 'addgroup')
+		if(isset($this->post->action))
 		{
-			$this->AddGroupPost();
-		}
-		if($this->post->action == 'editgroup')
-		{
-			# Process
-			$this->SaveGroup();
+			if($this->post->action == 'addgroup')
+			{
+				$this->AddGroupPost();
+			}
+			elseif($this->post->action == 'editgroup')
+			{
+				# Process
+				$this->SaveGroup();
+			}
 		}
 		
 		$this->ShowGroups();

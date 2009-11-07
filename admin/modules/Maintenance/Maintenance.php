@@ -99,10 +99,10 @@ class Maintenance extends CodonModule
 			
 			$ret = PIREPData::UpdatePIREPDistance($pirep->pirepid, $distance);
 			
-			if($ret == false)
+			/*if($ret == false)
 			{
 				echo PIREPData::$lasterror.'<br />';
-			}
+			}*/
 		}
 	
 		echo '<p>Completed!</p><br />';
@@ -152,14 +152,14 @@ class Maintenance extends CodonModule
 		echo '<h3>Updating Total Hours Count</h3>';
 				
 		$total = 0;
-		echo 'Calculating hours for all pilots: ';
+		echo '<p>Calculating hours for all pilots: <br />';
 		$allpilots = PilotData::GetAllPilots();
 		
 		foreach($allpilots as $pilot)
 		{
 			$hours = PilotData::UpdateFlightHours($pilot->pilotid);
 			$total = Util::AddTime($total, $hours);
-			echo "Found $hours for number $pilot->pilotid<br />";
+			echo PilotData::GetPilotCode($pilot->code, $pilot->pilotid) . " - found {$hours} flight hours for number <br />";
 		}
 		
 		echo "Pilots have a total of <strong>$total hours</strong><br /><br />";
@@ -167,7 +167,7 @@ class Maintenance extends CodonModule
 		echo "<strong>Now counting from PIREPS</strong><br />";
 		
 		StatsData::UpdateTotalHours();
-		echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';
+		echo 'Found '.StatsData::TotalHours().' total hours, updated<br /></p>';
 	}
 	
 	public function resetpirepfinance()

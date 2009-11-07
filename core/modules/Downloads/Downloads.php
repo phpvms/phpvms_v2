@@ -28,8 +28,8 @@ class Downloads extends CodonModule
 			return;
 		}
 		
-		Template::Set('allcategories', DownloadData::GetAllCategories());
-		Template::Show('downloads_list.tpl');
+		$this->set('allcategories', DownloadData::GetAllCategories());
+		$this->render('downloads_list.tpl');
 	}
 	
 	public function __call($name, $args)
@@ -51,7 +51,7 @@ class Downloads extends CodonModule
 		
 		DownloadData::IncrementDLCount($id);
 				
-		Template::Set('download', DownloadData::GetAsset($id));
-		Template::Show('download_item.tpl');
+		$this->set('download', DownloadData::GetAsset($id));
+		$this->render('download_item.tpl');
 	}
 }

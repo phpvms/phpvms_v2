@@ -42,8 +42,8 @@ class PIREPS extends CodonModule
 	{
 		if(!Auth::LoggedIn())
 		{
-			Template::Set('message', 'You are not logged in!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You are not logged in!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -58,8 +58,8 @@ class PIREPS extends CodonModule
 		
 		// Show PIREPs filed
 		
-		Template::Set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
-		Template::Show('pireps_viewall.tpl');
+		$this->set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
+		$this->render('pireps_viewall.tpl');
 	}
 	
 	public function view($pirepid='')
@@ -71,8 +71,8 @@ class PIREPS extends CodonModule
 	{
 		if($pirepid == '')
 		{
-			Template::Set('message', 'No report ID specified!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'No report ID specified!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -80,17 +80,17 @@ class PIREPS extends CodonModule
 		
 		if(!$pirep)
 		{
-			Template::Set('message', 'This PIREP does not exist!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'This PIREP does not exist!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('pirep', $pirep);
-		Template::Set('fields', PIREPData::GetFieldData($pirepid));
-		Template::Set('comments', PIREPData::GetComments($pirepid));
+		$this->set('pirep', $pirep);
+		$this->set('fields', PIREPData::GetFieldData($pirepid));
+		$this->set('comments', PIREPData::GetComments($pirepid));
 										
-		Template::Show('pirep_viewreport.tpl');
-		Template::Show('route_map.tpl');
+		$this->render('pirep_viewreport.tpl');
+		$this->render('route_map.tpl');
 	}
 	
 	
@@ -102,13 +102,13 @@ class PIREPS extends CodonModule
 		
 		if(!$pireps)
 		{
-			Template::Set('message', 'There are no PIREPs for this pilot!!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There are no PIREPs for this pilot!!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('allroutes', $pireps);
-		Template::Show('profile_myroutesmap.tpl');
+		$this->set('allroutes', $pireps);
+		$this->render('profile_myroutesmap.tpl');
 	}
 	
 	public function file()
@@ -120,8 +120,8 @@ class PIREPS extends CodonModule
 	{
 		if(!Auth::LoggedIn())
 		{
-			Template::Set('message', 'You must be logged in to access this feature!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -173,15 +173,15 @@ class PIREPS extends CodonModule
 		
 	protected function FilePIREPForm()
 	{
-		Template::Set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
-		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-		Template::Set('pirepfields', PIREPData::GetAllFields());
-		Template::Set('bid', SchedulesData::GetBid($this->get->id)); // get the bid info
-		Template::Set('allairports', OperationsData::GetAllAirports());
-		Template::Set('allairlines', OperationsData::GetAllAirlines(true));
-		Template::Set('allaircraft', OperationsData::GetAllAircraft(true));
+		$this->set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
+		$this->set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+		$this->set('pirepfields', PIREPData::GetAllFields());
+		$this->set('bid', SchedulesData::GetBid($this->get->id)); // get the bid info
+		$this->set('allairports', OperationsData::GetAllAirports());
+		$this->set('allairlines', OperationsData::GetAllAirlines(true));
+		$this->set('allaircraft', OperationsData::GetAllAircraft(true));
 		
-		Template::Show('pirep_new.tpl');
+		$this->render('pirep_new.tpl');
 	}
 	
 	protected function SubmitPIREP()
@@ -190,8 +190,8 @@ class PIREPS extends CodonModule
 		
 		if($pilotid == '' || Auth::LoggedIn() == false)
 		{
-			Template::Set('message', 'You must be logged in to access this feature!!');
-			//Template::Show('core_error.tpl');
+			$this->set('message', 'You must be logged in to access this feature!!');
+			//$this->render('core_error.tpl');
 			return false;
 		}		
 		
@@ -199,16 +199,16 @@ class PIREPS extends CodonModule
 				|| $this->post->depicao == '' || $this->post->arricao == '' 
 				|| $this->post->aircraft == '' || $this->post->flighttime == '')
 		{
-			Template::Set('message', 'You must fill out all of the required fields!');
-			//Template::Show('core_error.tpl');
+			$this->set('message', 'You must fill out all of the required fields!');
+			//$this->render('core_error.tpl');
 			return false;
 		}
 		
 		$sched_data = SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum);
 		if(!$sched_data)
 		{
-			Template::Set('message', 'The flight code and number you entered is not a valid route!');
-			//Template::Show('core_error.tpl');
+			$this->set('message', 'The flight code and number you entered is not a valid route!');
+			//$this->render('core_error.tpl');
 			return false;
 		}
 		
@@ -221,8 +221,8 @@ class PIREPS extends CodonModule
 			{
 				if($biddata->pilotid != $pilotid)
 				{
-					Template::Set('message', 'You are not the bidding pilot');
-					//Template::Show('core_error.tpl');
+					$this->set('message', 'You are not the bidding pilot');
+					//$this->render('core_error.tpl');
 					return false;
 				}
 			}
@@ -230,15 +230,15 @@ class PIREPS extends CodonModule
 		
 		/*if($this->post->depicao == $this->post->arricao)
 		{
-			Template::Set('message', 'The departure airport is the same as the arrival airport!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The departure airport is the same as the arrival airport!');
+			$this->render('core_error.tpl');
 			return false;
 		}*/
 		
 		if(!is_numeric($this->post->flighttime))
 		{
-			Template::Set('message', 'The flight time has to be a number!');
-			//Template::Show('core_error.tpl');
+			$this->set('message', 'The flight time has to be a number!');
+			//$this->render('core_error.tpl');
 			return false;
 		}
 		
@@ -262,8 +262,8 @@ class PIREPS extends CodonModule
 		
 		if(!PIREPData::FileReport($data))
 		{
-			Template::Set('message', 'There was an error adding your PIREP : '.PIREPData::$lasterror);
-			//Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error adding your PIREP : '.PIREPData::$lasterror);
+			//$this->render('core_error.tpl');
 			return false;
 		}
 		
@@ -293,7 +293,7 @@ class PIREPS extends CodonModule
 	 */
 	public function RecentFrontPage($count = 10)
 	{
-		Template::Set('reports', PIREPData::GetRecentReportsByCount($count));
-		Template::Show('frontpage_reports.tpl');
+		$this->set('reports', PIREPData::GetRecentReportsByCount($count));
+		$this->render('frontpage_reports.tpl');
 	}
 }

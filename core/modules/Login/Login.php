@@ -31,11 +31,11 @@ class Login extends CodonModule
 	{
 		if(Auth::LoggedIn() == true)
 		{
-			Template::Show('login_already.tpl');
+			$this->render('login_already.tpl');
 			return;
 		}
 		
-		Template::Set('redir', $redir);
+		$this->set('redir', $redir);
 	
 		if(isset($this->post->action) && $this->post->action == 'login')
 		{
@@ -43,15 +43,15 @@ class Login extends CodonModule
 		}
 		else
 		{
-			Template::Show('login_form.tpl');
+			$this->render('login_form.tpl');
 		}
 	}
 	
 	public function logout()
 	{
 		Auth::LogOut();
-		Template::Set('redir', SITE_URL);
-		Template::Show('login_complete.tpl');
+		$this->set('redir', SITE_URL);
+		$this->render('login_complete.tpl');
 	}
 	
 	public function forgotpassword()
@@ -62,7 +62,7 @@ class Login extends CodonModule
 			return;
 		}
 		
-		Template::Show('login_forgotpassword.tpl');
+		$this->render('login_forgotpassword.tpl');
 	}
 	
 	public function ResetPassword()
@@ -79,7 +79,7 @@ class Login extends CodonModule
 			
 			if(!$pilotdata)
 			{
-				Template::Show('login_notfound.tpl');
+				$this->render('login_notfound.tpl');
 				return;
 			}
 			
@@ -87,15 +87,15 @@ class Login extends CodonModule
 			
 			RegistrationData::ChangePassword($pilotdata->pilotid, $newpw);
 						
-			Template::Set('firstname', $pilotdata->firstname);
-			Template::Set('lastname', $pilotdata->lastname);
-			Template::Set('newpw', $newpw);
+			$this->set('firstname', $pilotdata->firstname);
+			$this->set('lastname', $pilotdata->lastname);
+			$this->set('newpw', $newpw);
 			
 			$message = Template::GetTemplate('email_lostpassword.tpl', true);
 			
 			Util::SendEmail($pilotdata->email, 'Password Reset', $message);
 			
-			Template::Show('login_passwordreset.tpl');
+			$this->render('login_passwordreset.tpl');
 		}
 	}
 	
@@ -106,29 +106,29 @@ class Login extends CodonModule
 			
 		if($email == '' || $password == '')
 		{
-			Template::Set('message', 'You must fill out both your username and password');
-			Template::Show('login_form.tpl');
+			$this->set('message', 'You must fill out both your username and password');
+			$this->render('login_form.tpl');
 			return false;
 		}
 
 		if(!Auth::ProcessLogin($email, $password))
 		{
-			Template::Set('message', Auth::$error_message);
-			Template::Show('login_form.tpl');
+			$this->set('message', Auth::$error_message);
+			$this->render('login_form.tpl');
 			return false;
 		}
 		else
 		{
 			if(Auth::$userinfo->confirmed == PILOT_PENDING)
 			{
-				Template::Show('login_unconfirmed.tpl');
+				$this->render('login_unconfirmed.tpl');
 				Auth::LogOut();
 				
 				// show error
 			}
 			elseif(Auth::$userinfo->confirmed == PILOT_REJECTED)
 			{
-				Template::Show('login_rejected.tpl');
+				$this->render('login_rejected.tpl');
 				Auth::LogOut();
 			}
 			else
@@ -145,8 +145,8 @@ class Login extends CodonModule
 				
 				PilotData::UpdateLogin($pilotid);
 				
-				Template::Set('redir', SITE_URL . '/' . $this->post->redir);
-				Template::Show('login_complete.tpl');
+				$this->set('redir', SITE_URL . '/' . $this->post->redir);
+				$this->render('login_complete.tpl');
 				
 				CodonEvent::Dispatch('login_success', 'Login');
 			}

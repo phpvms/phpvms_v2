@@ -47,10 +47,10 @@ class Finances extends CodonModule
 			
 			$data = FinanceData::GetMonthBalanceData($period);
 			
-			Template::Set('title', 'Balance Sheet for '.$period);
-			Template::Set('allfinances', $data);
+			$this->set('title', 'Balance Sheet for '.$period);
+			$this->set('allfinances', $data);
 			
-			Template::Show('finance_balancesheet.tpl');
+			$this->render('finance_balancesheet.tpl');
 		}
 		elseif($type[0] == 'y')
 		{
@@ -58,11 +58,11 @@ class Finances extends CodonModule
 
 			$data = FinanceData::GetYearBalanceData($type);
 			
-			Template::Set('title', 'Balance Sheet for Year '.date('Y', $type));
-			Template::Set('allfinances', $data);
-			Template::Set('year', date('Y', $type));
+			$this->set('title', 'Balance Sheet for Year '.date('Y', $type));
+			$this->set('allfinances', $data);
+			$this->set('year', date('Y', $type));
 			
-			Template::Show('finance_summarysheet.tpl');
+			$this->render('finance_summarysheet.tpl');
 		}
 		else
 		{
@@ -70,15 +70,15 @@ class Finances extends CodonModule
 			
 			$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
 			
-			Template::Set('title', 'Balance Sheet for Last 3 Months');
-			Template::Set('allfinances', $data);					
-			Template::Show('finance_summarysheet.tpl');
+			$this->set('title', 'Balance Sheet for Last 3 Months');
+			$this->set('allfinances', $data);					
+			$this->render('finance_summarysheet.tpl');
 		}		
 	}
 	
 	public function viewexpenses()
 	{
-		Template::Set('allexpenses', FinanceData::GetAllExpenses());
-		Template::Show('finance_expenselist.tpl');
+		$this->set('allexpenses', FinanceData::GetAllExpenses());
+		$this->render('finance_expenselist.tpl');
 	}
 }

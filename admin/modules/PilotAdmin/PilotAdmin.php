@@ -25,15 +25,15 @@ class PilotAdmin extends CodonModule
 		switch($this->get->page)
 		{
 			case 'viewpilots':
-				Template::Set('sidebar', 'sidebar_pilots.tpl');
+				$this->set('sidebar', 'sidebar_pilots.tpl');
 				break;
 			case 'pendingpilots':
-				Template::Set('sidebar', 'sidebar_pending.tpl');
+				$this->set('sidebar', 'sidebar_pending.tpl');
 				break;
 			case 'pilotgroups':
 			case 'editgroup':
 			case 'addgroup':
-				Template::Set('sidebar', 'sidebar_groups.tpl');
+				$this->set('sidebar', 'sidebar_groups.tpl');
 				break;
 		}
 	}
@@ -71,8 +71,8 @@ class PilotAdmin extends CodonModule
 				
 				PilotData::DeletePilot($pilotid);
 				
-				Template::Set('message', Lang::gs('pilot.deleted'));
-				Template::Show('core_success.tpl');
+				$this->set('message', Lang::gs('pilot.deleted'));
+				$this->render('core_success.tpl');
 				
 				break;
 			/* These are reloaded into the #pilotgroups ID
@@ -82,7 +82,7 @@ class PilotAdmin extends CodonModule
 				
 				$this->AddPilotToGroup();
 				$this->SetGroupsData($this->post->pilotid);
-				Template::Show('pilots_groups.tpl');
+				$this->render('pilots_groups.tpl');
 				return;
 				
 				break;
@@ -92,7 +92,7 @@ class PilotAdmin extends CodonModule
 				$this->RemovePilotGroup();
 				
 				$this->SetGroupsData($this->post->pilotid);
-				Template::Show('pilots_groups.tpl');
+				$this->render('pilots_groups.tpl');
 				
 				return;
 				
@@ -133,13 +133,12 @@ class PilotAdmin extends CodonModule
 				RanksData::CalculateUpdatePilotRank($this->post->pilotid);
 				PilotData::GenerateSignature($this->post->pilotid);
 				
-				Template::Set('message', 'Profile updated successfully');
-				Template::Show('core_success.tpl');
+				$this->set('message', 'Profile updated successfully');
+				$this->render('core_success.tpl');
 				
 				return;
 				break;
 		}
-		
 		
 		if($this->get->action == 'viewoptions')
 		{
@@ -148,7 +147,6 @@ class PilotAdmin extends CodonModule
 		}
 		
 		$this->ShowPilotsList();
-		
 	}
 		
 	public function pendingpilots()
@@ -167,8 +165,8 @@ class PilotAdmin extends CodonModule
 				break;
 		}
 
-		Template::Set('allpilots', PilotData::GetPendingPilots());
-		Template::Show('pilots_pending.tpl');
+		$this->set('allpilots', PilotData::GetPendingPilots());
+		$this->render('pilots_pending.tpl');
 	}
 	
 	public function viewbids()
@@ -179,18 +177,18 @@ class PilotAdmin extends CodonModule
 			
 			if($ret == true)
 			{
-				Template::Set('message', 'Bid removed!');
-				Template::Show('core_success.tpl');
+				$this->set('message', 'Bid removed!');
+				$this->render('core_success.tpl');
 			}
 			else
 			{
-				Template::Set('message', 'There was an error!');
-				Template::Show('core_error.tpl');
+				$this->set('message', 'There was an error!');
+				$this->render('core_error.tpl');
 			}
 		}
 		
-		Template::Set('allbids', SchedulesData::getAllBids());
-		Template::Show('pilots_viewallbids.tpl');
+		$this->set('allbids', SchedulesData::getAllBids());
+		$this->render('pilots_viewallbids.tpl');
 	}
 	
 	public function pilotgroups()
@@ -210,58 +208,66 @@ class PilotAdmin extends CodonModule
 	
 	public function addgroup()
 	{
-		Template::Set('title', 'Add a Group ');
-		Template::Set('action', 'addgroup');
-		Template::Set('permission_set', Config::Get('permission_set'));
+		$this->set('title', 'Add a Group ');
+		$this->set('action', 'addgroup');
+		$this->set('permission_set', Config::Get('permission_set'));
 		
-		Template::Show('groups_groupform.tpl');
+		$this->render('groups_groupform.tpl');
 	}
 	
 	public function editgroup()
 	{
+		if(!isset($this->get->groupid))
+		{
+			return;
+		}
+			
 		$group_info = PilotGroups::GetGroup($this->get->groupid);
 				
-		Template::Set('group', $group_info);
-		Template::Set('title', 'Editing '.$group_info->name);
-		Template::Set('action', 'editgroup');
-		Template::Set('permission_set', Config::Get('permission_set'));
+		$this->set('group', $group_info);
+		$this->set('title', 'Editing '.$group_info->name);
+		$this->set('action', 'editgroup');
+		$this->set('permission_set', Config::Get('permission_set'));
 		
-		Template::Show('groups_groupform.tpl');
+		$this->render('groups_groupform.tpl');
 	}
 	
 	public function pilotawards()
 	{
-		if($this->post->action == 'addaward')
-		{			
-			$this->AddAward();
-		}
-		elseif($this->post->action == 'deleteaward')
+		if(isset($this->post->action))
 		{
-			$this->DeleteAward();
+			if($this->post->action == 'addaward')
+			{			
+				$this->AddAward();
+			}
+			elseif($this->post->action == 'deleteaward')
+			{
+				$this->DeleteAward();
+			}
 		}
 						
-		Template::Set('allawards', AwardsData::GetPilotAwards($_REQUEST['pilotid']));
-		Template::Show('pilots_awards.tpl');
+		$this->set('allawards', AwardsData::GetPilotAwards($_REQUEST['pilotid']));
+		$this->render('pilots_awards.tpl');
 	}
 		
 	protected function ShowPilotsList()
 	{
-		Template::Set('allpilots', PilotData::GetAllPilots(Vars::GET('letter')));
-		Template::Show('pilots_list.tpl');
+		$this->set('allpilots', PilotData::GetAllPilots(Vars::GET('letter')));
+		$this->render('pilots_list.tpl');
 	}
 	
 	protected function ViewPilotDetails()
 	{
 		//This is for the main tab
-		Template::Set('pilotinfo', PilotData::GetPilotData($this->get->pilotid));
-		Template::Set('customfields', PilotData::GetFieldData($this->get->pilotid, true));
-		Template::Set('allawards', AwardsData::GetPilotAwards($this->get->pilotid));
-		Template::Set('pireps', PIREPData::GetAllReportsForPilot($this->get->pilotid));
-		Template::Set('countries', Countries::getAllCountries());
+		$this->set('pilotinfo', PilotData::GetPilotData($this->get->pilotid));
+		$this->set('customfields', PilotData::GetFieldData($this->get->pilotid, true));
+		$this->set('allawards', AwardsData::GetPilotAwards($this->get->pilotid));
+		$this->set('pireps', PIREPData::GetAllReportsForPilot($this->get->pilotid));
+		$this->set('countries', Countries::getAllCountries());
 		
 		$this->SetGroupsData($this->get->pilotid);
 		
-		Template::Show('pilots_detailtabs.tpl');
+		$this->render('pilots_detailtabs.tpl');
 	}
 	
 	protected function SetGroupsData($pilotid)
@@ -278,9 +284,9 @@ class PilotAdmin extends CodonModule
 			}
 		}
 		
-		Template::Set('pilotid', $pilotid);
-		Template::Set('pilotgroups', PilotData::GetPilotGroups($pilotid));
-		Template::Set('freegroups', $freegroups);
+		$this->set('pilotid', $pilotid);
+		$this->set('pilotgroups', PilotData::GetPilotGroups($pilotid));
+		$this->set('freegroups', $freegroups);
 	}
 	
 	protected function AddGroupPost()
@@ -289,8 +295,8 @@ class PilotAdmin extends CodonModule
 		
 		if($name == '')
 		{
-			Template::Set('message', Lang::gs('group.no.name'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('group.no.name'));
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -304,13 +310,13 @@ class PilotAdmin extends CodonModule
 			
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', sprintf(Lang::gs('error'), DB::$error));
-			Template::Show('core_error.tpl');
+			$this->set('message', sprintf(Lang::gs('error'), DB::$error));
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', sprintf(Lang::gs('group.added'), $this->post->name));
-			Template::Show('core_success.tpl');
+			$this->set('message', sprintf(Lang::gs('group.added'), $this->post->name));
+			$this->render('core_success.tpl');
 		}		
 	}
 	
@@ -326,13 +332,13 @@ class PilotAdmin extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', sprintf(Lang::gs('error'), DB::$error));
-			Template::Show('core_error.tpl');
+			$this->set('message', sprintf(Lang::gs('error'), DB::$error));
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', sprintf(Lang::gs('group.saved'), $this->post->name));
-			Template::Show('core_success.tpl');
+			$this->set('message', sprintf(Lang::gs('group.saved'), $this->post->name));
+			$this->render('core_success.tpl');
 		}		
 	}
 	
@@ -344,8 +350,8 @@ class PilotAdmin extends CodonModule
 		
 		if(PilotGroups::CheckUserInGroup($pilotid, $groupname))
 		{
-			Template::Set('message', Lang::gs('group.pilot.already.in'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('group.pilot.already.in'));
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -353,13 +359,13 @@ class PilotAdmin extends CodonModule
 		
 		if(DB::errno() != 0 )
 		{
-			Template::Set('message', Lang::gs('group.add.error'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('group.add.error'));
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', Lang::gs('group.user.added'));
-			Template::Show('core_success.tpl');
+			$this->set('message', Lang::gs('group.user.added'));
+			$this->render('core_success.tpl');
 		}		
 	}
 	
@@ -372,20 +378,20 @@ class PilotAdmin extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error removing');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error removing');
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'Removed');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'Removed');
+			$this->render('core_success.tpl');
 		}
 	}
 	
 	protected function ShowGroups()
 	{
-		Template::Set('allgroups', PilotGroups::GetAllGroups());
-		Template::Show('groups_grouplist.tpl');
+		$this->set('allgroups', PilotGroups::GetAllGroups());
+		$this->render('groups_grouplist.tpl');
 	}
 	
 	protected function ApprovePilot()
@@ -398,7 +404,7 @@ class PilotAdmin extends CodonModule
 		# Send pilot notification
 		
 		$subject = Lang::gs('email.register.accepted.subject');
-		Template::Set('pilot', $pilot);
+		$this->set('pilot', $pilot);
 		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true);
 	
 		Util::SendEmail($pilot->email, $subject, $message);
@@ -413,7 +419,7 @@ class PilotAdmin extends CodonModule
 		
 		$subject = Lang::gs('email.register.rejected.subject');
 				
-		Template::Set('pilot', $pilot);		
+		$this->set('pilot', $pilot);		
 		$message = "Dear $pilot->firstname $pilot->lastname,
 Your registration for ".SITE_NAME." was denied. Please contact an admin at <a href=\"".SITE_URL."\">".SITE_URL."</a> to dispute this. 
 				
@@ -434,16 +440,16 @@ Thanks!
 		// Check password length
 		if(strlen($password1) <= 5)
 		{
-			Template::Set('message', Lang::gs('password.wrong.length'));
-			Template::Show('core_message.tpl');
+			$this->set('message', Lang::gs('password.wrong.length'));
+			$this->render('core_message.tpl');
 			return;
 		}
 		
 		// Check is passwords are the same
 		if($password1 != $password2)
 		{
-			Template::Set('message', Lang::gs('password.no.match'));
-			Template::Show('core_message.tpl');
+			$this->set('message', Lang::gs('password.no.match'));
+			$this->render('core_message.tpl');
 			return;
 		}
 		
@@ -451,13 +457,13 @@ Thanks!
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error, administrator has been notified');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error, administrator has been notified');
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', Lang::gs('password.changed'));
-			Template::Show('core_success.tpl');
+			$this->set('message', Lang::gs('password.changed'));
+			$this->render('core_success.tpl');
 		}
 	}
 	
@@ -471,8 +477,8 @@ Thanks!
 		$award = AwardsData::GetPilotAward($this->post->pilotid, $this->post->awardid);
 		if($award)
 		{
-			Template::Set('message', Lang::gs('award.exists'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('award.exists'));
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -485,8 +491,8 @@ Thanks!
 		
 		if($award)
 		{
-			Template::Set('message', Lang::gs('award.deleted'));
-			Template::Show('core_success.tpl');
+			$this->set('message', Lang::gs('award.deleted'));
+			$this->render('core_success.tpl');
 			return;
 		}
 		

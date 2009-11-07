@@ -38,8 +38,8 @@ class ACARS extends CodonModule
 	public function viewmap()
 	{
 		$this->title = 'ACARS Map';
-		Template::Set('acarsdata', ACARSData::GetACARSData());
-		Template::Show('acarsmap.tpl');
+		$this->set('acarsdata', ACARSData::GetACARSData());
+		$this->render('acarsmap.tpl');
 	}
 	
 	/**
@@ -181,8 +181,8 @@ class ACARS extends CodonModule
 			break;
 		}
 		
-		Template::Set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
-		Template::Set('userinfo', Auth::$userinfo);
+		$this->set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+		$this->set('userinfo', Auth::$userinfo);
 		
 		$acars_config = Template::GetTemplate($template_name, true);
 		$acars_config = str_replace("\n", "\r\n", $acars_config);

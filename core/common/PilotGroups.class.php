@@ -193,7 +193,7 @@ class PilotGroups extends CodonData
 	public static function CheckUserInGroup($pilotid, $groupid)
 	{
 		
-		if(!is_numeric($groupidorname))
+		if(!is_numeric($groupid))
 		{
 			$groupid = self::GetGroupID($groupid);
 		}

@@ -27,7 +27,7 @@ class FrontBids extends CodonModule
     public function RecentFrontPage()
 	{
 
-		Template::Set('lastbids', SchedulesData::GetLatestBids());
-		Template::Show('frontpage_recentbids.tpl');
+		$this->set('lastbids', SchedulesData::GetLatestBids());
+		$this->render('frontpage_recentbids.tpl');
 	}
 }

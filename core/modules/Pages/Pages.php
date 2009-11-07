@@ -21,8 +21,8 @@ class Pages extends CodonModule
 {
 	public function NavBar()
 	{
-		Template::Set('allpages', SiteData::GetAllPages(true, Auth::$loggedin));
-		Template::Show('pages_items.tpl');
+		$this->set('allpages', SiteData::GetAllPages(true, Auth::$loggedin));
+		$this->render('pages_items.tpl');
 		
 	}
 	
@@ -36,24 +36,24 @@ class Pages extends CodonModule
 		
 		if($pageinfo->public == 0 && Auth::LoggedIn() == false)
 		{
-			Template::Show('pages_nopermission.tpl');
+			$this->render('pages_nopermission.tpl');
 			return;
 		}
 		
 		$content = SiteData::GetPageContent($page);
 		if(!$content)
 		{
-			Template::Show('pages_notfound.tpl');
+			$this->render('pages_notfound.tpl');
 		}
 		else
 		{
 			// Do it this way, so then that this page/template
 			//	can be customized on a skin-by-skin basis
 			$this->title = $content->pagename;
-			Template::Set('pagename', $content->pagename);
-			Template::Set('content', $content->content);
+			$this->set('pagename', $content->pagename);
+			$this->set('content', $content->content);
 			
-			Template::Show('pages_content.tpl');
+			$this->render('pages_content.tpl');
 		}
 		
 	}

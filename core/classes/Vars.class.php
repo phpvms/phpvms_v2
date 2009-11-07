@@ -220,7 +220,7 @@ class Vars
 	
 	public static function GET($name)
 	{
-		if(is_array($_GET[$name]))
+		if(isset($_GET[$name]) && is_array($_GET[$name]))
 		{
 			return $_GET[$name];
 		}

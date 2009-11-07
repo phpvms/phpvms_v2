@@ -64,8 +64,8 @@ class Schedules extends CodonModule
 		
 		if($routeid == '')
 		{
-			Template::Set('message', 'You must be logged in to access this feature!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
 			return;
 		}
 				
@@ -78,49 +78,49 @@ class Schedules extends CodonModule
 		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 		$counts = SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum);
 									
-		Template::Set('schedule', $scheddata);
-		Template::Set('scheddata', $counts); // past 30 days
+		$this->set('schedule', $scheddata);
+		$this->set('scheddata', $counts); // past 30 days
 		
-		Template::Show('schedule_details.tpl');
-		Template::Show('route_map.tpl');
+		$this->render('schedule_details.tpl');
+		$this->render('route_map.tpl');
 	}
 	
 	public function brief($routeid = '')
 	{	
 		if($routeid == '')
 		{
-			Template::Set('message', 'You must be logged in to access this feature!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 		
-		Template::Set('schedule', $scheddata);
-		Template::Show('schedule_briefing.tpl');
+		$this->set('schedule', $scheddata);
+		$this->render('schedule_briefing.tpl');
 	}
 	
 	public function boardingpass($routeid)
 	{
 		if($routeid == '')
 		{
-			Template::Set('message', 'You must be logged in to access this feature!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
 				
-		Template::Set('schedule', $scheddata);
-		Template::Show('schedule_boarding_pass.tpl');
+		$this->set('schedule', $scheddata);
+		$this->render('schedule_boarding_pass.tpl');
 	}
 	
 	public function bids()
 	{
 		if(!Auth::LoggedIn()) return;
 			
-		Template::Set('bids', SchedulesData::GetBids(Auth::$userinfo->pilotid));
-		Template::Show('schedule_bids.tpl');
+		$this->set('bids', SchedulesData::GetBids(Auth::$userinfo->pilotid));
+		$this->render('schedule_bids.tpl');
 	}
 	
 	public function addbid()
@@ -131,8 +131,8 @@ class Schedules extends CodonModule
 		
 		if($routeid == '')
 		{
-			Template::Set('message', 'No route!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'No route!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -141,8 +141,8 @@ class Schedules extends CodonModule
 		$route = SchedulesData::GetSchedule($routeid);
 		if(!$route)
 		{
-			Template::Set('message', 'Invalid route!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Invalid route!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -169,13 +169,13 @@ class Schedules extends CodonModule
 		
 		if($ret === true)
 		{
-			Template::Set('message', 'Bid Added!');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'Bid Added!');
+			$this->render('core_success.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'You must be logged in to access this feature!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
 		}
 	}
 	
@@ -191,15 +191,15 @@ class Schedules extends CodonModule
 		$depapts = OperationsData::GetAllAirports();
 		$equip = OperationsData::GetAllAircraftSearchList(true);
 		
-		Template::Set('depairports', $depapts);
-		Template::Set('equipment', $equip);
+		$this->set('depairports', $depapts);
+		$this->set('equipment', $equip);
 		
-		Template::Show('schedule_searchform.tpl');
+		$this->render('schedule_searchform.tpl');
 		
 		# Show the routes. Remote this to not show them.
-		Template::Set('allroutes', SchedulesData::GetSchedules());
+		$this->set('allroutes', SchedulesData::GetSchedules());
 		
-		Template::Show('schedule_list.tpl');
+		$this->render('schedule_list.tpl');
 	}
 	
 	public function FindFlight()
@@ -207,17 +207,17 @@ class Schedules extends CodonModule
 		
 		if($this->post->depicao != '')
 		{
-			Template::Set('allroutes', SchedulesData::GetRoutesWithDeparture($this->post->depicao));
+			$this->set('allroutes', SchedulesData::GetRoutesWithDeparture($this->post->depicao));
 		}
 		
 		if($this->post->arricao != '')
 		{
-			Template::Set('allroutes', SchedulesData::GetRoutesWithArrival($this->post->arricao));
+			$this->set('allroutes', SchedulesData::GetRoutesWithArrival($this->post->arricao));
 		}
 		
 		if($this->post->equipment != '')
 		{
-			Template::Set('allroutes', SchedulesData::GetSchedulesByEquip($this->post->equipment));
+			$this->set('allroutes', SchedulesData::GetSchedulesByEquip($this->post->equipment));
 		}
 		
 		if($this->post->distance != '')
@@ -227,10 +227,10 @@ class Schedules extends CodonModule
 			else
 				$type = '<';
 				
-			Template::Set('allroutes', SchedulesData::GetSchedulesByDistance($this->post->distance, $type));
+			$this->set('allroutes', SchedulesData::GetSchedulesByDistance($this->post->distance, $type));
 		}
 		
-		Template::Show('schedule_results.tpl');
+		$this->render('schedule_results.tpl');
 	}
 	
 

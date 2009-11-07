@@ -23,7 +23,7 @@ class Logout extends CodonModule
 		
 		/*redirect back to front page
 		*/
-		Template::Set('redir', SITE_URL);
-		Template::Show('login_complete.tpl');
+		$this->set('redir', SITE_URL);
+		$this->render('login_complete.tpl');
 	}
 }

@@ -30,8 +30,8 @@ class Contact extends CodonModule
 				// Check the captcha thingy
 				if($this->post->captcha != $captcha)
 				{
-					Template::Set('message', 'You failed the captcha test!');
-					Template::Show('core_error.tpl');
+					$this->set('message', 'You failed the captcha test!');
+					$this->render('core_error.tpl');
 					return;
 				}
 				
@@ -39,16 +39,16 @@ class Contact extends CodonModule
 				if(trim($this->post->name) == '' 
 					|| trim($this->post->email) == '')
 				{
-					Template::Set('message', 'You must enter a name and email!');
-					Template::Show('core_error.tpl');
+					$this->set('message', 'You must enter a name and email!');
+					$this->render('core_error.tpl');
 					return;
 				}
 			}
 			
 			if($this->post->subject == '' || trim($this->post->message) == '')
 			{
-				Template::Set('message', 'You must enter a subject and message!');
-				Template::Show('core_error.tpl');
+				$this->set('message', 'You must enter a subject and message!');
+				$this->render('core_error.tpl');
 				return;
 			}
 			
@@ -62,7 +62,7 @@ class Contact extends CodonModule
 			
 			Util::SendEmail(ADMIN_EMAIL, $subject, $message);
 			
-			Template::Show('contact_sent.tpl');
+			$this->render('contact_sent.tpl');
 			return;
 		}		
 		
@@ -70,8 +70,8 @@ class Contact extends CodonModule
 		$rand1 = rand(1, 10);
 		$rand2 = rand(1, 10);
 		
-		Template::Set('rand1', $rand1);
-		Template::Set('rand2', $rand2);		
+		$this->set('rand1', $rand1);
+		$this->set('rand2', $rand2);		
 		
 		$tot = $rand1 + $rand2;
 		//echo "total: $tot <br />";
@@ -80,7 +80,7 @@ class Contact extends CodonModule
 		//echo 'output of $_SESSION: <br />';
 		//print_r($_SESSION);
 		
-		Template::Show('contact_form.tpl');
+		$this->render('contact_form.tpl');
 	}
 	
 }

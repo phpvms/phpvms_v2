@@ -28,12 +28,12 @@ class Pilots extends CodonModule
 		
 		foreach($allhubs as $hub)
 		{
-			Template::Set('title', $hub->name);
-			Template::Set('icao', $hub->icao);
+			$this->set('title', $hub->name);
+			$this->set('icao', $hub->icao);
 			
-			Template::Set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
+			$this->set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
 								
-			Template::Show('pilots_list.tpl');
+			$this->render('pilots_list.tpl');
 		}
 		
 		$nohub = PilotData::GetAllPilotsByHub('');
@@ -42,28 +42,28 @@ class Pilots extends CodonModule
 			return;
 		}
 		
-		Template::Set('title', 'No Hub');
-		Template::Set('icao', '');
-		Template::Set('allpilots', $nohub);
-		Template::Show('pilots_list.tpl');
+		$this->set('title', 'No Hub');
+		$this->set('icao', '');
+		$this->set('allpilots', $nohub);
+		$this->render('pilots_list.tpl');
 	}
 	
 	public function reports($pilotid='')
 	{
 		if($pilotid == '')
 		{
-			Template::Set('message', 'No pilot specified!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'No pilot specified!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
-		Template::Show('pireps_viewall.tpl');
+		$this->set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
+		$this->render('pireps_viewall.tpl');
 	}
 	
 	public function RecentFrontPage($count = 5)
 	{
-		Template::Set('pilots', PilotData::GetLatestPilots($count));
-		Template::Show('frontpage_recentpilots.tpl');
+		$this->set('pilots', PilotData::GetLatestPilots($count));
+		$this->render('frontpage_recentpilots.tpl');
 	}
 }

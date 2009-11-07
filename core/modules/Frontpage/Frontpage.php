@@ -24,8 +24,8 @@ class Frontpage extends CodonModule
 	
 	public function index()
 	{
-		Template::Set('usersonline', StatsData::UsersOnline());
-		Template::Set('guestsonline', StatsData::GuestsOnline());
-		Template::Show('frontpage_main.tpl');
+		$this->set('usersonline', StatsData::UsersOnline());
+		$this->set('guestsonline', StatsData::GuestsOnline());
+		$this->render('frontpage_main.tpl');
 	}
 }

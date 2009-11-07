@@ -24,7 +24,7 @@ class Registration extends CodonModule
 			*/
 		if($this->get->page == 'register')
 		{
-			Template::ShowTemplate('registration_javascript.tpl');
+			$this->renderTemplate('registration_javascript.tpl');
 		}
 	}
 		
@@ -33,7 +33,7 @@ class Registration extends CodonModule
 	{
 		if(Auth::LoggedIn()) // Make sure they don't over-ride it
 		{
-			Template::Show('login_already.tpl');
+			$this->render('login_already.tpl');
 			return;
 		}
 			
@@ -51,22 +51,22 @@ class Registration extends CodonModule
 	protected function ShowForm()
 	{
 		
-		Template::Set('extrafields', RegistrationData::GetCustomFields());
-		Template::Set('allairlines', OperationsData::GetAllAirlines(true));
-		Template::Set('allhubs', OperationsData::GetAllHubs());
-		Template::Set('countries', Countries::getAllCountries());
+		$this->set('extrafields', RegistrationData::GetCustomFields());
+		$this->set('allairlines', OperationsData::GetAllAirlines(true));
+		$this->set('allhubs', OperationsData::GetAllHubs());
+		$this->set('countries', Countries::getAllCountries());
 				
 		# Just a simple addition
 		$rand1 = rand(1, 10);
 		$rand2 = rand(1, 10);
 		
-		Template::Set('rand1', $rand1);
-		Template::Set('rand2', $rand2);		
+		$this->set('rand1', $rand1);
+		$this->set('rand2', $rand2);		
 		
 		$tot = $rand1 + $rand2;
 		SessionManager::Set('captcha_sum', $tot);
 		
-		Template::Show('registration_mainform.tpl');
+		$this->render('registration_mainform.tpl');
 		
 	}
 	
@@ -99,21 +99,21 @@ class Registration extends CodonModule
 			
 			if($ret)
 			{
-				Template::Set('error', Lang::gs('email.inuse'));
-				Template::Show('registration_error.tpl');
+				$this->set('error', Lang::gs('email.inuse'));
+				$this->render('registration_error.tpl');
 				return false;
 			}
 			
 			
 			if(RegistrationData::AddUser($data) == false)
 			{
-				Template::Set('error', RegistrationData::$error);
-				Template::Show('registration_error.tpl');
+				$this->set('error', RegistrationData::$error);
+				$this->render('registration_error.tpl');
 			}
 			else
 			{
 				RegistrationData::SendEmailConfirm($email, $firstname, $lastname);
-				Template::Show('registration_sentconfirmation.tpl');
+				$this->render('registration_sentconfirmation.tpl');
 			}
 			
 			CodonEvent::Dispatch('registration_complete', 'Registration', $_POST);
@@ -150,78 +150,78 @@ class Registration extends CodonModule
 		if($this->post->captcha != $captcha)
 		{
 			$error = true;
-			Template::Set('captcha_error', 'You failed the human test!');			
+			$this->set('captcha_error', 'You failed the human test!');			
 		}
 		else
-			Template::Set('captcha_error', '');
+			$this->set('captcha_error', '');
 		
 		/* Check the firstname and last name
 		 */
 		if($this->post->firstname == '')
 		{
 			$error = true;
-			Template::Set('firstname_error', true);
+			$this->set('firstname_error', true);
 		}
 		else
-			Template::Set('firstname_error', '');
+			$this->set('firstname_error', '');
 		
 		/* Check the last name
 		 */
 		if($this->post->lastname == '')
 		{
 			$error = true;
-			Template::Set('lastname_error', true);
+			$this->set('lastname_error', true);
 		}
 		else
-			Template::Set('lastname_error', '');
+			$this->set('lastname_error', '');
 		
 		/* Check the email address
 		 */
 		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]*)$", $this->post->email) == false)
 		{
 			$error = true;
-			Template::Set('email_error', true);
+			$this->set('email_error', true);
 		}
 		else
-			Template::Set('email_error', '');
+			$this->set('email_error', '');
 		
 		/* Check the location
 		 */
 		if($this->post->location == '')
 		{
 			$error = true;
-			Template::Set('location_error', true);
+			$this->set('location_error', true);
 		}
 		else
-			Template::Set('location_error', '');
+			$this->set('location_error', '');
 		
 		// Check password length
 		if(strlen($this->post->password1) <= 5)
 		{
 			$error = true;
-			Template::Set('password_error', 'The password is too short!');
+			$this->set('password_error', 'The password is too short!');
 		}
 		else
-			Template::Set('password_error', '');
+			$this->set('password_error', '');
 		
 		// Check is passwords are the same
 		if($this->post->password1 != $this->post->password2)
 		{
 			$error = true;
-			Template::Set('password_error', 'The passwords do not match!');
+			$this->set('password_error', 'The passwords do not match!');
 		}
 		else
-			Template::Set('password_error', '');
+			$this->set('password_error', '');
 		
 		/* Check if they agreed to the statement
 
 		if(!$_POST['agree'])
 		{
 			$error = true;
-			Template::Set('agree_error', true);
+			$this->set('agree_error', true);
 		}
 		else
-			Template::Set('agree_error', '');
+			$this->set('agree_error', '');
 		 */
 		if($error == true)
 		{

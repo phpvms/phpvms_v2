@@ -27,7 +27,6 @@ class StatsData extends CodonData
 					LIMIT 1';
 					
 		return DB::get_row($sql);
-	
 	}
 	
 	/**
@@ -355,7 +354,7 @@ class StatsData extends CodonData
 					WHERE `accepted`='.PIREP_ACCEPTED.'
 						AND `flighttype`=\'P\'';
 		
-		$result=DB::get_results($query);
+		$result=DB::get_row($query);
 		
 		return $result->total;		
 	}
@@ -393,7 +392,7 @@ class StatsData extends CodonData
 					FROM '.TABLE_PREFIX.'pireps
 					WHERE `accepted`='.PIREP_ACCEPTED;
 		
-		$result=DB::get_results($query);
+		$result=DB::get_row($query);
 		
 		return $result->total;
 	}
@@ -411,7 +410,7 @@ class StatsData extends CodonData
 					FROM '.TABLE_PREFIX.'pireps
 					WHERE `accepted`='.PIREP_ACCEPTED;
 		
-		$result=DB::get_results($query);
+		$result=DB::get_row($query);
 		
 		return $result->total;
 	}

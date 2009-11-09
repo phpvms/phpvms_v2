@@ -28,29 +28,3 @@ else
 	<input type="hidden" name="action" value="<?php echo $action;?>" />
 	<input type="submit" name="submit" value="Save Changes" /></p>
 </form>
-<script type="text/javascript">
-//<![CDATA[
-var editor = CKEDITOR.replace( 'editor',
-{
-height: '500px',
-toolbar: [
-    ['Source','-','Save','NewPage','Preview','-','Templates', 'Image'],
-    ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
-    ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-    /*['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],*/
-    ['Bold','Italic','Underline','Strike',/*'-','Subscript','Superscript'*/],
-    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-    ['Link','Unlink','Anchor'],
-    /*[,'Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],*/
-    ['Styles','Format','Font','FontSize'],
-    ['TextColor','BGColor'],
-    ['Maximize', 'ShowBlocks','-','About']
-  ]
-});
-editor.on( 'pluginsLoaded', function( ev )
-{
-
-});
-//]]>
-</script>

@@ -46,35 +46,29 @@ class SiteCMS extends CodonModule
 	
 	public function viewnews()
 	{
-		switch ($this->post->action)
+		$isset = isset($this->post->action);
+		if($isset && $this->post->action == 'addnews')
 		{
-			case 'addnews':
-				
-				$this->AddNewsItem();
-				
-				break;
+			$this->AddNewsItem();		
+		}
+		elseif($isset && $this->post->action == 'editnews')
+		{
+			$res = SiteData::EditNewsItem($this->post->id, $this->post->subject, $this->post->body);
 			
-			case 'editnews':
-				
-				$res = SiteData::EditNewsItem($this->post->id, $this->post->subject, $this->post->body);
-				
-				if($res == false)
-				{
-					Template::Set('message', Lang::gs('news.updated.error'));
-					Template::Show('core_error.tpl');
-				}
-				else
-				{
-					Template::Set('message', Lang::gs('news.updated.success'));
-					Template::Show('core_success.tpl');
-				}						
-				break;
-			
-			case 'deleteitem':
-				
-				$this->DeleteNewsItem();
-				
-				break;
+			if($res == false)
+			{
+				Template::Set('message', Lang::gs('news.updated.error'));
+				Template::Show('core_error.tpl');
+			}
+			else
+			{
+				Template::Set('message', Lang::gs('news.updated.success'));
+				Template::Show('core_success.tpl');
+			}
+		}
+		elseif($isset && $this->post->action == 'deleteitem')
+		{	
+			$this->DeleteNewsItem();	
 		}
 		
 		$allnews = SiteData::GetAllNews();
@@ -143,16 +137,18 @@ class SiteCMS extends CodonModule
 		
 		/* This is the actual adding page process
 				 */
-		switch($this->post->action)
+		if(isset($this->post->action))
 		{
-			case 'addpage':
-				$this->add_page_post();
-				break;
-			case 'savepage':
-				$this->edit_page_post();
-				break;
+			switch($this->post->action)
+			{
+				case 'addpage':
+					$this->add_page_post();
+					break;
+				case 'savepage':
+					$this->edit_page_post();
+					break;
+			}
 		}
-		
 		
 		/* this is the popup form edit form
 		 */

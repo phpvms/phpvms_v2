@@ -540,7 +540,7 @@ class SchedulesData extends CodonData
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
 						(`code`, `flightnum`, 
 						 `depicao`, `arricao`, 
-						 `route`, `aircraft`, `distance`, 
+						 `route`, `aircraft`, `flightlevel`, `distance`, 
 						 `deptime`, `arrtime`, 
 						 `flighttime`, `daysofweek`, `maxload`, `price`, 
 						 `flighttype`, `notes`, `enabled`)
@@ -550,6 +550,7 @@ class SchedulesData extends CodonData
 						'$data[arricao]', 
 						'$data[route]', 
 						'$data[aircraft]', 
+						'$data[flightlevel]',
 						'$data[distance]',
 						'$data[deptime]', 
 						'$data[arrtime]',
@@ -628,6 +629,7 @@ class SchedulesData extends CodonData
 					`arricao`='$data[arricao]',
 					`route`='$data[route]', 
 					`aircraft`='$data[aircraft]', 
+					`flightlevel`='$data[flightlevel]',
 					`distance`='$data[distance]', 
 					`deptime`='$data[deptime]',
 					`arrtime`='$data[arrtime]', 

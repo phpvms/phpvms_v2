@@ -21,7 +21,7 @@ class Maintenance extends CodonModule
 
 	public function HTMLHead()
 	{
-		Template::Set('sidebar', 'sidebar_maintenance.tpl');		
+		$this->set('sidebar', 'sidebar_maintenance.tpl');		
 	}
 	
 	public function index()
@@ -31,7 +31,7 @@ class Maintenance extends CodonModule
 	
 	public function options()
 	{
-		Template::Show('maintenance_options.tpl');
+		$this->render('maintenance_options.tpl');
 	}
 	
 	public function resetdistances()

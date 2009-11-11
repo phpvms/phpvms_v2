@@ -42,6 +42,7 @@
 		<li><strong>NEW</strong>: <a href="http://www.xacars.net" target="_blank">XAcars</a> position and PIREP support</li>
 		<li><strong>NEW</strong>: Group based permissions access to admin panel</li>
 		<li>phpVMS API server has airport information (as an alternative to geonames, use whichever works for you)</li>
+		<li>Flight level field in schedules (and reported to xacars/fsacars)</li>
 		<li>Bids screen in admin panel</li>
 		<li>Maintenance mode option for site</li>
 		<li>Pilot auto-retire option (X days after last PIREP or last login with no PIREPs)</li>
@@ -61,10 +62,10 @@
 		<li>ACARS uses JSON instead of XML, more lightweight and bandwidth-friendly</li>
 		<li>...numerous other bug fixes and improvements!</li>
 	</ul>
-
+    <p>Important - <a href="http://docs.phpvms.net/2.0_upgrade_guide">read the upgrade guide!</a></p>
 	<p>
 	<strong>Templates Changed</strong>:</p>
-	<p>Every template has been touched, to use the new url() function. Instead of including SITE_URL/index.php/module/path, it is now just url('/module/path'). Specific changes are left below:</p>
+	<p>Every template has been touched, to use the new url() function. Instead of including SITE_URL/index.php/module/path, it is now just url('/module/path'). Specific changes are listed below:</p>
 	<ul>
 		<li>core_htmlhead.tpl - Path to Google Maps API changed</li>
 		<li>profile_main.tpl - Added link to XAcars config file, changed avatar link to use PilotData::getPilotAvatar (if there's no avatar, uses /lib/images/noavatar.png)</li>

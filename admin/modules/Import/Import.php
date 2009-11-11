@@ -26,7 +26,7 @@ class Import extends CodonModule
 			default:
 			case 'processimport':
 				
-				Template::Set('sidebar', 'sidebar_import.tpl');
+				$this->set('sidebar', 'sidebar_import.tpl');
 				
 				break;
 		}
@@ -34,12 +34,12 @@ class Import extends CodonModule
 	
 	public function index()
 	{
-		Template::Show('import_form.tpl');
+		$this->render('import_form.tpl');
 	}
 	
 	public function export()
 	{
-		Template::Show('export_form.tpl');
+		$this->render('export_form.tpl');
 	}
 	
 	public function processexport()
@@ -58,7 +58,7 @@ class Import extends CodonModule
 		foreach($all_schedules as $s)
 		{
 			$export .="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
-					."{$s->route},{$s->registration},{$s->distance},"
+					."{$s->route},{$s->registration},{$s->flightlevel},{$s->distance},"
 					."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
 					."{$s->price}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
 			
@@ -77,8 +77,8 @@ class Import extends CodonModule
 		
 		if(!file_exists($_FILES['uploadedfile']['tmp_name']))
 		{
-			Template::Set('message', 'File upload failed!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'File upload failed!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -112,15 +112,16 @@ class Import extends CodonModule
 			$arricao = $fields[3];
 			$route = $fields[4];
 			$aircraft = $fields[5];
-			$distance = $fields[6];
-			$deptime = $fields[7];
-			$arrtime = $fields[8];
-			$flighttime = $fields[9];
-			$notes = $fields[10];
-			$price = $fields[11];
-			$flighttype = $fields[12];
-			$daysofweek = $fields[13];
-			$enabled = $fields[14];
+			$flightlevel = $fields[6];
+			$distance = $fields[7];
+			$deptime = $fields[8];
+			$arrtime = $fields[9];
+			$flighttime = $fields[10];
+			$notes = $fields[11];
+			$price = $fields[12];
+			$flighttype = $fields[13];
+			$daysofweek = $fields[14];
+			$enabled = $fields[15];
 							
 			if($code=='')
 			{
@@ -197,6 +198,7 @@ class Import extends CodonModule
 							'arricao'=>$arricao,
 							'route'=>$route,
 							'aircraft'=>$ac,
+							'flightlevel'=>$flightlevel,
 							'distance'=>$distance,
 							'deptime'=>$deptime,
 							'arrtime'=>$arrtime,
@@ -219,9 +221,6 @@ class Import extends CodonModule
 			else
 			{
 				# Add it
-			
-				/*$val = SchedulesData::AddSchedule($code, $flightnum, $leg, $depicao, $arricao,
-								$route, $ac, $distance, $deptime, $arrtime, $flighttime, $notes);*/
 				$val = SchedulesData::AddSchedule($data);
 				$added++;
 								

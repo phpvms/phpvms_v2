@@ -138,6 +138,12 @@
 	</td>
 </tr>
 <tr>
+	<td valign="top"><strong>Flight Level:</strong></td>
+	<td><input type="text" name="flightlevel" value="<?php echo $schedule->flightlevel?>" />
+	<p>Please enter as a full-numeric altitude. Should be in feet, to remain accurate with any ACARS.</p>
+	</td>
+</tr>
+<tr>
 	<td valign="top"><strong>Flight Type</strong></td>
 	<td><select name="flighttype">
 			<?php

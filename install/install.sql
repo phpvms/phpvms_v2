@@ -146,6 +146,7 @@ CREATE TABLE `phpvms_schedules` (
   `arricao` varchar(4) NOT NULL default '',
   `route` text NOT NULL,
   `aircraft` text NOT NULL,
+  `flightlevel` VARCHAR( 6 ) NOT NULL,
   `distance` float NOT NULL default '0',
   `deptime` varchar(15) NOT NULL default '',
   `arrtime` varchar(15) NOT NULL default '',

@@ -24,7 +24,7 @@ class MassMailer extends CodonModule
 	
 	public function HTMLHead()
 	{
-		Template::Set('sidebar', 'sidebar_mailer.tpl');
+		$this->set('sidebar', 'sidebar_mailer.tpl');
 	}
 	
 	public function index()
@@ -35,8 +35,8 @@ class MassMailer extends CodonModule
 			echo '<h3>Sending email</h3>';
 			if($this->post->subject == '' || trim($this->post->message) == '')
 			{
-				Template::Set('message', 'You must enter a subject and message!');
-				Template::Show('core_error.tpl');
+				$this->set('message', 'You must enter a subject and message!');
+				$this->render('core_error.tpl');
 				return;
 			}
 			
@@ -80,7 +80,7 @@ class MassMailer extends CodonModule
 		}		
 		
 		
-		Template::Show('mailer_form.tpl');
+		$this->render('mailer_form.tpl');
 	}
 	
 }

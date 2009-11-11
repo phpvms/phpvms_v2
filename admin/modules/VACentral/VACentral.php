@@ -20,12 +20,12 @@ class VACentral extends CodonModule
 {
 	public function HTMLHead()
 	{
-		Template::Set('sidebar', 'sidebar_central.tpl');
+		$this->set('sidebar', 'sidebar_central.tpl');
 	}
 	
 	public function index()
 	{
-		Template::Show('central_main.tpl');
+		$this->render('central_main.tpl');
 	}
 	
 	public function sendqueuedpireps()
@@ -84,6 +84,4 @@ class VACentral extends CodonModule
 			echo "There was an error, server said \"".CentralData::$response->detail."\"";
 		}		
 	}
-		
-	
 }

@@ -23,7 +23,7 @@ class PIREPAdmin extends CodonModule
 		switch($this->get->page)
 		{
 			case 'viewpending': case 'viewrecent': case 'viewall':
-				Template::Set('sidebar', 'sidebar_pirep_pending.tpl');
+				$this->set('sidebar', 'sidebar_pirep_pending.tpl');
 				break;
 		}
 	}
@@ -63,34 +63,34 @@ class PIREPAdmin extends CodonModule
 		
 		$hub = $this->get->hub;
 		
-		Template::Set('title', 'Pending Reports');
+		$this->set('title', 'Pending Reports');
 		
 		if($hub != '')
 		{
-			Template::Set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $hub));
+			$this->set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $hub));
 		}
 		else
 		{
-			Template::Set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
+			$this->set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
 		}
 		
-		Template::Show('pireps_list.tpl');
+		$this->render('pireps_list.tpl');
 	}
 	
 	
 	public function rejectpirep()
 	{
-		Template::Set('pirepid', $this->get->pirepid);
-		Template::Show('pirep_reject.tpl');
+		$this->set('pirepid', $this->get->pirepid);
+		$this->render('pirep_reject.tpl');
 	}
 	
 	public function viewrecent()
 	{
-		Template::Set('title', Lang::gs('pireps.view.recent'));
-		Template::Set('pireps', PIREPData::GetRecentReports());
-		Template::Set('descrip', 'These pilot reports are from the past 48 hours');
+		$this->set('title', Lang::gs('pireps.view.recent'));
+		$this->set('pireps', PIREPData::GetRecentReports());
+		$this->set('descrip', 'These pilot reports are from the past 48 hours');
 		
-		Template::Show('pireps_list.tpl');
+		$this->render('pireps_list.tpl');
 	}
 	
 	public function approveall()
@@ -135,39 +135,39 @@ class PIREPAdmin extends CodonModule
 		
 		if(count($allreports) >= $num_per_page)
 		{
-			Template::Set('paginate', true);
-			Template::Set('admin', 'viewall');
-			Template::Set('start', $this->get->start+20);
+			$this->set('paginate', true);
+			$this->set('admin', 'viewall');
+			$this->set('start', $this->get->start+20);
 		}
 		
-		Template::Set('title', 'PIREPs List');
-		Template::Set('pireps', $allreports);
-		Template::Show('pireps_list.tpl');
+		$this->set('title', 'PIREPs List');
+		$this->set('pireps', $allreports);
+		$this->render('pireps_list.tpl');
 	}
 	
 	public function editpirep()
 	{
-		Template::Set('pirep', PIREPData::GetReportDetails($this->get->pirepid));
-		Template::Set('allairlines', OperationsData::GetAllAirlines());
-		Template::Set('allairports', OperationsData::GetAllAirports());
-		Template::Set('allaircraft', OperationsData::GetAllAircraft());
-		Template::Set('fielddata', PIREPData::GetFieldData($this->get->pirepid));
-		Template::Set('pirepfields', PIREPData::GetAllFields());
-		Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
+		$this->set('pirep', PIREPData::GetReportDetails($this->get->pirepid));
+		$this->set('allairlines', OperationsData::GetAllAirlines());
+		$this->set('allairports', OperationsData::GetAllAirports());
+		$this->set('allaircraft', OperationsData::GetAllAircraft());
+		$this->set('fielddata', PIREPData::GetFieldData($this->get->pirepid));
+		$this->set('pirepfields', PIREPData::GetAllFields());
+		$this->set('comments', PIREPData::GetComments($this->get->pirepid));
 		
-		Template::Show('pirep_edit.tpl');
+		$this->render('pirep_edit.tpl');
 	}
 	
 	public function viewcomments()
 	{
-		Template::Set('comments', PIREPData::GetComments($this->get->pirepid));
-		Template::Show('pireps_comments.tpl');
+		$this->set('comments', PIREPData::GetComments($this->get->pirepid));
+		$this->render('pireps_comments.tpl');
 	}
 	
 	public function viewlog()
 	{
-		Template::Set('report', PIREPData::GetReportDetails($this->get->pirepid));
-		Template::Show('pirep_log.tpl');
+		$this->set('report', PIREPData::GetReportDetails($this->get->pirepid));
+		$this->render('pirep_log.tpl');
 		
 	}
 		
@@ -178,13 +178,13 @@ class PIREPAdmin extends CodonModule
 		{
 			$this->add_comment_post();
 			
-			Template::Set('message', 'Comment added to PIREP!');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'Comment added to PIREP!');
+			$this->render('core_success.tpl');
 			return;
 		}
 		
-		Template::Set('pirepid', $this->get->pirepid);
-		Template::Show('pirep_addcomment.tpl');
+		$this->set('pirepid', $this->get->pirepid);
+		$this->render('pirep_addcomment.tpl');
 	}
 		
 		
@@ -201,9 +201,9 @@ class PIREPAdmin extends CodonModule
 		PIREPData::AddComment($pirepid, $commenter, $comment);
 		
 		// Send them an email
-		Template::Set('firstname', $pirep_details->firstname);
-		Template::Set('lastname', $pirep_details->lastname);
-		Template::Set('pirepid', $pirepid);
+		$this->set('firstname', $pirep_details->firstname);
+		$this->set('lastname', $pirep_details->lastname);
+		$this->set('pirepid', $pirepid);
 		
 		$message = Template::GetTemplate('email_commentadded.tpl', true);
 		Util::SendEmail($pirep_details->email, 'Comment Added', $message);
@@ -280,9 +280,9 @@ class PIREPAdmin extends CodonModule
 			PIREPData::AddComment($pirepid, $commenter, $comment);
 			
 			// Send them an email
-			Template::Set('firstname', $pirep_details->firstname);
-			Template::Set('lastname', $pirep_details->lastname);
-			Template::Set('pirepid', $pirepid);
+			$this->set('firstname', $pirep_details->firstname);
+			$this->set('lastname', $pirep_details->lastname);
+			$this->set('pirepid', $pirepid);
 			
 			$message = Template::GetTemplate('email_commentadded.tpl', true);
 			Util::SendEmail($pirep_details->email, 'Comment Added', $message);
@@ -296,15 +296,15 @@ class PIREPAdmin extends CodonModule
 			|| $this->post->depicao == '' || $this->post->arricao == '' 
 			|| $this->post->aircraft == '' || $this->post->flighttime == '')
 		{
-			Template::Set('message', 'You must fill out all of the required fields!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must fill out all of the required fields!');
+			$this->render('core_error.tpl');
 			return false;
 		}
 			
 		/*if($this->post->depicao == $this->post->arricao)
 		{
-			Template::Set('message', 'The departure airport is the same as the arrival airport!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The departure airport is the same as the arrival airport!');
+			$this->render('core_error.tpl');
 			return false;
 		}*/
 		
@@ -332,8 +332,8 @@ class PIREPAdmin extends CodonModule
 					 		
 		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{
-			Template::Set('message', 'There was an error adding your PIREP');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error adding your PIREP');
+			$this->render('core_error.tpl');
 			return false;
 		}
 		

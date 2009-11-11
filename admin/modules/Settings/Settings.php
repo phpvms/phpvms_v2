@@ -32,15 +32,15 @@ class Settings extends CodonModule
 		{
 			case '':
 			case 'settings':
-				Template::Set('sidebar', 'sidebar_settings.tpl');
+				$this->set('sidebar', 'sidebar_settings.tpl');
 				break;
 		
 			case 'customfields':
-				Template::Set('sidebar', 'sidebar_customfields.tpl');
+				$this->set('sidebar', 'sidebar_customfields.tpl');
 				break;
 				
 			case 'pirepfields':
-				Template::Set('sidebar', 'sidebar_pirepfields.tpl');
+				$this->set('sidebar', 'sidebar_pirepfields.tpl');
 				break;
 		}
 		
@@ -70,36 +70,36 @@ class Settings extends CodonModule
 	
 	public function addfield()
 	{
-		Template::Set('title', Lang::gs('settings.add.field'));
-		Template::Set('action', 'addfield');
+		$this->set('title', Lang::gs('settings.add.field'));
+		$this->set('action', 'addfield');
 		
-		Template::Show('settings_addcustomfield.tpl');
+		$this->render('settings_addcustomfield.tpl');
 	}
 	
 	public function editfield()
 	{
-		Template::Set('title', Lang::gs('settings.edit.field'));
-		Template::Set('action', 'savefield');
-		Template::Set('field', SettingsData::GetField($this->get->id));
+		$this->set('title', Lang::gs('settings.edit.field'));
+		$this->set('action', 'savefield');
+		$this->set('field', SettingsData::GetField($this->get->id));
 		
-		Template::Show('settings_addcustomfield.tpl');
+		$this->render('settings_addcustomfield.tpl');
 	}
 	
 	
 	public function addpirepfield()
 	{
-		Template::Set('title', Lang::gs('pirep.field.add'));
-		Template::Set('action', 'addfield');
-		Template::Show('settings_addpirepfield.tpl');
+		$this->set('title', Lang::gs('pirep.field.add'));
+		$this->set('action', 'addfield');
+		$this->render('settings_addpirepfield.tpl');
 	}
 	
 	public function editpirepfield()
 	{
-		Template::Set('title', Lang::gs('pirep.field.edit'));
-		Template::Set('action', 'savefields');
-		Template::Set('field', PIREPData::GetFieldInfo($this->get->id));
+		$this->set('title', Lang::gs('pirep.field.edit'));
+		$this->set('action', 'savefields');
+		$this->set('field', PIREPData::GetFieldInfo($this->get->id));
 		
-		Template::Show('settings_addpirepfield.tpl');
+		$this->render('settings_addpirepfield.tpl');
 	}
 	
 	public function pirepfields()
@@ -157,8 +157,8 @@ class Settings extends CodonModule
 		
 		}
 		
-		Template::Set('message', 'Settings were saved!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Settings were saved!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function add_field_post()
@@ -188,13 +188,13 @@ class Settings extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error saving the settings: ' . DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error saving the settings: ' . DB::error());
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'Settings were saved!');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'Settings were saved!');
+			$this->render('core_success.tpl');
 		}
 	}
 	
@@ -225,13 +225,13 @@ class Settings extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error saving the settings: ' . DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error saving the settings: ' . DB::error());
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'Settings were saved!');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'Settings were saved!');
+			$this->render('core_success.tpl');
 		}
 	}
 	
@@ -242,34 +242,34 @@ class Settings extends CodonModule
 		$ret = SettingsData::DeleteField($id) == true;
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error deleting the field: ' . DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error deleting the field: ' . DB::error());
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'The field was deleted');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'The field was deleted');
+			$this->render('core_success.tpl');
 		}
 	}
 	
 	protected function ShowSettings()
 	{
-		Template::Set('allsettings', SettingsData::GetAllSettings());
-		Template::ShowTemplate('settings_mainform.tpl');
+		$this->set('allsettings', SettingsData::GetAllSettings());
+		$this->renderTemplate('settings_mainform.tpl');
 	}
 	
 	protected function ShowFields()
 	{
-		Template::Set('allfields', SettingsData::GetAllFields());
+		$this->set('allfields', SettingsData::GetAllFields());
 		
-		Template::ShowTemplate('settings_customfieldsform.tpl');
+		$this->renderTemplate('settings_customfieldsform.tpl');
 	}
 	
 	protected function PIREP_ShowFields()
 	{
-		Template::Set('allfields', PIREPData::GetAllFields());
+		$this->set('allfields', PIREPData::GetAllFields());
 		
-		Template::ShowTemplate('settings_pirepfieldsform.tpl');
+		$this->renderTemplate('settings_pirepfieldsform.tpl');
 	}
 	
 	protected function PIREP_AddField()
@@ -284,13 +284,13 @@ class Settings extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error saving the field: ' . DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error saving the field: ' . DB::error());
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'PIREP field added!');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'PIREP field added!');
+			$this->render('core_success.tpl');
 		}
 	}
 	
@@ -299,8 +299,8 @@ class Settings extends CodonModule
 		
 		if($this->post->title == '')
 		{
-			Template::Set('message', 'The title cannot be blank');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The title cannot be blank');
+			$this->render('core_error.tpl');
 			return false;
 		}
 		
@@ -308,13 +308,13 @@ class Settings extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error saving the field');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error saving the field');
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'Field saved!');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'Field saved!');
+			$this->render('core_success.tpl');
 		}		
 	}
 	
@@ -326,13 +326,13 @@ class Settings extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'There was an error deleting the field: ' . DB::$err);
-			Template::Show('core_error.tpl');
+			$this->set('message', 'There was an error deleting the field: ' . DB::$err);
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', 'The field was deleted');
-			Template::Show('core_success.tpl');
+			$this->set('message', 'The field was deleted');
+			$this->render('core_success.tpl');
 		}
 	}
 }

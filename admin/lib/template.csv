@@ -1,1 +1,1 @@
-code,flightnum,depicao,arricao,route,aircraft,distance,deptime,arrtime,flighttime,notes,price,flighttype,daysofweek,enabled
+code,flightnum,depicao,arricao,route,aircraft,flightlevel,distance,deptime,arrtime,flighttime,notes,price,flighttype,daysofweek,enabled

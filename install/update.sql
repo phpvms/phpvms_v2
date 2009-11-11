@@ -39,3 +39,5 @@ INSERT INTO `phpvms_settings` (`id` ,`friendlyname` ,`name` , `value` ,`descrip`
 DELETE FROM `phpvms_settings` WHERE `name`='PHPVMS_API_KEY';
 ALTER TABLE `phpvms_aircraft` DROP INDEX `name`;
 ALTER TABLE `phpvms_pilots` CHANGE `email` `email` VARCHAR( 100 ) NOT NULL;
+
+ALTER TABLE `phpvms_schedules` ADD `flightlevel` VARCHAR( 6 ) NOT NULL AFTER `aircraft`;

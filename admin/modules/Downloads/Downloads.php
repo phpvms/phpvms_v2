@@ -21,7 +21,7 @@ class Downloads extends CodonModule
 	public function HTMLHead()
 	{
 		
-		Template::Set('sidebar', 'sidebar_downloads.tpl');
+		$this->set('sidebar', 'sidebar_downloads.tpl');
 	}
 	
 	public function index()
@@ -59,82 +59,82 @@ class Downloads extends CodonModule
 			
 		}
 		
-		Template::Set('allcategories', DownloadData::GetAllCategories());
-		Template::Show('downloads_overview.tpl');
+		$this->set('allcategories', DownloadData::GetAllCategories());
+		$this->render('downloads_overview.tpl');
 	}
 	
 	public function addcategory()
 	{
-		Template::Set('title', 'Add Category');
-		Template::Set('action', 'addcategory');
+		$this->set('title', 'Add Category');
+		$this->set('action', 'addcategory');
 		
-		Template::Show('downloads_categoryform.tpl');
+		$this->render('downloads_categoryform.tpl');
 		
 	}
 	
 	public function adddownload()
 	{
-		Template::Set('title', 'Add Download');
-		Template::Set('allcategories', DownloadData::GetAllCategories());
-		Template::Set('action', 'adddownload');
+		$this->set('title', 'Add Download');
+		$this->set('allcategories', DownloadData::GetAllCategories());
+		$this->set('action', 'adddownload');
 		
-		Template::Show('downloads_downloadform.tpl');
+		$this->render('downloads_downloadform.tpl');
 	}
 	
 	public function editcategory()
 	{
-		Template::Set('title', 'Edit Category');
-		Template::Set('action', 'editcategory');
-		Template::Set('category', DownloadData::GetAsset($this->get->id));
+		$this->set('title', 'Edit Category');
+		$this->set('action', 'editcategory');
+		$this->set('category', DownloadData::GetAsset($this->get->id));
 		
-		Template::Show('downloads_categoryform.tpl');
+		$this->render('downloads_categoryform.tpl');
 	}
 	
 	public function editdownload()
 	{
-		Template::Set('title', 'Edit Download');
-		Template::Set('action', 'editdownload');
-		Template::Set('allcategories', DownloadData::GetAllCategories());
-		Template::Set('download', DownloadData::GetAsset($this->get->id));
+		$this->set('title', 'Edit Download');
+		$this->set('action', 'editdownload');
+		$this->set('allcategories', DownloadData::GetAllCategories());
+		$this->set('download', DownloadData::GetAsset($this->get->id));
 		
-		Template::Show('downloads_downloadform.tpl');
+		$this->render('downloads_downloadform.tpl');
 	}
 		
 	protected function AddCategoryPost()
 	{
 		if($this->post->name == '')
 		{
-			Template::Set('message', 'No category name entered!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'No category name entered!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		if(DownloadData::FindCategory($this->post->name))
 		{
-			Template::Set('message', 'Category already exists');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Category already exists');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		DownloadData::AddCategory($this->post->name, '', '');
 		
-		Template::Set('message', 'Category added!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Category added!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function EditCategoryPost()
 	{
 		if($this->post->name == '')
 		{
-			Template::Set('message', 'No category name entered!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'No category name entered!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		if(DownloadData::FindCategory($this->post->name))
 		{
-			Template::Set('message', 'Category already exists');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Category already exists');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -149,8 +149,8 @@ class Downloads extends CodonModule
 			
 		DownloadData::EditAsset($data);
 		
-		Template::Set('message', 'Category edited!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Category edited!');
+		$this->render('core_success.tpl');
 		
 	}
 	
@@ -158,23 +158,23 @@ class Downloads extends CodonModule
 	{
 		if($this->post->id=='')
 		{
-			Template::Set('message', 'Invalid category!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Invalid category!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		DownloadData::RemoveCategory($this->post->id);
 		
-		Template::Set('message', 'Category removed!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Category removed!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function AddDownloadPost()
 	{
 		if($this->post->name == '' || $this->post->link == '')
 		{
-			Template::Set('message', 'Link and name must be entered');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Link and name must be entered');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -190,8 +190,8 @@ class Downloads extends CodonModule
 		
 		if($val == false)
 		{
-			Template::Set('message', DB::$error);
-			Template::Show('core_error.tpl');
+			$this->set('message', DB::$error);
+			$this->render('core_error.tpl');
 			return;
 		}
 	}
@@ -200,8 +200,8 @@ class Downloads extends CodonModule
 	{
 		if($this->post->name == '' || $this->post->link == '')
 		{
-			Template::Set('message', 'Link and name must be entered!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Link and name must be entered!');
+			$this->render('core_error.tpl');
 			return;
 		}
 			
@@ -216,23 +216,23 @@ class Downloads extends CodonModule
 		
 		DownloadData::EditAsset($data);
 		
-		Template::Set('message', 'Download edited!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Download edited!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function DeleteDownloadPost()
 	{
 		if($this->post->id=='')
 		{
-			Template::Set('message', 'Invalid download ID!');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Invalid download ID!');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		DownloadData::RemoveAsset($this->post->id);
 		
-		Template::Set('message', 'Download removed!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Download removed!');
+		$this->render('core_success.tpl');
 		
 	}
 }

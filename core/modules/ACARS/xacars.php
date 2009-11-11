@@ -143,7 +143,7 @@ $maxpax
 $maxcargo
 IFR
 $route->registration
-0
+$route->flightlevel
 ";
 		
 		break;

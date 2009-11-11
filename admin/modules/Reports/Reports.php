@@ -21,7 +21,7 @@ class Reports extends CodonModule
 {
 	function HTMLHead()
 	{
-		Template::Set('sidebar', 'sidebar_reports.tpl');
+		$this->set('sidebar', 'sidebar_reports.tpl');
 	}
 	
 	public function index()
@@ -31,16 +31,16 @@ class Reports extends CodonModule
 	
 	public function overview()
 	{
-		Template::Set('acstats', StatsData::AircraftUsage());
-		Template::Set('toproutes', StatsData::TopRoutes());
-		Template::Show('reports_main.tpl');
+		$this->set('acstats', StatsData::AircraftUsage());
+		$this->set('toproutes', StatsData::TopRoutes());
+		$this->render('reports_main.tpl');
 	}
 	
 	public function aircraft()
 	{
 		$acstats = AircraftStats::getAircraftDetails();
 		
-		Template::Set('acstats', $acstats);
-		Template::Show('reports_aircraft.tpl');
+		$this->set('acstats', $acstats);
+		$this->render('reports_aircraft.tpl');
 	}
 }

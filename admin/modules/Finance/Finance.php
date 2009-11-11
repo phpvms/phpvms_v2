@@ -27,7 +27,7 @@ class Finance extends CodonModule
 			case 'editexpense':
 			case 'viewexpenses':
 			
-				Template::Set('sidebar', 'sidebar_expenses.tpl');
+				$this->set('sidebar', 'sidebar_expenses.tpl');
 				
 				break;
 		}
@@ -57,10 +57,10 @@ class Finance extends CodonModule
 			
 			$data = FinanceData::GetMonthBalanceData($period);
 			
-			Template::Set('title', 'Balance Sheet for '.$period);
-			Template::Set('allfinances', $data);
+			$this->set('title', 'Balance Sheet for '.$period);
+			$this->set('allfinances', $data);
 			
-			Template::Show('finance_balancesheet.tpl');
+			$this->render('finance_balancesheet.tpl');
 		}
 		elseif($type[0] == 'y')
 		{
@@ -68,11 +68,11 @@ class Finance extends CodonModule
 
 			$data = FinanceData::GetYearBalanceData($type);
 			
-			Template::Set('title', 'Balance Sheet for Year '.date('Y', $type));
-			Template::Set('allfinances', $data);
-			Template::Set('year', date('Y', $type));
+			$this->set('title', 'Balance Sheet for Year '.date('Y', $type));
+			$this->set('allfinances', $data);
+			$this->set('year', date('Y', $type));
 			
-			Template::Show('finance_summarysheet.tpl');
+			$this->render('finance_summarysheet.tpl');
 		}
 		else
 		{
@@ -80,9 +80,9 @@ class Finance extends CodonModule
 			
 			$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
 			
-			Template::Set('title', 'Balance Sheet for Last 3 Months');
-			Template::Set('allfinances', $data);					
-			Template::Show('finance_summarysheet.tpl');
+			$this->set('title', 'Balance Sheet for Last 3 Months');
+			$this->set('allfinances', $data);					
+			$this->render('finance_summarysheet.tpl');
 		}
 	}
 	
@@ -98,25 +98,25 @@ class Finance extends CodonModule
 			FinanceData::RemoveExpense($this->post->id);
 		}
 	
-		Template::Set('allexpenses', FinanceData::GetAllExpenses());
-		Template::Show('finance_expenselist.tpl');
+		$this->set('allexpenses', FinanceData::GetAllExpenses());
+		$this->render('finance_expenselist.tpl');
 	}
 	
 	public function addexpense()
 	{
-		Template::Set('title', 'Add Expense');
-		Template::Set('action', 'addexpense');
+		$this->set('title', 'Add Expense');
+		$this->set('action', 'addexpense');
 		
-		Template::Show('finance_expenseform.tpl');
+		$this->render('finance_expenseform.tpl');
 	}
 	
 	public function editexpense()
 	{
-		Template::Set('title', 'Edit Expense');
-		Template::Set('action', 'editexpense');
-		Template::Set('expense', FinanceData::GetExpenseDetail($this->get->id));
+		$this->set('title', 'Edit Expense');
+		$this->set('action', 'editexpense');
+		$this->set('expense', FinanceData::GetExpenseDetail($this->get->id));
 		
-		Template::Show('finance_expenseform.tpl');	
+		$this->render('finance_expenseform.tpl');	
 	}
 	
 	public function ProcessExpense()
@@ -124,15 +124,15 @@ class Finance extends CodonModule
 		
 		if($this->post->name == '' || $this->post->cost == '')
 		{
-			Template::Set('message', 'Name and cost must be entered');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Name and cost must be entered');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		if(!is_numeric($this->post->cost))
 		{
-			Template::Set('message', 'Cost must be a numeric amount, no symbols');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Cost must be a numeric amount, no symbols');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -141,29 +141,29 @@ class Finance extends CodonModule
 			# Make sure it doesn't exist
 			if(FinanceData::GetExpenseByName($this->post->name))
 			{
-				Template::Set('message', 'Expense already exists!');
-				Template::Show('core_error.tpl');
+				$this->set('message', 'Expense already exists!');
+				$this->render('core_error.tpl');
 				return;				
 			}
 			
 			$ret = FinanceData::AddExpense($this->post->name, $this->post->cost, $this->post->type);
-			Template::Set('message', 'The expense "'.$this->post->name.'" has been added');
+			$this->set('message', 'The expense "'.$this->post->name.'" has been added');
 		}
 		elseif($this->post->action == 'editexpense')
 		{
 			$ret = FinanceData::EditExpense($this->post->id, $this->post->name, $this->post->cost, $this->post->type);
-			Template::Set('message', 'The expense "'.$this->post->name.'" has been edited');
+			$this->set('message', 'The expense "'.$this->post->name.'" has been edited');
 		}
 		
 		if(!$ret)
 		{
-			Template::Set('message', 'Error: '.DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Error: '.DB::error());
+			$this->render('core_error.tpl');
 			
 			return;
 		}
 		
 		
-		Template::Show('core_success.tpl');
+		$this->render('core_success.tpl');
 	}	
 }

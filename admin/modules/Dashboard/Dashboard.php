@@ -26,7 +26,7 @@ class Dashboard extends CodonModule
 {
 	public function HTMLHead()
 	{
-		Template::Set('sidebar', 'sidebar_dashboard.tpl');
+		$this->set('sidebar', 'sidebar_dashboard.tpl');
 	}
 	
 	public function index()
@@ -37,12 +37,12 @@ class Dashboard extends CodonModule
 		$this->CheckForUpdates();
 		CentralData::send_vastats();
 		
-		Template::Set('unexported_count', count(PIREPData::getReportsByExportStatus(false)));
-		Template::Show('dashboard.tpl');
+		$this->set('unexported_count', count(PIREPData::getReportsByExportStatus(false)));
+		$this->render('dashboard.tpl');
 		
 		
-		/*Template::Set('allpilots', PilotData::GetPendingPilots());
-		Template::Show('pilots_pending.tpl');*/
+		/*$this->set('allpilots', PilotData::GetPendingPilots());
+		$this->render('pilots_pending.tpl');*/
 	}
 	
 	public function pirepcounts()
@@ -64,7 +64,7 @@ class Dashboard extends CodonModule
 	
 	public function about()
 	{
-		Template::Show('core_about.tpl');
+		$this->render('core_about.tpl');
 
 	}
 	
@@ -73,8 +73,8 @@ class Dashboard extends CodonModule
 	{
 		if(file_exists(SITE_ROOT.'/install'))
 		{
-			Template::Set('message', 'The install folder still exists!! This poses a security risk. Please delete it immediately');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The install folder still exists!! This poses a security risk. Please delete it immediately');
+			$this->render('core_error.tpl');
 		}
 	}
 
@@ -99,7 +99,7 @@ class Dashboard extends CodonModule
 						Check to make sure allow_url_fopen is set to ON in your php.ini, or 
 						that the cURL module is installed (contact your host).';
 						
-				Template::Set('latestnews', $msg);
+				$this->set('latestnews', $msg);
 				return;
 			}
 			
@@ -113,8 +113,8 @@ class Dashboard extends CodonModule
 			
 			if($currversion < $postversion)
 			{
-				Template::Set('message', 'Version '.$version.' is available for download! Please update ASAP');
-				Template::Set('updateinfo', Template::GetTemplate('core_error.tpl', true));
+				$this->set('message', 'Version '.$version.' is available for download! Please update ASAP');
+				$this->set('updateinfo', Template::GetTemplate('core_error.tpl', true));
 			}
 			
 			/* Retrieve latest news from Feedburner RSS, in case the phpVMS site is down
@@ -140,7 +140,7 @@ class Dashboard extends CodonModule
 					break;
 			}
 			
-			Template::Set('latestnews', $contents);
+			$this->set('latestnews', $contents);
 		}
 	}
 }

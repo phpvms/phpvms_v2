@@ -24,11 +24,11 @@ class PilotRanking extends CodonModule
 		if($this->get->page == 'pilotranks'
 			|| $this->get->page == 'calculateranks')
 		{
-			Template::Set('sidebar', 'sidebar_ranks.tpl');
+			$this->set('sidebar', 'sidebar_ranks.tpl');
 		}
 		elseif($this->get->page == 'awards')
 		{
-			Template::Set('sidebar', 'sidebar_awards.tpl');
+			$this->set('sidebar', 'sidebar_awards.tpl');
 		}
 	}
 	
@@ -52,8 +52,8 @@ class PilotRanking extends CodonModule
 				
 				$ret = RanksData::DeleteRank($this->post->id);
 				
-				Template::Set('message', 'Rank deleted!');
-				Template::Show('core_success.tpl');
+				$this->set('message', 'Rank deleted!');
+				$this->render('core_success.tpl');
 				break;
 			
 			case 'addaward':
@@ -64,55 +64,55 @@ class PilotRanking extends CodonModule
 				break;				
 			case 'deleteaward':
 				$ret = AwardsData::DeleteAward($this->post->id);
-				Template::Set('message', 'Award deleted!');
-				Template::Show('core_success.tpl');
+				$this->set('message', 'Award deleted!');
+				$this->render('core_success.tpl');
 				break;
 		}
 		
-		Template::Set('ranks', RanksData::GetAllRanks());
-		Template::Show('ranks_allranks.tpl');
+		$this->set('ranks', RanksData::GetAllRanks());
+		$this->render('ranks_allranks.tpl');
 	}
 	
 	public function addrank()
 	{
-		Template::Set('title', 'Add Rank');
-		Template::Set('action', 'addrank');
+		$this->set('title', 'Add Rank');
+		$this->set('action', 'addrank');
 		
-		Template::Show('ranks_rankform.tpl');
+		$this->render('ranks_rankform.tpl');
 	}
 	
 	public function editrank()
 	{
-		Template::Set('title', 'Edit Rank');
-		Template::Set('action', 'editrank');
-		Template::Set('rank', RanksData::GetRankInfo($this->get->rankid));
+		$this->set('title', 'Edit Rank');
+		$this->set('action', 'editrank');
+		$this->set('rank', RanksData::GetRankInfo($this->get->rankid));
 		
-		Template::Show('ranks_rankform.tpl');
+		$this->render('ranks_rankform.tpl');
 	}
 	
 	public function awards()
 	{
-		Template::Set('awards', AwardsData::GetAllAwards());
-		Template::Show('awards_allawards.tpl');
+		$this->set('awards', AwardsData::GetAllAwards());
+		$this->render('awards_allawards.tpl');
 	}
 	
 	public function addaward()
 	{
 		
-		Template::Set('title', 'Add Award');
-		Template::Set('action', 'addaward');
+		$this->set('title', 'Add Award');
+		$this->set('action', 'addaward');
 		
-		Template::Show('awards_awardform.tpl');
+		$this->render('awards_awardform.tpl');
 		
 	}
 	
 	public function editaward()
 	{
-		Template::Set('title', 'Edit Award');
-		Template::Set('action', 'editaward');
-		Template::Set('award', AwardsData::GetAwardDetail($this->get->awardid));
+		$this->set('title', 'Edit Award');
+		$this->set('action', 'editaward');
+		$this->set('award', AwardsData::GetAwardDetail($this->get->awardid));
 		
-		Template::Show('awards_awardform.tpl');
+		$this->render('awards_awardform.tpl');
 		
 	}
 	
@@ -123,15 +123,15 @@ class PilotRanking extends CodonModule
 		
 		if($this->post->minhours == '' || $this->post->rank == '')
 		{
-			Template::Set('message', 'Hours and Rank must be blank');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Hours and Rank must be blank');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		if(!is_numeric($this->post->minhours))
 		{
-			Template::Set('message', 'The hours must be a number');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The hours must be a number');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -139,28 +139,28 @@ class PilotRanking extends CodonModule
 	
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'Error adding the rank: '. DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Error adding the rank: '. DB::error());
+			$this->render('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('message', 'Rank Added!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Rank Added!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function edit_rank_post()
 	{
 		if($this->post->minhours == '' || $this->post->rank == '')
 		{
-			Template::Set('message', 'Hours and Rank must be blank');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Hours and Rank must be blank');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		if(!is_numeric($this->post->minhours))
 		{
-			Template::Set('message', 'The hours must be a number');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The hours must be a number');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -169,43 +169,43 @@ class PilotRanking extends CodonModule
 		
 		if(DB::errno() != 0)
 		{
-			Template::Set('message', 'Error updating the rank: '.DB::error());
-			Template::Show('core_error.tpl');
+			$this->set('message', 'Error updating the rank: '.DB::error());
+			$this->render('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('message', 'Rank Added!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Rank Added!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function add_award_post()
 	{
 		if($this->post->name == '' || $this->post->image == '')
 		{
-			Template::Set('message', 'The name and image must be entered');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The name and image must be entered');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		$ret = AwardsData::AddAward($this->post->name, $this->post->descrip, $this->post->image);
 		
-		Template::Set('message', 'Award Added!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Award Added!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function edit_award_post()
 	{		
 		if($this->post->name == '' || $this->post->image == '')
 		{
-			Template::Set('message', 'The name and image must be entered');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'The name and image must be entered');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
 		$ret = AwardsData::EditAward($this->post->awardid, $this->post->name, $this->post->descrip, $this->post->image);
 		
-		Template::Set('message', 'Award Added!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Award Added!');
+		$this->render('core_success.tpl');
 	}
 }
 

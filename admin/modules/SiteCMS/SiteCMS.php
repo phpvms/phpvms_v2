@@ -26,19 +26,19 @@ class SiteCMS extends CodonModule
 			case 'addnews':
 			case 'viewnews':
 				
-				Template::Set('sidebar', 'sidebar_news.tpl');
+				$this->set('sidebar', 'sidebar_news.tpl');
 				
 				break;
 			
 			case 'viewpages':
 			
-				Template::Set('sidebar', 'sidebar_pages.tpl');
+				$this->set('sidebar', 'sidebar_pages.tpl');
 				
 				break;
 				
 			case 'addpageform':
 				
-				Template::Set('sidebar', 'sidebar_addpage.tpl');
+				$this->set('sidebar', 'sidebar_addpage.tpl');
 				
 				break;
 		}
@@ -57,13 +57,13 @@ class SiteCMS extends CodonModule
 			
 			if($res == false)
 			{
-				Template::Set('message', Lang::gs('news.updated.error'));
-				Template::Show('core_error.tpl');
+				$this->set('message', Lang::gs('news.updated.error'));
+				$this->render('core_error.tpl');
 			}
 			else
 			{
-				Template::Set('message', Lang::gs('news.updated.success'));
-				Template::Show('core_success.tpl');
+				$this->set('message', Lang::gs('news.updated.success'));
+				$this->render('core_success.tpl');
 			}
 		}
 		elseif($isset && $this->post->action == 'deleteitem')
@@ -72,35 +72,35 @@ class SiteCMS extends CodonModule
 		}
 		
 		$allnews = SiteData::GetAllNews();
-		Template::Set('allnews', $allnews);
-		Template::Show('news_list.tpl');
+		$this->set('allnews', $allnews);
+		$this->render('news_list.tpl');
 		
 	}
 	
 	public function addnews()
 	{
-		Template::Set('title', Lang::gs('news.add.title'));
-		Template::Set('action', 'addnews');
+		$this->set('title', Lang::gs('news.add.title'));
+		$this->set('action', 'addnews');
 		
-		Template::Show('news_additem.tpl');
+		$this->render('news_additem.tpl');
 	}
 	
 	public function editnews()
 	{
-		Template::Set('title', Lang::gs('news.edit.title'));
-		Template::Set('action', 'editnews');
-		Template::Set('newsitem', SiteData::GetNewsItem($this->get->id));
+		$this->set('title', Lang::gs('news.edit.title'));
+		$this->set('action', 'editnews');
+		$this->set('newsitem', SiteData::GetNewsItem($this->get->id));
 		
-		Template::Show('news_additem.tpl');
+		$this->render('news_additem.tpl');
 	}
 	
 	public function addpageform()
 	{
 		
-		Template::Set('title', Lang::gs('page.add.title'));
-		Template::Set('action', 'addpage');
+		$this->set('title', Lang::gs('page.add.title'));
+		$this->set('action', 'addpage');
 		
-		Template::Show('pages_editpage.tpl');
+		$this->render('pages_editpage.tpl');
 	}
 	
 	public function editpage()
@@ -108,12 +108,12 @@ class SiteCMS extends CodonModule
 		$pageid = $this->get->pageid;
 		
 		$page = SiteData::GetPageData($pageid);
-		Template::Set('pagedata', $page);
-		Template::Set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
+		$this->set('pagedata', $page);
+		$this->set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
 		
-		Template::Set('title', Lang::gs('page.edit.title'));
-		Template::Set('action', 'savepage');
-		Template::Show('pages_editpage.tpl');
+		$this->set('title', Lang::gs('page.edit.title'));
+		$this->set('action', 'savepage');
+		$this->render('pages_editpage.tpl');
 	}
 	
 	public function deletepage()
@@ -122,13 +122,13 @@ class SiteCMS extends CodonModule
 				
 		if(SiteData::DeletePage($pageid) == false)
 		{
-			Template::Set('message', Lang::gs('page.error.delete'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('page.error.delete'));
+			$this->render('core_error.tpl');
 		}
 		else
 		{
-			Template::Set('message', Lang::gs('page.deleted'));
-			Template::Show('core_success.tpl');
+			$this->set('message', Lang::gs('page.deleted'));
+			$this->render('core_success.tpl');
 		}
 	}
 	
@@ -169,8 +169,8 @@ class SiteCMS extends CodonModule
 		}
 		
 		
-		Template::Set('allpages', SiteData::GetAllPages());
-		Template::Show('pages_allpages.tpl');
+		$this->set('allpages', SiteData::GetAllPages());
+		$this->render('pages_allpages.tpl');
 	}
 	
 	/**
@@ -185,8 +185,8 @@ class SiteCMS extends CodonModule
 		
 		if(!$title)
 		{
-			Template::Set('message', 'You must have a title');
-			Template::Show('core_error.tpl');
+			$this->set('message', 'You must have a title');
+			$this->render('core_error.tpl');
 			return;
 		}
 		
@@ -195,18 +195,18 @@ class SiteCMS extends CodonModule
 		{
 			if(DB::$errno == 1062)
 			{
-				Template::Set('message', Lang::gs('page.exists'));
+				$this->set('message', Lang::gs('page.exists'));
 			}
 			else
 			{
-				Template::Set('message', Lang::gs('page.create.error'));
+				$this->set('message', Lang::gs('page.create.error'));
 			}
 			
-			Template::Show('core_error.tpl');
+			$this->render('core_error.tpl');
 		}
 
-		Template::Set('message', 'Page Added!');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Page Added!');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function edit_page_post()
@@ -218,12 +218,12 @@ class SiteCMS extends CodonModule
 		
 		if(!SiteData::EditFile($pageid, $content, $public, $enabled))
 		{
-			Template::Set('message', Lang::gs('page.edit.error'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('page.edit.error'));
+			$this->render('core_error.tpl');
 		}
 		
-		Template::Set('message', 'Content saved');
-		Template::Show('core_success.tpl');
+		$this->set('message', 'Content saved');
+		$this->render('core_success.tpl');
 	}
 				
 	
@@ -240,22 +240,22 @@ class SiteCMS extends CodonModule
 			
 		if(!SiteData::AddNewsItem($subject, $body))
 		{
-			Template::Set('message', 'There was an error adding the news item');
+			$this->set('message', 'There was an error adding the news item');
 		}
 		
-		Template::Show('core_message.tpl');
+		$this->render('core_message.tpl');
 	}
 	
 	protected function DeleteNewsItem()
 	{
 		if(!SiteData::DeleteItem($this->post->id))
 		{
-			Template::Set('message', Lang::gs('news.delete.error'));
-			Template::Show('core_error.tpl');
+			$this->set('message', Lang::gs('news.delete.error'));
+			$this->render('core_error.tpl');
 			return;
 		}
 		
-		Template::Set('message', Lang::gs('news.item.deleted'));
-		Template::Show('core_success.tpl');
+		$this->set('message', Lang::gs('news.item.deleted'));
+		$this->render('core_success.tpl');
 	}
 }

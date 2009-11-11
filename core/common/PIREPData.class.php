@@ -592,7 +592,7 @@ class PIREPData extends CodonData
 	 
 	public static function PopulateEmptyPIREPS()
 	{		
-		$sql = 'SELECT  *
+		$sql = 'SELECT *
 				FROM '.TABLE_PREFIX.'pireps ';
 					
 		$results = DB::get_results($sql);

@@ -94,13 +94,13 @@ class Operations extends CodonModule
 	
 	public function airlines()
 	{
-		if(isset($this->post->action)
+		if(isset($this->post->action))
 		{
 			if($this->post->action == 'addairline')
 			{
 				$this->add_airline_post();
 			}
-			if($this->post->action == 'editairline')
+			elseif($this->post->action == 'editairline')
 			{
 				$this->edit_airline_post();
 			}
@@ -154,7 +154,7 @@ class Operations extends CodonModule
 	{
 		/* If they're adding an airport, go through this pain
 		*/
-		if(isset($this->post->action)
+		if(isset($this->post->action))
 		{
 			switch($this->post->action)
 			{

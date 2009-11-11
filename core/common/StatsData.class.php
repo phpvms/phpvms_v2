@@ -286,7 +286,7 @@ class StatsData extends CodonData
 	public static function PilotAircraftFlownCounts($pilotid)
 	{
 		//Select aircraft types
-		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count
+		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count, SUM(p.flighttime) AS hours,
 				FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
 				WHERE p.aircraft = a.id AND pilotid='.intval($pilotid).'
 				GROUP BY a.name';

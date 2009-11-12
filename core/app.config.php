@@ -208,6 +208,7 @@ Config::Set('TEMPLATE_USE_CACHE', false);
 Config::Set('TEMPLATE_CACHE_EXPIRE', '24');
 Config::Set('DBASE_USE_CACHE', false);
 Config::Set('CACHE_PATH', SITE_ROOT . '/core/cache');
+Config::Set('TPL_EXTENSION', '.tpl');
 
 if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 {	

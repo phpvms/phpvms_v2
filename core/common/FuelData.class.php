@@ -70,8 +70,8 @@ class FuelData extends CodonData
 	{
 		$apt_icao = strtoupper($apt_icao);
 		$sql = "SELECT * FROM `".TABLE_PREFIX."fuelprices`
-					WHERE `icao`='$apt_icao' 
-						AND (DATEDIFF(NOW(), `dateupdated`) < 3)";
+				WHERE `icao`='$apt_icao' 
+					AND (DATEDIFF(NOW(), `dateupdated`) < 3)";
 		
 		return DB::get_row($sql);
 	}

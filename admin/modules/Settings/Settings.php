@@ -255,21 +255,21 @@ class Settings extends CodonModule
 	protected function ShowSettings()
 	{
 		$this->set('allsettings', SettingsData::GetAllSettings());
-		$this->renderTemplate('settings_mainform.tpl');
+		$this->render('settings_mainform.tpl');
 	}
 	
 	protected function ShowFields()
 	{
 		$this->set('allfields', SettingsData::GetAllFields());
 		
-		$this->renderTemplate('settings_customfieldsform.tpl');
+		$this->render('settings_customfieldsform.tpl');
 	}
 	
 	protected function PIREP_ShowFields()
 	{
 		$this->set('allfields', PIREPData::GetAllFields());
 		
-		$this->renderTemplate('settings_pirepfieldsform.tpl');
+		$this->render('settings_pirepfieldsform.tpl');
 	}
 	
 	protected function PIREP_AddField()

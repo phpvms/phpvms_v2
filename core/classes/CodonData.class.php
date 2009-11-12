@@ -46,4 +46,23 @@ class CodonData
 	{
 		
 	}
+	
+	public function config($setting)
+	{
+		return Config::Get($setting);
+	}
+	
+	public function log($text, $file='log')
+	{
+		Debug::log($text, $file);
+	}
+	
+	public function firephp()
+	{
+		include_once CORE_PATH.DS.'lib'.DS.'firebug'.DS.'FirePHP.class.php';
+		
+		$instance = FirePHP::getInstance(true);
+		$args = func_get_args();
+		return call_user_func_array(array($instance,'fb'),$args);
+	}
 }

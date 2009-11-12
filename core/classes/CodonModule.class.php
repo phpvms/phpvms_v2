@@ -66,11 +66,14 @@ class CodonModule
 		$this->post = Vars::$post;
 		$this->get = CodonRewrite::$get;
 		$this->request = Vars::$request;
-		
-		//echo '<pre>'; print_r($this->get); echo '</pre>';
 			
 		$this->init = true;
 		$this->activeModule = MainController::$activeModule;
+	}
+	
+	public function config($setting)
+	{
+		return Config::Get($setting);
 	}
 	
 	public function set($name, $value)
@@ -86,5 +89,19 @@ class CodonModule
 	public function render($tpl)
 	{
 		Template::Show($tpl);
+	}
+	
+	public function log($text, $file='log')
+	{
+		Debug::log($text, $file);
+	}
+	
+	public function firephp()
+	{
+		include_once CORE_PATH.DS.'lib'.DS.'firebug'.DS.'FirePHP.class.php';
+		
+		$instance = FirePHP::getInstance(true);
+		$args = func_get_args();
+		return call_user_func_array(array($instance,'fb'),$args);
 	}
 }

@@ -87,6 +87,15 @@ class Debug
 		fwrite(self::$fp, $string."\n");
 	}
 	
+	public static function firebug()
+	{
+		include_once CORE_PATH.DS.'lib'.DS.'firebug'.DS.'FirePHP.class.php';
+		
+		$instance = FirePHP::getInstance(true);
+		$args = func_get_args();
+		return call_user_func_array(array($instance,'fb'),$args);
+	}
+	
 	public static function showCritical($message, $title='')
 	{
 		if($title == '')

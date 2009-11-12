@@ -188,6 +188,11 @@ class TemplateSet
 	{
 		/* See if the file has been over-rided in the skin directory
 		 */
+		 
+		if(strstr($tpl_name, Config::Get('TPL_EXTENSION')) === false)
+		{
+			$tpl_name .= Config::Get('TPL_EXTENSION');
+		}
 
 		if(!defined('ADMIN_PANEL') && $checkskin == true)
 		{

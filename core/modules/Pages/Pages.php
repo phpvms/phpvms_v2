@@ -51,11 +51,12 @@ class Pages extends CodonModule
 			//	can be customized on a skin-by-skin basis
 			$this->title = $content->pagename;
 			$this->set('pagename', $content->pagename);
-			$this->set('content', $content->content);
+			
+			# Do entity encoding, compensate for a html_entity_decode() in the templates
+			$this->set('content', htmlentities($content->content));
 			
 			$this->render('pages_content.tpl');
 		}
 		
 	}
 }
-?>

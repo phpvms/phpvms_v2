@@ -271,7 +271,8 @@ class MainController
 				due to the fact that outside modules, etc will still use Run(), so it has
 				to stay the same */
 			
-			$ret = call_user_method_array($call_function, $$ModuleName, CodonRewrite::$params);
+			$ret = call_user_func_array(array($$ModuleName, $call_function), CodonRewrite::$params);
+			//$ret = call_user_method_array(, , );
 			
 			/* Set the title, based on what the module has, if it's blank,
 				then just set it to the module name */
@@ -338,7 +339,7 @@ class MainController
 				array_push($vals, $param);
 			}
 			
-			return call_user_method_array($MethodName,  $$ModuleName, $vals);
+			return call_user_func_array(array($$ModuleName, $MethodName), $vals);
 		}
 		else
 		{

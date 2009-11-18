@@ -130,13 +130,15 @@ class Profile extends CodonModule
 		{
 			return;
 		}
-
+		
 		$data = array(			
 			'pilotid' => Auth::$pilotid,
 			'code' => Auth::$userinfo->code,
 			'email' => $this->post->email,
 			'location' => $this->post->location,
-			'bgimage' => $this->post->bgimage
+			'hub' => Auth::$userinfo->hub,
+			'bgimage' => $this->post->bgimage,
+			'retired' => false
 			);
 			
 		PilotData::SaveProfile($data);

@@ -134,10 +134,10 @@ class CentralData extends CodonData
 		CronData::set_lastupdate('update_schedules');
 		$res = self::send_xml();
 		
-		if(Config::Get('VAC_RETRIEVE_AIRPORTS') == true)
+		/*if(Config::Get('VAC_RETRIEVE_AIRPORTS') == true)
 		{
 			self::process_airport_list();
-		}
+		}*/
 		
 		return $res;
 	}

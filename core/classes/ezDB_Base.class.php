@@ -159,6 +159,12 @@ class ezDB_Base
 	
 	public function __get($name)
 	{
+		if(!isset($this->settings[$name]))
+		{
+			$this->settings[$name] = null;
+			return null;
+		}
+		
 		return $this->settings[$name];
 	}
 	

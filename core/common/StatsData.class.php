@@ -196,7 +196,13 @@ class StatsData extends CodonData
 				WHERE s.pilotid = p.pilotid 
 				AND DATE_SUB(NOW(), INTERVAL {$minutes} MINUTE) <= s.`logintime`";
 		
-		return DB::get_results($sql);
+		$users = DB::get_results($sql);
+		
+		# Check if it's blank, then return an empty array
+		if(!$users)
+			$users = array();
+			
+		return $users;
 	}
 	public static function GuestsOnline($minutes = '')
 	{
@@ -208,7 +214,12 @@ class StatsData extends CodonData
 				WHERE s.pilotid = 0
 				AND DATE_SUB(NOW(), INTERVAL {$minutes} MINUTE) <= s.`logintime`";
 		
-		return DB::get_results($sql);
+		$guests = DB::get_results($sql);
+		
+		if(!$guests)
+			$guests = array();
+			
+		return $guests;
 	}
 	
 	

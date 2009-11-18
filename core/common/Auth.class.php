@@ -302,9 +302,11 @@ class Auth extends CodonData
 	{
 		#self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
 		
-		# Don't mark as guest, just yet
+		# Mark them as guest
 		self::update_session(self::$session_id, 0);
-		self::start_session(self::$userinfo->pilotid); // Orphaned?
+		
+		# "Ghost" entry
+		//self::start_session(self::$userinfo->pilotid); // Orphaned?
 
 		SessionManager::Set('loggedin', false);
 		SessionManager::Set('userinfo', '');

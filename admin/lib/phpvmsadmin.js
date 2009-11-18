@@ -85,163 +85,155 @@ function calcDistance()
     });
 }
 
-$(document).ready(function() 
-{   
-    
-   $("#sidebar, #mainContent").equalHeights(400)
-    
-//	$(".addtoEditor").click(function(e) {
-//		e.preventDefault();
-//		$(".nicEdit-main").append($(this).html()); 
-//		return false;
-//	});
+$(document).ready(function() {
 
-	$('#jqmdialog').jqm({
-		ajax:'@href',
-		onLoad: function(h) 
-		{
-			$("#form").ajaxForm({
-				target: '#bodytext',
-				success: function() 
-				{
-					$('#jqmdialog').jqmAddTrigger('.jqModal');
-			
-					$('#bodytext').fadeIn('slow');
-					$('#jqmdialog').jqmHide();
-				}
-			});
-			
-			$("#flashForm").ajaxForm({
-				target: '#results',
-				success: function() 
-				{
-					$('#jqmdialog').jqmAddTrigger('.jqModal');
-					$('#jqmdialog').jqmHide();
-				}
-			});
+    $("#sidebar, #mainContent").equalHeights(400)
 
-			h.w.show();
-		},
-		onHide: function(h) {
-			h.o.remove(); // remove overlay
-			h.w.fadeOut(100); // hide window 
-			$("#jqmdialog").html("");
-			//dialogInit();
-		}
-	});
+    //	$(".addtoEditor").click(function(e) {
+    //		e.preventDefault();
+    //		$(".nicEdit-main").append($(this).html()); 
+    //		return false;
+    //	});
 
-	formInit();
-	reloadGroups();
+    $('#jqmdialog').jqm({
+        ajax: '@href',
+        onLoad: function(h) {
+            $("#form").ajaxForm({
+                target: '#bodytext',
+                success: function() {
+                    $('#jqmdialog').jqmAddTrigger('.jqModal');
 
-	$("#slidermenu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
+                    $('#bodytext').fadeIn('slow');
+                    $('#jqmdialog').jqmHide();
+                }
+            });
 
-	$(".tablesorter").tablesorter(); 
+            $("#flashForm").ajaxForm({
+                target: '#results',
+                success: function() {
+                    $('#jqmdialog').jqmAddTrigger('.jqModal');
+                    $('#jqmdialog').jqmHide();
+                }
+            });
 
-	$("#dialogform").ajaxForm({
-		target: '#results'
-	});
+            h.w.show();
+        },
+        onHide: function(h) {
+            h.o.remove(); // remove overlay
+            h.w.fadeOut(100); // hide window 
+            $("#jqmdialog").html("");
+            //dialogInit();
+        }
+    });
 
-	$('.confirm').live('click', function() { return false; });
-	$('.confirm').live('dblclick', function()
-	{
-		var url = $(this).attr("href");
-		
-		$.prompt('Are you sure?', {
-			buttons: { Yes: true, Cancel: false },
-			callback: function(v,m)
-			{
-				if(v == true)
-				{
-					$("#bodytext").load(url);
-				}
-			}			
-		});
-		
-		return false;
-	});
+    formInit();
+    reloadGroups();
 
-	$('.deleteitem').live('click', function(){ return false; });
-	$('.deleteitem').live('dblclick', function(){	
-		var url = $(this).attr("href");
-		var action = $(this).attr("action");
-		var id = $(this).attr("id");
+    $("#slidermenu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
 
-		$.prompt('Are you sure?', {
-			buttons: { Yes: true, Cancel: false },
-			callback: function(v,m)
-			{
-				if(v == true)
-				{
-					$.post(url, {action: action, id: id});
-					rmvid= "#row"+id;
-					$(rmvid).slideUp();
-				}
-				
-				$('#jqmdialog').jqmAddTrigger('.jqModal');
-			}			
-		});	
+    $(".tablesorter").tablesorter();
 
-		return false;
-	});
+    $("#dialogform").ajaxForm({
+        target: '#results'
+    });
 
-	$('#jqmdialog').jqmAddTrigger('.jqModal');
-	$('.jqModal').live('dblclick', function() { return false; });
-		
-	// Binding the AJAX call clicks
-	$('.ajaxcall').live('click', function() {
-		return false; // cancel the single click event
-	});
+    $('.confirm').live('click', function() { return false; });
+    $('.confirm').live('dblclick', function() {
+        var url = $(this).attr("href");
 
-	$('.ajaxcall').live('dblclick', function() {
-		$("#bodytext").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
-	});
+        $.prompt('Are you sure?', {
+            buttons: { Yes: true, Cancel: false },
+            callback: function(v, m) {
+                if (v == true) {
+                    $("#bodytext").load(url);
+                }
+            }
+        });
 
-	$('.awardajaxcall').live('click', function() {
-		return false; // cancel the single click event
-	});
+        return false;
+    });
 
-	$('.awardajaxcall').live('dblclick', function() {
-		$("#awardslist").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id"), pilotid:$(this).attr("pilotid")});
-	});
+    $('.deleteitem').live('click', function() { return false; });
+    $('.deleteitem').live('dblclick', function() {
+        var url = $(this).attr("href");
+        var action = $(this).attr("action");
+        var id = $(this).attr("id");
 
-	// Binding the AJAX call clicks
-	$('.dialogajax').live('click', function() {
-		return false; // cancel the single click event
-	});
+        $.prompt('Are you sure?', {
+            buttons: { Yes: true, Cancel: false },
+            callback: function(v, m) {
+                if (v == true) {
+                    $.post(url, { action: action, id: id });
+                    rmvid = "#row" + id;
+                    $(rmvid).slideUp();
+                }
 
-	$('.dialogajax').live('dblclick', function() {
-		$("#dialogresult").load($(this).attr("href"), {action: $(this).attr("action"), id: $(this).attr("id")});
-	});
+                $('#jqmdialog').jqmAddTrigger('.jqModal');
+            }
+        });
 
-	//Tablize any lists
-	$("#tabledlist").tablesorter();
-		
-	/*if(document.getElementById('editor'))
-	{
-		new nicEditor({iconsPath : baseurl+'/lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
-	}*/
-	var editor = CKEDITOR.replace( 'editor',
-	{
-	height: '500px',
-	toolbar: [
-		['Source','-','Save','NewPage','Preview','-','Templates', 'Image'],
-		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
-		['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-		/*['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],*/
-		['Bold','Italic','Underline','Strike',/*'-','Subscript','Superscript'*/],
-		['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['Link','Unlink','Anchor'],
-		/*[,'Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],*/
-		['Styles','Format','Font','FontSize'],
-		['TextColor','BGColor'],
-		['Maximize', 'ShowBlocks','-','About']
-	  ]
-	});
-	editor.on( 'pluginsLoaded', function( ev )
-	{
+        return false;
+    });
 
-	});
+    $('#jqmdialog').jqmAddTrigger('.jqModal');
+    $('.jqModal').live('dblclick', function() { return false; });
+
+    // Binding the AJAX call clicks
+    $('.ajaxcall').live('click', function() {
+        return false; // cancel the single click event
+    });
+
+    $('.ajaxcall').live('dblclick', function() {
+        $("#bodytext").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id") });
+    });
+
+    $('.awardajaxcall').live('click', function() {
+        return false; // cancel the single click event
+    });
+
+    $('.awardajaxcall').live('dblclick', function() {
+        $("#awardslist").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id"), pilotid: $(this).attr("pilotid") });
+    });
+
+    // Binding the AJAX call clicks
+    $('.dialogajax').live('click', function() {
+        return false; // cancel the single click event
+    });
+
+    $('.dialogajax').live('dblclick', function() {
+        $("#dialogresult").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id") });
+    });
+
+    //Tablize any lists
+    $("#tabledlist").tablesorter();
+
+    /*if(document.getElementById('editor'))
+    {
+    new nicEditor({iconsPath : baseurl+'/lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
+    }*/
+    if (document.getElementById('editor')) {
+        var editor = CKEDITOR.replace('editor',
+	    {
+	        height: '500px',
+	        toolbar: [
+		    ['Source', '-', 'Save', 'NewPage', 'Preview', '-', 'Templates', 'Image'],
+		    ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
+		    ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'],
+	        /*['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],*/
+		    ['Bold', 'Italic', 'Underline', 'Strike', /*'-','Subscript','Superscript'*/],
+		    ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+		    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		    ['Link', 'Unlink', 'Anchor'],
+	        /*[,'Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],*/
+		    ['Styles', 'Format', 'Font', 'FontSize'],
+		    ['TextColor', 'BGColor'],
+		    ['Maximize', 'ShowBlocks', '-', 'About']
+	      ]
+	    });
+        editor.on('pluginsLoaded', function(ev) {
+
+        });
+    }
 });
 
 function lookupICAO()

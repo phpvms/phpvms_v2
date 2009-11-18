@@ -214,6 +214,7 @@ class SiteData extends CodonData
 			return;
 		}
 		
+		// In case there is PHP present
 		ob_start();
 		include PAGES_PATH . '/' . $row->filename . PAGE_EXT;
 		$row->content = ob_get_contents();

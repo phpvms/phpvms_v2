@@ -23,7 +23,8 @@ class Logout extends CodonModule
 		
 		/*redirect back to front page
 		*/
-		$this->set('redir', SITE_URL);
-		$this->render('login_complete.tpl');
+		header('Location: '.url('/'));
+		#$this->set('redir', SITE_URL);
+		#$this->render('login_complete.tpl');
 	}
 }

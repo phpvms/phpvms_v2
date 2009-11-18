@@ -134,7 +134,6 @@ if($message!='')
 	<dt>Price</dt>
 	<dd><input type="text" name="price" value="<?php echo $pirep->price; ?>" />
 		<p>This is the price per load unit for this flight.</p></dd>
-	
 		
 	<dt>Fuel Used</dt>
 	<dd><input type="text" name="fuelused" value="<?php echo $pirep->fuelused; ?>" />
@@ -157,8 +156,8 @@ if($message!='')
 		<p>Additional expenses for this flight (catering, cleaning, etc)</p></dd>
 		
 	<dt>Pilot Pay</dt>
-	<dd><?php echo Config::Get('MONEY_UNIT').($pirep->pilotpay * $pirep->flighttime);?>
-		<p>This is what the pilot was paid for this flight</p></dd>
+	<dd><input type="text" name="pilotpay" value="<?php echo $pirep->pilotpay;?>" />
+		<p>This is what the pilot will be paid, per hour, for this flight</p></dd>
 		
 	<dt>Total Revenue for flight:</dt>
 	<dd><?php echo FinanceData::FormatMoney($pirep->revenue); ?> 

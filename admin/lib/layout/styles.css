@@ -1,6 +1,6 @@
 @charset "utf-8";
 body  {
-	font-family: "segoe ui", tahoma, arial,helvetica,clean,sans-serif; font-size: 14px;
+	font-family: "segoe ui", tahoma, arial,helvetica,clean,sans-serif; font-size: 12px;
 	background: url(images/background.png) repeat-x 0 0 #FFF;
 	margin: 0;
 	padding: 0;
@@ -35,7 +35,7 @@ body  {
 }
 #sidebar h3 {
 	background: url(images/heading.png) repeat-x 0 0 #fff;	
-	font-size: 12pt;
+	
 	color: #000;	
 	padding: 5px;
 	margin: 0;
@@ -128,7 +128,7 @@ table tbody tr.background_yellow td
 	text-align: center;
 	width: auto;
 	margin-top: 10px;
-	font-size: 14px;
+	
 }
 
 #success
@@ -139,7 +139,7 @@ table tbody tr.background_yellow td
 	text-align: center;
 	width: auto;
 	margin-top: 10px;
-	font-size: 14px;
+	
 }
 
 .indent 
@@ -215,7 +215,7 @@ ul.menu li a {
   background: url(images/heading.png) repeat-x 0 0 #fff;
   color: #000;	
   padding: 0.5em;
-  font-size: 14px;
+  
   border-bottom: solid 1px #999;
 }
 ul.menu li a img
@@ -251,7 +251,7 @@ table.tablesorter {
 	font-family:arial;
 	background: url(images/heading.png) repeat-x 0 0 #fff;
 	margin:10px 0pt 15px;
-	font-size: 14px;
+	
 	width: 100%;
 	text-align: left;
 }
@@ -265,7 +265,7 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 table.tablesorter thead tr .header {
 	cursor: pointer;
 	color: #333;
-	font-size: 15px;
+	font-size: 13px;
 	padding: 0.5em;
 }
 

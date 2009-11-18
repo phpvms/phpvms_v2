@@ -53,15 +53,18 @@ class Settings extends CodonModule
 	
 	public function settings()
 	{
-		switch($this->post->action)
+		if(isset($this->post->action))
 		{
-			case 'addsetting':
-				$this->AddSetting();
-				break;
-			case 'savesettings':
-				$this->save_settings_post();
-				
-				break;
+			switch($this->post->action)
+			{
+				case 'addsetting':
+					$this->AddSetting();
+					break;
+				case 'savesettings':
+					$this->save_settings_post();
+					
+					break;
+			}
 		}
 		
 		$this->ShowSettings();

@@ -239,6 +239,13 @@ $route->flightlevel
 		{
 			return;
 		}
+		
+		# Get the distance remaining
+		$depapt = OperationsData::GetAirportInfo($depicao);
+		$dist_remain = SchedulesData::distanceBetweenPoints($coords->lat, $coords->lng, $depapt->lat, $depapt->lng);
+		
+		# Estimate the time remaining
+		$time_remain = $dist_remain / $gs;
 
 		ob_start();
 		$fields = array(
@@ -257,8 +264,8 @@ $route->flightlevel
 			'arrapt'=>'',
 			'deptime'=>$deptime,
 			'arrtime'=>'',
-			'distremain'=>$_GET['disdestapt'],
-			'timeremaining'=>$_GET['timedestapt'],
+			'distremain'=>$dist_remain,
+			'timeremaining'=>$time_remain,
 			'phasedetail'=>'Enroute',
 			'online'=>$_GET['Online'],
 			'client'=>'xacars',

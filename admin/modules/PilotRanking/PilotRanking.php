@@ -55,18 +55,6 @@ class PilotRanking extends CodonModule
 				$this->set('message', 'Rank deleted!');
 				$this->render('core_success.tpl');
 				break;
-			
-			case 'addaward':
-				$this->add_award_post();
-				break;				
-			case 'editaward':
-				$this->edit_award_post();
-				break;				
-			case 'deleteaward':
-				$ret = AwardsData::DeleteAward($this->post->id);
-				$this->set('message', 'Award deleted!');
-				$this->render('core_success.tpl');
-				break;
 		}
 		
 		$this->set('ranks', RanksData::GetAllRanks());
@@ -92,6 +80,22 @@ class PilotRanking extends CodonModule
 	
 	public function awards()
 	{
+		if(isset($this->post->action))
+		{
+			switch($this->post->action)
+			{
+				case 'addaward':
+					$this->add_award_post();
+					break;				
+				case 'editaward':
+					$this->edit_award_post();
+					break;				
+				case 'deleteaward':
+					$ret = AwardsData::DeleteAward($this->post->id);
+					break;
+			}
+		}
+				
 		$this->set('awards', AwardsData::GetAllAwards());
 		$this->render('awards_allawards.tpl');
 	}
@@ -208,5 +212,3 @@ class PilotRanking extends CodonModule
 		$this->render('core_success.tpl');
 	}
 }
-
-?>

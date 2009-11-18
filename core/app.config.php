@@ -118,6 +118,16 @@ Config::Set('LiquidUnit', '2');		# 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
+# FSFK Settings
+// Your FTP Server, and path to the lib/images folder, IE
+//	ftp://phpvms.net/phpvms/lib/fsfk
+Config::Set('FSFK_FTP_SERVER', '');
+Config::Set('FSFK_FTP_PORT', '21');
+Config::Set('FSFK_FTP_USER', '');
+Config::Set('FSFK_FTP_PASS', '');
+Config::Set('FSFK_FTP_PASS', '');
+Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
+
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);

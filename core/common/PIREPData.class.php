@@ -292,13 +292,13 @@ class PIREPData extends CodonData
 		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pirepcomments
 					WHERE pirepid='.$pirepid.'
 					GROUP BY pirepid';
-		
-		$total = DB::get_row($sql)->total;
+					
+		$total = DB::get_row($sql);
 		
 		if($total == '')
 			return 0;
-		
-		return $total;
+			
+		return $total->total;
 	}
 	
 	
@@ -521,18 +521,22 @@ class PIREPData extends CodonData
 		
 	public static function UpdateFlightReport($pirepid, $pirepdata)
 	{		
-		/*$pirepdata = array('pilotid'=>'',
-					  'code'=>'',
-					  'flightnum'=>'',
-					  'leg'=>'',
-					  'depicao'=>'',
-					  'arricao'=>'',
-					  'aircraft'=>'',
-					  'flighttime'=>'',
-					  'submitdate'=>'',
-					  'comment'=>'',
-					  'log'=>'',
-					  'load'=>'');
+		/*$pirepdata = array('pirepid'=>$this->post->pirepid,
+					  'code'=>$this->post->code,
+					  'flightnum'=>$this->post->flightnum,
+					  'leg'=>$this->post->leg,
+					  'depicao'=>$this->post->depicao,
+					  'arricao'=>$this->post->arricao,
+					  'aircraft'=>$this->post->aircraft,
+					  'flighttime'=>$this->post->flighttime,
+					  'load'=>$this->post->load,
+					  'price'=>$this->post->price,
+					  'pilotpay' => $this->post->pilotpay,
+					  'fuelused'=>$this->post->fuelused,
+					  'fuelunitcost'=>$this->post->fuelunitcost,
+					  'fuelprice'=>$fuelcost,
+					  'expenses'=>$this->post->expenses
+				);
 		*/
 		
 		if(!is_array($pirepdata))
@@ -555,7 +559,7 @@ class PIREPData extends CodonData
 			'load' => $pirepdata['load'],
 			'expenses' => $pirepdata['expenses'],
 			'fuelprice' => $pirepdata['fuelprice'],
-			'pilotpay' => $pirepinfo->pilotpay,
+			'pilotpay' => $pirepdata['pilotpay'],
 			'flighttime' => $pirepdata['flighttime'],
 			);
 		
@@ -571,6 +575,7 @@ class PIREPData extends CodonData
 					`flighttime_stamp`='{$flighttime_stamp}',
 					`load`='{$pirepdata['load']}',
 					`price`='{$pirepdata['price']}',
+					`pilotpay`='{$pirepdata['pilotpay']}',
 					`fuelused`='{$pirepdata['fuelused']}',
 					`fuelunitcost`='{$pirepdata['fuelunitcost']}',
 					`fuelprice`='{$pirepdata['fuelprice']}',

@@ -35,39 +35,38 @@ class PIREPAdmin extends CodonModule
 	
 	public function viewpending()
 	{
-		
-		switch($this->post->action)
+		if(isset($this->post->action))
 		{
-			case 'addcomment':
-				$this->add_comment_post();
-				break;
-			
-			case 'approvepirep':
-				$this->approve_pirep_post();
-				break;
-			
-			case 'deletepirep':
+			switch($this->post->action)
+			{
+				case 'addcomment':
+					$this->add_comment_post();
+					break;
 				
-				$this->delete_pirep_post();
-				break;
-			
-			case 'rejectpirep':
-				$this->reject_pirep_post();
-				break;
+				case 'approvepirep':
+					$this->approve_pirep_post();
+					break;
 				
-			case 'editpirep':
-				$this->edit_pirep_post();
-				break;
+				case 'deletepirep':
+					
+					$this->delete_pirep_post();
+					break;
+				
+				case 'rejectpirep':
+					$this->reject_pirep_post();
+					break;
+					
+				case 'editpirep':
+					$this->edit_pirep_post();
+					break;
+			}
 		}
-		
-		
-		$hub = $this->get->hub;
 		
 		$this->set('title', 'Pending Reports');
 		
-		if($hub != '')
+		if(isset($this->get->hub) && $this->get->hub != '')
 		{
-			$this->set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $hub));
+			$this->set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $this->get->hub));
 		}
 		else
 		{
@@ -324,6 +323,7 @@ class PIREPAdmin extends CodonModule
 					  'flighttime'=>$this->post->flighttime,
 					  'load'=>$this->post->load,
 					  'price'=>$this->post->price,
+					  'pilotpay' => $this->post->pilotpay,
 					  'fuelused'=>$this->post->fuelused,
 					  'fuelunitcost'=>$this->post->fuelunitcost,
 					  'fuelprice'=>$fuelcost,

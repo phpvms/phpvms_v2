@@ -1,6 +1,6 @@
 <h3>File a Flight Report</h3>
 <?php
-if($message!='')
+if(isset($message))
 	echo '<div id="error">'.$message.'</div>';
 ?>
 <form action="<?php echo url('/pireps/mine');?>" method="post">
@@ -24,7 +24,7 @@ if($message!='')
 	</dd>
 	
 	<dt>Enter Flight Number:</dt>
-	<dd><input type="text" name="flightnum" value="<?php echo $bid->flightnum?><?php echo $_POST['flightnum'] ?>" /></dd>
+	<dd><input type="text" name="flightnum" value="<?php if(isset($bid->flightnum)) { echo $bid->flightnum; }?><?php if(isset($_POST['flightnum'])) { echo $_POST['flightnum'];} ?>" /></dd>
 	
 	<dt>Select Departure Airport:</dt>
 	<dd>
@@ -129,7 +129,7 @@ if($message!='')
 	<dd><textarea name="comment" style="width: 100%"><?php echo $_POST['comment'] ?></textarea></dd>
 	
 	<dt></dt>
-	<dd><?php $bidid = ($bid)?$bid->bidid:$_POST['bid']; ?>
+	<dd><?php $bidid = ( isset($bid) )? $bid->bidid:$_POST['bid']; ?>
 		<input type="hidden" name="bid" value="<?php echo $bidid ?>" />
 		<input type="submit" name="submit_pirep" value="File Flight Report" /></dd>
 </dl>

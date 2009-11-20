@@ -125,7 +125,12 @@ class PIREPS extends CodonModule
 			return;
 		}
 		
-		$this->FilePIREPForm();
+		/*if(isset(CodonRewrite::$peices[2]))
+			$id = CodonRewrite::$peices[2];
+		else
+			$id = '';*/
+		$id = '';
+		$this->FilePIREPForm($id);
 	}
 	
 	public function getdeptapts($code)
@@ -171,12 +176,17 @@ class PIREPS extends CodonModule
 		
 	}
 		
-	protected function FilePIREPForm()
+	protected function FilePIREPForm($bidid='')
 	{
 		$this->set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
 		$this->set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 		$this->set('pirepfields', PIREPData::GetAllFields());
-		$this->set('bid', SchedulesData::GetBid($this->get->id)); // get the bid info
+		
+		if($bidid != '')
+		{
+			$this->set('bid', SchedulesData::GetBid($bidid)); // get the bid info
+		}
+			
 		$this->set('allairports', OperationsData::GetAllAirports());
 		$this->set('allairlines', OperationsData::GetAllAirlines(true));
 		$this->set('allaircraft', OperationsData::GetAllAircraft(true));
@@ -235,6 +245,7 @@ class PIREPS extends CodonModule
 			return false;
 		}*/
 		
+		$this->post->flighttime = str_replace(':', '.', $this->post->flighttime);
 		if(!is_numeric($this->post->flighttime))
 		{
 			$this->set('message', 'The flight time has to be a number!');

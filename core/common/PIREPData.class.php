@@ -447,6 +447,12 @@ class PIREPData extends CodonData
 	
 		$flighttime_stamp = $pirepdata['flighttime'].':00';
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
+		
+		# Landing rate
+		if(!isset($pirepdata['landingrate']) || $pirepdata['landingrate'] == '')
+		{
+			$pirepdata['landingrate'] = 0;
+		}
 				
 		#var_dump($pirepdata);
 		# Escape the comment field
@@ -729,7 +735,7 @@ class PIREPData extends CodonData
 						`pilotpay`='{$pilot->payrate}',
 						`revenue`='{$revenue}' ";
 		
-		if($data['load'] != '')
+		if(isset($data['load']) && $data['load'] != '')
 			$sql .= ", `load`='{$data['load']}'";
 			
 		$sql .= " WHERE `pirepid`=$pirepid";

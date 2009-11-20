@@ -232,6 +232,4 @@ class Schedules extends CodonModule
 		
 		$this->render('schedule_results.tpl');
 	}
-	
-
 }

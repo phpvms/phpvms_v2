@@ -33,7 +33,8 @@ class PIREPAdmin extends CodonModule
 		$this->viewpending();
 	}
 	
-	public function viewpending()
+	
+	protected function post_action()
 	{
 		if(isset($this->post->action))
 		{
@@ -61,6 +62,12 @@ class PIREPAdmin extends CodonModule
 					break;
 			}
 		}
+	}
+	
+	public function viewpending()
+	{
+		
+		$this->post_action();
 		
 		$this->set('title', 'Pending Reports');
 		
@@ -126,7 +133,9 @@ class PIREPAdmin extends CodonModule
 	
 	public function viewall()
 	{
-		if($this->get->start == '')
+		$this->post_action();
+		
+		if(!isset($this->get->start) || $this->get->start == '')
 			$this->get->start = 0;
 		
 		$num_per_page = 20;

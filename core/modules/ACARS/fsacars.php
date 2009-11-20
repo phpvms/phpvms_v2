@@ -285,6 +285,9 @@ $maxcargo";
 		$pos = find_in_fsacars_log('PAX', $log);
 		$load = str_replace('PAX:', '', $log[$pos]);
 		
+		$pos = find_in_fsacars_log('TouchDown:Rate', $log);
+		$landingrate = str_replace('TouchDown:Rate', '', $log[$pos]);
+		
 		# Get our aircraft
 		$reg = trim($_GET['reg']);
 		$ac = OperationsData::GetAircraftByReg($reg);
@@ -340,6 +343,7 @@ $maxcargo";
 						'arricao'=>$_GET['dest'],
 						'aircraft'=>$ac->id,
 						'flighttime'=>$flighttime,
+						'landingrate'=>$landingrate,
 						'submitdate'=>'NOW()',
 						'comment'=>$comment,
 						'fuelused'=>$_GET['fuel'],

@@ -27,7 +27,7 @@ if(is_array($acstats))
 		?>
 			<tr>
 				<td><?php echo "$stat->aircraft ($stat->registration)"?></td>
-				<td><?php echo $stat->hours?></td>
+				<td><?php echo $stat->totaltime?></td>
 				<td><?php echo $stat->distance?></td>
 			</tr>
 					

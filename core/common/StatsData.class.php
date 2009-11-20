@@ -163,7 +163,7 @@ class StatsData extends CodonData
 	 */
 	public static function TotalFlights()
 	{
-		$sql = 'SELECT COUNT(*) AS total 
+		$sql = 'SELECT COUNT(*) AS `total`
 				FROM '.TABLE_PREFIX.'pireps
 				WHERE accepted='.PIREP_ACCEPTED;
 				
@@ -239,15 +239,17 @@ class StatsData extends CodonData
 	 */
 	public static function AircraftUsage()
 	{
-		$sql = 'SELECT a.name AS aircraft, a.registration, 
-					SEC_TO_TIME(SUM(TIME_TO_SEC(p.flighttime))) AS hours, 
-					COUNT(p.distance) AS distance
-				FROM '.TABLE_PREFIX.'pireps p
-					INNER JOIN '.TABLE_PREFIX.'aircraft a ON p.aircraft = a.id
-				GROUP BY p.aircraft';
+		$sql = 'SELECT a.*, a.name AS aircraft,
+				   COUNT(p.pirepid) AS routesflown,
+				   SUM(p.distance) AS distance,
+				   SEC_TO_TIME(SUM(p.flighttime*60)) AS totaltime,
+				   AVG(p.distance) AS averagedistance,
+				   AVG(p.flighttime) as averagetime
+				  FROM   '.TABLE_PREFIX.'aircraft a
+					INNER JOIN '.TABLE_PREFIX.'pireps p ON (p.aircraft = a.id)
+				  GROUP BY a.registration';
 		
 		return DB::get_results($sql);
-		return $ret;
 	}
 	
 	/**

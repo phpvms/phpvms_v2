@@ -38,7 +38,7 @@ class Reports extends CodonModule
 	
 	public function aircraft()
 	{
-		$acstats = AircraftStats::getAircraftDetails();
+		$acstats = StatsData::AircraftUsage();
 		
 		$this->set('acstats', $acstats);
 		$this->render('reports_aircraft.tpl');

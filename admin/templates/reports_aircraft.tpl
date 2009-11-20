@@ -15,7 +15,7 @@ foreach($acstats as $stat)
 </tr>
 <tr>
 	<td align="right"><strong>Total Distance:</strong></td>
-	<td align="left"><?php echo $stat->totaldistance==''?0:$stat->totaldistance?></td>
+	<td align="left"><?php echo $stat->distance==''?0:$stat->distance?></td>
 </tr>
 <tr>
 	<td align="right" nowrap=""><strong>Average Flight Distance:</strong></td>

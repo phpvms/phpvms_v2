@@ -67,19 +67,26 @@
 			</ul>	
 		</p>
 		<p>
-			<strong>My Awards</strong>
+			<strong>My Awards</strong><br />
 			<?php
 			if(!$allawards)
 			{
 				echo 'No awards yet';
 			}
 			else
-			{			
+			{	
+			
+				/* To show the image:
+					<img src="<?php echo $award->image?>" alt="<?php echo $award->descrip?>" />
+				*/
+							
 			?>
 			<ul>
 				<?php foreach($allawards as $award){ ?>
 				<li><?php echo $award->name ?></li>
 				<?php } ?>
+				
+				
 			</ul>	
 			<?php
 			}

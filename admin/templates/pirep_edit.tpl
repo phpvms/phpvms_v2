@@ -1,6 +1,6 @@
 <h3>Edit a flight report</h3>
 <?php
-if($message!='')
+if(isset($message))
 	echo '<div id="error">'.$message.'</div>';
 ?>
 <form action="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending" method="post">
@@ -165,7 +165,7 @@ if($message!='')
 		
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" value="<?php echo $pirep->flighttime; ?>" />
-		<p>Enter as hours - "5.3" is five hours and thirty minutes</p></dd>
+		<p>Enter as hours - "5:30" is five hours and thirty minutes</p></dd>
 		
 	<dt>Comments</dt>
 	<dd>

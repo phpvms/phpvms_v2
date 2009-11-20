@@ -15,7 +15,7 @@ if(!$pireps)
 ?>
 <p>There are a total of <?php echo count($pireps);?> flight reports in this category. <a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/approveall">Click to approve all</a></p>
 <?php
-if($paginate)
+if(isset($paginate))
 {
 ?>
 <div style="float: right;">
@@ -109,6 +109,11 @@ foreach($pireps as $report)
 		<?php
 			echo ($report->fuelused!='')?$report->fuelused . Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit')):'-';
 		?><br />
+		
+		<strong>Landing Rate: </strong>
+		<?php
+		echo $report->landingrate;
+		?><br />
 		<strong>Client: </strong>
 		<?php
 		echo $report->source;
@@ -178,7 +183,7 @@ foreach($pireps as $report)
 <span style="float: right">* - double click to select</span><br />
 
 <?php
-if($paginate)
+if(isset($paginate))
 {
 ?>
 <div style="float: right;">

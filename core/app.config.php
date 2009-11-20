@@ -46,6 +46,8 @@ Config::Set('PILOTID_LENGTH', 4);	# Length of the Pilot ID
 Config::Set('UNITS', 'nm');			# Your units: nm, mi or km
 Config::Set('LOAD_FACTOR', '82');	# %age load factor 
 Config::Set('CARGO_UNITS', 'lbs');
+Config::Set('DEFAULT_MAX_CARGO_LOAD', 10000);
+Config::Set('DEFAULT_MAX_PAX_LOAD', 250);
 
 # After how long to mark a pilot inactive, in days
 Config::Set('PILOT_AUTO_RETIRE', true);

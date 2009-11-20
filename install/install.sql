@@ -248,6 +248,7 @@ CREATE TABLE `phpvms_pireps` (
   `flighttime` varchar(10) NOT NULL default '',
   `flighttime_stamp` TIME NOT NULL,
   `distance` smallint(6) NOT NULL default '0',
+  `landingrate` FLOAT NOT NULL DEFAULT 0.0,
   `submitdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `accepted` smallint(6) NOT NULL default '0',
   `log` text NOT NULL,

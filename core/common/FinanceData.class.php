@@ -505,10 +505,20 @@ class FinanceData extends CodonData
 		 */
 		$aircraft = OperationsData::GetAircraftInfo($aircraft_id);
 		
-		if($flighttype == 'C') # Check cargo if cargo flight
-			$count = $aircraft->maxcargo;
-		else
-			$count = $aircraft->maxpax;
+		if(is_object($aircraft))
+		{
+			if($flighttype == 'C') # Check cargo if cargo flight
+				$count = $aircraft->maxcargo;
+			else
+				$count = $aircraft->maxpax;
+		}
+		else # Aircraft doesn't exist
+		{
+			if($flighttype == 'C') # Check cargo if cargo flight
+				$count = Config::Get('DEFAULT_MAX_CARGO_LOAD');
+			else
+				$count = Config::Get('DEFAULT_MAX_PAX_LOAD');
+		}
 		
 		$currload = ceil($count * ($load / 100));
 		return $currload;

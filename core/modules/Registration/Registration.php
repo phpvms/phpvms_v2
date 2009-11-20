@@ -120,8 +120,16 @@ class Registration extends CodonModule
 			
 			// Registration email/show user is waiting for confirmation
 			$sub = 'A user has registered';
-			$message = "There user {$data['firstname']} {$data['lastname']} ({$data['email']}) has registered, and is awaiting confirmation.";
+			$message = "The user {$data['firstname']} {$data['lastname']} ({$data['email']}) has registered, and is awaiting confirmation.";
 			Util::SendEmail(ADMIN_EMAIL, $sub, $message);
+			
+			// Send email to user
+			$this->set('firstname', $data['firstname']);
+			$this->set('lastname', $data['lastname']);
+			$this->set('userinfo', $data);
+			
+			$message = Template::Get('email_registered.tpl', true);
+			Util::SendEmail($data['email'], 'Registration at '.SITE_NAME, $message);
 			
 			$rss = new RSSFeed('Latest Pilot Registrations', SITE_URL, 'The latest pilot registrations');
 			$allpilots = PilotData::GetLatestPilots();

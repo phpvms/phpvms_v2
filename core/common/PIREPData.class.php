@@ -385,7 +385,14 @@ class PIREPData extends CodonData
 			return;
 		}
 		
-		$pirepdata['log'] = DB::escape($pirepdata['log']);
+		if(isset($pirepdata['log']))
+		{
+			$pirepdata['log'] = DB::escape($pirepdata['log']);
+		}
+		else
+		{
+			$pirepdata['log'] = '';
+		}
 		
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
 		{
@@ -425,14 +432,17 @@ class PIREPData extends CodonData
 		}
 
 		# Look up the schedule
-		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, $pirep->leg);
-		
+		$sched = SchedulesData::GetScheduleByFlight($pirepdata['code'], $pirepdata['flightnum']);
 		
 		# Check the load, if it's blank then look it up
 		#	Based on the aircraft that was flown
-		if($pirepdata['load'] == '')
+		if(isset($pirepdata['load']))
 		{
 			$pirepdata['load'] = FinanceData::GetLoadCount($pirepdata['aircraft'], $sched->flighttype);
+		}
+		else
+		{
+			$pirepdata['load'] = '';
 		}
 	
 		$flighttime_stamp = $pirepdata['flighttime'].':00';
@@ -451,6 +461,7 @@ class PIREPData extends CodonData
 							`aircraft`, 
 							`flighttime`, 
 							`flighttime_stamp`,
+							`landingrate`,
 							`submitdate`, 
 							`accepted`, 
 							`log`,
@@ -458,20 +469,21 @@ class PIREPData extends CodonData
 							`fuelused`,
 							`source`,
 							`exported`)
-					VALUES ($pirepdata[pilotid], 
-							'$pirepdata[code]', 
-							'$pirepdata[flightnum]', 
-							'$pirepdata[depicao]', 
-							'$pirepdata[arricao]', 
-							'$pirepdata[aircraft]', 
-							'$pirepdata[flighttime]', 
-							'$flighttime_stamp',
+					VALUES ( {$pirepdata['pilotid']}, 
+							'{$pirepdata['code']}', 
+							'{$pirepdata['flightnum']}', 
+							'{$pirepdata['depicao']}', 
+							'{$pirepdata['arricao']}', 
+							'{$pirepdata['aircraft']}', 
+							'{$pirepdata['flighttime']}', 
+							'{$flighttime_stamp}',
+							{$pirepdata['landingrate']},
 							NOW(), 
 							".PIREP_PENDING.", 
-							'$pirepdata[log]',
-							'$pirepdata[load]',
-							'$pirepdata[fuelused]',
-							'$pirepdata[source]',
+							'{$pirepdata['log']}',
+							'{$pirepdata['load']}',
+							'{$pirepdata['fuelused']}',
+							'{$pirepdata['source']}',
 							0)";
 							
 		$ret = DB::query($sql);
@@ -486,9 +498,9 @@ class PIREPData extends CodonData
 								`pilotid`, 
 								`comment`, 
 								`postdate`)
-						VALUES ($pirepid,
-								$pirepdata[pilotid], 
-								'$pirepdata[comment]', 
+						VALUES ({$pirepid},
+								{$pirepdata[pilotid]}, 
+								'{$pirepdata[comment]}', 
 								NOW())";
 			$ret = DB::query($sql);
 		}
@@ -505,7 +517,7 @@ class PIREPData extends CodonData
 		$pilotcode = PilotData::GetPilotCode($pilotinfo->code, $pilotinfo->pilotid);
 		
 		# Send an email to the admin that a PIREP was submitted
-		$sub = 'A PIREP has been submitted';
+		$sub = "A PIREP has been submitted by {$pilotcode} ({$pirepdata['depicao']} - {$pirepdata['arricao']})";
 		$message="A PIREP has been submitted by {$pilotcode} ({$pilotinfo->firstname} {$pilotinfo->lastname})\n\n"
 				."{$pirepdata['code']}{$pirepdata['flightnum']}: {$pirepdata['depicao']} to {$pirepdata['arricao']}\n"
 				."Aircraft: {$pirepdata['aircraft']}, Flight Time: {$pirepdata['flighttime']}\n"
@@ -715,10 +727,10 @@ class PIREPData extends CodonData
 						`fuelunitcost`='{$pirep->fuelunitcost}',
 						`expenses`={$total_ex},
 						`pilotpay`='{$pilot->payrate}',
-						`revenue`='{$revenue}'";
+						`revenue`='{$revenue}' ";
 		
-		if($load != '')
-			$sql .= ", `load`='$load'";
+		if($data['load'] != '')
+			$sql .= ", `load`='{$data['load']}'";
 			
 		$sql .= " WHERE `pirepid`=$pirepid";
 					

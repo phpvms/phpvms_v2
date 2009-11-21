@@ -23,7 +23,7 @@
 writedebug("FSPAX DEBUG");
 //writedebug($_SERVER['QUERY_STRING']);
 writedebug(print_r($_POST, true));
-
+writedebug(serialize($_POST));
 
 	# Check for connection
 	if($_POST['FsPAskConnexion'] == 'yes')
@@ -169,6 +169,7 @@ writedebug(print_r($_POST, true));
 						'arricao'=>$arricao,
 						'aircraft'=>$aircraft,
 						'flighttime'=>$flighttime,
+						'landingrate'=>$_POST['TouchDownVertSpeedFt'],
 						'submitdate'=>'NOW()',
 						'load'=>$_POST['NbrPassengers'],
 						'fuelused'=>$fuelused,

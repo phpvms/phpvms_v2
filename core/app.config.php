@@ -131,7 +131,7 @@ Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
 
 # Options for the signature that's generated 
-Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
+Config::Set('SIGNATURE_TEXT_COLOR', '#000');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
 Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);

@@ -20,6 +20,7 @@ class ACARSData extends CodonData
 {
 	
 	public static $lasterror;
+	public static $pirepid;
 	public static $fields = array('pilotid', 'flightnum', 'pilotname', 
 								   'aircraft', 'lat', 'lng', 'heading', 
 								   'alt', 'gs', 'depicao', 'arricao', 
@@ -108,8 +109,8 @@ class ACARSData extends CodonData
 	
 		// first see if we exist:
 		$exist = DB::get_row('SELECT `id`
-							FROM '.TABLE_PREFIX.'acarsdata 
-							WHERE `pilotid`=\''.$data['pilotid'].'\'');
+								FROM '.TABLE_PREFIX.'acarsdata 
+								WHERE `pilotid`=\''.$data['pilotid'].'\'');
 			
 		$flight_id = '';
 		if($exist)
@@ -155,7 +156,6 @@ class ACARSData extends CodonData
 						WHERE `pilotid`='{$data['pilotid']}'";
 						
 			DB::query($query);
-
 		}
 		else
 		{
@@ -262,9 +262,10 @@ class ACARSData extends CodonData
 		#  
 		$ret = PIREPData::FileReport($data);
 		
-		
 		if(!$ret)
 			return false;
+			
+		self::$pirepid = DB::$insert_id;
 		
 		# Call the event
 		#

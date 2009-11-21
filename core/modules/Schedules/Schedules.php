@@ -44,7 +44,7 @@ class Schedules extends CodonModule
 	
 	public function view()
 	{
-		if($this->post->action == 'findflight')
+		if(isset($this->post->action) && $this->post->action == 'findflight')
 		{
 			$this->FindFlight();
 			return;

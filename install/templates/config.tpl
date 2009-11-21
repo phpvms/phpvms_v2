@@ -90,7 +90,7 @@ Config::Set('LiquidUnit', '2');   # 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 
 # Options for the signature that's generated 
-Config::Set('SIGNATURE_TEXT_COLOR', '#FFFFFF');
+Config::Set('SIGNATURE_TEXT_COLOR', '#000');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
 Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);

@@ -1,18 +1,30 @@
 [WEB_CONFIG]
-ADDRESS=<?php echo url('/acars/pirep'); ?>
+ADDRESS=<?php echo actionurl('/fsfk/pirep'); ?>
+
 PORT=80
+
 LOGIN_ENCODED=FALSE
+
 USER=
+
 PASSWORD=
+
 TIMEFORMAT=LOCAL
+
 DATETIME_FORMAT_STRING=dd\.mm\.yyyy HH\:nn
+
 TIME_FORMAT_STRING=HH\:nn
 
 PICTURE_ADDRESS=<?php echo Config::Get('FSFK_FTP_SERVER'); ?>
+
 PICTURE_PORT=<?php echo Config::Get('FSFK_FTP_PORT'); ?>
+
 PICTURE_USER=<?php echo Config::Get('FSFK_FTP_USER'); ?>
+
 PICTURE_PASSWORD=<?php echo Config::Get('FSFK_FTP_PASS'); ?>
+
 PICTURE_FTP_PASSIVE_MODE = <?php echo Config::Get('FSFK_FTP_PASSIVE_MODE'); ?>
+
 PICTURE_TYPES=FlightMapJPG, FlightMapWeatherJPG, FlightMapTaxiOutJPG, FlightMapTaxiInJPG, FlightMapVerticalProfileJPG, FlightMapLandingProfileJPG
 
 [DATA]
@@ -56,15 +68,27 @@ PICTURE_TYPES=FlightMapJPG, FlightMapWeatherJPG, FlightMapTaxiOutJPG, FlightMapT
 	<LAIAS>$@$LAIAS$@$</LAIAS>
 	<ONVS>$@$ONVS$@$</ONVS>
 	<FlightScore>$@$FlightScore$@$</FlightScore>
+	<FLIGHTPLAN>
+	<![CDATA[
+	$@$FlightPlan$@$
+	]]>
+	</FLIGHTPLAN>
+	<COMMENT>
+	<![CDATA[
+	$@$Comment$@$
+	]]>
+	</COMMENT>
+	<FLIGHTCRITIQUE>
+	<![CDATA[
+	$@$FlightCritique$@$
+	]]>
+	</FLIGHTCRITIQUE>
+	<FLIGHTMAPS>
+		<FlightMapJPG>$@$FlightMapJPG$@$</FlightMapJPG>
+		<FlightMapWeatherJPG>$@$FlightMapWeatherJPG$@$</FlightMapWeatherJPG>
+		<FlightMapTaxiOutJPG>$@$FlightMapTaxiOutJPG$@$</FlightMapTaxiOutJPG>
+		<FlightMapTaxiInJPG>$@$FlightMapTaxiInJPG$@$</FlightMapTaxiInJPG>
+		<FlightMapVerticalProfileJPG>$@$FlightMapVerticalProfileJPG$@$</FlightMapVerticalProfileJPG>
+		<FlightMapLandingProfileJPG>$@$FlightMapLandingProfileJPG$@$</FlightMapLandingProfileJPG>
+	</FLIGHTMAPS>
 </FLIGHTDATA>
-<FLIGHTPLAN>$@$FlightPlan$@$</FLIGHTPLAN>
-<COMMENT>$@$Comment$@$</COMMENT>
-<FLIGHTCRITIQUE>$@$FlightCritique$@$</FLIGHTCRITIQUE>
-<FLIGHTMAPS>
-	<FlightMapJPG>$@$FlightMapJPG$@$</FlightMapJPG>
-	<FlightMapWeatherJPG>$@$FlightMapWeatherJPG$@$</FlightMapWeatherJPG>
-	<FlightMapTaxiOutJPG>$@$FlightMapTaxiOutJPG$@$</FlightMapTaxiOutJPG>
-	<FlightMapTaxiInJPG>$@$FlightMapTaxiInJPG$@$</FlightMapTaxiInJPG>
-	<FlightMapVerticalProfileJPG>$@$FlightMapVerticalProfileJPG$@$</FlightMapVerticalProfileJPG>
-	<FlightMapLandingProfileJPG>$@$FlightMapLandingProfileJPG$@$</FlightMapLandingProfileJPG>
-</FLIGHTMAPS>

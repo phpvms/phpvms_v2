@@ -98,6 +98,9 @@
 				<li><a href="<?php echo actionurl('/acars/fsacarsconfig');?>">Download FSACARS Config</a></li>
 				<li><a href="<?php echo actionurl('/acars/fspaxconfig');?>">Download FSPax Config</a></li>
 				<li><a href="<?php echo actionurl('/acars/xacarsconfig');?>">Download XAcars Config</a></li>
+				<li><strong>For FSFK, you need the following (Place in Documents/FS Flight Keeper/Templates): </strong></li>
+				<li><a href="<?php echo actionurl('/fsfk/vaconfig_template');?>">VA-Template.txt</a></li>
+				
 			</ul>
 		</p>
 	</td>

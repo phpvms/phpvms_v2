@@ -37,8 +37,84 @@ class FSFK extends CodonModule
 	 */
 	public function pirep()
 	{
-		$this->log(print_r($_REQUEST, true), 'acars');
-		$this->log(serialize($_REQUEST), 'acars');
+		$data = "<?xml version=\"1.0\" encoding='UTF-8'?>".trim(utf8_encode($_REQUEST['DATA2']));
+		$xml = simplexml_load_string($data);
+		
+		preg_match('/^([A-Za-z]*)(\d*)/', $xml->PilotID, $matches);
+		$code = $matches[1];
+		$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+		
+		$flightinfo = SchedulesData::getProperFlightNum($xml->AircraftAirline.$xml->FlightNumber);
+		$code = $flightinfo['code'];
+		$flightnum = $flightinfo['flightnum'];
+		
+		$depicao = substr($xml->OriginICAO, 0, 4);
+		$arricao = substr($xml->DestinationICAO, 0, 4);
+		
+		if(!OperationsData::GetAirportInfo($depicao))
+		{
+			OperationsData::RetrieveAirportInfo($depicao);
+		}
+		
+		if(!OperationsData::GetAirportInfo($arricao))
+		{
+			OperationsData::RetrieveAirportInfo($arricao);
+		}
+		
+		$load = (string) $xml->Passenger;
+		if($load == '' || $load == 0)
+			$load = (string) $xml->Cargo;
+			
+		$flighttime = str_replace(':', '.', (string) $xml->BlockTime);
+		
+		# Get the proper aircraft
+		$ac = OperationsData::GetAircraftByReg((string) $xml->AircraftType);
+		if(!$ac)
+		{
+			$aircraft = 0;
+		}
+		else
+		{
+			$aircraft = $ac->id;
+			unset($ac);
+		}
+		
+		/* Process the report, to put into the log */
+
+		$log = '';
+		foreach($xml as $key => $value)
+		{
+			if($key == 'FLIGHTMAPS')
+				continue;
+				
+			$log .= $key . ' = '. (string) $value . "<br>";
+			$log = str_replace('¯Â', '', $log);
+		}
+		
+		/* Our data to send to the submit PIREP function */
+		$data = array(
+			'pilotid'=>$pilotid,
+			'code'=>$code,
+			'flightnum'=>$flightnum,
+			'depicao'=>$depicao,
+			'arricao'=>$arricao,
+			'aircraft'=> $aircraft,
+			'flighttime'=> $flighttime,
+			'landingrate'=> (string) $xml->ONVS,
+			'submitdate'=>'NOW()',
+			'comment'=> trim((string) $xml->COMMENT),
+			'fuelused'=> (string) $xml->BlockFuel,
+			'source'=>'fsfk',
+			'load'=>$load,
+			'log'=>$log,
+		);
+				
+		$ret = ACARSData::FilePIREP($pilotid, $data);
+		
+		if(!$ret)
+			echo PIREPData::$lasterror;
+		else
+			echo '<script type="text/javascript">window.location="'.url('/pireps/view/'.ACARSData::$pirepid).'";</script>';
 	}
 	
 	/**
@@ -47,9 +123,6 @@ class FSFK extends CodonModule
 	 */
 	public function acars()
 	{
-		$this->log(print_r($_REQUEST, true), 'acars');
-		$this->log(serialize($_REQUEST), 'acars');
-		
 		if (!isset($_REQUEST['DATA1'])) die("0|Invalid Data");
 		if (!isset($_REQUEST['DATA1'])) die("0|Invalid Data");
 		
@@ -66,7 +139,6 @@ class FSFK extends CodonModule
 		else
 			$message = $_REQUEST['DATA4'];
 			
-			
 		# Go through each method now
 		if($method == 'TEST')
 		{
@@ -75,21 +147,122 @@ class FSFK extends CodonModule
 			echo '1|30';
 			return;
 		}
-		elseif($method == 'UPDATEFLIGHTPLAN')
-		{
-			$flight_id = $value;
-		}
 		elseif($method == 'BEGINFLIGHT')
 		{
-            $flight_data = split('|', $value);
-            
+            $flight_data = explode('|', $value);
+	            
             if (count($flight_data) < 10) 
             {
                 echo '0|Invalid login data';
                 return;
             }
+	        
+			preg_match('/^([A-Za-z]*)(\d*)/', $flight_data[0], $matches);
+			$code = $matches[1];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+			
+			$coords = $this->get_coordinates($flight_data[6]);
+			
+			$route = explode('~', $flight_data[5]);
+			$depicao = $route[0];
+			$arricao = $route[count($route)-1];
+			
+			$flightnum = $flight_data[2];
+			$aircraft = $flight_data[3];
+			$heading = $flight_data[12];
+			$alt = $flight_data[7];
+			$gs = 0;
+			$dist_remain = $flight_data[16];
+			$time_remain = 0;
+			$deptime = time();
+			$online = 0;
         }
+        elseif($method == 'MESSAGE')
+        {
+			$pilotid = $value;
+			
+			$this->log('acars_message');
+			$this->log($message, 'acars');
+			
+			preg_match("/Flight ID:.(.*)\n/", $message, $matches);
+			$flight_data = ACARSData::get_flight_by_pilot($pilotid);
+			$flightnum = $flight_data->flightnum;
+			$aircraft = $flight_data->aircraft;
+			$depicao = $flight_data->depicao;
+			$arricao = $flight_data->arricao;
+			
+			// Get coordinates from ACARS message
+			$count = preg_match("/POS(.*)\n/", $message, $matches);
+			if($count > 0)
+			{
+				$coords = $this->get_coordinates(trim($matches[1]));
+			}
+			else
+			{
+				$coords = array('lat' => $flight_data->lat, 'lng' => $flight_data->lng);
+			}
+			
+			// Get our heading
+			preg_match("/\/HDG.(.*)\n/", $message, $matches);
+			$heading = $matches[1];
+			
+			// Get our altitude
+			preg_match("/\/ALT.(.*)\n/", $message, $matches);
+			$alt = $matches[1];
+			
+			// Get our speed
+			preg_match("/\/IAS.(.*)\//", $message, $matches);
+			$gs = $matches[1];
+		}
+		elseif($method == 'UPDATEFLIGHTPLAN')
+		{
+			$flight_id = $value;
+			$flight_data = explode("|", $message);
+			
+			$this->log('updateflightplan');
+			$this->log(print_r($flight_data, true), 'acars');
+		}
 		
+		$depapt = OperationsData::GetAirportInfo($depicao);
+		$dist_remain = SchedulesData::distanceBetweenPoints($coords->lat, $coords->lng, $depapt->lat, $depapt->lng);
+		
+		# Estimate the time remaining
+		if($gs != 0)
+			$time_remain = $dist_remain / $gs;
+		else
+			$time_remain = '0';
+		
+		$fields = array(
+			'pilotid'=>$pilotid,
+			'flightnum'=>$flightnum,
+			'pilotname'=>'',
+			'aircraft'=>$aircraft,
+			'lat'=>$coords['lat'],
+			'lng'=>$coords['lng'],
+			'heading'=>$heading,
+			'alt'=>$alt,
+			'gs'=>$gs,
+			'depicao'=>$depicao,
+			'arricao'=>$arricao,
+			'deptime'=>$deptime,
+			'arrtime'=>'',
+			'distremain'=>$dist_remain,
+			'timeremaining'=>$time_remain,
+			'phasedetail'=>'Enroute',
+			'online'=>$online,
+			'client'=>'fsfk',
+		);
+
+		ACARSData::UpdateFlightData($fields);
+		$id = DB::$insert_id;
+        
+        if($method == 'BEGINFLIGHT')
+		{
+			echo '1|'.$pilotid;
+			return;
+		}
+		
+        echo '1|';
 	}
 	
 	/**
@@ -145,5 +318,35 @@ class FSFK extends CodonModule
 		header('Content-Length: ' . strlen($acars_config));
 		
 		echo $acars_config;
+	}
+	
+	protected function get_coordinates($line)
+	{
+		/* Get the lat/long */
+		preg_match('/^([A-Za-z])(\d*).(\d*.\d*).([A-Za-z])(\d*).(\d*.\d*)/', $line, $coords);
+		
+		$lat_dir = $coords[1];
+		$lat_deg = $coords[2];
+		$lat_min = $coords[3];
+		
+		$lng_dir = $coords[4];
+		$lng_deg = $coords[5];
+		$lng_min = $coords[6];
+		
+		$lat_deg = ($lat_deg*1.0) + ($lat_min/60.0);
+		$lng_deg = ($lng_deg*1.0) + ($lng_min/60.0);
+		
+		if(strtolower($lat_dir) == 's')
+			$lat_deg = '-'.$lat_deg;
+			
+		if(strtolower($lng_dir) == 'w')
+			$lng_deg = $lng_deg*-1;
+		
+		/* Return container */
+		$coords = array();
+		$coords['lat'] = $lat_deg;
+		$coords['lng'] = $lng_deg;
+		
+		return $coords;
 	}
 }

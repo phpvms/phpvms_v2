@@ -119,11 +119,12 @@ writedebug(serialize($_POST));
 		//if($code == '')
 		//{
 			# Find a flight using just the flight code
-			$sched = SchedulesData::FindFlight($matches[2]);
+			$sched = SchedulesData::FindFlight($flightnum);
 			
 			# Can't do it. They completely screwed this up
 			if(!$sched)
 			{
+				echo "#Answer# Error - Invalid flight ID;";
 				return;
 			}
 			

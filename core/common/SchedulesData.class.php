@@ -91,7 +91,9 @@ class SchedulesData extends CodonData
 		}
 		
 		# Invalid flight number
-		return false;
+		$ret['code'] = '';
+		$ret['flightnum'] = $flightnum
+		return $ret;
 	}
 	
 	

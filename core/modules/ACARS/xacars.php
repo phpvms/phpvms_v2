@@ -19,13 +19,6 @@ writedebug($_SERVER['QUERY_STRING']);
 writedebug($_SERVER['REQUEST_URI']);
 writedebug(print_r($_REQUEST, true));
 
-if(isset($_GET['debug']))
-{
-	$_REQUEST['DATA2'] = 'BEGINFLIGHT';
-	$_REQUEST['DATA3'] = 'VMA001||VMS1234|B744||EGLL~-~KORD|N51 28.3444 W0 28.9596|91||||255337|92|24110|12|IFR|0||';
-}
-
-
 class Coords {
 	public $lat;
 	public $lng;

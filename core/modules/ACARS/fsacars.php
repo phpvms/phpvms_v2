@@ -313,7 +313,7 @@ $maxcargo";
 		if($code == '')
 		{
 			# Find a flight using just the flight code
-			$sched = SchedulesData::FindFlight($matches[2]);
+			$sched = SchedulesData::FindFlight($flightnum);
 		
 			# Can't do it. They completely fucked this up
 			if(!$sched)

@@ -25,162 +25,168 @@ writedebug("FSPAX DEBUG");
 writedebug(print_r($_POST, true));
 writedebug(serialize($_POST));
 
-	# Check for connection
-	if($_POST['FsPAskConnexion'] == 'yes')
+# Check for connection
+if($_POST['FsPAskConnexion'] == 'yes')
+{
+	# Validate pilot:
+	$_POST['UserName'] = DB::escape($_POST['UserName']);
+	
+	# Entered as ###
+	if(is_numeric($_POST['UserName']))
 	{
-		# Validate pilot:
-		$_POST['UserName'] = DB::escape($_POST['UserName']);
-		
-		# Entered as ###
-		if(is_numeric($_POST['UserName']))
+		$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
+	}
+	else
+	{
+		# Check if they entered as XXX###
+		if(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $_POST['UserName'], $matches)>0)
 		{
-			$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
+			$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
 		}
 		else
 		{
-			# Check if they entered as XXX###
-			if(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $_POST['UserName'], $matches)>0)
-			{
-				$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
-			}
-			else
-			{
-				# Invalid Pilot
-				echo '#Answer# Error - Invalid pilot ID format;';
-				return;
-			}
+			# Invalid Pilot
+			echo '#Answer# Error - Invalid pilot ID format;';
+			return;
 		}
-		
-		$pilotdata = PilotData::GetPilotData($pilotid);
-		if(!$pilotdata)
+	}
+	
+	$pilotdata = PilotData::GetPilotData($pilotid);
+	if(!$pilotdata)
+	{
+		echo '#Answer# Error - Username don\'t exist or wrong password;';
+		return;
+	}
+	
+	# Give it what it wants
+	# Derive the config from the main config settings
+	echo "#Answer# Ok - connected;";
+	echo 'Weight='.Config::Get('WeightUnit').' Dist='.Config::Get('DistanceUnit').' Speed='.Config::Get('SpeedUnit').' Alt='.Config::Get('AltUnit').' Liqu='.Config::Get('LiquidUnit');
+	echo '#welcome#'.Config::Get('WelcomeMessage').'#endwelcome#';
+}
+
+
+if($_POST['FsPAskToRegister'] == 'yes')
+{
+	$comment = '';
+	
+	# Get the pilot id:
+	
+	if(is_numeric($_POST['UserName']))
+	{
+		$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
+	}
+	else
+	{
+		if(preg_match('/^([A-Za-z]*)(\d*)/', $_POST['UserName'], $matches) == 0)
 		{
-			echo '#Answer# Error - Username don\'t exist or wrong password;';
+			echo "#Answer# Error: Pilot doesn't exist ;";
 			return;
 		}
 		
-		# Give it what it wants
-		# Derive the config from the main config settings
-		echo "#Answer# Ok - connected;";
-		echo 'Weight='.Config::Get('WeightUnit').' Dist='.Config::Get('DistanceUnit').' Speed='.Config::Get('SpeedUnit').' Alt='.Config::Get('AltUnit').' Liqu='.Config::Get('LiquidUnit');
-		echo '#welcome#'.Config::Get('WelcomeMessage').'#endwelcome#';
+		$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
 	}
 	
-
-	if($_POST['FsPAskToRegister'] == 'yes')
+	# Get the flight ID
+	$flightinfo = SchedulesData::getProperFlightNum($_POST['FlightId']);
+	$code = $flightinfo['code'];
+	$flightnum = $flightinfo['flightnum'];
+	/*if(preg_match('/^([A-Za-z]*)(\d*)/', $_POST['FlightId'], $matches) == 0)
 	{
-		$comment = '';
+		echo "#Answer# Error - Invalid flight ID;";
+		return;
+	}*/
+	
+				
+	preg_match('/^([A-Za-z]*) - .*/', $_POST['DepartureIcaoName'], $aptinfo);
+	$depicao = $aptinfo[1];
+	
+	# Make sure it exists
+	if(!OperationsData::GetAirportInfo($depicao))
+	{
+		OperationsData::RetrieveAirportInfo($depicao);
+	}
+
+	preg_match('/^([A-Za-z]*) - .*/', $_POST['ArrivalIcaoName'], $aptinfo);
+	$arricao = $aptinfo[1];
+	
+	# Make sure it exists
+	if(!OperationsData::GetAirportInfo($arricao))
+	{
+		OperationsData::RetrieveAirportInfo($arricao);
+	}
+	
+	//if($code == '')
+	//{
+		# Find a flight using just the flight code
+		$sched = SchedulesData::FindFlight($flightnum);
 		
-		# Get the pilot id:
-		
-		if(is_numeric($_POST['UserName']))
-		{
-			$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
-		}
-		else
-		{
-			if(preg_match('/^([A-Za-z]*)(\d*)/', $_POST['UserName'], $matches) == 0)
-			{
-				echo "#Answer# Error: Pilot doesn't exist ;";
-				return;
-			}
-			
-			$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
-		}
-		
-		# Get the flight ID
-		$flightinfo = SchedulesData::getProperFlightNum($_POST['FlightId']);
-		$code = $flightinfo['code'];
-		$flightnum = $flightinfo['flightnum'];
-		/*if(preg_match('/^([A-Za-z]*)(\d*)/', $_POST['FlightId'], $matches) == 0)
+		# Can't do it. They completely screwed this up
+		if(!$sched)
 		{
 			echo "#Answer# Error - Invalid flight ID;";
 			return;
-		}*/
-		
-					
-		preg_match('/^([A-Za-z]*) - .*/', $_POST['DepartureIcaoName'], $aptinfo);
-		$depicao = $aptinfo[1];
-		
-		# Make sure it exists
-		if(!OperationsData::GetAirportInfo($depicao))
-		{
-			OperationsData::RetrieveAirportInfo($depicao);
 		}
+		
+		$code = $sched->code;
+		$flightnum = $sched->flightnum;
+		$leg = $sched->leg;
+		$aircraft = $sched->aircraft;
+		/*$depicao = $sched->depicao;
+		$arricao = $sched->arricao;*/
+		
+		if($depicao != $sched->depicao || $arricao != $sched->arricao)
+		{
+			$comment = 'phpVMS Message: Arrival or Departure does not match schedule. ';
+		}
+	//}
+
+	# Get the time, don't care about seconds
+	preg_match('/^(\d*):(\d*):(\d*)/', $_POST['TotalBlockTime'], $time);
+	$flighttime = $time[1].'.'.$time[2];
 	
-		preg_match('/^([A-Za-z]*) - .*/', $_POST['ArrivalIcaoName'], $aptinfo);
-		$arricao = $aptinfo[1];
-		
-		# Make sure it exists
-		if(!OperationsData::GetAirportInfo($arricao))
-		{
-			OperationsData::RetrieveAirportInfo($arricao);
-		}
-		
-		//if($code == '')
-		//{
-			# Find a flight using just the flight code
-			$sched = SchedulesData::FindFlight($flightnum);
-			
-			# Can't do it. They completely screwed this up
-			if(!$sched)
-			{
-				echo "#Answer# Error - Invalid flight ID;";
-				return;
-			}
-			
-			$code = $sched->code;
-			$flightnum = $sched->flightnum;
-			$leg = $sched->leg;
-			$aircraft = $sched->aircraft;
-			/*$depicao = $sched->depicao;
-			$arricao = $sched->arricao;*/
-			
-			if($depicao != $sched->depicao || $arricao != $sched->arricao)
-			{
-				$comment = 'phpVMS Message: Arrival or Departure does not match schedule. ';
-			}
-		//}
+	# Get the fuel used
+	$fuelused = floatval($_POST['StartFuelQuantity']) - floatval($_POST['EndFuelQuantity']);
 	
-		# Get the time, don't care about seconds
-		preg_match('/^(\d*):(\d*):(\d*)/', $_POST['TotalBlockTime'], $time);
-		$flighttime = $time[1].'.'.$time[2];
-		
-		# Get the fuel used
-		$fuelused = floatval($_POST['StartFuelQuantity']) - floatval($_POST['EndFuelQuantity']);
-		
-		# Form the log:
-		$log = '';
-		foreach($_POST as $name=>$value)
+	# Form the log:
+	$log = '';
+	foreach($_POST as $name=>$value)
+	{
+		if($name == 'FsPAskToRegister' || $name == 'UserName' || $name == 'Password')
 		{
-			if($name == 'FsPAskToRegister' || $name == 'UserName' || $name == 'Password')
-			{
-				continue;
-			}
-			
-			$log .= "$name=$value<br />".PHP_EOL;
+			continue;
 		}
 		
-		$comment .= 'FSPassengers Flight. No aircraft entered';
-		
-		$data = array(	'pilotid'=>$pilotid,
-						'code'=>$code,
-						'flightnum'=>$flightnum,
-						'leg'=>$leg,
-						'depicao'=>$depicao,
-						'arricao'=>$arricao,
-						'aircraft'=>$aircraft,
-						'flighttime'=>$flighttime,
-						'landingrate'=>$_POST['TouchDownVertSpeedFt'],
-						'submitdate'=>'NOW()',
-						'load'=>$_POST['NbrPassengers'],
-						'fuelused'=>$fuelused,
-						'source'=>'fspax',
-						'comment'=>$comment,
-						'log'=> $log);
-			
-		writedebug($data);
-			
-		$ret = ACARSData::FilePIREP($pilotid, $data);	
-		
-		echo "#Answer# Ok - Saved;";
+		$log .= "$name=$value<br />".PHP_EOL;
 	}
+	
+	$comment .= 'FSPassengers Flight. No aircraft entered';
+	
+	$data = array(	'pilotid'=>$pilotid,
+					'code'=>$code,
+					'flightnum'=>$flightnum,
+					'leg'=>$leg,
+					'depicao'=>$depicao,
+					'arricao'=>$arricao,
+					'aircraft'=>$aircraft,
+					'flighttime'=>$flighttime,
+					'landingrate'=>$_POST['TouchDownVertSpeedFt'],
+					'submitdate'=>'NOW()',
+					'load'=>$_POST['NbrPassengers'],
+					'fuelused'=>$fuelused,
+					'source'=>'fspax',
+					'comment'=>$comment,
+					'log'=> $log);
+		
+	writedebug($data);
+		
+	$ret = ACARSData::FilePIREP($pilotid, $data);
+	if(!$ret)
+	{
+		echo "#Answer# Error - ".PIREPData::$lasterror;
+		exit;
+	}
+
+	
+	echo "#Answer# Ok - Saved;";
+}

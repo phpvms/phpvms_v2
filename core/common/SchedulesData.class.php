@@ -92,7 +92,7 @@ class SchedulesData extends CodonData
 		
 		# Invalid flight number
 		$ret['code'] = '';
-		$ret['flightnum'] = $flightnum
+		$ret['flightnum'] = $flightnum;
 		return $ret;
 	}
 	

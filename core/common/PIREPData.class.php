@@ -456,6 +456,7 @@ class PIREPData extends CodonData
 				
 		#var_dump($pirepdata);
 		# Escape the comment field
+		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		$comment = DB::escape($pirepdata['comment']);
 				
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps(	
@@ -483,10 +484,10 @@ class PIREPData extends CodonData
 							'{$pirepdata['aircraft']}', 
 							'{$pirepdata['flighttime']}', 
 							'{$flighttime_stamp}',
-							{$pirepdata['landingrate']},
+							'{$pirepdata['landingrate']}',
 							NOW(), 
 							".PIREP_PENDING.", 
-							'{$pirepdata['log']}',
+							'$pirepdata[log]',
 							'{$pirepdata['load']}',
 							'{$pirepdata['fuelused']}',
 							'{$pirepdata['source']}',

@@ -49,12 +49,10 @@ class ACARS extends CodonModule
 	public function __call($name, $args)
 	{
 		$acars_action = $args[0];
-		
-		writedebug("here");
-		
-		if(file_exists(CORE_PATH.'/modules/ACARS/'.$name.'.php'))
+	
+		if(dirname(__FILE__).DS.$name.'.php')
 		{
-			include_once CORE_PATH.'/modules/ACARS/'.$name.'.php';
+			include_once dirname(__FILE__).DS.$name.'.php';
 			return;
 		}
 	}

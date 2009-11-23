@@ -29,6 +29,7 @@ function writedebug($msg)
 class ACARS extends CodonModule
 {
 	public $title = 'ACARS';
+	public $acarsflights;
 	
 	public function index()
 	{
@@ -64,7 +65,7 @@ class ACARS extends CodonModule
 		if(!$flights) 
 			$flights = array();
 		
-		$outflights = array();
+		$this->acarsflights = array();
 		foreach($flights as $flight)
 		{	
 			$c = (array) $flight; // Convert the object to an array
@@ -114,12 +115,14 @@ class ACARS extends CodonModule
 			
 			unset($c['messagelog']);
 			
-			$outflights[] = $c;
+			$this->acarsflights[] = $c;
 			
 			continue;
 		}
+	
+		CodonEvent::Dispatch('refresh_acars', 'ACARS');
 		
-		echo json_encode($outflights);
+		echo json_encode($this->acarsflights);
 	}
 	
 	public function routeinfo()

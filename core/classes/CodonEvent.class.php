@@ -119,4 +119,3 @@ class CodonEvent
 			self::$stopList[self::$lastevent] = true;
 	}
 }
-?>

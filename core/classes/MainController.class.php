@@ -220,6 +220,24 @@ class MainController
 	}
 	
 	/**
+	 * Return an instance of the module/controller specified
+	 * 
+	 */
+	public static function getInstance($module)
+	{
+		$ModuleName = strtoupper($module);
+		global $$ModuleName;
+		
+		// Make sure this module is valid
+		if(!is_object($$ModuleName))
+		{	
+			return false;
+		}
+		
+		return $$ModuleName;
+	}
+	
+	/**
 	 * This runs the Controller() function of all the
 	 * 	modules, and gives priority to the module passed
 	 *	in the parameter

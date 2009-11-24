@@ -43,6 +43,7 @@ class TemplateSet
 	public $enable_caching = false;
 	public $cache_timeout;
 	
+	public $tpl_ext = '.tpl';
 	protected $vars = array();
 	
 	/*public function __construct($path='')
@@ -189,9 +190,9 @@ class TemplateSet
 		/* See if the file has been over-rided in the skin directory
 		 */
 		 
-		if(strstr($tpl_name, Config::Get('TPL_EXTENSION')) === false)
+		if(strstr($tpl_name, $this->tpl_ext) === false)
 		{
-			$tpl_name .= Config::Get('TPL_EXTENSION');
+			$tpl_name .= $this->tpl_ext;
 		}
 
 		if(!defined('ADMIN_PANEL') && $checkskin == true)

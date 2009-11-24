@@ -128,4 +128,3 @@ class Config
 		return true;
 	}
 }
-?>

@@ -161,7 +161,7 @@ class CentralData extends CodonData
 			}
 		}
 		
-		self::send_xml();
+		//self::send_xml();
 	}
 	
 	public static function send_pilots()
@@ -208,7 +208,7 @@ class CentralData extends CodonData
 			if($pirep->aircraft == '')
 				continue; 
 			
-			$xml .= self::get_pirep_xml($pirep);
+			self::get_pirep_xml($pirep);
 		}
 				
 		CronData::set_lastupdate('update_pireps');
@@ -240,7 +240,7 @@ class CentralData extends CodonData
 		if(!$pirep)
 			return false;
 			
-		$xml .= self::get_pirep_xml($pirep);
+		self::get_pirep_xml($pirep);
 				
 		CronData::set_lastupdate('add_pirep');
 		$resp = self::send_xml();

@@ -151,18 +151,21 @@ class PilotAdmin extends CodonModule
 		
 	public function pendingpilots()
 	{
-		switch($this->post->action)
-        {
-			case 'approvepilot':
-				
-				$this->ApprovePilot();
-				
-				break;
-			case 'rejectpilot':
-				
-				$this->RejectPilot();
-				
-				break;
+		if(isset($this->post->action))
+		{
+			switch($this->post->action)
+			{
+				case 'approvepilot':
+					
+					$this->ApprovePilot();
+					
+					break;
+				case 'rejectpilot':
+					
+					$this->RejectPilot();
+					
+					break;
+			}
 		}
 
 		$this->set('allpilots', PilotData::GetPendingPilots());

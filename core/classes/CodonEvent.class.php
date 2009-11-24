@@ -90,7 +90,7 @@ class CodonEvent
 				self::$lastevent = $eventname;
 				MainController::Run($ModuleName, 'EventListener', $params);
 				
-				if(self::$stopList[$eventname] == true)
+				if(isset(self::$stopList[$eventname]) && self::$stopList[$eventname] == true)
 				{
 					unset(self::$stopList[$eventname]);
 					return false;

@@ -17,7 +17,7 @@ $data = array('pilotid'=>1,
 			  'flighttime'=>$sched->flighttime,
 			  'submitdate'=>'NOW()',
 			  'fuelused'=>6000,
-			  'source'=>'manual',
+			  'source'=>'unittest',
 			  'comment'=>'Test Flight');
 
 $ret = PIREPData::FileReport($data);

@@ -17,6 +17,7 @@
  */
  
 error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', 'on');
 
 define('ADMIN_PANEL', true);
 define('INSTALLER_VERSION', '1.2.##REVISION##');

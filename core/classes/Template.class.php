@@ -51,6 +51,11 @@ class Template
 		self::$tplset->SetTemplatePath($path);
 	}
 	
+	public static function setTemplateExt($ext)
+	{
+		self::$tplset->tpl_ext = $ext;
+	}
+	
 	public static function EnableCaching($bool=true)
 	{
 		self::$tplset->enable_caching = $bool;
@@ -90,5 +95,4 @@ class Template
 	{
 		return self::$tplset->ShowModule($ModuleName, $Method);
 	}
-	
 }

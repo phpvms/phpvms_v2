@@ -506,8 +506,8 @@ class PIREPData extends CodonData
 								`comment`, 
 								`postdate`)
 						VALUES ({$pirepid},
-								{$pirepdata[pilotid]}, 
-								'{$pirepdata[comment]}', 
+								{$pirepdata['pilotid']}, 
+								'{$pirepdata['comment']}', 
 								NOW())";
 			$ret = DB::query($sql);
 		}
@@ -527,8 +527,10 @@ class PIREPData extends CodonData
 		$sub = "A PIREP has been submitted by {$pilotcode} ({$pirepdata['depicao']} - {$pirepdata['arricao']})";
 		$message="A PIREP has been submitted by {$pilotcode} ({$pilotinfo->firstname} {$pilotinfo->lastname})\n\n"
 				."{$pirepdata['code']}{$pirepdata['flightnum']}: {$pirepdata['depicao']} to {$pirepdata['arricao']}\n"
-				."Aircraft: {$pirepdata['aircraft']}, Flight Time: {$pirepdata['flighttime']}\n"
-				."File using: {$pirepdata['source']}\n";
+				."Aircraft: {$pirepdata['aircraft']}\n"
+				."Flight Time: {$pirepdata['flighttime']}\n"
+				."Filed using: {$pirepdata['source']}\n\n"
+				."Comment: {$pirepdata['comment']}";
 				 
 		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
 		//SchedulesData::IncrementFlownCount($pirepdata['code'], $pirepdata['flightnum']);

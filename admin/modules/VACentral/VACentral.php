@@ -53,7 +53,6 @@ class VACentral extends CodonModule
 			}
 		}
 		
-		
 		echo "Completed</p>";
 	}
 	

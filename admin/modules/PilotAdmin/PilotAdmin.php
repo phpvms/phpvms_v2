@@ -57,6 +57,7 @@ class PilotAdmin extends CodonModule
 			tab through AJAX). The hook is available for whoever
 			wants to use it
 		*/
+		
 		switch($this->post->action)
 		{
 			case 'changepassword':
@@ -132,6 +133,8 @@ class PilotAdmin extends CodonModule
 				
 				RanksData::CalculateUpdatePilotRank($this->post->pilotid);
 				PilotData::GenerateSignature($this->post->pilotid);
+				
+				StatsData::UpdateTotalHours();
 				
 				$this->set('message', 'Profile updated successfully');
 				$this->render('core_success.tpl');

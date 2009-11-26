@@ -53,6 +53,10 @@ a:hover {
 	font-size: 10px;
 }
 
+h2 {
+	color: #3366FF;
+}
+
 table {
 	padding: 0px;
 	background: #FFF;

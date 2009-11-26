@@ -24,39 +24,8 @@ define('INSTALLER_VERSION', '1.2.##REVISION##');
 
 include dirname(__FILE__).'/loader.inc.php';
 
-if($_POST['action'] == 'submitdb')
-{
-	//dbname] => [dbpass] => [dbuser] => [dbtype] => mysql [tableprefix] => phpvms_ [siteurl] => www.phpvms.net/test/ [action] => submitdb [
-
-	if($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == '' || $_POST['DBASE_TYPE'] == ''
-			|| $_POST['DBASE_SERVER'] == '' || $_POST['SITE_URL'] == '')
-	{
-		Template::Set('message', 'You must fill out all the required fields');
-	}
-	else
-	{
-		if(!Installer::AddTables())
-		{
-			Template::Set('message', Installer::$error);
-		}
-		else
-		{
-			if(!Installer::WriteConfig())
-			{
-				Template::Set('message', Installer::$error);
-			}
-			else
-			{
-				header("Location: install.php?page=sitesetup");
-			}
-		}
-	}
-}
-
 
 Template::Show('header.tpl');
-
-echo '<h3 align="left">phpVMS Installer</h3>';
 
 // Controller
 switch($_GET['page'])
@@ -75,7 +44,39 @@ switch($_GET['page'])
 		
 		break;
 		
+	case 'installdb':
+	
+		if($_POST['action'] == 'submitdb')
+		{
+			echo '<h2>Installing the tables...</h2>';
+			if($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == '' || $_POST['DBASE_TYPE'] == ''
+				|| $_POST['DBASE_SERVER'] == '' || $_POST['SITE_URL'] == '')
+			{
+				echo '<div id="error">You must fill out all the required fields</div>';
+				break;
+			}
+		
+			if(!Installer::AddTables())
+			{
+				echo '<div id="error">'.Installer::$error.'</div>';
+				break;
+			}
+			
+			if(!Installer::WriteConfig())
+			{
+				echo '<div id="error">'.Installer::$error.'</div>';
+				break;
+			}
+			
+			echo '<div align="center" style="font-size: 18px;"><br />
+					<a href="install.php?page=sitesetup">Continue to the next step</a>
+				  </div>';	
+		}
+		
+		break;
+		
 	case 'sitesetup':
+		
 		Template::Show('s2_site_setup.tpl');
 		break;
 		
@@ -83,7 +84,7 @@ switch($_GET['page'])
 		
 		if($_POST['action'] == 'submitsetup')
 		{
-			if($_POST['SITE_NAME'] == '' || $_POST['firstname'] == '' || $_POST['lastname'] == '' 
+			if($_POST['firstname'] == '' || $_POST['lastname'] == '' 
 					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == '' 
 					|| $_POST['vacode'] == '')
 			{
@@ -91,6 +92,8 @@ switch($_GET['page'])
 				Template::Show('s2_site_setup.tpl');
 				break;
 			}
+			
+			$_POST['SITE_NAME'] = $_POST['vaname'];
 				
 			if(!Installer::SiteSetup())
 			{
@@ -108,4 +111,3 @@ switch($_GET['page'])
 }	
 
 Template::Show('footer.tpl');
-?>

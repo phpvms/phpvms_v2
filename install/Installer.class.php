@@ -30,6 +30,7 @@ class Installer
 		// These needa be writable
 		$wf[] = 'core/pages';
 		$wf[] = 'core/cache';
+		$wf[] = 'core/logs';
 		$wf[] = 'lib/rss';
 		$wf[] = 'lib/avatars';
 		$wf[] = 'lib/signatures';
@@ -39,7 +40,7 @@ class Installer
 		{
 			$noerror = false;
 			$type = 'error';
-			$message = 'You need to run PHP 5 (your version: '.$version.')';
+			$message = 'You need PHP 5 (your version: '.$version.')';
 		}
 		else
 		{
@@ -57,6 +58,11 @@ class Installer
 				$noerror = false;
 				$type = 'error';
 				$message = 'Could not create core/local.config.php. Create this file, blank, with write permissions.';
+			}
+			else
+			{
+				$type = 'success';
+				$message = 'core/local.config.php is writeable!';
 			}
 		}
 		else
@@ -173,11 +179,40 @@ class Installer
 			{
 				$sql.=$str;
 				$sql = str_replace('phpvms_', $_POST['TABLE_PREFIX'], $sql);
+				$sql = trim($sql);
 				
-				DB::query($sql);
-							
-				if(DB::errno() == 1050)
+				preg_match("/({$_POST['TABLE_PREFIX']}.*)` /", $sql, $matches);
+				$tablename = $matches[1];
+				
+				// Skip if it's a comment
+				if($sql[0] == '-' && $sql[1] == '-')
+				{
+					$sql = '';
 					continue;
+				}
+				
+				if($tablename == '')
+				{
+					$sql = '';
+					continue;
+				}
+					
+				DB::query($sql);
+				
+				if(DB::errno() != 0)
+					$divid = 'error';
+				else
+					$divid = 'success';
+					
+				echo '<div id="'.$divid.'" style="text-align: left;">Writing "'.$tablename.'" table... ';
+				
+				if(DB::errno() != 0)
+					echo 'failed - manually run this query: <br /><br />"'.$sql.'"';
+				else
+					echo 'success';
+					
+				echo '</div>';
+					
 				$sql = '';
 			}
 			else
@@ -204,7 +239,7 @@ class Installer
 			return false;
 		}
 		
-		// Add an initial airport/hub
+		// Add an initial airport/hub, because I love KJFK so much
 		$data = array(
 			'icao' => 'KJFK',
 			'name' => 'Kennedy International',
@@ -246,6 +281,7 @@ class Installer
 		
 		SettingsData::SaveSetting('SITE_NAME', $_POST['SITE_NAME']);
 		SettingsData::SaveSetting('ADMIN_EMAIL', $_POST['email']);
+		SettingsData::SaveSetting('GOOGLE_KEY', $_POST['googlekey']);
 		
 		return true;
 		

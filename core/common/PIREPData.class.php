@@ -446,7 +446,7 @@ class PIREPData extends CodonData
 		}
 	
 		$flighttime_stamp = $pirepdata['flighttime'].':00';
-		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
+		$pirepdata['flighttime'] = str_replace(':', '.', $pirepdata['flighttime']);
 		
 		# Landing rate
 		if(!isset($pirepdata['landingrate']) || $pirepdata['landingrate'] == '')

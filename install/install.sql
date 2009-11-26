@@ -4,14 +4,13 @@
 -- DO NOT MANUALLY RUN THIS FILE!!!
 -- To install, goto /install/install.php
 --
--- Manually running this will screw up your install;
-
+-- Manually running this will screw up your install!! ;
 
 CREATE TABLE `phpvms_awards` (
 	`awardid` INT NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR( 25 ) NOT NULL ,
 	`descrip` VARCHAR( 100 ) NOT NULL ,
-	`image` TEXT NOT NULL ,
+	`image` TEXT NOT NULL,
 	PRIMARY KEY ( `awardid` )
 ) ENGINE = MYISAM;
 

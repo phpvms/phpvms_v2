@@ -830,7 +830,7 @@ class SchedulesData extends CodonData
 		$bid_info = self::GetBid($bidid);
 		
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids 
-					WHERE bidid='.$bidid;
+					WHERE `bidid`='.$bidid;
 		
 		DB::query($sql);
 		

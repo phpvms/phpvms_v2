@@ -25,24 +25,23 @@ class SiteData extends CodonData
 		$all_settings = DB::get_results($sql);
 		
 		if(!$all_settings)
+		{
 			return false;
+		}
 		
 		foreach($all_settings as $setting)
 		{
-			//if(!defined($setting->name))
-			//{
-				//correct value for booleans
-				if($setting->value == 'true')
-				{
-					$setting->value = true;
-				}
-				elseif($setting->value == 'false')
-				{
-					$setting->value = false;
-				}
-				
-				define($setting->name, $setting->value);
-			//}
+			//correct value for booleans
+			if($setting->value == 'true')
+			{
+				$setting->value = true;
+			}
+			elseif($setting->value == 'false')
+			{
+				$setting->value = false;
+			}
+			
+			define($setting->name, $setting->value);
 		}
 	}
 

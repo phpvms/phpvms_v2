@@ -125,11 +125,12 @@ class PIREPS extends CodonModule
 			return;
 		}
 		
-		/*if(isset(CodonRewrite::$peices[2]))
+		if(isset(CodonRewrite::$peices[2]))
 			$id = CodonRewrite::$peices[2];
 		else
-			$id = '';*/
-		$id = '';
+			$id = '';
+			
+	
 		$this->FilePIREPForm($id);
 	}
 	
@@ -210,15 +211,23 @@ class PIREPS extends CodonModule
 				|| $this->post->aircraft == '' || $this->post->flighttime == '')
 		{
 			$this->set('message', 'You must fill out all of the required fields!');
-			//$this->render('core_error.tpl');
 			return false;
 		}
 		
+		# Only allow for valid routes to be filed
 		$sched_data = SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum);
 		if(!$sched_data)
 		{
 			$this->set('message', 'The flight code and number you entered is not a valid route!');
-			//$this->render('core_error.tpl');
+			return false;
+		}
+		
+		# See if they entered more than 59 in the minutes part of the flight time
+		$this->post->flighttime = str_replace(':', '.', $this->post->flighttime);
+		$parts = explode('.', $this->post->flighttime);
+		if($parts[1] > 59)
+		{
+			$this->set('message', 'You entered more than 60 minutes in the minutes');
 			return false;
 		}
 		
@@ -238,7 +247,8 @@ class PIREPS extends CodonModule
 			}
 		}
 		
-		/*if($this->post->depicao == $this->post->arricao)
+		/* Removed this check since maybe it's a training flight or something, who knows
+		if($this->post->depicao == $this->post->arricao)
 		{
 			$this->set('message', 'The departure airport is the same as the arrival airport!');
 			$this->render('core_error.tpl');
@@ -249,7 +259,6 @@ class PIREPS extends CodonModule
 		if(!is_numeric($this->post->flighttime))
 		{
 			$this->set('message', 'The flight time has to be a number!');
-			//$this->render('core_error.tpl');
 			return false;
 		}
 		
@@ -274,12 +283,18 @@ class PIREPS extends CodonModule
 		if(!PIREPData::FileReport($data))
 		{
 			$this->set('message', 'There was an error adding your PIREP : '.PIREPData::$lasterror);
-			//$this->render('core_error.tpl');
 			return false;
 		}
 		
 		$pirepid = DB::$insert_id;
 		PIREPData::SaveFields($pirepid, $_POST);
+		
+		# Remove the bid
+		$bidid = SchedulesData::GetBidWithRoute($pilotid, $this->post->code, $this->post->flightnum);
+		if($bidid)
+		{
+			SchedulesData::RemoveBid($bidid->bidid);
+		}
 		
 		# Call the event
 		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);

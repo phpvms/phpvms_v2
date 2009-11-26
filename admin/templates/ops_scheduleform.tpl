@@ -4,7 +4,7 @@
 //id="form"
 ?>
 <form action="<?php echo SITE_URL?>/admin/index.php/operations/schedules" method="post">
-<table width="100%">
+<table width="100%" class="highlight">
 <tr>
 	<td valign="top"><strong>Code: </strong></td>
 	<td>
@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td valign="top"><strong>Route (optional)</strong></td>
-	<td><textarea name="route" style="width: 60%; height: 150px"><?php echo $schedule->route?></textarea>
+	<td><textarea name="route" style="width: 60%; height: 75px"><?php echo $schedule->route?></textarea>
 	</td>
 </tr>
 <!--
@@ -185,7 +185,7 @@
 <tr>
 	<td valign="top"><strong>Notes</strong></td>
 	<td valign="top" style="padding-top: 0px">
-		<p>Any notes about the flight, including frequency, dates flown, etc.</p>
+		Any notes about the flight, including frequency, dates flown, etc.<br /><br />
 		<textarea name="notes" style="width: 60%; height: 150px"><?php echo $schedule->notes?></textarea>
 	</td>
 </tr>

@@ -494,6 +494,10 @@ class Operations extends CodonModule
 		{
 			$this->post->distance = OperationsData::getAirportDistance($this->post->depicao, $this->post->arricao);
 		}
+		
+		# Format the flight level
+		$this->post->flightlevel = str_replace(',', '', $this->post->flightlevel);
+		$this->post->flightlevel = str_replace(' ', '', $this->post->flightlevel);
 
 		$this->post->route = strtoupper($this->post->route);
 	
@@ -536,13 +540,17 @@ class Operations extends CodonModule
 			|| $this->post->depicao == '' || $this->post->arricao == '')
 		{
 			$this->set('message', 'All of the fields must be filled out');
-			$this->render('core_message.tpl');
+			$this->render('core_error.tpl');
 			
 			return;
 		}
 		
 		$enabled = ($this->post->enabled == 'on') ? true : false;
 		$this->post->route = strtoupper($this->post->route);
+		
+		# Format the flight level
+		$this->post->flightlevel = str_replace(',', '', $this->post->flightlevel);
+		$this->post->flightlevel = str_replace(' ', '', $this->post->flightlevel);
 		
 		$data = array(	'scheduleid'=>$this->post->id,
 						'code'=>$this->post->code,

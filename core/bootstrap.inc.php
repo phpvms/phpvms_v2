@@ -26,11 +26,14 @@ function pre_module_load()
 	
 	if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.config.php') == 0)
 	{
-		header('Location: install/install.php');
+		Debug::showCritical('phpVMS has not been installed yet! Goto <a href="install/install.php">install/install.php</a> to start!');		
+		exit; 
+		//header('Location: install/install.php');
 	}
 	
-	Auth::StartAuth();
 	SiteData::loadSiteSettings();
+	Auth::StartAuth();
+	
 }
 
 function post_module_load()

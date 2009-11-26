@@ -17,7 +17,7 @@ Template::Show('core_htmlhead.tpl');
 
 <script type="text/javascript">
 $(document).ready(function() {
-	val = $("table.tablesorter tbody tr:even td").css("background-color", "#F5F7FF");
+	val = $("table.tablesorter tbody tr:even td, table.highlight tbody tr:even td").css("background-color", "#F5F7FF");
 });
 </script>
 

@@ -110,7 +110,9 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 include CORE_PATH.DS.'bootstrap.inc.php';
 
 if(function_exists('pre_module_load'))
+{
 	pre_module_load();
+}
 
 MainController::loadEngineTasks();
 

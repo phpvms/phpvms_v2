@@ -159,13 +159,13 @@ $(document).ready(function() {
         var action = $(this).attr("action");
         var id = $(this).attr("id");
 
-        $.prompt('Are you sure?', {
+        $.prompt('Are you sure you want to delete this?', {
             buttons: { Yes: true, Cancel: false },
             callback: function(v, m) {
                 if (v == true) {
                     $.post(url, { action: action, id: id });
                     rmvid = "#row" + id;
-                    $(rmvid).slideUp();
+                    $(rmvid).hide();
                 }
 
                 $('#jqmdialog').jqmAddTrigger('.jqModal');

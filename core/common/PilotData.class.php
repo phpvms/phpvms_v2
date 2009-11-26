@@ -470,8 +470,43 @@ class PilotData extends CodonData
 			$numflights = 1;
 	
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours=$flighttime,
-						totalflights=totalflights+$numflights
+					SET totalhours={$flighttime},
+						totalflights=totalflights+{$numflights}
+					WHERE pilotid={$pilotid}";
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
+	
+	public static function UpdatePilotStats($pilotid)
+	{
+		$pireps = PIREPData::GetAllReportsForPilot($pilotid);
+		
+		$totalpireps = 0;
+		$totalhours = 0;
+			
+		if(is_array($pireps))
+		{
+			foreach($pireps as $p)
+			{
+				if($p->accepted != PIREP_ACCEPTED)
+				{
+					continue;
+				}
+				
+				$totalpireps++;
+				$totalhours = Util::AddTime($p->flighttime, $totalhours);
+			}
+		}
+		
+		// Update it
+		$sql = "UPDATE " .TABLE_PREFIX."pilots
+					SET totalhours={$totalhours},
+						totalflights={$totalpireps}
 					WHERE pilotid=$pilotid";
 		
 		$res = DB::query($sql);
@@ -480,6 +515,7 @@ class PilotData extends CodonData
 			return false;
 			
 		return true;
+		
 	}
 	
 	

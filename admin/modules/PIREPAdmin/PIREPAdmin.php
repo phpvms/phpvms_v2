@@ -66,7 +66,6 @@ class PIREPAdmin extends CodonModule
 	
 	public function viewpending()
 	{
-		
 		$this->post_action();
 		
 		$this->set('title', 'Pending Reports');
@@ -116,7 +115,8 @@ class PIREPAdmin extends CodonModule
 			# Update pilot stats
 			SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
 			PIREPData::ChangePIREPStatus($pirep_details->pirepid, PIREP_ACCEPTED); // 1 is accepted
-			PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
+			//PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
+			PilotData::UpdatePilotStats($pirep_details->pilotid);
 			PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
 			
 			RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
@@ -235,6 +235,7 @@ class PIREPAdmin extends CodonModule
 		SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
+		//PilotData::UpdatePilotStats($pirep_details->pilotid);
 		PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
 			
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
@@ -277,6 +278,7 @@ class PIREPAdmin extends CodonModule
 			PilotData::UpdateFlightData($pirep_details->pilotid, -1 * floatval($pirep->flighttime), -1);
 		}
 
+		//PilotData::UpdatePilotStats($pirep_details->pilotid);
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 		PilotData::resetPilotPay($pirep_details->pilotid);
 		StatsData::UpdateTotalHours();

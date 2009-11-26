@@ -529,16 +529,17 @@ ul.treeview-famfamfam { padding-left: 25px; }
 .filetree span.file { background: url(images/icon_file.png) 0 0 no-repeat; }
 
 .jqiwarning .jqi{
-      background-color: #b0be96;
+      background-color: #FFF;
 }
 .jqifade{
       background-color: #ffffff;
 }
 div.jqi{
       position: absolute;
-      background-color: #c0cEa6;
+      background-color: #FFF;
       padding: 10px;
       width: 300px;
+      border: solid 1px #3366FF;
 }
 div.jqi .jqiclose{
       float: right;
@@ -546,13 +547,14 @@ div.jqi .jqiclose{
       cursor: pointer;
 }
 div.jqi .jqicontainer{
-      background-color: #e0eEc6;
+      background-color: #FFF;
       padding: 5px;
-      color: #ffffff;
+      color: #3366FF;
       font-weight: bold;
 }
 div.jqi .jqimessage{
-      background-color: #c0cEa6;
+      background-color: #FFF;
+      
       padding: 10px;
 }
 div.jqi .jqibuttons{

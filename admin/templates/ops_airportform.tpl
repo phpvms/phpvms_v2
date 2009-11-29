@@ -28,6 +28,10 @@
 <p>This is the price per <?php echo Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'))?>. Leave blank or 0 (zero) to use the default value of <?php echo Config::Get('FUEL_DEFAULT_PRICE');?>.</p>
 </dd>
 
+<dt>Live price check:</dt>
+<dd><p id="livepriceavailable">Waiting for ICAO change...</p></a>
+</dd>
+
 <dt>Hub</dt>
 <?php
 	if($airport->hub == '1')
@@ -43,3 +47,11 @@
 </dd>
 </dl>
 </form>
+<script type="text/javascript">
+$("#airporticao").bind("blur", function()
+{
+	$.get(baseurl+"/admin/action.php/operations/getfuelprice?icao="+$(this).val(), function(data) {
+		$("#livepriceavailable").html(data);
+	});
+});
+</script>

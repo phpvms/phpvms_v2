@@ -28,7 +28,7 @@ foreach($allgroups as $group)
 	{
 	?>
 		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/editgroup/?groupid=<?php echo $group->groupid?>">
-					<img src="<?echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>	
+					<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>	
 	<?php
 	}
 	else

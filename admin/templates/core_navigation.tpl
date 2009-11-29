@@ -1,5 +1,5 @@
 <li><a class="menu" href="#">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/site_icon.png" />News & Content
+		<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/site_icon.png" />News & Content
 	</a>
 	<ul>
 		<?php if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_NEWS)) 
@@ -25,7 +25,7 @@
 	</ul>
 </li>
 <li><a class="menu" href="?admin=airlines">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/operations_icon.png" />Airline Operations
+		<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/operations_icon.png" />Airline Operations
 	</a>
 	 <ul>
 		<?php
@@ -59,7 +59,7 @@
 	</ul>
 </li>
 <li><a class="menu" href="#">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/pilots_icon.png" />Pilots & Groups</a>
+		<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/pilots_icon.png" />Pilots & Groups</a>
 	<ul>
 		<?php
 		if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)) 
@@ -101,7 +101,7 @@
 	</ul>
 </li>
 <li><a class="menu" href="#">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/pireps_icon.png" />Pilot Reports (PIREPS)</a>
+		<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/pireps_icon.png" />Pilot Reports (PIREPS)</a>
 	<ul>
 		<?php 
 			if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)) 
@@ -128,7 +128,7 @@
 	</ul>
 </li>
 <li><a class="menu" href="<?php echo SITE_URL?>/admin/index.php/reports">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/reports_icon.png" />Reports & Expenses</a>
+		<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/reports_icon.png" />Reports & Expenses</a>
 	<ul>
 	<?php
 			if(PilotGroups::group_has_perm(Auth::$usergroups, VIEW_FINANCES)) 
@@ -146,7 +146,7 @@
 	</ul>
 </li>
 <li><a class="menu" href="#">
-		<img src="<?echo SITE_URL?>/admin/lib/layout/images/settings_icon.gif" />Site & Settings</a>
+		<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/settings_icon.gif" />Site & Settings</a>
 	<ul>
 	<?php 
 			if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 

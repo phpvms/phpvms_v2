@@ -53,22 +53,25 @@ class Import extends CodonModule
 			return;
 		}
 		
-		$export=file_get_contents(SITE_ROOT.'/admin/lib/template.csv');
-		$export.="\n";
-		foreach($all_schedules as $s)
-		{
-			$export .="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
-					."{$s->route},{$s->registration},{$s->flightlevel},{$s->distance},"
-					."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
-					."{$s->price}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}\n";
-			
-		}
-	
 		header('Content-Type: text/plain');
 		header('Content-Disposition: attachment; filename="schedules.csv"');
-		header('Content-Length: ' . strlen($export));
 		
-		echo $export;
+		$fp = fopen('php://output', 'w');
+		
+		$line=file_get_contents(SITE_ROOT.'/admin/lib/template.csv');
+		fputcsv($fp, explode(',', $line));
+		
+		foreach($all_schedules as $s)
+		{
+			$line ="{$s->code},{$s->flightnum},{$s->depicao},{$s->arricao},"
+					."{$s->route},{$s->registration},{$s->flightlevel},{$s->distance},"
+					."{$s->deptime}, {$s->arrtime}, {$s->flighttime}, {$s->notes}, "
+					."{$s->price}, {$s->flighttype}, {$s->daysofweek}, {$s->enabled}";
+					
+			fputcsv($fp, explode(',', $line));
+		}
+	
+		fclose($fp);
 	}
 	
 	public function processimport()

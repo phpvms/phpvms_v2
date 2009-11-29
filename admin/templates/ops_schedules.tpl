@@ -38,7 +38,7 @@ foreach($schedules as $sched)
 	</td>
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>">
-		<img src="<?echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit Schedule" /></a>
+		<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit Schedule" /></a>
 	<?php
 	/*
 	  <a href="action.php?admin=<?php echo Vars::GET('admin'); ?>"

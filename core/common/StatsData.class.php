@@ -138,6 +138,11 @@ class StatsData extends CodonData
 	{
 		$pireps = PIREPData::GetAllReports();
 		
+		if(!$pireps)
+		{
+			return;
+		}
+		
 		$totaltime = 0;
 		foreach($pireps as $pirep)
 		{

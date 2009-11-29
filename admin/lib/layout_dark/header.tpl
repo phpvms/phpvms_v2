@@ -39,7 +39,7 @@ Template::Show('core_htmlreq.tpl');
 	
 	<ul class="menu">
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard" class="menu">
-				<img src="<?echo SITE_URL?>/admin/lib/layout/images/dashboard_icon.png" />Dashboard
+				<img src="<?php echo SITE_URL?>/admin/lib/layout/images/dashboard_icon.png" />Dashboard
 			</a>
 		</li>
 	</ul>

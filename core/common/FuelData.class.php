@@ -18,8 +18,6 @@
 
 class FuelData extends CodonData
 {
-	
-	
 	/**
 	 * Get the current fuel price for an airport
 	 *
@@ -31,7 +29,10 @@ class FuelData extends CodonData
 	public static function GetFuelPrice($apt_icao)
 	{		
 		$price = false;
-		if(Config::Get('FUEL_GET_LIVE_PRICE') === true)
+		$aptinfo = OperationsData::GetAirportInfo($apt_icao);
+		
+		// Live pricing enabled, and the airport is set to '0' for a live price
+		if(Config::Get('FUEL_GET_LIVE_PRICE') == true && $aptinfo->fuelprice == '0')
 		{
 			$price = self::get_cached_price($apt_icao);
 			
@@ -39,10 +40,14 @@ class FuelData extends CodonData
 			{				
 				$price = self::get_from_server($apt_icao);	
 
-				if(is_bool($price) && $price === false)
+				if(!is_bool($price))
+				{
+					return $price; // Returns the JetA price
+				}
+				/*if(is_bool($price) && $price === false)
 				{	
 					return $price;
-				}
+				}*/
 			}		
 			else
 			{
@@ -51,7 +56,6 @@ class FuelData extends CodonData
 		}
 		
 		/* Live price stuff above failed or was "off" */
-		$aptinfo = OperationsData::GetAirportInfo($apt_icao);
 		if($aptinfo->fuelprice == '')
 			return Config::Get('FUEL_DEFAULT_PRICE');
 		else
@@ -134,7 +138,7 @@ class FuelData extends CodonData
 	 * @return float Returns the JET-A fuelprice
 	 *
 	 */
-	protected static function get_from_server($apt_icao)
+	public static function get_from_server($apt_icao)
 	{
 		if($apt_icao == '')
 			return false;
@@ -148,7 +152,6 @@ class FuelData extends CodonData
 			return false;
 			
 		$results = @simplexml_load_string($resp);
-	
 		
 		if($results === false)
 		{

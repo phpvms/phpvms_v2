@@ -92,6 +92,26 @@ class Operations extends CodonModule
 		echo OperationsData::getAirportDistance($depicao, $arricao);
 	}
 	
+	public function getfuelprice()
+	{
+		if(Config::Get('FUEL_GET_LIVE_PRICE') == false)
+		{
+			echo '<span style="color: red">Live fuel pricing is disabled!</span>';
+			return;
+		}
+		
+		$icao = $_GET['icao'];
+		$price = FuelData::get_from_server($icao);
+		
+		if(is_bool($price) && $price === false)
+		{
+			echo '<span style="color: red">Live fuel pricing is not available for this airport</span>';
+			return;
+		}
+		
+		echo '<span style="color: #33CC00">OK! Found - current price: <strong>'.$price.'</strong></span>';
+	}
+	
 	public function airlines()
 	{
 		if(isset($this->post->action))

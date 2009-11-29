@@ -43,10 +43,10 @@ foreach($allcategories as $category)
 			<td width="1%" nowrap>
 				<a id="dialog" class="jqModal" 
 					href="<?php echo SITE_URL?>/admin/action.php/downloads/editdownload?id=<?php echo $download->id?>">
-					<img src="<?echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>					
+					<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>					
 				<a class="ajaxcall" action="deletedownload" id="<?php echo $download->id?>"
 					href="<?php echo SITE_URL?>/admin/action.php/downloads">
-					<img src="<?echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>	
+					<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>	
 					
 			</td>
 		</tr>

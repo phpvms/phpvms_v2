@@ -273,7 +273,6 @@ class PIREPData extends CodonData
 	 */
 	public static function GetReportsByAcceptStatus($pilotid, $accept=0)
 	{
-
 		$sql = 'SELECT * 
 					FROM '.TABLE_PREFIX.'pireps
 					WHERE pilotid='.intval($pilotid).' 
@@ -288,7 +287,6 @@ class PIREPData extends CodonData
 	 
 	public static function getCommentCount($pirepid)
 	{
-		
 		$sql = 'SELECT COUNT(*) AS total FROM '.TABLE_PREFIX.'pirepcomments
 					WHERE pirepid='.$pirepid.'
 					GROUP BY pirepid';
@@ -643,7 +641,6 @@ class PIREPData extends CodonData
 	
 	public static function PopulatePIREPFinance($pirep)
 	{
-				
 		if(!is_object($pirep) && is_numeric($pirep))
 		{
 			$pirep = PIREPData::GetReportDetails($pirep);
@@ -656,7 +653,6 @@ class PIREPData extends CodonData
 		
 		# Set the PIREP ID
 		$pirepid = $pirep->pirepid;
-		
 		$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum, '');
 		if(!$sched)
 		{
@@ -672,7 +668,9 @@ class PIREPData extends CodonData
 			$pirep->load = FinanceData::GetLoadCount($pirep->aircraft, $sched->flighttype);
 		}
 		
-		if($pirep->fuelunitcost == '' || $pirep->fuelunitcost == 0)
+		// Fix for bug #62, check the airport fuel price as 0 for live
+		//$depapt = OperationsData::GetAirportInfo($pirep->depicao);
+		if($pirep->fuelunitcost == '')
 		{
 			$pirep->fuelunitcost = FuelData::GetFuelPrice($pirep->depicao);
 		}

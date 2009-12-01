@@ -121,7 +121,7 @@ Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
 # FSFK Settings
-// Your FTP Server, and path to the lib/images folder, IE
+// Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
 //	ftp://phpvms.net/phpvms/lib/fsfk
 Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
@@ -256,6 +256,14 @@ else
 	CodonRewrite::AddRule('schedules', array('page', 'id'));
 	CodonRewrite::AddRule('xml', array('request'));
 }
+
+
+/* VACentral */
+
+Config::Set('VACENTRAL_ENABLED', true);
+Config::Set('VACENTRAL_DEBUG_MODE', true);
+Config::Set('VACENTRAL_API_SERVER', 'http://apidev.phpvms.net');
+Config::Set('VACENTRAL_API_KEY', '');
 
 /**
  * Constants

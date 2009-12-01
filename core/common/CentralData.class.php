@@ -24,31 +24,76 @@ class CentralData extends CodonData
 	public static $debug = false;
 	public static $response;
 	public static $last_error;
+	public static $method;
 	
 	private static function central_enabled()
 	{
-		if(Config::Get('PHPVMS_CENTRAL_ENABLED') 
-			&& Config::Get('PHPVMS_API_KEY') != '')
+		/* Cover both, since format changed */
+		if(Config::Get('VACENTRAL_ENABLED') && Config::Get('VACENTRAL_API_KEY') != '')
+		{
 			return true;
+		}
+		
+		if(Config::Get('PHPVMS_CENTRAL_ENABLED') && Config::Get('PHPVMS_API_KEY') != '')
+		{
+			return true;
+		}
 		
 		return false;
 	}
 	
 	private static function send_xml()
 	{
+		// Cover old and new format
+		$api_server = Config::Get('VACENTRAL_API_SERVER');
+		if($api_server == '')
+		{
+			$api_server = Config::Get('PHPVMS_API_SERVER');
+		}
+		
 		$web_service = new CodonWebService();
-		self::$xml_response = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/update', self::$xml->asXML());
-			
+		self::$xml_response = $web_service->post($api_server.'/update', self::$xml->asXML());
 		self::$response = @simplexml_load_string(self::$xml_response);
 		
 		if(!is_object(self::$response))
 		{
+			if(Config::Get('VACENTRAL_DEBUG_MODE') == true)
+			{
+				Debug::log(self::$method.' - '.date('h:i:s A - m/d/Y'), 'vacentral');
+				Debug::log('   - no response from server', 'vacentral');
+			}
+			
 			self::$last_error = 'No response from API server';
 			return false;
 		}
 		
-		if((int)self::$response->responsecode != 200)
+		if(Config::Get('VACENTRAL_DEBUG_MODE') == true)
 		{
+			Debug::log(self::$method.' - '.date('h:i:s A - m/d/Y'), 'vacentral');
+			Debug::log('   - '.(string) self::$response->detail, 'vacentral');
+			Debug::log('   - '.(string) self::$response->dbg, 'vacentral');
+			
+			# Extra detail
+			if(Config::Get('VACENTRAL_DEBUG_DETAIL') == '2')
+			{
+				Debug::log('SENT XML: ', 'vacentral');
+				Debug::log(self::$xml->asXML(), 'vacentral');
+				
+				Debug::log('RECIEVED XML: ', 'vacentral');
+				Debug::log(self::$response->asXML(), 'vacentral');
+				
+				Debug::log('', 'vacentral');
+			}
+		}
+		
+		if((int) self::$response->responsecode != 200)
+		{
+			if(Config::Get('VACENTRAL_DEBUG_MODE') == true)
+			{
+				Debug::log(self::$method.' - ', 'vacentral');
+				Debug::log('   - '.(string) self::$response->message->detail, 'vacentral');
+			}
+			
 			self::$last_error = self::$response->message->detail;
 			return false;
 		}
@@ -60,15 +105,22 @@ class CentralData extends CodonData
 	{
 		self::$xml = new SimpleXMLElement('<vacentral/>');
 		
-		self::$xml->addChild('siteurl', SITE_URL);
-		self::$xml->addChild('apikey', Config::Get('PHPVMS_API_KEY'));
-		self::$xml->addChild('version', PHPVMS_VERSION);
-		
-		if(self::$debug === true)
+		$api_key = Config::Get('VACENTRAL_API_KEY');
+		if($api_key == '')
 		{
-			self::$xml->addChild('debug', self::$debug);
+			$api_key = Config::Get('PHPVMS_API_KEY');
 		}
 		
+		self::$xml->addChild('siteurl', SITE_URL);
+		self::$xml->addChild('apikey', $api_key);
+		self::$xml->addChild('version', PHPVMS_VERSION);
+		
+		if(Config::Get('VACENTRAL_DEBUG_MODE') == true)
+		{
+			self::$xml->addChild('debug', true);
+		}
+		
+		self::$method = $method;
 		self::$xml->addChild('method', $method);
 	}
 	
@@ -103,9 +155,6 @@ class CentralData extends CodonData
 
 		self::set_xml('update_schedules');
 		
-		if(Config::Get('VAC_RETRIEVE_AIRPORTS') == true)
-			self::$xml->addChild('retrieve_airports', 1);
-		
 		$schedules = SchedulesData::GetSchedules('', true);
 		
 		if(!is_array($schedules))
@@ -134,11 +183,6 @@ class CentralData extends CodonData
 		CronData::set_lastupdate('update_schedules');
 		$res = self::send_xml();
 		
-		/*if(Config::Get('VAC_RETRIEVE_AIRPORTS') == true)
-		{
-			self::process_airport_list();
-		}*/
-		
 		return $res;
 	}
 	
@@ -160,8 +204,6 @@ class CentralData extends CodonData
 				$airport->addChild('lng', $apt->lng);
 			}
 		}
-		
-		//self::send_xml();
 	}
 	
 	public static function send_pilots()

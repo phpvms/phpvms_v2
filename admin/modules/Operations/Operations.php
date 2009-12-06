@@ -239,6 +239,29 @@ class Operations extends CodonModule
 			$id = $this->get->id;
 			return;
 		}
+		if($this->get->action == 'filter')
+		{
+			$this->set('title', 'Filtered Schedules');
+			
+			if($this->get->type == 'flightnum')
+				$schedules = SchedulesData::GetSchedulesWithFlightNum($this->get->query, false);
+				
+			elseif($this->get->type == 'code')
+				$schedules = SchedulesData::GetSchedulesWithCode($this->get->query, false);
+			
+			elseif($this->get->type == 'aircraft')
+				$schedules = SchedulesData::GetSchedulesByEquip($this->get->query, false);
+				
+			elseif($this->get->type == 'depapt')
+				$schedules = SchedulesData::GetSchedulesWithDeparture($this->get->query, false);
+				
+			elseif($this->get->type == 'arrapt')
+				$schedules = SchedulesData::GetSchedulesWithArrival($this->get->query, false);
+			
+			$this->set('schedules', $schedules);
+			$this->render('ops_schedules.tpl');
+			return;
+		}
 		
 		switch($this->post->action)
 		{
@@ -252,13 +275,13 @@ class Operations extends CodonModule
 				
 			case 'deleteschedule':
 				$this->delete_schedule_post();
-				break;
+				break;			
 		}
 	
 		if($type == 'schedules' || $type == 'activeschedules')
 		{
 			$this->set('title', 'Viewing Active Schedules');
-			$this->set('schedules', SchedulesData::GetSchedules('', true));
+			$this->set('schedules', SchedulesData::GetSchedules(20, true));
 		}
 		else
 		{

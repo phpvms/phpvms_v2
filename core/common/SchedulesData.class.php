@@ -228,6 +228,11 @@ class SchedulesData extends CodonData
 	/**
 	 * Return all of the routes give the departure airport
 	 */
+	public static function GetSchedulesWithDeparture($depicao, $onlyenabled = true, $limit = '')
+	{
+		self::GetRoutesWithDeparture($depicao, $onlyenabled, $limit);
+	}
+	
 	public static function GetRoutesWithDeparture($depicao, $onlyenabled=true, $limit='')
 	{
 		$depicao = DB::escape($depicao);
@@ -274,6 +279,28 @@ class SchedulesData extends CodonData
 		return DB::get_results($sql);
 	}
 	
+	public static function GetSchedulesWithFlightNum($flightnum, $onlyenabled=true, $limit='')
+	{
+		$flightnum = strtoupper($flightnum);
+		$flightnum = DB::escape($flightnum);
+		
+		if($onlyenabled)
+			$enabled = 'AND s.enabled=1';
+		else
+			$enabled = '';
+		
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					FROM '.TABLE_PREFIX.'schedules s
+						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
+					WHERE s.flightnum LIKE \''.$flightnum.'\' '.$enabled;
+		
+		return DB::get_results($sql);
+	}
+	
 	public static function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
 	{
 		return self::GetSchedulesWithArrival($arricao, $onlyenabled, $limit);
@@ -296,7 +323,7 @@ class SchedulesData extends CodonData
 						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
 						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
 						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.arricao=\''.$arricao.'\' '.$enabled;
+					WHERE s.arricao LIKE \''.$arricao.'\' '.$enabled;
 		
 		return DB::get_results($sql);
 	}
@@ -345,7 +372,7 @@ class SchedulesData extends CodonData
 		
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'aircraft a
-					WHERE a.name=\''.$ac.'\' AND a.id=s.aircraft
+					WHERE a.name LIKE \''.$ac.'\' AND a.id=s.aircraft
 					'.$enabled.'
 					ORDER BY s.depicao DESC';
 		

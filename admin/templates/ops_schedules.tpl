@@ -1,4 +1,18 @@
 <h3><?php echo $title?></h3>
+<div>
+<form action="<?php echo SITE_URL.'/admin/index.php/operations/schedules';?>" method="get">
+<strong>Filter schedules: </strong><input type="text" name="query" value="<?php if($_GET['query']) { echo $_GET['query'];} else { echo '(Use % for wildcard)';}?>" onClick="this.value='';" />
+<select name="type">
+	<option value="code">code</option>
+	<option value="flightnum">flight number</option>
+	<option value="depapt">departure airport</option>
+	<option value="arrapt">arrival airport</option>
+	<option value="aircraft">aircraft type</option>
+</select>
+<input type="hidden" name="action" value="filter" />
+<input type="submit" name="submit" value="filter" />
+</form>
+</div>
 <?php
 if(!$schedules)
 {

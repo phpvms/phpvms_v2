@@ -4,7 +4,6 @@ a template CSV from <a href="<?php echo SITE_URL ?>/admin/lib/template.csv">here
 must be done:</p>
 <ol>
 	<li>The airline code must be added, or import will fail</li>
-	<li>The aircraft must be added, use the "Name" entered, <strong>not</strong> the fullname or ICAO</li>
 	<li>You can leave out the header, but if it is there, <strong>check off the box</strong></li>
 	<li>All of the columns can be there, but only the route, leg, distance, and flighttime can be blank</li>
 	<li>Routes which already exist (based on the code and flight number) will not be re-added</li>

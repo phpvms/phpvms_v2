@@ -443,7 +443,7 @@ class PIREPData extends CodonData
 			$pirepdata['load'] = '';
 		}
 	
-		$flighttime_stamp = $pirepdata['flighttime'].':00';
+		$flighttime_stamp = str_replace('.', ':', $pirepdata['flighttime']).':00';
 		$pirepdata['flighttime'] = str_replace(':', '.', $pirepdata['flighttime']);
 		
 		# Landing rate
@@ -570,7 +570,7 @@ class PIREPData extends CodonData
 		
 		$pirepdata['fuelprice'] = $pirepdata['fuelused'] * $pirepdata['fuelunitcost'];
 		
-		$flighttime_stamp = $pirepdata['flighttime'].':00';
+		$flighttime_stamp = str_replace('.', ':', $pirepdata['flighttime']).':00';
 		$pirepdata['flighttime'] = str_replace(':', ',', $pirepdata['flighttime']);
 				
 		$data = array(

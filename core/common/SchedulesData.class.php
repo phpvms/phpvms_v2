@@ -669,7 +669,7 @@ class SchedulesData extends CodonData
 					`flighttype`='$data[flighttype]',
 					`notes`='$data[notes]', 
 					`enabled`=$data[enabled]
-				WHERE `id`=$data[scheduleid]";
+				WHERE `id`=$data[id]";
 
 		$res = DB::query($sql);
 				

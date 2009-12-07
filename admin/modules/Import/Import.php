@@ -141,17 +141,12 @@ class Import extends CodonModule
 			// Make sure airports exist:
 			if(!($depapt = OperationsData::GetAirportInfo($depicao)))
 			{
-				echo "ICAO $depicao not added... retriving information: <br />";						
-				$aptinfo = OperationsData::RetrieveAirportInfo($depicao);
-				
-				echo "Found: $depicao - ".$aptinfo->name
-					.' ('.$aptinfo->lat.','.$aptinfo->lng.'), airport added<br /><br />';
+				$this->get_airport_info($depicao);
 			}
 			
 			if(!($arrapt = OperationsData::GetAirportInfo($arricao)))
 			{
-				echo "ICAO $arricao not added... retriving information: <br />";
-				$aptinfo = OperationsData::RetrieveAirportInfo($arricao);						
+				$this->get_airport_info($arricao);			
 			}
 			
 			# Check the aircraft
@@ -193,8 +188,7 @@ class Import extends CodonModule
 			# This is our 'struct' we're passing into the schedule function
 			#	to add or edit it
 			
-			$data = array(	'scheduleid'=>$schedinfo->id,
-							'code'=>$code,
+			$data = array(	'code'=>$code,
 							'flightnum'=>$flightnum,
 							'leg'=>$leg,
 							'depicao'=>$depicao,
@@ -217,16 +211,15 @@ class Import extends CodonModule
 			if(($schedinfo = SchedulesData::GetScheduleByFlight($code, $flightnum)))
 			{
 				# Update the schedule instead
+				$data['id'] = $schedinfo->id;
 				$val = SchedulesData::EditSchedule($data);
 				$updated++;
-			
 			}
 			else
 			{
 				# Add it
 				$val = SchedulesData::AddSchedule($data);
 				$added++;
-								
 			}
 			
 			if($val === false)
@@ -257,6 +250,24 @@ class Import extends CodonModule
 		foreach($errs as $error)
 		{
 			echo '&nbsp;&nbsp;&nbsp;&nbsp;'.$error.'<br />';
+		}
+	}
+	
+	protected function get_airport_info($icao)
+	{
+		echo "ICAO $icao not added... retriving information: <br />";						
+		$aptinfo = OperationsData::RetrieveAirportInfo($icao);
+		
+		if($aptinfo === false)
+		{
+			echo 'Could not retrieve information for '.$icao.', add it manually <br />';
+		}
+		else
+		{
+			echo "Found: $icao - ".$aptinfo->name
+				.' ('.$aptinfo->lat.','.$aptinfo->lng.'), airport added<br /><br />';
+				
+			return $aptinfo;
 		}
 	}
 }

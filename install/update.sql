@@ -14,6 +14,9 @@ DELETE FROM `phpvms_sessions`;
 ALTER TABLE `phpvms_sessions` ADD PRIMARY KEY ( `id` ) ;
 ALTER TABLE `phpvms_sessions` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 
+-- Cached fuel prices ;
+DELETE FROM `phpvms_fuelprices`;
+
 -- Add permissions and default permission for admin group;
 
 ALTER TABLE `phpvms_groups` ADD `permissions` INT NOT NULL ;

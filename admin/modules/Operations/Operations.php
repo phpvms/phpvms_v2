@@ -281,7 +281,7 @@ class Operations extends CodonModule
 		if($type == 'schedules' || $type == 'activeschedules')
 		{
 			$this->set('title', 'Viewing Active Schedules');
-			$this->set('schedules', SchedulesData::GetSchedules(20, true));
+			$this->set('schedules', SchedulesData::GetSchedules(true));
 		}
 		else
 		{
@@ -595,7 +595,7 @@ class Operations extends CodonModule
 		$this->post->flightlevel = str_replace(',', '', $this->post->flightlevel);
 		$this->post->flightlevel = str_replace(' ', '', $this->post->flightlevel);
 		
-		$data = array(	'scheduleid'=>$this->post->id,
+		$data = array(	'id'=>$this->post->id,
 						'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
 						'depicao'=>$this->post->depicao,

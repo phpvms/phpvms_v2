@@ -18,7 +18,7 @@
 
 /**
  * DO NOT MODIFY THESE SETTINGS HERE!!
- * They will get over-ridden in an update. These are just defaults *
+ * They will get over-ridden in an update. These are just defaults 
  * To change, copy-paste and change the line/option/setting into your
  *  local.config.php file
  *

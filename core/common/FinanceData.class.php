@@ -60,7 +60,6 @@ class FinanceData extends CodonData
 	 */
 	public static function GetYearBalanceData($yearstamp)
 	{
-		$ret = array();
 		$year = date('Y', $yearstamp);
 		
 		return self::GetRangeBalanceData('January '.$year, 'December '.$year);

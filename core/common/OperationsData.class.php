@@ -387,7 +387,19 @@ class OperationsData extends CodonData
 			
 		return true;
 	}
+	
+	public static function RemoveAirport($icao)
+	{
+		$icao = strtoupper($icao);
+		$sql = "DELETE FROM ".TABLE_PREFIX."airports WHERE `icao`='{$icao}'";
 		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+			
+		return true;
+	}
 	/**
 	 * Get information about an airport
 	 */
@@ -423,31 +435,49 @@ class OperationsData extends CodonData
 	 
 	public static function RetrieveAirportInfo($icao)
 	{
-		$url = GEONAME_URL.'/search?maxRows=1&featureCode=AIRP&q=';
+		$icao = strtoupper($icao);
+		
+		if(Config::Get('AIRPORT_LOOKUP_SERVER') == 'geonames')
+		{
+			$url = Config::Get('GEONAME_API_SERVER').'/searchJSON?maxRows=1&style=medium&featureCode=AIRP&type=json&q='.$icao;
+		}
+		elseif(Config::Get('AIRPORT_LOOKUP_SERVER') == 'phpvms')
+		{
+			$url = Config::Get('PHPVMS_API_SERVER').'/index.php/airport/get/'.$icao;
+		}
 		
 		# Updated to use CodonWebServer instead of simplexml_load_url() straight
 		#	Could cause errors
 		$file = new CodonWebService();
-		$contents = @$file->get($url.$icao);
-		
-		$reader = simplexml_load_string($contents);
+		$contents = @$file->get($url);
+	
+		$reader = json_decode($contents);
 		if($reader->totalResultsCount == 0 || !$reader)
 		{
 			return false;
 		}
 		else
 		{
+			if(isset($reader->geonames))
+			{
+				$apt = $reader->geonames[0];
+			}
+			elseif(isset($reader->airports))
+			{
+				$apt = $reader->airports[0];
+			}	
+			
 			// Add the AP
 			$data = array(
 				'icao' => $icao,
-				'name' => $reader->geoname->name,
-				'country' => $reader->geoname->countryName,
-				'lat' => $reader->geoname->lat,
-				'lng' => $reader->geoname->lng,
+				'name' => $apt->name,
+				'country' => $apt->countryName,
+				'lat' => $apt->lat,
+				'lng' => $apt->lng,
 				'hub' => false,
-				'fuelprice' => 0
+				'fuelprice' => $apt->jeta
 			);
-			
+		
 			OperationsData::AddAirport($data);
 		}
 		

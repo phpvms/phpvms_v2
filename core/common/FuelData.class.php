@@ -19,7 +19,8 @@
 class FuelData extends CodonData
 {
 	/**
-	 * Get the current fuel price for an airport
+	 * Get the current fuel price for an airport, returns it in the
+	 * unit specified in the config file
 	 *
 	 * @param string $apt_icao ICAO of the airport
 	 * @return float Fuel price
@@ -44,10 +45,6 @@ class FuelData extends CodonData
 				{
 					return $price; // Returns the JetA price
 				}
-				/*if(is_bool($price) && $price === false)
-				{	
-					return $price;
-				}*/
 			}		
 			else
 			{
@@ -142,8 +139,11 @@ class FuelData extends CodonData
 	{
 		if($apt_icao == '')
 			return false;
-			
-		$url = Config::Get('PHPVMS_API_SERVER').'/fuel/get/'.$apt_icao;
+		
+		# Bug fix, get the proper units from API server
+		$unit = Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit'));
+		
+		$url = Config::Get('PHPVMS_API_SERVER').'/fuel/get/'.$apt_icao.'/'.$unit;
 		
 		$curl_loader = new CodonWebService();
 		$resp = $curl_loader->get($url);

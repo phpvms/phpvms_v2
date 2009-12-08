@@ -99,6 +99,8 @@ class Import extends CodonModule
 		$added = 0;
 		$updated = 0;
 		$total = 0;
+		echo '<div style="overflow: auto; height: 400px; border: 1px solid #666; margin-bottom: 20px; padding: 5px; padding-top: 0px; padding-bottom: 20px;">';
+		
 		while($fields = fgetcsv($fp, 1000, ','))
 		{
 			// Skip the first line
@@ -251,6 +253,8 @@ class Import extends CodonModule
 		{
 			echo '&nbsp;&nbsp;&nbsp;&nbsp;'.$error.'<br />';
 		}
+		
+		echo '</div>';
 	}
 	
 	protected function get_airport_info($icao)

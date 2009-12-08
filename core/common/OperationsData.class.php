@@ -326,6 +326,7 @@ class OperationsData extends CodonData
 			return false;
 			
 		$data['icao'] = strtoupper($data['icao']);
+		$data['name'] = DB::escape($data['name']);
 
 		if($data['hub'] === true)
 			$data['hub'] = 1;

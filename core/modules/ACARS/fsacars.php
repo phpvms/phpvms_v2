@@ -325,8 +325,7 @@ $maxcargo";
 			$flightnum = $sched->flightnum;
 			$leg = $sched->leg;
 			
-			if($_GET['origin'] != $sched->depicao
-				|| $_GET['dest'] != $sched->arricao)
+			if($_GET['origin'] != $sched->depicao || $_GET['dest'] != $sched->arricao)
 			{
 				$comment = 'phpVMS Message: Arrival or Departure does not match schedule';
 			}

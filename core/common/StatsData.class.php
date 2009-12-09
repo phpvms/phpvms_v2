@@ -247,7 +247,7 @@ class StatsData extends CodonData
 		$sql = 'SELECT a.*, a.name AS aircraft,
 				   COUNT(p.pirepid) AS routesflown,
 				   SUM(p.distance) AS distance,
-				   SEC_TO_TIME(SUM(p.flighttime*60)) AS totaltime,
+				   SEC_TO_TIME(SUM(p.flighttime*60*60)) AS totaltime,
 				   AVG(p.distance) AS averagedistance,
 				   AVG(p.flighttime) as averagetime
 				  FROM   '.TABLE_PREFIX.'aircraft a
@@ -255,6 +255,8 @@ class StatsData extends CodonData
 				  GROUP BY a.registration';
 		
 		return DB::get_results($sql);
+		DB::debug();
+		return $ret;
 	}
 	
 	/**

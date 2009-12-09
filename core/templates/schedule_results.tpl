@@ -82,7 +82,7 @@ foreach($allroutes as $route)
 		?>
 			<a id="<?php echo $route->id; ?>" class="addbid" 
 				href="<?php echo actionurl('/schedules/addbid');?>">Add to Bid</a>
-		<?
+		<?php
 		}
 		else
 		{

@@ -36,6 +36,7 @@ class PIREPAdmin extends CodonModule
 	
 	protected function post_action()
 	{
+		
 		if(isset($this->post->action))
 		{
 			switch($this->post->action)
@@ -172,16 +173,27 @@ class PIREPAdmin extends CodonModule
 		$this->render('pireps_comments.tpl');
 	}
 	
+	public function deletecomment()
+	{
+		if(!isset($this->post))
+		{
+			return;
+		}
+		
+		PIREPData::deleteComment($this->post->id);
+		
+		$this->set('message', 'Comment deleted!');
+		$this->render('core_success.tpl');
+	}
+	
 	public function viewlog()
 	{
 		$this->set('report', PIREPData::GetReportDetails($this->get->pirepid));
 		$this->render('pirep_log.tpl');
-		
 	}
 		
 	public function addcomment()
 	{
-		
 		if(isset($this->post->submit))
 		{
 			$this->add_comment_post();
@@ -349,6 +361,25 @@ class PIREPAdmin extends CodonModule
 		}
 		
 		PIREPData::SaveFields($this->post->pirepid, $_POST);
+		
+		//Accept or reject?
+		$this->post->id = $this->post->pirepid;
+		$submit = strtolower($this->post->submit_pirep);
+		
+		// Add a comment
+		if(trim($this->post->comment) != '' && $submit != 'reject pirep')
+		{
+			PIREPData::AddComment($this->post->pirepid, Auth::$userinfo->pilotid, $this->post->comment);
+		}
+		
+		if($submit == 'accept pirep')
+		{
+			$this->approve_pirep_post();
+		}
+		elseif($submit == 'reject pirep')
+		{
+			$this->reject_pirep_post();
+		}
 			
 		return true;
 	}

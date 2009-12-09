@@ -6,10 +6,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Config::Get('PAGE_ENCODING');?>">
 
-<link rel="alternate" href="<?php echo SITE_URL?>/lib/rss/latestpireps.rss" 
-	title="latest pilot reports" type="application/rss+xml" />
-<link rel="alternate" href="<?php echo SITE_URL?>/lib/rss/latestpilots.rss" 
-	title="latest pilot registrations" type="application/rss+xml" />
+<link rel="alternate" href="<?php echo SITE_URL?>/lib/rss/latestpireps.rss" title="latest pilot reports" type="application/rss+xml" />
+<link rel="alternate" href="<?php echo SITE_URL?>/lib/rss/latestpilots.rss" title="latest pilot registrations" type="application/rss+xml" />
 
 <?php
 Template::Show('core_htmlhead.tpl');
@@ -38,7 +36,7 @@ Template::Show('core_htmlreq.tpl');
  	<div id="header">
     	<img src="<?php echo SITE_URL?>/admin/lib/layout/images/admin_logo.png" />
 	</div>
-	<div id="cols">
+	
   <div id="sidebar">
 	<?php
 	Template::Show('core_sidebar.tpl');

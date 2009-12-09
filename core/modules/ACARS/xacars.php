@@ -107,9 +107,7 @@ switch($acars_action)
 			}
 		}
 		
-		/* Ok to procede */
-		
-		
+		/* Ok to proceed */
 		if($route->flighttype=='H')
 		{
 			$maxpax = $route->maxpax;
@@ -198,7 +196,7 @@ $route->flightlevel
 			/* Get the flight information, from ACARS, need to
 				pull the latest flight data via the flight number
 				since acars messages don't transmit the pilot ID */
-			#preg_match("/Flight ID:.([A-Za-z]*)([0-9]*)\n/", $data, $matches);
+			
 			preg_match("/Flight ID:.(.*)\n/", $data, $matches);
 			$flight_data = ACARSData::get_flight_by_pilot($_REQUEST['DATA3']);
 					

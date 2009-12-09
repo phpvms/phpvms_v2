@@ -17,6 +17,7 @@ if(!$pireps)
 	<th>Flight Time</th>
 	<th>Submitted</th>
 	<th>Status</th>
+	<th>Options</th>
 </tr>
 </thead>
 <tbody>
@@ -32,9 +33,7 @@ foreach($pireps as $report)
 	<td align="center"><?php echo $report->arricao; ?></td>
 	<td align="center"><?php echo $report->aircraft . " ($report->registration)"; ?></td>
 	<td align="center"><?php echo $report->flighttime; ?></td>
-	<td align="center"><?php echo date(DATE_FORMAT, $report->submitdate); ?>
-		
-	</td>
+	<td align="center"><?php echo date(DATE_FORMAT, $report->submitdate); ?></td>
 	<td align="center">
 		<?php
 		
@@ -49,6 +48,7 @@ foreach($pireps as $report)
 		
 		?>
 	</td>
+	<td align="center"><a href="<?php echo url('/pireps/addcomment?id='.$report->pirepid);?>">Add Comment</a>
 </tr>
 <?php
 }

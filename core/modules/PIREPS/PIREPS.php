@@ -56,6 +56,17 @@ class PIREPS extends CodonModule
 			}
 		}
 		
+		if(isset($this->post->submit))
+		{
+			if($this->post->action == 'addcomment')
+			{
+				$ret = PIREPData::AddComment($this->post->pirepid, Auth::$userinfo->pilotid, $this->post->comment);
+				
+				$this->set('message', 'Comment added!');
+				$this->render('core_success.tpl');
+			}
+		}
+		
 		// Show PIREPs filed
 		
 		$this->set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
@@ -93,6 +104,36 @@ class PIREPS extends CodonModule
 		$this->render('route_map.tpl');
 	}
 	
+	public function addcomment()
+	{
+		if(!isset($this->get->id))
+		{
+			$this->set('message', 'No PIREP specified');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		$pirep = PIREPData::GetReportDetails($this->get->id);
+		
+		if(!$pirep)
+		{
+			$this->set('message', 'Invalid PIREP');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		# Make sure pilot ID's match
+		if($pirep->pilotid != Auth::$userinfo->pilotid)
+		{
+			$this->set('message', 'You cannot add a comment to a PIREP that is not yours!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		# Show the comment form
+		$this->set('pirep', $pirep);
+		$this->render('pireps_addcomment.tpl');
+	}
 	
 	public function routesmap()
 	{

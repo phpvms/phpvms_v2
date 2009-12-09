@@ -1,7 +1,6 @@
 	</div>
 	</div>
-	</div>
-	<br class="clearfloat" />
+	<div style="clear:both"></div>
 	<div id="footer">
 	<p>
 		"<?php echo randquote(); ?>"

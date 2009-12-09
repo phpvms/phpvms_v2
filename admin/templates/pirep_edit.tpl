@@ -178,10 +178,15 @@ if(isset($message))
 		
 		foreach($comments as $comment)
 		{?>
-			<p><?php echo $comment->comment; ?></p>
+			<p><?php echo $comment->comment; ?><br />
+				<strong>By <?php echo $comment->firstname.' '.$comment->lastname ?></strong></p>
 		<?php
 		}
 		?>
+		
+		<hr>
+		<strong>Add Comment:</strong><br />
+		<textarea name="comment" style="width: 50%; height: 150px"></textarea>
 	</dd>
 	
 	<?php
@@ -191,7 +196,7 @@ if(isset($message))
 	<dt>Log File:</dt>
 	<dd>
 		<a href="#" onclick="$('#log').toggle(); return false;">View Log</a></li>
-		<div id="log" style="display: none;">
+		<div id="log" style="display: none; overflow: auto; height: 400px; border: 1px solid #666; margin-bottom: 20px; padding: 5px; padding-top: 0px; padding-bottom: 20px;">
 		<?php
 		# Simple, each line of the log ends with *
 		# Just explode and loop.
@@ -211,7 +216,8 @@ if(isset($message))
 	<dt></dt>
 	<dd><input type="hidden" name="pirepid" value="<?php echo $pirep->pirepid;?>" />
 		<input type="hidden" name="action" value="editpirep" />
-		<input type="submit" name="submit_pirep" value="Edit Flight Report" /></dd>
+		<input type="submit" name="submit_pirep" value="Save PIREP" />
+		<input type="submit" name="submit_pirep" value="Accept PIREP" />
+		<input type="submit" name="submit_pirep" value="Reject PIREP" /></dd>
 </dl>
-
 </form>

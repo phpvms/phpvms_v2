@@ -14,7 +14,7 @@
 </form>
 </div>
 <?php
-if(!$schedules)
+if(!$schedules && !isset($paginate))
 {
 	echo '<p id="error">No schedules exist</p>';
 	return;
@@ -66,3 +66,15 @@ foreach($schedules as $sched)
 ?>
 </tbody>
 </table>
+<?php
+if(isset($paginate))
+{
+?>
+<div style="float: right;">
+	<a href="<?php echo SITE_URL.'/admin/index.php/operations/schedules';?>?start=<?php echo $prev?>">Prev Page</a> | 
+	<a href="<?php echo SITE_URL.'/admin/index.php/operations/schedules';?>?start=<?php echo $start?>">Next Page</a>
+	<br />
+</div>
+<?php
+}
+?>

@@ -2,10 +2,7 @@
 if($title!='')
 	echo "<h3>$title</h3>";
 ?>
-<p><?php 
-if(isset($descrip))
-	echo $descrip;
-?></p>
+<p><?php if(isset($descrip)) { echo $descrip; }?></p>
 <?php
 if(!$pireps)
 {
@@ -25,7 +22,7 @@ if(isset($paginate))
 	<?php
 }
 ?>
-<table id="tabledlist" class="tablesorter">
+<table id="tabledlist" class="tablesorter" style="height: 100%">
 <thead>
 <tr>
 	<th>PIREP Information</th>

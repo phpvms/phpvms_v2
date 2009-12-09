@@ -412,11 +412,8 @@ class SchedulesData extends CodonData
 	/**
 	 * Get all the schedules, $limit is the number to return
 	 */
-	public static function GetSchedules($limit='', $onlyenabled=true)
+	public static function GetSchedules($count='', $onlyenabled=true, $start='')
 	{
-		
-		$limit = DB::escape($limit);
-		
 		if($onlyenabled)
 			$enabled = 'WHERE s.enabled=1';
 		else
@@ -431,12 +428,13 @@ class SchedulesData extends CodonData
 						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
 					'.$enabled.'
 					ORDER BY s.depicao DESC';
-		
-		if($limit != '')
-			$sql .= ' LIMIT ' . $limit;
+
+		if(strlen($start) != 0 && strlen($count) != 0)
+		{
+			$sql .= ' LIMIT '.$count.' OFFSET '.$start;
+		}
 		
 		$ret =  DB::get_results($sql);
-		
 		return $ret;
 		
 	}
@@ -444,14 +442,19 @@ class SchedulesData extends CodonData
 	/**
 	 * This gets all of the schedules which are disabled
 	 */
-	public static function GetInactiveSchedules()
+	public static function GetInactiveSchedules($count='', $start='')
 	{
 		$sql = 'SELECT s.*, a.name as aircraft, a.registration
 					FROM '.TABLE_PREFIX.'schedules s
 						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id=s.aircraft
 					WHERE s.enabled=0
 					ORDER BY s.flightnum ASC';
-					
+		
+		if($start !='' && $count != '')
+		{
+			$sql .= ' LIMIT '.$count.' OFFSET '.$start;
+		}
+		
 		return DB::get_results($sql);
 		
 		DB::debug();

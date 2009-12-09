@@ -333,8 +333,8 @@ class OperationsData extends CodonData
 		else
 			$data['hub'] = 0;
 			
-		if($data['fuelprice'] == '')
-			$data['fuelprice'] = 0;
+		/*if($data['fuelprice'] == '')
+			$data['fuelprice'] = 0;*/
 
 		$sql = "INSERT INTO " . TABLE_PREFIX ."airports 
 					(	`icao`, `name`, `country`, `lat`, `lng`, `hub`, `chartlink`, `fuelprice`)

@@ -53,7 +53,7 @@ class FuelData extends CodonData
 		}
 		
 		/* Live price stuff above failed or was "off" */
-		if($aptinfo->fuelprice == '')
+		if($aptinfo->fuelprice == '' || $aptinfo->fuelprice == 0)
 			return Config::Get('FUEL_DEFAULT_PRICE');
 		else
 			return $aptinfo->fuelprice;

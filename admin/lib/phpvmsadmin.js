@@ -87,14 +87,6 @@ function calcDistance()
 
 $(document).ready(function() {
 
-    $("#sidebar, #mainContent").equalHeights(400)
-
-    //	$(".addtoEditor").click(function(e) {
-    //		e.preventDefault();
-    //		$(".nicEdit-main").append($(this).html()); 
-    //		return false;
-    //	});
-
     $('#jqmdialog').jqm({
         ajax: '@href',
         onLoad: function(h) {
@@ -202,6 +194,16 @@ $(document).ready(function() {
 
     $('.dialogajax').live('dblclick', function() {
         $("#dialogresult").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id") });
+    });
+    
+     // Binding the AJAX call clicks
+    $('.deletecomment').live('click', function() {
+        return false; // cancel the single click event
+    });
+
+    $('.deletecomment').live('dblclick', function() {
+        $("#dialogresult").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id") });
+        $("#row"+$(this).attr("id")).hide();
     });
 
     //Tablize any lists

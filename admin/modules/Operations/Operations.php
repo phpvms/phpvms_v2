@@ -46,6 +46,11 @@ class Operations extends CodonModule
 				break;
 		}
 	}
+	
+	public function index()
+	{
+		$this->schedules();
+	}
 
 	public function addaircraft()
 	{
@@ -278,15 +283,32 @@ class Operations extends CodonModule
 				break;			
 		}
 	
+		if(!isset($this->get->start) || $this->get->start == '')
+		{
+			$this->get->start = 0;
+		}
+		
+		$num_per_page = 20;
+		$start = $num_per_page * $this->get->start;
+		
 		if($type == 'schedules' || $type == 'activeschedules')
 		{
+			$schedules = SchedulesData::GetSchedules($num_per_page, false, $start);
+			
 			$this->set('title', 'Viewing Active Schedules');
-			$this->set('schedules', SchedulesData::GetSchedules(true));
+			$this->set('schedules', $schedules);
+			
+			if(count($schedules) >= $num_per_page)
+			{
+				$this->set('paginate', true);
+				$this->set('start', $this->get->start+1);
+				$this->set('prev', $this->get->start);
+			}
 		}
 		else
 		{
 			$this->set('title', 'Viewing Inactive Schedules');
-			$this->set('schedules', SchedulesData::GetInactiveSchedules());
+			$this->set('schedules', SchedulesData::GetInactiveSchedules(1, $start));
 		}
 		
 		$this->render('ops_schedules.tpl');

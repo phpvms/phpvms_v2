@@ -333,13 +333,19 @@ class PIREPData extends CodonData
 	 */
 	public static function GetComments($pirepid)
 	{
-		$sql = 'SELECT c.comment, UNIX_TIMESTAMP(c.postdate) as postdate,
+		$sql = 'SELECT c.*, UNIX_TIMESTAMP(c.postdate) as postdate,
 						p.firstname, p.lastname
 					FROM '.TABLE_PREFIX.'pirepcomments c, '.TABLE_PREFIX.'pilots p
 					WHERE p.pilotid=c.pilotid AND c.pirepid='.$pirepid.'
 					ORDER BY postdate ASC';
 
 		return DB::get_results($sql);
+	}
+	
+	public static function deleteComment($comment_id)
+	{
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'pirepcomments WHERE `id`='.$comment_id;
+		return DB::query($sql);
 	}
 	
 	/**
@@ -680,13 +686,21 @@ class PIREPData extends CodonData
 		{
 			# If FSACARS and in kg, convert it to lbs for the fuel calc
 			# @version 783
-			if($pirep->source == 'fsacars')
+			/*if($pirep->source == 'fsacars')
+			{
+				# in KG, change to pounds for the price calc
+				if(Config::Get('WeightUnit') == 0)
+				{
+					$pirep->fuelused = $pirep->fuelused / .45359237;
+				}
+			}*/
+			/*elseif($pirep->source == 'xacars')
 			{
 				if(Config::Get('WeightUnit') == 0)
 				{
 					$pirep->fuelused = $pirep->fuelused / .45359237;
 				}
-			}
+			}*/
 			
 			$pirep->fuelprice = FinanceData::GetFuelPrice($pirep->fuelused, $pirep->depicao);
 		}
@@ -853,10 +867,11 @@ class PIREPData extends CodonData
 	/**
 	 * Add a comment to the flight report
 	 */
-	public static function AddComment($pirepid, $commenter, $comment)
+	public static function AddComment($pirepid, $pilotid, $comment)
 	{
-		$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (pirepid, pilotid, comment, postdate)
-					VALUES ($pirepid, $commenter, '$comment', NOW())";
+		$comment = DB::escape($comment);
+		$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (`pirepid`, `pilotid`, `comment`, `postdate`)
+					VALUES ($pirepid, $pilotid, '$comment', NOW())";
 
 		$res = DB::query($sql);
 		

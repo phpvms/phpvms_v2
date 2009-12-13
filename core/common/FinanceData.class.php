@@ -159,6 +159,13 @@ class FinanceData extends CodonData
 			if(!$ret['allexpenses']) $ret['allexpenses'] = array();
 			foreach($ret['allexpenses'] as $expense)
 			{
+				// Percentage, of total revenue made and make that
+				if($expense->type == 'P')
+				{
+					$ret['totalexpenses'] += $ret['total'] * ($expense->cost/100);
+					continue;
+				}
+					
 				$ret['totalexpenses'] += $expense->cost;
 			}
 			
@@ -167,7 +174,6 @@ class FinanceData extends CodonData
 			# Save these separately
 			$ret['flightexpenses'] += $ret['pirepfinance']->FlightExpenses;
 			$ret['fuelcost'] = $ret['pirepfinance']->FuelCost;		
-			
 			
 			# Save it, with all the above calculations
 			#	Remains intact
@@ -376,7 +382,7 @@ class FinanceData extends CodonData
 	public static function GetMonthlyExpenses()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
-					WHERE `type`=\'M\'';
+					WHERE `type`=\'M\' OR `type`=\'P\'';
 		
 		return DB::get_results($sql);		
 	}
@@ -386,6 +392,23 @@ class FinanceData extends CodonData
 		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
 				 FROM '.TABLE_PREFIX.'expenses
 				 WHERE `type`=\'M\'';
+		
+		return DB::get_row($sql);
+	}
+	
+	public static function getPercentExpenses()
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
+					WHERE `type`=\'P\'';
+		
+		return DB::get_results($sql);		
+	}
+	
+	public static function get_total_percent_expenses()
+	{
+		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
+				 FROM '.TABLE_PREFIX.'expenses
+				 WHERE `type`=\'P\'';
 		
 		return DB::get_row($sql);
 	}

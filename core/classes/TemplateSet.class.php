@@ -91,7 +91,7 @@ class TemplateSet
 	{
 		// See if they're setting the template as a file
 		//	Check if the file exists 
-		if((!is_object($value) && !is_array($value)) && strstr($value, '.'))
+		if(is_string($value) && strstr($value, '.tpl'))
 		{
 			if(file_exists($this->template_path . DS . $value))
 			{

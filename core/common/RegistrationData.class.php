@@ -21,6 +21,7 @@ class RegistrationData extends CodonData
 
 	static public $salt;
 	static public $error;
+	static public $pilotid;
 	
 	/**
 	 * Get all of the custom fields that will show up
@@ -119,6 +120,12 @@ class RegistrationData extends CodonData
 		//Grab the new pilotid, we need it to insert those "custom fields"
 		$pilotid = DB::$insert_id;
 		$fields = self::GetCustomFields();
+		
+		RanksData::CalculateUpdatePilotRank($pilotid);
+		PilotData::GenerateSignature($pilotid);
+		
+		// For later
+		self::$pilotid = $pilotid;
 					
 		//Get customs fields
 		if(!$fields)
@@ -136,10 +143,7 @@ class RegistrationData extends CodonData
 				DB::query($sql);
 			}
 		}
-		
-		RanksData::CalculateUpdatePilotRank($pilotid);
-		PilotData::GenerateSignature($pilotid);
-		
+
 		return true;
 	}
 	

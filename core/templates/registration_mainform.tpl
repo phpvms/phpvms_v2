@@ -32,7 +32,7 @@
 		<?php
 		foreach($allairlines as $airline)
 		{
-			echo '<option value="'.$airline->code.'">'.$airline->name.'</option>';
+			echo '<option value="'.$airline->code.'">'.$airline->code.' - '.$airline->name.'</option>';
 		}
 		?>
 		</select>

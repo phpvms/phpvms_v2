@@ -104,16 +104,32 @@ class Registration extends CodonModule
 				return false;
 			}
 			
-			
 			if(RegistrationData::AddUser($data) == false)
 			{
 				$this->set('error', RegistrationData::$error);
 				$this->render('registration_error.tpl');
+				return;
 			}
 			else
 			{
-				RegistrationData::SendEmailConfirm($email, $firstname, $lastname);
-				$this->render('registration_sentconfirmation.tpl');
+				$pilotid = RegistrationData::$pilotid;
+				
+				/* Automatically confirm them if that option is set */
+				if(Config::Get('PILOT_AUTO_CONFIRM') == true)
+				{
+					PilotData::AcceptPilot($pilotid);
+					RanksData::CalculatePilotRanks();
+					
+					$pilot = PilotData::GetPilotData($pilotid);
+					$this->set('pilot', $pilot);
+					$this->render('registration_autoconfirm.tpl');
+				}
+				/* Otherwise, wait until an admin confirms the registration */
+				else
+				{
+					RegistrationData::SendEmailConfirm($email, $firstname, $lastname);
+					$this->render('registration_sentconfirmation.tpl');
+				}
 			}
 			
 			CodonEvent::Dispatch('registration_complete', 'Registration', $_POST);
@@ -140,7 +156,6 @@ class Registration extends CodonModule
 								. ' ('.$pilot->firstname .' ' . $pilot->lastname.')',
 								SITE_URL.'/admin/index.php?admin=pendingpilots','','');
 			}
-		
 		
 			$rss->BuildFeed(LIB_PATH.'/rss/latestpilots.rss');
 		}

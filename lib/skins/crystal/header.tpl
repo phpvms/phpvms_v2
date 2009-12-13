@@ -17,8 +17,7 @@
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="x-ua-compatible" content="IE=7">
+<meta http-equiv="X-UA-Compatible" content="IE=7">
 <title><?php echo $title; ?></title>
 
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo SITE_URL?>/lib/skins/crystal/styles.css" />
@@ -27,17 +26,23 @@
 	Template::Show('core_htmlhead.tpl');
 ?>
 
+<!-- Any custom Javascript should be placed here, after the above Template::Show() call -->
+
 </head>
 <body>
-<div id="body">
-<div id="innerwrapper">
 <?php
+	// This should be the first thing you place after a <body> tag
 	Template::Show('core_htmlreq.tpl');
 ?>
+<div id="body">
+<div id="innerwrapper">
 	<div id="topBanner">
 		<div id="topLogin">
 		<?php 
-		/* Only show this login form if they're logged in */
+		/* 
+		Quick example of how to see if they're logged in or not
+		
+		Only show this login form if they're logged in */
 		if(Auth::LoggedIn() == false)
 		{ ?>
 		
@@ -54,7 +59,7 @@
 		<?php
 		}	
 		/* End the Auth::LoggedIn() if */
-		else /* Else - they're logged in, so show some info about the pilot, and a few links */
+		else /* else - they're logged in, so show some info about the pilot, and a few links */
 		{
 			
 			/* Auth::$userinfo has the information about the user currently logged in */

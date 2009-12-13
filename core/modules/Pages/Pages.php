@@ -23,12 +23,11 @@ class Pages extends CodonModule
 	{
 		$this->set('allpages', SiteData::GetAllPages(true, Auth::$loggedin));
 		$this->render('pages_items.tpl');
-		
 	}
 	
 	public function __call($name, $args)
 	{
-		// Page here is the filename, but we don't call it in directly
+		// $name here is the filename, but we don't call it in directly
 		//	for security reasons
 		
 		$page = DB::escape($name);
@@ -57,6 +56,5 @@ class Pages extends CodonModule
 			
 			$this->render('pages_content.tpl');
 		}
-		
 	}
 }

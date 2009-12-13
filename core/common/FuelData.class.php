@@ -33,7 +33,7 @@ class FuelData extends CodonData
 		$aptinfo = OperationsData::GetAirportInfo($apt_icao);
 		
 		// Live pricing enabled, and the airport is set to '0' for a live price
-		if(Config::Get('FUEL_GET_LIVE_PRICE') == true && $aptinfo->fuelprice == '0')
+		if(Config::Get('FUEL_GET_LIVE_PRICE') == true && ($aptinfo->fuelprice == '0' || $aptinfo->fuelprice == ''))
 		{
 			$price = self::get_cached_price($apt_icao);
 			

@@ -104,7 +104,24 @@
 	</tr>
 	<tr>
 		<td>Current Rank</td>
-		<td><?php echo $pilotinfo->rank;?></td>
+		<td>
+		<?php
+		if(Config::Get('RANKS_AUTOCALCULATE') == false)
+		{
+			$allranks = RanksData::GetAllRanks();
+			echo '<select name="rank">';
+			
+			foreach($allranks as $rank)
+			{
+				echo "<option value=\"{$rank->rankid}\">{$rank->rank}</option>";
+			}
+			echo '</select>';
+		}
+		else
+		{
+			echo $pilotinfo->rank;
+		}
+		?></td>
 	</tr>
 	<tr>
 		<td>Date Joined</td>

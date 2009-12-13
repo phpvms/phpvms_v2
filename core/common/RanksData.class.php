@@ -132,6 +132,12 @@ class RanksData extends CodonData
 	 */
 	public static function CalculatePilotRanks()
 	{
+		/* Don't calculate a pilot's rank if this is set */
+		if(Config::Get('RANKS_AUTOCALCULATE') == false)
+		{
+			return;
+		}
+		
 		$pilots = PilotData::GetAllPilots();
 		$allranks = self::GetAllRanks();
 		
@@ -164,6 +170,12 @@ class RanksData extends CodonData
 	
 	public static function CalculateUpdatePilotRank($pilotid)
 	{
+		/* Don't calculate a pilot's rank if this is set */
+		if(Config::Get('RANKS_AUTOCALCULATE') == false)
+		{
+			return;
+		}
+		
 		$pilotid = intval($pilotid);
 		$allranks = self::GetAllRanks();
 		$pilot = PilotData::GetPilotData($pilotid);
@@ -190,4 +202,3 @@ class RanksData extends CodonData
 		DB::query($sql);
 	}
 }
-?>

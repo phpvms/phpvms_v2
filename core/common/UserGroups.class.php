@@ -99,4 +99,3 @@ class UserGroups extends CodonData
 		return true;
 	}
 }
-?>

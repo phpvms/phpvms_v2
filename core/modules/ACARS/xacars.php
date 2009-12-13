@@ -322,6 +322,24 @@ $route->flightlevel
 		# Convert the time to xx.xx 
 		$flighttime = floatval(str_replace(':', '.', $data[11])) * 1.00;
 		
+		/* Fuel conversion - XAcars only reports in lbs */
+		$fuelused = $data[12];
+		if(Config::Get('LiquidUnit') == '0')
+		{
+			# Convert to KGs, divide by density since d = mass * volume
+			$fuelused = ($fuelused * .45359237) / .8075;
+		}
+		# Convert lbs to gallons
+		elseif(Config::Get('LiquidUnit') == '1')
+		{
+			$fuelused = $fuelused * 6.84;
+		}
+		# Convert lbs to kgs
+		elseif(Config::Get('LiquidUnit') == '2')
+		{
+			$fuelused = $fuelused * .45359237;
+		}
+		
 		$data = array('pilotid'=>$pilotid,
 				'code'=>$code,
 				'flightnum'=>$flightnum,
@@ -331,7 +349,7 @@ $route->flightlevel
 				'flighttime'=>$flighttime,
 				'submitdate'=>'NOW()',
 				'comment'=>$comment,
-				'fuelused'=>$data[12],
+				'fuelused'=>$fuelused,
 				'source'=>'xacars',
 				'load'=>$load,
 				'log'=> $_GET['log']);

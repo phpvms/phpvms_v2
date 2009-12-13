@@ -264,4 +264,3 @@ class PilotGroups extends CodonData
 		DB::query($sql);
 	}
 }
-?>

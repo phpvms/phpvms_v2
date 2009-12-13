@@ -53,6 +53,12 @@ Config::Set('DEFAULT_MAX_PAX_LOAD', 250);
 Config::Set('PILOT_AUTO_RETIRE', true);
 Config::Set('PILOT_INACTIVE_TIME', 90);
 
+# Automatically confirm pilots?
+Config::Set('PILOT_AUTO_CONFIRM', false);
+
+# Automatically calculate ranks?
+Config::Set('RANKS_AUTOCALCULATE', true);
+
 # If someone places a bid, whether to disable that or not
 Config::Set('DISABLE_SCHED_ON_BID', true);
 Config::Set('DISABLE_BIDS_ON_BID', false);
@@ -279,7 +285,8 @@ Config::Set('FLIGHT_TYPES', array(
 # Set the types of expenses we have
 Config::Set('EXPENSE_TYPES', array( 
 	'M'=>'Monthly',
-	'F'=>'Per Flight')
+	'F'=>'Per Flight',
+	'P'=>'Percent (month)')
 );
 			
 define('SIGNATURE_PATH', '/lib/signatures');

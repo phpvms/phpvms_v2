@@ -131,7 +131,16 @@ class PilotAdmin extends CodonModule
 				
 				PilotData::SaveFields($this->post->pilotid, $_POST);
 				
-				RanksData::CalculateUpdatePilotRank($this->post->pilotid);
+				/* Don't calculate a pilot's rank if this is set */
+				if(Config::Get('RANKS_AUTOCALCULATE') == false)
+				{
+					PilotData::changePilotRank($this->post->pilotid, $this->post->rank);
+				}
+				else
+				{
+					RanksData::CalculateUpdatePilotRank($this->post->pilotid);
+				}
+				
 				PilotData::GenerateSignature($this->post->pilotid);
 				
 				StatsData::UpdateTotalHours();
@@ -417,7 +426,6 @@ class PilotAdmin extends CodonModule
 		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true);
 	
 		Util::SendEmail($pilot->email, $subject, $message);
-		
 	}
 	
 	protected function RejectPilot()

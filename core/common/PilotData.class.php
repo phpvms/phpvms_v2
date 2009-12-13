@@ -25,7 +25,7 @@ class PilotData extends CodonData
 	 * Get all the pilots, or the pilots who's last names start
 	 * with the letter
 	 */
-	public static function GetAllPilots($letter='')
+	public static function getAllPilots($letter='')
 	{
 		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'pilots ';
 		
@@ -40,7 +40,7 @@ class PilotData extends CodonData
 	/**
 	 * Get all the detailed pilot's information
 	 */
-	public static function GetAllPilotsDetailed($start='', $limit=20)
+	public static function getAllPilotsDetailed($start='', $limit=20)
 	{
 		$sql = 'SELECT p.*, r.rankimage, r.payrate
 					FROM '.TABLE_PREFIX.'pilots p
@@ -56,7 +56,7 @@ class PilotData extends CodonData
 	/**
 	 * Get a pilot's avatar
 	 */
-	public static function GetPilotAvatar($pilotid)
+	public static function getPilotAvatar($pilotid)
 	{
 		if(is_numeric($pilotid)){
 			$pilot = self::GetPilotData($pilotid);
@@ -76,7 +76,7 @@ class PilotData extends CodonData
 	/**
 	 * Get all the pilots on a certain hub
 	 */
-	public static function GetAllPilotsByHub($hub)
+	public static function getAllPilotsByHub($hub)
 	{
 		$sql = "SELECT p.*, r.rankimage, r.payrate
 					FROM ".TABLE_PREFIX."pilots p
@@ -91,7 +91,7 @@ class PilotData extends CodonData
 	 * Return the pilot's code (ie DVA1031), using
 	 * the code and their DB ID
 	 */
-	public static function GetPilotCode($code, $pilotid)
+	public static function getPilotCode($code, $pilotid)
 	{
 		# Make sure values are entered
 		if(Config::Get('PILOTID_LENGTH') == '')
@@ -109,7 +109,7 @@ class PilotData extends CodonData
 	 * Quasi 'cached' in case it's called multiple times
 	 * for the same pilot in one script
 	 */
-	public static function GetPilotData($pilotid)
+	public static function getPilotData($pilotid)
 	{	
 		if(!isset(self::$pilot_data[$pilotid]))
 		{	
@@ -135,7 +135,7 @@ class PilotData extends CodonData
 	/**
 	 * Get a pilot's information by email
 	 */
-	public static function GetPilotByEmail($email)
+	public static function getPilotByEmail($email)
 	{
 		$sql = 'SELECT * 
 					FROM '. TABLE_PREFIX.'pilots 
@@ -147,7 +147,7 @@ class PilotData extends CodonData
 	/**
 	 * Get the list of all the pending pilots
 	 */
-	public static function GetPendingPilots($count='')
+	public static function getPendingPilots($count='')
 	{
 		$sql = 'SELECT * 
 					FROM '.TABLE_PREFIX.'pilots WHERE `confirmed`='.PILOT_PENDING;
@@ -158,7 +158,7 @@ class PilotData extends CodonData
 		return DB::get_results($sql);
 	}
 	
-	public static function GetLatestPilots($count=10)
+	public static function getLatestPilots($count=10)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
 					ORDER BY `pilotid` DESC
@@ -174,7 +174,7 @@ class PilotData extends CodonData
 	 *  only changes minute information
 	 */
 	 
-	public static function ChangeName($pilotid, $firstname, $lastname)
+	public static function changeName($pilotid, $firstname, $lastname)
 	{
 		# Non-blank
 		if($pilotid=='' || $firstname == '' || $lastname == '')
@@ -198,11 +198,33 @@ class PilotData extends CodonData
 		return true;
 	}
 	
+	public static function changePilotRank($pilotid, $rankid)
+	{
+		
+		$rank = RanksData::GetRankInfo($rankid);
+		
+		if(!$rank)
+		{
+			return false;
+		}
+		
+		$sql = 'UPDATE '.TABLE_PREFIX."pilots 
+					SET `rank`='{$rank->rank}'
+					WHERE `pilotid`=".intval($pilotid);
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
 	/**
 	 * Save the email and location changes to the pilot's prfile
 	 */
 	
-	public static function SaveProfile($data)
+	public static function saveProfile($data)
 	{
 		/*$data = array(			
 			'pilotid' => '',
@@ -273,7 +295,7 @@ class PilotData extends CodonData
 	 * @return array The background images list
 	 *
 	 */
-	public static function GetBackgroundImages()
+	public static function getBackgroundImages()
 	{
 		$list = array();
 		$files = scandir(SITE_ROOT.'/lib/signatures/background');
@@ -292,7 +314,7 @@ class PilotData extends CodonData
 	/**
 	 * Save avatars
 	 */
-	public static function SaveAvatar($code, $pilotid, $_FILES)
+	public static function saveAvatar($code, $pilotid, $_FILES)
 	{
 		# Check the proper file size
 		#  Ignored for now since there is a resize
@@ -396,7 +418,7 @@ class PilotData extends CodonData
 	/**
 	 * Update the login time
 	 */
-	public static function UpdateLogin($pilotid)
+	public static function updateLogin($pilotid)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."pilots 
 					SET lastlogin=NOW() 
@@ -437,7 +459,7 @@ class PilotData extends CodonData
 	 * @return int Total hours for pilot
 	 *
 	 */
-	public static function UpdateFlightHours($pilotid)
+	public static function updateFlightHours($pilotid)
 	{				
 		$total = self::getPilotHours($pilotid);
 		
@@ -459,7 +481,7 @@ class PilotData extends CodonData
 	 * @return bool Success
 	 *
 	 */
-	public static function UpdateFlightData($pilotid, $flighttime, $numflights=1)
+	public static function updateFlightData($pilotid, $flighttime, $numflights=1)
 	{	
 		
 		# Update the flighttime
@@ -482,7 +504,7 @@ class PilotData extends CodonData
 		return true;
 	}
 	
-	public static function UpdatePilotStats($pilotid)
+	public static function updatePilotStats($pilotid)
 	{
 		$pireps = PIREPData::GetAllReportsForPilot($pilotid);
 		
@@ -526,7 +548,7 @@ class PilotData extends CodonData
 	 * @return bool Success
 	 *
 	 */
-	public static function UpdateLastPIREPDate($pilotid)
+	public static function updateLastPIREPDate($pilotid)
 	{
 		
 		$sql = 'UPDATE '.TABLE_PREFIX.'pilots
@@ -646,7 +668,7 @@ class PilotData extends CodonData
 	 * @return bool Success
 	 *
 	 */
-	public static function UpdatePilotPay($pilotid, $flighthours)
+	public static function updatePilotPay($pilotid, $flighthours)
 	{
 		$sql = 'SELECT payrate 
 					FROM '.TABLE_PREFIX.'ranks r, '.TABLE_PREFIX.'pilots p 

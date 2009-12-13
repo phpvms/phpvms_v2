@@ -84,6 +84,15 @@ class PIREPAdmin extends CodonModule
 	}
 	
 	
+	public function pilotpireps()
+	{
+		$this->post_action();
+		
+		$this->set('pireps', PIREPData::GetAllReportsForPilot($this->get->pilotid));
+		$this->render('pireps_list.tpl');
+	}
+	
+	
 	public function rejectpirep()
 	{
 		$this->set('pirepid', $this->get->pirepid);

@@ -69,6 +69,11 @@ class ACARSData extends CodonData
 			$data['pilotid'] = $matches[2];
 		}
 		
+		if(isset($data['code']))
+		{
+			$data['flightnum'] = $data['code'].$data['flightnum'];
+		}
+		
 		// Add pilot info		
 		$pilotinfo = PilotData::GetPilotData($data['pilotid']);
 		$data['firstname'] = $pilotinfo->firstname;
@@ -78,6 +83,8 @@ class ACARSData extends CodonData
 		// Get the airports data
 		$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
 		$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
+		$dep_apt->name = DB::escape($dep_apt->name);
+		$arr_apt->name = DB::escape($arr_apt->name);
 		
 		// Clean up times
 		if(!is_numeric($data['deptime']))
@@ -148,7 +155,7 @@ class ACARSData extends CodonData
 				}
 			}
 			
-			// Update Airports		
+			// Update Airports	
 			$upd .= " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
 
 			$query = 'UPDATE '.TABLE_PREFIX."acarsdata 

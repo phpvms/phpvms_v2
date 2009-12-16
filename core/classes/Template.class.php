@@ -76,9 +76,9 @@ class Template
 		return self::$tplset->ShowTemplate($tpl_name);
 	}
 	
-	public static function Get($tpl_path, $ret=false, $checkskin=true)
+	public static function Get($tpl_path, $ret=false, $checkskin=true, $force_base=false)
 	{
-		return self::$tplset->GetTemplate($tpl_path, $ret, $checkskin);
+		return self::$tplset->GetTemplate($tpl_path, $ret, $checkskin, $force_base);
 	}
 	
 	public static function ShowTemplate($tpl_name, $checkskin=true)
@@ -86,9 +86,9 @@ class Template
 		return self::$tplset->ShowTemplate($tpl_name, $checkskin);
 	}
 	
-	public static function GetTemplate($tpl_path, $ret=false, $checkskin=true)
+	public static function GetTemplate($tpl_path, $ret=false, $checkskin=true, $force_base=false)
 	{
-		return self::$tplset->GetTemplate($tpl_path, $ret, $checkskin);
+		return self::$tplset->GetTemplate($tpl_path, $ret, $checkskin, $force_base);
 	}
 	
 	public static function ShowModule($ModuleName, $Method)

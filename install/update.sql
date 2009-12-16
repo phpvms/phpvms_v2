@@ -28,6 +28,7 @@ ALTER TABLE `phpvms_pireps` ADD `fuelunitcost` FLOAT NOT NULL AFTER `fuelused` ;
 ALTER TABLE `phpvms_pireps` ADD `exported` TINYINT NOT NULL;
 ALTER TABLE `phpvms_pireps` ADD `revenue` FLOAT NOT NULL AFTER `expenselist` ;
 ALTER TABLE `phpvms_pireps` ADD `landingrate` FLOAT NOT NULL AFTER `distance`;
+ALTER TABLE `phpvms_pireps` ADD `rawdata` TEXT NOT NULL;
 
 -- Date added for bids;
 ALTER TABLE `phpvms_bids` ADD `dateadded` DATE NOT NULL;

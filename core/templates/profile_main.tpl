@@ -105,7 +105,7 @@
 		</p>
 	</td>
 	<td valign="top">
-		<?php StatsData::PilotAircraftFlownGraph($userinfo->pilotid); ?>
+		
 	</td>
 	</tr></table>
 </div>

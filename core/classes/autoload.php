@@ -41,24 +41,25 @@
 # Load stuff only when it's needed
 function codon_autoload($class_name)
 {
+	
 	# Load a main class, if it exists
-	if(file_exists(CLASS_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php'))
+	if(file_exists(CLASS_PATH.DS.$class_name.'.class.php'))
 	{
-		require CLASS_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php';
+		require CLASS_PATH.DS.$class_name.'.class.php';
 		return;
 	}
 	
 	# Load a main class, if it exists
-	if(file_exists(MODULES_PATH.DIRECTORY_SEPARATOR.$class_name.DIRECTORY_SEPARATOR.$class_name.'.php'))
+	if(file_exists(MODULES_PATH.DS.$class_name.DS.$class_name.'.php'))
 	{
-		require MODULES_PATH.DIRECTORY_SEPARATOR.$class_name.DIRECTORY_SEPARATOR.$class_name.'.php';
+		require MODULES_PATH.DS.$class_name.DS.$class_name.'.php';
 		return;
 	}
 	
 	# Check the common folder
-	if(file_exists(COMMON_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php'))
+	if(file_exists(COMMON_PATH.DS.$class_name.'.class.php'))
 	{
-		require COMMON_PATH.DIRECTORY_SEPARATOR.$class_name.'.class.php';
+		require COMMON_PATH.DS.$class_name.'.class.php';
 		return;
-	}	
+	}
 }

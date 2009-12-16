@@ -48,7 +48,10 @@ foreach($pireps as $report)
 		
 		?>
 	</td>
-	<td align="center"><a href="<?php echo url('/pireps/addcomment?id='.$report->pirepid);?>">Add Comment</a>
+	<td align="center">
+		<a href="<?php echo url('/pireps/addcomment?id='.$report->pirepid);?>">Add Comment</a><br />
+		<a href="<?php echo url('/pireps/editpirep?id='.$report->pirepid);?>">Edit PIREP</a>
+	</td>
 </tr>
 <?php
 }

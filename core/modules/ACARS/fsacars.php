@@ -323,7 +323,6 @@ $maxcargo";
 			
 			$code = $sched->code;
 			$flightnum = $sched->flightnum;
-			$leg = $sched->leg;
 			
 			if($_GET['origin'] != $sched->depicao || $_GET['dest'] != $sched->arricao)
 			{

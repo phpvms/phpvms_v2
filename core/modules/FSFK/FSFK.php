@@ -40,11 +40,15 @@ class FSFK extends CodonModule
 		$data = "<?xml version=\"1.0\" encoding='UTF-8'?>".trim(utf8_encode($_REQUEST['DATA2']));
 		$xml = simplexml_load_string($data);
 		
+		$this->log($data, 'acars');
+		$this->log(print_r($xml, true), 'acars');
+		$this->log(serialize($xml), 'acars');
+		
 		preg_match('/^([A-Za-z]*)(\d*)/', $xml->PilotID, $matches);
 		$code = $matches[1];
 		$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 		
-		$flightinfo = SchedulesData::getProperFlightNum($xml->AircraftAirline.$xml->FlightNumber);
+		$flightinfo = SchedulesData::getProperFlightNum($xml->FlightNumber);
 		$code = $flightinfo['code'];
 		$flightnum = $flightinfo['flightnum'];
 		
@@ -68,7 +72,7 @@ class FSFK extends CodonModule
 		$flighttime = str_replace(':', '.', (string) $xml->BlockTime);
 		
 		# Get the proper aircraft
-		$ac = OperationsData::GetAircraftByReg((string) $xml->AircraftType);
+		$ac = OperationsData::GetAircraftByReg((string) $xml->AircraftTailNumber);
 		if(!$ac)
 		{
 			$aircraft = 0;
@@ -82,14 +86,57 @@ class FSFK extends CodonModule
 		/* Process the report, to put into the log */
 
 		$log = '';
+		$images = '';
+		$rawdata = array();
 		foreach($xml as $key => $value)
 		{
+			/* Add the map images in */
 			if($key == 'FLIGHTMAPS')
-				continue;
+			{
+				$img = (string)$xml->FLIGHTMAPS->FlightMapJPG;
+				if($img)
+					$images = '<br /><br /><img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
 				
+				$img = (string)$xml->FLIGHTMAPS->FlightMapWeatherJPG;
+				if($img)
+					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					
+				$img = (string)$xml->FLIGHTMAPS->FlightMapTaxiOutJPG;
+				if($img)
+					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					
+				$img = (string)$xml->FLIGHTMAPS->FlightMapTaxiInJPG;
+				if($img)
+					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+				
+				$img = (string)$xml->FLIGHTMAPS->FlightMapVerticalProfileJPG;
+				if($img)
+					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					
+				$img = (string)$xml->FLIGHTMAPS->FlightMapLandingProfileJPG;
+				if($img)
+					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+				
+				continue;
+			}
+			
+			elseif($key == 'FLIGHTPLAN')
+			{
+				$rawdata['FLIGHTPLAN'] = (string) $value;
+				continue;
+			}
+			elseif($key == 'FLIGHTCRITIQUE')
+			{
+				$value = trim((string)$value);
+				$rawdata['FLIGHTCRITIQUE'] = $value;
+				continue;
+			}
+			
 			$log .= $key . ' = '. (string) $value . "<br>";
 			$log = str_replace('¯Â', '', $log);
 		}
+		
+		$log .= $images;
 		
 		/* Our data to send to the submit PIREP function */
 		$data = array(
@@ -107,8 +154,11 @@ class FSFK extends CodonModule
 			'source'=>'fsfk',
 			'load'=>$load,
 			'log'=>$log,
+			'rawdata'=>$rawdata,
 		);
 				
+		$this->log(print_r($data, true), 'acars');
+		
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 		
 		if(!$ret)
@@ -156,7 +206,7 @@ class FSFK extends CodonModule
                 echo '0|Invalid login data';
                 return;
             }
-	        
+			
 			preg_match('/^([A-Za-z]*)(\d*)/', $flight_data[0], $matches);
 			$code = $matches[1];
 			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
@@ -167,7 +217,10 @@ class FSFK extends CodonModule
 			$depicao = $route[0];
 			$arricao = $route[count($route)-1];
 			
-			$flightnum = $flight_data[2];
+			$flightinfo = SchedulesData::getProperFlightNum($flight_data[2]);
+			$code = $flightinfo['code'];
+			$flightnum = $flightinfo['flightnum'];
+			
 			$aircraft = $flight_data[3];
 			$heading = $flight_data[12];
 			$alt = $flight_data[7];
@@ -181,13 +234,22 @@ class FSFK extends CodonModule
         {
 			$pilotid = $value;
 			
-			$this->log('acars_message');
-			$this->log($message, 'acars');
+			/*$this->log('acars_message');
+			$this->log($message, 'acars');*/
 			
-			preg_match("/Flight ID:.(.*)\n/", $message, $matches);
 			$flight_data = ACARSData::get_flight_by_pilot($pilotid);
-			$flightnum = $flight_data->flightnum;
-			$aircraft = $flight_data->aircraft;
+			
+			// Get the flight
+			preg_match("/Flight ID: (.*)\n/", $message, $matches);
+			$flightinfo = SchedulesData::getProperFlightNum($matches[1]);
+			$code = $flightinfo['code'];
+			$flightnum = $flightinfo['flightnum'];
+			
+			// Get the aircraft 
+			preg_match("/.*Aircraft Reg: \.\.(.*)\n/", $message, $matches);
+			$aircraft_data = OperationsData::GetAircraftByReg(trim($matches[1]));
+			
+			$aircraft = $aircraft_data->id;
 			$depicao = $flight_data->depicao;
 			$arricao = $flight_data->arricao;
 			
@@ -219,8 +281,8 @@ class FSFK extends CodonModule
 			$flight_id = $value;
 			$flight_data = explode("|", $message);
 			
-			$this->log('updateflightplan');
-			$this->log(print_r($flight_data, true), 'acars');
+			/*$this->log('updateflightplan');
+			$this->log(print_r($flight_data, true), 'acars');*/
 		}
 		
 		$depapt = OperationsData::GetAirportInfo($depicao);
@@ -234,7 +296,7 @@ class FSFK extends CodonModule
 		
 		$fields = array(
 			'pilotid'=>$pilotid,
-			'flightnum'=>$flightnum,
+			'flightnum'=>$code.$flightnum,
 			'pilotname'=>'',
 			'aircraft'=>$aircraft,
 			'lat'=>$coords['lat'],
@@ -252,7 +314,9 @@ class FSFK extends CodonModule
 			'online'=>$online,
 			'client'=>'fsfk',
 		);
-
+		
+		
+		/*$this->log(print_r($fields, true), 'acars');*/
 		ACARSData::UpdateFlightData($fields);
 		$id = DB::$insert_id;
         

@@ -240,7 +240,50 @@ class PIREPData extends CodonData
 						LEFT JOIN '.TABLE_PREFIX.'schedules s ON s.code = p.code AND s.flightnum = p.flightnum
 					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
-		return DB::get_row($sql);
+		$row = DB::get_row($sql);
+		
+		/* Do any specific replacements here */
+		if($row)
+		{
+			/* If it's FSFlightKeeper, replace the images path with the proper path */
+			if($row->source == 'fsfk')
+			{
+				/* Do data stuff in the logs */
+				$data = unserialize($row->rawdata);
+				
+				/* Process flightplan data */
+				if(isset($data['FLIGHTPLAN']))
+				{
+					$value = $data['FLIGHTPLAN'];
+					$value = trim($value);
+					$lines = explode("\n", $value);
+					
+					Template::Set('lines', $lines);
+					$flightplan = Template::Get('fsfk_log_flightplan.tpl', true, true, true);
+					
+					$row->log.=$flightplan;
+				}
+				
+				/* Process flight critique data */
+				if(isset($data['FLIGHTCRITIQUE']))
+				{
+					$value = $data['FLIGHTCRITIQUE'];
+					$value = trim($value);
+					preg_match_all("/(.*) \| (.*)\n/", $value, $matches);
+					
+					# Get these from a template
+					Template::Set('matches', $matches);
+					$critique = Template::Get('fsfk_log_flightcritique.tpl', true, true, true);
+					
+					$row->log.=$critique;
+				}
+					
+				/* Replace images */
+				$row->log = str_replace('{{FSFK_IMAGES_PATH}}', fileurl(Config::Get('FSFK_IMAGE_PATH')), $row->log);
+			}
+		}
+		
+		return $row;
 	}
 
 	/**
@@ -457,7 +500,17 @@ class PIREPData extends CodonData
 		{
 			$pirepdata['landingrate'] = 0;
 		}
-				
+		
+		
+		if(isset($pirepdata['rawdata']))
+		{
+			$pirepdata['rawdata'] = DB::escape(serialize($pirepdata['rawdata']));
+		}
+		else
+		{
+			$pirepdata['rawdata'] = '';
+		}
+	
 		#var_dump($pirepdata);
 		# Escape the comment field
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
@@ -479,7 +532,8 @@ class PIREPData extends CodonData
 							`load`,
 							`fuelused`,
 							`source`,
-							`exported`)
+							`exported`,
+							`rawdata`)
 					VALUES ( {$pirepdata['pilotid']}, 
 							'{$pirepdata['code']}', 
 							'{$pirepdata['flightnum']}', 
@@ -495,7 +549,8 @@ class PIREPData extends CodonData
 							'{$pirepdata['load']}',
 							'{$pirepdata['fuelused']}',
 							'{$pirepdata['source']}',
-							0)";
+							0,
+							'{$pirepdata['rawdata']}')";
 							
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
@@ -634,7 +689,7 @@ class PIREPData extends CodonData
 		
 		foreach($results as $row)
 		{
-			self::PopulatePIREPFinance($row);
+			self::PopulatePIREPFinance($row, true);
 		}
 	
 		return true;		
@@ -645,7 +700,7 @@ class PIREPData extends CodonData
 	 *  Pass the PIREPID or the PIREP row
 	 */
 	
-	public static function PopulatePIREPFinance($pirep)
+	public static function PopulatePIREPFinance($pirep, $reset_fuel = false)
 	{
 		if(!is_object($pirep) && is_numeric($pirep))
 		{
@@ -676,14 +731,16 @@ class PIREPData extends CodonData
 		
 		// Fix for bug #62, check the airport fuel price as 0 for live
 		//$depapt = OperationsData::GetAirportInfo($pirep->depicao);
-		if($pirep->fuelunitcost == '')
+		if($pirep->fuelunitcost == '' || $reset_fuel == true)
 		{
 			$pirep->fuelunitcost = FuelData::GetFuelPrice($pirep->depicao);
 		}
 		
 		# Check the fuel
-		if($pirep->fuelprice != '')
+		if($pirep->fuelprice != '' || $reset_fuel == true)
 		{
+			/* rev 813 or so - don't need to convert units, unit is accounted
+				for properly in GetFuelPrice() */
 			# If FSACARS and in kg, convert it to lbs for the fuel calc
 			# @version 783
 			/*if($pirep->source == 'fsacars')
@@ -800,7 +857,7 @@ class PIREPData extends CodonData
 		DB::query($sql);
 					
 		# Delete any comments and fields
-		$sql = 'DELETE FROM '. TABLE_PREFIX.'comments
+		$sql = 'DELETE FROM '. TABLE_PREFIX.'pirepcomments
 					WHERE pirepid='.$pirepid;
 				
 		DB::query($sql);
@@ -844,6 +901,34 @@ class PIREPData extends CodonData
 		}
 		
 		$rss->BuildFeed(LIB_PATH.'/rss/latestpireps.rss');
+	}
+	
+	
+	/**
+	 * Return true if a PIREP if under $age_hours old	
+	 *
+	 * @param int $pirepid PIREP ID
+	 * @param int $age_hours The age in hours to see if a PIREP is under
+	 * @return bool True/false
+	 *
+	 */
+	public static function PIREPUnderAge($pirepid, $age_hours)
+	{
+		$pirepid = intval($pirepid);
+		
+		$sql = "SELECT pirepid
+				FROM ".TABLE_PREFIX."pireps
+				WHERE DATE_SUB(CURDATE(), INTERVAL '.$age_hours.' HOURS) <= submitdate
+					AND pirepid={$pirepid}";
+
+		$row = DB::get_row($sql);
+		
+		if(!$row)
+		{
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/** 

@@ -90,6 +90,18 @@ class Profile extends CodonModule
 		$this->render('pireps_viewall.tpl');
 	}
 	
+	public function stats()
+	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		$this->set('pilot', PilotData::GetPilotData(Auth::$userinfo->pilotid));
+		$this->render('profile_stats.tpl');
+	}
 	
 	public function editprofile()
 	{

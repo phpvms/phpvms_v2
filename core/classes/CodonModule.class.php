@@ -76,6 +76,11 @@ class CodonModule
 		return Config::Get($setting);
 	}
 	
+	public function get($name)
+	{
+		return Template::Get($name, true);
+	}
+	
 	public function set($name, $value)
 	{
 		Template::Set($name, $value);

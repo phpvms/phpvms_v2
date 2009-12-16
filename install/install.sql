@@ -263,6 +263,7 @@ CREATE TABLE `phpvms_pireps` (
   `revenue` FLOAT NOT NULL,
   `source` VARCHAR(25) NOT NULL,
   `exported` TINYINT NOT NULL,
+  `rawdata` TEXT NOT NULL,
   PRIMARY KEY  (`pirepid`)
 ) ENGINE=InnoDB;
 

@@ -59,6 +59,9 @@ Config::Set('PILOT_AUTO_CONFIRM', false);
 # Automatically calculate ranks?
 Config::Set('RANKS_AUTOCALCULATE', true);
 
+# For how many hours a pilot can edit their submitted PIREP (custom fields only)
+Config::Set('PIREP_CUSTOM_FIELD_EDIT', '48');
+
 # If someone places a bid, whether to disable that or not
 Config::Set('DISABLE_SCHED_ON_BID', true);
 Config::Set('DISABLE_BIDS_ON_BID', false);
@@ -122,19 +125,21 @@ Config::Set('WeightUnit', '1');		# 0=Kg 1=lbs
 Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
 Config::Set('SpeedUnit', '1');		# 0=Km/H 1=Kts
 Config::Set('AltUnit', '1');		# 0=Meter 1=Feet 
-Config::Set('LiquidUnit', '2');		# 0=liter 1=gal 2=kg 3=lbs
+Config::Set('LiquidUnit', '3');		# 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
 # FSFK Settings
 // Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
-//	ftp://phpvms.net/phpvms/lib/fsfk
+//	ftp://phpvms.net/phpvms/lib/fsfk or ftp://phpvms.net/public_html/phpvms/lib/fsfk
+// You want the path from when you connect to the FTP down to where the /lib/fsfk folder is
 Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
 Config::Set('FSFK_FTP_USER', '');
 Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
+Config::Set('FSFK_IMAGE_PATH', '/lib/fsfk'); // web path from SITE_ROOT
 
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_TEXT_COLOR', '#000');
@@ -227,6 +232,7 @@ Config::Set('TEMPLATE_CACHE_EXPIRE', '24');
 Config::Set('DBASE_USE_CACHE', false);
 Config::Set('CACHE_PATH', SITE_ROOT . '/core/cache');
 Config::Set('TPL_EXTENSION', '.tpl');
+Config::Set('BASE_TEMPLATE_PATH', SITE_ROOT.'/core/templates');
 
 if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 {	
@@ -242,7 +248,7 @@ if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 }
 else 
 {	
-	Template::SetTemplatePath(SITE_ROOT.'/core/templates');
+	Template::SetTemplatePath(Config::Get('BASE_TEMPLATE_PATH'));
 	
 	Config::Set('RUN_SINGLE_MODULE', true);
 	Config::Set('MODULES_PATH', SITE_ROOT.'/core/modules');

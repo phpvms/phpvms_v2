@@ -152,7 +152,7 @@ while(!feof($fp))
 	}
 }
 
-echo "<br />--- Checked {$total} files, found {$errors} errors<br />";
+echo "<br /><strong> -- Checked {$total} files, found {$errors} errors</strong><br />";
 ?>
 </body>
 </html>

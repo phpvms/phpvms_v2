@@ -58,6 +58,29 @@ class PIREPS extends CodonModule
 		
 		if(isset($this->post->submit))
 		{
+			
+			/* See if the PIREP is valid, and whether it's being edited
+				by the owner, not someone else */
+				
+			$pirep = PIREPData::GetReportDetails($this->post->pirepid);
+			
+			if(!$pirep)
+			{
+				$this->set('message', 'Invalid PIREP');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
+			# Make sure pilot ID's match
+			if($pirep->pilotid != Auth::$userinfo->pilotid)
+			{
+				$this->set('message', 'This PIREP is not yours!');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
+			/* Now do the edit actions */
+			
 			if($this->post->action == 'addcomment')
 			{
 				$ret = PIREPData::AddComment($this->post->pirepid, Auth::$userinfo->pilotid, $this->post->comment);
@@ -65,10 +88,18 @@ class PIREPS extends CodonModule
 				$this->set('message', 'Comment added!');
 				$this->render('core_success.tpl');
 			}
+			
+			/* Edit the PIREP custom fields */
+			elseif($this->post->action == 'editpirep')
+			{
+				$ret = PIREPData::SaveFields($this->post->pirepid, $_POST);
+				
+				$this->set('message', 'PIREP edited!');
+				$this->render('core_success.tpl');
+			}
 		}
 		
 		// Show PIREPs filed
-		
 		$this->set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
 		$this->render('pireps_viewall.tpl');
 	}
@@ -133,6 +164,45 @@ class PIREPS extends CodonModule
 		# Show the comment form
 		$this->set('pirep', $pirep);
 		$this->render('pireps_addcomment.tpl');
+	}
+	
+	public function editpirep()
+	{
+		if(!isset($this->get->id))
+		{
+			$this->set('message', 'No PIREP specified');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		$pirep = PIREPData::GetReportDetails($this->get->id);
+		
+		if(!$pirep)
+		{
+			$this->set('message', 'Invalid PIREP');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		# Make sure pilot ID's match
+		if($pirep->pilotid != Auth::$userinfo->pilotid)
+		{
+			$this->set('message', 'You cannot add a comment to a PIREP that is not yours!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		if(PIREPData::PIREPUnderAge($pirep->pirepid, Config::Get('PIREP_CUSTOM_FIELD_EDIT')) == false)
+		{
+			$this->set('message', 'You cannot edit a PIREP after the cutoff time of '.Config::Get('PIREP_CUSTOM_FIELD_EDIT').' hours');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		$this->set('pirep', $pirep);
+		$this->set('pirepfields', PIREPData::GetAllFields());
+		
+		$this->render('pirep_editform.tpl');
 	}
 	
 	public function routesmap()

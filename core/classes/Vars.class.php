@@ -183,8 +183,6 @@ class Vars
 	public static function cleaned(&$V)
 	{
 		return $V;
-		
-		//return htmlspecialchars(addslashes(stripslashes($V)));
 	}
 	
 	/**

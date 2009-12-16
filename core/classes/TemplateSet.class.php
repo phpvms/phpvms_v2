@@ -91,7 +91,7 @@ class TemplateSet
 	{
 		// See if they're setting the template as a file
 		//	Check if the file exists 
-		if(is_string($value) && strstr($value, '.tpl'))
+		if(is_string($value) && strstr($value, $this->tpl_ext))
 		{
 			if(file_exists($this->template_path . DS . $value))
 			{
@@ -182,29 +182,44 @@ class TemplateSet
 	 * @param string $tpl_name Template to return (with extension)
 	 * @param bool $ret Return the template or output it on the screen
 	 * @param bool $checkskin Check the active skin folder for the template first
+	 * @param bool $force_base Force it to read from the base template dir
 	 * @return mixed Returns template text is $ret is true
 	 *
 	 */
-	public function GetTemplate($tpl_name, $ret=false, $checkskin=true)
+	public function GetTemplate($tpl_name, $ret=false, $checkskin=true, $force_base=false)
 	{
 		/* See if the file has been over-rided in the skin directory
 		 */
-		 
 		if(strstr($tpl_name, $this->tpl_ext) === false)
 		{
 			$tpl_name .= $this->tpl_ext;
 		}
+		
+		if($force_base) 
+		{
+			$old_tpl = $this->template_path;
+			$this->template_path = Config::Get('BASE_TEMPLATE_PATH');
+		}
 
-		if(!defined('ADMIN_PANEL') && $checkskin == true)
+		if((!defined('ADMIN_PANEL') || $force_base == true) && $checkskin == true)
 		{
 			if(defined('SKINS_PATH') && file_exists(SKINS_PATH . DS . $tpl_name))
+			{
 				$tpl_path = SKINS_PATH . DS . $tpl_name;
+			}
 			else
+			{
 				$tpl_path = $this->template_path . DS . $tpl_name;
+			}
 		}
 		else
 		{
 			$tpl_path = $this->template_path . DS . $tpl_name;
+		}
+		
+		if($force_base) 
+		{
+			$this->template_path = $old_tpl;
 		}
 
 		if(!file_exists($tpl_path))
@@ -243,4 +258,3 @@ class TemplateSet
 		return MainController::Run($ModuleName, $MethodName);
 	}
 }
-?>

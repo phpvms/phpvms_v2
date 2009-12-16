@@ -280,6 +280,7 @@ CREATE TABLE `phpvms_customfields` (
 	`fieldid` INT NOT NULL AUTO_INCREMENT ,
 	`title` VARCHAR( 75 ) NOT NULL ,
 	`fieldname` VARCHAR( 75 ) NOT NULL ,
+	`value` TEXT NOT NULL ,
 	`type` VARCHAR( 25 ) NOT NULL DEFAULT 'text',
 	`public` smallint(6) NOT NULL default '0',
 	`showonregister` smallint(6) NOT NULL default '0',

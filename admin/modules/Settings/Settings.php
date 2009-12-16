@@ -177,17 +177,23 @@ class Settings extends CodonModule
 		$public = $this->post->public;
 		$showinregistration = $this->post->showinregistration;
 		
-		if($public == 'yes')
-			$public = true;
-		else
-			$public = false;
+		$data=array('title'=>$this->post->title,
+					'value'=>$this->post->value,
+					'type'=>$this->post->type,
+					'public'=>$this->post->public,
+					'showinregistration'=>$this->post->showinregistration);
 			
-		if($showinregistration == 'yes')
-			$showinregistration = true;
+		if($data['public'] == 'yes')
+			$data['public'] = true;
 		else
-			$showinregistration = false;
-		
-		$ret = SettingsData::AddField($title, $fieldtype, $public, $showinregistration);
+			$data['public'] = false;
+			
+		if($data['showinregistration'] == 'yes')
+			$data['showinregistration'] = true;
+		else
+			$data['showinregistration'] = false;
+			
+		$ret = SettingsData::AddField($data);
 		
 		if(DB::errno() != 0)
 		{
@@ -209,22 +215,24 @@ class Settings extends CodonModule
 			return;
 		}
 		
-		$title = $this->post->title;
-		$fieldtype = $this->post->fieldtype;
-		$public = $this->post->public;
-		$showinregistration = $this->post->showinregistration;
+		$data= array('fieldid'=>$this->post->fieldid,
+					 'title'=>$this->post->title,
+					 'value'=>$this->post->value,
+					 'type'=>$this->post->type,
+					 'public'=>$this->post->public,
+					 'showinregistration'=>$this->post->showinregistration);
 		
-		if($public == 'yes')
-			$public = true;
+		if($data['public'] == 'yes')
+			$data['public'] = true;
 		else
-			$public = false;
+			$data['public'] = false;
 			
-		if($showinregistration == 'yes')
-			$showinregistration = true;
+		if($data['showinregistration'] == 'yes')
+			$data['showinregistration'] = true;
 		else
-			$showinregistration = false;
+			$data['showinregistration'] = false;
 		
-		$ret = SettingsData::EditField($this->post->fieldid, $title, $fieldtype, $public, $showinregistration);
+		$ret = SettingsData::EditField($data);
 		
 		if(DB::errno() != 0)
 		{

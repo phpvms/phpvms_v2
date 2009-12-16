@@ -3,7 +3,7 @@
 	Be careful, it's a bit fragile
 	*/
 ?>
-<div class="fsfk_section_title" style="font-weight: bold">Flight Critique</div>
+<div class="fsfk_section_title">Flight Critique</div>
 <table class="fsfk_flightcritique">
 <?php
 // two columns

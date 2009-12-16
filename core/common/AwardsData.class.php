@@ -79,7 +79,6 @@ class AwardsData extends CodonData
 	 */
 	public static function GetPilotAward($pilotid, $awardid)
 	{
-		
 		$pilotid = intval($pilotid);
 		$awardid = intval($awardid);
 		
@@ -90,6 +89,26 @@ class AwardsData extends CodonData
 						AND g.`awardid`='.$awardid;
 					  
 		return DB::get_row($sql);
+	}
+	
+	
+	/**
+	 * Return all the awards with pilots
+	 *
+	 * @param mixed $awardid This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function getPilotAwardCounts($awardid)
+	{
+		$awardid = intval($awardid);
+		$sql = 'SELECT g.id, g.pilotid, a.*
+					FROM '.TABLE_PREFIX.'awardsgranted g
+					INNER JOIN '.TABLE_PREFIX.'awards a ON a.awardid = g.awardid
+					INNER JOIN '.TABLE_PREFIX.'pilots a ON a.pilotid = g.pilotid
+					WHERE g.`awardid`='.$awardid;
+		
+		return DB::get_results($sql);
 	}
 	
 	/**

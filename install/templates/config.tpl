@@ -3,12 +3,12 @@
 /**
  * This is the phpVMS Main Configuration File
  *
- * You can add any additional modules at the bottom
  * This file won't be modified/touched by future versions
  * of phpVMS, you can change your settings here
  * 
  * There may also be additional settings in app.config.php
- * To change it, copy the line into this file here
+ * To change it, copy the line into this file here, for the
+ * settings to take effect
  *
  */
 define('DBASE_USER', '$DBASE_USER');
@@ -39,6 +39,15 @@ Config::Set('CARGO_UNITS', 'lbs');
 # After how long to mark a pilot inactive, in days
 Config::Set('PILOT_AUTO_RETIRE', true);
 Config::Set('PILOT_INACTIVE_TIME', 90);
+
+# Automatically confirm pilots?
+Config::Set('PILOT_AUTO_CONFIRM', false);
+
+# Automatically calculate ranks?
+Config::Set('RANKS_AUTOCALCULATE', true);
+
+# For how many hours a pilot can edit their submitted PIREP (custom fields only)
+Config::Set('PIREP_CUSTOM_FIELD_EDIT', '48');
 
 # If someone places a bid, whether to disable that or not
 Config::Set('DISABLE_SCHED_ON_BID', true);
@@ -89,6 +98,20 @@ Config::Set('AltUnit', '1');   # 0=Meter 1=Feet
 Config::Set('LiquidUnit', '2');   # 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 
+/* FSFK Settings
+	Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
+	ftp://phpvms.net/phpvms/lib/fsfk or ftp://phpvms.net/public_html/phpvms/lib/fsfk
+	
+	You want the path from when you connect to the FTP down to where the /lib/fsfk folder is 
+*/
+Config::Set('FSFK_FTP_SERVER', '');
+Config::Set('FSFK_FTP_PORT', '21');
+Config::Set('FSFK_FTP_USER', '');
+Config::Set('FSFK_FTP_PASS', '');
+Config::Set('FSFK_FTP_PASS', '');
+Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
+Config::Set('FSFK_IMAGE_PATH', '/lib/fsfk'); // web path from SITE_ROOT
+
 # Options for the signature that's generated 
 Config::Set('SIGNATURE_TEXT_COLOR', '#000');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
@@ -99,6 +122,18 @@ Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);
 Config::Set('AVATAR_FILE_SIZE', 50000); 
 Config::Set('AVATAR_MAX_WIDTH', 80);
 Config::Set('AVATAR_MAX_HEIGHT', 80);
+
+# Email Settings
+Config::Set('EMAIL_FROM_NAME', '');
+Config::Set('EMAIL_FROM_ADDRESS', '');
+
+Config::Set('EMAIL_USE_SMTP', false);
+# Add multiple SMTP servers by separating them with ;
+Config::Set('EMAIL_SMTP_SERVERS', '');
+Config::Set('EMAIL_SMTP_PORT', '25');
+Config::Set('EMAIL_SMTP_USE_AUTH', false);
+Config::Set('EMAIL_SMTP_USER', '');
+Config::Set('EMAIL_SMTP_PASS', '');
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', false);

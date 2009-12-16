@@ -799,9 +799,9 @@ class PilotData extends CodonData
 	 * @return array Returns all of the fields (names and values)
 	 *
 	 */
-	public static function GetFieldData($pilotid, $inclprivate=false)
+	public static function getFieldData($pilotid, $inclprivate=false)
 	{
-		$sql = 'SELECT f.title, f.fieldname, v.value, f.public
+		$sql = 'SELECT f.fieldid, f.title, f.type, f.fieldname, v.value, f.public
 					FROM '.TABLE_PREFIX.'customfields f
 					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
 						ON f.fieldid=v.fieldid
@@ -822,9 +822,9 @@ class PilotData extends CodonData
 	 * @return string Returns the value of that field
 	 *
 	 */
-	public static function GetFieldValue($pilotid, $title)
+	public static function getFieldValue($pilotid, $title)
 	{
-		$sql = "SELECT v.value 
+		$sql = "SELECT f.fieldid, v.value 
 					FROM phpvms_customfields f, phpvms_fieldvalues v 
 					WHERE f.fieldid=v.fieldid 
 						AND f.title='$title' 

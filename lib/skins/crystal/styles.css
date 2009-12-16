@@ -29,6 +29,8 @@ hr{ margin-top: 15px; height: 1px; border: none; border-bottom: solid 1px #999; 
 
 .indent { padding-left: 32px; }
 
+.fsfk_section_title { font-weight: bold; }
+
 #mainbox { width: 700px; float: left; padding-right: 20px; }
 
 #sidebar { float: left; width: 210px; }

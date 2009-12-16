@@ -224,7 +224,7 @@ class PIREPData extends CodonData
 	/**
 	 * Get all of the details for a PIREP, including lat/long of the airports
 	 */
-	public static function GetReportDetails($pirepid)
+	public static function getReportDetails($pirepid)
 	{
 		$sql = 'SELECT p.*, s.*, s.id AS scheduleid,
 						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
@@ -245,23 +245,49 @@ class PIREPData extends CodonData
 		/* Do any specific replacements here */
 		if($row)
 		{
-			/* If it's FSFlightKeeper, replace the images path with the proper path */
+			/* If it's FSFlightKeeper, process the `rawdata` column, which contains
+				array()'d copied of extra data that was sent by the ACARS. Run that
+				through some templates which we've got. This can probably be generic-ized
+				but it's fine now for FSFK. This can probably move through an outside 
+				function, but seems OK to stay in getReportDetails() for now, since this
+				is semi-intensive code here (the most expensive is populating the templates,
+				and I wouldn't want to run it for EVERY PIREP which is called by the system.
+			*/
 			if($row->source == 'fsfk')
 			{
 				/* Do data stuff in the logs */
 				$data = unserialize($row->rawdata);
 				
-				/* Process flightplan data */
+				/* Process flight data */
+				if(isset($data['FLIGHTDATA']))
+				{
+					Template::Set('data', $data['FLIGHTDATA']);
+					$flightdata = Template::Get('fsfk_log_flightdata.tpl', true, true, true);
+					$row->log.=$flightdata;
+					unset($flightdata);
+				}
+				
+				/* Process the flightplan */
 				if(isset($data['FLIGHTPLAN']))
 				{
-					$value = $data['FLIGHTPLAN'];
-					$value = trim($value);
+					$value = trim($data['FLIGHTPLAN']);
 					$lines = explode("\n", $value);
 					
 					Template::Set('lines', $lines);
 					$flightplan = Template::Get('fsfk_log_flightplan.tpl', true, true, true);
 					
 					$row->log.=$flightplan;
+					unset($flightplan);
+				}
+				
+				/* Process the flight images */
+					/* Process flight data */
+				if(isset($data['FLIGHTMAPS']))
+				{
+					Template::Set('images', $data['FLIGHTMAPS']);
+					$flightimages = Template::Get('fsfk_log_flightimages.tpl', true, true, true);
+					$row->log.=$flightimages;
+					unset($flightimages);
 				}
 				
 				/* Process flight critique data */
@@ -276,10 +302,8 @@ class PIREPData extends CodonData
 					$critique = Template::Get('fsfk_log_flightcritique.tpl', true, true, true);
 					
 					$row->log.=$critique;
+					unset($critique);
 				}
-					
-				/* Replace images */
-				$row->log = str_replace('{{FSFK_IMAGES_PATH}}', fileurl(Config::Get('FSFK_IMAGE_PATH')), $row->log);
 			}
 		}
 		

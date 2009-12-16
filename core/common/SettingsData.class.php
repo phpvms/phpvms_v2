@@ -49,36 +49,40 @@ class SettingsData extends CodonData
 	
 	public static function GetField($fieldid)
 	{
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields 
-								WHERE fieldid='.$fieldid);
+		$fieldid = intval($fieldid);
+		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$fieldid);
 	}
 		
 	/**
-	 * Add a custom field to be used in a profile
+	 * Edit a custom field to be used in a profile
+	 * 
+	 * $data= array('fieldid'=>,
+					 'title'=>,
+					 'value'=>,
+					 'type'=>,
+					 'public'=>,
+					 'showinregistration'=>);
 	 */
-	public static function AddField($title, $fieldtype, $public, $showinregistration)
+	public static function AddField($data)
 	{
-		/*$fieldname = Vars::POST('fieldname');
-		$fieldtype = Vars::POST('fieldtype');
-		$public = Vars::POST('public');
-		$showinregistration = Vars::POST('showinregistration');*/
-		
-		$fieldname = str_replace(' ', '_', $title);
+		$fieldname = str_replace(' ', '_', $data['title']);
 		$fieldname = strtoupper($fieldname);
 		
 		//Check, set up like this on purpose to default "safe" values
-		if($public == true)
-			$public = 1;
+		if($data['public'] == true)
+			$data['public'] = 1;
 		else
-			$public = 0;
+			$data['public'] = 0;
 		
-		if($showinregistration == true)
-			$showinregistration = 1;
+		if($data['showinregistration'] == true)
+			$data['showinregistration'] = 1;
 		else
-			$showinregistration = 0;
+			$data['showinregistration'] = 0;
+			
+		$data['type'] = strtolower($data['type']);
 		
-		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (title, fieldname, type, public, showonregister)
-					VALUES ('$title', '$fieldname', '$fieldtype', $public, $showinregistration)";
+		$sql = "INSERT INTO " . TABLE_PREFIX ."customfields (title, fieldname, value, type, public, showonregister)
+					VALUES ('{$data['title']}', '$fieldname', '{$data['value']}', '{$data['type']}', {$data['public']}, {$data['showinregistration']})";
 		
 		$res = DB::query($sql);
 		
@@ -88,31 +92,42 @@ class SettingsData extends CodonData
 		return true;
 	}
 	
-/**
-	 * Add a custom field to be used in a profile
+	/**
+	 * Edit a custom field to be used in a profile
+	 * 
+	 * $data= array('fieldid'=>,
+					 'title'=>,
+					 'value'=>,
+					 'type'=>,
+					 'public'=>,
+					 'showinregistration'=>);
 	 */
-	public static function EditField($fieldid, $title, $fieldtype, $public, $showinregistration)
-	{
-		$fieldname = str_replace(' ', '_', $title);
-		$fieldname = strtoupper($fieldname);
+	public static function EditField($data)
+	{				 
+					 
+		$fieldname = strtoupper(str_replace(' ', '_', $data['title']));
 		
 		//Check, set up like this on purpose to default "safe" values
-		if($public == true)
-			$public = 1;
+		if($data['public'] == true)
+			$data['public'] = 1;
 		else
-			$public = 0;
+			$data['public'] = 0;
 		
-		if($showinregistration == true)
-			$showinregistration = 1;
+		if($data['showinregistration'] == true)
+			$data['showinregistration'] = 1;
 		else
-			$showinregistration = 0;
+			$data['showinregistration'] = 0;
+		
+		$data['type'] = strtolower($data['type']);
 		
 		$sql = "UPDATE " . TABLE_PREFIX ."customfields
-					SET title='$title', fieldname='$fieldname', type='$type',
-						public=$public, showonregister=$showinregistration
-					WHERE fieldid=$fieldid";
+				SET title='{$data['title']}', fieldname='{$fieldname}', value='{$data['value']}',
+					type='{$data['type']}', public={$data['public']}, 
+					showonregister={$data['showinregistration']}
+				WHERE fieldid={$data['fieldid']}";
 		
 		$res = DB::query($sql);
+		DB::debug();
 		
 		if(DB::errno() != 0)
 			return false;

@@ -52,8 +52,9 @@ class FSFK extends CodonModule
 		$code = $flightinfo['code'];
 		$flightnum = $flightinfo['flightnum'];
 		
-		$depicao = substr($xml->OriginICAO, 0, 4);
-		$arricao = substr($xml->DestinationICAO, 0, 4);
+		# Extract the ICAO of the airport
+		$depicao = strtoupper(substr($xml->OriginICAO, 0, 4));
+		$arricao = strtoupper(substr($xml->DestinationICAO, 0, 4));
 		
 		if(!OperationsData::GetAirportInfo($depicao))
 		{
@@ -88,6 +89,11 @@ class FSFK extends CodonModule
 		$log = '';
 		$images = '';
 		$rawdata = array();
+		
+		# Setup the base things
+		$rawdata['FLIGHTMAPS'] = array();
+		$rawdata['FLIGHTDATA'] = array();
+		
 		foreach($xml as $key => $value)
 		{
 			/* Add the map images in */
@@ -95,27 +101,27 @@ class FSFK extends CodonModule
 			{
 				$img = (string)$xml->FLIGHTMAPS->FlightMapJPG;
 				if($img)
-					$images = '<br /><br /><img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					$rawdata['FLIGHTMAPS']['FlightMap'] = $img;
 				
 				$img = (string)$xml->FLIGHTMAPS->FlightMapWeatherJPG;
 				if($img)
-					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					$rawdata['FLIGHTMAPS']['FlightMapWeather'] = $img;
 					
 				$img = (string)$xml->FLIGHTMAPS->FlightMapTaxiOutJPG;
 				if($img)
-					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					$rawdata['FLIGHTMAPS']['FlightMapTaxiOut'] = $img;
 					
 				$img = (string)$xml->FLIGHTMAPS->FlightMapTaxiInJPG;
 				if($img)
-					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					$rawdata['FLIGHTMAPS']['FlightMapTaxiIn'] = $img;
 				
 				$img = (string)$xml->FLIGHTMAPS->FlightMapVerticalProfileJPG;
 				if($img)
-					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					$rawdata['FLIGHTMAPS']['FlightMapVerticalProfile'] = $img;
 					
 				$img = (string)$xml->FLIGHTMAPS->FlightMapLandingProfileJPG;
 				if($img)
-					$images .= '<img class="fsfk_image" src="{{FSFK_IMAGES_PATH}}/'.$img.'" /><br />';
+					$rawdata['FLIGHTMAPS']['FlightMapLandingProfile'] = $img;
 				
 				continue;
 			}
@@ -131,12 +137,16 @@ class FSFK extends CodonModule
 				$rawdata['FLIGHTCRITIQUE'] = $value;
 				continue;
 			}
-			
-			$log .= $key . ' = '. (string) $value . "<br>";
-			$log = str_replace('¯Â', '', $log);
+			else
+			{
+				$key = trim($key);
+				$value = (string) $value;
+				$value = str_replace('¯Â', '', $value);
+				
+				$rawdata['FLIGHTDATA'][$key] = $value;
+			}
 		}
 		
-		$log .= $images;
 		
 		/* Our data to send to the submit PIREP function */
 		$data = array(

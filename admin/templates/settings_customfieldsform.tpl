@@ -11,6 +11,8 @@ if(!$allfields)
 <thead>
 	<tr>
 		<th>Field Name</th>
+		<th>Default Value</th>
+		<th>Type</th>
 		<th>Options</th>
 	</tr>
 </thead>
@@ -21,6 +23,8 @@ foreach($allfields as $field)
 ?>
 <tr>
 	<td align="center"><?php echo $field->title;?></td>
+	<td align="center"><?php echo $field->value;?></td>
+	<td align="center"><?php echo $field->type;?></td>
 	<td align="center" nowrap width="1%">
 		<a id="dialog" class="jqModal" 
 				href="<?php echo SITE_URL?>/admin/action.php/settings/editfield?id=<?php echo $field->fieldid;?>">

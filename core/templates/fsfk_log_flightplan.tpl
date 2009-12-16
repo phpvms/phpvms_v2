@@ -1,4 +1,10 @@
-<div class="fsfk_section_title" style="font-weight:bold">Flight Details</div>
+<?php
+/* This template is for the flight plan details, contains the data
+	about all the flight plan points which were passed by the flight,
+	and details about that point.
+*/
+?>
+<div class="fsfk_section_title">Flight Plan Details</div>
 <table class="fsfk_flightplan">
 <thead>
 <tr>
@@ -15,7 +21,6 @@
 </tr>
 </thead>
 <tbody>
-
 <?php 
 
 foreach($lines as $point)
@@ -31,7 +36,6 @@ foreach($lines as $point)
 	echo '</tr>';
 }
 ?>
-
 </tbody>
 </table>
 <br />

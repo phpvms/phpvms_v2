@@ -129,10 +129,12 @@ Config::Set('LiquidUnit', '3');		# 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 
-# FSFK Settings
-// Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
-//	ftp://phpvms.net/phpvms/lib/fsfk or ftp://phpvms.net/public_html/phpvms/lib/fsfk
-// You want the path from when you connect to the FTP down to where the /lib/fsfk folder is
+/* FSFK Settings
+	Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
+	ftp://phpvms.net/phpvms/lib/fsfk or ftp://phpvms.net/public_html/phpvms/lib/fsfk
+	
+	You want the path from when you connect to the FTP down to where the /lib/fsfk folder is 
+*/
 Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
 Config::Set('FSFK_FTP_USER', '');
@@ -155,6 +157,18 @@ Config::Set('AVATAR_MAX_HEIGHT', 80);	# Resized height
 # Cookie information
 Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in seconds
 //Config::Set('SESSION_COOKIE_NAME', 'VMS_AUTH_COOKIE');
+
+# Email Settings
+Config::Set('EMAIL_FROM_NAME', '');
+Config::Set('EMAIL_FROM_ADDRESS', '');
+
+Config::Set('EMAIL_USE_SMTP', false);
+# Add multiple SMTP servers by separating them with ;
+Config::Set('EMAIL_SMTP_SERVERS', '');
+Config::Set('EMAIL_SMTP_PORT', '25');
+Config::Set('EMAIL_SMTP_USE_AUTH', false);
+Config::Set('EMAIL_SMTP_USER', '');
+Config::Set('EMAIL_SMTP_PASS', '');
 
 /* Can be 'geonames' or 'phpvms'.
 	Geonames will use the geonames.org server to look up the airport info
@@ -256,6 +270,7 @@ else
 	Config::Set('MODULES_AUTOLOAD', true);
 	Config::Set('ACTIVE_MODULES', array());
 	
+	/* Deprecated!!!! */
 	/* Rules for the controllers */
 	CodonRewrite::AddRule('default', array('page'));
 	CodonRewrite::AddRule('acars', array('page', 'action'));
@@ -272,8 +287,9 @@ else
 
 /* VACentral */
 
-Config::Set('VACENTRAL_ENABLED', true);
-Config::Set('VACENTRAL_DEBUG_MODE', true);
+Config::Set('VACENTRAL_ENABLED', false);
+Config::Set('VACENTRAL_DEBUG_MODE', false);
+Config::Set('VACENTRAL_DEBUG_DETAIL', 0);
 Config::Set('VACENTRAL_API_SERVER', 'http://apidev.phpvms.net');
 Config::Set('VACENTRAL_API_KEY', '');
 
@@ -292,7 +308,7 @@ Config::Set('FLIGHT_TYPES', array(
 Config::Set('EXPENSE_TYPES', array( 
 	'M'=>'Monthly',
 	'F'=>'Per Flight',
-	'P'=>'Percent (month)')
+	'P'=>'Percent (month)',)
 );
 			
 define('SIGNATURE_PATH', '/lib/signatures');
@@ -317,9 +333,6 @@ define('VMS_AUTH_COOKIE', 'VMSAUTH');
 /**
  * Library Includes (from 3rd Party)
  */
-
-# PHPMailer
-include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');
 
 # Bit-masks for permission sets
 $permission_set = array

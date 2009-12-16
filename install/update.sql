@@ -30,6 +30,9 @@ ALTER TABLE `phpvms_pireps` ADD `revenue` FLOAT NOT NULL AFTER `expenselist` ;
 ALTER TABLE `phpvms_pireps` ADD `landingrate` FLOAT NOT NULL AFTER `distance`;
 ALTER TABLE `phpvms_pireps` ADD `rawdata` TEXT NOT NULL;
 
+-- Default value for profile fields;
+ALTER TABLE `phpvms_customfields` ADD `value` TEXT NOT NULL AFTER `fieldname`;
+
 -- Date added for bids;
 ALTER TABLE `phpvms_bids` ADD `dateadded` DATE NOT NULL;
 

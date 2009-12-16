@@ -33,7 +33,6 @@ function pre_module_load()
 	
 	SiteData::loadSiteSettings();
 	Auth::StartAuth();
-	
 }
 
 function post_module_load()

@@ -152,11 +152,48 @@ class Util
 	 */
 	public static function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
 	{
+		# PHPMailer
+		include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');
 		$mail = new PHPMailer(); 
 		  
-		$mail->From     = ($fromemail == '') ? ADMIN_EMAIL : $fromemail;  
-		$mail->FromName = ($fromname == '') ? SITE_NAME : $fromname; 
+		if($fromemail == '')
+		{
+			$fromemail = Config::Get('EMAIL_FROM_ADDRESS');
+			
+			if($fromemail == '')
+			{
+				$fromemail = ADMIN_EMAIL;
+			}
+		}
+		
+		
+		if($fromname == '')
+		{
+			$fromname = Config::Get('EMAIL_FROM_NAME');
+			
+			if($fromname == '')
+			{
+				$fromname = SITE_NAME;
+			}
+		}
+		
+		$mail->From     = $fromemail;
+		$mail->FromName = $fromname;
 		$mail->Mailer = 'mail';
+		
+		if(Config::Get('EMAIL_USE_SMTP') == true)
+		{
+			$mail->IsSMTP();
+
+			$mail->Host = Config::Get('EMAIL_SMTP_SERVERS');
+			$mail->Port = Config::Get('EMAIL_SMTP_PORT');
+			
+			if(Config::Get('EMAIL_SMTP_USE_AUTH') == true)
+			{
+				$mail->Username = Config::Get('EMAIL_SMTP_USER');
+				$mail->Password = Config::Get('EMAIL_SMTP_PASS');
+			}
+		}
 		
 		$message = nl2br($message);
 		$alt = strip_tags($message);

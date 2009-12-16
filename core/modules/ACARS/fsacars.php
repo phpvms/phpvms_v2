@@ -73,8 +73,8 @@ switch($acars_action)
 	
 	case 'acars':
 		
-		writedebug('ACARS UPDATE');
-		writedebug(print_r($_GET, true));
+		Debug::log('ACARS UPDATE', 'acars');
+		Debug::log(print_r($_GET, true), 'acars');
 
 		$pilotid = $_GET['pilotnumber'];
 		
@@ -95,14 +95,14 @@ switch($acars_action)
 		
 		ob_end_clean();
 		
-		writedebug($cont);
+		Debug::log($cont, 'acars');
 		
 		break;
 		
 	case 'flightplans':
 	case 'schedules':
 	
-		writedebug('FLIGHT PLAN REQUEST');
+		Debug::log('FLIGHT PLAN REQUEST', 'acars');
 		
 		if(!is_numeric($_GET['pilot']))
 		{
@@ -157,8 +157,8 @@ $maxcargo";
 	#
 	case 'status':
 	
-		writedebug('STATUS UPDATE');
-		writedebug(print_r($_GET, true));
+		Debug::log('STATUS UPDATE', 'acars');
+		Debug::log(print_r($_GET, true), 'acars');
 		
 		if($_GET['detailph']=='')
 		{
@@ -215,7 +215,7 @@ $maxcargo";
 			
 		ob_end_clean();
 		
-		writedebug($cont);
+		Debug::log($cont, 'acars');
 		
 		break;
 	
@@ -241,7 +241,7 @@ $maxcargo";
 
 		if(!($pilot = PilotData::GetPilotData($pilotid)))
 		{
-			writedebug('INVALID PID');
+			echo 'Invalid Pilot!';
 			return;
 		}
 				
@@ -298,8 +298,6 @@ $maxcargo";
 			$landingrate = 0;
 		}
 		
-		//echo "$landingrate,  rate: $rate";
-		
 		# Get our aircraft
 		$reg = trim($_GET['reg']);
 		$ac = OperationsData::GetAircraftByReg($reg);
@@ -346,25 +344,23 @@ $maxcargo";
 		# Convert the time to xx.xx 
 		$flighttime = number_format(floatval(str_replace(':', '.', $_GET['duration'])), 2);
 		
-		$data = array('pilotid'=>$pilotid,
-						'code'=>$code,
-						'flightnum'=>$flightnum,
-						'depicao'=>$_GET['origin'],
-						'arricao'=>$_GET['dest'],
-						'aircraft'=>$ac->id,
-						'flighttime'=>$flighttime,
-						'landingrate'=>$landingrate,
-						'submitdate'=>'NOW()',
-						'comment'=>$comment,
-						'fuelused'=>$_GET['fuel'],
-						'source'=>'fsacars',
-						'load'=>$load,
+		$data = array('pilotid' => $pilotid,
+						'code' => $code,
+						'flightnum' => $flightnum,
+						'depicao' => $_GET['origin'],
+						'arricao' => $_GET['dest'],
+						'aircraft' => $ac->id,
+						'flighttime' => $flighttime,
+						'landingrate' => $landingrate,
+						'submitdate' => 'NOW()',
+						'comment' => $comment,
+						'fuelused' => $_GET['fuel'],
+						'source' => 'fsacars',
+						'load' => $load,
+						'rawdata' => $log,
 						'log'=> $_GET['log']);
 			
-		writedebug($data);
-		$ret = ACARSData::FilePIREP($pilotid, $data);		
-		if(!$res)
-			writedebug(DB::error());
+		$ret = ACARSData::FilePIREP($pilotid, $data);
 			
 		echo 'OK';
 		break;

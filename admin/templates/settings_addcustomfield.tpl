@@ -7,9 +7,17 @@
 	
 	<dt>Field Type</dt>
 	<dd>
-		<select name="fieldtype">
+		<select name="type">
 		<option value="text">Text</option>
+		<option value="text">Textarea</option>
+		<option value="dropdown">Dropdown</option>
 		</select>
+	</dd>
+	
+	<dt>Default value</dt>
+	<dd>
+		<input type="text" name="value" value="<?php echo $field->value; ?>" />
+		<p>For dropdowns, separate different options with commas</p>
 	</dd>
 	
 	<dt>Show in User Profile?</dt>

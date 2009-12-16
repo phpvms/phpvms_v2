@@ -59,6 +59,24 @@ class XML extends CodonModule
 		echo $xml->asXML();
 	}
 	
+	public function getairlines()
+	{
+		$xml = new SimpleXMLElement("<sitedata />");
+		
+		$airlines = OperationsData::GetAllAirlines();
+		
+		foreach($airlines as $a)
+		{
+			$airline_xml = $xml->addChild('airline');
+			$airline_xml->addChild('code', $a->code);
+			$airline_xml->addChild('name', $a->name);
+			$airline_xml->addChild('enabled', $a->enabled);
+		}
+		
+		header('Content-type: text/xml'); 		
+		echo $xml->asXML();
+	}
+	
 	#
 	# Get XML-ized output for the flight plan (dept/arr)
 	#

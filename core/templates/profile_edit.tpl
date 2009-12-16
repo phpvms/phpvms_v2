@@ -59,7 +59,43 @@
 		foreach($customfields as $field)
 		{
 			echo '<dt>'.$field->title.'</dt>
-				  <dd><input type="text" name="'.$field->fieldname.'" value="'.$field->value.'" /></dd>';
+				  <dd>';
+			
+			if($field->type == 'dropdown')
+			{
+				$field_values = SettingsData::GetField($field->fieldid);				
+				$values = explode(',', $field_values->value);
+				
+				
+				echo "<select name=\"{$field->fieldname}\">";
+			
+				if(is_array($values))
+				{						
+					foreach($values as $val)
+					{
+						$val = trim($val);
+						
+						if($val == $field->value)
+							$sel = " selected ";
+						else
+							$sel = '';
+						
+						echo "<option value=\"{$val}\" {$sel}>{$val}</option>";
+					}
+				}
+				
+				echo '</select>';
+			}
+			elseif($field->type == 'textarea')
+			{
+				echo '<textarea class="customfield_textarea"></textarea>';
+			}
+			else
+			{
+				echo '<input type="text" name="'.$field->fieldname.'" value="'.$field->value.'" />';
+			}
+			
+			echo '</dd>';
 		}
 	}
 	?>

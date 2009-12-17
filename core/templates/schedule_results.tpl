@@ -16,6 +16,23 @@ if(!$allroutes)
 <?php
 foreach($allroutes as $route)
 {
+	
+	/* Uncomment this code if you want only schedules which are from the last PIREP that
+		pilot filed */
+	/*if(Auth::LoggedIn())
+	{
+		$reports = PIREPData::getLastReports(Auth::$userinfo->pilotid, 1, PIREP_ACCEPTED);
+		
+		if(is_object($reports))
+		{
+			# IF the arrival airport doesn't match the departure airport
+			if($reports->arricao != $route->depicao)
+			{
+				continue;
+			}
+		}
+	}*/
+	
 	/*
 	Skip over a route if it's not for this day of week
 	Left this here, so it can be omitted if your VA

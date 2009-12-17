@@ -53,6 +53,11 @@ foreach($schedules as $sched)
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>">
 		<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit Schedule" /></a>
+		
+		<a href="<?php echo SITE_URL?>/admin/action.php/operations/schedules" action="deleteschedule" 
+			id="<?php echo $sched->id;?>" class="ajaxcall">
+			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" />
+		</a>
 	<?php
 	/*
 	  <a href="action.php?admin=<?php echo Vars::GET('admin'); ?>"

@@ -22,9 +22,9 @@ class StatsData extends CodonData
 	public static function GetStartDate()
 	{
 		$sql = 'SELECT `pirepid`, `submitdate`
-					FROM '.TABLE_PREFIX.'pireps
-					ORDER BY `submitdate` ASC
-					LIMIT 1';
+				FROM '.TABLE_PREFIX.'pireps
+				ORDER BY `submitdate` ASC
+				LIMIT 1';
 					
 		return DB::get_row($sql);
 	}
@@ -166,25 +166,42 @@ class StatsData extends CodonData
 	/**
 	 * Get the total number of flights flown
 	 */
-	public static function TotalFlights()
+	public static function TotalFlights($airline_code = '')
 	{
 		$sql = 'SELECT COUNT(*) AS `total`
-				FROM '.TABLE_PREFIX.'pireps
-				WHERE accepted='.PIREP_ACCEPTED;
+				FROM `'.TABLE_PREFIX.'pireps`
+				WHERE `accepted`='.PIREP_ACCEPTED;
+		
+		if($airline_code != '')
+		{
+			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+		}
 				
-		$res = DB::get_row($sql);
-		return $res->total;
+		$result = DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
+		
+		return $result->total;
 	}
 	
 	/**
 	 * Get the top routes
 	 */
 	 
-	public static function TopRoutes()
+	public static function TopRoutes($airline_code='')
 	{
 		$sql = 'SELECT * 
-				FROM '.TABLE_PREFIX.'schedules
-				ORDER BY timesflown DESC
+				FROM `'.TABLE_PREFIX.'schedules`';
+				
+		if($airline_code != '')
+		{
+			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+		}
+		
+		$sql ='	ORDER BY `timesflown` DESC
 				LIMIT 10';
 		
 		return DB::get_results($sql);
@@ -231,12 +248,24 @@ class StatsData extends CodonData
 	/**
 	 * Get the total number of pilots
 	 */
-	public static function PilotCount()
+	public static function PilotCount($airline_code='')
 	{
-		$sql = 'SELECT COUNT(*) AS total 
-				FROM '.TABLE_PREFIX.'pilots';
-		$res = DB::get_row($sql);
-		return $res->total;
+		$sql = 'SELECT COUNT(*) AS `total`
+				FROM '.TABLE_PREFIX.'pilots ';
+				
+		if($airline_code != '')
+		{
+			$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
+		}
+		
+		$result = DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
+			
+		return $result->total;
 	}
 	
 	/**
@@ -245,18 +274,16 @@ class StatsData extends CodonData
 	public static function AircraftUsage()
 	{
 		$sql = 'SELECT a.*, a.name AS aircraft,
-				   COUNT(p.pirepid) AS routesflown,
-				   SUM(p.distance) AS distance,
-				   SEC_TO_TIME(SUM(p.flighttime*60*60)) AS totaltime,
-				   AVG(p.distance) AS averagedistance,
-				   AVG(p.flighttime) as averagetime
-				  FROM   '.TABLE_PREFIX.'aircraft a
-					INNER JOIN '.TABLE_PREFIX.'pireps p ON (p.aircraft = a.id)
-				  GROUP BY a.registration';
+					COUNT(p.pirepid) AS routesflown,
+					SUM(p.distance) AS distance,
+					SEC_TO_TIME(SUM(p.flighttime*60*60)) AS totaltime,
+					AVG(p.distance) AS averagedistance,
+					AVG(p.flighttime) as averagetime
+				FROM   '.TABLE_PREFIX.'aircraft a
+				INNER JOIN '.TABLE_PREFIX.'pireps p ON (p.aircraft = a.id)
+				GROUP BY a.registration';
 		
 		return DB::get_results($sql);
-		DB::debug();
-		return $ret;
 	}
 	
 	/**
@@ -367,14 +394,24 @@ class StatsData extends CodonData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function TotalPaxCarried()
+	public static function TotalPaxCarried($airline_code = '')
 	{
-		$query = 'SELECT SUM(`load`) AS `total`
+		$sql = 'SELECT SUM(`load`) AS `total`
 					FROM '.TABLE_PREFIX.'pireps
 					WHERE `accepted`='.PIREP_ACCEPTED.'
 						AND `flighttype`=\'P\'';
+			
+		if($airline_code != '')
+		{
+			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+		}
 		
-		$result=DB::get_row($query);
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
 		
 		return $result->total;		
 	}
@@ -386,14 +423,23 @@ class StatsData extends CodonData
 	 * @return int Total number of flights
 	 *
 	 */
-	public static function TotalFlightsToday()
+	public static function TotalFlightsToday($airline_code='')
 	{
-		$query = 'SELECT COUNT(*) AS `total`
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE DATE(`submitdate`) = CURDATE()';
+		$sql = 'SELECT COUNT(*) AS `total`
+				FROM '.TABLE_PREFIX.'pireps
+				WHERE DATE(`submitdate`) = CURDATE()';
 					
-		$result=DB::get_row($query);
-		if(!$result) return 0;
+		if($airline_code != '')
+		{
+			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+		}
+		
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
 		
 		return $result->total;
 		
@@ -406,13 +452,23 @@ class StatsData extends CodonData
 	 * @return float In units specified in config
 	 *
 	 */
-	public static function TotalFuelBurned()
+	public static function TotalFuelBurned($airline_code='')
 	{
-		$query = 'SELECT SUM(`fuelused`) AS `total`
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE `accepted`='.PIREP_ACCEPTED;
+		$sql = 'SELECT SUM(`fuelused`) AS `total`
+				FROM '.TABLE_PREFIX.'pireps
+				WHERE `accepted`='.PIREP_ACCEPTED;
 		
-		$result=DB::get_row($query);
+		if($airline_code != '')
+		{
+			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+		}
+		
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
 		
 		return $result->total;
 	}
@@ -424,13 +480,23 @@ class StatsData extends CodonData
 	 * @return float Total distance flown in units in config
 	 *
 	 */
-	public static function TotalMilesFlown()
+	public static function TotalMilesFlown($airline_code='')
 	{
-		$query = 'SELECT SUM(`distance`) AS `total`
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE `accepted`='.PIREP_ACCEPTED;
+		$sql = 'SELECT SUM(`distance`) AS `total`
+				FROM '.TABLE_PREFIX.'pireps
+				WHERE `accepted`='.PIREP_ACCEPTED;
+					
+		if($airline_code != '')
+		{
+			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+		}
 		
-		$result=DB::get_row($query);
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
 		
 		return $result->total;
 	}
@@ -442,11 +508,23 @@ class StatsData extends CodonData
 	 * @return int Total
 	 *
 	 */
-	public static function TotalAircraftInFleet()
+	public static function TotalAircraftInFleet($airline_code='')
 	{
-		$query = 'SELECT COUNT(`id`) AS `total` 
-					FROM '.TABLE_PREFIX.'aircraft';
-		$result=DB::get_row($query);
+		$sql = 'SELECT COUNT(`id`) AS `total` 
+				FROM '.TABLE_PREFIX.'aircraft';
+					
+		if($airline_code != '')
+		{
+			$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
+		}
+		
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
+		
 		return $result->total;
 	}
 	
@@ -459,9 +537,16 @@ class StatsData extends CodonData
 	 */
 	public static function TotalNewsItems()
 	{
-		$query = 'SELECT COUNT(`id`) AS `total` 
-					FROM '.TABLE_PREFIX.'news';
-		$result=DB::get_row($query);
+		$sql = 'SELECT COUNT(`id`) AS `total` 
+				FROM '.TABLE_PREFIX.'news';
+		
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
+		
 		return $result->total;
 	}
 	
@@ -472,11 +557,23 @@ class StatsData extends CodonData
 	 * @return int Total number
 	 *
 	 */
-	public static function TotalSchedules()
+	public static function TotalSchedules($airline_code='')
 	{
-		$query = 'SELECT COUNT(`id`) AS `total` 
-					FROM '.TABLE_PREFIX.'schedules';
-		$result=DB::get_row($query);
+		$sql = 'SELECT COUNT(`id`) AS `total` 
+				FROM '.TABLE_PREFIX.'schedules';
+		
+		if($airline_code != '')
+		{
+			$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
+		}
+		
+		$result=DB::get_row($sql);
+		
+		if(!$result)
+		{
+			return 0;
+		}
+		
 		return $result->total;
 	}
 }

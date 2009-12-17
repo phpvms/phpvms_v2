@@ -30,14 +30,19 @@ class UserGroups extends CodonData
 	 */
 	 
 	
-	public static function GetAllUsers()
+	/**
+	 * Get all the users from a group
+	 *
+	 * @param mixed $groupid Group name or group ID
+	 * @return array Return the array with the pilot details
+	 *
+	 */
+	public static function getUsersInGroup($groupid)
 	{
-		return DB::get_results('SELECT id, displayname, username, groupid, allowremote, lastlogin
-										FROM '.TABLE_PREFIX.'users
-										ORDER BY username ASC');
+		return PilotGroups::getUsersInGroup($groupid);
 	}
 	
-	public static function GetGroupName($groupid)
+	public static function getGroupName($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		
@@ -48,7 +53,7 @@ class UserGroups extends CodonData
 	}
 		
 	
-	public static function GetAllGroups()
+	public static function getAllGroups()
 	{
 		$query = 'SELECT * FROM ' . TABLE_PREFIX .'groups
 					ORDER BY name ASC';
@@ -56,19 +61,18 @@ class UserGroups extends CodonData
 		return DB::get_results($query);
 	}
 	
-	public static function GetGroupID($groupname)
+	public static function getGroupID($groupname)
 	{
-		$query = 'SELECT id FROM ' . TABLE_PREFIX .'groups
+		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups
 					WHERE name=\''.$groupname.'\'';
 		
 		$res = DB::get_row($query);
 		
-		return $res->id;
+		return $res->groupid;
 	}
 	
 	
-	
-	public static function GetGroupInfo($groupid)
+	public static function getGroupInfo($groupid)
 	{
 		$groupid = DB::escape($groupid);
 		

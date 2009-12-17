@@ -36,7 +36,6 @@ class PIREPAdmin extends CodonModule
 	
 	protected function post_action()
 	{
-		
 		if(isset($this->post->action))
 		{
 			switch($this->post->action)
@@ -80,6 +79,8 @@ class PIREPAdmin extends CodonModule
 			$this->set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
 		}
 		
+		$this->set('pending', true);
+		$this->set('load', 'viewpending');
 		$this->render('pireps_list.tpl');
 	}
 	
@@ -87,6 +88,9 @@ class PIREPAdmin extends CodonModule
 	public function pilotpireps()
 	{
 		$this->post_action();
+		
+		$this->set('pending', false);
+		$this->set('load', 'pilotpireps');
 		
 		$this->set('pireps', PIREPData::GetAllReportsForPilot($this->get->pilotid));
 		$this->render('pireps_list.tpl');
@@ -104,7 +108,10 @@ class PIREPAdmin extends CodonModule
 		$this->set('title', Lang::gs('pireps.view.recent'));
 		$this->set('pireps', PIREPData::GetRecentReports());
 		$this->set('descrip', 'These pilot reports are from the past 48 hours');
-		
+	
+		$this->set('pending', false);
+		$this->set('load', 'viewrecent');
+			
 		$this->render('pireps_list.tpl');
 	}
 	
@@ -157,6 +164,9 @@ class PIREPAdmin extends CodonModule
 			$this->set('admin', 'viewall');
 			$this->set('start', $this->get->start+20);
 		}
+		
+		$this->set('pending', false);
+		$this->set('load', 'viewall');
 		
 		$this->set('title', 'PIREPs List');
 		$this->set('pireps', $allreports);

@@ -8,6 +8,21 @@
 </div>
 
 <?php
+foreach($allairlines as $airline)
+{
+?>
+
+<h3>Stats for <?php echo $airline->name?></h3>
+<div class="outlined">
+	<strong>Total Pilots: </strong><?php echo StatsData::PilotCount($airline->code); ?><br />
+	<strong>Total Flights: </strong><?php echo StatsData::TotalFlights($airline->code); ?><br />
+	<strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours($airline->code); ?><br />
+</div>
+
+<?php
+}
+
+
 if(is_array($acstats))
 {
 	?>

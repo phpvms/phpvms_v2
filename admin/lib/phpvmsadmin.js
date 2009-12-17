@@ -178,6 +178,15 @@ $(document).ready(function() {
     $('.ajaxcall').live('dblclick', function() {
         $("#bodytext").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id") });
     });
+    
+    // Call for PIREPs
+    $('.pirepaction').live('click', function() {
+		return false; // cancel the single click event
+	});
+
+	$('.pirepaction').live('dblclick', function() {
+		$("#pireplist").load($(this).attr("href"), { action: $(this).attr("action"), id: $(this).attr("id") });
+	});
 
     $('.awardajaxcall').live('click', function() {
         return false; // cancel the single click event

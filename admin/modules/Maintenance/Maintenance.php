@@ -80,17 +80,19 @@ class Maintenance extends CodonModule
 			
 			# Find the schedule, and the distance supplied by the schedule:
 			
-			$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum);
+			/*$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum);
 			
 			if(!$sched)
 			{
-				$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
-															 $pirep->arrlat, $pirep->arrlong);	
+				
 			}
 			else
 			{
 				$distance = $sched->distance;
-			}
+			}*/
+			
+			$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
+				$pirep->arrlat, $pirep->arrlong);	
 			
 			$distance = sprintf("%.2f", $distance);
 											

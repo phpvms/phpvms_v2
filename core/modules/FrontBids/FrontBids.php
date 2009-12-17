@@ -24,10 +24,10 @@ class FrontBids extends CodonModule
 		$this->RecentFrontPage();
 	}
 	
-    public function RecentFrontPage()
+    public function RecentFrontPage($total=5)
 	{
 
-		$this->set('lastbids', SchedulesData::GetLatestBids());
+		$this->set('lastbids', SchedulesData::GetLatestBids($total));
 		$this->render('frontpage_recentbids.tpl');
 	}
 }

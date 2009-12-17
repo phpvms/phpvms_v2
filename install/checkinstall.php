@@ -123,7 +123,7 @@ while(!feof($fp))
 	$total ++;
 	$file = str_replace('./', '../', $file);
 	
-	if($file == '../core/local.config.php')
+	if($file == '../core/local.config.php' || substr_count($file, 'unittest') > 0)
 	{
 		continue;
 	}

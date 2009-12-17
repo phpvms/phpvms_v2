@@ -59,8 +59,8 @@ class PilotData extends CodonData
 	public static function getPilotAvatar($pilotid)
 	{
 		if(is_numeric($pilotid)){
-			$pilot = self::GetPilotData($pilotid);
-			$pilotid = self::GetPilotCode($pilot->code, $pilot->pilotid);
+			$pilot = self::getPilotData($pilotid);
+			$pilotid = self::getPilotCode($pilot->code, $pilot->pilotid);
 		}
 		
 		$link = AVATAR_PATH.'/'.$pilotid.'.png';
@@ -201,7 +201,7 @@ class PilotData extends CodonData
 	public static function changePilotRank($pilotid, $rankid)
 	{
 		
-		$rank = RanksData::GetRankInfo($rankid);
+		$rank = RanksData::getRankInfo($rankid);
 		
 		if(!$rank)
 		{
@@ -352,7 +352,7 @@ class PilotData extends CodonData
 		imagecopyresized($avatarimg, $img, 0,0,0,0,$new_width, $new_height, $width, $height);
 		
 		# Output the file, to /lib/avatar/pilotcode.png
-		$pilotCode = self::GetPilotCode($code, $pilotid);
+		$pilotCode = self::getPilotCode($code, $pilotid);
 		imagepng($avatarimg, SITE_ROOT.AVATAR_PATH.'/'.$pilotCode.'.png');
 		imagedestroy($img);
 	}
@@ -485,7 +485,7 @@ class PilotData extends CodonData
 	{	
 		
 		# Update the flighttime
-		$pilotdata = PilotData::GetPilotData($pilotid);		
+		$pilotdata = PilotData::getPilotData($pilotid);		
 		$flighttime = Util::AddTime($pilotdata->totalhours, $flighttime);
 		
 		if($numflights == '')
@@ -506,7 +506,7 @@ class PilotData extends CodonData
 	
 	public static function updatePilotStats($pilotid)
 	{
-		$pireps = PIREPData::GetAllReportsForPilot($pilotid);
+		$pireps = PIREPData::getAllReportsForPilot($pilotid);
 		
 		$totalpireps = 0;
 		$totalhours = 0;
@@ -752,7 +752,7 @@ class PilotData extends CodonData
 	 */
 	public static function SaveFields($pilotid, $list)
 	{
-		$allfields = RegistrationData::GetCustomFields(true);
+		$allfields = RegistrationData::getCustomFields(true);
 		
 		if(!$allfields)
 			return true;
@@ -842,7 +842,7 @@ class PilotData extends CodonData
 	 * @return array Groups the pilot is in (groupid and groupname)
 	 *
 	 */
-	public static function GetPilotGroups($pilotid)
+	public static function getPilotGroups($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
 		
@@ -873,8 +873,8 @@ class PilotData extends CodonData
 	 */	 
 	public function GenerateSignature($pilotid)
 	{
-		$pilot = self::GetPilotData($pilotid);
-		$pilotcode = self::GetPilotCode($pilot->code, $pilot->pilotid);
+		$pilot = self::getPilotData($pilotid);
+		$pilotcode = self::getPilotCode($pilot->code, $pilot->pilotid);
 		
 		if(Config::Get('TRANSFER_HOURS_IN_RANKS') === true)
 		{

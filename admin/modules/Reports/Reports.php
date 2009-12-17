@@ -33,6 +33,9 @@ class Reports extends CodonModule
 	{
 		$this->set('acstats', StatsData::AircraftUsage());
 		$this->set('toproutes', StatsData::TopRoutes());
+		
+		$this->set('allairlines', OperationsData::GetAllAirlines());
+		
 		$this->render('reports_main.tpl');
 	}
 	

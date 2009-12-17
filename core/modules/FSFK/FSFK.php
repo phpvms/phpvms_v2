@@ -325,8 +325,6 @@ class FSFK extends CodonModule
 			'client'=>'fsfk',
 		);
 		
-		
-		/*$this->log(print_r($fields, true), 'acars');*/
 		ACARSData::UpdateFlightData($fields);
 		$id = DB::$insert_id;
         

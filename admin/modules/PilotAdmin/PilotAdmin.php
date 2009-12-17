@@ -285,6 +285,10 @@ class PilotAdmin extends CodonModule
 		
 		$this->SetGroupsData($this->get->pilotid);
 		
+		// For the PIREP list
+		$this->set('pending', false);
+		$this->set('load', 'pilotpireps');
+		
 		$this->render('pilots_detailtabs.tpl');
 	}
 	

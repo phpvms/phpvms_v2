@@ -1,3 +1,4 @@
+<div id="pireplist">
 <?php
 if($title!='')
 	echo "<h3>$title</h3>";
@@ -25,155 +26,30 @@ if(isset($paginate))
 <table id="tabledlist" class="tablesorter" style="height: 100%">
 <thead>
 <tr>
-	<th>PIREP Information</th>
-	<th>Details</th>
-	<th>Options</th>
+	<th colspan="4">Details</th>
 </tr>
 </thead>
 <tbody>
 <?php
-foreach($pireps as $report)
-{
-	$error = false; #IF there are any errors on the report, then don't allow accept
-	
-	if($report->accepted == PIREP_ACCEPTED)
-		$class = 'success';
+foreach($pireps as $pirep)
+{	
+	/* Two different templates, since we want to show the pending pireps
+		differently than the ones which are processed. Two separate templates
+		are much easier than one littered with if/else's all over the place
+	 */
+	 
+	//Template::Set('pirep', $pirep);
+	if($pirep->accepted == PIREP_PENDING)
+	{
+		include dirname(__FILE__).'/pirep_pending.tpl';
+	}
 	else
-		$class = 'error';
-?>
-
-<tr class="<?php echo $class?> pirep_list">
-	<td align="left" valign="top" width="25%" nowrap>
-		<img style="margin-right: 5px; margin-top: 5px;" height="50px" width="50px" src="<?php echo PilotData::GetPilotAvatar($report->pilotid);?>" align="left" />
-		<strong><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $report->pilotid;?>"><?php echo $report->firstname .' ' . $report->lastname?></a></strong><br />
-		<strong>Flight: <?php echo $report->code . $report->flightnum; ?></strong> - <br />
-		Dep/Arr: <?php echo $report->depicao; ?>/<?php echo $report->arricao; ?><br />
-		Flight Time: <?php echo $report->flighttime; ?><br />
-		<strong>Current Status:	</strong>
-		<?php 
-		
-		if($report->accepted == PIREP_ACCEPTED)
-			echo 'Accepted';
-		elseif($report->accepted == PIREP_REJECTED)
-			echo 'Rejected';
-		elseif($report->accepted == PIREP_PENDING)
-			echo 'Approval Pending';
-		elseif($report->accepted == PIREP_INPROGRESS)
-			echo 'In Progress';
-		
-		?><br />
-		<?php
-		if($report->log != '')
-		{
-		?>
-			<a id="dialog" class="jqModal"
-				href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $report->pirepid;?>">View Log Details</a>
-		<?php
-		}
-		?>
-	</td>
-	<td align="left" valign="top" >
-		<span style="float: right">
-		<a id="dialog" class="jqModal"
-			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/viewcomments.png" alt="View Comments" /></a> <span style="font-size: 12px; margin-top: -3px">(<?php echo PIREPData::getCommentCount($report->pirepid); ?>)</span>
-		
-		<a id="dialog" class="jqModal"
-			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/addcomment?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/addcomment.png" alt="Add Comment" /></a>
-		</span>
-		
-		<strong>Submit Date: </strong><?php echo date(DATE_FORMAT, $report->submitdate); ?><br />
-		
-		<strong>Aircraft: </strong>
-		<?php 
-			if($report->aircraft == '')
-			{
-				$error = true;
-				echo '<span style="color: red">No aircraft! View log for more details</span>';
-			}
-			else
-				echo $report->aircraft. " ($report->registration)";
-		?><br />
-		
-		
-		<strong>Load Count: </strong>
-		<?php
-			echo ($report->load!='')?$report->load:'-';
-		?><br />
-		
-		<strong>Fuel Used: </strong>
-		<?php
-			echo ($report->fuelused!='')?$report->fuelused . Config::Get('LIQUID_UNIT_NAMES', Config::Get('LiquidUnit')):'-';
-		?><br />
-		
-		<strong>Landing Rate: </strong>
-		<?php
-		echo $report->landingrate;
-		?><br />
-		<strong>Client: </strong>
-		<?php
-		echo $report->source;
-		?><br />
-		
-		
-	<?php
-		// Get the additional fields
-		//	I know, badish place to put it, but it's pulled per-PIREP
-		$fields = PIREPData::GetFieldData($report->pirepid);
-		
-		if(!$fields)
-		{
-			echo 'No additional data found';
-		}
-		else
-		{
-			foreach ($fields as $field)
-			{
-		?>		<strong><?php echo $field->title ?>:</strong> <?php echo $field->value ?><br />
-		<?php
-			}
-		}
-		?>
-		
-		<?php
-		# If there was an error, don't allow the PIREP to go through
-		if($error == true)
-		{
-			echo '<span style="color: red">There were errors with this PIREP. Correct them to be able to accept it</span>';
-		}		
-	?>
-
-	</td>
-	<td align="left" width="1%" nowrap>
+	{
+		include dirname(__FILE__).'/pirep_processed.tpl';
+	}
 	
-	<?php
-		# If there was an error, don't allow the PIREP to go through
-		if($error == false)
-		{
-	?>
-		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="approvepirep"
-			id="<?php echo $report->pirepid;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/accept.png" alt="Accept" /></a>
-		<br />
-	<?php
-		}
-	?>
-		<a id="dialog" class="jqModal"
-			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/rejectpirep?pirepid=<?php echo $report->pirepid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.png" alt="Reject" /></a>
-		<br />
-		<a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/editpirep?pirepid=<?php echo $report->pirepid;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
-		<br />	
-		<a href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/<?php echo Vars::GET('page'); ?>" action="deletepirep"
-			id="<?php echo $report->pirepid;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
-			
-	</td>
-</tr>
-<?php
-}
+	
+} /* Close the PIREPs loop */
 ?>
 </tbody>
 </table>
@@ -188,5 +64,6 @@ if(isset($paginate))
 	<br />
 </div>
 <?php
-}
+} /* Close the paginate loop */
 ?>
+</div>

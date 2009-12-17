@@ -21,7 +21,7 @@ class PilotGroups extends CodonData
 	/**
 	 * Get all of the groups
 	 */
-	public static function GetAllGroups()
+	public static function getAllGroups()
 	{
 		$query = 'SELECT * 
 					FROM ' . TABLE_PREFIX .'groups
@@ -63,7 +63,7 @@ class PilotGroups extends CodonData
 		return true;
 	}
 	
-	public static function GetGroup($groupid)
+	public static function getGroup($groupid)
 	{
 		$groupid = intval($groupid);
 		
@@ -77,7 +77,7 @@ class PilotGroups extends CodonData
 	/**
 	 * Get a group ID, given the name
 	 */
-	public static function GetGroupID($groupname)
+	public static function getGroupID($groupname)
 	{
 		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups
 					WHERE name=\''.$groupname.'\'';
@@ -97,7 +97,7 @@ class PilotGroups extends CodonData
 		// If group name is given, get the group ID
 		if(!is_numeric($groupidorname))
 		{
-			$groupidorname = self::GetGroupID($groupidorname);
+			$groupidorname = self::getGroupID($groupidorname);
 		}
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (pilotid, groupid)
@@ -195,7 +195,7 @@ class PilotGroups extends CodonData
 		
 		if(!is_numeric($groupid))
 		{
-			$groupid = self::GetGroupID($groupid);
+			$groupid = self::getGroupID($groupid);
 		}
 		
 		$query = 'SELECT g.groupid
@@ -208,10 +208,26 @@ class PilotGroups extends CodonData
 			return true;
 	}
 	
+	public static function getUsersInGroup($groupid)
+	{
+		if(!is_int($groupid))
+		{
+			$groupid = self::getGroupID($groupid);
+		}
+		
+		$sql = 'SELECT p.*
+				FROM ' . TABLE_PREFIX . 'groupmembers g
+				INNER JOIN '.TABLE_PREFIX.'pilots p ON p.pilotid=g.pilotid
+				WHERE g.groupid='.$groupid;
+		
+		$ret = DB::get_results($sql);
+		return $ret;
+	}	
+	
 	/**
 	 * The a users groups (pass their database ID)
 	 */
-	public static function GetUserGroups($pilotid)
+	public static function getUserGroups($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
 		
@@ -234,7 +250,7 @@ class PilotGroups extends CodonData
 		
 		if(!is_numeric($groupid))
 		{
-			$groupid = self::GetGroupID($groupid);
+			$groupid = self::getGroupID($groupid);
 		}
 		
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'groupmembers

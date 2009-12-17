@@ -210,12 +210,6 @@ class ACARSData extends CodonData
 			$flight_id = DB::$insert_id;
 		}
 		
-		if(DB::errno() != 0)
-		{
-			writedebug($query);
-			writedebug(DB::error());
-		}
-		
 		// Add this cuz we need it
 		$data['unique_id'] = $flight_id;
 			

@@ -26,8 +26,38 @@ foreach($images as $type => $image)
 		the base URL, default is /lib/fsfk). Then we pass it to the
 		fileurl() function which will return the full URL to it
 	*/
+	
+	
+	/* Here, just did some titles which will show up above the image */
+	$type = strtolower($type);
+	if($type == 'flightmap')
+	{
+		$title = 'Route Map';
+	}
+	elseif($type == 'flightmapweather')
+	{
+		$title = 'Route Weather';
+	}
+	elseif($type == 'flightmaptaxiout')
+	{
+		$title = 'Taxi Out Path';
+	}
+	elseif($type == 'flightmaptaxiin')
+	{
+		$title = 'Taxi In Path';
+	}
+	elseif($type == 'flightmapverticalprofile')
+	{
+		$title = ' Vertical Profile';
+	}
+	elseif($type == 'flightmaplandingprofile')
+	{
+		$title = 'Landing Profile';
+	}
+	
 		
 ?>
+	<strong><?php echo $title ?></strong><br />
 	<img src="<?php echo fileurl(Config::Get('FSFK_IMAGE_PATH')).'/'.$image; ?>" alt="<?php echo $type;?>" />
 	<br />
 <?php

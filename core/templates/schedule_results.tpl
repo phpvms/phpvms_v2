@@ -21,7 +21,12 @@ foreach($allroutes as $route)
 		pilot filed */
 	/*if(Auth::LoggedIn())
 	{
-		$reports = PIREPData::getLastReports(Auth::$userinfo->pilotid, 1, PIREP_ACCEPTED);
+		$search = array(
+			'p.pilotid' => Auth::$userinfo->pilotid,
+			'p.accepted' => PIREP_ACCEPTED
+		);
+		
+		$reports = PIREPData::findPIREPS($search, 1); // return only one
 		
 		if(is_object($reports))
 		{

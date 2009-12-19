@@ -143,17 +143,16 @@ class Profile extends CodonModule
 			return;
 		}
 		
-		$data = array(			
-			'pilotid' => Auth::$pilotid,
+		$params = array(
 			'code' => Auth::$userinfo->code,
 			'email' => $this->post->email,
 			'location' => $this->post->location,
 			'hub' => Auth::$userinfo->hub,
 			'bgimage' => $this->post->bgimage,
 			'retired' => false
-			);
+		);
 			
-		PilotData::SaveProfile($data);
+		PilotData::updateProfile(Auth::$pilotid, $params);
 		PilotData::SaveFields(Auth::$pilotid, $_POST);
 		
 		PilotData::SaveAvatar($userinfo->code, $userinfo->pilotid, $_FILES);

@@ -17,7 +17,14 @@ if(!$pireps)
 	<th>Flight Time</th>
 	<th>Submitted</th>
 	<th>Status</th>
-	<th>Options</th>
+	<?php
+	// Only show this column if they're logged in, and the pilot viewing is the
+	//	owner/submitter of the PIREPs
+	if(Auth::LoggedIn() && Auth::$userinfo->pilotid == $userinfo->pilotid)
+	{
+		echo '<th>Options</th>';
+	}
+	?>
 </tr>
 </thead>
 <tbody>
@@ -48,10 +55,19 @@ foreach($pireps as $report)
 		
 		?>
 	</td>
+	<?php
+	// Only show this column if they're logged in, and the pilot viewing is the
+	//	owner/submitter of the PIREPs
+	if(Auth::LoggedIn() && Auth::$userinfo->pilotid == $userinfo->pilotid)
+	{
+		?>
 	<td align="center">
 		<a href="<?php echo url('/pireps/addcomment?id='.$report->pirepid);?>">Add Comment</a><br />
 		<a href="<?php echo url('/pireps/editpirep?id='.$report->pirepid);?>">Edit PIREP</a>
 	</td>
+	<?php
+	}
+	?>
 </tr>
 <?php
 }

@@ -62,6 +62,12 @@ Config::Set('RANKS_AUTOCALCULATE', true);
 # For how many hours a pilot can edit their submitted PIREP (custom fields only)
 Config::Set('PIREP_CUSTOM_FIELD_EDIT', '48');
 
+/* What to order schedules by. Use s.[column_name] [ASC/DESC],
+	with the column name being from the schedules table */
+Config::Set('SCHEDULES_ORDER_BY', 's.flightnum ASC');
+/* For PIREPS_ORDER_BY use p.[column_name] [ASC/DESC] */
+Config::Set('PIREPS_ORDER_BY', 'p.submitdate DESC');
+
 # If someone places a bid, whether to disable that or not
 Config::Set('DISABLE_SCHED_ON_BID', true);
 Config::Set('DISABLE_BIDS_ON_BID', false);
@@ -138,7 +144,6 @@ Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
 Config::Set('FSFK_FTP_USER', '');
-Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
 Config::Set('FSFK_IMAGE_PATH', '/lib/fsfk'); // web path from SITE_ROOT

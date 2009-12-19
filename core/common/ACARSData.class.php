@@ -18,15 +18,8 @@
  
 class ACARSData extends CodonData
 {
-	
 	public static $lasterror;
 	public static $pirepid;
-	public static $fields = array('pilotid', 'flightnum', 'pilotname', 
-								   'aircraft', 'lat', 'lng', 'heading', 
-								   'alt', 'gs', 'depicao', 'arricao', 
-								   'deptime', 'arrtime', 'distremain', 'timeremaining',
-								   'phasedetail', 'online', 'messagelog', 'client');
-	
 	
 	/**
 	 * This updates the ACARS live data for a pilot
@@ -76,8 +69,6 @@ class ACARSData extends CodonData
 		
 		// Add pilot info		
 		$pilotinfo = PilotData::GetPilotData($data['pilotid']);
-		$data['firstname'] = $pilotinfo->firstname;
-		$data['lastname'] = $pilotinfo->lastname;
 		$data['pilotname'] = $pilotinfo->firstname . ' ' . $pilotinfo->lastname;
 		
 		// Get the airports data
@@ -120,89 +111,87 @@ class ACARSData extends CodonData
 								WHERE `pilotid`=\''.$data['pilotid'].'\'');
 			
 		$flight_id = '';
+		
 		if($exist)
 		{ // update
 			
+			$upd = array();
 			$flight_id = $exist->id;
-			$upd = '';
 			
-			foreach(self::$fields as $field)
-			{
-				// update only the included fields
-				if(!isset($data[$field]))
-				{
-					continue;
-				}
+			/* Unset the pilot id so it's not updating itself
+			 */
+			$pilotid = $data['pilotid'];
+			unset($data['pilotid']);
 				
-				$data[$field] = DB::escape($data[$field]);
+			//foreach(self::$fields as $field)
+			foreach($data as $field => $value)
+			{
+				$value = DB::escape(trim($value));
+				
 				// Append the message log
 				if($field == 'messagelog')
 				{
-					$upd.="`messagelog`=CONCAT(`messagelog`, '{$data[$field]}'), ";
+					$upd[] ="`messagelog`=CONCAT(`messagelog`, '{$value}')";
 				}
 				// Update times
 				elseif($field == 'deptime' || $field == 'arrtime')
 				{
 					/* If undefined, set a default time to now (penalty for malformed data?)
 						Won't be quite accurate.... */
-					if($data[$field] == '') $data[$field] = time();
+					if($value == '') $value = time();
 					
-					$upd.="`{$field}`=FROM_UNIXTIME(".$data[$field]."), ";
+					$upd[] = "`{$field}`=FROM_UNIXTIME({$value})";
 				}
 				else 
 				{					
-					$upd.="`{$field}`='".$data[$field]."', ";
+					$upd[] = "`{$field}`='{$value}'";
 				}
 			}
 			
 			// Update Airports	
-			$upd .= " `depapt`='{$dep_apt->name}', `arrapt`='{$arr_apt->name}', lastupdate=NOW()";
-
+			$upd[] = "`depapt`='{$dep_apt->name}'";
+			$upd[] = "`arrapt`='{$arr_apt->name}'";
+			$upd[] = "`lastupdate`=NOW()";
+			
+			$upd = implode(',', $upd);
 			$query = 'UPDATE '.TABLE_PREFIX."acarsdata 
 						SET {$upd} 
-						WHERE `pilotid`='{$data['pilotid']}'";
+						WHERE `pilotid`='{$pilotid}'";
 						
 			DB::query($query);
 		}
 		else
 		{
-			// insert
-			
 			// form array with $ins[column]=value and then
 			//	give it to quick_insert to finish
 			$ins = array();
-			$fields='';
-			$values='';
-			foreach(self::$fields as $field)
+			$vals = array();
+			
+			foreach($data as $field => $value)
 			{
-				// field=\'value\',
-				// add only fields which are present
-				if(!isset($data[$field]))
-				{
-					continue;
-				}
-				
-				$fields.="`{$field}`, ";
-				
+				$ins[] = "`{$field}`";
 				if($field == 'deptime' || $field == 'arrtime')
 				{
-					if($data[$field] == '') $data[$field] = time();
-					$values .= "FROM_UNIXTIME(".$data[$field]."), ";
+					if($value == '') $value = time();
+					$vals[] = "FROM_UNIXTIME({$value})";
 				}
 				else
 				{
-					$ins[$field] = $data[$field];
-					$values .= "'".$data[$field]."', ";
+					$value = DB::escape($value);
+					$vals[] = "'{$value}'";
 				}
 			}
 			
 			// Manually add the last set
-			$fields .=' `lastupdate`, `depapt`, `arrapt` ';
-			$values .= " NOW(), '{$dep_apt->name}', '{$arr_apt->name}'";
+			$ins[] = '`lastupdate`'; $vals[] = 'NOW()';
+			$ins[] = '`depapt`'; $vals[] = "'{$dep_apt->name}'";
+			$ins[] = '`arrapt`'; $vals[] = "'{$arr_apt->name}'";
 			
-			$query = 'INSERT INTO '.TABLE_PREFIX.'acarsdata (
-							'.$fields.') 
-						VALUES ('.$values.')';
+			$ins = implode(',', $ins);
+			$vals = implode(',', $vals);
+			
+			$query = 'INSERT INTO '.TABLE_PREFIX."acarsdata ({$ins}) 
+						VALUES ({$vals})";
 		
 			DB::query($query);
 			

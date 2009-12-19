@@ -249,21 +249,27 @@ class Operations extends CodonModule
 			$this->set('title', 'Filtered Schedules');
 			
 			if($this->get->type == 'flightnum')
-				$schedules = SchedulesData::GetSchedulesWithFlightNum($this->get->query, false);
-				
+			{
+				$params = array('s.flightnum' => $this->get->query);
+			}
 			elseif($this->get->type == 'code')
-				$schedules = SchedulesData::GetSchedulesWithCode($this->get->query, false);
-			
+			{
+				$params = array('s.code' => $this->get->query);
+			}
 			elseif($this->get->type == 'aircraft')
-				$schedules = SchedulesData::GetSchedulesByEquip($this->get->query, false);
-				
+			{
+				$params = array('a.name' => $this->get->query);
+			}
 			elseif($this->get->type == 'depapt')
-				$schedules = SchedulesData::GetSchedulesWithDeparture($this->get->query, false);
-				
+			{
+				$params = array('s.depicao' => $this->get->query);
+			}
 			elseif($this->get->type == 'arrapt')
-				$schedules = SchedulesData::GetSchedulesWithArrival($this->get->query, false);
+			{
+				$params = array('s.arricao' => $this->get->query);
+			}
 			
-			$this->set('schedules', $schedules);
+			$this->set('schedules', SchedulesData::findSchedules($params));
 			$this->render('ops_schedules.tpl');
 			return;
 		}
@@ -293,7 +299,8 @@ class Operations extends CodonModule
 		
 		if($type == 'schedules' || $type == 'activeschedules')
 		{
-			$schedules = SchedulesData::GetSchedules($num_per_page, false, $start);
+			$params = array();
+			$schedules = SchedulesData::findSchedules($params, $num_per_page, $start);
 			
 			$this->set('title', 'Viewing Active Schedules');
 			$this->set('schedules', $schedules);
@@ -308,7 +315,7 @@ class Operations extends CodonModule
 		else
 		{
 			$this->set('title', 'Viewing Inactive Schedules');
-			$this->set('schedules', SchedulesData::GetInactiveSchedules(1, $start));
+			$this->set('schedules', SchedulesData::findSchedules(array('s.enabled'=>0)));
 		}
 		
 		$this->render('ops_schedules.tpl');

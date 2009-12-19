@@ -50,7 +50,7 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$this->ShowSchedules();
+		$this->showSchedules();
 	}
 	
 	public function detail($routeid='')
@@ -136,7 +136,6 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		
 		// See if this is a valid route
 		$route = SchedulesData::GetSchedule($routeid);
 		if(!$route)
@@ -186,7 +185,7 @@ class Schedules extends CodonModule
 		SchedulesData::RemoveBid($this->post->id);
 	}
 
-	public function ShowSchedules()
+	public function showSchedules()
 	{
 		$depapts = OperationsData::GetAllAirports();
 		$equip = OperationsData::GetAllAircraftSearchList(true);
@@ -202,34 +201,37 @@ class Schedules extends CodonModule
 		$this->render('schedule_list.tpl');
 	}
 	
-	public function FindFlight()
+	public function findFlight()
 	{
 		
 		if($this->post->depicao != '')
 		{
-			$this->set('allroutes', SchedulesData::GetRoutesWithDeparture($this->post->depicao));
+			$params = array('s.depicao' => $this->post->depicao);
 		}
 		
 		if($this->post->arricao != '')
 		{
-			$this->set('allroutes', SchedulesData::GetRoutesWithArrival($this->post->arricao));
+			$params = array('s.arricao' => $this->post->arricao);
 		}
 		
 		if($this->post->equipment != '')
 		{
-			$this->set('allroutes', SchedulesData::GetSchedulesByEquip($this->post->equipment));
+			$params = array('a.name' => $this->post->equipment);
 		}
 		
 		if($this->post->distance != '')
 		{
 			if($this->post->type == 'greater')
-				$type = '>';
+				$value = '> ';
 			else
-				$type = '<';
-				
-			$this->set('allroutes', SchedulesData::GetSchedulesByDistance($this->post->distance, $type));
+				$value = '< ';
+			
+			$value .= $this->post->distance;
+			
+			$params = array('s.distance' => $value);
 		}
 		
+		$this->set('allroutes', SchedulesData::findSchedules($params));
 		$this->render('schedule_results.tpl');
 	}
 }

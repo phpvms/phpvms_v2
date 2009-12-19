@@ -114,9 +114,9 @@ class PilotData extends CodonData
 		if(!isset(self::$pilot_data[$pilotid]))
 		{	
 			$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
-						FROM ".TABLE_PREFIX."pilots p
-							LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank`
-						WHERE p.`pilotid`='$pilotid'";
+					FROM ".TABLE_PREFIX."pilots p
+						LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank`
+					WHERE p.`pilotid`='$pilotid'";
 			
 			$data = DB::get_row($sql);
 						
@@ -138,8 +138,8 @@ class PilotData extends CodonData
 	public static function getPilotByEmail($email)
 	{
 		$sql = 'SELECT * 
-					FROM '. TABLE_PREFIX.'pilots 
-					WHERE `email`=\''.$email.'\'';
+				FROM '. TABLE_PREFIX.'pilots 
+				WHERE `email`=\''.$email.'\'';
 				
 		return DB::get_row($sql);
 	}
@@ -180,27 +180,18 @@ class PilotData extends CodonData
 		if($pilotid=='' || $firstname == '' || $lastname == '')
 		{
 			return false;
-		}			
+		}
 		
-		# Clean up for DB
-		$firstname = DB::escape($firstname);
-		$lastname = DB::escape($lastname);
+		$params = array(
+			'firstname' => $firstname,
+			'lastname' => $lastname,
+		);
 		
-		$sql = 'UPDATE '.TABLE_PREFIX.'pilots 
-					SET `firstname`=\''.$firstname.'\', `lastname`=\''.$lastname.'\'
-					WHERE `pilotid`='.intval($pilotid);
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-		
-		return true;
+		return self::updateProfile($pilotid, $params);
 	}
 	
 	public static function changePilotRank($pilotid, $rankid)
 	{
-		
 		$rank = RanksData::getRankInfo($rankid);
 		
 		if(!$rank)
@@ -208,25 +199,35 @@ class PilotData extends CodonData
 			return false;
 		}
 		
-		$sql = 'UPDATE '.TABLE_PREFIX."pilots 
-					SET `rank`='{$rank->rank}'
-					WHERE `pilotid`=".intval($pilotid);
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-		
-		return true;
+		return self::updateProfile($pilotid, array('rank' => $rank->rank));
 	}
 	
 	/**
-	 * Save the email and location changes to the pilot's prfile
+	 * Save any changes to a pilot's profile, calls updateProfile()
+	 * 
 	 */
-	
-	public static function saveProfile($data)
+	public static function saveProfile($params)
 	{
-		/*$data = array(			
+		/* For any old functions which use saveProfile, convert to new
+			format to prevent breakage, while I update everything... */
+		$pilotid = $params['pilotid'];
+		unset($params['pilotid']);
+		
+		return self::updateProfile($pilotid, $params);
+	}
+	
+	
+	/**
+	 * Update a pilot, $params is an array of column_name=>value
+	 *
+	 * @param mixed $pilotid This is a description
+	 * @param mixed $params This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function updateProfile($pilotid, $params)
+	{
+		/*$params = array(			
 			'pilotid' => '',
 			'code' => '',
 			'email' => '',
@@ -235,27 +236,52 @@ class PilotData extends CodonData
 			'bgimage' => '',
 			'retired' => false,
 		);*/
+		
+		
+		if(!is_array($params))
+		{
+			return false;
+		}
+		
+		/* Cleanup any specific parameters */	
+		if(isset($params['location']))
+		{	
+			$params['location'] = strtoupper($data['location']);
+		}
+		
+		if(isset($params['retired']))
+		{
+			if(is_bool($params['retired']))
+			{
+				$params['retired'] = intval($params['retired']);
+			}
+		}
+		
+		if(isset($params['pilotid']))
+		{
+			unset($params['pilotid']);
+		}
+		
+		$sql = "UPDATE ".TABLE_PREFIX."pilots SET ";
+		
+		# Generate the list....
+		$update_params = array();
+		foreach($params as $column_name => $value)
+		{
+			$value = DB::escape($value);
 			
-		
-		unset(self::$pilot_data[$pilotid]);
-		
-		$location = strtoupper($data['location']);
-		
-		$sql = "UPDATE ".TABLE_PREFIX."pilots 
-					SET `code`='{$data['code']}', `email`='{$data['email']}', `location`='{$data['location']}',
-						`hub`='{$data['hub']}', `bgimage`='{$data['bgimage']}', ";
-		
-		/* Default to not retired */
-		if($data['retired'] == '')
-			$retired = false;
+			if($value != 'NOW()')
+			{
+				$value = "'{$value}'";
+			}
 			
-		if($data['retired'] === true)
-			$retired = 1;
-		else
-			$retired = 0;
+			$update_params[] = "`{$column_name}`={$value}";
+		}
 		
-		$sql.=" `retired`=$retired ";
-		$sql .= ' WHERE `pilotid`='.$data['pilotid'];
+		$sql .= implode(',', $update_params);
+		unset($update_params);
+		
+		$sql .= " WHERE `pilotid`={$pilotid}";
 		
 		$res = DB::query($sql);
 		
@@ -265,27 +291,14 @@ class PilotData extends CodonData
 		}
 			
 		# Generate a fresh signature
-		self::GenerateSignature($data['pilotid']);
+		self::GenerateSignature($pilotid);
 		
 		return true;
 	}
 	
 	public static function setPilotRetired($pilotid, $retired)
 	{
-		if($retired == true)
-		{
-			$retired = 1;
-		}
-		else
-		{
-			$retired = 0;
-		}
-		
-		$sql = "UPDATE ".TABLE_PREFIX."pilots
-				SET `retired`={$retired}
-				WHERE `pilotid`={$pilotid}";
-		
-		return DB::query($sql);
+		return self::updateProfile($pilotid, array('retired'=>$retired));
 	}
 	
 	
@@ -362,11 +375,7 @@ class PilotData extends CodonData
 	 */
 	public static function AcceptPilot($pilotid)
 	{
-		$sql = 'UPDATE ' . TABLE_PREFIX.'pilots 
-					SET `confirmed`='.PILOT_ACCEPTED.'
-					WHERE `pilotid`='.$pilotid;
-					
-		DB::query($sql);
+		return self::updateProfile($pilotid, array('confirmed'=>PILOT_ACCEPTED));
 	}
 	
 	/**
@@ -374,10 +383,6 @@ class PilotData extends CodonData
 	 */
    	public static function RejectPilot($pilotid)
 	{
-		/*$sql = 'UPDATE ' . TABLE_PREFIX.'pilots 
-					SET confirmed='.PILOT_REJECTED.'
-					WHERE pilotid='.$pilotid;*/
-		
 		return self::DeletePilot($pilotid);
 	}
 	
@@ -420,16 +425,7 @@ class PilotData extends CodonData
 	 */
 	public static function updateLogin($pilotid)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."pilots 
-					SET lastlogin=NOW() 
-					WHERE pilotid=$pilotid";
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
+		return self::updateProfile($pilotid, array('lastlogin'=>'NOW()'));
 	}
 	
 	public static function getPilotHours($pilotid)
@@ -462,13 +458,7 @@ class PilotData extends CodonData
 	public static function updateFlightHours($pilotid)
 	{				
 		$total = self::getPilotHours($pilotid);
-		
-		$sql = "UPDATE " .TABLE_PREFIX."pilots
-				SET `totalhours`=$total
-				WHERE `pilotid`=$pilotid";
-					
-		$res = DB::query($sql);
-		
+		$ret = self::updateProfile($pilotid, array('totalhours'=>$total));
 		return $total;
 	}
 		
@@ -491,17 +481,12 @@ class PilotData extends CodonData
 		if($numflights == '')
 			$numflights = 1;
 	
-		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours={$flighttime},
-						totalflights=totalflights+{$numflights}
-					WHERE pilotid={$pilotid}";
+		$params = array(
+			'totalhours'=>$flighttime,
+			'totalflights'=>($pilotdata->totalflights + $numflights),
+			);
 		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
+		return self::updateProfile($pilotid, $params);
 	}
 	
 	public static function updatePilotStats($pilotid)
@@ -525,19 +510,13 @@ class PilotData extends CodonData
 			}
 		}
 		
-		// Update it
-		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET totalhours={$totalhours},
-						totalflights={$totalpireps}
-					WHERE pilotid=$pilotid";
 		
-		$res = DB::query($sql);
+		$params = array(
+			'totalhours'=>$totalhours,
+			'totalflights'=>$totalpireps,
+			);
 		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-		
+		return self::updateProfile($pilotid, $params);
 	}
 	
 	
@@ -550,17 +529,7 @@ class PilotData extends CodonData
 	 */
 	public static function updateLastPIREPDate($pilotid)
 	{
-		
-		$sql = 'UPDATE '.TABLE_PREFIX.'pilots
-					SET `lastpirep`=NOW()
-					WHERE pilotid='.$pilotid;
-		
-		DB::query($sql);
-				
-		if(DB::errno() != 0)
-			return false;
-		
-		return true;
+		return self::updateProfile($pilotid, array('lastpirep'=>'NOW()'));
 	}
 	
 	/**
@@ -582,7 +551,7 @@ class PilotData extends CodonData
 	 * @return bool Success
 	 *
 	 */
-	public static function ReplaceFlightData($data)
+	public static function ReplaceFlightData($params)
 	{
 		
 		/*$data = array(
@@ -593,11 +562,23 @@ class PilotData extends CodonData
 			'transferhours' => '',
 		);*/
 		
-		$data['pilotid'] = intval($data['pilotid']);
+		$pilotid = $data['pilotid'];
+		unset($data['pilotid']);
+		
+		return self::updateProfile($pilotid, $params);
+		
+		/*$data['pilotid'] = intval($data['pilotid']);
 		$data['totalhours'] = floatval($data['totalhours']);
 		$data['totalflights'] = floatval($data['totalflights']);
 		$data['totalpay'] = floatval($data['totalpay']);
 		$data['transferhours'] = floatval($data['transferhours']);
+		
+		$params = array(
+			'totalhours'=>$flighttime,
+			'totalflights'=>($pilotdata->totalflights + $numflights),
+			);
+		
+		
 		
 		$sql = "UPDATE " .TABLE_PREFIX."pilots
 					SET `totalhours`={$data['totalhours']}, `totalflights`={$data['totalflights']}, 
@@ -615,7 +596,7 @@ class PilotData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 			
-		return true;
+		return true;*/
 	}
 	
 	public static function resetPilotPay($pilotid)
@@ -630,8 +611,8 @@ class PilotData extends CodonData
 		unset($payrate);*/
 
 		$total = 0;
-		DB::query("UPDATE `".TABLE_PREFIX."pilots` SET `totalpay`=0 WHERE `pilotid`={$pilotid}");
-
+		
+		self::updateProfile($pilotid, array('totalpay'=>0));
 		
 		$sql = "SELECT `pirepid`, `flighttime`, `pilotpay`
 				FROM ".TABLE_PREFIX."pireps
@@ -648,13 +629,9 @@ class PilotData extends CodonData
 		{
 			$payupdate = self::getPilotPay($row->flighttime, $row->pilotpay);
 			$total += $payupdate;
-			
-			$sql = 'UPDATE `'.TABLE_PREFIX.'pilots` 
-					SET `totalpay`=`totalpay`+'.$payupdate.'
-					WHERE `pilotid`='.$pilotid;
-			
-			DB::query($sql);
 		}
+		
+		self::updateProfile($pilotid, array('totalpay'=>$total));
 		
 		return $total;
 	}

@@ -99,7 +99,12 @@ class FSFK extends CodonModule
 			/* Add the map images in */
 			if($key == 'FLIGHTMAPS')
 			{
+				
 				$img = (string)$xml->FLIGHTMAPS->FlightMapJPG;
+				
+				Debug::log("FLIGHT MAPS - {$img}", 'acars');
+				Debug::log(print_r($xml->FLIGHTMAPS, true), 'acars');
+				
 				if($img)
 					$rawdata['FLIGHTMAPS']['FlightMap'] = $img;
 				
@@ -167,7 +172,7 @@ class FSFK extends CodonModule
 			'rawdata'=>$rawdata,
 		);
 				
-		$this->log(print_r($data, true), 'acars');
+		//$this->log(print_r($rawdata, true), 'acars');
 		
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 		
@@ -325,6 +330,7 @@ class FSFK extends CodonModule
 			'client'=>'fsfk',
 		);
 		
+		Debug::log(print_r($fields, true), 'acars');
 		ACARSData::UpdateFlightData($fields);
 		$id = DB::$insert_id;
         

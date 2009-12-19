@@ -26,6 +26,17 @@ class CentralData extends CodonData
 	public static $last_error;
 	public static $method;
 	
+	/* DO NOT try to circumvent these limits.
+		They're also tracked server-side. If you change them,
+		you will be penalized or banned. */
+	private static $limits = array(
+		'update_vainfo' => 6,
+		'update_schedules' => 12,
+		'process_airport_list' => 1,
+		'update_pilots' => 24,
+		'update_pireps' => 8
+	);
+	
 	private static function central_enabled()
 	{
 		/* Cover both, since format changed */
@@ -128,6 +139,14 @@ class CentralData extends CodonData
 	{
 		if(!self::central_enabled())
 			return false;
+	
+		/* Only allow and update every 6 hours
+			If you change this, it will be known on the API side */
+		$update = CronData::check_hoursdiff('update_vainfo', self::$limits['update_vainfo']);
+		if($update == true)
+		{
+			return false;
+		}
 
 		self::set_xml('update_vainfo');
 		self::$xml->addChild('pilotcount', StatsData::PilotCount());
@@ -152,6 +171,12 @@ class CentralData extends CodonData
 	{
 		if(!self::central_enabled())
 			return false;
+			
+		$update = CronData::check_hoursdiff('update_schedules', self::$limits['update_schedules']);
+		if($update == true)
+		{
+			return false;
+		}
 
 		self::set_xml('update_schedules');
 		
@@ -211,6 +236,12 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 		
+		$update = CronData::check_hoursdiff('update_pilots', self::$limits['update_pilots']);
+		if($update == true)
+		{
+			return false;
+		}
+			
 		self::set_xml('update_pilots');
 		
 		$allpilots = PilotData::GetAllPilots();
@@ -232,6 +263,12 @@ class CentralData extends CodonData
 	{
 		if(!self::central_enabled())
 			return false;
+		
+		$update = CronData::check_hoursdiff('update_pireps', self::$limits['update_pireps']);
+		if($update == true)
+		{
+			return false;
+		}
 		
 		self::set_xml('update_pireps');
 				

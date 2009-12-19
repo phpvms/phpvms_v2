@@ -77,9 +77,22 @@ if($pirep->log != '')
 {
 ?>
 <h3>Additional Log Information:</h3>
-<ul>
-	<li><a href="#" onclick="$('#log').toggle(); return false;">View Log</a></li>
-	<li id="log" style="display: none;">
+<p>
+	<?php
+	/* If it's FSFK, don't show the toggle. We want all the details and pretty
+		images showing up by default */
+	if($pirep->source != 'fsfk')
+	{
+		?>
+	<p><a href="#" onclick="$('#log').toggle(); return false;">View Log</a></p>
+	<p id="log" style="display: none;">
+	<?php
+	}
+	else
+	{
+		echo '<p>';
+	}
+	?>
 		<div>
 		<?php
 		# Simple, each line of the log ends with *
@@ -91,8 +104,8 @@ if($pirep->log != '')
 		}
 		?>
 		</div>
-	</li>
-</ul>
+	</p>
+</p>
 <?php
 }
 ?>

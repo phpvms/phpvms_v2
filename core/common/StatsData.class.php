@@ -335,7 +335,7 @@ class StatsData extends CodonData
 		//Select aircraft types
 		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count, SUM(p.flighttime) AS hours,
 				FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
-				WHERE p.aircraft = a.id p.AND pilotid='.intval($pilotid).'
+				WHERE p.aircraft = a.id AND p.pilotid='.intval($pilotid).'
 				GROUP BY a.name';
 		
 		return DB::get_results($sql);		

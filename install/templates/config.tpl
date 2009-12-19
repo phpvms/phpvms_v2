@@ -108,7 +108,6 @@ Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
 Config::Set('FSFK_FTP_USER', '');
 Config::Set('FSFK_FTP_PASS', '');
-Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
 Config::Set('FSFK_IMAGE_PATH', '/lib/fsfk'); // web path from SITE_ROOT
 

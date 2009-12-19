@@ -41,7 +41,8 @@ class Maintenance extends CodonModule
 		# Update all of the schedules
 		echo '<p><strong>Updating schedules...</strong></p>';
 		
-		$allschedules = SchedulesData::GetSchedulesNoDistance();
+		//$allschedules = SchedulesData::GetSchedulesNoDistance();
+		$allschedules = SchedulesData::findSchedules(array('s.distance' => 0));
 		
 		if(!$allschedules)
 		{

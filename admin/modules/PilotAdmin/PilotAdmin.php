@@ -100,9 +100,13 @@ class PilotAdmin extends CodonModule
 				break;
 			
 			case 'saveprofile':
-				
-				# Save their profile
-				PilotData::ChangeName($this->post->pilotid, $this->post->firstname, $this->post->lastname);
+
+				if($this->post->firstname == '' || $this->post->lastname == '')
+				{
+					$this->set('message', 'The first or lastname cannot be blank!');
+					$this->render('core_error.tpl');
+					return;
+				}
 				
 				if(intval($this->post->retired) == 1)
 				{
@@ -113,9 +117,14 @@ class PilotAdmin extends CodonModule
 					$retired = false;
 				}
 				
-				$data = array(			
-					'pilotid' => $this->post->pilotid,
+				
+				# Just do this as one call
+				//PilotData::ChangeName($this->post->pilotid, $this->post->firstname, $this->post->lastname);
+				
+				$params = array(
 					'code' => $this->post->code,
+					'firstname' => $this->post->firstname,
+					'lastname' => $this->post->lastname,
 					'email' => $this->post->email,
 					'location' => $this->post->location,
 					'hub' => $this->post->hub,
@@ -126,8 +135,8 @@ class PilotAdmin extends CodonModule
 					'transferhours' => $this->post->transferhours,
 				);
 					
-				PilotData::SaveProfile($data);
-				PilotData::ReplaceFlightData($data);
+				PilotData::updateProfile($this->post->pilotid, $params);
+				//PilotData::ReplaceFlightData($params); // Called with above now
 				
 				PilotData::SaveFields($this->post->pilotid, $_POST);
 				
@@ -140,8 +149,6 @@ class PilotAdmin extends CodonModule
 				{
 					RanksData::CalculateUpdatePilotRank($this->post->pilotid);
 				}
-				
-				PilotData::GenerateSignature($this->post->pilotid);
 				
 				StatsData::UpdateTotalHours();
 				

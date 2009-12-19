@@ -21,34 +21,70 @@ class PIREPData extends CodonData
 	public static $lasterror;
 	public $pirepid;
 	
+	
+	/**
+	 * A generic find function for schedules. As parameters, do:
+	 * 
+	 * $params = array( 's.depicao' => 'value',
+	 *					's.arricao' => array ('multiple', 'values'),
+	 *	);
+	 * 
+	 * Syntax is ('s.columnname' => 'value'), where value can be
+	 *	an array is multiple values, or with a SQL wildcard (%) 
+	 *  if that's what is desired.
+	 * 
+	 * Columns from the schedules table should be prefixed by 's.',
+	 * the aircraft table as 'a.'
+	 * 
+	 * You can also pass offsets ($start and $count) in order to 
+	 * facilitate pagination
+	 * 
+	 * @tutorial http://docs.phpvms.net/media/development/searching_and_retriving_schedules
+	 */
+	public static function findPIREPS($params,  $count = '', $start = '')
+	{
+		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
+					u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+					a.id AS aircraftid, a.name as aircraft, a.registration,
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong						
+				FROM '.TABLE_PREFIX.'pireps p
+					LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+					INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+					INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao 
+					INNER JOIN '.TABLE_PREFIX.'pilots u ON u.pilotid = p.pilotid ';
+		
+		/* Build the select "WHERE" based on the columns passed */		
+		$sql .= DB::build_where($params);
+				
+		if(Config::Get('PIREPS_ORDER_BY') != '')
+		{
+			$sql .= ' ORDER BY '.Config::Get('PIREPS_ORDER_BY');
+		}
+		
+		if(strlen($count) != 0)
+		{
+			$sql .= ' LIMIT '.$count;
+		}
+		
+		if(strlen($start) != 0)
+		{
+			$sql .= ' OFFSET '. $start;
+		}
+		
+		$ret = DB::get_results($sql);
+		return $ret;
+	}
+	
 	/**
 	 * Return all of the pilot reports. Can pass a start and
 	 * count for pagination. Returns 20 rows by default. If you
 	 * only want to return the latest n number of reports, use
 	 * getRecentReportsByCount()
 	 */
-	public static function getAllReports($start=0, $count=20)
+	public static function getAllReports($count=20, $start=0)
 	{
-		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
-						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong						
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
-					WHERE p.pilotid=u.pilotid
-					ORDER BY p.pirepid DESC';
-					
-		if($start !='' && $count != '')
-		{
-			$sql .= ' LIMIT '.$start.', '.$count;
-		}
-
-		return DB::get_results($sql);
-		
-		return $ret;
+		return self::findPIREPS('', $count, $start);
 	}
 		
 	/**
@@ -56,29 +92,23 @@ class PIREPData extends CodonData
 	 * constants:
 	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
 	 */
-	public static function getAllReportsByAccept($accept=0)
+	public static function getAllReportsByAccept($accepted=0)
 	{
-		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
-						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					WHERE p.pilotid=u.pilotid AND p.accepted='.$accept;
-
-		return DB::get_results($sql);
+		$params = array(
+			'p.accepted'=>$accept
+		);
+		
+		return self::findPIREPS($params);
 	}
 	
-	public static function getAllReportsFromHub($accept=0, $hub)
+	public static function getAllReportsFromHub($accepted=0, $hub)
 	{
-		$sql = "SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate,
-						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						a.name as aircraft, a.registration
-					FROM ".TABLE_PREFIX."pilots u, ".TABLE_PREFIX."pireps p
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					WHERE p.pilotid=u.pilotid AND p.accepted=$accept
-						AND u.hub='$hub'";
-
-		return DB::get_results($sql);
+		$params = array(
+			'p.accepted' => $accepted,
+			'u.hub' => $hub
+		);
+		
+		return self::findPIREPS($params);
 	}
 
 	/**
@@ -88,17 +118,8 @@ class PIREPData extends CodonData
 	public static function getRecentReportsByCount($count = 10)
 	{
 		if($count == '') $count = 10;
-
-		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate,
-					   u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					WHERE p.pilotid=u.pilotid
-					ORDER BY p.submitdate DESC
-					LIMIT '.intval($count);
-
-		return DB::get_results($sql);
+		
+		return self::findPIREPS('', $count);
 	}
 
 	/**
@@ -106,16 +127,12 @@ class PIREPData extends CodonData
 	 */
 	public static function getRecentReports($days=2)
 	{
-		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate,
-					   u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					   a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					WHERE p.pilotid=u.pilotid
-						AND DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate
-					ORDER BY p.submitdate DESC';
-
-		return DB::get_results($sql);
+		# No => assumes just to plop in the entire expression "raw"
+		$params = array(
+			'DATE_SUB(CURDATE(), INTERVAL '.$days.' DAY) <= p.submitdate'
+		);
+		
+		return self::findPIREPS($params);
 	}
 	
 	/**
@@ -127,15 +144,8 @@ class PIREPData extends CodonData
 			$status = 1;
 		else
 			$status = 0;
-		
-		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
-						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					WHERE p.pilotid=u.pilotid AND p.exported='.$status;
-
-		return DB::get_results($sql);
+			
+		return self::findPIREPS(array('p.exported'=>$status));
 	}
 
 	/**
@@ -191,20 +201,8 @@ class PIREPData extends CodonData
 		/*$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
 					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
 					FROM '.TABLE_PREFIX.'pireps';*/
-		$sql = 'SELECT p.pirepid, u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-					    p.code, p.flightnum, p.depicao, p.arricao, 
-						a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
-					   p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					WHERE p.pilotid=u.pilotid AND p.pilotid='.intval($pilotid).'
-					ORDER BY p.submitdate DESC';
-
-		return DB::get_results($sql);
+					
+		return self::findPIREPS(array('p.pilotid'=>$pilotid));
 	}
 	
 	/**
@@ -279,17 +277,7 @@ class PIREPData extends CodonData
 					$row->log.=$flightplan;
 					unset($flightplan);
 				}
-				
-				/* Process the flight images */
-					/* Process flight data */
-				if(isset($data['FLIGHTMAPS']))
-				{
-					Template::Set('images', $data['FLIGHTMAPS']);
-					$flightimages = Template::Get('fsfk_log_flightimages.tpl', true, true, true);
-					$row->log.=$flightimages;
-					unset($flightimages);
-				}
-				
+								
 				/* Process flight critique data */
 				if(isset($data['FLIGHTCRITIQUE']))
 				{
@@ -303,6 +291,15 @@ class PIREPData extends CodonData
 					
 					$row->log.=$critique;
 					unset($critique);
+				}
+				
+				/* Process the flight images, last */
+				if(isset($data['FLIGHTMAPS']))
+				{
+					Template::Set('images', $data['FLIGHTMAPS']);
+					$flightimages = Template::Get('fsfk_log_flightimages.tpl', true, true, true);
+					$row->log.=$flightimages;
+					unset($flightimages);
 				}
 			} /* End "if FSFK" */
 		} /* End "if $row" */

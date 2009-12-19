@@ -92,16 +92,28 @@ unset($file);
 
 
 
+/* Simple XML? */
+
+echo '<br />';
+echo '<strong>Checking for SimpleXML module...</strong><br />';
+
+if(function_exists('simplexml_load_string') == true)
+{
+	success('OK', 'SimpleXML module exists!');
+}
+else
+{
+	error('Fail', 'SimpleXML module doesn\'t exist or is not installed. Contact your host');
+}
 
 
 
+
+/* File hashes check */
 
 echo '<br >';
 echo '<strong>Checking file hashes for corrupt or mismatched files</strong><br />';
 
-/*
- * Check file hashes
- */
 $fp = fopen(HASH_LIST, 'r');
 
 if(!$fp)
@@ -121,7 +133,7 @@ while(!feof($fp))
 	
 	fscanf($fp, '%s %s', $checksum, $file);
 	$total ++;
-	$file = str_replace('./', '../', $file);
+	$file = str_replace('*./', '../', $file);
 	
 	if($file == '../core/local.config.php' || substr_count($file, 'unittest') > 0)
 	{

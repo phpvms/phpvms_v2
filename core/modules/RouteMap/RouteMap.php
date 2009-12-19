@@ -14,7 +14,12 @@ class RouteMap extends CodonModule
 		if($this->get->maptype == 'hubmap')
 		{
 			// Show hubmap	
-			$allschedules = SchedulesData::GetRoutesWithDeparture($this->get->hub, true, 20);
+			$params = array(
+				's.depicao'=>$this->get->hub, 
+				's.enabled'=>1
+			);
+			
+			$allschedules = SchedulesData::findSchedules($params, 0, 20);
 			
 			if(count($allschedules) == 0)
 			{
@@ -22,7 +27,7 @@ class RouteMap extends CodonModule
 				return;
 			}
 			
-			$airportinfo = OperationsData::GetAirportInfo ($this->get->hub);
+			$airportinfo = OperationsData::GetAirportInfo($this->get->hub);
 			
 			echo '<h3>Departures from '.$airportinfo->name.'</h3>';
 			
@@ -30,7 +35,7 @@ class RouteMap extends CodonModule
 		else
 		{
 			# Get all of the schedule
-			$allschedules = SchedulesData::GetSchedules(20);
+			$allschedules = SchedulesData::findSchedules(array(), 0, 20);
 		}
 		
 		$this->ShowMap($allschedules);

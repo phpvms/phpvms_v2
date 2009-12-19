@@ -18,54 +18,118 @@
  
 class SchedulesData extends CodonData
 {	
+
+/**
+	 * A generic find function for schedules. As parameters, do:
+	 * 
+	 * $params = array( 's.depicao' => 'value',
+	 *					's.arricao' => array ('multiple', 'values'),
+	 *	);
+	 * 
+	 * Syntax is ('s.columnname' => 'value'), where value can be
+	 *	an array is multiple values, or with a SQL wildcard (%) 
+	 *  if that's what is desired.
+	 * 
+	 * Columns from the schedules table should be prefixed by 's.',
+	 * the aircraft table as 'a.'
+	 * 
+	 * You can also pass offsets ($start and $count) in order to 
+	 * facilitate pagination
+	 * 
+	 * @tutorial http://docs.phpvms.net/media/development/searching_and_retriving_schedules
+	 */
+	public static function findSchedules($params, $count = '', $start = '')
+	{
+		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+				FROM '.TABLE_PREFIX.'schedules AS s
+					LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+					LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+					LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft ';
+	
+		/* Build the select "WHERE" based on the columns passed, this is a generic function */
+		$sql .= DB::build_where($params);
+		
+		// Order matters
+		if(Config::Get('SCHEDULES_ORDER_BY') != '')
+		{
+			$sql .= ' ORDER BY '.Config::Get('SCHEDULES_ORDER_BY');
+		}
+		
+		if(strlen($count) != 0)
+		{
+			$sql .= ' LIMIT '.$count;
+		}
+		
+		if(strlen($start) != 0)
+		{
+			$sql .= ' OFFSET '. $start;
+		}
+		
+		$ret = DB::get_results($sql);
+		return $ret;
+	}
+	
 	/**
 	 * Return information about a schedule (pass the ID)
 	 */
-	public static function GetSchedule($id)
+	public static function getSchedule($id)
 	{
-		#$id = DB::escape($id);
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration
-					FROM '. TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id=s.aircraft
-					WHERE s.id='.intval($id);
+		$schedules = self::findSchedules(array('s.id'=>$id));
 		
-		return DB::get_row($sql);
+		if(!$schedules)
+			return false;
+			
+		return $schedules[0];
 	}
 	
-	public static function GetScheduleByFlight($code, $flightnum)
+	
+	/**
+	 * Return a flight given the airline code and flight number
+	 *
+	 * @param string $code Airline code
+	 * @param mixed $flightnum Flight number
+	 * @return array Returns a full flight
+	 *
+	 */
+	public static function getScheduleByFlight($code, $flightnum)
 	{
-		$code = strtoupper($code);
-		$flightnum = strtoupper($flightnum);
+		$params = array(
+			's.code' => strtoupper($code),
+			's.flightnum' => strtoupper($flightnum),
+		);
 		
-		$sql = 'SELECT s.*, a.id as aircraftid, a.name as aircraft, a.registration,
-							dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-							arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						INNER JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.code=\''.$code.'\' 
-						AND s.flightnum=\''.$flightnum.'\'';
-			
-		return DB::get_row($sql);
+		$schedule = self::findSchedules($params);
+		return $schedule[0];
 	}
 		
-	public static function FindFlight($flightnum, $depicao='')
+	
+	/**
+	 * Find a flight on the flightnumber and departure airport
+	 *
+	 * @param string $flightnum Flight numbers
+	 * @param string $depicao Departure airport
+	 * @return array Returns one flight
+	 *
+	 */
+	public static function findFlight($flightnum, $depicao='')
 	{
-		$flightnum = strtoupper($flightnum);
+		$params = array('s.flightnum' => strtoupper($flightnum));
 		
-		$sql = 'SELECT * 
-					FROM '.TABLE_PREFIX.'schedules
-					WHERE flightnum=\''.$flightnum.'\' ';
-					
 		if($depicao != '')
 		{
-			$sql .= 'AND depicao=\''.$depicao.'\'';
+			$params['s.depicao'] = $depicao;
 		}
 		
-		return DB::get_row($sql);		
+		$schedule = self::findSchedules($params);
+		return $schedule[0];
 	}
 	
+	/**
+	 * Extract the code and flight number portions from the flight number
+	 * Ensures that the code and number are properly split
+	 */
 	public static function getProperFlightNum($flightnum)
 	{
 		if($flightnum == '')
@@ -73,7 +137,7 @@ class SchedulesData extends CodonData
 			
 		$ret = array();	
 		$flightnum = strtoupper($flightnum);
-		$airlines = OperationsData::GetAllAirlines(false);
+		$airlines = OperationsData::getAllAirlines(false);
 				
 		foreach($airlines as $a)
 		{
@@ -132,41 +196,13 @@ class SchedulesData extends CodonData
 	 * @return array Schedule details
 	 *
 	 */
-	public static function GetScheduleDetailed($id)
+	public static function getScheduleDetailed($id)
 	{
-		$limit = DB::escape($limit);
-		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.id='.$id;
-		
-		return DB::get_row($sql);
-	}
-	
-	
-	/**
-	 * Return a list of schedules which have no distance, or a distance of 0
-	 *
-	 * @return array 
-	 *
-	 */
-	public static function GetSchedulesNoDistance()
-	{
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.distance=0';
-		
-		return DB::get_results($sql);
+		$schedules = self::findSchedules(array('s.id' => $id));
+		if(!$schedules)
+			return false;
+			
+		return $schedules[0];
 	}
 	
 	/**
@@ -174,7 +210,7 @@ class SchedulesData extends CodonData
 	 *	a certain airline. If the airline
 	 * @return object_array
 	 */
-	public static function GetDepartureAirports($airlinecode='', $onlyenabled=false)
+	public static function getDepartureAirports($airlinecode='', $onlyenabled=false)
 	{
 		$airlinecode = DB::escape($airlinecode);
 		
@@ -202,7 +238,7 @@ class SchedulesData extends CodonData
 	 * 
 	 * @return database object
 	 */
-	public static function GetArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
+	public static function getArrivalAiports($depicao, $airlinecode='', $onlyenabled=true)
 	{
 		$depicao = strtoupper($depicao);
 		$airlinecode = strtoupper($airlinecode);
@@ -226,240 +262,38 @@ class SchedulesData extends CodonData
 	}
 	
 	/**
-	 * Return all of the routes give the departure airport
-	 */
-	public static function GetSchedulesWithDeparture($depicao, $onlyenabled = true, $limit = '')
-	{
-		self::GetRoutesWithDeparture($depicao, $onlyenabled, $limit);
-	}
-	
-	public static function GetRoutesWithDeparture($depicao, $onlyenabled=true, $limit='')
-	{
-		$depicao = DB::escape($depicao);
-		
-		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-			
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules AS s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.depicao=\''.$depicao.'\' '.$enabled;
-		
-		return DB::get_results($sql);
-	}
-	
-	/**
-	 * Return all of the schedules with the code
-	 */
-	public static function GetSchedulesWithCode($code, $onlyenabled=true, $limit='')
-	{
-		$code = strtoupper($code);
-		$code = DB::escape($code);
-		
-		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.code=\''.$code.'\' '.$enabled;
-		
-		return DB::get_results($sql);
-	}
-	
-	public static function GetSchedulesWithFlightNum($flightnum, $onlyenabled=true, $limit='')
-	{
-		$flightnum = strtoupper($flightnum);
-		$flightnum = DB::escape($flightnum);
-		
-		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.flightnum LIKE \''.$flightnum.'\' '.$enabled;
-		
-		return DB::get_results($sql);
-	}
-	
-	public static function GetRoutesWithArrival($arricao, $onlyenabled=true, $limit='')
-	{
-		return self::GetSchedulesWithArrival($arricao, $onlyenabled, $limit);
-	}
-	
-	public static function GetSchedulesWithArrival($arricao, $onlyenabled=true, $limit='')
-	{
-		$arricao = strtoupper($arricao);
-		$arricao = DB::escape($arricao);
-		
-		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-			
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.arricao LIKE \''.$arricao.'\' '.$enabled;
-		
-		return DB::get_results($sql);
-	}
-	
-	public static function GetSchedulesByDistance($distance, $type, $onlyenabled=true, $limit='')
-	{
-		$distance = DB::escape($distance);
-		$limit = DB::escape($limit);
-		
-		if($type == '')
-			$type = '>';
-			
-		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules AS s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.distance '.$type.' '.$distance.' '.$enabled.'
-						ORDER BY s.depicao DESC';
-	
-		if($limit != '')
-			$sql .= ' LIMIT ' . $limit;
-		
-		return DB::get_results($sql);
-	}
-	
-	/**
-	 * Search schedules by the equipment type
-	 */
-	public static function GetSchedulesByEquip($ac, $onlyenabled = true, $limit='')
-	{
-		$ac = DB::escape($ac);
-		$limit = DB::escape($limit);
-		
-		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'aircraft a
-					WHERE a.name LIKE \''.$ac.'\' AND a.id=s.aircraft
-					'.$enabled.'
-					ORDER BY s.depicao DESC';
-		
-		if($limit != '')
-			$sql .= ' LIMIT ' . $limit;
-		
-		$ret = DB::get_results($sql);
-		//DB::debug();
-		return $ret;
-	}
-	
-	/**
 	 * Search schedules by day of week (0-6, Sunday- Sat)
 	 */
-	public static function GetSchedulesByDay($dayofweek, $onlyenabled=true, $limit='')
+	/*
+	public static function getSchedulesByDay($dayofweek, $onlyenabled=true, $limit='', $start='')
 	{
-		$arricao = strtoupper($arricao);
-		$arricao = DB::escape($arricao);
-		
+		$params = array('s.daysofweek' => '%'.$dayofweek.'%');
 		if($onlyenabled)
-			$enabled = 'AND s.enabled=1';
-		else
-			$enabled = '';
-			
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					WHERE s.daysofweek LIKE \'%'.$dayofweek.'%\' '.$enabled;
+			$params['s.enabled'] = '1';
 		
-		return DB::get_results($sql);
-	}
+		return self::findSchedules($params, $limit, $start);
+	}*/
 	
 	/**
 	 * Get all the schedules, $limit is the number to return
 	 */
-	public static function GetSchedules($count='', $onlyenabled=true, $start='')
+	public static function getSchedules($onlyenabled=true, $limit='', $start='')
 	{
+		$params = array();
 		if($onlyenabled)
-			$enabled = 'WHERE s.enabled=1';
-		else
-			$enabled = '';
+			$params['s.enabled'] = '1';
 		
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
-					FROM '.TABLE_PREFIX.'schedules AS s
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft
-					'.$enabled.'
-					ORDER BY s.depicao DESC';
-
-		if(strlen($start) != 0 && strlen($count) != 0)
-		{
-			$sql .= ' LIMIT '.$count.' OFFSET '.$start;
-		}
-		
-		$ret =  DB::get_results($sql);
-		return $ret;
-		
+		return self::findSchedules($params, $limit, $start);
 	}
 	
 	/**
 	 * This gets all of the schedules which are disabled
 	 */
-	public static function GetInactiveSchedules($count='', $start='')
+	/*public static function getInactiveSchedules($count='', $start='')
 	{
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'schedules s
-						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id=s.aircraft
-					WHERE s.enabled=0
-					ORDER BY s.flightnum ASC';
-		
-		if($start !='' && $count != '')
-		{
-			$sql .= ' LIMIT '.$count.' OFFSET '.$start;
-		}
-		
-		return DB::get_results($sql);
-		
-		DB::debug();
-		return $ret;
-	}
+		$params = array('s.enabled'=>0);
+		return self::findSchedules($params, $count, $start);
+	}*/
 	
 	
 	/**
@@ -471,7 +305,6 @@ class SchedulesData extends CodonData
 	 */
 	public static function distanceBetweenPoints($lat1, $lon1, $lat2, $lon2)
 	{
-		
 		$distance = (3958 * 3.1415926 * sqrt(($lat2-$lat1) * ($lat2-$lat1) 
 					+ cos($lat2/57.29578) * cos($lat1/57.29578) * ($lon2-$lon1) * ($lon2-$lon1))/180);
 		
@@ -717,7 +550,7 @@ class SchedulesData extends CodonData
 	 * Get the latest bids
 	 */
 	 
-	public static function GetLatestBids($limit=5)
+	public static function getLatestBids($limit=5)
 	{
 		$sql = 'SELECT  p.*, s.*, 
 						b.bidid as bidid, a.name as aircraft, a.registration
@@ -732,7 +565,7 @@ class SchedulesData extends CodonData
 		return DB::get_results($sql);
 	}
 	
-	public function GetLatestBid($pilotid)
+	public function getLatestBid($pilotid)
 	{
 		$pilotid = DB::escape($pilotid);
 		
@@ -754,7 +587,7 @@ class SchedulesData extends CodonData
 	 * @param unknown_type $bidid
 	 * @return unknown
 	 */
-	public static function GetBid($bidid)
+	public static function getBid($bidid)
 	{
 		$bidid = DB::escape($bidid);
 		
@@ -775,7 +608,7 @@ class SchedulesData extends CodonData
 	 * @param unknown_type $pilotid
 	 * @return unknown
 	 */
-	public static function GetBids($pilotid)
+	public static function getBids($pilotid)
 	{		
 		$pilotid = DB::escape($pilotid);
 		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
@@ -792,9 +625,8 @@ class SchedulesData extends CodonData
 	 * Get find a bid for the pilot based on ID,
 	 *	the airline code for the flight, and the flight number
 	 */
-	public static function GetBidWithRoute($pilotid, $code, $flightnum)
+	public static function getBidWithRoute($pilotid, $code, $flightnum)
 	{
-		
 		if($pilotid == '')
 			return;
 			
@@ -810,7 +642,6 @@ class SchedulesData extends CodonData
 	
 	public function SetBidOnSchedule($scheduleid, $bidid)
 	{
-		
 		$scheduleid = intval($scheduleid);
 		$bidid = intval($bidid);
 		
@@ -857,7 +688,7 @@ class SchedulesData extends CodonData
 	public static function RemoveBid($bidid)
 	{
 		$bidid = intval($bidid);
-		$bid_info = self::GetBid($bidid);
+		$bid_info = self::getBid($bidid);
 		
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids 
 					WHERE `bidid`='.$bidid;
@@ -872,7 +703,7 @@ class SchedulesData extends CodonData
 		return true;
 	}
 	
-	public static function GetScheduleFlownCounts($code, $flightnum, $days=7)
+	public static function getScheduleFlownCounts($code, $flightnum, $days=7)
 	{
 		$max = 0;
 		
@@ -888,7 +719,7 @@ class SchedulesData extends CodonData
 		
 		do 
 		{	
-			$count = PIREPData::GetReportCountForRoute($code, $flightnum, $start);
+			$count = PIREPData::getReportCountForRoute($code, $flightnum, $start);
 			$date = date('m-d', $start);
 			
 			$data[$date] = $count;			
@@ -917,7 +748,7 @@ class SchedulesData extends CodonData
 		
 		// This is for the past 7 days
 		do {
-			$count = PIREPData::GetReportCount($time_start);
+			$count = PIREPData::getReportCount($time_start);
 			
 			$data[] = $count;
 			
@@ -928,5 +759,105 @@ class SchedulesData extends CodonData
 		} while ($time_start < $time_end);
 			
 		return $data;
+	}
+	
+	
+	
+	/* Below here, these are all deprecated. In your code, you should use
+		the query structure, defined within the functions
+		
+	/**
+	 * @deprecated
+	 */
+	public static function getSchedulesWithCode($code, $onlyenabled=true, $start='', $limit='')
+	{
+		$params = array('s.code' => strtoupper($code));
+		if($onlyenabled)
+			$params['s.enabled'] = '1';
+		
+		return self::findSchedules($params, $start, $limit);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public static function getSchedulesWithFlightNum($flightnum, $onlyenabled=true, $start='', $limit='')
+	{
+		$params = array('s.flightnum' => $flightnum);
+		if($onlyenabled)
+			$params['s.enabled'] = '1';
+		
+		return self::findSchedules($params, $start, $limit);
+	}
+	
+	/**
+	 * Return all of the routes give the departure airport
+	 * 
+	 * @deprecated
+	 */
+	public static function getSchedulesWithDeparture($depicao, $onlyenabled = true, $start='', $limit = '')
+	{
+		self::getRoutesWithDeparture($depicao, $onlyenabled, $limit);
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public static function getRoutesWithDeparture($depicao, $onlyenabled=true, $start='', $limit='')
+	{
+		$params = array('s.depicao' => strtoupper($depicao));
+		if($onlyenabled)
+			$params['s.enabled'] = '1';
+		
+		return self::findSchedules($params, $start, $limit);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public static function getRoutesWithArrival($arricao, $onlyenabled=true, $start='', $limit='')
+	{
+		return self::getSchedulesWithArrival($arricao, $onlyenabled, $limit);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public static function getSchedulesWithArrival($arricao, $onlyenabled=true, $start='', $limit='')
+	{
+		$params = array('s.arricao' => strtoupper($arricao));
+		if($onlyenabled)
+			$params['s.enabled'] = '1';
+		
+		return self::findSchedules($params, $start, $limit);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public static function getSchedulesByDistance($distance, $type, $onlyenabled=true, $start='', $limit='')
+	{
+		if($type == '')
+			$type = '>';
+			
+		$params = array('s.distance' => trim($type).' '.$distance);
+		if($onlyenabled)
+			$params['s.enabled'] = '1';
+		
+		return self::findSchedules($params, $start, $limit);
+	}
+	
+	/**
+	 * Search schedules by the equipment type
+	 * 
+	 * @deprecated
+	 */
+	public static function getSchedulesByEquip($ac, $onlyenabled = true, $start='', $limit='')
+	{
+		$params = array('a.name' => $ac);
+		if($onlyenabled)
+			$params['s.enabled'] = '1';
+		
+		return self::findSchedules($params, $start, $limit);
 	}
 }

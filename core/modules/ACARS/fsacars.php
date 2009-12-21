@@ -30,7 +30,7 @@
 error_reporting(0);
 ini_set('display_errors', 'off');
 
-Debug::log(serialize($_SERVER['QUERY_STRING']), 'acars');
+Debug::log(serialize($_SERVER['QUERY_STRING']), 'fsacars');
 
 ##################################
 	
@@ -71,10 +71,10 @@ switch($acars_action)
 	#	or tested
 	#
 	
-	case 'acars':
+	case 'fsacars':
 		
-		Debug::log('ACARS UPDATE', 'acars');
-		Debug::log(print_r($_GET, true), 'acars');
+		Debug::log('ACARS UPDATE', 'fsacars');
+		Debug::log(print_r($_GET, true), 'fsacars');
 
 		$pilotid = $_GET['pilotnumber'];
 		
@@ -95,14 +95,14 @@ switch($acars_action)
 		
 		ob_end_clean();
 		
-		Debug::log($cont, 'acars');
+		Debug::log($cont, 'fsacars');
 		
 		break;
 		
 	case 'flightplans':
 	case 'schedules':
 	
-		Debug::log('FLIGHT PLAN REQUEST', 'acars');
+		Debug::log('FLIGHT PLAN REQUEST', 'fsacars');
 		
 		if(!is_numeric($_GET['pilot']))
 		{
@@ -157,8 +157,8 @@ $maxcargo";
 	#
 	case 'status':
 	
-		Debug::log('STATUS UPDATE', 'acars');
-		Debug::log(print_r($_GET, true), 'acars');
+		Debug::log('STATUS UPDATE', 'fsacars');
+		Debug::log(print_r($_GET, true), 'fsacars');
 		
 		if($_GET['detailph']=='')
 		{
@@ -185,10 +185,22 @@ $maxcargo";
 			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 		}
 		
+		$ac = OperationsData::GetAircraftByReg($_GET['Regist']);
+		if(!$ac)
+		{
+			$aircraft = 0;
+		}
+		else
+		{
+			$aircraft = $ac->id;
+			unset($ac);
+		}
+		
 		$fields = array('pilotid'=>$pilotid,
 						'flightnum'=>$_GET['IATA'],
 						'pilotname'=>'',
-						'aircraft'=>$_GET['Regist'],
+						'aircraft'=>$aircraft,
+						'registration'=>$_GET['Regist'],
 						'lat'=>$_GET['lat'],
 						'lng'=>$_GET['long'],
 						'heading'=>'',
@@ -208,14 +220,14 @@ $maxcargo";
 
 		ob_start();
 		
-		Debug::log(print_r($fields, true), 'acars');
+		Debug::log(print_r($fields, true), 'fsacars');
 		
 		ACARSData::UpdateFlightData($fields);
 		$cont = ob_get_clean();
 			
 		ob_end_clean();
 		
-		Debug::log($cont, 'acars');
+		Debug::log($cont, 'fsacars');
 		
 		break;
 	
@@ -224,8 +236,8 @@ $maxcargo";
 	#
 	case 'pirep':
 	
-		Debug::log('PIREP FILE', 'acars');
-		Debug::log(serialize($_GET), 'acars');
+		Debug::log('PIREP FILE', 'fsacars');
+		Debug::log(serialize($_GET), 'fsacars');
 			
 		if(is_numeric($_GET['pilot']))
 		{

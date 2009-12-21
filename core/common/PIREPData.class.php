@@ -939,7 +939,7 @@ class PIREPData extends CodonData
 		
 		$sql = "SELECT pirepid
 				FROM ".TABLE_PREFIX."pireps
-				WHERE DATE_SUB(CURDATE(), INTERVAL '.$age_hours.' HOURS) <= submitdate
+				WHERE DATE_SUB(CURDATE(), INTERVAL {$age_hours} HOUR) <= submitdate
 					AND pirepid={$pirepid}";
 
 		$row = DB::get_row($sql);

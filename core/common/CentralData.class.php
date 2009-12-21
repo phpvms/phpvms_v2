@@ -55,6 +55,7 @@ class CentralData extends CodonData
 	
 	private static function send_xml()
 	{
+		
 		// Cover old and new format
 		$api_server = Config::Get('VACENTRAL_API_SERVER');
 		if($api_server == '')
@@ -62,9 +63,11 @@ class CentralData extends CodonData
 			$api_server = Config::Get('PHPVMS_API_SERVER');
 		}
 		
+		ob_start();
 		$web_service = new CodonWebService();
 		self::$xml_response = $web_service->post($api_server.'/update', self::$xml->asXML());
 		self::$response = @simplexml_load_string(self::$xml_response);
+		ob_end_clean();
 		
 		if(!is_object(self::$response))
 		{
@@ -382,7 +385,7 @@ class CentralData extends CodonData
 			return false;
 		
 		self::set_xml('update_acars_flight');
-		$xml .= self::create_acars_flight($flight);
+		self::create_acars_flight($flight);
 		
 		CronData::set_lastupdate('update_acars');
 		return self::send_xml();
@@ -404,7 +407,7 @@ class CentralData extends CodonData
 		$acars_xml = self::$xml->addChild('flight');
 		$acars_xml->addChild('unique_id', $flight['id']);
 		$acars_xml->addChild('pilotid', PilotData::GetPilotCode($flight['code'], $flight['pilotid']));
-		$acars_xml->addChild('pilotname', $flight['firstname'].' '.$flight['lastname']);
+		$acars_xml->addChild('pilotname', $flight['pilotname']);
 		$acars_xml->addChild('flightnum', $flight['flightnum']);
 		$acars_xml->addChild('aircraft', $flight['aircraft']);
 		$acars_xml->addChild('lat', $flight['lat']);

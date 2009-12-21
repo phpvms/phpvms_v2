@@ -19,6 +19,7 @@ class RouteMap extends CodonModule
 				's.enabled'=>1
 			);
 			
+			// Show only 20 routes
 			$allschedules = SchedulesData::findSchedules($params, 0, 20);
 			
 			if(count($allschedules) == 0)

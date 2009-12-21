@@ -71,6 +71,13 @@ class ACARSData extends CodonData
 		$pilotinfo = PilotData::GetPilotData($data['pilotid']);
 		$data['pilotname'] = $pilotinfo->firstname . ' ' . $pilotinfo->lastname;
 		
+		// Store for later
+		if(isset($data['registration']))
+		{
+			$ac_registration = $data['registration'];
+			unset($data['registration']);
+		}
+		
 		// Get the airports data
 		$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
 		$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
@@ -106,9 +113,11 @@ class ACARSData extends CodonData
 		}
 	
 		// first see if we exist:
-		$exist = DB::get_row('SELECT `id`
-								FROM '.TABLE_PREFIX.'acarsdata 
-								WHERE `pilotid`=\''.$data['pilotid'].'\'');
+		$sql = 'SELECT `id`
+				FROM '.TABLE_PREFIX."acarsdata 
+				WHERE `pilotid`={$data['pilotid']}";
+				
+		$exist = DB::get_row($sql);
 			
 		$flight_id = '';
 		
@@ -156,7 +165,7 @@ class ACARSData extends CodonData
 			$upd = implode(',', $upd);
 			$query = 'UPDATE '.TABLE_PREFIX."acarsdata 
 						SET {$upd} 
-						WHERE `pilotid`='{$pilotid}'";
+						WHERE `id`='{$flight_id}'";
 						
 			DB::query($query);
 		}
@@ -199,11 +208,33 @@ class ACARSData extends CodonData
 			$flight_id = DB::$insert_id;
 		}
 		
+		
+		$flight_info = self::get_flight_by_id($flight_id);
+		
 		// Add this cuz we need it
+		$data['code'] = $pilotinfo->code;
+		$data['pilotid'] = $pilotid;
 		$data['unique_id'] = $flight_id;
-			
+		$data['aircraft'] = $flight_info->aircraftname;
+		$data['registration'] = $flight_info->registration;
+		
 		$res = CentralData::send_acars_data($data);
 		return true;
+	}
+	
+	public static function get_flight_by_id($id)
+	{
+		$id = intval($id);
+		$sql = 'SELECT a.*, c.name as aircraftname, c.registration as registration,
+					p.code, p.pilotid as pilotid, p.firstname, p.lastname
+				FROM ' . TABLE_PREFIX .'acarsdata a
+				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`id`
+				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
+				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
+				WHERE a.id='.$id;
+		
+		return DB::get_row($sql);
 	}
 	
 	public static function get_flight_by_pilot($pilotid)
@@ -274,7 +305,7 @@ class ACARSData extends CodonData
 	
 	public static function GetAllFlights()
 	{
-		$sql = 'SELECT a.*, c.name as aircraftname,
+		$sql = 'SELECT a.*, c.name as aircraftname, c.registration as registration,
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname
 					FROM ' . TABLE_PREFIX .'acarsdata a
 					LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`

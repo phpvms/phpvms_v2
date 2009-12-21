@@ -21,8 +21,8 @@ class FSFK extends CodonModule
 	
 	public function __call($name, $args)
 	{
-		$this->log(print_r($_REQUEST, true), 'acars');
-		$this->log(serialize($_REQUEST), 'acars');
+		$this->log(print_r($_REQUEST, true), 'fsfk');
+		$this->log(serialize($_REQUEST), 'fsfk');
 	}
 	
 	public function index()
@@ -40,9 +40,9 @@ class FSFK extends CodonModule
 		$data = "<?xml version=\"1.0\" encoding='UTF-8'?>".trim(utf8_encode($_REQUEST['DATA2']));
 		$xml = simplexml_load_string($data);
 		
-		$this->log($data, 'acars');
-		$this->log(print_r($xml, true), 'acars');
-		$this->log(serialize($xml), 'acars');
+		$this->log($data, 'fsfk');
+		$this->log(print_r($xml, true), 'fsfk');
+		$this->log(serialize($xml), 'fsfk');
 		
 		preg_match('/^([A-Za-z]*)(\d*)/', $xml->PilotID, $matches);
 		$code = $matches[1];
@@ -102,9 +102,6 @@ class FSFK extends CodonModule
 				
 				$img = (string)$xml->FLIGHTMAPS->FlightMapJPG;
 				
-				Debug::log("FLIGHT MAPS - {$img}", 'acars');
-				Debug::log(print_r($xml->FLIGHTMAPS, true), 'acars');
-				
 				if($img)
 					$rawdata['FLIGHTMAPS']['FlightMap'] = $img;
 				
@@ -161,6 +158,7 @@ class FSFK extends CodonModule
 			'depicao'=>$depicao,
 			'arricao'=>$arricao,
 			'aircraft'=> $aircraft,
+			'registration'=>(string) $xml->AircraftTailNumber,
 			'flighttime'=> $flighttime,
 			'landingrate'=> (string) $xml->ONVS,
 			'submitdate'=>'NOW()',
@@ -172,7 +170,7 @@ class FSFK extends CodonModule
 			'rawdata'=>$rawdata,
 		);
 				
-		//$this->log(print_r($rawdata, true), 'acars');
+		//$this->log(print_r($rawdata, true), 'fsfk');
 		
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 		
@@ -203,6 +201,9 @@ class FSFK extends CodonModule
 			$message = '';
 		else
 			$message = $_REQUEST['DATA4'];
+			
+			
+		$this->log("Method: {$method}", 'fsfk');
 			
 		# Go through each method now
 		if($method == 'TEST')
@@ -250,7 +251,7 @@ class FSFK extends CodonModule
 			$pilotid = $value;
 			
 			/*$this->log('acars_message');
-			$this->log($message, 'acars');*/
+			$this->log($message, 'fsfk');*/
 			
 			$flight_data = ACARSData::get_flight_by_pilot($pilotid);
 			
@@ -296,8 +297,8 @@ class FSFK extends CodonModule
 			$flight_id = $value;
 			$flight_data = explode("|", $message);
 			
-			/*$this->log('updateflightplan');
-			$this->log(print_r($flight_data, true), 'acars');*/
+			echo '1|';
+			return;
 		}
 		
 		$depapt = OperationsData::GetAirportInfo($depicao);
@@ -321,8 +322,6 @@ class FSFK extends CodonModule
 			'gs'=>$gs,
 			'depicao'=>$depicao,
 			'arricao'=>$arricao,
-			'deptime'=>$deptime,
-			'arrtime'=>'',
 			'distremain'=>$dist_remain,
 			'timeremaining'=>$time_remain,
 			'phasedetail'=>'Enroute',
@@ -330,7 +329,18 @@ class FSFK extends CodonModule
 			'client'=>'fsfk',
 		);
 		
-		Debug::log(print_r($fields, true), 'acars');
+		if($deptime != '')
+		{
+			$fields['deptime'] = $deptime;
+		}
+		
+		
+		if($arrtime != '')
+		{
+			$fields['arrtime'] = $arrtime;
+		}
+		
+		Debug::log(print_r($fields, true), 'fsfk');
 		ACARSData::UpdateFlightData($fields);
 		$id = DB::$insert_id;
         
@@ -390,6 +400,9 @@ class FSFK extends CodonModule
 		$acars_config = Template::GetTemplate($name, true);
 		$acars_config = str_replace("\n", "\r\n", $acars_config);
 		
+		Util::downloadFile($acars_config, $save_as);
+		
+		return;
 		# Set the headers so the browser things a file is being sent
 		header('Content-Type: text/plain');
 		header('Content-Disposition: attachment; filename="'.$save_as.'"');

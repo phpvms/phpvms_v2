@@ -29,7 +29,6 @@ class MassMailer extends CodonModule
 	
 	public function index()
 	{
-		
 		if($this->post->submit)
 		{
 			echo '<h3>Sending email</h3>';
@@ -45,19 +44,11 @@ class MassMailer extends CodonModule
 			$subject = DB::escape($this->post->subject);
 			$message = html_entity_decode($this->post->message). PHP_EOL . PHP_EOL;
 			
-			
 			# Do some quick fixing of obvious formatting errors
 			$message = str_replace('<br>', '<br />', $message);
 			
 			//Begin the nice long assembly of e-mail addresses
 			$pilotarray = PilotData::GetAllPilots();
-
-			$mail = new PHPMailer(); 
-			$mail->Subject = $subject;
-			$mail->From     = ($fromemail == '') ? ADMIN_EMAIL : $fromemail;  
-			$mail->FromName = ($fromname == '') ? SITE_NAME : $fromname; 
-			$mail->Mailer = 'mail';
-
 			foreach($pilotarray as $pilot)
 			{
 				echo 'Sending for '.$pilot->firstname.' '.$pilot->lastname.'<br />';
@@ -67,12 +58,7 @@ class MassMailer extends CodonModule
 				$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $send_message);
 				$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $send_message);
 
-				$mail->MsgHTML($send_message);
-				
-				$mail->AddAddress($pilot->email);                 
-				$mail->Send();
-				
-				$mail->ClearAddresses();
+				Util::SendEmail($pilot->email, $subject, $send_message);
 			}
 			
 			echo 'Complete!';

@@ -88,11 +88,14 @@ class XML extends CodonModule
 		preg_match('/^([A-Za-z]{2,3})(\d*)/', $route, $matches);
 		$code = $matches[1];
 		$flightnum = $matches[2];
-		$flightinfo = SchedulesData::GetScheduleByFlight($code, $flightnum);
 		
+		$params = array('s.code' => $code, 's.flightnum' => $flightnum);
+		$flightinfo = SchedulesData::findSchedules($params, 1);
+				
 		if(!$flightinfo)
 			return;
 			
+		$flightinfo = $flightinfo[0]; // Grab the first one
 		$xml = new SimpleXMLElement('<flightinfo/>');
 		
 		$dep = $xml->addChild('departure');

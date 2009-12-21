@@ -238,6 +238,12 @@ class OperationsData extends CodonData
 		$data['weight'] = ($data['weight'] == '') ? 0 : $data['weight'];
 		$data['cruise'] = ($data['cruise'] == '') ? 0 : $data['cruise'];
 		
+		$data['range'] = str_replace(',', '', $data['range']);
+		$data['weight'] = str_replace(',', '', $data['weight']);
+		$data['cruise'] = str_replace(',', '', $data['cruise']);
+		$data['maxpax'] = str_replace(',', '', $data['maxpax']);
+		$data['maxcargo'] = str_replace(',', '', $data['maxcargo']);
+		
 		if($data['enabled'] === true)
 			$data['enabled'] = 1;
 		else
@@ -272,6 +278,12 @@ class OperationsData extends CodonData
 		$data['range'] = ($data['range'] == '') ? 0 : $data['range'];
 		$data['weight'] = ($data['weight'] == '') ? 0 : $data['weight'];
 		$data['cruise'] = ($data['cruise'] == '') ? 0 : $data['cruise'];
+		
+		$data['range'] = str_replace(',', '', $data['range']);
+		$data['weight'] = str_replace(',', '', $data['weight']);
+		$data['cruise'] = str_replace(',', '', $data['cruise']);
+		$data['maxpax'] = str_replace(',', '', $data['maxpax']);
+		$data['maxcargo'] = str_replace(',', '', $data['maxcargo']);
 		
 		if($data['enabled'] === true)
 			$data['enabled'] = 1;

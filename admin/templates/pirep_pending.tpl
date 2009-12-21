@@ -24,15 +24,9 @@ $error = false; #IF there are any errors on the report, then don't allow accept
 			echo 'In Progress';
 		
 		?><br />
-		<?php
-		if($pirep->log != '')
-		{
-		?>
-			<a id="dialog" class="jqModal"
-				href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $pirep->pirepid;?>">View Log Details</a>
-		<?php
-	}
-	?>
+		
+		<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $pirep->pirepid;?>">View Log Details</a>
 	</td>
 	<td align="left" valign="top" >
 		<span style="float: right">

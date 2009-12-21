@@ -1,0 +1,2252 @@
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786371666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786371666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.78637
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.78637
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.78637
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786368333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786368333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786368333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786366666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786366666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.62249
+    [lng] => -73.786365
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:42:59
+    [timeremaining] => 0
+    [arrtime] => 20:42:59
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:42:59
+    [client] => fsfk
+    [aircraftname] => 
+    [registration] => 
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786365
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.62249
+    [lng] => -73.786365
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:43:09
+    [timeremaining] => 0
+    [arrtime] => 20:43:09
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:43:09
+    [client] => fsfk
+    [aircraftname] => 
+    [registration] => 
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.62249
+    [lng] => -73.786365
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.622481666667
+    [lng] => -73.786365
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:43:20
+    [timeremaining] => 0
+    [arrtime] => 20:43:20
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:43:20
+    [client] => fsfk
+    [aircraftname] => 
+    [registration] => 
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.622481666667
+    [lng] => -73.786365
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.622481666667
+    [lng] => -73.78636333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:43:39
+    [timeremaining] => 0
+    [arrtime] => 20:43:39
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:43:39
+    [client] => fsfk
+    [aircraftname] => 
+    [registration] => 
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 
+    [lat] => 40.622481666667
+    [lng] => -73.786363333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => 
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.622481666667
+    [lng] => -73.78636166666
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:43:59
+    [timeremaining] => 0
+    [arrtime] => 20:43:59
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:43:59
+    [client] => fsfk
+    [aircraftname] => B747-400
+    [registration] => N4567
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786361666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.622481666667
+    [lng] => -73.78636166666
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:44:10
+    [timeremaining] => 0
+    [arrtime] => 20:44:10
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:44:10
+    [client] => fsfk
+    [aircraftname] => B747-400
+    [registration] => N4567
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786361666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+stdClass Object
+(
+    [id] => 1
+    [pilotid] => 1
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => 1
+    [lat] => 40.622481666667
+    [lng] => -73.78636166666
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0
+    [depicao] => KJFK
+    [depapt] => JFK Airport
+    [arricao] => KLGA
+    [arrapt] => La Guardia Airport
+    [deptime] => 20:44:20
+    [timeremaining] => 0
+    [arrtime] => 20:44:20
+    [distremain] => 5252.8
+    [phasedetail] => Enroute
+    [online] => 
+    [messagelog] => 
+    [lastupdate] => 2009-12-19 20:44:20
+    [client] => fsfk
+    [aircraftname] => B747-400
+    [registration] => N4567
+    [code] => VMS
+    [firstname] => Nabeel
+    [lastname] => Shahzad
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786361666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.78636
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.78636
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.78636
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786358333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786358333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786358333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786356666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786356666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786356666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786355
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786353333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786353333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786351666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [deptime] => 
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786351666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.78635
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [arrtime] => 
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.78635
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786348333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786348333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786348333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786346666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786346666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622481666667
+    [lng] => -73.786346666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786345
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786345
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786343333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786343333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786341666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.78634
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786338333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786338333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786336666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786335
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786335
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786333333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786333333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786331666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786331666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786331666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.78633
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.78633
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.78633
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786328333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786328333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786328333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786326666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622471666667
+    [lng] => -73.786325
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786325
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786323333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786321666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786321666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.78632
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.78632
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786318333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786318333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786318333333
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786316666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786316666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786316666667
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786315
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786315
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+
+Array
+(
+    [flightnum] => VMS1000
+    [pilotname] => Nabeel Shahzad
+    [aircraft] => B747-400
+    [lat] => 40.622463333333
+    [lng] => -73.786315
+    [heading] => 134
+    [alt] => 17
+    [gs] => 0 
+    [depicao] => KJFK
+    [arricao] => KLGA
+    [distremain] => 5252.8481388638
+    [timeremaining] => 0
+    [phasedetail] => Enroute
+    [online] => 
+    [client] => fsfk
+    [deptime] => 
+    [arrtime] => 
+    [code] => VMS
+    [pilotid] => 1
+    [unique_id] => 1
+    [registration] => N4567
+    [id] => 1
+)
+

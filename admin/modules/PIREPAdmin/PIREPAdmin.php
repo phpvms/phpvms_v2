@@ -72,13 +72,17 @@ class PIREPAdmin extends CodonModule
 		
 		if(isset($this->get->hub) && $this->get->hub != '')
 		{
-			$this->set('pireps', PIREPData::GetAllReportsFromHub(PIREP_PENDING, $this->get->hub));
+			$params = array(
+				'p.accepted' => PIREP_PENDING,
+				'u.hub' => $this->get->hub,
+			);
 		}
 		else
 		{
-			$this->set('pireps', PIREPData::GetAllReportsByAccept(PIREP_PENDING));
+			$params = array('p.accepted'=>PIREP_PENDING);
 		}
 		
+		$this->set('pireps', PIREPData::findPIREPS($params));
 		$this->set('pending', true);
 		$this->set('load', 'viewpending');
 		$this->render('pireps_list.tpl');
@@ -92,7 +96,7 @@ class PIREPAdmin extends CodonModule
 		$this->set('pending', false);
 		$this->set('load', 'pilotpireps');
 		
-		$this->set('pireps', PIREPData::GetAllReportsForPilot($this->get->pilotid));
+		$this->set('pireps', PIREPData::findPIREPS(array('p.pilotid'=>$this->get->pilotid)));
 		$this->render('pireps_list.tpl');
 	}
 	
@@ -118,8 +122,8 @@ class PIREPAdmin extends CodonModule
 	public function approveall()
 	{
 		echo '<h3>Approve All</h3>';
-		
-		$allpireps = PIREPData::GetAllReportsByAccept(PIREP_PENDING);
+			
+		$allpireps = PIREPData::findPIREPS(array('p.accepted'=>PIREP_PENDING));
 		$total = count($allpireps);
 		$count = 0;
 		foreach($allpireps as $pirep_details)
@@ -156,7 +160,8 @@ class PIREPAdmin extends CodonModule
 			$this->get->start = 0;
 		
 		$num_per_page = 20;
-		$allreports = PIREPData::GetAllReports($this->get->start, $num_per_page);
+		$params = array();
+		$allreports = PIREPData::findPIREPS($params, $num_per_page, $this->get->start);
 		
 		if(count($allreports) >= $num_per_page)
 		{

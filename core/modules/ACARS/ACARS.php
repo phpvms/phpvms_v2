@@ -188,11 +188,6 @@ class ACARS extends CodonModule
 		$acars_config = Template::GetTemplate($template_name, true);
 		$acars_config = str_replace("\n", "\r\n", $acars_config);
 		
-		# Set the headers so the browser things a file is being sent
-		header('Content-Type: text/plain');
-		header('Content-Disposition: attachment; filename="'.$save_as.'"');
-		header('Content-Length: ' . strlen($acars_config));
-		
-		echo $acars_config;
+		Util::downloadFile($acars_config, $save_as);
 	}
 }

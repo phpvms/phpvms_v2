@@ -220,8 +220,8 @@ class SchedulesData extends CodonData
 			$enabled = '';
 		
 		$sql = 'SELECT DISTINCT s.depicao AS icao, a.name
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
-					WHERE s.depicao = a.icao '.$enabled;
+				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
+				WHERE s.depicao = a.icao '.$enabled;
 					
 		if($airlinecode != '')
 			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
@@ -250,8 +250,8 @@ class SchedulesData extends CodonData
 			$enabled = '';
 		
 		$sql = 'SELECT DISTINCT s.arricao AS icao, a.name
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
-					WHERE s.arricao = a.icao '.$enabled;
+				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'airports a
+				WHERE s.arricao = a.icao '.$enabled;
 
 		if($airlinecode != '')
 			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
@@ -395,6 +395,9 @@ class SchedulesData extends CodonData
 		if($data['flighttype'] == '')
 			$data['flighttype'] = 'P';
 			
+		$data['flightlevel'] = str_replace(',', '', $data['flightlevel']);
+		$data['maxload'] = str_replace(',', '', $data['maxload']);
+			
 		foreach($data as $key=>$value)
 		{
 			$data[$key] = DB::escape($value);
@@ -403,12 +406,12 @@ class SchedulesData extends CodonData
 		$data['flighttime'] = str_replace(':', '.', $data['flighttime']);
 				
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
-						(`code`, `flightnum`, 
-						 `depicao`, `arricao`, 
-						 `route`, `aircraft`, `flightlevel`, `distance`, 
-						 `deptime`, `arrtime`, 
-						 `flighttime`, `daysofweek`, `maxload`, `price`, 
-						 `flighttype`, `notes`, `enabled`)
+					(`code`, `flightnum`, 
+					 `depicao`, `arricao`, 
+					 `route`, `aircraft`, `flightlevel`, `distance`, 
+					 `deptime`, `arrtime`, 
+					 `flighttime`, `daysofweek`, `maxload`, `price`, 
+					 `flighttype`, `notes`, `enabled`)
 				VALUES ('$data[code]', 
 						'$data[flightnum]',
 						'$data[depicao]', 
@@ -480,6 +483,9 @@ class SchedulesData extends CodonData
 		$data['flighttype'] = strtoupper($data['flighttype']);
 		if($data['flighttype'] == '')
 			$data['flighttype'] = 'P';
+		
+		$data['flightlevel'] = str_replace(',', '', $data['flightlevel']);
+		$data['maxload'] = str_replace(',', '', $data['maxload']);
 		
 		foreach($data as $key=>$value)
 		{
@@ -612,11 +618,11 @@ class SchedulesData extends CodonData
 	{		
 		$pilotid = DB::escape($pilotid);
 		$sql = 'SELECT s.*, b.bidid, a.name as aircraft, a.registration
-					FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
-						'.TABLE_PREFIX.'aircraft a
-					WHERE b.routeid = s.id 
-						AND s.aircraft=a.id
-						AND b.pilotid='.$pilotid;
+				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
+					'.TABLE_PREFIX.'aircraft a
+				WHERE b.routeid = s.id 
+					AND s.aircraft=a.id
+					AND b.pilotid='.$pilotid;
 		
 		return DB::get_results($sql);
 	}
@@ -631,11 +637,11 @@ class SchedulesData extends CodonData
 			return;
 			
 		$sql = 'SELECT b.bidid 
-					FROM '.TABLE_PREFIX.'bids b, '.TABLE_PREFIX.'schedules s
-					WHERE b.pilotid='.$pilotid.' 
-						AND b.routeid=s.id
-						AND s.code=\''.$code.'\' 
-						AND s.flightnum=\''.$flightnum.'\'';
+				FROM '.TABLE_PREFIX.'bids b, '.TABLE_PREFIX.'schedules s
+				WHERE b.pilotid='.$pilotid.' 
+					AND b.routeid=s.id
+					AND s.code=\''.$code.'\' 
+					AND s.flightnum=\''.$flightnum.'\'';
 		
 		return DB::get_row($sql);
 	}
@@ -646,8 +652,8 @@ class SchedulesData extends CodonData
 		$bidid = intval($bidid);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX.'schedules
-					SET `bidid`='.$bidid.'
-					WHERE `id`='.$scheduleid;
+				SET `bidid`='.$bidid.'
+				WHERE `id`='.$scheduleid;
 					
 		DB::query($sql);
 	}
@@ -661,7 +667,7 @@ class SchedulesData extends CodonData
 		$routeid = DB::escape($routeid);
 		
 		if(DB::get_row('SELECT bidid FROM '.TABLE_PREFIX.'bids
-				WHERE pilotid='.$pilotid.' AND routeid='.$routeid))
+						WHERE pilotid='.$pilotid.' AND routeid='.$routeid))
 		{
 			return false;
 		}
@@ -670,7 +676,7 @@ class SchedulesData extends CodonData
 		$routeid = DB::escape($routeid);
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'bids (pilotid, routeid, dateadded)
-					VALUES ('.$pilotid.', '.$routeid.', CURDATE())';
+				VALUES ('.$pilotid.', '.$routeid.', CURDATE())';
 		
 		DB::query($sql);
 		
@@ -691,7 +697,7 @@ class SchedulesData extends CodonData
 		$bid_info = self::getBid($bidid);
 		
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'bids 
-					WHERE `bidid`='.$bidid;
+				WHERE `bidid`='.$bidid;
 		
 		DB::query($sql);
 		

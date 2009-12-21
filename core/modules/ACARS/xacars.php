@@ -15,9 +15,9 @@
  */
  
 error_reporting(0);
-Debug::log($_SERVER['QUERY_STRING'], 'acars');
-Debug::log($_SERVER['REQUEST_URI'], 'acars');
-Debug::log(print_r($_REQUEST, true), 'acars');
+Debug::log($_SERVER['QUERY_STRING'], 'xacars');
+Debug::log($_SERVER['REQUEST_URI'], 'xacars');
+Debug::log(print_r($_REQUEST, true), 'xacars');
 
 class Coords {
 	public $lat;
@@ -61,7 +61,7 @@ switch($acars_action)
 	case 'data':
 	
 		$flight = $_REQUEST['DATA2'];
-		Debug::log('FLIGHT PLAN REQUEST', 'acars');
+		Debug::log('FLIGHT PLAN REQUEST', 'xacars');
 		
 		# They requested latest bid
 		if(strtolower($flight) == 'bid')
@@ -98,7 +98,7 @@ switch($acars_action)
 			
 			$route = SchedulesData::GetScheduleByFlight($code, $flight_num);
 			
-			Debug::log(print_r($route, true), 'acars');
+			Debug::log(print_r($route, true), 'xacars');
 			
 			if(!$route)
 			{
@@ -139,7 +139,7 @@ $route->flightlevel
 		
 		break;
 				
-	case 'acars':
+	case 'xacars':
 	
 		# Pass success by default
 		$outstring = 'Success';
@@ -165,7 +165,7 @@ $route->flightlevel
 			/*	
 			VMA001||VMW5421|N123K5||KORD~~KMIA|N51 28.3151 W0 26.8892|88||||59|328|00000|14|IFR|0||
 			*/
-			Debug::log('BEGINFLIGHT', 'acars');
+			Debug::log('BEGINFLIGHT', 'xacars');
 			$data = explode('|', $_REQUEST['DATA3']);
 			
 			/* Get the pilot info */
@@ -262,7 +262,7 @@ $route->flightlevel
 			'client'=>'xacars',
 		);
 		
-		Debug::log(print_r($fields, true), 'acars');
+		Debug::log(print_r($fields, true), 'xacars');
 		
 		ACARSData::UpdateFlightData($fields);
 		
@@ -354,7 +354,7 @@ $route->flightlevel
 				'load'=>$load,
 				'log'=> $_GET['log']);
 				
-		Debug::log(print_r($data, true), 'acars');
+		Debug::log(print_r($data, true), 'xacars');
 		
 		$ret = ACARSData::FilePIREP($data[0], $data);
 				

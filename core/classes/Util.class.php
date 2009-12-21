@@ -42,6 +42,26 @@ class Util
 	
 	public static $trace;
 	
+	
+	/**
+	 * Send a file out to the browser so a user can download it
+	 *
+	 * @param string $contents The contents of what they downloading
+	 * @param string $save_as The default filename
+	 * @param string $mime_type The mime-type (default text/plain)
+	 * @return none 
+	 *
+	 */
+	public static function downloadFile($contents, $save_as, $mime_type='text/plain')
+	{
+		# Set the headers so the browser things a file is being sent
+		header('Content-Type: '.$mime_type);
+		header('Content-Disposition: attachment; filename="'.$save_as.'"');
+		header('Content-Length: ' . strlen($contents));
+		
+		echo $contents;
+	} 
+	
 	/**
 	 * Convert PHP 0-6 days to the Compact M T W R F S Su
 	 */

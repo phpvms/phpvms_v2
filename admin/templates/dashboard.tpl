@@ -20,7 +20,7 @@ Loading...
 			</ul>
 			
 			<?php
-			if(Config::Get('PHPVMS_CENTRAL_ENABLED') == true)
+			if(Config::Get('VACENTRAL_ENABLED') == true)
 			{
 			?>
 			<h3>vaCentral Status: </h3>

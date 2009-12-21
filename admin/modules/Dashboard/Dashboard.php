@@ -32,7 +32,7 @@ class Dashboard extends CodonModule
 	public function index()
 	{
 		/* Dashboard.tpl calls the functions below
-				*/
+		 */
 		
 		$this->CheckForUpdates();
 		CentralData::send_vastats();

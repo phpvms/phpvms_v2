@@ -81,8 +81,11 @@ class ACARSData extends CodonData
 		// Get the airports data
 		$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
 		$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
-		$dep_apt->name = DB::escape($dep_apt->name);
-		$arr_apt->name = DB::escape($arr_apt->name);
+		$data['depapt'] = DB::escape($dep_apt->name);
+		$data['arrapt'] = DB::escape($arr_apt->name);
+		
+		unset($dep_apt);
+		unset($arr_apt);
 		
 		// Clean up times
 		if(!is_numeric($data['deptime']))
@@ -111,7 +114,10 @@ class ACARSData extends CodonData
 				$data['heading'] += 360;
 			}
 		}
-	
+
+		// Manually add the last set
+		$data['lastupdate'] = 'NOW()';
+			
 		// first see if we exist:
 		$sql = 'SELECT `id`
 				FROM '.TABLE_PREFIX."acarsdata 
@@ -131,8 +137,7 @@ class ACARSData extends CodonData
 			 */
 			$pilotid = $data['pilotid'];
 			unset($data['pilotid']);
-				
-			//foreach(self::$fields as $field)
+			
 			foreach($data as $field => $value)
 			{
 				$value = DB::escape(trim($value));
@@ -141,6 +146,10 @@ class ACARSData extends CodonData
 				if($field == 'messagelog')
 				{
 					$upd[] ="`messagelog`=CONCAT(`messagelog`, '{$value}')";
+				}
+				elseif($field == 'lastupdate')
+				{
+					$upd[] = "`lastupdate`=NOW()";
 				}
 				// Update times
 				elseif($field == 'deptime' || $field == 'arrtime')
@@ -156,11 +165,6 @@ class ACARSData extends CodonData
 					$upd[] = "`{$field}`='{$value}'";
 				}
 			}
-			
-			// Update Airports	
-			$upd[] = "`depapt`='{$dep_apt->name}'";
-			$upd[] = "`arrapt`='{$arr_apt->name}'";
-			$upd[] = "`lastupdate`=NOW()";
 			
 			$upd = implode(',', $upd);
 			$query = 'UPDATE '.TABLE_PREFIX."acarsdata 
@@ -184,18 +188,17 @@ class ACARSData extends CodonData
 					if($value == '') $value = time();
 					$vals[] = "FROM_UNIXTIME({$value})";
 				}
+				elseif($field == 'lastupdate')
+				{
+					$vals[] = 'NOW()';
+				}
 				else
 				{
 					$value = DB::escape($value);
 					$vals[] = "'{$value}'";
 				}
 			}
-			
-			// Manually add the last set
-			$ins[] = '`lastupdate`'; $vals[] = 'NOW()';
-			$ins[] = '`depapt`'; $vals[] = "'{$dep_apt->name}'";
-			$ins[] = '`arrapt`'; $vals[] = "'{$arr_apt->name}'";
-			
+						
 			$ins = implode(',', $ins);
 			$vals = implode(',', $vals);
 			
@@ -243,7 +246,7 @@ class ACARSData extends CodonData
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."acarsdata 
 					WHERE `pilotid`='{$pilotid}'";
 		
-		return DB::get_row($sql);		
+		return DB::get_row($sql);	
 	}
 	
 	public static function get_flight($code, $flight_num)
@@ -320,22 +323,22 @@ class ACARSData extends CodonData
 	/**
 	 * This returns all of the current ACARS flights within the cutoff
 	 *
-	 * @param int $cutofftime This is the cut-off time in hours (12 hours return in)
+	 * @param int $cutofftime This is the cut-off time in minutes (12 hours return in)
 	 * @return array Returns an array of objects with the ACARS data
 	 *
 	 */
 	public static function GetACARSData($cutofftime = '')
 	{
 		//cutoff time in days
-		if($cutofftime == '' && $cutofftime != null)
+		if($cutofftime == '')
 		{
 			// Go from minutes to hours
-			$cutofftime = Config::Get('ACARS_LIVE_TIME') / 60;
+			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 			//$cutofftime = $cutofftime / 60;			
 		}
 		else
 		{
-			$cutofftime = 12;
+			$cutofftime = 720;
 		}
 		
 		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a
@@ -353,7 +356,7 @@ class ACARSData extends CodonData
 				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
 				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
-				WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) <= a.`lastupdate`';
+				WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 	}

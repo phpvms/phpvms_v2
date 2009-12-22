@@ -1,11 +1,11 @@
 <h3>Add Comment to PIREP</h3>
 <form action="<?php echo url('/pireps/viewpireps');?>" method="post">
 <?php
-$pirepfields = array();
 // List all of the custom PIREP fields
 if(!$pirepfields)
 {
 	echo '<p>There are no custom fields to edit for PIREPs!</p>';
+	return;
 }
 
 foreach($pirepfields as $field)

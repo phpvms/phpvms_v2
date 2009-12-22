@@ -299,7 +299,7 @@ class Operations extends CodonModule
 		
 		if($type == 'schedules' || $type == 'activeschedules')
 		{
-			$params = array();
+			$params = array('s.enabled' => 1);
 			$schedules = SchedulesData::findSchedules($params, $num_per_page, $start);
 			
 			$this->set('title', 'Viewing Active Schedules');

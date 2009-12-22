@@ -402,6 +402,29 @@ class DB
 		return $sql;
 	}
 	
+	
+	/**
+	 * Write out the last query to a debug log, or error
+	 *
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function write_debug()
+	{
+		$log = debug_backtrace();
+		$call_list = array();
+		
+		foreach($log as $caller)
+		{
+			$call_list[] = $caller['class'].$caller['type'].$caller['function'];
+		}
+		$callers = implode('->', $call_list);
+		unset($call_list);
+		
+		Debug::log("Caller: ".$callers);
+		Debug::log(self::$last_query."\n".self::$error);
+	}
+	
 	/**
 	 * Return array of results. Default returns array of
 	 * objects. Can be ARRAY_A, ARRAY_N or OBJECT, for
@@ -428,7 +451,7 @@ class DB
 		// Log any erronious queries
 		if(self::$DB->errno != 0)
 		{
-			Debug::log($query."\n".self::$DB->error);
+			self::write_debug();
 		}
 		
 		return $ret;
@@ -457,7 +480,7 @@ class DB
 		// Log any erronious queries
 		if(self::$DB->errno != 0)
 		{
-			Debug::log($query."\n".self::$DB->error);
+			self::write_debug();
 		}
 		
 		return $ret;
@@ -484,7 +507,7 @@ class DB
 		// Log any erronious queries
 		if(self::$DB->errno != 0)
 		{
-			Debug::log($query."\n".self::$DB->error."\n\n");
+			self::write_debug();
 		}
 		
 		return $ret; //self::$insert_id;

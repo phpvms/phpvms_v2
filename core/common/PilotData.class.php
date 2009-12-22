@@ -246,7 +246,7 @@ class PilotData extends CodonData
 		/* Cleanup any specific parameters */	
 		if(isset($params['location']))
 		{	
-			$params['location'] = strtoupper($data['location']);
+			$params['location'] = strtoupper($params['location']);
 		}
 		
 		if(isset($params['retired']))
@@ -285,14 +285,13 @@ class PilotData extends CodonData
 		
 		$res = DB::query($sql);
 		
+		DB::debug();
+		
 		if(DB::errno() != 0)
 		{
 			return false;
 		}
-			
-		# Generate a fresh signature
-		self::GenerateSignature($pilotid);
-		
+				
 		return true;
 	}
 	

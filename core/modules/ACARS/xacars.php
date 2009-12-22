@@ -14,10 +14,12 @@
  * SDK Docs: http://www.xacars.net/index.php?Client-Server-Protocol
  */
  
-error_reporting(0);
+	error_reporting(E_ALL ^ E_NOTICE);
+	ini_set('display_errors', 'on');
+	
 Debug::log($_SERVER['QUERY_STRING'], 'xacars');
 Debug::log($_SERVER['REQUEST_URI'], 'xacars');
-Debug::log(print_r($_REQUEST, true), 'xacars');
+Debug::log(serialize($_REQUEST), 'xacars');
 
 class Coords {
 	public $lat;
@@ -54,6 +56,7 @@ function get_coordinates($line)
 	return $coords;
 }
 
+
 switch($acars_action)
 {
 	
@@ -86,11 +89,6 @@ switch($acars_action)
 				echo '0|No airline code entered!';
 				return;
 			}
-			
-			# split the flight request:
-			/*preg_match('/^([A-Za-z]*)(\d*)/', $flight, $matches);
-			$code = $matches[1];
-			$flight_num = $matches[2];*/
 			
 			$flightinfo = SchedulesData::getProperFlightNum($flight);
 			$code = $flightinfo['code'];
@@ -139,11 +137,12 @@ $route->flightlevel
 		
 		break;
 				
+	case 'acars':
 	case 'xacars':
 	
 		# Pass success by default
 		$outstring = 'Success';
-
+			
 		$_REQUEST['DATA2'] = strtoupper($_REQUEST['DATA2']);	
 		if($_REQUEST['DATA2'] == 'TEST')
 		{
@@ -189,18 +188,25 @@ $route->flightlevel
 			
 			$outstring = $pilotid;			
 		}
-		elseif(strtoupper($_REQUEST['DATA2']) == 'MESSAGE')
+		elseif($_REQUEST['DATA2'] == 'MESSAGE')
 		{
+		
 			$data = $_REQUEST['DATA4'];
+			$pilotid = $_REQUEST['DATA3'];
 			
 			/* Get the flight information, from ACARS, need to
 				pull the latest flight data via the flight number
 				since acars messages don't transmit the pilot ID */
 			
 			preg_match("/Flight ID:.(.*)\n/", $data, $matches);
-			$flight_data = ACARSData::get_flight_by_pilot($_REQUEST['DATA3']);
-					
-			$pilotid = $_REQUEST['DATA3'];
+			
+			$flight_data = ACARSData::get_flight_by_pilot($pilotid);
+			
+			Debug::log('Flight data:', 'xacars');
+			Debug::log(print_r($_REQUEST, true), 'xacars');
+			
+			Debug::log('PilotID: '.$pilotid, 'xacars');
+			
 			$flightnum = $flight_data->flightnum;
 			$aircraft = $flight_data->aircraft;
 			$depicao = $flight_data->depicao;
@@ -228,6 +234,7 @@ $route->flightlevel
 		}
 		else
 		{
+			Debug::log('else', 'xacars');
 			return;
 		}
 		
@@ -236,7 +243,14 @@ $route->flightlevel
 		$dist_remain = SchedulesData::distanceBetweenPoints($coords->lat, $coords->lng, $depapt->lat, $depapt->lng);
 		
 		# Estimate the time remaining
-		$time_remain = $dist_remain / $gs;
+		if($gs > 0)
+		{
+			$time_remain = $dist_remain / $gs;
+		}
+		else
+		{
+			$time_remain = '00:00';
+		}
 
 		ob_start();
 		$fields = array(
@@ -250,9 +264,7 @@ $route->flightlevel
 			'alt'=>$alt,
 			'gs'=>$gs,
 			'depicao'=>$depicao,
-			'depapt'=>'',
 			'arricao'=>$arricao,
-			'arrapt'=>'',
 			'deptime'=>$deptime,
 			'arrtime'=>'',
 			'distremain'=>$dist_remain,

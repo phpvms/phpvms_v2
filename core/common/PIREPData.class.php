@@ -49,10 +49,10 @@ class PIREPData extends CodonData
 					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong						
 				FROM '.TABLE_PREFIX.'pireps p
-					LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-					INNER JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
-					INNER JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao 
-					INNER JOIN '.TABLE_PREFIX.'pilots u ON u.pilotid = p.pilotid ';
+				LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao 
+				INNER JOIN '.TABLE_PREFIX.'pilots u ON u.pilotid = p.pilotid ';
 		
 		/* Build the select "WHERE" based on the columns passed */		
 		$sql .= DB::build_where($params);

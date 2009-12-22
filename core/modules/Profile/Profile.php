@@ -143,6 +143,8 @@ class Profile extends CodonModule
 			return;
 		}
 		
+		print_r($this->post);
+		
 		$params = array(
 			'code' => Auth::$userinfo->code,
 			'email' => $this->post->email,
@@ -152,8 +154,12 @@ class Profile extends CodonModule
 			'retired' => false
 		);
 			
-		PilotData::updateProfile(Auth::$pilotid, $params);
-		PilotData::SaveFields(Auth::$pilotid, $_POST);
+		PilotData::updateProfile($userinfo->pilotid, $params);
+		PilotData::SaveFields($userinfo->pilotid, $_POST);
+		
+		
+		# Generate a fresh signature
+		PilotData::GenerateSignature($userinfo->pilotid);
 		
 		PilotData::SaveAvatar($userinfo->code, $userinfo->pilotid, $_FILES);
 		

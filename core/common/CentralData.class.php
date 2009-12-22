@@ -275,7 +275,10 @@ class CentralData extends CodonData
 		
 		self::set_xml('update_pireps');
 				
-		$allpireps = PIREPData::GetAllReports();
+		//$allpireps = PIREPData::GetAllReports();
+		$params = array('DATE_SUB(CURDATE(), INTERVAL 6 MONTH) <= p.submitdate');
+		$allpireps = PIREPData::findPIREPS($params);
+		
 		if(!$allpireps)
 			return false;
 		

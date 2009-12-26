@@ -109,6 +109,9 @@ class Maintenance extends CodonModule
 		}
 	
 		echo '<p>Completed!</p><br />';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset distances');
+		
 	}
 	
 	public function calculateranks()
@@ -116,6 +119,8 @@ class Maintenance extends CodonModule
 		echo '<h3>Resetting Ranks</h3>';
 		RanksData::CalculatePilotRanks();
 		echo 'Done!';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Recalculated ranks');
 	}
 	
 	public function resetpilotpay()
@@ -131,6 +136,8 @@ class Maintenance extends CodonModule
 		}
 		
 		echo 'Done';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset pilot pay');
 	}
 	
 	
@@ -148,6 +155,8 @@ class Maintenance extends CodonModule
 		}
 		
 		echo "Done";
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset signatures');
 	}
 	
 	public function resethours()
@@ -171,6 +180,9 @@ class Maintenance extends CodonModule
 		
 		StatsData::UpdateTotalHours();
 		echo 'Found '.StatsData::TotalHours().' total hours, updated<br /></p>';
+		
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset hours');
 	}
 	
 	public function resetpirepfinance()
@@ -181,5 +193,7 @@ class Maintenance extends CodonModule
 		PIREPData::PopulateEmptyPIREPS();
 		
 		echo 'Complete';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset PIREP finances');
 	}
 }

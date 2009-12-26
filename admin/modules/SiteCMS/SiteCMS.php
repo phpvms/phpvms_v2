@@ -62,6 +62,8 @@ class SiteCMS extends CodonModule
 			}
 			else
 			{
+				LogData::addLog(Auth::$userinfo->pilotid, 'Edited news item "'.$this->post->subject.'"');
+				
 				$this->set('message', Lang::gs('news.updated.success'));
 				$this->render('core_success.tpl');
 			}
@@ -71,10 +73,8 @@ class SiteCMS extends CodonModule
 			$this->DeleteNewsItem();	
 		}
 		
-		$allnews = SiteData::GetAllNews();
-		$this->set('allnews', $allnews);
+		$this->set('allnews', SiteData::GetAllNews());
 		$this->render('news_list.tpl');
-		
 	}
 	
 	public function addnews()
@@ -96,7 +96,6 @@ class SiteCMS extends CodonModule
 	
 	public function addpageform()
 	{
-		
 		$this->set('title', Lang::gs('page.add.title'));
 		$this->set('action', 'addpage');
 		
@@ -105,28 +104,28 @@ class SiteCMS extends CodonModule
 	
 	public function editpage()
 	{
-		$pageid = $this->get->pageid;
-		
-		$page = SiteData::GetPageData($pageid);
+		$page = SiteData::GetPageData( $this->get->pageid);
 		$this->set('pagedata', $page);
 		$this->set('content', @file_get_contents(PAGES_PATH . '/' . $page->filename . PAGE_EXT));
 		
 		$this->set('title', Lang::gs('page.edit.title'));
 		$this->set('action', 'savepage');
 		$this->render('pages_editpage.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Page '. $page->pagename.' edited');
 	}
 	
 	public function deletepage()
 	{
-		$pageid = $this->get->pageid;
-				
-		if(SiteData::DeletePage($pageid) == false)
+		if(SiteData::DeletePage( $this->get->pageid) == false)
 		{
 			$this->set('message', Lang::gs('page.error.delete'));
 			$this->render('core_error.tpl');
 		}
 		else
 		{
+			LogData::addLog(Auth::$userinfo->pilotid, 'Page '. $this->get->pageid.' deleted');
+			
 			$this->set('message', Lang::gs('page.deleted'));
 			$this->render('core_success.tpl');
 		}
@@ -168,7 +167,6 @@ class SiteCMS extends CodonModule
 				break;
 		}
 		
-		
 		$this->set('allpages', SiteData::GetAllPages());
 		$this->render('pages_allpages.tpl');
 	}
@@ -178,20 +176,19 @@ class SiteCMS extends CodonModule
 	 */
 	protected function add_page_post()
 	{
-		$title = $this->post->pagename;
-		$content = $this->post->content;
+		
 		$public = ($this->post->public == 'true') ? true : false;
 		$enabled = ($this->post->enabled == 'true') ? true : false;
 		
-		if(!$title)
+		if(!$this->post->pagename)
 		{
 			$this->set('message', 'You must have a title');
 			$this->render('core_error.tpl');
 			return;
 		}
 		
-		$content = stripslashes($content);
-		if(!SiteData::AddPage($title, $content, $public, $enabled))
+		$this->post->content = stripslashes($this->post->content);
+		if(!SiteData::AddPage($this->post->pagename, $this->post->content, $public, $enabled))
 		{
 			if(DB::$errno == 1062)
 			{
@@ -204,19 +201,19 @@ class SiteCMS extends CodonModule
 			
 			$this->render('core_error.tpl');
 		}
-
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added page "'.$this->post->pagename.'"');
+		
 		$this->set('message', 'Page Added!');
 		$this->render('core_success.tpl');
 	}
 	
 	protected function edit_page_post()
 	{
-		$pageid = $this->post->pageid;
-		$content = $this->post->content;
 		$public = ($this->post->public == 'true') ? true : false;
 		$enabled = ($this->post->enabled == 'true') ? true : false;
 		
-		if(!SiteData::EditFile($pageid, $content, $public, $enabled))
+		if(!SiteData::EditFile($this->post->pageid, $this->post->content, $public, $enabled))
 		{
 			$this->set('message', Lang::gs('page.edit.error'));
 			$this->render('core_error.tpl');
@@ -224,26 +221,26 @@ class SiteCMS extends CodonModule
 		
 		$this->set('message', 'Content saved');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited page "'.$this->post->pagename.'"');
 	}
-				
 	
 	protected function AddNewsItem()
 	{
-		$subject = $this->post->subject;
-		$body = $this->post->body;
-		
-		if($subject == '')
+		if($this->post->subject == '')
 			return;
 		
-		if($body == '')
+		if($this->post->body == '')
 			return;
 			
-		if(!SiteData::AddNewsItem($subject, $body))
+		if(!SiteData::AddNewsItem($this->post->subject, $this->post->body))
 		{
 			$this->set('message', 'There was an error adding the news item');
 		}
 		
 		$this->render('core_message.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added news "'.$this->post->subject.'"');
 	}
 	
 	protected function DeleteNewsItem()
@@ -257,5 +254,7 @@ class SiteCMS extends CodonModule
 		
 		$this->set('message', Lang::gs('news.item.deleted'));
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Deleted news '.$this->post->id);
 	}
 }

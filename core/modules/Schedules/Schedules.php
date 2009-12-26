@@ -231,6 +231,7 @@ class Schedules extends CodonModule
 			$params = array('s.distance' => $value);
 		}
 		
+		$params['s.enabled'] = 1;
 		$this->set('allroutes', SchedulesData::findSchedules($params));
 		$this->render('schedule_results.tpl');
 	}

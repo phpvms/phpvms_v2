@@ -143,10 +143,8 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 	
-		/* Only allow and update every 6 hours
-			If you change this, it will be known on the API side */
-		$update = CronData::check_hoursdiff('update_vainfo', self::$limits['update_vainfo']);
-		if($update == true)
+		$within_timelimit = CronData::check_hoursdiff('update_vainfo', self::$limits['update_vainfo']);
+		if($within_timelimit == true)
 		{
 			return false;
 		}
@@ -175,19 +173,21 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 			
-		$update = CronData::check_hoursdiff('update_schedules', self::$limits['update_schedules']);
-		if($update == true)
+		$within_timelimit = CronData::check_hoursdiff('update_schedules', self::$limits['update_schedules']);
+		if($within_timelimit == true)
 		{
 			return false;
 		}
 
 		self::set_xml('update_schedules');
 		
-		$schedules = SchedulesData::GetSchedules('', true);
+		$params = array('s.enabled' => true);
+		$schedules = SchedulesData::findSchedules($params);
 		
 		if(!is_array($schedules))
 			return false;
 					
+		self::$xml->addChild('total', count($schedules));
 		foreach($schedules as $sched)
 		{
 			$schedule_xml = self::$xml->addChild('schedule');
@@ -239,8 +239,8 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 		
-		$update = CronData::check_hoursdiff('update_pilots', self::$limits['update_pilots']);
-		if($update == true)
+		$within_timelimit = CronData::check_hoursdiff('update_pilots', self::$limits['update_pilots']);
+		if($within_timelimit == true)
 		{
 			return false;
 		}
@@ -262,13 +262,13 @@ class CentralData extends CodonData
 		return self::send_xml();
 	}
 	
-	public function send_all_pireps()
+	public static function send_all_pireps()
 	{
 		if(!self::central_enabled())
 			return false;
 		
-		$update = CronData::check_hoursdiff('update_pireps', self::$limits['update_pireps']);
-		if($update == true)
+		$within_timelimit = CronData::check_hoursdiff('update_pireps', self::$limits['update_pireps']);
+		if($within_timelimit == true)
 		{
 			return false;
 		}
@@ -307,7 +307,7 @@ class CentralData extends CodonData
 		}
 	}
 	
-	public function send_pirep($pirep_id)
+	public static function send_pirep($pirep_id)
 	{
 		if(!self::central_enabled())
 			return false;
@@ -319,7 +319,7 @@ class CentralData extends CodonData
 		
 		self::set_xml('add_pirep');
 		
-		$pirep = PIREPData::GetReportDetails($pirep_id);
+		$pirep = PIREPData::getReportDetails($pirep_id);
 		PIREPData::setExportedStatus($pirep_id, false);
 		
 		if(!$pirep)
@@ -337,7 +337,7 @@ class CentralData extends CodonData
 		}
 	}
 	
-	protected function get_pirep_xml($pirep)
+	protected static function get_pirep_xml($pirep)
 	{
 		$pilotid = PilotData::GetPilotCode($pirep->code, $pirep->pilotid);
 		
@@ -394,7 +394,7 @@ class CentralData extends CodonData
 		return self::send_xml();
 	}	
 	
-	protected function create_acars_flight($flight)
+	protected static function create_acars_flight($flight)
 	{
 		if(is_object($flight))
 		{

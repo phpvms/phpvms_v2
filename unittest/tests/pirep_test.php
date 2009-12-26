@@ -18,6 +18,7 @@ class PIREPTester extends UnitTestCase
 	
 	public function testSubmitPIREP()
 	{
+		echo '<h3>PIREP Checks</h3>';
 		$data = array('pilotid'=>1,
 			'code'=>'VMA',
 			'flightnum'=>'1352',

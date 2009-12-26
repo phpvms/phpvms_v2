@@ -200,7 +200,7 @@ class Registration extends CodonModule
 		
 		/* Check the email address
 		 */
-		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]*)$", $this->post->email) == false)
+		if(filter_var($this->post->email, FILTER_VALIDATE_EMAIL) == false)
 		{
 			$error = true;
 			$this->set('email_error', true);

@@ -59,6 +59,15 @@ class XML extends CodonModule
 		echo $xml->asXML();
 	}
 	
+	public function version()
+	{
+		$xml = new SimpleXMLElement('<sitedata />');
+		$xml->addChild('version', PHPVMS_VERSION);
+		
+		header('Content-type: text/xml');
+		echo $xml->asXML();
+	}
+	
 	public function getairlines()
 	{
 		$xml = new SimpleXMLElement("<sitedata />");

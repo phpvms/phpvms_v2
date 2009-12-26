@@ -16,6 +16,8 @@ class OPSTester extends UnitTestCase
 	
 	public function testRetrieveAirport()
 	{
+		echo '<h3>Core API Tests</h3>';
+		echo "<strong>Checking geonames server</strong><br />";
 		Config::Set('AIRPORT_LOOKUP_SERVER', 'geonames');
 		
 		OperationsData::RemoveAirport('PANC');
@@ -23,8 +25,7 @@ class OPSTester extends UnitTestCase
 		
 		$this->assertNotEqual($return, false);
 		
-		echo '<br />';
-		
+		echo "<strong>Checking phpVMS API server</strong><br />";
 		Config::Set('AIRPORT_LOOKUP_SERVER', 'phpvms');
 		Config::Set('PHPVMS_API_SERVER', 'http://apidev.phpvms.net');
 		OperationsData::RemoveAirport('PANC');
@@ -32,7 +33,18 @@ class OPSTester extends UnitTestCase
 		
 		$this->assertNotEqual($return, false);
 		
+	}
+	
+	public function testFindSchedules()
+	{
+		heading('findSchedules');
+		$data = SchedulesData::findSchedules(array());
+		$this->assertNotEqual($data, false);
 		
-		echo '<br >';
+		
+		heading('Find disabled schedules');
+		$data = SchedulesData::findSchedules(array('s.enabled'=>0));
+		$this->assertNotEqual($data, false);
+		
 	}
 }

@@ -160,6 +160,8 @@ class Settings extends CodonModule
 		
 		}
 		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Changed settings');
+		
 		$this->set('message', 'Settings were saved!');
 		$this->render('core_success.tpl');
 	}
@@ -171,11 +173,6 @@ class Settings extends CodonModule
 			echo 'No field name entered!';
 			return;
 		}
-		
-		$title = $this->post->title;
-		$fieldtype = $this->post->fieldtype;
-		$public = $this->post->public;
-		$showinregistration = $this->post->showinregistration;
 		
 		$data=array('title'=>$this->post->title,
 					'value'=>$this->post->value,
@@ -202,7 +199,9 @@ class Settings extends CodonModule
 		}
 		else
 		{
-			$this->set('message', 'Settings were saved!');
+			LogData::addLog(Auth::$userinfo->pilotid, 'Added custom registration field "'.$this->post->title.'"');
+			
+			$this->set('message', 'Added custom registration field "'.$this->post->title.'"');
 			$this->render('core_success.tpl');
 		}
 	}
@@ -241,7 +240,9 @@ class Settings extends CodonModule
 		}
 		else
 		{
-			$this->set('message', 'Settings were saved!');
+			LogData::addLog(Auth::$userinfo->pilotid, 'Edited custom registration field "'.$this->post->title.'"');
+			
+			$this->set('message', 'Edited custom registration field "'.$this->post->title.'"');
 			$this->render('core_success.tpl');
 		}
 	}
@@ -258,6 +259,8 @@ class Settings extends CodonModule
 		}
 		else
 		{
+			LogData::addLog(Auth::$userinfo->pilotid, 'Deleted custom field');
+			
 			$this->set('message', 'The field was deleted');
 			$this->render('core_success.tpl');
 		}
@@ -300,7 +303,9 @@ class Settings extends CodonModule
 		}
 		else
 		{
-			$this->set('message', 'PIREP field added!');
+			LogData::addLog(Auth::$userinfo->pilotid, 'Added PIREP field "'.$this->post->title.'"');
+			
+			$this->set('message', 'Added PIREP field "'.$this->post->title.'"');
 			$this->render('core_success.tpl');
 		}
 	}
@@ -324,7 +329,9 @@ class Settings extends CodonModule
 		}
 		else
 		{
-			$this->set('message', 'Field saved!');
+			LogData::addLog(Auth::$userinfo->pilotid, 'Edited PIREP field "'.$this->post->title.'"');
+			
+			$this->set('message', 'Edited PIREP field "'.$this->post->title.'"');
 			$this->render('core_success.tpl');
 		}		
 	}
@@ -342,6 +349,8 @@ class Settings extends CodonModule
 		}
 		else
 		{
+			LogData::addLog(Auth::$userinfo->pilotid, 'Deleted PIREP field');
+			
 			$this->set('message', 'The field was deleted');
 			$this->render('core_success.tpl');
 		}

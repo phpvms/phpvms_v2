@@ -413,9 +413,6 @@ class PIREPS extends CodonModule
 		# Set them as non-retired
 		PilotData::setPilotRetired($pilotid, false);
 		
-		# Send to Central
-		CentralData::send_pirep($pirepid);
-		
 		# Delete the bid, if the value for it is set
 		if($this->post->bid != '')
 		{

@@ -68,12 +68,17 @@ class PilotAdmin extends CodonModule
 				break;
 			
 			case 'deletepilot':
+			
 				$pilotid = $this->post->pilotid;
+				$pilotinfo = PilotData::getPilotData($pilotid);
 				
 				PilotData::DeletePilot($pilotid);
 				
 				$this->set('message', Lang::gs('pilot.deleted'));
 				$this->render('core_success.tpl');
+				
+				
+				LogData::addLog(Auth::$userinfo->pilotid, 'Deleted pilot '.PilotData::getPilotCode($pilotinfo->code, $pilotinfo->pilotid).' '.$pilotinfo->firstname .' ' .$pilotinfo->lastname);
 				
 				break;
 			/* These are reloaded into the #pilotgroups ID
@@ -154,6 +159,10 @@ class PilotAdmin extends CodonModule
 				
 				$this->set('message', 'Profile updated successfully');
 				$this->render('core_success.tpl');
+				
+				
+				$pilot = PilotData::getPilotData($this->post->pilotid);
+				LogData::addLog(Auth::$userinfo->pilotid, 'Updated profile for '.PilotData::getPilotCode($pilot->code, $pilot->pilotid).' '.$pilot->firstname .' ' .$pilot->lastname);
 				
 				return;
 				break;
@@ -320,9 +329,7 @@ class PilotAdmin extends CodonModule
 	
 	protected function AddGroupPost()
 	{
-		$name = $this->post->name;
-		
-		if($name == '')
+		if($this->post->name == '')
 		{
 			$this->set('message', Lang::gs('group.no.name'));
 			$this->render('core_error.tpl');
@@ -335,7 +342,7 @@ class PilotAdmin extends CodonModule
 			$permissions = PilotGroups::set_permission($permissions, $perm);
 		}
 		
-		$ret = PilotGroups::AddGroup($name, $permissions);
+		$ret = PilotGroups::AddGroup($this->post->name, $permissions);
 			
 		if(DB::errno() != 0)
 		{
@@ -346,6 +353,8 @@ class PilotAdmin extends CodonModule
 		{
 			$this->set('message', sprintf(Lang::gs('group.added'), $this->post->name));
 			$this->render('core_success.tpl');
+			
+			LogData::addLog(Auth::$userinfo->pilotid, 'Added group "'.$this->post->name.'"');
 		}		
 	}
 	
@@ -368,23 +377,22 @@ class PilotAdmin extends CodonModule
 		{
 			$this->set('message', sprintf(Lang::gs('group.saved'), $this->post->name));
 			$this->render('core_success.tpl');
+			
+			LogData::addLog(Auth::$userinfo->pilotid, 'Edited group "'.$this->post->name.'"');
 		}		
 	}
 	
 	
 	protected function AddPilotToGroup()
 	{
-		$pilotid = $this->post->pilotid;
-		$groupname = $this->post->groupname;
-		
-		if(PilotGroups::CheckUserInGroup($pilotid, $groupname))
+		if(PilotGroups::CheckUserInGroup($this->post->pilotid, $this->post->groupname))
 		{
 			$this->set('message', Lang::gs('group.pilot.already.in'));
 			$this->render('core_error.tpl');
 			return;
 		}
 		
-		$ret = PilotGroups::AddUsertoGroup($pilotid, $groupname);
+		$ret = PilotGroups::AddUsertoGroup($this->post->pilotid, $this->post->groupname);
 		
 		if(DB::errno() != 0 )
 		{
@@ -395,6 +403,9 @@ class PilotAdmin extends CodonModule
 		{
 			$this->set('message', Lang::gs('group.user.added'));
 			$this->render('core_success.tpl');
+			
+			
+			LogData::addLog(Auth::$userinfo->pilotid, 'Added pilot #'.$this->post->pilotid.' to group "'.$this->post->groupname.'"');
 		}		
 	}
 	
@@ -414,6 +425,8 @@ class PilotAdmin extends CodonModule
 		{
 			$this->set('message', 'Removed');
 			$this->render('core_success.tpl');
+			
+			LogData::addLog(Auth::$userinfo->pilotid, 'Removed pilot #'.$this->post->pilotid.' from group "'.$this->post->groupid.'"');
 		}
 	}
 	
@@ -437,6 +450,8 @@ class PilotAdmin extends CodonModule
 		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true);
 	
 		Util::SendEmail($pilot->email, $subject, $message);
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Approved '.PilotData::getPilotCode($pilot->code, $pilot->pilotid).' - ' .$pilot->firstname.' ' .$pilot->lastname);
 	}
 	
 	protected function RejectPilot()
@@ -448,16 +463,13 @@ class PilotAdmin extends CodonModule
 		$subject = Lang::gs('email.register.rejected.subject');
 				
 		$this->set('pilot', $pilot);		
-		$message = "Dear $pilot->firstname $pilot->lastname,
-Your registration for ".SITE_NAME." was denied. Please contact an admin at <a href=\"".SITE_URL."\">".SITE_URL."</a> to dispute this. 
-				
-Thanks!
-".SITE_NAME." Staff";
+		$message = Template::Get('email_registrationdenied.tpl', true, true, true);
 		
 		Util::SendEmail($pilot->email, $subject, $message);
 		
 		# Reject in the end, since it's delted
 		PilotData::RejectPilot($this->post->id);
+		LogData::addLog(Auth::$userinfo->pilotid, 'Approved '.PilotData::getPilotCode($pilot->code, $pilot->pilotid).' - ' .$pilot->firstname.' ' .$pilot->lastname);
 	}
 	
 	protected function ChangePassword()
@@ -493,6 +505,9 @@ Thanks!
 			$this->set('message', Lang::gs('password.changed'));
 			$this->render('core_success.tpl');
 		}
+		
+		$pilot = PilotData::getPilotData($this->post->pilotid);
+		LogData::addLog(Auth::$userinfo->pilotid, 'Changed the password for '.PilotData::getPilotCode($pilot->code, $pilot->pilotid).' - ' .$pilot->firstname.' ' .$pilot->lastname);
 	}
 	
 	protected function AddAward()
@@ -511,6 +526,9 @@ Thanks!
 		}
 		
 		AwardsData::AddAwardToPilot($this->post->pilotid, $this->post->awardid);
+		
+		$pilot = PilotData::getPilotData($this->post->pilotid);
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added and award to '.PilotData::getPilotCode($pilot->code, $pilot->pilotid).' - ' .$pilot->firstname.' ' .$pilot->lastname);
 	}
 	
 	protected function DeleteAward()
@@ -523,6 +541,5 @@ Thanks!
 			$this->render('core_success.tpl');
 			return;
 		}
-		
 	}
 }

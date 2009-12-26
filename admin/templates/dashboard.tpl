@@ -11,30 +11,48 @@ Loading...
 </div>
 <table width="100%">
 	<tr>
-		<td valign="top" width="50%">
+		<td valign="top">		
 			<h3>VA Stats:</h3>
 			<ul>
 				<li><strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?></li>
 				<li><strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?></li>
 				<li><strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?></li>
 			</ul>
+		</td>
+		<?php
+		if(Config::Get('VACENTRAL_ENABLED') == true)
+		{
+		?>
+		<td valign="top" width="50%">
 			
-			<?php
-			if(Config::Get('VACENTRAL_ENABLED') == true)
-			{
-			?>
-			<h3>vaCentral Status: </h3>
+				<h3>vaCentral Status: </h3>
 				<p>You have <strong><?php echo $unexported_count?></strong> PIREPS waiting for export to vaCentral. 
 				<a href="<?php echo SITE_URL ?>/admin/index.php/vacentral/sendqueuedpireps">Click here to send them</a> </p>
 			
-			<?php
-			}
-			?>
 		</td>
-		<td valign="top" width="50%">
+		<?php
+		}
+		?>
+	</tr>
+	<tr>
+		<td valign="top">
 			<h3 style="margin-bottom: 0px;">Latest News</h3>
-			<?php echo $latestnews; ?>
+			<?php echo $phpvms_news; ?>
+			<p><a href="http://www.phpvms.net" target="_new">View All News</a></p>
 		</td>
+		<?php
+		if(Config::Get('VACENTRAL_ENABLED') == true)
+		{
+		?>
+		<td valign="top" valign="50%">
+			
+			<h3 style="margin-bottom: 0px;">Latest vaCentral News</h3>
+			<?php echo $vacentral_news; ?>
+			<p><a href="http://www.vacentral.net" target="_new">View All News</a></p>
+		</td>
+		<?php
+		}
+		?>
 	</tr>
 </table>
 <script type="text/javascript">

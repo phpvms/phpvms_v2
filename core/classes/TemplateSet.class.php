@@ -108,9 +108,9 @@ class TemplateSet
 	 * @param string $tpl_name Template name including extention
 	 * @param bool $checkskin Check the skin folder or not
 	 */
-	public function Show($tpl_name, $checkskin=true)
+	public function Show($tpl_name, $checkskin=true, $force_base=false)
 	{
-		return $this->ShowTemplate($tpl_name, $checkskin);
+		return $this->ShowTemplate($tpl_name, $checkskin, $force_base);
 	}
 	
 	
@@ -125,7 +125,7 @@ class TemplateSet
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public function ShowTemplate($tpl_name, $checkskin=true)
+	public function ShowTemplate($tpl_name, $checkskin=true, $force_base=false)
 	{		
 		if($this->enable_caching == true)
 		{
@@ -136,7 +136,7 @@ class TemplateSet
 			{
 				unlink($cached_file);
 				
-				$tpl_output = $this->GetTemplate($tpl_name, true);
+				$tpl_output = $this->GetTemplate($tpl_name, true, $checkskin, $force_base);
 				
 				echo $tpl_output;
 				
@@ -155,7 +155,7 @@ class TemplateSet
 		}
 		else
 		{
-			return $this->GetTemplate($tpl_name,false,$checkskin);
+			return $this->GetTemplate($tpl_name, false, $checkskin, $force_base);
 		}
 	}
 	
@@ -169,9 +169,9 @@ class TemplateSet
 	 * @return mixed Returns template text is $ret is true
 	 *
 	 */
-	public function Get($tpl_name, $ret=false, $checkskin=true)
+	public function Get($tpl_name, $ret=false, $checkskin=true, $force_base=false)
 	{
-		return $this->GetTemplate($tpl_name, $ret, $checkskin);
+		return $this->GetTemplate($tpl_name, $ret, $checkskin, $force_base);
 	}
 	
 	/**

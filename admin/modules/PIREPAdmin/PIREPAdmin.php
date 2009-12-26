@@ -160,7 +160,40 @@ class PIREPAdmin extends CodonModule
 			$this->get->start = 0;
 		
 		$num_per_page = 20;
+		$this->set('title', 'PIREPs List');
+		
 		$params = array();
+		if($this->get->action == 'filter')
+		{
+			$this->set('title', 'Filtered PIREPs');
+			
+			if($this->get->type == 'code')
+			{
+				$params = array('p.code' => $this->get->query);
+			}
+			elseif($this->get->type == 'flightnum')
+			{
+				$params = array('p.flightnum' => $this->get->query);
+			}
+			elseif($this->get->type == 'pilotid')
+			{
+				$params = array('p.pilotid' => $this->get->query);
+			}
+			elseif($this->get->type == 'depapt')
+			{
+				$params = array('p.depicao' => $this->get->query);
+			}
+			elseif($this->get->type == 'arrapt')
+			{
+				$params = array('p.arricao' => $this->get->query);
+			}
+		}
+		
+		if(isset($this->get->accepted) && $this->get->accepted != 'all')
+		{
+			$params['p.accepted'] = $this->get->accepted;
+		}
+		
 		$allreports = PIREPData::findPIREPS($params, $num_per_page, $this->get->start);
 		
 		if(count($allreports) >= $num_per_page)
@@ -173,8 +206,8 @@ class PIREPAdmin extends CodonModule
 		$this->set('pending', false);
 		$this->set('load', 'viewall');
 		
-		$this->set('title', 'PIREPs List');
 		$this->set('pireps', $allreports);
+		
 		$this->render('pireps_list.tpl');
 	}
 	
@@ -206,6 +239,8 @@ class PIREPAdmin extends CodonModule
 		
 		PIREPData::deleteComment($this->post->id);
 		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Deleted a comment');
+		
 		$this->set('message', 'Comment deleted!');
 		$this->render('core_success.tpl');
 	}
@@ -227,6 +262,7 @@ class PIREPAdmin extends CodonModule
 			return;
 		}
 		
+
 		$this->set('pirepid', $this->get->pirepid);
 		$this->render('pirep_addcomment.tpl');
 	}
@@ -251,6 +287,9 @@ class PIREPAdmin extends CodonModule
 		
 		$message = Template::GetTemplate('email_commentadded.tpl', true);
 		Util::SendEmail($pirep_details->email, 'Comment Added', $message);
+		
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added a comment to PIREP #'.$pirepid);
 	}
 	
 	/**
@@ -279,6 +318,9 @@ class PIREPAdmin extends CodonModule
 		StatsData::UpdateTotalHours();
 		PilotData::UpdateLastPIREPDate($pirep_details->pilotid);
 		PilotData::resetPilotPay($pirep_details->pilotid);
+		
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Approved PIREP #'.$pirepid);
 	}
 	
 	/** 
@@ -333,6 +375,9 @@ class PIREPAdmin extends CodonModule
 			$message = Template::GetTemplate('email_commentadded.tpl', true);
 			Util::SendEmail($pirep_details->email, 'Comment Added', $message);
 		}
+		
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Rejected PIREP #'.$pirepid);
 	}
 	
 	protected function edit_pirep_post()
@@ -379,7 +424,7 @@ class PIREPAdmin extends CodonModule
 					 		
 		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{
-			$this->set('message', 'There was an error adding your PIREP');
+			$this->set('message', 'There was an error editing your PIREP');
 			$this->render('core_error.tpl');
 			return false;
 		}
@@ -404,7 +449,10 @@ class PIREPAdmin extends CodonModule
 		{
 			$this->reject_pirep_post();
 		}
-			
+		
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited PIREP #'.$this->post->id);
+		DB::debug();
 		return true;
 	}
 }

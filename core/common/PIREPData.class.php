@@ -82,9 +82,9 @@ class PIREPData extends CodonData
 	 * only want to return the latest n number of reports, use
 	 * getRecentReportsByCount()
 	 */
-	public static function getAllReports($count=20, $start=0)
+	public static function getAllReports($count='', $start=0)
 	{
-		return self::findPIREPS('', $count, $start);
+		return self::findPIREPS(array(), $count, $start);
 	}
 		
 	/**
@@ -532,10 +532,11 @@ class PIREPData extends CodonData
 			$pirepdata['rawdata'] = '';
 		}
 	
-		#var_dump($pirepdata);
 		# Escape the comment field
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		$comment = DB::escape($pirepdata['comment']);
+		
+		$pirepdata['exported'] = 0;
 				
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps(	
 							`pilotid`, 
@@ -570,7 +571,7 @@ class PIREPData extends CodonData
 							'{$pirepdata['load']}',
 							'{$pirepdata['fuelused']}',
 							'{$pirepdata['source']}',
-							0,
+							{$pirepdata['exported']},
 							'{$pirepdata['rawdata']}')";
 							
 		$ret = DB::query($sql);
@@ -613,9 +614,10 @@ class PIREPData extends CodonData
 				."Comment: {$pirepdata['comment']}";
 				 
 		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
-		//SchedulesData::IncrementFlownCount($pirepdata['code'], $pirepdata['flightnum']);
-		
+	
 		DB::$insert_id = $pirepid;
+		
+		CentralData::send_pirep($pirepid);
 		
 		return true;
 	}
@@ -867,7 +869,12 @@ class PIREPData extends CodonData
 	/**
 	 * Delete a flight report and all of its associated data
 	 */
-	public static function DeleteFlightReport($pirepid)
+	public static function deletePIREP($pirepid)
+	{
+		self::deleteFlightReport($pirepid);
+	}
+	
+	public static function deleteFlightReport($pirepid)
 	{
 		$pirepid = intval($pirepid);
 		$pirep_details = self::getReportDetails($pirepid);

@@ -62,6 +62,8 @@ class MassMailer extends CodonModule
 			}
 			
 			echo 'Complete!';
+			
+			LogData::addLog(Auth::$userinfo->pilotid, 'Sent pass mail');
 			return;
 		}		
 		

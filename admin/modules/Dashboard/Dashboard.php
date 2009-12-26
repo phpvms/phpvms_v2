@@ -85,7 +85,7 @@ class Dashboard extends CodonModule
 	{
 		if(NOTIFY_UPDATE == true)
 		{
-			$url = Config::Get('PHPVMS_API_SERVER').'/version';
+			$url = Config::Get('PHPVMS_API_SERVER').'/version/get/xml/'.PHPVMS_VERSION;
 			
 			# Default to fopen(), if that fails it'll use CURL
 			$file = new CodonWebService();
@@ -103,12 +103,8 @@ class Dashboard extends CodonModule
 				return;
 			}
 			
-			$contents = str_replace('\n', '', $contents);
-			
-			preg_match('/^.*Version: (.*)<\/span>/', $contents, $version_info);
-			$version = $version_info[1];
-			
-			$postversion = intval(str_replace('.', '', trim($version)));
+			$xml =simplexml_load_string($contents);
+			$postversion = intval(str_replace('.', '', trim($xml->version)));
 			$currversion = intval(str_replace('.', '', PHPVMS_VERSION));
 			
 			if($currversion < $postversion)
@@ -140,7 +136,34 @@ class Dashboard extends CodonModule
 					break;
 			}
 			
-			$this->set('latestnews', $contents);
+			$this->set('phpvms_news', $contents);
+			
+			if(Config::Get('VACENTRAL_ENABLED') == true)
+			{
+				/* Get the latest vaCentral News */
+				$contents = $file->get(Config::Get('VACENTRAL_NEWS_FEED'));
+				$feed = simplexml_load_string($contents);
+				$contents = '';
+				
+				$i=1;
+				$count = 5; // Show the last 5
+				foreach($feed->channel->item as $news)
+				{
+					$news_content = (string) $news->description;
+					$date_posted = str_replace('-0400', '', (string) $news->pubDate);
+					
+					$contents.="<div class=\"newsitem\">
+									<b>{$news->title}</b> {$news_content}
+									<br /><br />
+									Posted: {$date_posted}
+								</div>";
+					
+					if($i++ == $count)
+						break;
+				}
+				
+				$this->set('vacentral_news', $contents);
+			}
 		}
 	}
 }

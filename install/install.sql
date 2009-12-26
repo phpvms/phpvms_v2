@@ -6,6 +6,14 @@
 --
 -- Manually running this will screw up your install!! ;
 
+
+CREATE TABLE `phpvms_test`.`phpvms_adminlog` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`pilotid` INT NOT NULL ,
+	`datestamp` DATETIME NOT NULL ,
+	`message` VARCHAR( 255 ) NOT NULL
+) ENGINE = MYISAM ;
+
 CREATE TABLE `phpvms_awards` (
 	`awardid` INT NOT NULL AUTO_INCREMENT ,
 	`name` VARCHAR( 25 ) NOT NULL ,

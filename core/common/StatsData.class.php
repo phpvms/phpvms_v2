@@ -136,7 +136,7 @@ class StatsData extends CodonData
 	
 	public static function UpdateTotalHours()
 	{
-		$pireps = PIREPData::GetAllReports();
+		$pireps = PIREPData::findPIREPS(array('p.accepted'=>1));
 		
 		if(!$pireps)
 		{
@@ -146,9 +146,6 @@ class StatsData extends CodonData
 		$totaltime = 0;
 		foreach($pireps as $pirep)
 		{
-			if($pirep->accepted != PIREP_ACCEPTED)
-				continue; 
-				
 			$totaltime = Util::AddTime($totaltime, $pirep->flighttime);
 		}
 		
@@ -333,7 +330,7 @@ class StatsData extends CodonData
 	public static function PilotAircraftFlownCounts($pilotid)
 	{
 		//Select aircraft types
-		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count, SUM(p.flighttime) AS hours,
+		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count, SUM(p.flighttime) AS hours
 				FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
 				WHERE p.aircraft = a.id AND p.pilotid='.intval($pilotid).'
 				GROUP BY a.name';

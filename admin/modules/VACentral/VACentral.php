@@ -25,7 +25,7 @@ class VACentral extends CodonModule
 	
 	public function index()
 	{
-		$this->render('central_main.tpl');
+		$this->render('vacentral_index.tpl');
 	}
 	
 	public function sendqueuedpireps()
@@ -54,6 +54,8 @@ class VACentral extends CodonModule
 		}
 		
 		echo "Completed</p>";
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'vaCentral - queued PIREPs sent');
 	}
 	
 	public function sendschedules()
@@ -61,6 +63,8 @@ class VACentral extends CodonModule
 		echo '<h3>Sending schedules...</h3>';
 		$ret = CentralData::send_schedules();
 		$this->parse_response($ret);
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'vaCentral - schedules sent');
 	}
 	
 	public function sendpireps()
@@ -68,6 +72,8 @@ class VACentral extends CodonModule
 		echo '<h3>Sending all PIREPS</h3>';
 		$ret = CentralData::send_all_pireps();
 		$this->parse_response($ret);
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'vaCentral - PIREPS sent');
 	}
 	
 	/* Utility functions */

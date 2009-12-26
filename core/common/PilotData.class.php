@@ -205,6 +205,8 @@ class PilotData extends CodonData
 	/**
 	 * Save any changes to a pilot's profile, calls updateProfile()
 	 * 
+	 * @deprecated Use updateProfile() instead!!
+	 * 
 	 */
 	public static function saveProfile($params)
 	{
@@ -284,8 +286,6 @@ class PilotData extends CodonData
 		$sql .= " WHERE `pilotid`={$pilotid}";
 		
 		$res = DB::query($sql);
-		
-		DB::debug();
 		
 		if(DB::errno() != 0)
 		{
@@ -481,9 +481,9 @@ class PilotData extends CodonData
 			$numflights = 1;
 	
 		$params = array(
-			'totalhours'=>$flighttime,
-			'totalflights'=>($pilotdata->totalflights + $numflights),
-			);
+			'totalhours' => $flighttime,
+			'totalflights' => ($pilotdata->totalflights + $numflights),
+		);
 		
 		return self::updateProfile($pilotid, $params);
 	}
@@ -513,7 +513,7 @@ class PilotData extends CodonData
 		$params = array(
 			'totalhours'=>$totalhours,
 			'totalflights'=>$totalpireps,
-			);
+		);
 		
 		return self::updateProfile($pilotid, $params);
 	}
@@ -552,7 +552,6 @@ class PilotData extends CodonData
 	 */
 	public static function ReplaceFlightData($params)
 	{
-		
 		/*$data = array(
 			'pilotid' => '',
 			'flighttime' => '',
@@ -565,50 +564,10 @@ class PilotData extends CodonData
 		unset($data['pilotid']);
 		
 		return self::updateProfile($pilotid, $params);
-		
-		/*$data['pilotid'] = intval($data['pilotid']);
-		$data['totalhours'] = floatval($data['totalhours']);
-		$data['totalflights'] = floatval($data['totalflights']);
-		$data['totalpay'] = floatval($data['totalpay']);
-		$data['transferhours'] = floatval($data['transferhours']);
-		
-		$params = array(
-			'totalhours'=>$flighttime,
-			'totalflights'=>($pilotdata->totalflights + $numflights),
-			);
-		
-		
-		
-		$sql = "UPDATE " .TABLE_PREFIX."pilots
-					SET `totalhours`={$data['totalhours']}, `totalflights`={$data['totalflights']}, 
-						`totalpay`={$data['totalpay']}";
-		
-		if($data['transferhours'] != '')
-		{
-			$sql .=", `transferhours`={$data['transferhours']}";	
-		}	
-					
-		$sql .= " WHERE pilotid={$data['pilotid']}";
-		
-		$res = DB::query($sql);
-		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;*/
 	}
 	
 	public static function resetPilotPay($pilotid)
 	{
-		/*$sql = 'SELECT payrate 
-				FROM '.TABLE_PREFIX.'ranks r, '.TABLE_PREFIX.'pilots p 
-				WHERE p.rank=r.rank 
-					AND p.pilotid='.$pilotid;
-					
-		$payrate = DB::get_row($sql);
-		$rate = $payrate->payrate;
-		unset($payrate);*/
-
 		$total = 0;
 		
 		self::updateProfile($pilotid, array('totalpay'=>0));
@@ -700,20 +659,56 @@ class PilotData extends CodonData
 		
 		if($days == '')
 			$days = 90;
+		
+		$days = 1;
+		
+		$sql = "SELECT * FROM ".TABLE_PREFIX."pilots
+				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `joindate`  
+					AND `lastpirep` = '0000-00-00 00:00:00'
+					AND `retired` = 0";
+				  
+		$results = DB::get_results($sql);
+		
+		$sql = "SELECT * FROM ".TABLE_PREFIX."pilots
+				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `lastpirep` 
+					AND `lastpirep` != '0000-00-00 00:00:00'
+					AND `retired` = 0";
+				  
+		$results2 = DB::get_results($sql);
+		
+		// messy but two queries, merge them both
+		if(!is_array($results) && !is_array($results2))
+		{
+			return false;
+		}
+		else
+		{
+			if(is_array($results) && is_array($results2))
+			{
+				$results = array_merge($results, $results2);
+			}
 			
-		$sql = 'UPDATE '.TABLE_PREFIX."pilots
-				SET `retired`=1
-				WHERE DATE_SUB(CURDATE(), INTERVAL {$days} DAY) > `lastpirep`
-					AND `lastpirep` != '0000-00-00 00:00:00'";
+			if(!is_array($results) && is_array($results2))
+			{
+				$results = $results2;
+			}
+		}
 		
-		DB::query($sql);
+		if(!$results)
+		{
+			return false;
+		}
 		
-		$sql = 'UPDATE '.TABLE_PREFIX."pilots
-				SET `retired`=1
-				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `joindate` 
-					AND `lastpirep` = '0000-00-00 00:00:00'";
-		
-		DB::query($sql);
+		foreach($results as $row)
+		{
+			// Set them retired
+			self::updateProfile($row->pilotid, array('retired'=>1));
+			
+			Template::Set('pilot', $row);
+			$pilot_retired_template = Template::Get('email_pilot_retired.tpl', true, true, true);
+			
+			//Util::SendEmail($row->email, Lang::get('email.pilot.retired.subject'), $pilot_retired_template);
+		}
 	}
 	
 	

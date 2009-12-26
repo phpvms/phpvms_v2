@@ -13,6 +13,7 @@ class TimesTester extends UnitTestCase
 	
 	public function testTimesAdded()
 	{
+		echo '<h3>Checking Times</h3>';
 		$sql='SELECT `flighttime`
 			  FROM '.TABLE_PREFIX.'pireps 
 			  WHERE `accepted`='.PIREP_ACCEPTED;
@@ -41,8 +42,12 @@ class TimesTester extends UnitTestCase
 		$this->assertNotEqual(0, $total);
 		
 		heading('Comparing pilot to pilot vs all PIREPS');
-		$this->assertEqual($total, $this->added_time);		
+		$this->assertEqual($total, $this->added_time);
+		
+		heading('Compare to STAT total hours');
+		$this->assertEqual($total, StatsData::TotalHours());
+		
+		
 		echo '<br />';
 	}
 }
-

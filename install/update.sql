@@ -9,6 +9,15 @@ CREATE TABLE `phpvms_sessions` (
    `logintime` DATETIME NOT NULL
 ) ENGINE = MYISAM ;
 
+
+-- Admin log table;
+CREATE TABLE `phpvms_test`.`phpvms_adminlog` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`pilotid` INT NOT NULL ,
+	`datestamp` DATETIME NOT NULL ,
+	`message` VARCHAR( 255 ) NOT NULL
+) ENGINE = MYISAM ;
+
 -- Sessions additions;
 DELETE FROM `phpvms_sessions`;
 ALTER TABLE `phpvms_sessions` ADD PRIMARY KEY ( `id` ) ;

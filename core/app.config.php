@@ -65,6 +65,7 @@ Config::Set('PIREP_CUSTOM_FIELD_EDIT', '48');
 /* What to order schedules by. Use s.[column_name] [ASC/DESC],
 	with the column name being from the schedules table */
 Config::Set('SCHEDULES_ORDER_BY', 's.flightnum ASC');
+
 /* For PIREPS_ORDER_BY use p.[column_name] [ASC/DESC] */
 Config::Set('PIREPS_ORDER_BY', 'p.submitdate DESC');
 
@@ -183,7 +184,7 @@ Config::Set('EMAIL_SMTP_PASS', '');
 Config::Set('AIRPORT_LOOKUP_SERVER', 'geonames'); 
 Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
 Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
-Config::Set('VAC_RETRIEVE_AIRPORTS', true);
+Config::Set('VACENTRAL_NEWS_FEED', 'http://feeds.feedburner.com/vacentral');
 Config::Set('GEONAME_API_SERVER', 'http://ws.geonames.org');
 
 Config::Set('URL_REWRITE', false);

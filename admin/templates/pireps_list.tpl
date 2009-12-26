@@ -7,12 +7,17 @@ if($title!='')
 <?php
 if(!$pireps)
 {
-	echo '<p>No reports have been found</p>';
+	echo '<p>No reports have been found</p></div>';
 	return;
 }
 ?>
 <p>There are a total of <?php echo count($pireps);?> flight reports in this category. <a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/approveall">Click to approve all</a></p>
 <?php
+if($_GET['module'] == 'pirepadmin' && $_GET['page'] == 'viewall')
+{
+	Template::Show('pireps_filter.tpl');
+}
+
 if(isset($paginate))
 {
 ?>

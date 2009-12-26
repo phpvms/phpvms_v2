@@ -29,7 +29,7 @@
 			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
 			
 	</td>
-	<td align="left" valign="top"  style="padding-bottom: 15px; padding-top: 7px;">
+	<td align="left" valign="top" colspan="3"  style="padding-bottom: 15px; padding-top: 7px;">
 	<span style="float: right">
 	<a id="dialog" class="jqModal"
 		href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewcomments?pirepid=<?php echo $pirep->pirepid;?>">

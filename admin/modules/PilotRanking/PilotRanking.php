@@ -92,6 +92,7 @@ class PilotRanking extends CodonModule
 					break;				
 				case 'deleteaward':
 					$ret = AwardsData::DeleteAward($this->post->id);
+					LogData::addLog(Auth::$userinfo->pilotid, 'Deleted an award');
 					break;
 			}
 		}
@@ -150,6 +151,8 @@ class PilotRanking extends CodonModule
 		
 		$this->set('message', 'Rank Added!');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added the rank "'.$this->post->rank.'"');
 	}
 	
 	protected function edit_rank_post()
@@ -180,6 +183,8 @@ class PilotRanking extends CodonModule
 		
 		$this->set('message', 'Rank Added!');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited the rank "'.$this->post->rank.'"');
 	}
 	
 	protected function add_award_post()
@@ -195,6 +200,8 @@ class PilotRanking extends CodonModule
 		
 		$this->set('message', 'Award Added!');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, "Added the award \"{$this->post->name}\"");
 	}
 	
 	protected function edit_award_post()
@@ -210,5 +217,7 @@ class PilotRanking extends CodonModule
 		
 		$this->set('message', 'Award Added!');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited the award "'.$this->post->name.'"');
 	}
 }

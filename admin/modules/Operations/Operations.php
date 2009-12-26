@@ -269,6 +269,12 @@ class Operations extends CodonModule
 				$params = array('s.arricao' => $this->get->query);
 			}
 			
+			// Filter or don't filter enabled/disabled flights
+			if(isset($this->get->enabled) && $this->get->enabled != 'all')
+			{
+				$params['s.enabled'] = $this->get->enabled;
+			}
+			
 			$this->set('schedules', SchedulesData::findSchedules($params));
 			$this->render('ops_schedules.tpl');
 			return;
@@ -323,24 +329,23 @@ class Operations extends CodonModule
 		
 	protected function add_airline_post()
 	{
-		$code = strtoupper($this->post->code);
-		$name = $this->post->name;
-		
-		if($code == '' || $name == '')
+		$this->post->code = strtoupper($this->post->code);
+	
+		if($this->post->code == '' || $this->post->name == '')
 		{
 			$this->set('message', 'You must fill out all of the fields');
 			$this->render('core_error.tpl');
 			return;
 		}
 		
-		if(OperationsData::GetAirlineByCode($code))
+		if(OperationsData::GetAirlineByCode($this->post->code))
 		{
 			$this->set('message', 'An airline with this code already exists!');
 			$this->render('core_error.tpl');
 			return;
 		}
 		
-		OperationsData::AddAirline($code, $name);
+		OperationsData::AddAirline($this->post->code, $this->post->name);
 		
 		if(DB::errno() != 0)
 		{
@@ -353,36 +358,36 @@ class Operations extends CodonModule
 			return;
 		}
 
-		$this->set('message', 'Airline has been added!');
+		$this->set('message',  'Added the airline "'.$this->post->code.' - '.$this->post->name.'"');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added the airline "'.$this->post->code.' - '.$this->post->name.'"');
 	}
 	
 	protected function edit_airline_post()
 	{
-		$id = $this->post->id;
-		$code = $this->post->code;
-		$name = $this->post->name;
+		$this->post->code = strtoupper($this->post->code);
 		
-		if($code == '' || $name == '')
+		if($this->post->code == '' || $this->post->name == '')
 		{
 			$this->set('message', 'Code and name cannot be blank');
 			$this->render('core_error.tpl');
 		}
 		
-		$prevairline = OperationsData::GetAirlineByCode($code);
-		if($prevairline && $prevairline->id != $id)
+		$prevairline = OperationsData::GetAirlineByCode($this->post->code);
+		if($prevairline && $prevairline->id != $this->post->id)
 		{
 			$this->set('message', 'This airline with this code already exists!');
 			$this->render('core_error.tpl');
 			return;
 		}
 		
-		if(isset($_POST['enabled']))
+		if(isset($this->post->enabled))
 			$enabled = true;
 		else
 			$enabled = false;
 			
-		OperationsData::EditAirline($id, $code, $name, $enabled);
+		OperationsData::EditAirline($this->post->id, $this->post->code, $this->post->name, $enabled);
 		
 		if(DB::errno() != 0)
 		{
@@ -391,8 +396,10 @@ class Operations extends CodonModule
 			return false;
 		}
 
-		$this->set('message', 'The airline has been edited');
+		$this->set('message', 'Edited the airline "'.$this->post->code.' - '.$this->post->name.'"');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited the airline "'.$this->post->code.' - '.$this->post->name.'"');
 	}
 			
 	protected function add_aircraft_post()
@@ -450,6 +457,69 @@ class Operations extends CodonModule
 
 		$this->set('message', 'The aircraft has been added');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added the aircraft "'.$this->post->name.' - '.$this->post->registration.'"');
+	}
+	
+	protected function edit_aircraft_post()
+	{
+		if($this->post->id == '')
+		{
+			$this->set('message', 'Invalid ID specified');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		if($this->post->icao == '' || $this->post->name == '' 
+			|| $this->post->fullname == '' || $this->post->registration == '')
+		{
+			$this->set('message', 'You must enter the ICAO, name, full name, and registration');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		$ac = OperationsData::CheckRegDupe($this->post->id, $this->post->registration);
+		if($ac)
+		{
+			$this->set('message', 'This registration is already assigned to another active aircraft');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		if($this->post->enabled == '1')
+			$this->post->enabled = true;
+		else
+			$this->post->enabled = false;
+			
+		$data = array(	
+			'id' => $this->post->id,
+			'icao'=>$this->post->icao,
+			'name'=>$this->post->name,
+			'fullname'=>$this->post->fullname,
+			'registration'=>$this->post->registration,
+			'downloadlink'=>$this->post->downloadlink,
+			'imagelink'=>$this->post->imagelink,
+			'range'=>$this->post->range,
+			'weight'=>$this->post->weight,
+			'cruise'=>$this->post->cruise,
+			'maxpax'=>$this->post->maxpax,
+			'maxcargo'=>$this->post->maxcargo,
+			'enabled'=>$this->post->enabled
+		);
+			
+		OperationsData::EditAircraft($data);
+		
+		if(DB::errno() != 0)
+		{
+			$this->set('message', 'There was an error editing the aircraft');
+            $this->render('core_error.tpl');
+			return;
+		}
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited the aircraft "'.$this->post->name.' - '.$this->post->registration.'"');
+
+		$this->set('message', 'The aircraft "'.$this->post->registration.'" has been edited');
+		$this->render('core_success.tpl');
 	}
 	
 	protected function add_airport_post()
@@ -494,6 +564,8 @@ class Operations extends CodonModule
 
 		$this->set('message', 'The airport has been added');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added the airport "'.$this->post->icao.' - '.$this->post->name.'"');
 	}
 
 	protected function edit_airport_post()
@@ -535,6 +607,8 @@ class Operations extends CodonModule
 
 		$this->set('message', $icao . ' has been edited');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited the airport "'.$this->post->icao.' - '.$this->post->name.'"');
 	}
 	
 	protected function add_schedule_post()
@@ -603,6 +677,8 @@ class Operations extends CodonModule
 
         $this->set('message', 'The schedule "'.$this->post->code.$this->post->flightnum.'" has been added');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Added schedule "'.$this->post->code.$this->post->flightnum.'"');
 	}
 
 	protected function edit_schedule_post()
@@ -653,13 +729,14 @@ class Operations extends CodonModule
 
 		$this->set('message', 'The schedule "'.$this->post->code.$this->post->flightnum.'" has been edited');
 		$this->render('core_success.tpl');
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Edited schedule "'.$this->post->code.$this->post->flightnum.'"');
 	}
 
 	protected function delete_schedule_post()
 	{
-		$id = $this->post->id;
-		
-		SchedulesData::DeleteSchedule($id);
+		$schedule = SchedulesData::findSchedules(array('s.id'=>$this->post->id));
+		SchedulesData::DeleteSchedule($this->post->id);
 		
         if(DB::errno() != 0)
 		{
@@ -670,64 +747,7 @@ class Operations extends CodonModule
 
 		$this->set('message', 'The schedule has been deleted');
 		$this->render('core_success.tpl');
-	}
-
-	protected function edit_aircraft_post()
-	{
-		if($this->post->id == '')
-		{
-			$this->set('message', 'Invalid ID specified');
-			$this->render('core_error.tpl');
-			return;
-		}
 		
-		if($this->post->icao == '' || $this->post->name == '' 
-			|| $this->post->fullname == '' || $this->post->registration == '')
-		{
-			$this->set('message', 'You must enter the ICAO, name, full name, and registration');
-			$this->render('core_error.tpl');
-			return;
-		}
-		
-		$ac = OperationsData::CheckRegDupe($this->post->id, $this->post->registration);
-		if($ac)
-		{
-			$this->set('message', 'This registration is already assigned to another active aircraft');
-			$this->render('core_error.tpl');
-			return;
-		}
-		
-		if($this->post->enabled == '1')
-			$this->post->enabled = true;
-		else
-			$this->post->enabled = false;
-			
-		$data = array(	
-			'id' => $this->post->id,
-			'icao'=>$this->post->icao,
-			'name'=>$this->post->name,
-			'fullname'=>$this->post->fullname,
-			'registration'=>$this->post->registration,
-			'downloadlink'=>$this->post->downloadlink,
-			'imagelink'=>$this->post->imagelink,
-			'range'=>$this->post->range,
-			'weight'=>$this->post->weight,
-			'cruise'=>$this->post->cruise,
-			'maxpax'=>$this->post->maxpax,
-			'maxcargo'=>$this->post->maxcargo,
-			'enabled'=>$this->post->enabled
-		);
-			
-		OperationsData::EditAircraft($data);
-		
-		if(DB::errno() != 0)
-		{
-			$this->set('message', 'There was an error editing the aircraft');
-            $this->render('core_error.tpl');
-			return;
-		}
-
-		$this->set('message', 'The aircraft "'.$this->post->registration.'" has been edited');
-		$this->render('core_success.tpl');
+		LogData::addLog(Auth::$userinfo->pilotid, 'Deleted schedule "'.$schedule->code.$schedule->flightnum.'"');
 	}
 }

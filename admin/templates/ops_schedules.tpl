@@ -9,6 +9,13 @@
 	<option value="arrapt">arrival airport</option>
 	<option value="aircraft">aircraft type</option>
 </select>
+
+&nbsp;&nbsp;Type
+<select name="enabled">
+	<option value="all">active+inactive</option>
+	<option value="1">only active</option>
+	<option value="0">only inactive</option>
+</select>
 <input type="hidden" name="action" value="filter" />
 <input type="submit" name="submit" value="filter" />
 </form>

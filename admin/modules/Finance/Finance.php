@@ -148,11 +148,14 @@ class Finance extends CodonModule
 			
 			$ret = FinanceData::AddExpense($this->post->name, $this->post->cost, $this->post->type);
 			$this->set('message', 'The expense "'.$this->post->name.'" has been added');
+			
+			LogData::addLog(Auth::$userinfo->pilotid, 'Added expense "'.$this->post->name.'"');
 		}
 		elseif($this->post->action == 'editexpense')
 		{
 			$ret = FinanceData::EditExpense($this->post->id, $this->post->name, $this->post->cost, $this->post->type);
 			$this->set('message', 'The expense "'.$this->post->name.'" has been edited');
+			LogData::addLog(Auth::$userinfo->pilotid, 'Edited expense "'.$this->post->name.'"');
 		}
 		
 		if(!$ret)
@@ -162,7 +165,6 @@ class Finance extends CodonModule
 			
 			return;
 		}
-		
 		
 		$this->render('core_success.tpl');
 	}	

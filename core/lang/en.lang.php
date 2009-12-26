@@ -28,6 +28,7 @@ $trans = array(
 	'email.inuse'						=> 'This email address is already in use',
 	'email.register.accepted.subject'	=> 'Your registration was accepted!',
 	'email.register.rejected.subject'	=> 'Your registration was denied!',
+	'email.pilot.retired.subject'		=> SITE_NAME.': You\'ve been marked as retired',
 	
 	/* Expenses */
 	

@@ -1,5 +1,5 @@
 <?php
-$pilotid = Vars::GET('pilotid');
+$pilotid = $_GET['pilotid'];
 ?>
 <h3>Reset Pilot Password</h3>
 <p>If someone has forgetten their password and it needs to be reset. </p>

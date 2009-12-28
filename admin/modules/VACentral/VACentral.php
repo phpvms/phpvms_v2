@@ -61,6 +61,14 @@ class VACentral extends CodonModule
 	public function sendschedules()
 	{
 		echo '<h3>Sending schedules...</h3>';
+		
+		$within_timelimit = CronData::check_hoursdiff('update_schedules', CentralData::$limits['update_schedules']);
+		if($within_timelimit == true)
+		{
+			echo '<p>You can only export schedules every '.CentralData::$limits['update_schedules'].' hours</p>';
+			return false;
+		}
+		
 		$ret = CentralData::send_schedules();
 		$this->parse_response($ret);
 		
@@ -70,6 +78,14 @@ class VACentral extends CodonModule
 	public function sendpireps()
 	{
 		echo '<h3>Sending all PIREPS</h3>';
+		
+		$within_timelimit = CronData::check_hoursdiff('update_schedules', CentralData::$limits['update_pireps']);
+		if($within_timelimit == true)
+		{
+			echo '<p>You can only export PIREPs every '.CentralData::$limits['update_pireps'].' hours</p>';
+			return false;
+		}
+		
 		$ret = CentralData::send_all_pireps();
 		$this->parse_response($ret);
 		

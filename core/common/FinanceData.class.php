@@ -523,7 +523,6 @@ class FinanceData extends CodonData
 			$loadfactor = intval(Config::Get('LOAD_FACTOR'));
 			$load = rand($loadfactor - LOAD_VARIATION, $loadfactor + LOAD_VARIATION);
 			
-			echo "load factor: $load<br />";
 			# Don't allow a load of more than 95%
 			if($load > 95)
 				$load = 95;

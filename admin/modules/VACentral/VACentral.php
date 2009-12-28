@@ -79,7 +79,7 @@ class VACentral extends CodonModule
 	{
 		echo '<h3>Sending all PIREPS</h3>';
 		
-		$within_timelimit = CronData::check_hoursdiff('update_schedules', CentralData::$limits['update_pireps']);
+		$within_timelimit = CronData::check_hoursdiff('update_pireps', CentralData::$limits['update_pireps']);
 		if($within_timelimit == true)
 		{
 			echo '<p>You can only export PIREPs every '.CentralData::$limits['update_pireps'].' hours</p>';

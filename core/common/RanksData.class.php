@@ -23,7 +23,7 @@ class RanksData extends CodonData
 	/**
 	 * Return information about the rank, given the ID
 	 */
-	public static function GetRankInfo($rankid)
+	public static function getRankInfo($rankid)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'ranks
 					WHERE rankid='.$rankid;
@@ -35,7 +35,7 @@ class RanksData extends CodonData
 	 * Returns all the ranks, and the total number of pilots
 	 * on each rank
 	 */
-	public static function GetAllRanks()
+	public static function getAllRanks()
 	{
 		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
 					FROM ' .TABLE_PREFIX.'ranks r
@@ -43,7 +43,7 @@ class RanksData extends CodonData
 		return DB::get_results($sql);
 	}
 	
-	public static function GetRankImage($rank)
+	public static function getRankImage($rank)
 	{
 		$sql = 'SELECT rankimage FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
 		return DB::get_var($sql);
@@ -52,7 +52,7 @@ class RanksData extends CodonData
 	/**
 	 * Give the number of hours, return the next rank
 	 */
-	public static function GetNextRank($hours)
+	public static function getNextRank($hours)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."ranks
 					WHERE minhours>$hours ORDER BY minhours ASC LIMIT 1";
@@ -64,7 +64,7 @@ class RanksData extends CodonData
 	 * Add a ranking. This will automatically call
 	 * CalculatePilotRanks() at the end
 	 */
-	public static function AddRank($title, $minhours, $imageurl, $payrate)
+	public static function addRank($title, $minhours, $imageurl, $payrate)
 	{
 		$minhours = intval($minhours);
 		$payrate = floatval($payrate);

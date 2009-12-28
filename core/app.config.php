@@ -314,7 +314,8 @@ Config::Set('FLIGHT_TYPES', array(
 Config::Set('EXPENSE_TYPES', array( 
 	'M'=>'Monthly',
 	'F'=>'Per Flight',
-	'P'=>'Percent (month)',)
+	'P'=>'Percent (month)',
+	'G'=>'Percent (per flight)')
 );
 			
 define('SIGNATURE_PATH', '/lib/signatures');

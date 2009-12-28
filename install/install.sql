@@ -207,7 +207,6 @@ CREATE TABLE `phpvms_ranks` (
   UNIQUE KEY `rank` (`rank`)
 ) ENGINE=InnoDB ;
 
-INSERT INTO `phpvms_ranks` VALUES(1, 'New Hire','', 0, 10.0);
 
 CREATE TABLE `phpvms_sessions` (
    `id` INT NOT NULL auto_increment ,

@@ -103,7 +103,7 @@ switch($_GET['page'])
 			else
 			{
 				Installer::RegisterInstall(INSTALLER_VERSION);
-				echo '<p>Your site is all setup! You can login to the admin panel <a href="'.SITE_URL.'/admin">here</a></p>';
+				Template::Show('s3_setup_finished.tpl');
 			}
 		}
 		

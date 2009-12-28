@@ -11,7 +11,7 @@ CREATE TABLE `phpvms_sessions` (
 
 
 -- Admin log table;
-CREATE TABLE `phpvms_test`.`phpvms_adminlog` (
+CREATE TABLE `phpvms_adminlog` (
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`pilotid` INT NOT NULL ,
 	`datestamp` DATETIME NOT NULL ,

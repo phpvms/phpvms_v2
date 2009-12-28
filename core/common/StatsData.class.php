@@ -73,7 +73,6 @@ class StatsData extends CodonData
 		return array_reverse($years, true);	
 	}
 	
-	
 	/**
 	 * Get all of the months since a certain date
 	 */
@@ -187,7 +186,6 @@ class StatsData extends CodonData
 	/**
 	 * Get the top routes
 	 */
-	 
 	public static function TopRoutes($airline_code='')
 	{
 		$sql = 'SELECT * 
@@ -203,7 +201,6 @@ class StatsData extends CodonData
 		
 		return DB::get_results($sql);
 	}
-	
 	
 	public static function UsersOnline($minutes = '')
 	{
@@ -240,7 +237,6 @@ class StatsData extends CodonData
 			
 		return $guests;
 	}
-	
 	
 	/**
 	 * Get the total number of pilots

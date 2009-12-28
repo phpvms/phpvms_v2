@@ -659,19 +659,17 @@ class PilotData extends CodonData
 		
 		if($days == '')
 			$days = 90;
-		
-		$days = 1;
-		
+			
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pilots
-				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `joindate`  
-					AND `lastpirep` = '0000-00-00 00:00:00'
+				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `lastlogin`  
+					AND `totalflights` = 0
 					AND `retired` = 0";
 				  
 		$results = DB::get_results($sql);
 		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pilots
 				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `lastpirep` 
-					AND `lastpirep` != '0000-00-00 00:00:00'
+					AND `totalflights` > 0
 					AND `retired` = 0";
 				  
 		$results2 = DB::get_results($sql);

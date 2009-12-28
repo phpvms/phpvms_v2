@@ -28,7 +28,7 @@ class FinanceData extends CodonData
 	 * @return int Total cost of the fuel
 	 *
 	 */
-	public static function GetFuelPrice($fuel_amount, $apt_icao='')
+	public static function getFuelPrice($fuel_amount, $apt_icao='')
 	{
 		
 		/* A few steps:
@@ -58,7 +58,7 @@ class FinanceData extends CodonData
 	 * @return array All the year's balance data
 	 *
 	 */
-	public static function GetYearBalanceData($yearstamp)
+	public static function getYearBalanceData($yearstamp)
 	{
 		$year = date('Y', $yearstamp);
 		
@@ -75,7 +75,7 @@ class FinanceData extends CodonData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function GetRangeBalanceData($start, $end)
+	public static function getRangeBalanceData($start, $end)
 	{
 		$times = StatsData::GetMonthsInRange($start, $end);
 		$now = time();
@@ -116,7 +116,7 @@ class FinanceData extends CodonData
 	 * 
 	 * This will automatically handle the caching
 	 */
-	public static function GetMonthBalanceData($monthstamp)
+	public static function getMonthBalanceData($monthstamp)
 	{
 		$ret = array();
 					
@@ -186,7 +186,7 @@ class FinanceData extends CodonData
 	/**
 	 * Get an archived financial expenses report
 	 */
-	public static function GetCachedFinanceData($monthstamp)
+	public static function getCachedFinanceData($monthstamp)
 	{
 		if(!is_int($monthstamp))
 			$submit = strtotime($monthstamp);
@@ -344,7 +344,7 @@ class FinanceData extends CodonData
 	/**
 	 * Get a list of all the expenses
 	 */
-	public static function GetAllExpenses()
+	public static function getAllExpenses()
 	{		
 		$sql = 'SELECT * 
 				FROM '.TABLE_PREFIX.'expenses';
@@ -355,7 +355,7 @@ class FinanceData extends CodonData
 	/** 
 	 * Get an expense details based on ID
 	 */
-	public static function GetExpenseDetail($id)
+	public static function getExpenseDetail($id)
 	{		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
 					WHERE `id`='.$id;
@@ -367,7 +367,7 @@ class FinanceData extends CodonData
 	 * Get an expense by the name (mainly to check for
 	 *	duplicates)
 	 */
-	public static function GetExpenseByName($name)
+	public static function getExpenseByName($name)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
 					WHERE `name`='.$name;
@@ -379,7 +379,7 @@ class FinanceData extends CodonData
 	 * Get monthly expenses
 	 */
 	 
-	public static function GetMonthlyExpenses()
+	public static function getMonthlyExpenses()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
 					WHERE `type`=\'M\' OR `type`=\'P\'';
@@ -416,12 +416,20 @@ class FinanceData extends CodonData
 	/** 
 	 * Get all of the expenses for a flight
 	 */
-	public static function GetFlightExpenses()
+	public static function getFlightExpenses()
 	{
-		$sql = "SELECT * 
-				FROM ".TABLE_PREFIX."expenses
-					WHERE `type`='F'";
-					
+		$sql = "SELECT * FROM ".TABLE_PREFIX."expenses WHERE `type`='F'";
+		return DB::get_results($sql);
+	}
+	
+	
+	/**
+	 *  Get any percentage expenses per flight
+	 *
+	 */
+	public static function getFlightPercentExpenses()
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."expenses WHERE `type`='G'";
 		return DB::get_results($sql);
 	}
 	
@@ -499,7 +507,7 @@ class FinanceData extends CodonData
 	 * Get the active load count based on the load factor
 	 *  based on the flight type: P(assenger), C(argo), H(Charter)
 	 */
-	public static function GetLoadCount($aircraft_id, $flighttype='P')
+	public static function getLoadCount($aircraft_id, $flighttype='P')
 	{
 		
 		$flighttype = strtoupper($flighttype);
@@ -515,6 +523,7 @@ class FinanceData extends CodonData
 			$loadfactor = intval(Config::Get('LOAD_FACTOR'));
 			$load = rand($loadfactor - LOAD_VARIATION, $loadfactor + LOAD_VARIATION);
 			
+			echo "load factor: $load<br />";
 			# Don't allow a load of more than 95%
 			if($load > 95)
 				$load = 95;
@@ -526,27 +535,29 @@ class FinanceData extends CodonData
 		 * Get the maximum allowed based on the aircraft flown
 		 */
 		$aircraft = OperationsData::GetAircraftInfo($aircraft_id);
-		
-		if(is_object($aircraft))
-		{
-			if($flighttype == 'C') # Check cargo if cargo flight
-				$count = $aircraft->maxcargo;
-			else
-				$count = $aircraft->maxpax;
-		}
-		else # Aircraft doesn't exist
+	
+		if(!$aircraft) # Aircraft doesn't exist
 		{
 			if($flighttype == 'C') # Check cargo if cargo flight
 				$count = Config::Get('DEFAULT_MAX_CARGO_LOAD');
 			else
 				$count = Config::Get('DEFAULT_MAX_PAX_LOAD');
 		}
+		else 
+		{
+			if($flighttype == 'C') # Check cargo if cargo flight
+				$count = $aircraft->maxcargo;
+			else
+				$count = $aircraft->maxpax;
+		}
 		
-		$currload = ceil($count * ($load / 100));
+		
+		$load = ($load / 100);
+		$currload = ceil($count * $load);
 		return $currload;
 	}
 
-	function FormatMoney($number)
+	function formatMoney($number)
 	{
 		$isneg = false;
 		if($number < 0)

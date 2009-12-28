@@ -252,6 +252,9 @@ class Installer
 		
 		$ret = OperationsData::AddAirport($data);
 		
+		// Add a rank
+		RanksData::addRank('New Hire', 0, fileurl('/lib/images/ranks/newhire.jpg'), 18.00);
+		
 		// Add the user
 		$data = array(
 			'firstname' => $_POST['firstname'],
@@ -270,7 +273,7 @@ class Installer
 			return false;
 		}
 		
-		// add to admin group
+		# Add to admin group
 		$pilotdata = PilotData::GetPilotByEmail($_POST['email']);
 
 		if(!PilotGroups::AddUsertoGroup($pilotdata->pilotid, 'Administrators'))
@@ -279,6 +282,7 @@ class Installer
 			return false;
 		}
 		
+		# Add the final settings in
 		SettingsData::SaveSetting('SITE_NAME', $_POST['SITE_NAME']);
 		SettingsData::SaveSetting('ADMIN_EMAIL', $_POST['email']);
 		SettingsData::SaveSetting('GOOGLE_KEY', $_POST['googlekey']);

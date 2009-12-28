@@ -415,7 +415,17 @@ class PIREPData extends CodonData
 	/**
 	 * File a PIREP
 	 */
-	public static function FileReport($pirepdata)
+	public static function newPIREP($pirepdata)
+	{
+		self::fileReport($pirepdata);
+	}
+	
+	public static function filePIREP($pirepdata)
+	{
+		self::fileReport($pirepdata);
+	}
+	
+	public static function fileReport($pirepdata)
 	{
 		
 		/*$pirepdata = array('pilotid'=>'',
@@ -504,7 +514,7 @@ class PIREPData extends CodonData
 		
 		# Check the load, if it's blank then look it up
 		#	Based on the aircraft that was flown
-		if(isset($pirepdata['load']))
+		if(!isset($pirepdata['load']) || $pirepdata['load'] == '')
 		{
 			$pirepdata['load'] = FinanceData::getLoadCount($pirepdata['aircraft'], $sched->flighttype);
 		}
@@ -576,23 +586,12 @@ class PIREPData extends CodonData
 							
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
-						
+		
 		// Add the comment if its not blank
 		if($comment != '')
 		{
-			$pirepid = DB::$insert_id;
-			$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments 
-								(`pirepid`, 
-								`pilotid`, 
-								`comment`, 
-								`postdate`)
-						VALUES ({$pirepid},
-								{$pirepdata['pilotid']}, 
-								'{$pirepdata['comment']}', 
-								NOW())";
-			$ret = DB::query($sql);
+			self::addComment($pirepid, $pirepdata['pilotid'], $pirepdata['comment']);
 		}
-		
 		
 		# Update the financial information for the PIREP:
 		self::PopulatePIREPFinance($pirepid);
@@ -613,16 +612,26 @@ class PIREPData extends CodonData
 				."Filed using: {$pirepdata['source']}\n\n"
 				."Comment: {$pirepdata['comment']}";
 				 
-		Util::SendEmail(ADMIN_EMAIL, $sub, $message);
-	
-		DB::$insert_id = $pirepid;
+		Util::SendEmail(ADMIN_EMAIL, $sub, $message);	
 		
 		CentralData::send_pirep($pirepid);
 		
+		// Reset this ID back
+		DB::$insert_id = $pirepid;
 		return true;
 	}
-		
-	public static function UpdateFlightReport($pirepid, $pirepdata)
+	
+	public static function updateReport($pirepid, $pirepdata)
+	{
+		self::updateFlightReport($pirepid, $pirepdata);
+	}
+	
+	public static function updatePIREP($pirepid, $pirepdata)
+	{
+		self::updateFlightReport($pirepid, $pirepdata);
+	}
+	
+	public static function updateFlightReport($pirepid, $pirepdata)
 	{		
 		/*$pirepdata = array('pirepid'=>$this->post->pirepid,
 					  'code'=>$this->post->code,
@@ -664,7 +673,7 @@ class PIREPData extends CodonData
 			'fuelprice' => $pirepdata['fuelprice'],
 			'pilotpay' => $pirepdata['pilotpay'],
 			'flighttime' => $pirepdata['flighttime'],
-			);
+		);
 		
 		$revenue = self::getPIREPRevenue($data);
 		
@@ -698,7 +707,7 @@ class PIREPData extends CodonData
 	 * Populate PIREPS which have 0 values for the load/price, etc
 	 */
 	 
-	public static function PopulateEmptyPIREPS()
+	public static function populateEmptyPIREPS()
 	{		
 		$sql = 'SELECT *
 				FROM '.TABLE_PREFIX.'pireps ';
@@ -723,7 +732,7 @@ class PIREPData extends CodonData
 	 *  Pass the PIREPID or the PIREP row
 	 */
 	
-	public static function PopulatePIREPFinance($pirep, $reset_fuel = false)
+	public static function populatePIREPFinance($pirep, $reset_fuel = false)
 	{
 		if(!is_object($pirep) && is_numeric($pirep))
 		{
@@ -754,7 +763,7 @@ class PIREPData extends CodonData
 		
 		// Fix for bug #62, check the airport fuel price as 0 for live
 		//$depapt = OperationsData::getAirportInfo($pirep->depicao);
-		if($pirep->fuelunitcost == '' || $reset_fuel == true)
+		if($pirep->fuelunitcost == '' || $pirep->fuelunitcost == 0 || $reset_fuel == true)
 		{
 			$pirep->fuelunitcost = FuelData::getFuelPrice($pirep->depicao);
 		}
@@ -762,26 +771,6 @@ class PIREPData extends CodonData
 		# Check the fuel
 		if($pirep->fuelprice != '' || $reset_fuel == true)
 		{
-			/* rev 813 or so - don't need to convert units, unit is accounted
-				for properly in getFuelPrice() */
-			# If FSACARS and in kg, convert it to lbs for the fuel calc
-			# @version 783
-			/*if($pirep->source == 'fsacars')
-			{
-				# in KG, change to pounds for the price calc
-				if(Config::Get('WeightUnit') == 0)
-				{
-					$pirep->fuelused = $pirep->fuelused / .45359237;
-				}
-			}*/
-			/*elseif($pirep->source == 'xacars')
-			{
-				if(Config::Get('WeightUnit') == 0)
-				{
-					$pirep->fuelused = $pirep->fuelused / .45359237;
-				}
-			}*/
-			
 			$pirep->fuelprice = FinanceData::getFuelPrice($pirep->fuelused, $pirep->depicao);
 		}
 		
@@ -789,24 +778,26 @@ class PIREPData extends CodonData
 		$total_ex = 0;
 		$expense_list = '';
 		
+		/* Account for any fixed-cost percentages */
 		$allexpenses = FinanceData::getFlightExpenses();
-		
-		if(!$allexpenses)
+		if(is_array($allexpenses))
 		{
-			$allexpenses = array();
-		}
-		else
-		{
-			# Add up the total amount so we can add it in
 			foreach($allexpenses as $ex)
 			{
 				$total_ex += $ex->cost;				
 			}
-			
-			/* Don't need to anymore
-			# Serialize and package it, so we can store it
-			#	with the PIREP
-			$expense_list = serialize($allexpenses);*/
+		}
+		
+		/* Account for any per-flight %age expenses */
+		$all_percent_expenses = FinanceData::getFlightPercentExpenses();
+		if(is_array($all_percent_expenses))
+		{
+			$gross = $gross = $data['price'] * $data['load'];
+			foreach($all_percent_expenses as $ex)
+			{
+				$percent = $ex / 100;
+				$total_ex += ($gross * $percent);
+			}
 		}
 		
 		$data = array(
@@ -837,7 +828,6 @@ class PIREPData extends CodonData
 					
 		DB::query($sql);
 	}
-	
 	
 	public static function getPIREPRevenue($data)
 	{
@@ -883,7 +873,7 @@ class PIREPData extends CodonData
 					WHERE pirepid='.$pirepid;
 		
 		DB::query($sql);
-					
+	
 		# Delete any comments and fields
 		$sql = 'DELETE FROM '. TABLE_PREFIX.'pirepcomments
 					WHERE pirepid='.$pirepid;
@@ -895,7 +885,7 @@ class PIREPData extends CodonData
 					WHERE pirepid='.$pirepid;
 		
 		DB::query($sql);
-		
+	
 		# Check if this was accepted report
 		#	If it was, remove it from that pilot's stats
 		if($pirep_details->accepted == PIREP_ACCEPTED)
@@ -909,7 +899,7 @@ class PIREPData extends CodonData
 	public static function UpdatePIREPFeed()
 	{
 		# Load PIREP into RSS feed
-		$reports = PIREPData::getRecentReportsByCount(10);
+		$reports = PIREPData::findPIREPS(array(), 10);
 		$rss = new RSSFeed('Latest Pilot Reports', SITE_URL, 'The latest pilot reports');
 		
 		# Empty the rss file if there are no pireps
@@ -963,7 +953,7 @@ class PIREPData extends CodonData
 	 * Append to a flight report's log
 	 */
 	 
-	public static function AppendToLog($pirepid, $log)
+	public static function appendToLog($pirepid, $log)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
 					SET `log` = CONCAT(`log`, \''.$log.'\')
@@ -980,7 +970,7 @@ class PIREPData extends CodonData
 	/**
 	 * Add a comment to the flight report
 	 */
-	public static function AddComment($pirepid, $pilotid, $comment)
+	public static function addComment($pirepid, $pilotid, $comment)
 	{
 		$comment = DB::escape($comment);
 		$sql = "INSERT INTO ".TABLE_PREFIX."pirepcomments (`pirepid`, `pilotid`, `comment`, `postdate`)

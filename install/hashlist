@@ -1,7 +1,7 @@
 cc468e40278c00fb311813200b301bd1 *./vatsim.php
 b2f51380eb60eef29a9ea3017d0ba7cc *./unittest/run_tests.php
 9e15d6bda5eaa21e895f23ed6e6f140f *./unittest/doctrine_generate.php
-41500a2549f8db24d9587e01033232b1 *./unittest/add_pirep.php
+edfbeeea15a011ded85e8e52d4d43c73 *./unittest/add_pirep.php
 b805d1f34d10bad7aa545a2b8ad351b8 *./unittest/fsacars.php
 28923adce52eb52a8ac3c5400d8109e6 *./unittest/fspax.php
 2ece7b59e46913915baa8f878f4521e4 *./unittest/im_here.php
@@ -13,13 +13,13 @@ befe5871e87fae236013e93e88aba872 *./unittest/tests/install_test.php
 614dcd95256572f0e077ad504146595b *./unittest/tests/ops_test.php
 52758b3f41e8f81c7cc4bde8bf7ed68e *./unittest/tests/times_test.php
 db804a180fa8419cfa21ad4057236f42 *./unittest/time.php
-94bbab201d47150566019abf8e44cfa8 *./install/checkinstall.php
+ef9eb61589ec8c0fec4bb754c141b1e3 *./install/checkinstall.php
 d41d8cd98f00b204e9800998ecf8427e *./install/index.php
 80b2826f5861390475c49bbb1551906d *./install/dbtest.php
 dc6c1d0e7acbea6562eaf7c58e26be74 *./install/loader.inc.php
-e5df1849a4584ac494ee7250e1b7a9c7 *./install/Installer.class.php
-711912abe74ea0b216850c7a57facde6 *./install/update.php
-e1886c15b3142db5fe86ac902ce4bf8f *./install/install.php
+758e209c0dd8e5c2892765ae9776fef3 *./install/Installer.class.php
+2eb98d7dd8cefa49e5c89b9d9f242084 *./install/update.php
+4023ed8e258cf7934b215f2cb2e91889 *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd *./core/lang/en.lang.php
 4e1b5ecf9768b1e47e2fba8be1cf7777 *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411 *./core/common/Auth.class.php
@@ -218,6 +218,7 @@ c6d8c61a9c550b3528986bd9905efd04 *./admin/modules/Operations/Operations.php
 21876e3b183bd9a2d129eb033b80dbf5 *./admin/modules/Maintenance/Maintenance.php
 00013a43b307d094e9048982123c7259 *./admin/modules/Dashboard/Dashboard.php
 7624203ecc08b38891d94a8103876156 *./admin/modules/PIREPAdmin/PIREPAdmin.php
+27ec44788281221bb24cd738bb2e86fd *./incversion.php
 86e37a27d55eb447294923056759c684 *./vac_diag.php
 d41d8cd98f00b204e9800998ecf8427e *./lib/avatars/index.php
 d41d8cd98f00b204e9800998ecf8427e *./lib/signatures/index.php

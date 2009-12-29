@@ -20,7 +20,6 @@ dc6c1d0e7acbea6562eaf7c58e26be74 *./install/loader.inc.php
 758e209c0dd8e5c2892765ae9776fef3 *./install/Installer.class.php
 2eb98d7dd8cefa49e5c89b9d9f242084 *./install/update.php
 6180493965b119b2546ff9b0c1808bd3 *./install/install.php
-2ece7b59e46913915baa8f878f4521e4 *./index1.php
 0ce9f88088bd78d869525b8b202fb1bd *./core/lang/en.lang.php
 cf3ab1a8b9844f23fcbab38b472aab83 *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411 *./core/common/Auth.class.php
@@ -414,6 +413,6 @@ f66b7aae232bfec106d66cf6e8b38388 *./lib/skins/crystal/footer.tpl
 c6384626328e54dd77c534d04ff65a44 *./install/update_700.sql
 8733aaaee4a827c76f0580a7de49a26f *./install/update.sql
 55c3722f079209f61fcfce707f077548 *./install/update_400.sql
-987866b803fd56fef8cc87fd32dffd08 *./install/install.sql
+96dc3f31a8a0753df297c784a90f850b *./install/install.sql
 1ee77934d1a602e9c74861c9391a55d9 *./install/update_628.sql
 6b8d1dc1b006ef2a88e8130ce7bb157a *./install/update_441.sql

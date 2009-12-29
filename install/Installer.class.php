@@ -170,6 +170,7 @@ class Installer
 		$sql = '';
 		
 		$sql_file = file_get_contents(SITE_ROOT . '/install/install.sql');
+		$revision = file_get_contents(dirname(__FILE__).'/version');
 		
 		for($i=0;$i<strlen($sql_file);$i++)
 		{
@@ -196,7 +197,9 @@ class Installer
 					$sql = '';
 					continue;
 				}
-					
+				
+				$sql = str_replace('##REVISION##', $revision, $sql);
+				
 				DB::query($sql);
 				
 				if(DB::errno() != 0)

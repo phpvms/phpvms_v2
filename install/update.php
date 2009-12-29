@@ -24,9 +24,10 @@ include '../core/codon.config.php';
 include dirname(__FILE__).'/Installer.class.php';
  
 # phpVMS Updater 
-define('INSTALLER_VERSION', '2.0.##REVISION##');
-define('UPDATE_VERSION', '2.0.##REVISION##');
-define('REVISION', '##REVISION##');
+$revision = file_get_contents(dirname(__FILE__).'/version');
+define('INSTALLER_VERSION', '2.0.'.$revision);
+define('UPDATE_VERSION', '2.0.'.$revision);
+define('REVISION', $revision);
 
 Template::SetTemplatePath(SITE_ROOT.'/install/templates');
 Template::Show('header.tpl');

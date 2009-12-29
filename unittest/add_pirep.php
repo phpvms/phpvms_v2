@@ -10,16 +10,16 @@ $sched = $schedules[$idx];
 echo '<strong>Filing report...</strong><br />';
 $data = array(
 	'pilotid'=>1,
-		  'code'=>$sched->code,
-		  'flightnum'=>$sched->flightnum,
-		  'depicao'=>$sched->depicao,
-		  'arricao'=>$sched->arricao,
-		  'aircraft'=>$sched->aircraft,
-		  'flighttime'=>$sched->flighttime,
-		  'submitdate'=>'NOW()',
-		  'fuelused'=>6000,
-		  'source'=>'unittest',
-		  'comment'=>'Test Flight',
+	'code'=>$sched->code,
+	'flightnum'=>$sched->flightnum,
+	'depicao'=>$sched->depicao,
+	'arricao'=>$sched->arricao,
+	'aircraft'=>$sched->aircraft,
+	'flighttime'=>$sched->flighttime,
+	'submitdate'=>'NOW()',
+	'fuelused'=>6000,
+	'source'=>'unittest',
+	'comment'=>'Test Flight',
 );
 
 $ret = PIREPData::fileReport($data);

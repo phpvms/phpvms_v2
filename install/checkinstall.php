@@ -152,7 +152,7 @@ while(!feof($fp))
 	if($calc_sum === false)
 	{
 		$errors++;
-		error ('Checksum failed', "{$file} - permissions might be incorrect!");
+		error('Checksum failed', "{$file} - permissions might be incorrect!");
 		continue;
 	}
 	

@@ -27,7 +27,6 @@ define('INSTALLER_VERSION', '1.2.'.$revision);
 
 include dirname(__FILE__).'/loader.inc.php';
 
-
 Template::Show('header.tpl');
 
 // Controller

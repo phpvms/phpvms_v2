@@ -20,6 +20,7 @@ dc6c1d0e7acbea6562eaf7c58e26be74 *./install/loader.inc.php
 758e209c0dd8e5c2892765ae9776fef3 *./install/Installer.class.php
 2eb98d7dd8cefa49e5c89b9d9f242084 *./install/update.php
 6180493965b119b2546ff9b0c1808bd3 *./install/install.php
+2ece7b59e46913915baa8f878f4521e4 *./index1.php
 0ce9f88088bd78d869525b8b202fb1bd *./core/lang/en.lang.php
 cf3ab1a8b9844f23fcbab38b472aab83 *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411 *./core/common/Auth.class.php
@@ -207,7 +208,7 @@ f1c016469d12fd1974599d675da8d97b *./admin/modules/Reports/Reports.php
 eb48b61566644404735718c7607dce33 *./admin/modules/VACentral/VACentral.php
 3d5cdde45c76ad2b15bf05ceb209eda9 *./admin/modules/Finance/Finance.php
 c1de104017f08ab3f33a2635c0a6acf2 *./admin/modules/Logs/Logs.php
-f293013402ea4aea00ddc2405044e120 *./admin/modules/PilotAdmin/PilotAdmin.php
+e2fbd7d4574fde51e0da839fdece54d9 *./admin/modules/PilotAdmin/PilotAdmin.php
 3565855601464567dd9c016a0be910af *./admin/modules/PilotRanking/PilotRanking.php
 56cc4eec3711f0f58fc64ff1f1c64a70 *./admin/modules/Downloads/Downloads.php
 cf0e7f278179490b5a610846ee6b0cb0 *./admin/modules/MassMailer/MassMailer.php

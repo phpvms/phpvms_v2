@@ -22,7 +22,7 @@ class OperationsData extends CodonData
 	 * Get all aircraft from database
 	 */
 	
-	public static function GetAllAirlines($onlyenabled=false)
+	public static function getAllAirlines($onlyenabled=false)
 	{
 		if($onlyenabled == true) $where = 'WHERE `enabled`=1';
 		else $where = '';
@@ -35,7 +35,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get all of the hubs
 	 */
-	public static function GetAllHubs()
+	public static function getAllHubs()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
 				WHERE `hub`=1
@@ -46,7 +46,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get all of the aircraft
 	 */
-	public static function GetAllAircraft($onlyenabled=false)
+	public static function getAllAircraft($onlyenabled=false)
 	{
 		$sql = 'SELECT * 
 				FROM ' . TABLE_PREFIX .'aircraft';
@@ -64,7 +64,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get all of the aircraft
 	 */
-	public static function GetAllAircraftSearchList($onlyenabled=false)
+	public static function getAllAircraftSearchList($onlyenabled=false)
 	{
 		$sql = 'SELECT * 
 				FROM ' . TABLE_PREFIX .'aircraft';
@@ -83,7 +83,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get an aircraft according to registration
 	 */
-	public static function GetAircraftByReg($registration)
+	public static function getAircraftByReg($registration)
 	{
 		$registration = DB::escape(strtoupper($registration));
 		
@@ -97,7 +97,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get an aircraft by name
 	 */
-	public static function GetAircraftByName($name)
+	public static function getAircraftByName($name)
 	{
 		$name = DB::escape(strtoupper($name));
 		
@@ -128,7 +128,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get all of the airports
 	 */
-	public static function GetAllAirports()
+	public static function getAllAirports()
 	{
 		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports 
 								ORDER BY `icao` ASC');
@@ -137,7 +137,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get information about a specific aircraft
 	 */
-	public static function GetAircraftInfo($id)
+	public static function getAircraftInfo($id)
 	{
 		$id = DB::escape($id);
 		
@@ -145,14 +145,14 @@ class OperationsData extends CodonData
 							WHERE `id`='.$id);
 	}
 	
-	public static function GetAirlineByCode($code)
+	public static function getAirlineByCode($code)
 	{
 		$code = strtoupper($code);
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
 							WHERE `code`=\''.$code.'\'');
 	}
 	
-	public static function GetAirlineByID($id)
+	public static function getAirlineByID($id)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
 							WHERE `id`=\''.$id.'\'');
@@ -416,7 +416,7 @@ class OperationsData extends CodonData
 	/**
 	 * Get information about an airport
 	 */
-	public static function GetAirportInfo($icao)
+	public static function getAirportInfo($icao)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
 					WHERE `icao`=\''.$icao.'\'';
@@ -428,18 +428,20 @@ class OperationsData extends CodonData
 	/**
 	 * Get the distance between two airports
 	 *
-	 * @param string $depicao ICAO of the departure airport
-	 * @param string $arricao ICAO of the destination airport
+	 * @param mixed $depicao ICAO or object of the departure airport
+	 * @param mixed $arricao ICAO or object of the destination airport
 	 * @return int The distance
 	 *
 	 */
 	public static function getAirportDistance($depicao, $arricao)
 	{
+		if(!is_object($depicao) && is_numeric($depicao))
+			$depicao = self::GetAirportInfo($depicao);
+			
+		if(!is_object($arricao) && is_numeric($arricao))
+			$arricao = self::GetAirportInfo($arricao);
 		
-		$dep = self::GetAirportInfo($depicao);
-		$arr = self::GetAirportInfo($arricao);
-		
-		return SchedulesData::distanceBetweenPoints($dep->lat, $dep->lng, $arr->lat, $arr->lng);	
+		return SchedulesData::distanceBetweenPoints($depicao->lat, $depicao->lng, $arricao->lat, $arricao->lng);	
 	}
 	
 	/**

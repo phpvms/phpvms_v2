@@ -1,7 +1,7 @@
 cc468e40278c00fb311813200b301bd1 *./vatsim.php
 b2f51380eb60eef29a9ea3017d0ba7cc *./unittest/run_tests.php
 9e15d6bda5eaa21e895f23ed6e6f140f *./unittest/doctrine_generate.php
-edfbeeea15a011ded85e8e52d4d43c73 *./unittest/add_pirep.php
+cf7c54280f273e1220d99bdb62f46eac *./unittest/add_pirep.php
 b805d1f34d10bad7aa545a2b8ad351b8 *./unittest/fsacars.php
 28923adce52eb52a8ac3c5400d8109e6 *./unittest/fspax.php
 2ece7b59e46913915baa8f878f4521e4 *./unittest/im_here.php
@@ -19,9 +19,9 @@ d41d8cd98f00b204e9800998ecf8427e *./install/index.php
 dc6c1d0e7acbea6562eaf7c58e26be74 *./install/loader.inc.php
 758e209c0dd8e5c2892765ae9776fef3 *./install/Installer.class.php
 2eb98d7dd8cefa49e5c89b9d9f242084 *./install/update.php
-ca228eae0a929048b6079901ed3aebb3 *./install/install.php
+6180493965b119b2546ff9b0c1808bd3 *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd *./core/lang/en.lang.php
-4e1b5ecf9768b1e47e2fba8be1cf7777 *./core/common/PIREPData.class.php
+cf3ab1a8b9844f23fcbab38b472aab83 *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411 *./core/common/Auth.class.php
 faad9763e29f1b98643d859f2ef36683 *./core/common/RegistrationData.class.php
 db9c54ff3ab9b6b1b786e802b43853be *./core/common/StatsData.class.php
@@ -44,7 +44,7 @@ bab1cf66b6a740c25a3aea425ce0d194 *./core/common/SiteData.class.php
 643d7c252ba4910e48ddf33f0a7f045b *./core/common/ChartGraph.class.php
 035117763e0cad54a737c181aa25f636 *./core/common/DownloadData.class.php
 423e50e61933ff37fa95c96e5ce84af4 *./core/common/ACARSData.class.php
-8986aa280867c62d97c2c18bbaf10826 *./core/common/OperationsData.class.php
+adaed123de929614e98f5bb128f11b1d *./core/common/OperationsData.class.php
 da675675e84fdbaccf3a00ffe154a55d *./core/common/CronData.class.php
 4284083afc5de18b5e03aefc8abc9662 *./core/common/GoogleMap.class.php
 e1ccef8c261ad08cab0e26f929282804 *./core/common/CentralData.class.php
@@ -188,7 +188,7 @@ c75e1f34d88a90272e8b4f665e62ea3d *./core/modules/Frontpage/Frontpage.php
 2d0d9aa64e3ec2301ac6b26707c7026c *./core/modules/ACARS/fsacars.php
 b5c5d6d48fce21348ea500cfa577521d *./core/modules/ACARS/fspax.php
 a26e90b77c6a777406078673a07e0136 *./core/modules/ACARS/ACARS.php
-c530ed83af25fcf712955a9ef31cf0d2 *./core/modules/ACARS/xacars.php
+9212a8865d1a34d7881c6581dc120629 *./core/modules/ACARS/xacars.php
 5d7473dafc12c886027bba76102ff6b1 *./core/modules/FSFK/FSFK.php
 8882059eb244446de66944aa53df28d3 *./core/modules/FrontBids/FrontBids.php
 a5e67fddae9c3f77e262cee30771db05 *./core/modules/Logout/Logout.php
@@ -387,7 +387,7 @@ d003a142bf7c4bc1d7a9bb798ffbb13c *./admin/templates/awards_awardform.tpl
 6ae7c23b015b625fedac0218dceb87c8 *./admin/templates/pages_editpage.tpl
 004fcdbba9222fc7afcf739b002ab97c *./admin/templates/sidebar_ranks.tpl
 d70b94341a9608d8684060cb91164cdb *./admin/templates/sidebar_customfields.tpl
-a24917ea21f1fee1bd04af59e0c1f3ce *./admin/templates/finance_expenselist.tpl
+223813bc6ea8b8235f063a22a63d7bde *./admin/templates/finance_expenselist.tpl
 0cf57246059a8c42b1e3a6e9eb5db504 *./admin/templates/sidebar_financial.tpl
 c1a5185ba6623be4eb025402490cc162 *./admin/templates/settings_mainform.tpl
 64bd90ac0877b44a5a121eef0001a6c6 *./admin/templates/sidebar_downloads.tpl

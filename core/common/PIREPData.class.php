@@ -499,14 +499,16 @@ class PIREPData extends CodonData
 		}
 		
 		# Check the airports, add to database if they don't exist
-		if(!($depapt = OperationsData::getAirportInfo($pirepdata['depicao'])))
+		$depapt = OperationsData::getAirportInfo($pirepdata['depicao']);
+		if(!$depapt)
 		{						
-			$aptinfo = OperationsData::RetrieveAirportInfo($pirepdata['depicao']);
+			$depapt = OperationsData::RetrieveAirportInfo($pirepdata['depicao']);
 		}
 		
-		if(!($arrapt = OperationsData::getAirportInfo($pirepdata['arricao'])))
+		$arrapt = OperationsData::getAirportInfo($pirepdata['arricao']);
+		if(!$arrapt)
 		{
-			$aptinfo = OperationsData::RetrieveAirportInfo($pirepdata['arricao']);						
+			$arrapt = OperationsData::RetrieveAirportInfo($pirepdata['arricao']);						
 		}
 
 		# Look up the schedule
@@ -520,19 +522,22 @@ class PIREPData extends CodonData
 		}
 		else
 		{
-			$pirepdata['load'] = '';
+			$pirepdata['load'] = '0';
 		}
-	
-		$flighttime_stamp = str_replace('.', ':', $pirepdata['flighttime']).':00';
-		$pirepdata['flighttime'] = str_replace(':', '.', $pirepdata['flighttime']);
 		
-		# Landing rate
-		if(!isset($pirepdata['landingrate']) || $pirepdata['landingrate'] == '')
+		/* If the distance isn't supplied, then calculate it */
+		if(!isset($pirepdata['distance']) || empty($pirepdata['distance']))
+		{
+			$pirepdata['distance'] = OperationsData::getAirportDistance($depapt, $arrapt);
+		}
+		
+		/* See if there's a landing rate */
+		if(!isset($pirepdata['landingrate']) || empty($pirepdata['landingrate']))
 		{
 			$pirepdata['landingrate'] = 0;
 		}
 		
-		
+		/* Any "raw" parameterized data which needs to be added */
 		if(isset($pirepdata['rawdata']))
 		{
 			$pirepdata['rawdata'] = DB::escape(serialize($pirepdata['rawdata']));
@@ -542,10 +547,15 @@ class PIREPData extends CodonData
 			$pirepdata['rawdata'] = '';
 		}
 	
-		# Escape the comment field
+		/* Escape the comment field */
 		$pirepdata['log'] = DB::escape($pirepdata['log']);
 		$comment = DB::escape($pirepdata['comment']);
 		
+		/* Proper timestamp */
+		$flighttime_stamp = str_replace('.', ':', $pirepdata['flighttime']).':00';
+		$pirepdata['flighttime'] = str_replace(':', '.', $pirepdata['flighttime']);
+		
+		/* Export status as 0 */
 		$pirepdata['exported'] = 0;
 				
 		$sql = "INSERT INTO ".TABLE_PREFIX."pireps(	
@@ -554,6 +564,7 @@ class PIREPData extends CodonData
 							`flightnum`, 
 							`depicao`, 
 							`arricao`, 
+							`distance`,
 							`aircraft`, 
 							`flighttime`, 
 							`flighttime_stamp`,
@@ -571,6 +582,7 @@ class PIREPData extends CodonData
 							'{$pirepdata['flightnum']}', 
 							'{$pirepdata['depicao']}', 
 							'{$pirepdata['arricao']}', 
+							'{$pirepdata['distance']}',
 							'{$pirepdata['aircraft']}', 
 							'{$pirepdata['flighttime']}', 
 							'{$flighttime_stamp}',
@@ -593,8 +605,8 @@ class PIREPData extends CodonData
 			self::addComment($pirepid, $pirepdata['pilotid'], $pirepdata['comment']);
 		}
 		
-		# Update the financial information for the PIREP:
-		self::PopulatePIREPFinance($pirepid);
+		# Update the financial information for the PIREP, true to refresh fuel
+		self::PopulatePIREPFinance($pirepid, true);
 				
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
@@ -790,13 +802,17 @@ class PIREPData extends CodonData
 		
 		/* Account for any per-flight %age expenses */
 		$all_percent_expenses = FinanceData::getFlightPercentExpenses();
+	
+		$gross = floatval($sched->price) * floatval($pirep->load);
 		if(is_array($all_percent_expenses))
-		{
-			$gross = $gross = $data['price'] * $data['load'];
+		{		
 			foreach($all_percent_expenses as $ex)
 			{
-				$percent = $ex / 100;
-				$total_ex += ($gross * $percent);
+				$cost = str_replace('%', '', $ex->cost);
+				$percent = $cost / 100;
+				$total = ($gross * $percent);
+				
+				$total_ex += $total;
 			}
 		}
 		

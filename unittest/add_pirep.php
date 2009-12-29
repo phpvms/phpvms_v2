@@ -3,7 +3,7 @@
 include '../core/codon.config.php';
 echo '<pre>';
 
-$schedules = SchedulesData::findSchedules(array());
+$schedules = SchedulesData::findSchedules(array('s.flighttype'=>'P'));
 $idx = rand(0, count($schedules)-1);
 $sched = $schedules[$idx];
 

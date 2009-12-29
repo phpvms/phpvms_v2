@@ -13,9 +13,9 @@
  * 
  * SDK Docs: http://www.xacars.net/index.php?Client-Server-Protocol
  */
- 
-	error_reporting(E_ALL ^ E_NOTICE);
-	ini_set('display_errors', 'on');
+
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', 'on');
 	
 Debug::log($_SERVER['QUERY_STRING'], 'xacars');
 Debug::log($_SERVER['REQUEST_URI'], 'xacars');
@@ -368,7 +368,7 @@ $route->flightlevel
 				
 		Debug::log(print_r($data, true), 'xacars');
 		
-		$ret = ACARSData::FilePIREP($data[0], $data);
+		$ret = ACARSData::FilePIREP($pilotid, $data);
 				
 		echo '1|Success';
 		break;

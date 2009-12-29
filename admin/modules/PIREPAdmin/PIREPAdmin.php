@@ -288,7 +288,6 @@ class PIREPAdmin extends CodonModule
 		$message = Template::GetTemplate('email_commentadded.tpl', true);
 		Util::SendEmail($pirep_details->email, 'Comment Added', $message);
 		
-		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Added a comment to PIREP #'.$pirepid);
 	}
 	
@@ -450,9 +449,7 @@ class PIREPAdmin extends CodonModule
 			$this->reject_pirep_post();
 		}
 		
-		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Edited PIREP #'.$this->post->id);
-		DB::debug();
 		return true;
 	}
 }

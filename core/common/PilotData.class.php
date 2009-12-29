@@ -255,7 +255,13 @@ class PilotData extends CodonData
 		{
 			if(is_bool($params['retired']))
 			{
-				$params['retired'] = intval($params['retired']);
+				//$params['retired'] = intval($params['retired']);
+				
+				# The above doesn't work for false =\
+				if($params['retired'] == true)
+					$params['retired'] = 1;
+				else
+					$params['retired'] = 0;
 			}
 		}
 		
@@ -374,7 +380,7 @@ class PilotData extends CodonData
 	 */
 	public static function AcceptPilot($pilotid)
 	{
-		return self::updateProfile($pilotid, array('confirmed'=>PILOT_ACCEPTED));
+		return self::updateProfile($pilotid, array('confirmed'=>PILOT_ACCEPTED, 'retired'=>'0'));
 	}
 	
 	/**

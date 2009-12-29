@@ -100,6 +100,7 @@ class PIREPS extends CodonModule
 		}
 		
 		// Show PIREPs filed
+		$this->set('userinfo', Auth::$userinfo);
 		$this->set('pireps', PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid));
 		$this->render('pireps_viewall.tpl');
 	}

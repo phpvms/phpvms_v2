@@ -58,10 +58,10 @@ foreach($pireps as $report)
 	<?php
 	// Only show this column if they're logged in, and the pilot viewing is the
 	//	owner/submitter of the PIREPs
-	if(Auth::LoggedIn() && Auth::$userinfo->pilotid == $userinfo->pilotid)
+	if(Auth::LoggedIn() && Auth::$userinfo->pilotid == $report->pilotid)
 	{
 		?>
-	<td align="center">
+	<td align="right">
 		<a href="<?php echo url('/pireps/addcomment?id='.$report->pirepid);?>">Add Comment</a><br />
 		<a href="<?php echo url('/pireps/editpirep?id='.$report->pirepid);?>">Edit PIREP</a>
 	</td>

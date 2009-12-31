@@ -15,7 +15,7 @@
  */
 
 error_reporting(E_ALL ^ E_NOTICE);
-ini_set('display_errors', 'on');
+ini_set('display_errors', 'off');
 	
 Debug::log($_SERVER['QUERY_STRING'], 'xacars');
 Debug::log($_SERVER['REQUEST_URI'], 'xacars');
@@ -204,7 +204,6 @@ $route->flightlevel
 			
 			Debug::log('Flight data:', 'xacars');
 			Debug::log(print_r($_REQUEST, true), 'xacars');
-			
 			Debug::log('PilotID: '.$pilotid, 'xacars');
 			
 			$flightnum = $flight_data->flightnum;

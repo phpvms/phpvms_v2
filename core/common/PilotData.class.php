@@ -668,14 +668,14 @@ class PilotData extends CodonData
 			
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pilots
 				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `lastlogin`  
-					AND `totalflights` = 0
+					AND `totalflights` = 0 AND `lastlogin` != 0
 					AND `retired` = 0";
 				  
 		$results = DB::get_results($sql);
 		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pilots
 				WHERE DATE_SUB(CURDATE(), INTERVAL  {$days} DAY) > `lastpirep` 
-					AND `totalflights` > 0
+					AND `totalflights` > 0 AND `lastpirep` != 0
 					AND `retired` = 0";
 				  
 		$results2 = DB::get_results($sql);

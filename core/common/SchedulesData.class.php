@@ -576,15 +576,15 @@ class SchedulesData extends CodonData
 		$pilotid = DB::escape($pilotid);
 		
 		$sql = 'SELECT s.*, b.bidid, a.id as aircraftid, a.name as aircraft, a.registration, a.maxpax, a.maxcargo
-				FROM '.TABLE_PREFIX.'schedules s, '.TABLE_PREFIX.'bids b,
-					'.TABLE_PREFIX.'aircraft a
+				FROM '.TABLE_PREFIX.'schedules s, 
+					 '.TABLE_PREFIX.'bids b,
+					 '.TABLE_PREFIX.'aircraft a
 				WHERE b.routeid = s.id 
 					AND s.aircraft=a.id
 					AND b.pilotid='.$pilotid.'
 				ORDER BY id ASC LIMIT 1';
 		
 		return DB::get_row($sql);
-		
 	}
 	
 	/**

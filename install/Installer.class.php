@@ -256,7 +256,7 @@ class Installer
 		$ret = OperationsData::AddAirport($data);
 		
 		// Add a rank
-		RanksData::addRank('New Hire', 0, fileurl('/lib/images/ranks/newhire.jpg'), 18.00);
+		RanksData::updateRank(1, 'New Hire', 0, fileurl('/lib/images/ranks/newhire.jpg'), 18.00);
 		
 		// Add the user
 		$data = array(

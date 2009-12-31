@@ -71,6 +71,7 @@ switch($acars_action)
 	#	or tested
 	#
 	
+	case 'acars':
 	case 'fsacars':
 		
 		Debug::log('ACARS UPDATE', 'fsacars');
@@ -112,8 +113,8 @@ switch($acars_action)
 			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 		}
 		
-		$route = SchedulesData::GetLatestBid($pilotid);
-		$date=date('Y:m:d');
+		$route = SchedulesData::getLatestBid($pilotid);
+		$date = date('Y:m:d');
 		
 		# Get load counts
 		if($route->flighttype=='H')

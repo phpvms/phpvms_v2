@@ -88,7 +88,7 @@ class RanksData extends CodonData
 	/**
 	 * Update a certain rank
 	 */
-	public static function UpdateRank($rankid, $title, $minhours, $imageurl, $payrate)
+	public static function updateRank($rankid, $title, $minhours, $imageurl, $payrate)
 	{
 		$minhours = intval($minhours);
 		$payrate = floatval($payrate);

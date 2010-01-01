@@ -15,7 +15,7 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
-function formInit()
+function formInit() 
 {
     $("#form").ajaxForm({
 		target: '#bodytext',
@@ -70,8 +70,8 @@ function reloadGroups()
 	$('.pilotgroupajax').live('dblclick', function() {
 		$("#pilotgroups").load($(this).attr("href"), 
 		    { action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id")}, 
-		    function() 
-            { reloadGroups(); 
+		    function() { 
+                reloadGroups(); 
             });
 	});
 }
@@ -79,10 +79,11 @@ function reloadGroups()
 function calcDistance()
 {
      $("#distance").val("Calculating...");
-    $.get(baseurl+"/admin/action.php/operations/calculatedistance", {depicao: $("#depicao").val(), arricao: $("#arricao").val()},
-    function (data){
-        $("#distance").val(data);
-    });
+     $.get(baseurl + "/admin/action.php/operations/calculatedistance", 
+        {depicao: $("#depicao").val(), arricao: $("#arricao").val()},
+        function (data){
+            $("#distance").val(data);
+        });
 }
 
 $(document).ready(function() {

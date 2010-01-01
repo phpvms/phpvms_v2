@@ -13,12 +13,13 @@ befe5871e87fae236013e93e88aba872 *./unittest/tests/install_test.php
 614dcd95256572f0e077ad504146595b *./unittest/tests/ops_test.php
 52758b3f41e8f81c7cc4bde8bf7ed68e *./unittest/tests/times_test.php
 db804a180fa8419cfa21ad4057236f42 *./unittest/time.php
-ef9eb61589ec8c0fec4bb754c141b1e3 *./install/checkinstall.php
+0479139261f8be25b5ec6d1e9e4a3131 *./install/checkinstall.php
 d41d8cd98f00b204e9800998ecf8427e *./install/index.php
 80b2826f5861390475c49bbb1551906d *./install/dbtest.php
 dc6c1d0e7acbea6562eaf7c58e26be74 *./install/loader.inc.php
 5c04d5f5c959d0a025aef48587982930 *./install/Installer.class.php
 2eb98d7dd8cefa49e5c89b9d9f242084 *./install/update.php
+582e7b09582845e80dc0d2baa3abde81 *./install/checkdb.php
 6180493965b119b2546ff9b0c1808bd3 *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd *./core/lang/en.lang.php
 cf3ab1a8b9844f23fcbab38b472aab83 *./core/common/PIREPData.class.php
@@ -31,7 +32,7 @@ ab63202ba065d26ba190dc4c1591f67b *./core/common/RSSFeed.class.php
 f719770fdfa25e81891a86268680a32d *./core/common/SchedulesData.class.php
 6e69bbf6f5d8b534b77f051a63cd9466 *./core/common/UserGroups.class.php
 b3e6a4926ee94b822c5d74fa158356b1 *./core/common/Countries.class.php
-827135fd1ccc31b4c31b0f996196b893 *./core/common/PilotData.class.php
+d2d7d44c9f24ff6e3f0543f2aee7b9cf *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210 *./core/common/GoogleChart.class.php
 d345bcc3736b865fa7c522ec4d7b27a0 *./core/common/SettingsData.class.php
 5b1858de9a61578c0b9b21742ce17349 *./core/common/RanksData.class.php
@@ -205,7 +206,7 @@ c01d01e667581b22b10ce71ae00b65d2 *./index.php
 3dc614c1083fd3565c493a9c2bc670b1 *./admin/action.php
 f1c016469d12fd1974599d675da8d97b *./admin/modules/Reports/Reports.php
 eb48b61566644404735718c7607dce33 *./admin/modules/VACentral/VACentral.php
-3d5cdde45c76ad2b15bf05ceb209eda9 *./admin/modules/Finance/Finance.php
+47619590386bbc62641778abad349c71 *./admin/modules/Finance/Finance.php
 c1de104017f08ab3f33a2635c0a6acf2 *./admin/modules/Logs/Logs.php
 e2fbd7d4574fde51e0da839fdece54d9 *./admin/modules/PilotAdmin/PilotAdmin.php
 3565855601464567dd9c016a0be910af *./admin/modules/PilotRanking/PilotRanking.php
@@ -387,7 +388,7 @@ d003a142bf7c4bc1d7a9bb798ffbb13c *./admin/templates/awards_awardform.tpl
 6ae7c23b015b625fedac0218dceb87c8 *./admin/templates/pages_editpage.tpl
 004fcdbba9222fc7afcf739b002ab97c *./admin/templates/sidebar_ranks.tpl
 d70b94341a9608d8684060cb91164cdb *./admin/templates/sidebar_customfields.tpl
-223813bc6ea8b8235f063a22a63d7bde *./admin/templates/finance_expenselist.tpl
+62d0cae47009707ce358b6b4277d300e *./admin/templates/finance_expenselist.tpl
 0cf57246059a8c42b1e3a6e9eb5db504 *./admin/templates/sidebar_financial.tpl
 c1a5185ba6623be4eb025402490cc162 *./admin/templates/settings_mainform.tpl
 64bd90ac0877b44a5a121eef0001a6c6 *./admin/templates/sidebar_downloads.tpl

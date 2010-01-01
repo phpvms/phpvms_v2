@@ -106,9 +106,6 @@ else
 	error('Fail', 'SimpleXML module doesn\'t exist or is not installed. Contact your host');
 }
 
-
-
-
 /* File hashes check */
 
 echo '<br >';

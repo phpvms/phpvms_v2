@@ -711,7 +711,7 @@ class PilotData extends CodonData
 			Template::Set('pilot', $row);
 			$pilot_retired_template = Template::Get('email_pilot_retired.tpl', true, true, true);
 			
-			//Util::SendEmail($row->email, Lang::get('email.pilot.retired.subject'), $pilot_retired_template);
+			Util::SendEmail($row->email, Lang::get('email.pilot.retired.subject'), $pilot_retired_template);
 		}
 	}
 	

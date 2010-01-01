@@ -90,12 +90,12 @@ class Finance extends CodonModule
 	{
 		if($this->post->action == 'addexpense' || $this->post->action == 'editexpense')
 		{
-			$this->ProcessExpense();
+			$this->processExpense();
 		}
 		
-		if($this->get->action == 'deleteexpense')
+		if($this->post->action == 'deleteexpense')
 		{
-			FinanceData::RemoveExpense($this->post->id);
+			FinanceData::removeExpense($this->post->id);
 		}
 	
 		$this->set('allexpenses', FinanceData::GetAllExpenses());
@@ -119,9 +119,8 @@ class Finance extends CodonModule
 		$this->render('finance_expenseform.tpl');	
 	}
 	
-	public function ProcessExpense()
+	public function processExpense()
 	{
-		
 		if($this->post->name == '' || $this->post->cost == '')
 		{
 			$this->set('message', 'Name and cost must be entered');

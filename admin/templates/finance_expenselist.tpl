@@ -39,7 +39,7 @@ foreach($allexpenses as $expense)
 		<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
 		
 		<a href="<?php echo SITE_URL?>/admin/action.php/finance/viewexpenses" action="deleteexpense"
-			id="<?php echo $expense->pirepid;?>" class="ajaxcall">
+			id="<?php echo $expense->id;?>" class="ajaxcall">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
 	</td>
 </tr>

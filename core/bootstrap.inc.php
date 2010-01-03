@@ -27,8 +27,7 @@ function pre_module_load()
 	if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.config.php') == 0)
 	{
 		Debug::showCritical('phpVMS has not been installed yet! Goto <a href="install/install.php">install/install.php</a> to start!');		
-		exit; 
-		//header('Location: install/install.php');
+		exit;
 	}
 	
 	SiteData::loadSiteSettings();
@@ -40,10 +39,17 @@ function post_module_load()
 	/* Misc tasks which need to get done */
 	
 	/* If the setting to auto-retired pilots is on, then do that
+		and only check every 24 hours
 	 */
 	if(Config::Get('PILOT_AUTO_RETIRE') == true)
 	{
-		PilotData::findRetiredPilots();
+		$within_timelimit = CronData::check_hoursdiff('find_retired_pilots', '24');
+		if($within_timelimit == false)
+		{
+			PilotData::findRetiredPilots();
+			CronData::set_lastupdate('find_retired_pilots');
+		}
+	
 	}
 	
 	

@@ -44,6 +44,9 @@ foreach($db->database->table_structure as $table)
 		continue;
 	}
 	
+	/* loop through all the columns returned by the above query and all the columns
+		from the fields in the xml file, and make sure they all match up, with the
+		fieldlist from the xml being the "master" outside loop which it looks up against */
 	$anyerrors = false;
 	$colinfo = DB::$DB->col_info;
 	foreach($table->field as $field)

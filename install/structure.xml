@@ -138,10 +138,10 @@
 		<field Field="fieldid" Type="int(11)" Null="NO" Key="MUL" Extra="" />
 		<field Field="pilotid" Type="int(11)" Null="NO" Key="MUL" Extra="" />
 		<field Field="value" Type="varchar(25)" Null="NO" Key="" Extra="" />
-		<key Table="phpvms_fieldvalues" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="5" Null="" Index_type="BTREE" Comment="" />
+		<key Table="phpvms_fieldvalues" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="6" Null="" Index_type="BTREE" Comment="" />
 		<key Table="phpvms_fieldvalues" Non_unique="1" Key_name="phpvms_fieldvalues_ibfk_1" Seq_in_index="1" Column_name="fieldid" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" />
-		<key Table="phpvms_fieldvalues" Non_unique="1" Key_name="phpvms_fieldvalues_ibfk_2" Seq_in_index="1" Column_name="pilotid" Collation="A" Cardinality="5" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_fieldvalues" Engine="InnoDB" Version="10" Row_format="Compact" Rows="5" Avg_row_length="3276" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="10485760" Auto_increment="6" Create_time="2009-10-31 20:05:09" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<key Table="phpvms_fieldvalues" Non_unique="1" Key_name="phpvms_fieldvalues_ibfk_2" Seq_in_index="1" Column_name="pilotid" Collation="A" Cardinality="6" Null="" Index_type="BTREE" Comment="" />
+		<options Name="phpvms_fieldvalues" Engine="InnoDB" Version="10" Row_format="Compact" Rows="6" Avg_row_length="2730" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="10485760" Auto_increment="7" Create_time="2009-10-31 20:05:09" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 	<table_structure name="phpvms_financedata">
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />
@@ -149,8 +149,8 @@
 		<field Field="year" Type="int(11)" Null="NO" Key="" Extra="" />
 		<field Field="data" Type="text" Null="NO" Key="" Extra="" />
 		<field Field="total" Type="float" Null="NO" Key="" Extra="" />
-		<key Table="phpvms_financedata" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_financedata" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="4" Avg_row_length="347" Data_length="1388" Max_data_length="281474976710655" Index_length="2048" Data_free="0" Auto_increment="5" Create_time="2009-10-31 20:05:09" Update_time="2009-12-12 00:40:58" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<key Table="phpvms_financedata" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="5" Null="" Index_type="BTREE" Comment="" />
+		<options Name="phpvms_financedata" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="5" Avg_row_length="377" Data_length="1888" Max_data_length="281474976710655" Index_length="2048" Data_free="0" Auto_increment="6" Create_time="2009-10-31 20:05:09" Update_time="2010-01-02 18:36:36" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 	<table_structure name="phpvms_fuelprices">
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />
@@ -221,9 +221,9 @@
 		<field Field="retired" Type="smallint(6)" Null="NO" Key="" Default="0" Extra="" />
 		<field Field="joindate" Type="datetime" Null="NO" Key="" Default="0000-00-00 00:00:00" Extra="" />
 		<field Field="lastpirep" Type="datetime" Null="NO" Key="" Default="0000-00-00 00:00:00" Extra="" />
-		<key Table="phpvms_pilots" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="pilotid" Collation="A" Cardinality="15" Null="" Index_type="BTREE" Comment="" />
-		<key Table="phpvms_pilots" Non_unique="1" Key_name="code" Seq_in_index="1" Column_name="code" Collation="A" Cardinality="5" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_pilots" Engine="InnoDB" Version="10" Row_format="Compact" Rows="15" Avg_row_length="1092" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="10485760" Auto_increment="32" Create_time="2009-10-31 20:05:09" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<key Table="phpvms_pilots" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="pilotid" Collation="A" Cardinality="16" Null="" Index_type="BTREE" Comment="" />
+		<key Table="phpvms_pilots" Non_unique="1" Key_name="code" Seq_in_index="1" Column_name="code" Collation="A" Cardinality="4" Null="" Index_type="BTREE" Comment="" />
+		<options Name="phpvms_pilots" Engine="InnoDB" Version="10" Row_format="Compact" Rows="16" Avg_row_length="1024" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="10485760" Auto_increment="33" Create_time="2009-10-31 20:05:09" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 	<table_structure name="phpvms_pirepcomments">
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />
@@ -328,8 +328,8 @@
 		<field Field="pilotid" Type="int(11)" Null="NO" Key="" Extra="" />
 		<field Field="ipaddress" Type="varchar(25)" Null="NO" Key="" Extra="" />
 		<field Field="logintime" Type="datetime" Null="NO" Key="" Extra="" />
-		<key Table="phpvms_sessions" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="392" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_sessions" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="392" Avg_row_length="33" Data_length="13012" Max_data_length="281474976710655" Index_length="6144" Data_free="0" Auto_increment="393" Create_time="2009-10-31 20:05:09" Update_time="2010-01-01 16:56:21" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<key Table="phpvms_sessions" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="401" Null="" Index_type="BTREE" Comment="" />
+		<options Name="phpvms_sessions" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="401" Avg_row_length="33" Data_length="13316" Max_data_length="281474976710655" Index_length="6144" Data_free="0" Auto_increment="402" Create_time="2009-10-31 20:05:09" Update_time="2010-01-03 15:20:29" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 	<table_structure name="phpvms_settings">
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />
@@ -346,9 +346,9 @@
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />
 		<field Field="name" Type="varchar(25)" Null="NO" Key="MUL" Extra="" />
 		<field Field="lastupdate" Type="datetime" Null="NO" Key="" Extra="" />
-		<key Table="phpvms_updates" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="5" Null="" Index_type="BTREE" Comment="" />
+		<key Table="phpvms_updates" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="6" Null="" Index_type="BTREE" Comment="" />
 		<key Table="phpvms_updates" Non_unique="1" Key_name="name" Seq_in_index="1" Column_name="name" Collation="A" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_updates" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="5" Avg_row_length="32" Data_length="160" Max_data_length="281474976710655" Index_length="3072" Data_free="0" Auto_increment="6" Create_time="2009-12-20 17:51:29" Update_time="2009-12-31 21:10:24" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<options Name="phpvms_updates" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="6" Avg_row_length="32" Data_length="196" Max_data_length="281474976710655" Index_length="3072" Data_free="0" Auto_increment="7" Create_time="2009-12-20 17:51:29" Update_time="2010-01-02 20:23:04" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 </database>
 </mysqldump>

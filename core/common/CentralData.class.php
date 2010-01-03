@@ -29,7 +29,7 @@ class CentralData extends CodonData
 	/* DO NOT try to circumvent these limits.
 		They're also tracked server-side. If you change them,
 		you will be penalized or banned. */
-	private static $limits = array(
+	public static $limits = array(
 		'update_vainfo' => 6,
 		'update_schedules' => 12,
 		'process_airport_list' => 1,
@@ -55,7 +55,6 @@ class CentralData extends CodonData
 	
 	private static function send_xml()
 	{
-		
 		// Cover old and new format
 		$api_server = Config::Get('VACENTRAL_API_SERVER');
 		if($api_server == '')
@@ -181,7 +180,7 @@ class CentralData extends CodonData
 
 		self::set_xml('update_schedules');
 		
-		$params = array('s.enabled' => true);
+		$params = array('s.enabled' => '1');
 		$schedules = SchedulesData::findSchedules($params);
 		
 		if(!is_array($schedules))

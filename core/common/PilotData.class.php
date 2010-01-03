@@ -846,7 +846,7 @@ class PilotData extends CodonData
 	 * @param int The pilot ID for which to generate a signature for
 	 * @return bool Success
 	 */	 
-	public function GenerateSignature($pilotid)
+	public function generateSignature($pilotid)
 	{
 		$pilot = self::getPilotData($pilotid);
 		$pilotcode = self::getPilotCode($pilot->code, $pilot->pilotid);
@@ -869,12 +869,12 @@ class PilotData extends CodonData
 		
 		if(Config::Get('SIGNATURE_SHOW_EARNINGS') == true)
 		{
-			$output[] = 'Total Earnings: $' . $pilot->totalpay;
+			$output[] = 'Total Earnings: ' . $pilot->totalpay;
 		}
 		
 		# Load up our image
 		# Get the background image the pilot selected
-		if($pilot->bgimage == '')
+		if(empty($pilot->bgimage))
 			$bgimage = SITE_ROOT.'/lib/signatures/background/background.png';
 		else
 			$bgimage = SITE_ROOT.'/lib/signatures/background/'.$pilot->bgimage;
@@ -904,22 +904,49 @@ class PilotData extends CodonData
 		$textcolor = imagecolorallocate($img, $color[0], $color[1], $color[2]);
 		$font = 3; // Set the font-size
 		
-		$xoffset = 10; # How many pixels, from left, to start
-		$yoffset = 10; # How many pixels, from top, to start
+		$xoffset = Config::Get('SIGNATURE_X_OFFSET'); # How many pixels, from left, to start
+		$yoffset = Config::Get('SIGNATURE_Y_OFFSET'); # How many pixels, from top, to start
 		
-		# The line height of each item to fit nicely, dynamic
-		$stepsize = imagefontheight($font);
-		$fontwidth = imagefontwidth($font);
+		$font = Config::Get('SIGNATURE_FONT_PATH');
+		$font_size = Config::Get('SIGNATURE_FONT_SIZE');
 		
 		if(function_exists('imageantialias'))
 		{
 			imageantialias($img, true);
+		}		
+		
+		/* Font stuff */
+		
+		# The line height of each item to fit nicely, dynamic
+		
+		if(Config::Get('SIGNATURE_USE_CUSTOM_FONT') == false)
+		{
+			$stepsize = imagefontheight($font);
+			$fontwidth = imagefontwidth($font);
 		}
+		else
+		{
+			// get the font width and step size
+			$bb = imagettfbbox  ( $font_size, 0, $font, 'A');
+			
+			$stepsize = $bb[3] - $bb[5] + Config::Get('SIGNATURE_FONT_PADDING');
+			$fontwidth = $bb[2] - $bb[0];
+		}
+		
 		
 		$currline = $yoffset;
 		foreach($output as $line)
-		{
-			imagestring($img, $font, $xoffset, $currline, $line, $textcolor);
+		{		
+			if(Config::Get('SIGNATURE_USE_CUSTOM_FONT') == false)
+			{	
+				imagestring($img, $font, $xoffset, $currline, $line, $textcolor);	
+			}
+			else
+			{
+				// Use TTF
+				imagettftext($img, $font_size, 0, $xoffset, $currline, $textcolor, $font, $line);
+			}
+			
 			$currline+=$stepsize;
 		}
 		
@@ -929,8 +956,17 @@ class PilotData extends CodonData
 		if(file_exists(SITE_ROOT.'/lib/images/countries/'.$country.'.png'))
 		{
 			$flagimg = imagecreatefrompng(SITE_ROOT.'/lib/images/countries/'.$country.'.png');
-			$ret = imagecopy($img, $flagimg, strlen($output[0])*$fontwidth+20, 
+			
+			if(Config::Get('SIGNATURE_USE_CUSTOM_FONT') == false)
+			{	
+				$ret = imagecopy($img, $flagimg, strlen($output[0])*$fontwidth, 
 							($yoffset+($stepsize/2)-5.5), 0, 0, 16, 11);
+			}
+			else
+			{
+				$ret = imagecopy($img, $flagimg, strlen($output[1])*$fontwidth, 
+					($yoffset+($stepsize/2) - Config::Get('SIGNATURE_FONT_PADDING')), 0, 0, 16, 11);
+			}
 		}
 							
 		# Add the Rank image

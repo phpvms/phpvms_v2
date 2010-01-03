@@ -552,7 +552,7 @@ class StatsData extends CodonData
 	 */
 	public static function TotalSchedules($airline_code='')
 	{
-		$sql = 'SELECT COUNT(`id`) AS `total` 
+		$sql = 'SELECT COUNT(`id`) AS total
 				FROM '.TABLE_PREFIX.'schedules';
 		
 		if($airline_code != '')

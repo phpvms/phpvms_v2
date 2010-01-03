@@ -103,7 +103,19 @@ class Dashboard extends CodonModule
 				return;
 			}
 			
-			$xml =simplexml_load_string($contents);
+			
+			$xml = @simplexml_load_string($contents);
+			
+			if(!$xml)
+			{
+				$msg = '<br /><b>Error:</b> There was an error retrieving news. It may be temporary.
+						Check to make sure allow_url_fopen is set to ON in your php.ini, or 
+						that the cURL module is installed (contact your host).';
+				
+				$this->set('latestnews', $msg);
+				return;
+			}
+			
 			$postversion = intval(str_replace('.', '', trim($xml->version)));
 			$currversion = intval(str_replace('.', '', PHPVMS_VERSION));
 			

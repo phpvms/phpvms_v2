@@ -38,8 +38,7 @@ class CronData extends CodonData
 	public static function check_hoursdiff($name, $age_hours)
 	{
 		$name = strtoupper($name);
-		$sql = 'SELECT *, DATEDIFF(NOW(), lastupdate) AS days,
-						  TIMEDIFF(NOW(), lastupdate) as timediff
+		$sql = 'SELECT `lastupdate`
 				FROM '.TABLE_PREFIX."updates
 				WHERE DATE_SUB(CURDATE(), INTERVAL {$age_hours} HOUR) <= lastupdate
 					AND name='{$name}'";

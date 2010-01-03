@@ -99,7 +99,8 @@ class Profile extends CodonModule
 			return;
 		}
 		
-		$this->set('pilot', PilotData::GetPilotData(Auth::$userinfo->pilotid));
+		$this->set('allmonthdata', PIREPData::getIntervalData(array('p.pilotid'=>Auth::$userinfo->pilotid)));
+		$this->set('allaircraftdata', StatsData::PilotAircraftFlownCounts(Auth::$userinfo->pilotid));
 		$this->render('profile_stats.tpl');
 	}
 	
@@ -142,9 +143,7 @@ class Profile extends CodonModule
 		{
 			return;
 		}
-		
-		print_r($this->post);
-		
+				
 		$params = array(
 			'code' => Auth::$userinfo->code,
 			'email' => $this->post->email,
@@ -156,7 +155,6 @@ class Profile extends CodonModule
 			
 		PilotData::updateProfile($userinfo->pilotid, $params);
 		PilotData::SaveFields($userinfo->pilotid, $_POST);
-		
 		
 		# Generate a fresh signature
 		PilotData::GenerateSignature($userinfo->pilotid);

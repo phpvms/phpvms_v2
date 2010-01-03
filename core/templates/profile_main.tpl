@@ -52,6 +52,7 @@
 				<li><a href="<?php echo url('/profile/editprofile'); ?>">Edit My Profile, Email and Avatar</a></li>
 				<li><a href="<?php echo url('/profile/changepassword'); ?>">Change my Password</a></li>
 				<li><a href="<?php echo SITE_URL.SIGNATURE_PATH.'/'.$pilotcode.'.png' ?>">View my Badge</a></li>
+				<li><a href="<?php echo url('/profile/stats'); ?>">My Stats</a></li>
 				<li><a href="<?php echo url('/downloads'); ?>">View Downloads</a></li>
 			</ul>
 		</p>

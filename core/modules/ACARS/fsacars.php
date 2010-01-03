@@ -32,6 +32,7 @@ ini_set('display_errors', 'off');
 
 Debug::log(serialize($_SERVER['QUERY_STRING']), 'fsacars');
 
+
 ##################################
 	
 # Our flight phase constants
@@ -271,7 +272,23 @@ $maxcargo";
 			# We have more coming to the log
 			#
 			$report = PIREPData::GetLastReports($pilotid, 1);
-			PIREPData::AppendToLog($report->pirepid, $_GET['log']);	
+			
+			/* Check for any other data which might be in the other
+				chunks sent by fsacars, because it's stupid and doesn't
+				just do POST */
+			$log = explode('*', $_GET['log']);
+			
+			/* Find the landing rate */
+			$pos = find_in_fsacars_log('TouchDown:Rate', $log);
+			$landingrate = str_replace('TouchDown:Rate', '', $log[$pos]);
+			$count = preg_match('/([0-9]*:[0-9]*).*([-+]\d*).*/i', $landingrate, $matches);
+			
+			if($count > 0)
+			{
+				PIREPData::updatePIREPFields($report->pirepid, array('landingrate' => $matches[2]));
+			}
+			
+			PIREPData::AppendToLog($report->pirepid, $_GET['log']);
 						
 			echo 'OK';
 			return;
@@ -372,7 +389,7 @@ $maxcargo";
 						'load' => $load,
 						'rawdata' => $log,
 						'log'=> $_GET['log']);
-			
+		
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 			
 		echo 'OK';

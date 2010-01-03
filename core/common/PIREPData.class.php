@@ -76,6 +76,32 @@ class PIREPData extends CodonData
 		return $ret;
 	}
 	
+	public static function getIntervalData($where_params, $months=6)
+	{
+		$sql = "SELECT 
+					DATE_FORMAT(p.submitdate, '%Y-%m') AS ym,
+					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
+					COUNT(p.pirepid) AS total,
+					SUM(p.revenue) as revenue
+				FROM ".TABLE_PREFIX."pireps p";
+		
+		$date_clause = "p.submitdate >= DATE_SUB(NOW(), INTERVAL {$months} MONTH)";
+		if(!is_array($where_params))
+		{
+			$where_params=array($date_clause);
+		}
+		else
+		{
+			$where_params[] = $date_clause;
+		}
+		
+		$sql .= DB::build_where($where_params);
+		
+		$sql .= 'GROUP BY `ym` ORDER BY `timestamp` ASC';
+		
+		return DB::get_results($sql);
+	}
+	
 	/**
 	 * Return all of the pilot reports. Can pass a start and
 	 * count for pagination. Returns 20 rows by default. If you
@@ -212,11 +238,7 @@ class PIREPData extends CodonData
 	 */
 	public static function ChangePIREPStatus($pirepid, $status)
 	{
-		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
-				SET `accepted`='.$status.' 
-				WHERE `pirepid`='.$pirepid;
-
-		return DB::query($sql);
+		return self::updatePIREPFields($pirepid, array('accepted' => $status));
 	}
 
 	/**
@@ -377,18 +399,14 @@ class PIREPData extends CodonData
 		return DB::query($sql);
 	}
 	
-	public static function setExportedStatus($pirep_id, $status)
+	public static function setExportedStatus($pirepid, $status)
 	{
 		if($status === true)
 			$status = 1;
 		else
 			$status = 0;
 			
-		$sql = 'UPDATE '.TABLE_PREFIX.'pireps 
-				SET `exported`='.$status.'
-				WHERE `pirepid`='.$pirep_id;
-		
-		return DB::query($sql);
+		return self::updatePIREPFields($pirepid, array('exported' => $status));
 	}
 	
 
@@ -443,9 +461,7 @@ class PIREPData extends CodonData
 					  
 		if(!is_array($pirepdata))
 			return false;
-			
-		#echo '<pre>';
-		
+					
 		/* Check if this PIREP was just submitted, check the last 10 minutes 
 		*/
 		
@@ -516,13 +532,9 @@ class PIREPData extends CodonData
 		
 		# Check the load, if it's blank then look it up
 		#	Based on the aircraft that was flown
-		if(!isset($pirepdata['load']) || $pirepdata['load'] == '')
+		if(!isset($pirepdata['load']) || empty($pirepdata['load']))
 		{
 			$pirepdata['load'] = FinanceData::getLoadCount($pirepdata['aircraft'], $sched->flighttype);
-		}
-		else
-		{
-			$pirepdata['load'] = '0';
 		}
 		
 		/* If the distance isn't supplied, then calculate it */
@@ -689,29 +701,67 @@ class PIREPData extends CodonData
 		
 		$revenue = self::getPIREPRevenue($data);
 		
-		$sql = "UPDATE `".TABLE_PREFIX."pireps`
-				SET `code`='{$pirepdata['code']}', 
-					`flightnum`='{$pirepdata['flightnum']}',
-					`depicao`='{$pirepdata['depicao']}', 
-					`arricao`='{$pirepdata['arricao']}', 
-					`aircraft`='{$pirepdata['aircraft']}', 
-					`flighttime`='{$pirepdata['flighttime']}',
-					`flighttime_stamp`='{$flighttime_stamp}',
-					`load`='{$pirepdata['load']}',
-					`price`='{$pirepdata['price']}',
-					`pilotpay`='{$pirepdata['pilotpay']}',
-					`fuelused`='{$pirepdata['fuelused']}',
-					`fuelunitcost`='{$pirepdata['fuelunitcost']}',
-					`fuelprice`='{$pirepdata['fuelprice']}',
-					`expenses`='{$pirepdata['expenses']}',
-					`revenue`='{$revenue}'
-				WHERE `pirepid`={$pirepid}";
-
-		$ret = DB::query($sql);
-		//DB::debug();
+		$fields = array(
+			'code' => $pirepdata['code'],
+			'flightnum' => $pirepdata['flightnum'],
+			`depicao` => $pirepdata['depicao'], 
+			'arricao' => $pirepdata['arricao'], 
+			'aircraft' => $pirepdata['aircraft'], 
+			'flighttime' => $pirepdata['flighttime'],
+			'flighttime_stamp' => $flighttime_stamp,
+			'load' => $pirepdata['load'],
+			'price' => $pirepdata['price'],
+			'pilotpay' => $pirepdata['pilotpay'],
+			'fuelused' => $pirepdata['fuelused'],
+			'fuelunitcost' => $pirepdata['fuelunitcost'],
+			'fuelprice' => $pirepdata['fuelprice'],
+			'expenses' => $pirepdata['expenses'],
+			'revenue' => $revenue,
+		);
 		
-		#self::PopulatePIREPFinance($pirepid);
-		return true;
+		return self::updatePIREPFields($pirepid, $fields);
+	}
+	
+	
+	/**
+	 * Update any fields in a PIREP, other update functions come down to this
+	 *
+	 * @param int $pirepid ID of the PIREP to update
+	 * @param array $fields Array, column name as key, with values to update
+	 * @return bool 
+	 *
+	 */
+	public static function updatePIREPFields($pirepid, $fields)
+	{
+		if(!is_array($fields))
+		{
+			return false;
+		}
+		
+		$sql = "UPDATE `".TABLE_PREFIX."pireps` SET ";
+		
+		$sql_cols = array();
+		foreach($fields as $col => $value)
+		{
+			$tmp = "`{$col}`=";
+			if($value == 'NOW()')
+			{
+				$tmp.='NOW()';
+			}
+			else
+			{
+				$value = DB::escape($value);
+				$tmp.="'{$value}'";
+			}
+			
+			$sql_cols[] = $tmp;
+		}
+		
+		$sql .= implode(', ', $sql_cols);
+		$sql .= ' WHERE `pirepid`='.$pirepid;
+		
+		DB::query($sql);
+		DB::debug();
 	}
 	
 	/**
@@ -827,22 +877,21 @@ class PIREPData extends CodonData
 			
 		$revenue = self::getPIREPRevenue($data);
 		
-		# Update it
-		$sql = 'UPDATE '.TABLE_PREFIX."pireps
-					SET `price`='{$sched->price}',
-						`load`={$pirep->load},
-						`fuelprice`='{$pirep->fuelprice}',
-						`fuelunitcost`='{$pirep->fuelunitcost}',
-						`expenses`={$total_ex},
-						`pilotpay`='{$pilot->payrate}',
-						`revenue`='{$revenue}' ";
+		/* Now update the PIREP */
+		$fields = array(
+			'price' => $sched->price,
+			'load' => $pirep->load,
+			'fuelprice' => $pirep->fuelprice,
+			'fuelunitcost' => $pirep->fuelunitcost,
+			'expenses' => $total_ex,
+			'pilotpay' => $pilot->payrate,
+			'revenue' => $revenue
+		);
 		
 		if(isset($data['load']) && $data['load'] != '')
-			$sql .= ", `load`='{$data['load']}'";
+			$fields['load'] = $data['load'];
 			
-		$sql .= " WHERE `pirepid`=$pirepid";
-					
-		DB::query($sql);
+		return self::updatePIREPFields($pirepid, $fields);
 	}
 	
 	public static function getPIREPRevenue($data)
@@ -857,19 +906,6 @@ class PIREPData extends CodonData
 		
 		return $revenue;
 		
-	}
-	
-	/**
-	 * Update the PIREP distance
-	 */
-	 
-	public static function UpdatePIREPDistance($pirepid, $distance)
-	{
-		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
-					SET distance=\''.$distance.'\'
-					WHERE pirepid='.$pirepid;
-		
-		return DB::query($sql);		
 	}
 	
 	/**

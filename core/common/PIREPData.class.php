@@ -76,7 +76,7 @@ class PIREPData extends CodonData
 		return $ret;
 	}
 	
-	public static function getIntervalData($where_params, $months=6)
+	public static function getIntervalDataByMonth($where_params, $interval='6')
 	{
 		$sql = "SELECT 
 					DATE_FORMAT(p.submitdate, '%Y-%m') AS ym,
@@ -85,7 +85,37 @@ class PIREPData extends CodonData
 					SUM(p.revenue) as revenue
 				FROM ".TABLE_PREFIX."pireps p";
 		
-		$date_clause = "p.submitdate >= DATE_SUB(NOW(), INTERVAL {$months} MONTH)";
+		$date_clause = "p.submitdate >= DATE_SUB(NOW(), INTERVAL {$interval} MONTH)";
+		
+		/* See if this array already exists */
+		if(!is_array($where_params))
+		{
+			$where_params=array($date_clause);
+		}
+		else
+		{
+			$where_params[] = $date_clause;
+		}
+		
+		$sql .= DB::build_where($where_params);
+		
+		$sql .= 'GROUP BY `ym` ORDER BY `timestamp` ASC';
+		
+		return DB::get_results($sql);
+	}
+	
+	public static function getIntervalDataByDays($where_params, $interval='6')
+	{
+		$sql = "SELECT 
+					DATE_FORMAT(p.submitdate, '%Y-%m-%d') AS ym,
+					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
+					COUNT(p.pirepid) AS total,
+					SUM(p.revenue) as revenue
+				FROM ".TABLE_PREFIX."pireps p";
+		
+		$date_clause = "p.submitdate >= DATE_SUB(NOW(), INTERVAL {$interval} DAY)";
+		
+		/* See if this array already exists */
 		if(!is_array($where_params))
 		{
 			$where_params=array($date_clause);
@@ -385,7 +415,6 @@ class PIREPData extends CodonData
 		return $total->total;
 	}
 	
-	
 	public static function setAllExportStatus($status)
 	{
 		if($status === true)
@@ -396,7 +425,14 @@ class PIREPData extends CodonData
 		$sql = 'UPDATE '.TABLE_PREFIX.'pireps
 				SET `exported`='.$status;
 		
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+		{
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public static function setExportedStatus($pirepid, $status)
@@ -427,7 +463,14 @@ class PIREPData extends CodonData
 	public static function deleteComment($comment_id)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'pirepcomments WHERE `id`='.$comment_id;
-		return DB::query($sql);
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+		{
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -704,7 +747,7 @@ class PIREPData extends CodonData
 		$fields = array(
 			'code' => $pirepdata['code'],
 			'flightnum' => $pirepdata['flightnum'],
-			`depicao` => $pirepdata['depicao'], 
+			'depicao' => $pirepdata['depicao'], 
 			'arricao' => $pirepdata['arricao'], 
 			'aircraft' => $pirepdata['aircraft'], 
 			'flighttime' => $pirepdata['flighttime'],
@@ -760,8 +803,14 @@ class PIREPData extends CodonData
 		$sql .= implode(', ', $sql_cols);
 		$sql .= ' WHERE `pirepid`='.$pirepid;
 		
-		DB::query($sql);
-		DB::debug();
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+		{
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -1174,6 +1223,8 @@ class PIREPData extends CodonData
 	/**
 	 * Show the graph of the past week's reports. Outputs the
 	 *	image unless $ret == true
+	 * 
+	 * @deprecated
 	 */
 	public static function ShowReportCounts($ret=false)
 	{

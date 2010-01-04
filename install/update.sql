@@ -26,6 +26,10 @@ ALTER TABLE `phpvms_sessions` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT
 -- Cached fuel prices ;
 DELETE FROM `phpvms_fuelprices`;
 
+-- Field length updates;
+ALTER TABLE `phpvms_fieldvalues` CHANGE `value` `value` TEXT NOT NULL;
+ALTER TABLE `phpvms_pirepvalues` CHANGE `value` `value` TEXT NOT NULL ;
+
 -- Add permissions and default permission for admin group;
 ALTER TABLE `phpvms_groups` ADD `permissions` INT NOT NULL ;
 UPDATE `phpvms_groups` SET `permissions` = '35651519' WHERE `groupid`=1 LIMIT 1 ;

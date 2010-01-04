@@ -80,6 +80,8 @@ class Profile extends CodonModule
 		
 		$userinfo = PilotData::GetPilotData($pilotid);
 		
+		$this->title = 'Profile of '.$userinfo->firstname.' '.$userinfo->lastname;
+		
 		$this->set('userinfo', $userinfo);
 		$this->set('allfields', PilotData::GetFieldData($pilotid, false));
 		$this->set('pireps', PIREPData::GetAllReportsForPilot($pilotid));
@@ -99,11 +101,9 @@ class Profile extends CodonModule
 			return;
 		}
 		
-		$this->set('allmonthdata', PIREPData::getIntervalData(array('p.pilotid'=>Auth::$userinfo->pilotid)));
-		$this->set('allaircraftdata', StatsData::PilotAircraftFlownCounts(Auth::$userinfo->pilotid));
 		$this->render('profile_stats.tpl');
 	}
-	
+		
 	public function editprofile()
 	{
 		if(!Auth::LoggedIn())
@@ -136,6 +136,13 @@ class Profile extends CodonModule
 	
 	protected function save_profile_post()
 	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
 		$userinfo = Auth::$userinfo;
 		
 		//TODO: check email validity
@@ -167,6 +174,13 @@ class Profile extends CodonModule
 
 	protected function change_password_post()
 	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
 		// Verify
 		if($this->post->oldpassword == '')
 		{

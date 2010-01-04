@@ -65,6 +65,19 @@ class CentralData extends CodonData
 		ob_start();
 		$web_service = new CodonWebService();
 		self::$xml_response = $web_service->post($api_server.'/update', self::$xml->asXML());
+		
+		if(!self::$xml_response)
+		{
+			if(Config::Get('VACENTRAL_DEBUG_MODE') == true)
+			{
+				Debug::log(self::$method.' - '.date('h:i:s A - m/d/Y'), 'vacentral');
+				Debug::log(print_r($web_service->errors, true), 'vacentral');
+			}
+			
+			self::$last_error = 'No response from API server';
+			return false;
+		}
+		
 		self::$response = @simplexml_load_string(self::$xml_response);
 		ob_end_clean();
 		
@@ -187,9 +200,10 @@ class CentralData extends CodonData
 			return false;
 					
 		self::$xml->addChild('total', count($schedules));
+		$schedules_parent = self::$xml->addChild('schedules');
 		foreach($schedules as $sched)
 		{
-			$schedule_xml = self::$xml->addChild('schedule');
+			$schedule_xml = $schedules_parent->addChild('schedule');
 		
 			$schedule_xml->addChild('flightnum', $sched->code.$sched->flightnum);
 			$schedule_xml->addChild('depicao', $sched->depicao);

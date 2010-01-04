@@ -45,6 +45,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 define('DS', DIRECTORY_SEPARATOR);
 define('SITE_ROOT', str_replace('core', '', dirname(__FILE__)));
 define('CORE_PATH', dirname(__FILE__) );
+define('CORE_LIB_PATH', CORE_PATH.DS.'lib');
 define('CLASS_PATH', CORE_PATH.DS.'classes');
 define('TEMPLATES_PATH', CORE_PATH.DS.'templates');
 define('MODULES_PATH', CORE_PATH.DS.'modules');

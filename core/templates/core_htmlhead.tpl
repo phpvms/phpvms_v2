@@ -10,9 +10,11 @@ echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='.GOOGLE
 }
 
 //<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-$files = array(	'jquery.min.js',
-				'jquery.form.js',
-				'jquery-ui.js');
+$files = array(	
+	'jquery.min.js',
+	'jquery.form.js',
+	'jquery-ui.js'
+);
 				
 # Build a condensed version of the above files
 #	Suck 'em all into one file, reduce the number of HTTP requests

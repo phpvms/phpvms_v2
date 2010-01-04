@@ -127,7 +127,6 @@ class SettingsData extends CodonData
 				WHERE fieldid={$data['fieldid']}";
 		
 		$res = DB::query($sql);
-		DB::debug();
 		
 		if(DB::errno() != 0)
 			return false;

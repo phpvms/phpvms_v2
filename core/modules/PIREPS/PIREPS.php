@@ -138,6 +138,13 @@ class PIREPS extends CodonModule
 	
 	public function addcomment()
 	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
 		if(!isset($this->get->id))
 		{
 			$this->set('message', 'No PIREP specified');
@@ -169,6 +176,13 @@ class PIREPS extends CodonModule
 	
 	public function editpirep()
 	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
 		if(!isset($this->get->id))
 		{
 			$this->set('message', 'No PIREP specified');
@@ -208,6 +222,13 @@ class PIREPS extends CodonModule
 	
 	public function routesmap()
 	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
 		$this->title = 'My Flight Map';
 		
 		$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
@@ -291,6 +312,13 @@ class PIREPS extends CodonModule
 		
 	protected function FilePIREPForm($bidid='')
 	{
+		if(!Auth::LoggedIn())
+		{
+			$this->set('message', 'You must be logged in to access this feature!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
 		$this->set('pilot', Auth::$userinfo->firstname . ' ' . Auth::$userinfo->lastname);
 		$this->set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
 		$this->set('pirepfields', PIREPData::GetAllFields());
@@ -309,6 +337,7 @@ class PIREPS extends CodonModule
 	
 	protected function SubmitPIREP()
 	{
+		
 		$pilotid = Auth::$userinfo->pilotid;
 		
 		if($pilotid == '' || Auth::LoggedIn() == false)

@@ -299,7 +299,7 @@ CREATE TABLE `phpvms_fieldvalues` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`fieldid` INT NOT NULL ,
 	`pilotid` INT NOT NULL ,
-	`value` VARCHAR( 25 ) NOT NULL ,
+	`value` TEXT NOT NULL ,
 	PRIMARY KEY ( `id` )
 )ENGINE=INNODB;
 
@@ -335,7 +335,7 @@ CREATE TABLE `phpvms_pirepvalues` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
 	`fieldid` INT NOT NULL ,
 	`pirepid` INT NOT NULL ,
-	`value` VARCHAR( 50 ) NOT NULL ,
+	`value` TEXT NOT NULL ,
 	PRIMARY KEY ( `id` )
 )ENGINE=INNODB;
 

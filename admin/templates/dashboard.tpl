@@ -5,9 +5,11 @@ MainController::Run('Dashboard', 'CheckInstallFolder');
 echo $updateinfo;
 ?>
 <h3>Pilot Reports for the Past Week</h3>
-<div id="reportcounts" align="center" width="400px" >
-<img src="<?php echo SITE_URL?>/lib/images/loading.gif" /><br /><br />
-Loading...
+<div align="center" style="width=98%">
+	<div id="reportcounts" align="center" width="400px" >
+	<img src="<?php echo SITE_URL?>/lib/images/loading.gif" /><br /><br />
+	Loading...
+	</div>
 </div>
 <table width="100%">
 	<tr>
@@ -55,9 +57,19 @@ Loading...
 		?>
 	</tr>
 </table>
+<?php
+/*
+	Added in 2.0!
+*/
+$chart_width = '800';
+$chart_height = '200';
+
+/* Don't need to change anything below this here */
+?>
+<script type="text/javascript" src="<?php echo fileurl('/lib/js/ofc/js/swfobject.js')?>"></script>
 <script type="text/javascript">
-$(document).ready(function()
-{
-	$("#reportcounts").load("<?php echo SITE_URL;?>/admin/action.php/dashboard/pirepcounts");
-});
+swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
+	"reportcounts", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
+	"9.0.0", "expressInstall.swf", 
+	{"data-file":"<?php echo SITE_URL;?>/admin/action.php/dashboard/pirepcounts"});
 </script>

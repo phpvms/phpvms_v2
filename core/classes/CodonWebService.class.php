@@ -46,11 +46,11 @@ class CodonWebService
 	
 	public $errors = array();
 	public $options = array(
-		CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9) Gecko/2008052906 Firefox/3.0',
+		/*CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9) Gecko/2008052906 Firefox/3.0',*/
 		CURLOPT_FOLLOWLOCATION => true,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_AUTOREFERER => true,
-		CURLOPT_CONNECTTIMEOUT => 7,
+		CURLOPT_CONNECTTIMEOUT => 30,
 		CURLOPT_HEADER => false,
 		CURLOPT_FOLLOWLOCATION => true);
 			

@@ -100,7 +100,7 @@ class Maintenance extends CodonModule
 			echo "PIREP Number $pirep->pirepid ($pirep->code$pirep->flightnum) "
 				."$pirep->depname to $pirep->arrname is $distance ".Config::Get('UNIT').'<br />';
 			
-			PIREPData::updatePIREPFields($pirep->pireid, array('distance'=>$distance));
+			PIREPData::editPIREPFields($pirep->pirepid, array('distance'=>$distance));
 			
 			/*if($ret == false)
 			{

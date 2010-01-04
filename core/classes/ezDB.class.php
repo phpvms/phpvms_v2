@@ -341,6 +341,14 @@ class DB
 		return self::$DB->quick_update($table, $fields, $cond, $allowed_cols);
 	}
 	
+	
+	/**
+	 * Build a WHERE clause for an SQL statement with supplied parameters
+	 *
+	 * @param array $params associative array with column=>value
+	 * @return string string where
+	 *
+	 */
 	public static function build_where($params)
 	{
 		$sql='';
@@ -402,6 +410,33 @@ class DB
 		return $sql;
 	}
 	
+	
+	public static function build_update($fields)
+	{
+		$sql_cols = '';
+		
+		$sql_cols = array();
+		foreach($fields as $col => $value)
+		{
+			$tmp = "`{$col}`=";
+			if($value == 'NOW()')
+			{
+				$tmp.='NOW()';
+			}
+			else
+			{
+				$value = DB::escape($value);
+				$tmp.="'{$value}'";
+			}
+			
+			$sql_cols[] = $tmp;
+		}
+		
+		$sql .= implode(', ', $sql_cols);
+		unset($sql_cols);
+		
+		return $sql;
+	}
 	
 	/**
 	 * Write out the last query to a debug log, or error

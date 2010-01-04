@@ -151,7 +151,7 @@ class Dashboard extends CodonModule
 			
 			if($currversion < $postversion)
 			{
-				$this->set('message', 'Version '.$version.' is available for download! Please update ASAP');
+				$this->set('message', 'Version '.$xml->version.' is available for download! Please update ASAP');
 				$this->set('updateinfo', Template::GetTemplate('core_error.tpl', true));
 			}
 			

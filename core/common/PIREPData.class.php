@@ -268,7 +268,7 @@ class PIREPData extends CodonData
 	 */
 	public static function ChangePIREPStatus($pirepid, $status)
 	{
-		return self::updatePIREPFields($pirepid, array('accepted' => $status));
+		return self::editPIREPFields($pirepid, array('accepted' => $status));
 	}
 
 	/**
@@ -442,7 +442,7 @@ class PIREPData extends CodonData
 		else
 			$status = 0;
 			
-		return self::updatePIREPFields($pirepid, array('exported' => $status));
+		return self::editPIREPFields($pirepid, array('exported' => $status));
 	}
 	
 
@@ -762,9 +762,8 @@ class PIREPData extends CodonData
 			'revenue' => $revenue,
 		);
 		
-		return self::updatePIREPFields($pirepid, $fields);
+		return self::editPIREPFields($pirepid, $fields);
 	}
-	
 	
 	/**
 	 * Update any fields in a PIREP, other update functions come down to this
@@ -776,31 +775,26 @@ class PIREPData extends CodonData
 	 */
 	public static function updatePIREPFields($pirepid, $fields)
 	{
+		return self::editPIREPFields($pirepid, $fields);
+	}
+	
+	/**
+	 * Update any fields in a PIREP, other update functions come down to this
+	 *
+	 * @param int $pirepid ID of the PIREP to update
+	 * @param array $fields Array, column name as key, with values to update
+	 * @return bool 
+	 *
+	 */
+	public static function editPIREPFields($pirepid, $fields)
+	{
 		if(!is_array($fields))
 		{
 			return false;
 		}
 		
 		$sql = "UPDATE `".TABLE_PREFIX."pireps` SET ";
-		
-		$sql_cols = array();
-		foreach($fields as $col => $value)
-		{
-			$tmp = "`{$col}`=";
-			if($value == 'NOW()')
-			{
-				$tmp.='NOW()';
-			}
-			else
-			{
-				$value = DB::escape($value);
-				$tmp.="'{$value}'";
-			}
-			
-			$sql_cols[] = $tmp;
-		}
-		
-		$sql .= implode(', ', $sql_cols);
+		$sql .= DB::build_update($fields);
 		$sql .= ' WHERE `pirepid`='.$pirepid;
 		
 		$res = DB::query($sql);
@@ -940,7 +934,7 @@ class PIREPData extends CodonData
 		if(isset($data['load']) && $data['load'] != '')
 			$fields['load'] = $data['load'];
 			
-		return self::updatePIREPFields($pirepid, $fields);
+		return self::editPIREPFields($pirepid, $fields);
 	}
 	
 	public static function getPIREPRevenue($data)

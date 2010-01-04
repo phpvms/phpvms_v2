@@ -446,7 +446,13 @@ class SchedulesData extends CodonData
 							'price'=>'',
 							'flighttype'=>'P' OR 'C');
 	 */
-	public static function EditSchedule($data)
+	 
+	public static function updateSchedule($data)
+	{
+		return self::editSchedule($data);
+	}
+	
+	public static function editSchedule($data)
 	{
 		if(!is_array($data))
 			return false;
@@ -509,9 +515,51 @@ class SchedulesData extends CodonData
 	}
 
 	/**
+	 * Update any fields in a schedule, other update functions come down to this
+	 *
+	 * @param int $scheduleid ID of the schedule to update
+	 * @param array $fields Array, column name as key, with values to update
+	 * @return bool 
+	 *
+	 */
+	public static function updateScheduleFields($scheduleid, $fields)
+	{
+		return self::editScheduleFields($scheduleid, $fields);
+	}
+	
+	/**
+	 * Update any fields in a schedule, other update functions come down to this
+	 *
+	 * @param int $scheduleid ID of the schedule to update
+	 * @param array $fields Array, column name as key, with values to update
+	 * @return bool 
+	 *
+	 */
+	public static function editScheduleFields($scheduleid, $fields)
+	{
+		if(!is_array($fields))
+		{
+			return false;
+		}
+		
+		$sql = "UPDATE `".TABLE_PREFIX."schedules` SET ";
+		$sql .= DB::build_update($fields);
+		$sql .= ' WHERE `id`='.$scheduleid;
+		
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+
+	/**
 	 * Delete a schedule
 	 */
-	public static function DeleteSchedule($scheduleid)
+	public static function deleteSchedule($scheduleid)
 	{
 		$scheduleid = DB::escape($scheduleid);
 		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules 
@@ -633,7 +681,7 @@ class SchedulesData extends CodonData
 		return DB::get_row($sql);
 	}
 	
-	public function SetBidOnSchedule($scheduleid, $bidid)
+	public function setBidOnSchedule($scheduleid, $bidid)
 	{
 		$scheduleid = intval($scheduleid);
 		$bidid = intval($bidid);
@@ -653,7 +701,7 @@ class SchedulesData extends CodonData
 	/**
 	 * Add a bid
 	 */		
-	public static function AddBid($pilotid, $routeid)
+	public static function addBid($pilotid, $routeid)
 	{
 		$pilotid = DB::escape($pilotid);
 		$routeid = DB::escape($routeid);
@@ -672,7 +720,7 @@ class SchedulesData extends CodonData
 		
 		DB::query($sql);
 		
-		self::SetBidOnSchedule($routeid, DB::$insert_id);
+		self::setBidOnSchedule($routeid, DB::$insert_id);
 		
 		if(DB::errno() != 0)
 			return false;
@@ -683,7 +731,15 @@ class SchedulesData extends CodonData
 	/**
 	 * Remove a bid, by passing it's bid id
 	 */
-	public static function RemoveBid($bidid)
+	public static function deleteBid($bidid)
+	{
+		self::removeBid($bidid);
+	}
+	
+	/**
+	 * Remove a bid, by passing it's bid id
+	 */
+	public static function removeBid($bidid)
 	{
 		$bidid = intval($bidid);
 		$bid_info = self::getBid($bidid);
@@ -706,7 +762,7 @@ class SchedulesData extends CodonData
 	 * @deprecated
 	 *
 	 */
-	public static function getScheduleFlownCounts($code, $flightnum, $days=7)
+	/*public static function getScheduleFlownCounts($code, $flightnum, $days=7)
 	{
 		$max = 0;
 		
@@ -734,7 +790,7 @@ class SchedulesData extends CodonData
 		DB::disableCache();
 		
 		return $data;
-	}
+	}*/
 	
 	/**
 	 * Show the graph of the past week's reports. Outputs the
@@ -742,7 +798,7 @@ class SchedulesData extends CodonData
 	 * 
 	 * @deprecated
 	 */
-	public static function ShowReportCounts()
+	/*public static function showReportCounts()
 	{
 		// Recent PIREP #'s
 		$max = 0;
@@ -764,7 +820,7 @@ class SchedulesData extends CodonData
 		} while ($time_start < $time_end);
 			
 		return $data;
-	}
+	}*/
 	
 	/* Below here, these are all deprecated. In your code, you should use
 		the query structure, defined within the functions
@@ -772,48 +828,48 @@ class SchedulesData extends CodonData
 	/**
 	 * @deprecated
 	 */
-	public static function getSchedulesWithCode($code, $onlyenabled=true, $limit='', $start='')
+	/*public static function getSchedulesWithCode($code, $onlyenabled=true, $limit='', $start='')
 	{
 		$params = array('s.code' => strtoupper($code));
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
 		return self::findSchedules($params, $limit, $start);
-	}
+	}*/
 	
 	/**
 	 * @deprecated
 	 */
-	public static function getSchedulesWithFlightNum($flightnum, $onlyenabled=true, $limit='', $start='')
+	/*public static function getSchedulesWithFlightNum($flightnum, $onlyenabled=true, $limit='', $start='')
 	{
 		$params = array('s.flightnum' => $flightnum);
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
 		return self::findSchedules($params, $limit, $start);
-	}
+	}*/
 	
 	/**
 	 * Return all of the routes give the departure airport
 	 * 
 	 * @deprecated
 	 */
-	public static function getSchedulesWithDeparture($depicao, $onlyenabled = true, $limit = '', $start='')
+	/*public static function getSchedulesWithDeparture($depicao, $onlyenabled = true, $limit = '', $start='')
 	{
 		self::getRoutesWithDeparture($depicao, $onlyenabled, $limit);
-	}
+	}*/
 
 	/**
 	 * @deprecated
 	 */
-	public static function getRoutesWithDeparture($depicao, $onlyenabled=true, $limit='', $start='')
+	/*public static function getRoutesWithDeparture($depicao, $onlyenabled=true, $limit='', $start='')
 	{
 		$params = array('s.depicao' => strtoupper($depicao));
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
 		return self::findSchedules($params, $limit, $start);
-	}
+	}*/
 	
 	/**
 	 * @deprecated

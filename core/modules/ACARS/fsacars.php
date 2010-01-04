@@ -285,7 +285,7 @@ $maxcargo";
 			
 			if($count > 0)
 			{
-				PIREPData::updatePIREPFields($report->pirepid, array('landingrate' => $matches[2]));
+				PIREPData::editPIREPFields($report->pirepid, array('landingrate' => $matches[2]));
 			}
 			
 			PIREPData::AppendToLog($report->pirepid, $_GET['log']);

@@ -51,6 +51,11 @@ class Dashboard extends CodonModule
 		//$reportcounts = '';
 		$data = PIREPData::getIntervalDataByDays(array(), 7);
 		
+		if(!$data)
+		{
+			return false;
+		}
+		
 		$bar_values = array();
 		$bar_titles = array();
 		foreach($data as $val)

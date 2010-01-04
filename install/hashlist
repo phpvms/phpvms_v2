@@ -1,5 +1,5 @@
 c53987a61354c3460fdac8e07f5c2cd2  *./install/templates/s0_config_check.tpl
-ef221439b1120b08495e5155e952f099  *./install/templates/s3_setup_finished.tpl
+2310b0dfd1fc15abb81d760e48e25e33  *./install/templates/s3_setup_finished.tpl
 cd5ffddffe3771ddf9c8f3cdedb7ccae  *./install/templates/header.tpl
 cc03311e935549a5d652466a28aa5692  *./install/templates/error.tpl
 72a35a90f4e36a0d24d89615bfdedd4c  *./install/templates/config.tpl
@@ -294,7 +294,7 @@ c6d8c61a9c550b3528986bd9905efd04  *./admin/modules/Operations/Operations.php
 645f76ac153c28ac5297d1510f7890e0  *./admin/modules/Import/Import.php
 08a88d8c1c1658dd6d174e19e296004f  *./admin/modules/Settings/Settings.php
 1008cfc8e1b70e5c65ff2ddc04178b63  *./admin/modules/Maintenance/Maintenance.php
-51e1c038e98be7130b365944d5dcd02f  *./admin/modules/Dashboard/Dashboard.php
+076cff685bc1401d86861185696f9ee3  *./admin/modules/Dashboard/Dashboard.php
 b1404a5b901369ae1a6a9d1665b0dac3  *./admin/modules/PIREPAdmin/PIREPAdmin.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/avatars/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/signatures/index.php

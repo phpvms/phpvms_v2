@@ -18,7 +18,7 @@ body
 }
 
 a {
-	color: #333;
+	color: #3366FF;
 	text-decoration: none;
 }
 

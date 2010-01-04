@@ -297,7 +297,6 @@ class Installer
 	
 	public static function sql_file_update($filename)
 	{
-		
 		if(isset($_GET['test']))
 			return true;
 			

@@ -1,6 +1,6 @@
 c53987a61354c3460fdac8e07f5c2cd2  *./install/templates/s0_config_check.tpl
-fcfc96e86e97eff1024d0e076236db48  *./install/templates/s3_setup_finished.tpl
-bdc2ca7a28524589ca2382d3cadebb6b  *./install/templates/header.tpl
+ef221439b1120b08495e5155e952f099  *./install/templates/s3_setup_finished.tpl
+cd5ffddffe3771ddf9c8f3cdedb7ccae  *./install/templates/header.tpl
 cc03311e935549a5d652466a28aa5692  *./install/templates/error.tpl
 72a35a90f4e36a0d24d89615bfdedd4c  *./install/templates/config.tpl
 756864311737259fe15c45612e10ae33  *./install/templates/s1_db_setup.tpl
@@ -17,7 +17,7 @@ d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 46b7e387c70897225a69ea280ec9eed4  *./install/install.sql
 1ee77934d1a602e9c74861c9391a55d9  *./install/update_628.sql
 dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
-82ea45d12d88915cf32502a7bd57f480  *./install/Installer.class.php
+2f10ecb66edb9aadda219ff40db66190  *./install/Installer.class.php
 2eb98d7dd8cefa49e5c89b9d9f242084  *./install/update.php
 6b8d1dc1b006ef2a88e8130ce7bb157a  *./install/update_441.sql
 16c26883d8e0e51e6e61d5244de4367c  *./install/checkdb.php

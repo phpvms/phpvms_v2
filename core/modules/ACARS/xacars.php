@@ -83,7 +83,6 @@ switch($acars_action)
 		}
 		else
 		{
-			
 			if(is_numeric($flight))
 			{
 				echo '0|No airline code entered!';
@@ -114,11 +113,11 @@ switch($acars_action)
 		{
 			if($route->flighttype=='C')
 			{
-				$maxcargo = FinanceData::GetLoadCount($route->aircraftid, 'C');
+				$maxcargo = FinanceData::getLoadCount($route->aircraftid, 'C');
 			}
 			else
 			{
-				$maxpax = FinanceData::GetLoadCount($route->aircraftid, 'P');
+				$maxpax = FinanceData::getLoadCount($route->aircraftid, 'P');
 			}
 		}
 		
@@ -304,7 +303,6 @@ $route->flightlevel
 			$pilotid = $data[0];
 		}
 		
-		
 		# Make sure airports exist:
 		#  If not, add them.
 		$depicao = $data[6];
@@ -327,7 +325,7 @@ $route->flightlevel
 		# Load info
 		/* If no passengers set, then set it to the cargo */
 		$load = $data[14];
-		if($load == '' || $load == 0)
+		if(empty($load))
 			$load = $data[15];
 		
 		# Convert the time to xx.xx 

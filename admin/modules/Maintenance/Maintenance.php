@@ -60,19 +60,18 @@ class Maintenance extends CodonModule
 			echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname "
 				."is $distance ".Config::Get('UNIT').'<br />';
 				
-			
-			SchedulesData::UpdateDistance($sched->id, $distance);
+			SchedulesData::updateScheduleFields($sched->id, array('distance' => $distance));
 		}
 		
 		# Update all of the PIREPS
 		
 		echo '<p><strong>Updating PIREPs...</strong></p>';
 		
-		$allpireps = PIREPData::GetAllReports('', '');
+		$allpireps = PIREPData::findPIREPS(array());
 		
 		if(!$allpireps)
 		{
-			echo 'No PIREPs need updating. Good job!';
+			echo 'No PIREPs need updating!';
 			$allpireps = array();
 		}
 		
@@ -80,18 +79,6 @@ class Maintenance extends CodonModule
 		{
 			
 			# Find the schedule, and the distance supplied by the schedule:
-			
-			/*$sched = SchedulesData::GetScheduleByFlight($pirep->code, $pirep->flightnum);
-			
-			if(!$sched)
-			{
-				
-			}
-			else
-			{
-				$distance = $sched->distance;
-			}*/
-			
 			$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
 				$pirep->arrlat, $pirep->arrlong);	
 			
@@ -101,17 +88,11 @@ class Maintenance extends CodonModule
 				."$pirep->depname to $pirep->arrname is $distance ".Config::Get('UNIT').'<br />';
 			
 			PIREPData::editPIREPFields($pirep->pirepid, array('distance'=>$distance));
-			
-			/*if($ret == false)
-			{
-				echo PIREPData::$lasterror.'<br />';
-			}*/
 		}
 	
 		echo '<p>Completed!</p><br />';
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Reset distances');
-		
 	}
 	
 	public function calculateranks()

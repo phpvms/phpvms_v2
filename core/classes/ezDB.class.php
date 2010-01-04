@@ -345,77 +345,92 @@ class DB
 	/**
 	 * Build a WHERE clause for an SQL statement with supplied parameters
 	 *
-	 * @param array $params associative array with column=>value
+	 * @param array $fields associative array with column=>value
 	 * @return string string where
 	 *
 	 */
-	public static function build_where($params)
+	public static function build_where($fields)
 	{
 		$sql='';
 		
-		if(is_array($params) && count($params) > 0)
+		if(!is_array($fields) || empty($fields))
 		{
-			$sql .= ' WHERE ';
-			
-			$where_clauses = array();
-			foreach($params as $column_name => $value)
-			{
-				# Convert to $columnname IN ($value)
-				if(is_array($value))
-				{
-					$sql_temp = "{$column_name} IN (";
-					
-					$value_list = array();
-					foreach($value as $in)
-					{
-						$in = DB::escape($in);
-						$value_list[] = "'{$in}'";
-					}
-					
-					$sql_temp .= implode(',', $value_list).")";
-					$where_clauses[] = $sql_temp;
-				}
-				else
-				{
-					# If there's no value per-say, just a field value
-					if(is_int($column_name))
-					{
-						$where_clauses[] = $value;
-						continue;
-					}
-					
-					# If there's a % (wildcard) in there, so it should use a LIKE
-					if(substr_count($value, '%') > 0)
-					{
-						$value = DB::escape($value);
-						$where_clauses[] = "{$column_name} LIKE '{$value}'";
-						continue;
-					}
-					
-					# If it's a greater than or equal to, or for some reason an equals
-					if($value[0] == '<' || $value[0] == '>' || $value[0] == '=')
-					{
-						$where_clauses[] = "{$column_name} {$value}";
-						continue;
-					}
-					
-					$value = DB::escape($value);
-					$where_clauses[] = "{$column_name} = '{$value}'";
-				}
-			}
-			
-			$sql.= implode(' AND ', $where_clauses);
+			return false;
 		}
+		
+		$sql .= ' WHERE ';
+		
+		$where_clauses = array();
+		foreach($fields as $column_name => $value)
+		{
+			# Convert to $columnname IN ($value)
+			if(is_array($value))
+			{
+				$sql_temp = "{$column_name} IN (";
+				
+				$value_list = array();
+				foreach($value as $in)
+				{
+					$in = DB::escape($in);
+					$value_list[] = "'{$in}'";
+				}
+				
+				$sql_temp .= implode(',', $value_list).")";
+				$where_clauses[] = $sql_temp;
+			}
+			else
+			{
+				# If there's no value per-say, just a field value
+				if(is_int($column_name))
+				{
+					$where_clauses[] = $value;
+					continue;
+				}
+				
+				# If there's a % (wildcard) in there, so it should use a LIKE
+				if(substr_count($value, '%') > 0)
+				{
+					$value = DB::escape($value);
+					$where_clauses[] = "{$column_name} LIKE '{$value}'";
+					continue;
+				}
+				
+				# If it's a greater than or equal to, or for some reason an equals
+				if($value[0] == '<' || $value[0] == '>' || $value[0] == '=')
+				{
+					$where_clauses[] = "{$column_name} {$value}";
+					continue;
+				}
+				
+				$value = DB::escape($value);
+				$where_clauses[] = "{$column_name} = '{$value}'";
+			}
+		}
+			
+		$sql.= implode(' AND ', $where_clauses);
+		unset($where_clauses);
 		
 		return $sql;
 	}
 	
 	
+	/**
+	 * Build the update clause (after the SET and before WHERE)
+	 *
+	 * @param array $fields associative array (col_name=>value)
+	 * @return string the SQL string
+	 *
+	 */
 	public static function build_update($fields)
 	{
-		$sql_cols = '';
+		if(!is_array($fields) || empty($fields))
+		{
+			return false;
+		}
 		
+		$sql = '';
 		$sql_cols = array();
+		
 		foreach($fields as $col => $value)
 		{
 			$tmp = "`{$col}`=";

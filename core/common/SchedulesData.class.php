@@ -40,7 +40,7 @@ class SchedulesData extends CodonData
 	 */
 	public static function findSchedules($params, $count = '', $start = '')
 	{
-		$sql = 'SELECT s.*, a.name as aircraft, a.registration,
+		$sql = 'SELECT s.*, a.id as aircraftid, a.name as aircraft, a.registration,
 					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
 					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
 				FROM '.TABLE_PREFIX.'schedules AS s
@@ -88,6 +88,8 @@ class SchedulesData extends CodonData
 	/**
 	 * Return a flight given the airline code and flight number
 	 *
+	 * @deprecated
+	 * 
 	 * @param string $code Airline code
 	 * @param mixed $flightnum Flight number
 	 * @return array Returns a full flight
@@ -320,8 +322,10 @@ class SchedulesData extends CodonData
 	
 	/**
 	 * Update a distance
+	 * 
+	 * @deprecated
 	 */
-	public static function UpdateDistance($scheduleid, $distance)
+	/*public static function UpdateDistance($scheduleid, $distance)
 	{
 		$sql = 'UPDATE '.TABLE_PREFIX."schedules 
 				SET distance='{$distance}'
@@ -333,7 +337,7 @@ class SchedulesData extends CodonData
 			return false;
 		
 		return true;
-	}
+	}*/
 	
 	/**
 	 * Add a schedule
@@ -355,7 +359,7 @@ class SchedulesData extends CodonData
 						'price'=>''
 						'flighttype'=>'');
 	 */
-	public static function AddSchedule($data)
+	public static function addSchedule($data)
 	{
 	
 		if(!is_array($data))

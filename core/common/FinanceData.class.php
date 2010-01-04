@@ -527,7 +527,7 @@ class FinanceData extends CodonData
 			if($load > 95)
 				$load = 95;
 			elseif($load <= 0)
-				$load = 72; # Use ATA standard of 72%
+				$load = 92; # Use ATA standard of 72%
 		}
 		
 		/*

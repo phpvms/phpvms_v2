@@ -267,7 +267,6 @@ class PIREPAdmin extends CodonModule
 		$this->render('pirep_addcomment.tpl');
 	}
 		
-		
 	/* Utility functions */
 	
 	protected function add_comment_post()
@@ -318,6 +317,7 @@ class PIREPAdmin extends CodonModule
 		PilotData::UpdateLastPIREPDate($pirep_details->pilotid);
 		PilotData::resetPilotPay($pirep_details->pilotid);
 		
+		StatsData::UpdateTotalHours();
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Approved PIREP #'.$pirepid);
 	}
@@ -332,6 +332,7 @@ class PIREPAdmin extends CodonModule
 		if($pirepid == '') return;
 		
 		PIREPData::DeleteFlightReport($pirepid);
+		StatsData::UpdateTotalHours();
 	}
 		
 	
@@ -374,7 +375,6 @@ class PIREPAdmin extends CodonModule
 			$message = Template::GetTemplate('email_commentadded.tpl', true);
 			Util::SendEmail($pirep_details->email, 'Comment Added', $message);
 		}
-		
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Rejected PIREP #'.$pirepid);
 	}

@@ -45,6 +45,7 @@ class TimesTester extends UnitTestCase
 		$this->assertEqual($total, $this->added_time);
 		
 		heading('Compare to STAT total hours');
+		StatsData::UpdateTotalHours();
 		$this->assertEqual($total, StatsData::TotalHours());
 		
 		

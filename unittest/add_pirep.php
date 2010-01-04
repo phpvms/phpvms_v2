@@ -34,7 +34,7 @@ echo '<br />';
 print_r($report_info);
 
 echo '<strong>Deleting...</strong><br />';
-PIREPData::deletePIREP($pirepid);
+//PIREPData::deletePIREP($pirepid);
 $report_info = PIREPData::findPIREPS(array('p.pirepid'=>$pirepid));
 
 if(!$report_info)

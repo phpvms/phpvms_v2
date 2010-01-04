@@ -20,7 +20,7 @@ class RouteMap extends CodonModule
 			);
 			
 			// Show only 20 routes
-			$allschedules = SchedulesData::findSchedules($params, 0, 20);
+			$allschedules = SchedulesData::findSchedules($params, 20);
 			
 			if(count($allschedules) == 0)
 			{
@@ -36,7 +36,7 @@ class RouteMap extends CodonModule
 		else
 		{
 			# Get all of the schedule
-			$allschedules = SchedulesData::findSchedules(array(), 0, 20);
+			$allschedules = SchedulesData::findSchedules(array('s.enabled'=>1), 20);
 		}
 		
 		$this->ShowMap($allschedules);

@@ -224,7 +224,7 @@ class SchedulesData extends CodonData
 				WHERE s.depicao = a.icao '.$enabled;
 					
 		if($airlinecode != '')
-			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
+			$sql .= " AND s.code='{$airlinecode}' ";
 			
 		$sql .= ' ORDER BY depicao ASC';
 									
@@ -254,25 +254,12 @@ class SchedulesData extends CodonData
 				WHERE s.arricao = a.icao '.$enabled;
 
 		if($airlinecode != '')
-			$sql .= ' AND s.code=\''.$airlinecode.'\' ';
+			$sql .= " AND s.code='{$airlinecode}' ";
 		
 		$sql .= ' ORDER BY depicao ASC';
 		
 		return DB::get_results($sql);
 	}
-	
-	/**
-	 * Search schedules by day of week (0-6, Sunday- Sat)
-	 */
-	/*
-	public static function getSchedulesByDay($dayofweek, $onlyenabled=true, $limit='', $start='')
-	{
-		$params = array('s.daysofweek' => '%'.$dayofweek.'%');
-		if($onlyenabled)
-			$params['s.enabled'] = '1';
-		
-		return self::findSchedules($params, $limit, $start);
-	}*/
 	
 	/**
 	 * Get all the schedules, $limit is the number to return
@@ -336,9 +323,9 @@ class SchedulesData extends CodonData
 	 */
 	public static function UpdateDistance($scheduleid, $distance)
 	{
-		$sql = 'UPDATE '.TABLE_PREFIX.'schedules 
-					SET distance=\''.$distance.'\'
-					WHERE id='.$scheduleid;
+		$sql = 'UPDATE '.TABLE_PREFIX."schedules 
+				SET distance='{$distance}'
+				WHERE id={$scheduleid}";
 		
 		$res = DB::query($sql);
 		
@@ -656,6 +643,11 @@ class SchedulesData extends CodonData
 				WHERE `id`='.$scheduleid;
 					
 		DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
 	}
 	
 	/**
@@ -709,6 +701,11 @@ class SchedulesData extends CodonData
 		return true;
 	}
 	
+	
+	/**
+	 * @deprecated
+	 *
+	 */
 	public static function getScheduleFlownCounts($code, $flightnum, $days=7)
 	{
 		$max = 0;
@@ -742,6 +739,8 @@ class SchedulesData extends CodonData
 	/**
 	 * Show the graph of the past week's reports. Outputs the
 	 *	image unless $ret == true
+	 * 
+	 * @deprecated
 	 */
 	public static function ShowReportCounts()
 	{
@@ -767,33 +766,31 @@ class SchedulesData extends CodonData
 		return $data;
 	}
 	
-	
-	
 	/* Below here, these are all deprecated. In your code, you should use
 		the query structure, defined within the functions
 		
 	/**
 	 * @deprecated
 	 */
-	public static function getSchedulesWithCode($code, $onlyenabled=true, $start='', $limit='')
+	public static function getSchedulesWithCode($code, $onlyenabled=true, $limit='', $start='')
 	{
 		$params = array('s.code' => strtoupper($code));
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
-		return self::findSchedules($params, $start, $limit);
+		return self::findSchedules($params, $limit, $start);
 	}
 	
 	/**
 	 * @deprecated
 	 */
-	public static function getSchedulesWithFlightNum($flightnum, $onlyenabled=true, $start='', $limit='')
+	public static function getSchedulesWithFlightNum($flightnum, $onlyenabled=true, $limit='', $start='')
 	{
 		$params = array('s.flightnum' => $flightnum);
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
-		return self::findSchedules($params, $start, $limit);
+		return self::findSchedules($params, $limit, $start);
 	}
 	
 	/**
@@ -801,7 +798,7 @@ class SchedulesData extends CodonData
 	 * 
 	 * @deprecated
 	 */
-	public static function getSchedulesWithDeparture($depicao, $onlyenabled = true, $start='', $limit = '')
+	public static function getSchedulesWithDeparture($depicao, $onlyenabled = true, $limit = '', $start='')
 	{
 		self::getRoutesWithDeparture($depicao, $onlyenabled, $limit);
 	}
@@ -809,39 +806,39 @@ class SchedulesData extends CodonData
 	/**
 	 * @deprecated
 	 */
-	public static function getRoutesWithDeparture($depicao, $onlyenabled=true, $start='', $limit='')
+	public static function getRoutesWithDeparture($depicao, $onlyenabled=true, $limit='', $start='')
 	{
 		$params = array('s.depicao' => strtoupper($depicao));
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
-		return self::findSchedules($params, $start, $limit);
+		return self::findSchedules($params, $limit, $start);
 	}
 	
 	/**
 	 * @deprecated
 	 */
-	public static function getRoutesWithArrival($arricao, $onlyenabled=true, $start='', $limit='')
+	/*public static function getRoutesWithArrival($arricao, $onlyenabled=true, $start='', $limit='')
 	{
 		return self::getSchedulesWithArrival($arricao, $onlyenabled, $limit);
-	}
+	}*/
 	
 	/**
 	 * @deprecated
 	 */
-	public static function getSchedulesWithArrival($arricao, $onlyenabled=true, $start='', $limit='')
+	/*public static function getSchedulesWithArrival($arricao, $onlyenabled=true, $start='', $limit='')
 	{
 		$params = array('s.arricao' => strtoupper($arricao));
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
-		return self::findSchedules($params, $start, $limit);
-	}
+		return self::findSchedules($params, $limit, $start);
+	}*/
 	
 	/**
 	 * @deprecated
 	 */
-	public static function getSchedulesByDistance($distance, $type, $onlyenabled=true, $start='', $limit='')
+	/*public static function getSchedulesByDistance($distance, $type, $onlyenabled=true, $start='', $limit='')
 	{
 		if($type == '')
 			$type = '>';
@@ -850,20 +847,20 @@ class SchedulesData extends CodonData
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
-		return self::findSchedules($params, $start, $limit);
-	}
+		return self::findSchedules($params, $limit, $start);
+	}*/
 	
 	/**
 	 * Search schedules by the equipment type
 	 * 
 	 * @deprecated
 	 */
-	public static function getSchedulesByEquip($ac, $onlyenabled = true, $start='', $limit='')
+	/*public static function getSchedulesByEquip($ac, $onlyenabled = true, $start='', $limit='')
 	{
 		$params = array('a.name' => $ac);
 		if($onlyenabled)
 			$params['s.enabled'] = '1';
 		
-		return self::findSchedules($params, $start, $limit);
-	}
+		return self::findSchedules($params, $limit, $start);
+	}*/
 }

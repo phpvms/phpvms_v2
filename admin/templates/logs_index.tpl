@@ -1,5 +1,13 @@
 <h3>Admin Activity Logs</h3>
 
+<?php
+if(!$all_logs)
+{
+	echo 'There is no activity';
+	return;
+}
+?>
+
 <table id="tabledlist" class="tablesorter">
 <thead>
 <tr>

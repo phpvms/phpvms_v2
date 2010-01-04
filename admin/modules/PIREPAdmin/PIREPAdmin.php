@@ -449,6 +449,8 @@ class PIREPAdmin extends CodonModule
 			$this->reject_pirep_post();
 		}
 		
+		StatsData::UpdateTotalHours();
+		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Edited PIREP #'.$this->post->id);
 		return true;
 	}

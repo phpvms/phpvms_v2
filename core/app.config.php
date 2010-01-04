@@ -49,6 +49,9 @@ Config::Set('CARGO_UNITS', 'lbs');
 Config::Set('DEFAULT_MAX_CARGO_LOAD', 10000);
 Config::Set('DEFAULT_MAX_PAX_LOAD', 250);
 
+# Number of routes to show in the route map
+Config::Set('ROUTE_MAP_SHOW_NUMBER', 25);
+
 # After how long to mark a pilot inactive, in days
 Config::Set('PILOT_AUTO_RETIRE', true);
 Config::Set('PILOT_INACTIVE_TIME', 90);

@@ -17,7 +17,7 @@ d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 46b7e387c70897225a69ea280ec9eed4  *./install/install.sql
 1ee77934d1a602e9c74861c9391a55d9  *./install/update_628.sql
 dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
-5c04d5f5c959d0a025aef48587982930  *./install/Installer.class.php
+82ea45d12d88915cf32502a7bd57f480  *./install/Installer.class.php
 2eb98d7dd8cefa49e5c89b9d9f242084  *./install/update.php
 6b8d1dc1b006ef2a88e8130ce7bb157a  *./install/update_441.sql
 16c26883d8e0e51e6e61d5244de4367c  *./install/checkdb.php
@@ -36,7 +36,7 @@ b3e6a4926ee94b822c5d74fa158356b1  *./core/common/Countries.class.php
 456d8ee8c28c790ebe810c64789e5db0  *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210  *./core/common/GoogleChart.class.php
 36f4b0354b78fb4ad31a64842b388803  *./core/common/SettingsData.class.php
-5b1858de9a61578c0b9b21742ce17349  *./core/common/RanksData.class.php
+7b7530dd33206ff43071aeee9ea823b8  *./core/common/RanksData.class.php
 546816c7e1408dc9f8b890ad94b22d5a  *./core/common/GoogleMapAPI.class.php
 429fadeedea71158f7d265c3bf523ee5  *./core/common/FuelData.class.php
 bab1cf66b6a740c25a3aea425ce0d194  *./core/common/SiteData.class.php
@@ -111,7 +111,7 @@ b65cf567362e739f6137b0da0f84a0fa  *./core/templates/xacars_config.tpl
 a7809ff8c48c4a9b8a332c84b16c0eb3  *./core/templates/login_unconfirmed.tpl
 484b9180ba5ad41b0e25b6379cdc3c81  *./core/templates/downloads_list.tpl
 d86a5456f97b46c189913edfddcb5788  *./core/templates/profile_myroutesmap.tpl
-dfb6d8217494630ddf8f6f490a656506  *./core/templates/pilot_public_profile.tpl
+c5e883d68d9e038104dc5ee649514d47  *./core/templates/pilot_public_profile.tpl
 74509a45104870fffb6cffd731a7602d  *./core/templates/download_item.tpl
 195bccea8218c5a0fece3b909cce0c51  *./core/templates/email_lostpassword.tpl
 024e111d80c93ed5565f22fdb858b789  *./core/templates/fspax_config.tpl
@@ -159,7 +159,7 @@ e29229cf3c89bc4748a3df55eb6594ad  *./core/modules/XML/XML.php
 b9a61f2439cd545e263950f353e207d8  *./core/modules/Profile/Profile.php
 098230f9263a886a30f4a7d3692c5a56  *./core/modules/Registration/Registration.php
 7df45181bcf88e8c21db2d79fdae4cbd  *./core/modules/Downloads/Downloads.php
-f187625cb0c69d80a1cf7505a6361693  *./core/modules/Pilots/Pilots.php
+18b809a65ac24065ef7bb6183b6b73b3  *./core/modules/Pilots/Pilots.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/modules/index.php
 c75e1f34d88a90272e8b4f665e62ea3d  *./core/modules/Frontpage/Frontpage.php
 ef93262abb8b8347c81c8536ac934391  *./core/modules/ACARS/fsacars.php
@@ -250,7 +250,7 @@ edcab51e8af505c3fecc4d4c6906a21c  *./admin/templates/pilots_list.tpl
 a54b71f064c399f8c0739666708aa056  *./admin/templates/sidebar_pilots.tpl
 f942aa15540351fa2746dec68beb0ed0  *./admin/templates/settings_addsetting.tpl
 a7fd59999a07740825b65e127c15d167  *./admin/templates/pirep_pending.tpl
-8b7f911e1fed62097848363f913b51d4  *./admin/templates/dashboard.tpl
+1b6309f7170e11556514b7ff888b383a  *./admin/templates/dashboard.tpl
 761d19348e9b26d98098b0294435cd6d  *./admin/templates/sidebar_airlines.tpl
 d003a142bf7c4bc1d7a9bb798ffbb13c  *./admin/templates/awards_awardform.tpl
 64b1c87cdd75c9700ff6619668623db0  *./admin/templates/sidebar_news.tpl
@@ -294,7 +294,7 @@ c6d8c61a9c550b3528986bd9905efd04  *./admin/modules/Operations/Operations.php
 645f76ac153c28ac5297d1510f7890e0  *./admin/modules/Import/Import.php
 08a88d8c1c1658dd6d174e19e296004f  *./admin/modules/Settings/Settings.php
 1008cfc8e1b70e5c65ff2ddc04178b63  *./admin/modules/Maintenance/Maintenance.php
-f86553f5dccbd740f008226c8780bdfb  *./admin/modules/Dashboard/Dashboard.php
+51e1c038e98be7130b365944d5dcd02f  *./admin/modules/Dashboard/Dashboard.php
 b1404a5b901369ae1a6a9d1665b0dac3  *./admin/modules/PIREPAdmin/PIREPAdmin.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/avatars/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/signatures/index.php

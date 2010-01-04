@@ -254,10 +254,7 @@ class Installer
 		);
 		
 		$ret = OperationsData::AddAirport($data);
-		
-		// Add a rank
-		RanksData::updateRank(1, 'New Hire', 0, fileurl('/lib/images/ranks/newhire.jpg'), 18.00);
-		
+			
 		// Add the user
 		$data = array(
 			'firstname' => $_POST['firstname'],
@@ -275,6 +272,10 @@ class Installer
 			self::$error = DB::$error;
 			return false;
 		}
+		
+		
+		// Add a rank
+		RanksData::updateRank(1, 'New Hire', 0, fileurl('/lib/images/ranks/newhire.jpg'), 18.00);
 		
 		# Add to admin group
 		$pilotdata = PilotData::GetPilotByEmail($_POST['email']);

@@ -141,6 +141,11 @@ class RanksData extends CodonData
 		$pilots = PilotData::GetAllPilots();
 		$allranks = self::GetAllRanks();
 		
+		if(!$pilots)
+		{
+			return;
+		}
+		
 		foreach($pilots as $pilot)
 		{
 			$last_rank = '';

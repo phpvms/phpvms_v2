@@ -217,7 +217,7 @@ class OperationsData extends CodonData
 	 */
 	public static function AddAircaft($data)
 	{
-		/*$data = array(	'icao'=>$this->post->icao,
+		/*$data = array('icao'=>$this->post->icao,
 						'name'=>$this->post->name,
 						'fullname'=>$this->post->fullname,
 						'registration'=>$this->post->registration,
@@ -304,7 +304,7 @@ class OperationsData extends CodonData
 			return false;
 			
 		return true;
-}
+	}
 	
 	/**
 	 * Add an airport

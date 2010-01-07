@@ -101,9 +101,19 @@ class CodonEvent
 		return true;
 	}
 	
+	public function hasStop($eventname)
+	{
+		if(isset(self::$stopList[$eventname]) && self::$stopList[$eventname] == true)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public function CheckStop($eventname)
 	{
-		if(self::$stopList[$eventname] == true)
+		if(isset(self::$stopList[$eventname]) && self::$stopList[$eventname] == true)
 		{
 			return false;
 		}
@@ -113,7 +123,7 @@ class CodonEvent
 	
 	public function Stop($eventname='')
 	{
-		if($eventname!='')
+		if($eventname != '')
 			self::$stopList[$eventname] = true;
 		else
 			self::$stopList[self::$lastevent] = true;

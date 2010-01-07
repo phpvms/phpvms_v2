@@ -407,7 +407,7 @@ class DB
 			}
 		}
 			
-		$sql.= implode(' AND ', $where_clauses);
+		$sql.= implode(' AND ', $where_clauses).' ';
 		unset($where_clauses);
 		
 		return $sql;
@@ -433,6 +433,13 @@ class DB
 		
 		foreach($fields as $col => $value)
 		{
+			/* If there's a value just added */
+			if(is_int($col))
+			{
+				$sql_cols[] = $value;
+				continue;
+			}
+			
 			$tmp = "`{$col}`=";
 			if($value == 'NOW()')
 			{

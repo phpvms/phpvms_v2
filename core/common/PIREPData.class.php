@@ -52,7 +52,7 @@ class PIREPData extends CodonData
 				LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
 				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao 
-				INNER JOIN '.TABLE_PREFIX.'pilots u ON u.pilotid = p.pilotid ';
+				LEFT JOIN '.TABLE_PREFIX.'pilots u ON u.pilotid = p.pilotid ';
 		
 		/* Build the select "WHERE" based on the columns passed */		
 		$sql .= DB::build_where($params);
@@ -75,17 +75,25 @@ class PIREPData extends CodonData
 		$ret = DB::get_results($sql);
 		return $ret;
 	}
-	
+
+	/**
+	 * Get internal data for the past $interval months, including the
+	 * total number of PIREPS and revenue
+	 *
+	 * @param array $where_params Any specific conditions to search on
+	 * @param int $interval The interval, in months
+	 * @return mixed This is the return value description
+	 *
+	 */
 	public static function getIntervalDataByMonth($where_params, $interval='6')
 	{
-		$sql = "SELECT 
-					DATE_FORMAT(p.submitdate, '%Y-%m') AS ym,
+		$sql = "SELECT DATE_FORMAT(p.submitdate, '%Y-%m') AS ym,
 					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
 					COUNT(p.pirepid) AS total,
 					SUM(p.revenue) as revenue
 				FROM ".TABLE_PREFIX."pireps p";
 		
-		$date_clause = "p.submitdate >= DATE_SUB(NOW(), INTERVAL {$interval} MONTH)";
+		$date_clause = "DATE_SUB(NOW(), INTERVAL {$interval} MONTH) <= p.submitdate";
 		
 		/* See if this array already exists */
 		if(!is_array($where_params))
@@ -98,13 +106,21 @@ class PIREPData extends CodonData
 		}
 		
 		$sql .= DB::build_where($where_params);
-		
-		$sql .= 'GROUP BY `ym` ORDER BY `timestamp` ASC';
+		$sql .= ' GROUP BY `ym` ORDER BY `timestamp` ASC';
 		
 		return DB::get_results($sql);
 	}
 	
-	public static function getIntervalDataByDays($where_params, $interval='6')
+	/**
+	 * Get internal data for the past $interval days, including the
+	 * total number of PIREPS and revenue
+	 *
+	 * @param array $where_params Any specific conditions to search on
+	 * @param int $interval The interval, in days
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function getIntervalDataByDays($where_params, $interval='7')
 	{
 		$sql = "SELECT 
 					DATE_FORMAT(p.submitdate, '%Y-%m-%d') AS ym,
@@ -113,7 +129,7 @@ class PIREPData extends CodonData
 					SUM(p.revenue) as revenue
 				FROM ".TABLE_PREFIX."pireps p";
 		
-		$date_clause = "p.submitdate >= DATE_SUB(NOW(), INTERVAL {$interval} DAY)";
+		$date_clause = "DATE_SUB(CURDATE(), INTERVAL {$interval} DAY)  <= p.submitdate";
 		
 		/* See if this array already exists */
 		if(!is_array($where_params))
@@ -126,8 +142,7 @@ class PIREPData extends CodonData
 		}
 		
 		$sql .= DB::build_where($where_params);
-		
-		$sql .= 'GROUP BY `ym` ORDER BY `timestamp` ASC';
+		$sql .= ' GROUP BY `ym` ORDER BY `timestamp` ASC';
 		
 		return DB::get_results($sql);
 	}
@@ -138,7 +153,7 @@ class PIREPData extends CodonData
 	 * only want to return the latest n number of reports, use
 	 * getRecentReportsByCount()
 	 */
-	public static function getAllReports($count='', $start=0)
+	public static function getAllReports($count = '', $start = 0)
 	{
 		return self::findPIREPS(array(), $count, $start);
 	}
@@ -148,7 +163,7 @@ class PIREPData extends CodonData
 	 * constants:
 	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
 	 */
-	public static function getAllReportsByAccept($accepted=0)
+	public static function getAllReportsByAccept($accepted = 0)
 	{
 		$params = array(
 			'p.accepted'=>$accept
@@ -157,7 +172,7 @@ class PIREPData extends CodonData
 		return self::findPIREPS($params);
 	}
 	
-	public static function getAllReportsFromHub($accepted=0, $hub)
+	public static function getAllReportsFromHub($accepted = 0, $hub)
 	{
 		$params = array(
 			'p.accepted' => $accepted,
@@ -277,18 +292,18 @@ class PIREPData extends CodonData
 	public static function getReportDetails($pirepid)
 	{
 		$sql = 'SELECT p.*, s.*, s.id AS scheduleid,
-						u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-						dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-						arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
-					    p.code, p.flightnum, p.depicao, p.arricao,  p.price AS price,
-					    a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
-					    p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
-					FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
-						LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
-						LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
-						LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
-						LEFT JOIN '.TABLE_PREFIX.'schedules s ON s.code = p.code AND s.flightnum = p.flightnum
-					WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
+					u.pilotid, u.firstname, u.lastname, u.email, u.rank,
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
+				    p.code, p.flightnum, p.depicao, p.arricao,  p.price AS price,
+				    a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
+				    p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
+				FROM '.TABLE_PREFIX.'pilots u, '.TABLE_PREFIX.'pireps p
+					LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
+					LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = p.arricao
+					LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
+					LEFT JOIN '.TABLE_PREFIX.'schedules s ON s.code = p.code AND s.flightnum = p.flightnum
+				WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		$row = DB::get_row($sql);
 		

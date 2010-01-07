@@ -95,6 +95,14 @@ class Maintenance extends CodonModule
 		LogData::addLog(Auth::$userinfo->pilotid, 'Reset distances');
 	}
 	
+	public function resetacars()
+	{
+		echo '<h3>ACARS Reset</h3>';
+		
+		ACARSData::resetFlights();
+		
+	}
+	
 	public function calculateranks()
 	{
 		echo '<h3>Resetting Ranks</h3>';

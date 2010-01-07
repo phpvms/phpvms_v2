@@ -68,13 +68,13 @@ class Pilots extends CodonModule
 	public function statsdaysdata($pilotid)
 	{
 		$data = PIREPData::getIntervalDataByDays(array('p.pilotid'=>$pilotid), 30);
-		$this->create_line_graph($data);
+		$this->create_line_graph('Past 30 days PIREPs', $data);
 	}
 	
 	public function statsmonthsdata($pilotid)
 	{
 		$data = PIREPData::getIntervalDataByMonth(array('p.pilotid'=>$pilotid), 3);
-		$this->create_line_graph($data);
+		$this->create_line_graph('Monthly Flight Stats', $data);
 	}
 	
 	public function statsaircraftdata($pilotid)
@@ -117,7 +117,7 @@ class Pilots extends CodonModule
 		echo $chart->toPrettyString();
 	}
 	
-	protected function create_line_graph($data)
+	protected function create_line_graph($title, $data)
 	{	
 		if(!$data)
 		{
@@ -134,7 +134,7 @@ class Pilots extends CodonModule
 	
 		include CORE_LIB_PATH.'/php-ofc-library/open-flash-chart.php';
 
-		$title = new title( 'Past 30 days PIREPs' );
+		$title = new title($title);
 
 		// ------- LINE 2 -----
 		$d = new solid_dot();

@@ -8,6 +8,12 @@
 	<dd>This will reset your VA's total hours count<br /></dd>
 	
 	<dt><strong>
+		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetacars">Reset ACARS</a>:
+		</strong>
+	</dt>
+	<dd>Empties the ACARS table, if you're having problems with ACARS updates<br /></dd>
+	
+	<dt><strong>
 		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetsignatures">Reset Signatures</a>: 
 		</strong>
 	</dt>

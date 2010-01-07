@@ -401,7 +401,7 @@ class FinanceData extends CodonData
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
 					WHERE `type`=\'P\'';
 		
-		return DB::get_results($sql);		
+		return DB::get_results($sql);	
 	}
 	
 	public static function get_total_percent_expenses()

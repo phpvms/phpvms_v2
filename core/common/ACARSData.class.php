@@ -37,19 +37,20 @@ class ACARSData extends CodonData
 		}
 		
 		// make sure at least the vitals we need are there:
-		if($data['pilotid'] == '')
+		if(empty($data['pilotid']))
 		{
 			self::$lasterror = 'No pilot ID specified';
 			return false;
 		}
 		
-		if($data['flightnum'] == '')
+		if(empty($data['flightnum']))
 		{
 			self::$lasterror = 'No flight number';
 			return false;
 		}
 		
-		if($data['depicao'] == '' || $data['arricao'] == '' || $data['lat'] == '' || $data['lng'] == '')
+		if(empty($data['depicao']) || empty($data['arricao']) 
+			|| empty($data['lat']) || empty($data['lng']))
 		{
 			self::$lasterror = 'Airports are blank';
 			return;
@@ -167,9 +168,9 @@ class ACARSData extends CodonData
 			}
 			
 			$upd = implode(',', $upd);
-			$query = 'UPDATE '.TABLE_PREFIX."acarsdata 
-						SET {$upd} 
-						WHERE `id`='{$flight_id}'";
+			$query='UPDATE '.TABLE_PREFIX."acarsdata 
+					SET {$upd} 
+					WHERE `id`='{$flight_id}'";
 						
 			DB::query($query);
 		}
@@ -222,6 +223,14 @@ class ACARSData extends CodonData
 		$data['registration'] = $flight_info->registration;
 		
 		$res = CentralData::send_acars_data($data);
+		return true;
+	}
+	
+	public static function resetFlights()
+	{
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'acarsdata';
+		DB::query($sql);
+		
 		return true;
 	}
 	

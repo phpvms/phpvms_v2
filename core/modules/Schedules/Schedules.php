@@ -62,24 +62,22 @@ class Schedules extends CodonModule
 	{
 		//$routeid = $this->get->id;
 		
-		if($routeid == '')
-		{
-			$this->set('message', 'You must be logged in to access this feature!');
-			$this->render('core_error.tpl');
-			return;
-		}
-				
 		if(!is_numeric($routeid))
 		{
 			preg_match('/^([A-Za-z]{3})(\d*)/', $routeid, $matches);
-			$routeid = $matches[2];
+			$code = $matches[1];
+			$flightnum = $matches[2];
+			
+			$params = array('s.code'=>$code, 's.flightnum'=>$flightnum);
+		}
+		else
+		{
+			$params = array('s.id' => $routeid);
 		}
 		
-		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
-		$counts = SchedulesData::GetScheduleFlownCounts($scheddata->code, $scheddata->flightnum);
-									
-		$this->set('schedule', $scheddata);
-		$this->set('scheddata', $counts); // past 30 days
+		
+		$scheddata = SchedulesData::findSchedules($params);
+		$this->set('schedule', $scheddata[0]);
 		
 		$this->render('schedule_details.tpl');
 		$this->render('route_map.tpl');
@@ -94,9 +92,9 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+		$schedules = self::findSchedules(array('s.id' => $routeid));
 		
-		$this->set('schedule', $scheddata);
+		$this->set('schedule', $schedules[0]);
 		$this->render('schedule_briefing.tpl');
 	}
 	
@@ -109,9 +107,9 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$scheddata = SchedulesData::GetScheduleDetailed($routeid);
+		$schedules = self::findSchedules(array('s.id' => $routeid));
 				
-		$this->set('schedule', $scheddata);
+		$this->set('schedule', $schedules[0]);
 		$this->render('schedule_boarding_pass.tpl');
 	}
 	
@@ -131,50 +129,45 @@ class Schedules extends CodonModule
 		
 		if($routeid == '')
 		{
-			$this->set('message', 'No route!');
-			$this->render('core_error.tpl');
+			echo 'No route passed';
 			return;
 		}
 		
 		// See if this is a valid route
-		$route = SchedulesData::GetSchedule($routeid);
-		if(!$route)
+		$route = SchedulesData::findSchedules(array('s.id' => $routeid));
+		
+		if(!is_array($route) && !isset($route[0]))
 		{
-			$this->set('message', 'Invalid route!');
-			$this->render('core_error.tpl');
+			echo 'Invalid Route';
 			return;
 		}
 		
-		if(CodonEvent::Dispatch('bid_preadd', 'Schedules', $routeid)==false)
-		{
-			return;
-		}
+		CodonEvent::Dispatch('bid_preadd', 'Schedules', $routeid);
 		
 		/* Block any other bids if they've already made a bid
 		 */
 		if(Config::Get('DISABLE_BIDS_ON_BID') == true)
 		{
-			$bids = SchedulesData::GetBids(Auth::$userinfo->pilotid);
+			$bids = SchedulesData::getBids(Auth::$userinfo->pilotid);
 			
 			# They've got somethin goin on
 			if(count($bids) > 0)
 			{
+				echo 'Bid exists!';
 				return;
-			}					
+			}
 		}
 		
 		$ret = SchedulesData::AddBid(Auth::$userinfo->pilotid, $routeid);
 		CodonEvent::Dispatch('bid_added', 'Schedules', $routeid);
 		
-		if($ret === true)
+		if($ret == true)
 		{
-			$this->set('message', 'Bid Added!');
-			$this->render('core_success.tpl');
+			echo 'Bid added';
 		}
 		else
 		{
-			$this->set('message', 'You must be logged in to access this feature!');
-			$this->render('core_error.tpl');
+			echo 'Already in bids!';
 		}
 	}
 	
@@ -234,5 +227,64 @@ class Schedules extends CodonModule
 		$params['s.enabled'] = 1;
 		$this->set('allroutes', SchedulesData::findSchedules($params));
 		$this->render('schedule_results.tpl');
+	}
+	
+	public function statsdaysdata($routeid)
+	{
+		$routeinfo = SchedulesData::findSchedules(array('s.id'=>$routeid));
+		$routeinfo = $routeinfo[0];
+		
+		// Last 30 days stats
+		$data = PIREPData::getIntervalDataByDays(array(
+			'p.code' => $routeinfo->code, 
+			'p.flightnum' => $routeinfo->flightnum,
+		), 30);
+		
+		$this->create_line_graph('Schedule Flown Counts', $data);
+	}
+	
+	protected function create_line_graph($title, $data)
+	{	
+		if(!$data)
+		{
+			$data = array();
+		}
+		
+		$bar_values = array();
+		$bar_titles = array();
+		foreach($data as $val)
+		{
+			$bar_titles[] = $val->ym;
+			$bar_values[] = floatval($val->total);
+		}
+		
+		include CORE_LIB_PATH.'/php-ofc-library/open-flash-chart.php';
+
+		$title = new title($title);
+
+		// ------- LINE 2 -----
+		$d = new solid_dot();
+		$d->size(3)->halo_size(1)->colour('#3D5C56');
+
+		$line = new line();
+		$line->set_default_dot_style($d);
+		$line->set_values( $bar_values );
+		$line->set_width( 2 );
+		$line->set_colour( '#3D5C56' );
+		
+		$x_labels = new x_axis_labels();
+		$x_labels->set_labels( $bar_titles );
+
+		$x = new x_axis();
+		$x->set_labels( $x_labels );
+		
+		$chart = new open_flash_chart();
+		$chart->set_title( $title );
+		$chart->add_element( $line );
+		$chart->set_y_axis( $y );
+		$chart->set_x_axis( $x );
+		$chart->set_bg_colour( '#FFFFFF' );
+
+		echo $chart->toPrettyString();
 	}
 }

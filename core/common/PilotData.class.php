@@ -21,6 +21,39 @@ class PilotData extends CodonData
 	
 	public static $pilot_data = array();
 	
+	
+	/**
+	 * Find any pilots based on the parameters passed in
+	 *
+	 * @param array $params All the parameters
+	 * @param int $limit Number of results to return
+	 * @param int $start Record to start from
+	 * @return array Returns all the pilots requested
+	 *
+	 */
+	public static function findPilots($params, $limit='', $start = '')
+	{
+		$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
+				FROM ".TABLE_PREFIX."pilots p
+				LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank` ";
+		
+		/* Build the select "WHERE" based on the columns passed, this is a generic function */
+		$sql .= DB::build_where($params);
+		
+		if(strlen($count) != 0)
+		{
+			$sql .= ' LIMIT '.$count;
+		}
+		
+		if(strlen($start) != 0)
+		{
+			$sql .= ' OFFSET '. $start;
+		}
+		
+		$ret = DB::get_results($sql);
+		return $ret;
+	}
+	
 	/**
 	 * Get all the pilots, or the pilots who's last names start
 	 * with the letter
@@ -43,9 +76,9 @@ class PilotData extends CodonData
 	public static function getAllPilotsDetailed($start='', $limit=20)
 	{
 		$sql = 'SELECT p.*, r.rankimage, r.payrate
-					FROM '.TABLE_PREFIX.'pilots p
-					LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rank = p.rank
-					ORDER BY totalhours DESC';
+				FROM '.TABLE_PREFIX.'pilots p
+				LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rank = p.rank
+				ORDER BY totalhours DESC';
 		
 		if($start!='')
 			$sql .= ' LIMIT '.$start.','.$limit;
@@ -111,7 +144,19 @@ class PilotData extends CodonData
 	 */
 	public static function getPilotData($pilotid)
 	{	
-		if(!isset(self::$pilot_data[$pilotid]))
+	
+		$pilot = self::findPilots(
+				array('p.pilotid' => $pilotid), 
+			1);
+		
+		if(!$pilot)
+		{
+			return false;
+		}
+		
+		return $pilot[0];
+		
+		/*if(!isset(self::$pilot_data[$pilotid]))
 		{	
 			$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
 					FROM ".TABLE_PREFIX."pilots p
@@ -129,7 +174,7 @@ class PilotData extends CodonData
 			self::$pilot_data[$pilotid] = $data;
 		}
 		
-		return self::$pilot_data[$pilotid];
+		return self::$pilot_data[$pilotid];*/
 	}
 	
 	/**
@@ -913,9 +958,16 @@ class PilotData extends CodonData
 		if(function_exists('imageantialias'))
 		{
 			imageantialias($img, true);
-		}		
+		}
+		
+		
 		
 		/* Font stuff */
+		
+		if(!function_exists('imagettftext'))
+		{
+			Config::Set('SIGNATURE_USE_CUSTOM_FONT', false);
+		}
 		
 		# The line height of each item to fit nicely, dynamic
 		
@@ -935,16 +987,23 @@ class PilotData extends CodonData
 		
 		
 		$currline = $yoffset;
-		foreach($output as $line)
+		$total = count($output);
+		for($i=0;$i<$total;$i++)
 		{		
 			if(Config::Get('SIGNATURE_USE_CUSTOM_FONT') == false)
 			{	
-				imagestring($img, $font, $xoffset, $currline, $line, $textcolor);	
+				imagestring($img, $font, $xoffset, $currline, $output[$i], $textcolor);	
 			}
 			else
 			{
 				// Use TTF
-				imagettftext($img, $font_size, 0, $xoffset, $currline, $textcolor, $font, $line);
+				$tmp = imagettftext($img, $font_size, 0, $xoffset, $currline, $textcolor, $font, $output[$i]);
+				
+				// Flag is placed at the end of of the first line, so have that bounding box there
+				if($i==0)
+				{
+					$flag_bb = $tmp;
+				}
 			}
 			
 			$currline+=$stepsize;
@@ -964,8 +1023,8 @@ class PilotData extends CodonData
 			}
 			else
 			{
-				$ret = imagecopy($img, $flagimg, strlen($output[1])*$fontwidth, 
-					($yoffset+($stepsize/2) - Config::Get('SIGNATURE_FONT_PADDING')), 0, 0, 16, 11);
+				# figure out where it would go 
+				$ret = imagecopy($img, $flagimg, $flag_bb[4]+5, $flag_bb[5]+2, 0, 0, 16, 11);
 			}
 		}
 							

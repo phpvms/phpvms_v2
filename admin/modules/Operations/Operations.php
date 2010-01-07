@@ -315,7 +315,11 @@ class Operations extends CodonModule
 			{
 				$this->set('paginate', true);
 				$this->set('start', $this->get->start+1);
-				$this->set('prev', $this->get->start);
+				
+				if($this->get->start - 1 > 0)
+				{
+					$this->set('prev', $this->get->start - 1);
+				}
 			}
 		}
 		else

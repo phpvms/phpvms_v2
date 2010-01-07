@@ -17,18 +17,28 @@ if($schedule->route!='')
 <strong>Schedule Frequency</strong>
 <div align="center">
 <?php
-	$data = array();
-	$labels = array();
-	
-	foreach($scheddata as $month=>$count)
-	{
-		$data[] = $count;
-		$labels[] = $month;
-	}
-	
-	$chart = new ChartGraph('gchart', 'ls', 600, 150);
-	$chart->AddData($data, $labels);
-	
-	echo '<img align="center" src="'.$chart->GenerateGraph().'" />';
+/*
+	Added in 2.0!
+*/
+$chart_width = '800';
+$chart_height = '170';
+
+/* Don't need to change anything below this here */
+?>
+<div align="center" style="width: 100%;">
+	<div align="center" id="pireps_chart"></div>
+</div>
+
+<script type="text/javascript" src="<?php echo fileurl('/lib/js/ofc/js/swfobject.js')?>"></script>
+<script type="text/javascript">
+swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
+	"pireps_chart", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
+	"9.0.0", "expressInstall.swf", 
+	{"data-file":"<?php echo actionurl('/schedules/statsdaysdata/'.$schedule->id);?>"});
+</script>
+<?php
+/* End added in 2.0
+*/
 ?>
 </div>
+

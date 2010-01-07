@@ -19,6 +19,7 @@
 class PIREPS extends CodonModule
 {
 	public $pirep;
+	public $pirepdata;
 	
 	public function __call($name, $args)
 	{
@@ -403,25 +404,29 @@ class PIREPS extends CodonModule
 			return false;
 		}
 		
-		if(CodonEvent::Dispatch('pirep_prefile', 'PIREPS', $_POST) == false)
+		# form the fields to submit
+		$this->pirepdata = array(
+			'pilotid'=>$pilotid,
+			'code'=>$this->post->code,
+			'flightnum'=>$this->post->flightnum,
+			'depicao'=>$this->post->depicao,
+			'arricao'=>$this->post->arricao,
+			'aircraft'=>$this->post->aircraft,
+			'flighttime'=>$this->post->flighttime,
+			'submitdate'=>'NOW()',
+			'fuelused'=>$this->post->fuelused,
+			'source'=>'manual',
+			'comment'=>$this->post->comment
+		);
+	
+		CodonEvent::Dispatch('pirep_prefile', 'PIREPS');
+		
+		if(CodonEvent::hasStop('pirepfile'))
 		{
 			return false;
 		}
-	
-		# form the fields to submit
-		$data = array('pilotid'=>$pilotid,
-					  'code'=>$this->post->code,
-					  'flightnum'=>$this->post->flightnum,
-					  'depicao'=>$this->post->depicao,
-					  'arricao'=>$this->post->arricao,
-					  'aircraft'=>$this->post->aircraft,
-					  'flighttime'=>$this->post->flighttime,
-					  'submitdate'=>'NOW()',
-					  'fuelused'=>$this->post->fuelused,
-					  'source'=>'manual',
-					  'comment'=>$this->post->comment);
-		
-		if(!PIREPData::FileReport($data))
+				
+		if(!PIREPData::FileReport($this->pirepdata))
 		{
 			$this->set('message', 'There was an error adding your PIREP : '.PIREPData::$lasterror);
 			return false;
@@ -438,7 +443,7 @@ class PIREPS extends CodonModule
 		}
 		
 		# Call the event
-		CodonEvent::Dispatch('pirep_filed', 'PIREPS', $_POST);
+		CodonEvent::Dispatch('pirep_filed', 'PIREPS');
 		
 		# Set them as non-retired
 		PilotData::setPilotRetired($pilotid, false);

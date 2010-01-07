@@ -47,7 +47,7 @@
 		{ ?>
 		
 			<form name="loginform" action="<?php echo url('/login'); ?>" method="post">
-				Sign-in with your pilot id or email, or <a href="<?php url('/registration'); ?>">register</a><br />
+				Sign-in with your pilot id or email, or <a href="<?php echo url('/registration'); ?>">register</a><br />
 				<input type="text" name="email" value="" onClick="this.value=''" />
 				<input type="password" name="password" value="" />
 				<input type="hidden" name="remember" value="on" />

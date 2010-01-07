@@ -73,12 +73,14 @@ class Profile extends CodonModule
 	public function view($pilotid='')
 	{
 
-		if(preg_match('/^([A-Za-z]{3})(\d*)/', $pilotid, $matches) > 0)
+		if(!is_numeric($pilotid))
 		{
-			$pilotid = $matches[2];
+			preg_match('/^([A-Za-z]*)(\d*)/', $pilotid, $matches);
+			$code = $matches[1];
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 		}
 		
-		$userinfo = PilotData::GetPilotData($pilotid);
+		$userinfo = PilotData::getPilotData($pilotid);
 		
 		$this->title = 'Profile of '.$userinfo->firstname.' '.$userinfo->lastname;
 		

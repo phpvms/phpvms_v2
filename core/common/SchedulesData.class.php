@@ -766,9 +766,10 @@ class SchedulesData extends CodonData
 	 * @deprecated
 	 *
 	 */
-	/*public static function getScheduleFlownCounts($code, $flightnum, $days=7)
+	public static function getScheduleFlownCounts($code, $flightnum, $days=7)
 	{
 		$max = 0;
+		
 		
 		$code = strtoupper($code);
 		$flightnum = strtoupper($flightnum);
@@ -794,7 +795,7 @@ class SchedulesData extends CodonData
 		DB::disableCache();
 		
 		return $data;
-	}*/
+	}
 	
 	/**
 	 * Show the graph of the past week's reports. Outputs the
@@ -802,7 +803,7 @@ class SchedulesData extends CodonData
 	 * 
 	 * @deprecated
 	 */
-	/*public static function showReportCounts()
+	public static function showReportCounts()
 	{
 		// Recent PIREP #'s
 		$max = 0;
@@ -824,7 +825,7 @@ class SchedulesData extends CodonData
 		} while ($time_start < $time_end);
 			
 		return $data;
-	}*/
+	}
 	
 	/* Below here, these are all deprecated. In your code, you should use
 		the query structure, defined within the functions

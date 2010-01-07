@@ -140,6 +140,8 @@ class PilotRanking extends CodonModule
 			return;
 		}
 		
+		$this->post->payrate = abs($this->post->payrate);
+		
 		$ret = RanksData::AddRank($this->post->rank, $this->post->minhours, $this->post->imageurl, $this->post->payrate);
 	
 		if(DB::errno() != 0)
@@ -170,6 +172,8 @@ class PilotRanking extends CodonModule
 			$this->render('core_error.tpl');
 			return;
 		}
+		
+		$this->post->payrate = abs($this->post->payrate);
 		
 		$ret = RanksData::UpdateRank($this->post->rankid, $this->post->rank, 
 								$this->post->minhours, $this->post->rankimage, $this->post->payrate);

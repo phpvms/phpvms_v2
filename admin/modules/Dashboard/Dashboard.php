@@ -53,7 +53,7 @@ class Dashboard extends CodonModule
 		
 		if(!$data)
 		{
-			return false;
+			$data = array(); // so it doesn't error out
 		}
 		
 		$bar_values = array();

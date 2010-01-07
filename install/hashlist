@@ -151,7 +151,7 @@ ff6daf86c574e3be2722c33f8975cdab  *./core/classes/Template.class.php
 74f79f15db7476a6ce4a8521996eeeef  *./core/classes/CodonCondenser.class.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/pages/index.php
-3df57ff65fcf84f98f373aaba4b4dc8a  *./core/app.config.php
+4d8dd4cff7d4cbfdfe29751e5bc3055d  *./core/app.config.php
 951b0897b975489b56b4bb9be772a748  *./core/modules/Schedules/Schedules.php
 540a2876e98c759d58bf0f9ef82ea905  *./core/modules/news/news.php
 e29229cf3c89bc4748a3df55eb6594ad  *./core/modules/XML/XML.php
@@ -295,7 +295,7 @@ cf0e7f278179490b5a610846ee6b0cb0  *./admin/modules/MassMailer/MassMailer.php
 645f76ac153c28ac5297d1510f7890e0  *./admin/modules/Import/Import.php
 08a88d8c1c1658dd6d174e19e296004f  *./admin/modules/Settings/Settings.php
 797eaf758a7e082bde5df6514c3fbfcd  *./admin/modules/Maintenance/Maintenance.php
-60ec8f7295e0b67f87e77d228837d83b  *./admin/modules/Dashboard/Dashboard.php
+e415740ae22cfc67d52471f86ed51deb  *./admin/modules/Dashboard/Dashboard.php
 f7c10b8d6b18e4fe0ab9f2c87dc3759a  *./admin/modules/PIREPAdmin/PIREPAdmin.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/avatars/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/signatures/index.php

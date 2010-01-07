@@ -146,12 +146,27 @@ class Dashboard extends CodonModule
 				return;
 			}
 			
-			$postversion = intval(str_replace('.', '', trim($xml->version)));
+			$version = $xml->version;
+			
+			if(Config::Get('CHECK_BETA_VERSION') == true)
+			{
+				$version = $xml->betaversion;
+			}
+			
+			$postversion = intval(str_replace('.', '', trim($version)));
 			$currversion = intval(str_replace('.', '', PHPVMS_VERSION));
 			
 			if($currversion < $postversion)
 			{
-				$this->set('message', 'Version '.$xml->version.' is available for download! Please update ASAP');
+				if(Config::Get('CHECK_BETA_VERSION') == true)
+				{
+					$this->set('message', 'A beta version '.$version.' is available for download!');
+				}
+				else
+				{
+					$this->set('message', 'Version '.$version.' is available for download! Please update ASAP');
+				}
+				
 				$this->set('updateinfo', Template::GetTemplate('core_error.tpl', true));
 			}
 			

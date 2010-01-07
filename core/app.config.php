@@ -196,6 +196,7 @@ Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
 Config::Set('VACENTRAL_NEWS_FEED', 'http://feeds.feedburner.com/vacentral');
 Config::Set('GEONAME_API_SERVER', 'http://ws.geonames.org');
 
+Config::Set('CHECK_BETA_VERSION', false);
 Config::Set('URL_REWRITE', false);
 
 /* Days of the Week

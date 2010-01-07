@@ -34,8 +34,8 @@
 		<field Field="pilotid" Type="int(11)" Null="NO" Key="" Extra="" />
 		<field Field="datestamp" Type="datetime" Null="NO" Key="" Extra="" />
 		<field Field="message" Type="varchar(255)" Null="NO" Key="" Extra="" />
-		<key Table="phpvms_adminlog" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="53" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_adminlog" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="53" Avg_row_length="40" Data_length="2168" Max_data_length="281474976710655" Index_length="2048" Data_free="0" Auto_increment="54" Create_time="2009-12-26 19:34:48" Update_time="2010-01-07 02:38:16" Check_time="2010-01-03 23:34:03" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<key Table="phpvms_adminlog" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="55" Null="" Index_type="BTREE" Comment="" />
+		<options Name="phpvms_adminlog" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="55" Avg_row_length="41" Data_length="2292" Max_data_length="281474976710655" Index_length="2048" Data_free="0" Auto_increment="56" Create_time="2009-12-26 19:34:48" Update_time="2010-01-07 19:21:44" Check_time="2010-01-03 23:34:03" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 	<table_structure name="phpvms_aircraft">
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />
@@ -329,7 +329,7 @@
 		<field Field="ipaddress" Type="varchar(25)" Null="NO" Key="" Extra="" />
 		<field Field="logintime" Type="datetime" Null="NO" Key="" Extra="" />
 		<key Table="phpvms_sessions" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="511" Null="" Index_type="BTREE" Comment="" />
-		<options Name="phpvms_sessions" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="511" Avg_row_length="32" Data_length="16552" Max_data_length="281474976710655" Index_length="8192" Data_free="0" Auto_increment="512" Create_time="2009-10-31 20:05:09" Update_time="2010-01-07 16:59:51" Check_time="2010-01-03 23:34:25" Collation="latin1_swedish_ci" Create_options="" Comment="" />
+		<options Name="phpvms_sessions" Engine="MyISAM" Version="10" Row_format="Dynamic" Rows="511" Avg_row_length="32" Data_length="16552" Max_data_length="281474976710655" Index_length="8192" Data_free="0" Auto_increment="512" Create_time="2009-10-31 20:05:09" Update_time="2010-01-07 19:21:44" Check_time="2010-01-03 23:34:25" Collation="latin1_swedish_ci" Create_options="" Comment="" />
 	</table_structure>
 	<table_structure name="phpvms_settings">
 		<field Field="id" Type="int(11)" Null="NO" Key="PRI" Extra="auto_increment" />

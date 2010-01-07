@@ -92,7 +92,7 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$schedules = self::findSchedules(array('s.id' => $routeid));
+		$schedules = SchedulesData::findSchedules(array('s.id' => $routeid));
 		
 		$this->set('schedule', $schedules[0]);
 		$this->render('schedule_briefing.tpl');
@@ -107,7 +107,7 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$schedules = self::findSchedules(array('s.id' => $routeid));
+		$schedules = SchedulesData::findSchedules(array('s.id' => $routeid));
 				
 		$this->set('schedule', $schedules[0]);
 		$this->render('schedule_boarding_pass.tpl');

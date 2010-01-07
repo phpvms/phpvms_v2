@@ -144,10 +144,7 @@ class PilotData extends CodonData
 	 */
 	public static function getPilotData($pilotid)
 	{	
-	
-		$pilot = self::findPilots(
-				array('p.pilotid' => $pilotid), 
-			1);
+		$pilot = self::findPilots(array('p.pilotid' => $pilotid), 1);
 		
 		if(!$pilot)
 		{
@@ -155,26 +152,6 @@ class PilotData extends CodonData
 		}
 		
 		return $pilot[0];
-		
-		/*if(!isset(self::$pilot_data[$pilotid]))
-		{	
-			$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
-					FROM ".TABLE_PREFIX."pilots p
-						LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank`
-					WHERE p.`pilotid`='$pilotid'";
-			
-			$data = DB::get_row($sql);
-						
-			if(!is_object($data) || DB::errno() != 0)
-			{
-				return false;
-			}
-			
-			# "Cache" it
-			self::$pilot_data[$pilotid] = $data;
-		}
-		
-		return self::$pilot_data[$pilotid];*/
 	}
 	
 	/**
@@ -182,6 +159,13 @@ class PilotData extends CodonData
 	 */
 	public static function getPilotByEmail($email)
 	{
+		/*$pilot = self::findPilots(array('p.email'=>$email));
+		if(!$pilot)
+		{
+			return false;
+		}
+		
+		return $pilot[0];*/
 		$sql = 'SELECT * 
 				FROM '. TABLE_PREFIX.'pilots 
 				WHERE `email`=\''.$email.'\'';
@@ -195,7 +179,8 @@ class PilotData extends CodonData
 	public static function getPendingPilots($count='')
 	{
 		$sql = 'SELECT * 
-					FROM '.TABLE_PREFIX.'pilots WHERE `confirmed`='.PILOT_PENDING;
+				FROM '.TABLE_PREFIX.'pilots 
+				WHERE `confirmed`='.PILOT_PENDING;
 
 		if($count!='')
 			$sql .= ' LIMIT '.intval($count);
@@ -206,8 +191,8 @@ class PilotData extends CodonData
 	public static function getLatestPilots($count=10)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
-					ORDER BY `pilotid` DESC
-					LIMIT '.$count;
+				ORDER BY `pilotid` DESC
+				LIMIT '.$count;
 	
 		return DB::get_results($sql);
 	}
@@ -316,24 +301,7 @@ class PilotData extends CodonData
 		}
 		
 		$sql = "UPDATE ".TABLE_PREFIX."pilots SET ";
-		
-		# Generate the list....
-		$update_params = array();
-		foreach($params as $column_name => $value)
-		{
-			$value = DB::escape($value);
-			
-			if($value != 'NOW()')
-			{
-				$value = "'{$value}'";
-			}
-			
-			$update_params[] = "`{$column_name}`={$value}";
-		}
-		
-		$sql .= implode(',', $update_params);
-		unset($update_params);
-		
+		$sql .= DB::build_update($params);
 		$sql .= " WHERE `pilotid`={$pilotid}";
 		
 		$res = DB::query($sql);

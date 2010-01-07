@@ -33,7 +33,7 @@ ab63202ba065d26ba190dc4c1591f67b  *./core/common/RSSFeed.class.php
 804014965dccc7a27dde496eaec30361  *./core/common/SchedulesData.class.php
 6e69bbf6f5d8b534b77f051a63cd9466  *./core/common/UserGroups.class.php
 b3e6a4926ee94b822c5d74fa158356b1  *./core/common/Countries.class.php
-32e33d37aa63a17025ae3863d6db7ede  *./core/common/PilotData.class.php
+282131eaba9ef6a507102f52c77c8e07  *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210  *./core/common/GoogleChart.class.php
 36f4b0354b78fb4ad31a64842b388803  *./core/common/SettingsData.class.php
 7b7530dd33206ff43071aeee9ea823b8  *./core/common/RanksData.class.php
@@ -152,7 +152,7 @@ ff6daf86c574e3be2722c33f8975cdab  *./core/classes/Template.class.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/pages/index.php
 4d8dd4cff7d4cbfdfe29751e5bc3055d  *./core/app.config.php
-951b0897b975489b56b4bb9be772a748  *./core/modules/Schedules/Schedules.php
+ea5ed44f112162f668fe8a15fc293300  *./core/modules/Schedules/Schedules.php
 540a2876e98c759d58bf0f9ef82ea905  *./core/modules/news/news.php
 e29229cf3c89bc4748a3df55eb6594ad  *./core/modules/XML/XML.php
 93266c75bf81bb484ca8eb20c32379df  *./core/modules/Contact/Contact.php
@@ -171,7 +171,7 @@ a26e90b77c6a777406078673a07e0136  *./core/modules/ACARS/ACARS.php
 a5e67fddae9c3f77e262cee30771db05  *./core/modules/Logout/Logout.php
 c8375f20179debe5f03b5c855a6dfd2f  *./core/modules/PIREPS/PIREPS.php
 e324fcd646fb96bc35c32f101684d41e  *./core/modules/Finances/Finances.php
-0fd082f1ec02e15ca13b513d2e0f86a7  *./core/modules/pirepchecks/pirepchecks.php
+db9b7b370a9c5409abd9a1a31386e23c  *./core/modules/pirepchecks/pirepchecks.php
 469b106005f7bae51741e9a20f725708  *./core/modules/Pages/Pages.php
 925c6ea3907403895286aff5d9838916  *./core/modules/Login/Login.php
 b14b19cb5db6f209cc6a2619be027d3b  *./core/modules/RouteMap/RouteMap.php

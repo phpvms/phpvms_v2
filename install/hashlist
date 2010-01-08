@@ -23,7 +23,7 @@ dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
 16c26883d8e0e51e6e61d5244de4367c  *./install/checkdb.php
 6180493965b119b2546ff9b0c1808bd3  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
-d4c2225576c5486ae7ac7b98271ed442  *./core/common/PIREPData.class.php
+3762e969dbba16aed89de5a3f4d12221  *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411  *./core/common/Auth.class.php
 faad9763e29f1b98643d859f2ef36683  *./core/common/RegistrationData.class.php
 fe3cd290b8d809e7b1260f76f28d5a87  *./core/common/StatsData.class.php
@@ -33,7 +33,7 @@ ab63202ba065d26ba190dc4c1591f67b  *./core/common/RSSFeed.class.php
 804014965dccc7a27dde496eaec30361  *./core/common/SchedulesData.class.php
 6e69bbf6f5d8b534b77f051a63cd9466  *./core/common/UserGroups.class.php
 b3e6a4926ee94b822c5d74fa158356b1  *./core/common/Countries.class.php
-282131eaba9ef6a507102f52c77c8e07  *./core/common/PilotData.class.php
+1d9a63892f5f6edd00ac2478c0d25459  *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210  *./core/common/GoogleChart.class.php
 36f4b0354b78fb4ad31a64842b388803  *./core/common/SettingsData.class.php
 7b7530dd33206ff43071aeee9ea823b8  *./core/common/RanksData.class.php
@@ -152,14 +152,14 @@ ff6daf86c574e3be2722c33f8975cdab  *./core/classes/Template.class.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/pages/index.php
 4d8dd4cff7d4cbfdfe29751e5bc3055d  *./core/app.config.php
-ea5ed44f112162f668fe8a15fc293300  *./core/modules/Schedules/Schedules.php
+d8911e321086b0aff1c5ff35da4b1800  *./core/modules/Schedules/Schedules.php
 540a2876e98c759d58bf0f9ef82ea905  *./core/modules/news/news.php
 e29229cf3c89bc4748a3df55eb6594ad  *./core/modules/XML/XML.php
 93266c75bf81bb484ca8eb20c32379df  *./core/modules/Contact/Contact.php
 398b6c003a8a3e42cb70d08413350fee  *./core/modules/Profile/Profile.php
 098230f9263a886a30f4a7d3692c5a56  *./core/modules/Registration/Registration.php
 7df45181bcf88e8c21db2d79fdae4cbd  *./core/modules/Downloads/Downloads.php
-356fdd502a5282afc032851868f2c01e  *./core/modules/Pilots/Pilots.php
+1b713efa3972acf5bc9c6a3a7e641bd0  *./core/modules/Pilots/Pilots.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/modules/index.php
 c75e1f34d88a90272e8b4f665e62ea3d  *./core/modules/Frontpage/Frontpage.php
 a997b2189393c8e6108ac142e492af87  *./core/modules/ACARS/fsacars.php
@@ -171,7 +171,6 @@ a26e90b77c6a777406078673a07e0136  *./core/modules/ACARS/ACARS.php
 a5e67fddae9c3f77e262cee30771db05  *./core/modules/Logout/Logout.php
 c8375f20179debe5f03b5c855a6dfd2f  *./core/modules/PIREPS/PIREPS.php
 e324fcd646fb96bc35c32f101684d41e  *./core/modules/Finances/Finances.php
-db9b7b370a9c5409abd9a1a31386e23c  *./core/modules/pirepchecks/pirepchecks.php
 469b106005f7bae51741e9a20f725708  *./core/modules/Pages/Pages.php
 925c6ea3907403895286aff5d9838916  *./core/modules/Login/Login.php
 b14b19cb5db6f209cc6a2619be027d3b  *./core/modules/RouteMap/RouteMap.php

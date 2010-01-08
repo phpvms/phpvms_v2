@@ -31,12 +31,12 @@ class Pilots extends CodonModule
 			$this->set('title', $hub->name);
 			$this->set('icao', $hub->icao);
 			
-			$this->set('allpilots', PilotData::GetAllPilotsByHub($hub->icao));
+			$this->set('allpilots', PilotData::findPilots(array('p.hub'=>$hub->icao)));
 								
 			$this->render('pilots_list.tpl');
 		}
 		
-		$nohub = PilotData::GetAllPilotsByHub('');
+		$nohub = PilotData::findPilots(array('p.hub'=>''));
 		if(!$nohub)
 		{
 			return;

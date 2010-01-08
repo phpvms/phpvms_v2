@@ -264,29 +264,6 @@ class PIREPData extends CodonData
 	}
 
 	/**
-	 * Get all of the reports for a pilot. Pass the pilot id
-	 * The ID is their database ID number, not their airline ID number
-	 */
-	public static function getAllReportsForPilot($pilotid)
-	{
-		/*$sql = 'SELECT pirepid, pilotid, code, flightnum, depicao, arricao, aircraft,
-					   flighttime, distance, UNIX_TIMESTAMP(submitdate) as submitdate, accepted
-					FROM '.TABLE_PREFIX.'pireps';*/
-					
-		return self::findPIREPS(array('p.pilotid'=>$pilotid));
-	}
-	
-	/**
-	 * Change the status of a PIREP. For the status, use the
-	 * constants:
-	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
-	 */
-	public static function ChangePIREPStatus($pirepid, $status)
-	{
-		return self::editPIREPFields($pirepid, array('accepted' => $status));
-	}
-
-	/**
 	 * Get all of the details for a PIREP, including lat/long of the airports
 	 */
 	public static function getReportDetails($pirepid)
@@ -1075,6 +1052,29 @@ class PIREPData extends CodonData
 			return false;
 		
 		return true;		
+	}
+	
+	/**
+	 * Get all of the reports for a pilot. Pass the pilot id
+	 * The ID is their database ID number, not their airline ID number
+	 * 
+	 * @deprecated Use findPIREPS() instead
+	 */
+	public static function getAllReportsForPilot($pilotid)
+	{
+		return self::findPIREPS(array('p.pilotid'=>$pilotid));
+	}
+	
+	/**
+	 * Change the status of a PIREP. For the status, use the
+	 * constants:
+	 * PIREP_PENDING, PIREP_ACCEPTED, PIREP_REJECTED,PIREP_INPROGRESS
+	 * 
+	 * @deprecated Use editPIREPFields instead
+	 */
+	public static function ChangePIREPStatus($pirepid, $status)
+	{
+		return self::editPIREPFields($pirepid, array('accepted' => $status));
 	}
 
 	/**

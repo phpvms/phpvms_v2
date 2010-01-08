@@ -75,7 +75,6 @@ class Schedules extends CodonModule
 			$params = array('s.id' => $routeid);
 		}
 		
-		
 		$scheddata = SchedulesData::findSchedules($params);
 		$this->set('schedule', $scheddata[0]);
 		

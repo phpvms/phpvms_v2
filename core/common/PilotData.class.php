@@ -35,7 +35,7 @@ class PilotData extends CodonData
 	{
 		$sql = "SELECT p.*, r.`rankimage`, r.`payrate`
 				FROM ".TABLE_PREFIX."pilots p
-				LEFT JOIN ".TABLE_PREFIX."ranks r ON r.`rank`=p.`rank` ";
+				LEFT JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank ";
 		
 		/* Build the select "WHERE" based on the columns passed, this is a generic function */
 		$sql .= DB::build_where($params);
@@ -60,30 +60,22 @@ class PilotData extends CodonData
 	 */
 	public static function getAllPilots($letter='')
 	{
-		$sql = 'SELECT * FROM ' . TABLE_PREFIX .'pilots ';
+		$params = array();
 		
-		if($letter!='')
-			$sql .= " WHERE lastname LIKE '$letter%' ";
-
-		$sql .= ' ORDER BY lastname DESC';
+		if(!empty($letter))
+		{
+			$params['lastname'] = $letter.'%';
+		}
 		
-		return DB::get_results($sql);
+		return self::findPilots($params);
 	}
 	
 	/**
 	 * Get all the detailed pilot's information
 	 */
-	public static function getAllPilotsDetailed($start='', $limit=20)
+	public static function getAllPilotsDetailed($limit=20, $start='')
 	{
-		$sql = 'SELECT p.*, r.rankimage, r.payrate
-				FROM '.TABLE_PREFIX.'pilots p
-				LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rank = p.rank
-				ORDER BY totalhours DESC';
-		
-		if($start!='')
-			$sql .= ' LIMIT '.$start.','.$limit;
-			
-		return DB::get_results($sql);
+		return self::findPilots(array(), $limit, $start);
 	}
 	
 	/**
@@ -111,13 +103,7 @@ class PilotData extends CodonData
 	 */
 	public static function getAllPilotsByHub($hub)
 	{
-		$sql = "SELECT p.*, r.rankimage, r.payrate
-					FROM ".TABLE_PREFIX."pilots p
-						INNER JOIN ".TABLE_PREFIX."ranks r ON r.rank=p.rank
-					WHERE p.hub='$hub'
-					ORDER BY p.pilotid DESC";
-					
-		return DB::get_results($sql);
+		return self::findPilots(array('p.hub'=>$hub));
 	}
 	
 	/**
@@ -207,7 +193,7 @@ class PilotData extends CodonData
 	public static function changeName($pilotid, $firstname, $lastname)
 	{
 		# Non-blank
-		if($pilotid=='' || $firstname == '' || $lastname == '')
+		if(empty($pilotid) || empty($firstname) || empty($lastname))
 		{
 			return false;
 		}
@@ -238,15 +224,13 @@ class PilotData extends CodonData
 	 * @deprecated Use updateProfile() instead!!
 	 * 
 	 */
-	public static function saveProfile($params)
+	/*public static function saveProfile($params)
 	{
-		/* For any old functions which use saveProfile, convert to new
-			format to prevent breakage, while I update everything... */
 		$pilotid = $params['pilotid'];
 		unset($params['pilotid']);
 		
 		return self::updateProfile($pilotid, $params);
-	}
+	}*/
 	
 	
 	/**
@@ -509,7 +493,7 @@ class PilotData extends CodonData
 	
 	public static function updatePilotStats($pilotid)
 	{
-		$pireps = PIREPData::getAllReportsForPilot($pilotid);
+		$pireps = PIREPData::findPIREPS(array('p.pilotid'=>$pilotid));
 		
 		$totalpireps = 0;
 		$totalhours = 0;

@@ -300,6 +300,15 @@ class PilotData extends CodonData
 	
 	public static function setPilotRetired($pilotid, $retired)
 	{
+		if($retired == true || $retired == 1)
+		{
+			$retired = 1;
+		}
+		else
+		{
+			$retired = 0;
+		}
+		
 		return self::updateProfile($pilotid, array('retired'=>$retired));
 	}
 	

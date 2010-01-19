@@ -95,6 +95,12 @@ class Import extends CodonModule
 		
 		if(isset($_POST['header'])) $skip = true;
 		
+		/* Delete all schedules before doing an import */
+		if(isset($_POST['erase_routes']))
+		{
+			SchedulesData::deleteAllSchedules();
+		}
+		
 		
 		$added = 0;
 		$updated = 0;
@@ -128,7 +134,7 @@ class Import extends CodonModule
 			$daysofweek = $fields[14];
 			$enabled = $fields[15];
 							
-			if($code=='')
+			if($code == '')
 			{
 				continue;
 			}

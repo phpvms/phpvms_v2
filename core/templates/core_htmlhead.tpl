@@ -28,4 +28,8 @@ $cache_url = $condenser->GetCondensedFile($files, 'jquery-front.js', true);
 <script type="text/javascript" src="<?php echo $cache_url?>"></script>
 <script type="text/javascript" src="<?php echo fileurl('lib/js/phpvms.js');?>"></script>
 
+<?php
+/* You can place your additional includes, etc under here */
+
+?>
 <?php echo $MODULE_HEAD_INC;?>

@@ -84,37 +84,13 @@ class Pilots extends CodonModule
 		
 		include CORE_LIB_PATH.'/php-ofc-library/open-flash-chart.php';
 		
-		$title = new title('Aircraft Flown');
-		
 		$d = array();
 		foreach($data as $ac)
 		{
-			$d[] = new pie_value(floatval($ac->hours), $ac->aircraft);
+			OFCharts::add_data_set($ac->aircraft, floatval($ac->hours));
 		}
-
-		$pie = new pie();
-		$pie->start_angle(35)
-			->add_animation( new pie_fade() )
-			->add_animation( new pie_bounce(4) )
-			// ->label_colour('#432BAF') // <-- uncomment to see all labels set to blue
-			->gradient_fill()
-			->tooltip( '#val# of #total#<br>#percent# of 100%' )
-			->colours(
-				array(
-					'#1F8FA1',    // <-- blue
-					'#848484',    // <-- grey
-					'#CACFBE',    // <-- green
-					'#DEF799'    // <-- light green
-					) );
-
-		$pie->set_values( $d );
-
-		$chart = new open_flash_chart();
-		$chart->set_title( $title );
-		$chart->add_element( $pie );
-		$chart->set_bg_colour( '#FFFFFF' );
-
-		echo $chart->toPrettyString();
+		
+		echo OFCharts::create_pie_graph('Aircraft Flown');
 	}
 	
 	protected function create_line_graph($title, $data)
@@ -128,38 +104,13 @@ class Pilots extends CodonModule
 		$bar_titles = array();
 		foreach($data as $val)
 		{
+			
 			$bar_titles[] = $val->ym;
 			$bar_values[] = floatval($val->total);
 		}
 	
-		include CORE_LIB_PATH.'/php-ofc-library/open-flash-chart.php';
-
-		$title = new title($title);
-
-		// ------- LINE 2 -----
-		$d = new solid_dot();
-		$d->size(3)->halo_size(1)->colour('#3D5C56');
-
-		$line = new line();
-		$line->set_default_dot_style($d);
-		$line->set_values( $bar_values );
-		$line->set_width( 2 );
-		$line->set_colour( '#3D5C56' );
-		
-		$x_labels = new x_axis_labels();
-		$x_labels->set_labels( $bar_titles );
-
-		$x = new x_axis();
-		$x->set_labels( $x_labels );
-		
-		$chart = new open_flash_chart();
-		$chart->set_title( $title );
-		$chart->add_element( $line );
-		$chart->set_y_axis( $y );
-		$chart->set_x_axis( $x );
-		$chart->set_bg_colour( '#FFFFFF' );
-
-		echo $chart->toPrettyString();
+		OFCharts::add_data_set($bar_titles, $bar_values);
+		echo OFCharts::create_area_graph($title);
 	}
 		
 	public function RecentFrontPage($count = 5)

@@ -234,10 +234,11 @@ class Schedules extends CodonModule
 		$routeinfo = $routeinfo[0];
 		
 		// Last 30 days stats
-		$data = PIREPData::getIntervalDataByDays(array(
-			'p.code' => $routeinfo->code, 
-			'p.flightnum' => $routeinfo->flightnum,
-		), 30);
+		$data = PIREPData::getIntervalDataByDays(
+			array(
+				'p.code' => $routeinfo->code, 
+				'p.flightnum' => $routeinfo->flightnum,
+			), 30);
 		
 		$this->create_line_graph('Schedule Flown Counts', $data);
 	}
@@ -249,41 +250,15 @@ class Schedules extends CodonModule
 			$data = array();
 		}
 		
-		$bar_values = array();
+		$titles = array();
 		$bar_titles = array();
 		foreach($data as $val)
 		{
-			$bar_titles[] = $val->ym;
-			$bar_values[] = floatval($val->total);
+			$titles[] = $val->ym;
+			$values[] = floatval($val->total);
 		}
 		
-		include CORE_LIB_PATH.'/php-ofc-library/open-flash-chart.php';
-
-		$title = new title($title);
-
-		// ------- LINE 2 -----
-		$d = new solid_dot();
-		$d->size(3)->halo_size(1)->colour('#3D5C56');
-
-		$line = new line();
-		$line->set_default_dot_style($d);
-		$line->set_values( $bar_values );
-		$line->set_width( 2 );
-		$line->set_colour( '#3D5C56' );
-		
-		$x_labels = new x_axis_labels();
-		$x_labels->set_labels( $bar_titles );
-
-		$x = new x_axis();
-		$x->set_labels( $x_labels );
-		
-		$chart = new open_flash_chart();
-		$chart->set_title( $title );
-		$chart->add_element( $line );
-		$chart->set_y_axis( $y );
-		$chart->set_x_axis( $x );
-		$chart->set_bg_colour( '#FFFFFF' );
-
-		echo $chart->toPrettyString();
+		OFCharts::add_data_set($titles, $values);
+		echo OFCharts::create_line_graph($title);
 	}
 }

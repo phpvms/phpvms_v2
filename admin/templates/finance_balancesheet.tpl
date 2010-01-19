@@ -1,67 +1,26 @@
 <?php
-/*
- * DO NOT EDIT THIS TEMPLATE UNLESS:
- *   1. YOU HAVE ALOT OF TIME
- *   2. YOU DON'T MIND LOSING SOME HAIR
- *   3. YOU HAVE BIG BALLS MADE OF STEEL
- *
- *	It can cause incontinence
- *
- *	YOU HAVE BEEN WARNED!!!
- */
-?><?php Template::Show('finance_header.tpl'); ?>
-<h3><?php echo $title?></h3>
-<?php
-
-	//$total = $pirepfinance->Revenue - $pirepfinance->TotalPay;
-		
-	# This holds all of our values for the graph
-	#	And some default values
-	# DO NOT EDIT THESE!!!!!!!!!!!!!!!!!!!!!!!!!!!1111111111111111
-	
-	$pilotpay_total = $allfinances['pirepfinance']->TotalPay;
-	$expense_total = 0;
-	$g_expenses_values=array();
-	$g_expenses_labels=array();
-	
-	$allfinances['pirepfinance']->TotalPay  = $allfinances['pirepfinance']->TotalPay * -1;
-	$allfinances['pirepfinance']->FlightExpenses  = $allfinances['pirepfinance']->FlightExpenses * -1;
-	$allfinances['pirepfinance']->FuelCost  = $allfinances['pirepfinance']->FuelCost * -1;
-	
-	$running_total = $allfinances['pirepfinance']->Revenue + $allfinances['pirepfinance']->TotalPay + $allfinances['pirepfinance']->FlightExpenses + $allfinances['pirepfinance']->FuelCost;
+Template::Show('finance_header.tpl'); 
 ?>
-
+<h3><?php echo $title?></h3>
 <table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Cash and Sales</td>
 	</tr>
-	<?php
-	/*
-	<tr>
-		<td align="right">Cash Reserves: </td>
-		<td align="right"><?php echo FinanceData::FormatMoney($allfinances['cashreserve']);?></td>
-	</tr>
-	*/
-	?>
 	<tr>
 		<td align="right">Gross Revenue Flights: <br />
-			Total number of flights: <?php echo $allfinances['pirepfinance']->TotalFlights==''? 0 : $allfinances['pirepfinance']->TotalFlights; ?>
+			Total number of flights: <?php echo $month_data->total; ?>
 		</td>
-		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($allfinances['pirepfinance']->Revenue);?></td>
+		<td align="right" valign="top"><?php echo FinanceData::FormatMoney($month_data->gross);?></td>
 	</tr>
 	
 	<tr>
 		<td align="right">Pilot Payments: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['pirepfinance']->TotalPay));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(-1*$month_data->pilotpay));?></td>
 	</tr>
 	<tr>
 		<td align="right">Fuel Costs: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['pirepfinance']->FuelCost));?></td>
-	</tr>
-	<tr>
-		<td align="right">Flight Expenses: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['pirepfinance']->FlightExpenses));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(-1*$month_data->fuelprice));?></td>
 	</tr>
 	
 	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
@@ -70,7 +29,9 @@
 	
 	<tr>
 		<td align="right"><strong>Total:</strong></td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($running_total));?></td>
+		<td align="right"> <?php 
+		$running_total = $month_data->gross - $month_data->pilotpay - $month_data->fuelprice;
+		echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($running_total));?></td>
 	</tr>
 	
 	<tr class="balancesheet_header">
@@ -79,9 +40,9 @@
 
 <?php
 	/* COUNT EXPENSES */
-	if(!$allexpenses['allexpenses'])
+	if(!$month_data->expenses)
 	{
-		$allexpenses['allexpenses'] = array();
+		$month_data->expenses = array();
 		?>
 		<tr>
 		<td align="right">None</td>
@@ -89,97 +50,66 @@
 	</tr>
 	<?php
 	}
-	
-	if(!$allfinances['allexpenses']) $allfinances['allexpenses'] = array();
-	
-	foreach($allfinances['allexpenses'] as $expense)
+		
+	$type = Config::Get('EXPENSE_TYPES');
+	foreach($month_data->expenses as $expense)
 	{
-		# Add the value to the graph
-		
-		$g_expenses_values[] =  $expense->cost/100;
-		$g_expenses_labels[] = $expense->name;
-	
-		$expense_total += $expense->cost;
-		
-		$expense->cost  = $expense->cost * -1;
-		$total = $total + $expense->cost;
-?>		
+	?>		
 	<tr>
-		<td align="right"><?php echo $expense->name?>: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($expense->cost));?></td>
+		<td align="right"><?php echo $expense->name.'<br />'.$type[$expense->type]; ?>: </td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(-1 * $expense->total));?></td>
 	</tr>
-<?php		
+	<?php
+		# Load charts data too
+		OFCharts::add_data_set($expense->name, $expense->total);		
 	}
-?>
+	?>
 	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
 		<td align="" colspan="2" style="padding: 1px;"></td>
 	</tr>
 	<tr>
 		<td align="right"><strong>Expenses Total:</strong></td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($expense_total));?></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney(-1 * $month_data->expenses_total));?></td>
 	</tr>
 	
 	<tr class="balancesheet_header">
 		<td align="" colspan="2">Totals</td>
 	</tr>
 	
-	<tr style="border: 0px">
-		<td align="right">Total Revenue: </td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['total'])); ?></td>
-	</tr>
 	<tr class="balancesheet_header" style="border-bottom: 1px dotted">
 		<td align="" colspan="2" style="padding: 1px;"></td>
 	</tr>
 	<tr>
-		<td align="right"><strong>Net Worth:</strong></td>
-		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($allfinances['total'])); ?></td>
+		<td align="right"><strong>Total:</strong></td>
+		<td align="right"> <?php echo str_replace('$', Config::Get('MONEY_UNIT'), FinanceData::FormatMoney($month_data->revenue)); ?></td>
 	</tr>
 </table>
 
 <h3>Breakdown</h3>
-<div>
+<div align="center">
 <?php
 /*
-	Show the expenses details graphs
-	
-	IF YOU DO NOT WANT THE GRAPH TO SHOW
-	COMMENT OUT THE ECHO BELOW BY ADDING TWO
-	// IN FRONT OF IT
-	
+	Added in 2.0!
 */
+$chart_width = '800';
+$chart_height = '500';
 
-error_reporting(0);
-if(count($g_expenses_values) ==0)
-{
-	$g_expenses_values[] = 100;
-	$g_expenses_labels[] = '';
-}
-		
-$graph = new ChartGraph('pchart', 'pie', 600, 400);
-$graph->setTitles('Expenses');
-$graph->AddData($g_expenses_values, $g_expenses_labels);
-$graph->GenerateGraph();
-		
+/* Don't need to change anything below this here */
 ?>
-<br /><br />
+<div align="center" style="width: 100%;">
+	<div align="center" id="summary_chart"></div>
+</div>
+
+<script type="text/javascript" src="<?php echo fileurl('/lib/js/ofc/js/json/json2.js')?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('/lib/js/ofc/js/swfobject.js')?>"></script>
+<script type="text/javascript">
+swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
+	"summary_chart", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
+	"9.0.0", "expressInstall.swf", 
+	{"data-file":"<?php echo SITE_URL ?>/admin/action.php/finance/viewexpensechart?<?php echo $_SERVER['QUERY_STRING']?>"});
+</script>
 <?php
-/*
-	Show the total expenditures graph
-	
-	IF YOU DO NOT WANT THE GRAPH TO SHOW
-	COMMENT OUT THE ECHO BELOW BY ADDING TWO
-	// IN FRONT OF IT
-	
+/* End added in 2.0
 */
-//$graph = Graphing::GenerateGraph($g_expenses_values, $g_expenses_labels);
-
-$g_expenses_values = array($pilotpay_total, $expense_total);
-$g_expenses_labels = array('Pilot Salary','Expenses');
-
-$expense_graph = new ChartGraph('pchart', 'pie3d', 600, 400);
-$expense_graph->setTitles('Pilot Salary vs Expenses');
-$expense_graph->AddData($g_expenses_values, $g_expenses_labels);
-$expense_graph->GenerateGraph();
-
 ?>
 </div>

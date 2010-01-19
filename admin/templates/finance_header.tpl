@@ -1,4 +1,4 @@
-<span style="float: right;">
+<br /><div style="float: right;">
 <form action="<?php echo SITE_URL?>/admin/index.php/finance/viewreport" method="get">
 <strong>Select Report: </strong>
 <?php
@@ -44,5 +44,18 @@ foreach($months as $monthname=>$timestamp)
 ?>
 </select>
 <input type="submit" name="submit" value="View Report" />
-</span>
 </form>
+<br />
+<form action="<?php echo SITE_URL?>/admin/index.php/finance/viewreport?<?php echo $_SERVER['QUERY_STRING'];?>" method="get">
+<strong>Filter Financials: </strong><input type="text" name="query" value="<?php if($_GET['query']) { echo $_GET['query'];} else { echo '(Use % for wildcard)';}?>" onClick="this.value='';" />
+<select name="type">
+	<option value="code">code</option>
+	<option value="flightnum">flight number</option>
+	<option value="depapt">departure airport</option>
+	<option value="arrapt">arrival airport</option>
+	<option value="aircraft">aircraft type</option>
+</select>
+<input type="hidden" name="action" value="filter" />
+<input type="submit" name="submit" value="filter" />
+</form>
+</div><br />

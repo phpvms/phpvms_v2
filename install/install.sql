@@ -66,6 +66,14 @@ CREATE TABLE `phpvms_expenses` (
 	PRIMARY KEY (`id`)
 ) ENGINE = MYISAM;
 
+CREATE TABLE `phpvms_expenselog` (
+	`dateadded` INT NOT NULL ,
+	`name` VARCHAR( 25 ) NOT NULL ,
+	`type` VARCHAR( 2 ) NOT NULL ,
+	`cost` FLOAT NOT NULL ,
+	INDEX ( `dateadded` )
+) ENGINE = MYISAM ;
+
 CREATE TABLE IF NOT EXISTS `phpvms_financedata` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`month` int(11) NOT NULL,

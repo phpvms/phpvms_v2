@@ -168,9 +168,9 @@ class CentralData extends CodonData
 		self::$xml->addChild('totalschedules', StatsData::TotalSchedules());
 				
 		# Expenses stuff
-		$exp_data = FinanceData::get_total_monthly_expenses();
+		/*$exp_data = FinanceData::getExpensesForMonth(time());
 		self::$xml->addChild('expenses', $exp_data->total);
-		self::$xml->addChild('expensescost', $exp_data->cost);
+		self::$xml->addChild('expensescost', $exp_data->cost);*/
 		
 		# Some of the settings
 		self::$xml->addChild('livefuel', Config::Get('FUEL_GET_LIVE_PRICE'));

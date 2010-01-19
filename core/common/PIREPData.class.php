@@ -87,12 +87,6 @@ class PIREPData extends CodonData
 	 */
 	public static function getIntervalDataByMonth($where_params, $interval='6')
 	{
-		$sql = "SELECT DATE_FORMAT(p.submitdate, '%Y-%m') AS ym,
-					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
-					COUNT(p.pirepid) AS total,
-					SUM(p.revenue) as revenue
-				FROM ".TABLE_PREFIX."pireps p";
-		
 		$date_clause = "DATE_SUB(NOW(), INTERVAL {$interval} MONTH) <= p.submitdate";
 		
 		/* See if this array already exists */
@@ -105,10 +99,14 @@ class PIREPData extends CodonData
 			$where_params[] = $date_clause;
 		}
 		
-		$sql .= DB::build_where($where_params);
-		$sql .= ' GROUP BY `ym` ORDER BY `timestamp` ASC';
+		$data = self::getIntervalData($where_params);
+	
+		foreach($data as $month)
+		{
+			$month = FinanceData::calculateFinances($month);
+		}
 		
-		return DB::get_results($sql);
+		return $data;
 	}
 	
 	/**
@@ -122,13 +120,6 @@ class PIREPData extends CodonData
 	 */
 	public static function getIntervalDataByDays($where_params, $interval='7')
 	{
-		$sql = "SELECT 
-					DATE_FORMAT(p.submitdate, '%Y-%m-%d') AS ym,
-					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
-					COUNT(p.pirepid) AS total,
-					SUM(p.revenue) as revenue
-				FROM ".TABLE_PREFIX."pireps p";
-		
 		$date_clause = "DATE_SUB(CURDATE(), INTERVAL {$interval} DAY)  <= p.submitdate";
 		
 		/* See if this array already exists */
@@ -141,10 +132,66 @@ class PIREPData extends CodonData
 			$where_params[] = $date_clause;
 		}
 		
+		return self::getIntervalData($where_params, 'D');
+		
+	}
+	
+	
+	/**
+	 * Get interval financial data, with the date clause
+	 * passed in as a WHERE:
+	 * 
+	 * "DATE_SUB(CURDATE(), INTERVAL {$interval} DAY)  <= p.submitdate";
+	 * 
+	 * Or some form of a date limitation, but has to be within the
+	 * where clause
+	 *
+	 * @param array $where_params Any WHERE parameters
+	 * @param char $grouping How to group data - Y for yearly, M for monthly, D for daily
+	 * @return array Returns finance data according to the above grouping
+	 *
+	 */
+	public static function getIntervalData($where_params, $grouping='M')
+	{
+		if(strtolower($grouping) == 'y')
+		{
+			$format = '%Y';
+		}
+		elseif(strtolower($grouping) == 'm')
+		{
+			$format = '%Y-%m';
+		}
+		elseif(strtolower($grouping) == 'd') /* go by day */
+		{
+			$format = '%Y-%m-%d';
+		}
+		
+		/*if(is_array($where_params))
+		{
+			$where_params['p.price'] = '> 0';
+		}
+		else
+		{
+			$where_params = array('p.price' => '> 0');
+		}*/
+		
+		$sql = "SELECT DATE_FORMAT(p.submitdate, '{$format}') AS ym,
+					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
+					COUNT(p.pirepid) AS total,
+					SUM(p.revenue) as revenue,
+					(SUM(p.price) * SUM(p.load)) as gross,
+					SUM(p.fuelprice) as fuelprice,
+					SUM(p.price) as price,
+					SUM(p.expenses) as expenses,
+					(SUM(p.pilotpay) * SUM(p.flighttime)) as pilotpay
+				FROM ".TABLE_PREFIX."pireps p";
+		
 		$sql .= DB::build_where($where_params);
 		$sql .= ' GROUP BY `ym` ORDER BY `timestamp` ASC';
 		
-		return DB::get_results($sql);
+		$results = DB::get_results($sql);
+		
+		return $results;
 	}
 	
 	/**
@@ -152,6 +199,7 @@ class PIREPData extends CodonData
 	 * count for pagination. Returns 20 rows by default. If you
 	 * only want to return the latest n number of reports, use
 	 * getRecentReportsByCount()
+	 * 
 	 */
 	public static function getAllReports($count = '', $start = 0)
 	{
@@ -225,8 +273,9 @@ class PIREPData extends CodonData
 	 */
 	public static function getReportCount($date)
 	{
-		$sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'pireps
-					WHERE DATE(submitdate)=DATE(FROM_UNIXTIME('.$date.'))';
+		$sql = 'SELECT COUNT(*) AS count 
+				FROM '.TABLE_PREFIX.'pireps
+				WHERE DATE(submitdate)=DATE(FROM_UNIXTIME('.$date.'))';
 
 		$row = DB::get_row($sql);
 		if(!$row)
@@ -237,13 +286,18 @@ class PIREPData extends CodonData
 	
 	/**
 	 * Get the number of reports on a certain date, for a certain route
+	 * 
+	 * @param string $code Airline code
+	 * @param string $flightnum Flight number
+	 * @param timestamp $date UNIX timestamp
 	 */
 	public static function getReportCountForRoute($code, $flightnum, $date)
 	{
 		$MonthYear = date('mY', $date);
-		$sql = "SELECT COUNT(*) AS count FROM ".TABLE_PREFIX."pireps
-					WHERE DATE_FORMAT(submitdate, '%c%Y') = '$MonthYear'
-						AND code='$code' AND flightnum='$flightnum'";
+		$sql = "SELECT COUNT(*) AS count 
+				FROM ".TABLE_PREFIX."pireps
+				WHERE DATE_FORMAT(submitdate, '%c%Y') = '$MonthYear'
+					AND code='$code' AND flightnum='$flightnum'";
 
 		$row = DB::get_row($sql);
 		return $row->count;
@@ -654,11 +708,12 @@ class PIREPData extends CodonData
 		
 		# Update the financial information for the PIREP, true to refresh fuel
 		self::PopulatePIREPFinance($pirepid, true);
-				
+		
 		# Do other assorted tasks that are along with a PIREP filing
 		# Update the flown count for that route
 		self::UpdatePIREPFeed();
 		
+		# Update any pilot's information
 		$pilotinfo = PilotData::getPilotData($pirepdata['pilotid']);
 		$pilotcode = PilotData::getPilotCode($pilotinfo->code, $pilotinfo->pilotid);
 		
@@ -881,7 +936,7 @@ class PIREPData extends CodonData
 		{
 			foreach($allexpenses as $ex)
 			{
-				$total_ex += $ex->cost;				
+				$total_ex += $ex->cost;	
 			}
 		}
 		

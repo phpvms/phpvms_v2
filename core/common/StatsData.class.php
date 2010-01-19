@@ -18,7 +18,6 @@
  
 class StatsData extends CodonData
 {
-	
 	public static function GetStartDate()
 	{
 		$sql = 'SELECT `pirepid`, `submitdate`
@@ -237,30 +236,7 @@ class StatsData extends CodonData
 			
 		return $guests;
 	}
-	
-	/**
-	 * Get the total number of pilots
-	 */
-	public static function PilotCount($airline_code='')
-	{
-		$sql = 'SELECT COUNT(*) AS `total`
-				FROM '.TABLE_PREFIX.'pilots ';
-				
-		if($airline_code != '')
-		{
-			$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
-		}
 		
-		$result = DB::get_row($sql);
-		
-		if(!$result)
-		{
-			return 0;
-		}
-			
-		return $result->total;
-	}
-	
 	/**
 	 * Get the current aircraft usage
 	 */
@@ -379,6 +355,31 @@ class StatsData extends CodonData
 	
 	/* These contributed by simpilot from phpVMS forums
 	 */
+	 
+	/**
+	* Get the total number of pilots
+	*/
+	public static function PilotCount($airline_code='')
+	{
+		$params = array(
+			'table' => TABLE_PREFIX.'pilots',
+			'fields' => 'COUNT(*) as `total`',
+		);
+		
+		if(!empty($airline_code))
+		{
+			$params['where']['code'] = $airline_code;
+			$params['group'] = 'code';
+		}
+		
+		$results = DB::quick_select($params);
+		if(!$results)
+		{
+			return 0;
+		}
+		
+		return $results[0]->total;
+	}
 	
 	
 	/**
@@ -389,24 +390,28 @@ class StatsData extends CodonData
 	 */
 	public static function TotalPaxCarried($airline_code = '')
 	{
-		$sql = 'SELECT SUM(`load`) AS `total`
-					FROM '.TABLE_PREFIX.'pireps
-					WHERE `accepted`='.PIREP_ACCEPTED.'
-						AND `flighttype`=\'P\'';
-			
-		if($airline_code != '')
+		$params = array(
+			'table' => TABLE_PREFIX.'pireps',
+			'fields' => 'SUM(`load`) as `total`',
+			'where' => array(
+				'accepted' => PIREP_ACCEPTED,
+				'flighttype' => 'P'
+				),
+			);
+		
+		if(!empty($airline_code))
 		{
-			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+			$params['where']['code'] = $airline_code;
+			$params['group'] = 'code';
 		}
 		
-		$result=DB::get_row($sql);
-		
-		if(!$result)
+		$results = DB::quick_select($params);
+		if(!$results)
 		{
 			return 0;
 		}
 		
-		return $result->total;		
+		return $results[0]->total;
 	}
 	
 	
@@ -418,24 +423,25 @@ class StatsData extends CodonData
 	 */
 	public static function TotalFlightsToday($airline_code='')
 	{
-		$sql = 'SELECT COUNT(*) AS `total`
-				FROM '.TABLE_PREFIX.'pireps
-				WHERE DATE(`submitdate`) = CURDATE()';
-					
-		if($airline_code != '')
+		$params = array(
+			'table' => TABLE_PREFIX.'pireps',
+			'fields' => 'COUNT(*) AS `total`',
+			'where' => 'DATE(`submitdate`) = CURDATE()',
+			);
+		
+		if(!empty($airline_code))
 		{
-			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+			$params['where']['code'] = $airline_code;
+			$params['group'] = 'code';
 		}
 		
-		$result=DB::get_row($sql);
-		
-		if(!$result)
+		$results = DB::quick_select($params);
+		if(!$results)
 		{
 			return 0;
 		}
 		
-		return $result->total;
-		
+		return $results[0]->total;
 	}
 	
 	
@@ -447,23 +453,25 @@ class StatsData extends CodonData
 	 */
 	public static function TotalFuelBurned($airline_code='')
 	{
-		$sql = 'SELECT SUM(`fuelused`) AS `total`
-				FROM '.TABLE_PREFIX.'pireps
-				WHERE `accepted`='.PIREP_ACCEPTED;
+		$params = array(
+			'table' => TABLE_PREFIX.'pireps',
+			'fields' => 'SUM(`fuelused`) AS `total`',
+			'where' => array('accepted' => PIREP_ACCEPTED),
+			);
 		
-		if($airline_code != '')
+		if(!empty($airline_code))
 		{
-			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+			$params['where']['code'] = $airline_code;
+			$params['group'] = 'code';
 		}
 		
-		$result=DB::get_row($sql);
-		
-		if(!$result)
+		$results = DB::quick_select($params);
+		if(!$results)
 		{
 			return 0;
 		}
 		
-		return $result->total;
+		return $results[0]->total;
 	}
 	
 	
@@ -475,23 +483,25 @@ class StatsData extends CodonData
 	 */
 	public static function TotalMilesFlown($airline_code='')
 	{
-		$sql = 'SELECT SUM(`distance`) AS `total`
-				FROM '.TABLE_PREFIX.'pireps
-				WHERE `accepted`='.PIREP_ACCEPTED;
-					
-		if($airline_code != '')
+		$params = array(
+			'table' => TABLE_PREFIX.'pireps',
+			'fields' => 'SUM(`distance`) AS `total`',
+			'where' => array('accepted' => PIREP_ACCEPTED),
+		);
+		
+		if(!empty($airline_code))
 		{
-			$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+			$params['where']['code'] = $airline_code;
+			$params['group'] = 'code';
 		}
 		
-		$result=DB::get_row($sql);
-		
-		if(!$result)
+		$results = DB::quick_select($params);
+		if(!$results)
 		{
 			return 0;
 		}
 		
-		return $result->total;
+		return $results[0]->total;
 	}
 	
 	
@@ -503,22 +513,18 @@ class StatsData extends CodonData
 	 */
 	public static function TotalAircraftInFleet($airline_code='')
 	{
-		$sql = 'SELECT COUNT(`id`) AS `total` 
-				FROM '.TABLE_PREFIX.'aircraft';
-					
-		if($airline_code != '')
-		{
-			$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
-		}
+		$params = array(
+			'table' => TABLE_PREFIX.'aircraft',
+			'fields' => 'COUNT(`id`) as `total`',
+		);
 		
-		$result=DB::get_row($sql);
-		
-		if(!$result)
+		$results = DB::quick_select($params);
+		if(!$results)
 		{
 			return 0;
 		}
 		
-		return $result->total;
+		return $results[0]->total;
 	}
 	
 	
@@ -552,21 +558,23 @@ class StatsData extends CodonData
 	 */
 	public static function TotalSchedules($airline_code='')
 	{
-		$sql = 'SELECT COUNT(`id`) AS total
-				FROM '.TABLE_PREFIX.'schedules';
+		$params = array(
+			'table' => TABLE_PREFIX.'schedules',
+			'fields' => 'COUNT(`id`) as `total`',
+			);
 		
-		if($airline_code != '')
+		if(!empty($airline_code))
 		{
-			$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
+			$params['where'] = array('code' => $airline_code);
+			$params['group'] = 'code';
 		}
 		
-		$result=DB::get_row($sql);
-		
-		if(!$result)
+		$results = DB::quick_select($params);
+		if(!$results)
 		{
 			return 0;
 		}
 		
-		return $result->total;
+		return $results[0]->total;
 	}
 }

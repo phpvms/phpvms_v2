@@ -295,6 +295,9 @@ class ACARSData extends CodonData
 		#  
 		$ret = PIREPData::FileReport($data);
 		
+		# Set them as non-retired
+		PilotData::setPilotRetired($pilotid, false);
+		
 		if(!$ret)
 			return false;
 			

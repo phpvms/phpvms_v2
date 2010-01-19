@@ -50,7 +50,124 @@ class FinanceData extends CodonData
 		return $total;
 	}
 	
+	
+	/**
+	 * This populates the expenses for a monthly-listing from
+	 * PIREPData::getIntervalDatabyMonth(array(), months). This goes
+	 * monthly. Pass in just one month returned by that array. 
+	 * 
+	 * This will add a index called 'expenses' which will contain
+	 * all of the expenses for that month	
+	 *
+	 * @param mixed $month_info This is a description
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function calculateFinances($month_info)
+	{
+		# Grab the expenses for that month
+		$expenses = self::getExpensesForMonth($month_info->timestamp);
 		
+		if(!$expenses)
+			return $month_info;
+		
+		/* Where the bulk of our work is done for expenses */	
+		$running_total = 0;
+		foreach($expenses as $ex)
+		{
+			switch(strtolower($ex->type))
+			{
+				/* fixed cost, per month */
+				
+				case 'm':
+				
+					$ex->total = $ex->cost;
+					
+					break;
+				
+				/* per-flight expense, so multiply the cost
+					times the number of flights we've had */
+				case 'f': 
+				
+					$ex->total = $month_info->total * $ex->cost;
+					
+					break;
+					
+				/* percent of gross per month */
+				case 'p': 
+				
+					$ex->total = $month_info->gross * ($ex->cost / 100);
+					
+					break;
+					
+				/* perfect revenue, per flight */
+				case 'g': 
+				
+					$ex->total = $month_info->gross * ($ex->cost / 100);
+					
+					break;
+				
+			}
+			
+			
+			$running_total += $ex->total;
+		}
+		
+		$month_info->expenses_total = $running_total;
+		$month_info->expenses = $expenses;
+		
+		$month_info->revenue = $month_info->gross - $month_info->fuelprice - $month_info->pilotpay - $running_total;
+		
+		return $month_info;
+	}
+
+	public static function getExpensesForMonth($timestamp)
+	{
+		$time = date('Ym', $timestamp);
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenselog
+				WHERE `dateadded`='.$time;
+		
+		return DB::get_results($sql);
+	}
+	
+	public function setExpensesforMonth($timestamp)
+	{
+		$all_expenses = self::getAllExpenses();
+		if(!$all_expenses)
+			return;
+		
+		# Remove expenses first
+		self::removeExpensesforMonth($timestamp);
+		
+		$time = date('Ym', $timestamp);
+		foreach($all_expenses as $expense)
+		{
+			$sql = 'INSERT INTO '.TABLE_PREFIX."expenselog
+					(`dateadded`, `name`, `type`, `cost`)
+					VALUES ('{$time}', '{$expense->name}', '{$expense->type}', '{$expense->cost}');";
+			
+			DB::query($sql);
+		}
+	}
+	
+	public static function populateAllExpenses()
+	{
+		$times = StatsData::GetMonthsSinceStart();
+		
+		foreach($times as $timestamp)
+		{
+			self::setExpensesforMonth($timestamp);
+		}
+	}
+	
+	public static function removeExpensesforMonth($timestamp)
+	{
+		$time = date('Ym', $timestamp);
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'expenselog WHERE `dateadded`='.$time;
+		DB::query($sql);
+	}
+			
 	/**
 	 * This gets all of the balance data for a year
 	 *
@@ -58,12 +175,12 @@ class FinanceData extends CodonData
 	 * @return array All the year's balance data
 	 *
 	 */
-	public static function getYearBalanceData($yearstamp)
+	/*public static function getYearBalanceData($yearstamp)
 	{
 		$year = date('Y', $yearstamp);
 		
 		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
-	}
+	}*/
  
 	
 	/**
@@ -75,7 +192,7 @@ class FinanceData extends CodonData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function getRangeBalanceData($start, $end)
+	/*public static function getRangeBalanceData($start, $end)
 	{
 		$times = StatsData::GetMonthsInRange($start, $end);
 		$now = time();
@@ -108,7 +225,7 @@ class FinanceData extends CodonData
 		}
 		
 		return $ret;		
-	}
+	}*/
 	
 	/**
 	 * Get the financial data for a month
@@ -116,7 +233,7 @@ class FinanceData extends CodonData
 	 * 
 	 * This will automatically handle the caching
 	 */
-	public static function getMonthBalanceData($monthstamp)
+	/*public static function getMonthBalanceData($monthstamp)
 	{
 		$ret = array();
 					
@@ -181,12 +298,12 @@ class FinanceData extends CodonData
 		}
 		
 		return $ret;
-	}
+	}*/
 	
 	/**
 	 * Get an archived financial expenses report
 	 */
-	public static function getCachedFinanceData($monthstamp)
+	/*public static function getCachedFinanceData($monthstamp)
 	{
 		if(!is_int($monthstamp))
 			$submit = strtotime($monthstamp);
@@ -210,7 +327,7 @@ class FinanceData extends CodonData
 		$ret = DB::get_row($sql);
 		
 		return $ret;
-	}
+	}*/
 	
 	
 	/**
@@ -221,7 +338,7 @@ class FinanceData extends CodonData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function AddFinanceDataCache($monthstamp, $data)
+	/*public static function AddFinanceDataCache($monthstamp, $data)
 	{		
 	
 		if(!is_int($monthstamp))
@@ -267,14 +384,14 @@ class FinanceData extends CodonData
 		}
 		
 		DB::query($sql);	
-	}
+	}*/
 		
 	/**
 	 * Get PIREP financials for the MONTH that's
 	 *  in the timestamp. Just pass any timestamp,
 	 *  it'll pull the MONTH
 	 */	 
-	public static function PIREPForMonth($timestamp)
+	/*public static function PIREPForMonth($timestamp)
 	{
 		# Form the timestamp
 		if($timestamp == '')
@@ -296,7 +413,7 @@ class FinanceData extends CodonData
 		$where_sql = " WHERE DATE_FORMAT(p.`submitdate`, '%m%Y') = '$MonthYear'";	
 		
 		return self::CalculatePIREPS($where_sql);
-	}
+	}*/
 	
 	/**
 	 * Get PIREP financials for the YEAR that's
@@ -320,7 +437,7 @@ class FinanceData extends CodonData
 	 * @return array Finances
 	 *
 	 */
-	public static function CalculatePIREPS($where='')
+	/*public static function CalculatePIREPS($where='')
 	{
 		if($where == '')
 		{
@@ -339,7 +456,7 @@ class FinanceData extends CodonData
 				FROM '.TABLE_PREFIX.'pireps p '.$where;
 					
 		return DB::get_row($sql);
-	}	
+	}	*/
 	
 	/**
 	 * Get a list of all the expenses
@@ -379,39 +496,39 @@ class FinanceData extends CodonData
 	 * Get monthly expenses
 	 */
 	 
-	public static function getMonthlyExpenses()
+	/*public static function getMonthlyExpenses()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
 					WHERE `type`=\'M\' OR `type`=\'P\'';
 		
 		return DB::get_results($sql);		
-	}
+	}*/
 	
-	public static function get_total_monthly_expenses()
+	/*public static function get_total_monthly_expenses()
 	{
 		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
 				 FROM '.TABLE_PREFIX.'expenses
 				 WHERE `type`=\'M\'';
 		
 		return DB::get_row($sql);
-	}
+	}*/
 	
-	public static function getPercentExpenses()
+	/*public static function getPercentExpenses()
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
 					WHERE `type`=\'P\'';
 		
 		return DB::get_results($sql);	
-	}
+	}*/
 	
-	public static function get_total_percent_expenses()
+	/*public static function get_total_percent_expenses()
 	{
 		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
 				 FROM '.TABLE_PREFIX.'expenses
 				 WHERE `type`=\'P\'';
 		
 		return DB::get_row($sql);
-	}
+	}*/
 	
 	/** 
 	 * Get all of the expenses for a flight

@@ -31,7 +31,6 @@ class Finance extends CodonModule
 				
 				break;
 		}
-		
 	}
 	
 	public function viewcurrent()
@@ -39,9 +38,87 @@ class Finance extends CodonModule
 		$this->viewreport();
 	}
 	
+	public function viewmonths()
+	{
+		
+	}
+	
+	public function viewexpensechart()
+	{
+		$type = $this->get->type;
+		$type = str_replace('m', '', $type);
+		$check = date('Ym', $type);
+			
+		$finance_data = $this->getmonthly($check);
+		$finance_data = FinanceData::calculateFinances($finance_data[0]);
+		
+		OFCharts::add_data_set('Fuel Costs', $finance_data->fuelprice);
+		OFCharts::add_data_set('Pilot Pay', $finance_data->pilotpay);
+		
+		// Now expenses
+		foreach($finance_data->expenses as $expense)
+		{
+			OFCharts::add_data_set($expense->name, $expense->total);
+		}
+		
+		echo OFCharts::create_pie_graph('Expenses breakdown');
+	}
+	
+	public function viewmonthchart()
+	{
+		$params = $this->formfilter();		
+		/**
+		 * Check the first letter in the type
+		 * m#### - month
+		 * y#### - year
+		 * 
+		 * No type indicates to view the 'overall'
+		 */
+		$type = $this->get->type;
+		if($type[0] == 'y')
+		{
+			$type = str_replace('y', '', $type);
+			$year = date('Y', $type);
+			
+			$finance_data = $this->getyearly($year);
+			$title = 'Activity for '.$year;
+		}
+		else
+		{
+			// This should be the last 3 months overview
+			# Get the last 3 months
+			$months = 3;
+			$params['p.accepted'] =  PIREP_ACCEPTED;
+			$finance_data = PIREPData::getIntervalDataByMonth($params, $months);
+			$title = 'Recent Activity';
+		}
+		
+		$titles = array();
+		$gross_data = array();
+		$fuel_data = array();
+		$expense_data = array();
+		
+		foreach($finance_data as $month)
+		{
+			$titles[] = $month->ym;
+			$gross_data[] = intval($month->revenue);
+			$fuel_data[] = intval($month->fuelprice); 
+			$expense_data[] = intval($month->expenses_total);
+		}
+		
+		// Add each set
+		OFCharts::add_data_set($titles, $gross_data, 'Total Revenue', '#FF6633');
+		OFCharts::add_data_set($titles, $expense_data, 'Expenses', '#2EB800');
+		OFCharts::add_data_set($titles, $fuel_data, 'Fuel Costs', '#008AB8');
+		
+		//echo OFCharts::create_line_graph('Months Balance Data');
+		echo OFCharts::create_area_graph($title);
+	}
+	
 	public function viewreport()
 	{
 		$type = $this->get->type;
+		$params = $this->formfilter();
 		
 		/**
 		 * Check the first letter in the type
@@ -54,22 +131,24 @@ class Finance extends CodonModule
 		{
 			$type = str_replace('m', '', $type);
 			$period = date('F Y', $type);
+			$check = date('Ym', $type);
 			
-			$data = FinanceData::GetMonthBalanceData($period);
-			
+			$finance_data = $this->getmonthly($check);
+			$finance_data = FinanceData::calculateFinances($finance_data[0]);
+						
 			$this->set('title', 'Balance Sheet for '.$period);
-			$this->set('allfinances', $data);
-			
+			$this->set('month_data', $finance_data);
 			$this->render('finance_balancesheet.tpl');
 		}
 		elseif($type[0] == 'y')
 		{
 			$type = str_replace('y', '', $type);
-
-			$data = FinanceData::GetYearBalanceData($type);
+			$year = date('Y', $type);
+	
+			$all_finances = $this->getyearly($year);
 			
 			$this->set('title', 'Balance Sheet for Year '.date('Y', $type));
-			$this->set('allfinances', $data);
+			$this->set('allfinances', $all_finances);
 			$this->set('year', date('Y', $type));
 			
 			$this->render('finance_summarysheet.tpl');
@@ -77,13 +156,98 @@ class Finance extends CodonModule
 		else
 		{
 			// This should be the last 3 months overview
-			
-			$data = FinanceData::GetRangeBalanceData('-3 months', 'Today');
+			# Get the last 3 months
+			$months = 3;
+			$params['p.accepted'] =  PIREP_ACCEPTED;
+			$finance_data = PIREPData::getIntervalDataByMonth($params, $months);
 			
 			$this->set('title', 'Balance Sheet for Last 3 Months');
-			$this->set('allfinances', $data);					
+			$this->set('allfinances', $finance_data);
 			$this->render('finance_summarysheet.tpl');
 		}
+	}
+	
+	protected function getmonthly($yearmonth)
+	{
+		$params = array(
+			'p.accepted' => PIREP_ACCEPTED,
+			"DATE_FORMAT(p.submitdate, '%Y%m') = {$yearmonth}"
+		);
+		
+		$params = array_merge($params, $this->formfilter());
+		return PIREPData::getIntervalData($params);
+	}
+	
+	/**
+	 * Loop through month by month, and pull any data for that month.
+	 * If there's nothing for that month, then blank it 
+	 */
+	protected function getyearly($year)
+	{
+		
+		$params = $this->formfilter();
+		$all_finances = array();
+		
+		$months = StatsData::GetMonthsInRange('January '.$year, 'December '.$year);
+		foreach($months as $month)
+		{
+			$date_filter = array("DATE_FORMAT(p.submitdate, '%Y%m') = '".date('Ym', $month)."'");
+			$this_filter = array_merge($date_filter, $params);
+			
+			$data = PIREPData::getIntervalData($this_filter);
+			
+			if(!$data)
+			{
+				$data = new stdClass();
+				$data->ym = date('Y-m', $month);
+				$data->timestamp = $month;
+				$data->total = 0;
+				$data->revenue = 0;
+				$data->gross = 0;
+				$data->fuelprice = 0;
+				$data->price = 0;
+				$data->expenses = 0;
+				$data->pilotpay = 0;
+			}
+			else
+			{
+				$data = FinanceData::calculateFinances($data[0]);
+			}
+			
+			$all_finances[] = $data;
+		}
+		
+		return $all_finances;
+	}
+	
+	protected function formfilter()
+	{
+		$params = array();
+		if($this->get->action == 'filter' && !empty($this->get->query))
+		{
+			if($this->get->type == 'flightnum')
+			{
+				$params = array('p.flightnum' => $this->get->query);
+			}
+			elseif($this->get->type == 'code')
+			{
+				$params = array('p.code' => $this->get->query);
+			}
+			elseif($this->get->type == 'aircraft')
+			{
+				$params = array('p.registration' => $this->get->query);
+			}
+			elseif($this->get->type == 'depapt')
+			{
+				$params = array('p.depicao' => $this->get->query);
+			}
+			elseif($this->get->type == 'arrapt')
+			{
+				$params = array('p.arricao' => $this->get->query);
+			}
+		}
+		
+		return $params;
 	}
 	
 	public function viewexpenses()
@@ -96,6 +260,7 @@ class Finance extends CodonModule
 		if($this->post->action == 'deleteexpense')
 		{
 			FinanceData::removeExpense($this->post->id);
+			FinanceData::setExpensesforMonth(time());
 		}
 	
 		$this->set('allexpenses', FinanceData::GetAllExpenses());
@@ -148,12 +313,17 @@ class Finance extends CodonModule
 			$ret = FinanceData::AddExpense($this->post->name, $this->post->cost, $this->post->type);
 			$this->set('message', 'The expense "'.$this->post->name.'" has been added');
 			
+			FinanceData::setExpensesforMonth(time());
+			
 			LogData::addLog(Auth::$userinfo->pilotid, 'Added expense "'.$this->post->name.'"');
 		}
 		elseif($this->post->action == 'editexpense')
 		{
 			$ret = FinanceData::EditExpense($this->post->id, $this->post->name, $this->post->cost, $this->post->type);
 			$this->set('message', 'The expense "'.$this->post->name.'" has been edited');
+			
+			FinanceData::setExpensesforMonth(time());
+			
 			LogData::addLog(Auth::$userinfo->pilotid, 'Edited expense "'.$this->post->name.'"');
 		}
 		

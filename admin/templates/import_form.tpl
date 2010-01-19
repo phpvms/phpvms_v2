@@ -16,11 +16,15 @@ must be done:</p>
 </ol>
 
 <form enctype="multipart/form-data" action="<?php echo SITE_URL?>/admin/index.php/import/processimport" method="post">
-Choose your import file (*.csv): <input name="uploadedfile" type="file" /><br />
-<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-<div style="margin-left: 195px;">
+Choose your import file (*.csv): <br />
+	<input name="uploadedfile" type="file" /><br />
+	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+	
+	<br />
 	<input type="checkbox" name="header" checked /> First line of CSV is the header
+	<br />
+	<input type="checkbox" name="erase_routes" /> Delete all previous routes - NOTE: this could potentially mess up any PIREPS from ACARS flights which are currently in progress, whose routes have changed.
 	<br /><br />
 	<input type="submit" value="Upload File" />
-</div>
+
 </form>

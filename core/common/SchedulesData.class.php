@@ -577,6 +577,18 @@ class SchedulesData extends CodonData
 		return true;
 	}
 	
+	public static function deleteAllSchedules()
+	{
+		$sql = 'DELETE FROM ' .TABLE_PREFIX.'schedules';
+
+		$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
 	public static function getAllBids()
 	{
 		$sql = 'SELECT  p.*, s.*, 

@@ -88,7 +88,8 @@ class Registration extends CodonModule
 				'code' => $this->post->code,
 				'location' => $this->post->location,
 				'hub' => $this->post->hub,
-				'confirm' => false);
+				'confirm' => false
+			);
 				
 			if(CodonEvent::Dispatch('registration_precomplete', 'Registration', $_POST) == false)
 			{

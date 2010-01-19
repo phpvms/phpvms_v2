@@ -19,12 +19,12 @@ d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 1ee77934d1a602e9c74861c9391a55d9  *./install/update_628.sql
 dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
 2f10ecb66edb9aadda219ff40db66190  *./install/Installer.class.php
-9928434f479831bd7f9f618bb987aadb  *./install/update.php
+7ab525dfe0c085043b6921b80f28dbc0  *./install/update.php
 6b8d1dc1b006ef2a88e8130ce7bb157a  *./install/update_441.sql
 16c26883d8e0e51e6e61d5244de4367c  *./install/checkdb.php
 6180493965b119b2546ff9b0c1808bd3  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
-371fbf6fae101891d8b0988f12151069  *./core/common/PIREPData.class.php
+183f5919e1db69ce89895417ae43b6e3  *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411  *./core/common/Auth.class.php
 faad9763e29f1b98643d859f2ef36683  *./core/common/RegistrationData.class.php
 e9f366eef6a7edfa08363e53c60b119f  *./core/common/StatsData.class.php
@@ -159,7 +159,7 @@ bea521217b04cbabd35751a992d5e42c  *./core/modules/Schedules/Schedules.php
 e29229cf3c89bc4748a3df55eb6594ad  *./core/modules/XML/XML.php
 93266c75bf81bb484ca8eb20c32379df  *./core/modules/Contact/Contact.php
 398b6c003a8a3e42cb70d08413350fee  *./core/modules/Profile/Profile.php
-098230f9263a886a30f4a7d3692c5a56  *./core/modules/Registration/Registration.php
+82125d548f38d8dcff3eb83a7960d747  *./core/modules/Registration/Registration.php
 7df45181bcf88e8c21db2d79fdae4cbd  *./core/modules/Downloads/Downloads.php
 e6eb59f2814008a2a20eb01591c12447  *./core/modules/Pilots/Pilots.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/modules/index.php

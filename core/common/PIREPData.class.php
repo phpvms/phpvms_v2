@@ -790,6 +790,7 @@ class PIREPData extends CodonData
 			'flighttime' => $pirepdata['flighttime'],
 		);
 		
+		$gross = floatval($pirepdata['load']) * floatval($pirepdata['price']);
 		$revenue = self::getPIREPRevenue($data);
 		
 		$fields = array(
@@ -802,7 +803,7 @@ class PIREPData extends CodonData
 			'flighttime_stamp' => $flighttime_stamp,
 			'load' => $pirepdata['load'],
 			'price' => $pirepdata['price'],
-			'gross' => $pirepdata['load'] * $pirepdata['price'],
+			'gross' => $gross,
 			'pilotpay' => $pirepdata['pilotpay'],
 			'fuelused' => $pirepdata['fuelused'],
 			'fuelunitcost' => $pirepdata['fuelunitcost'],
@@ -973,7 +974,7 @@ class PIREPData extends CodonData
 		$fields = array(
 			'price' => $sched->price,
 			'load' => $pirep->load,
-			'gross' => $pirep->load * $sched->price,
+			'gross' => $gross,
 			'fuelprice' => $pirep->fuelprice,
 			'fuelunitcost' => $pirep->fuelunitcost,
 			'expenses' => $total_ex,

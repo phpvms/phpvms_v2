@@ -205,7 +205,7 @@ echo 'Starting the update...<br />';
 				'flighttime' => $pirep->flighttime,
 				);
 
-			$gross = $pirep->load * $pirep->price;
+			$gross = floatval($pirep->load) * floatval($pirep->price);
 			$revenue = PIREPData::getPIREPRevenue($data);
 			
 			$update = "UPDATE ".TABLE_PREFIX."pireps 

@@ -446,7 +446,7 @@ class PIREPS extends CodonModule
 		CodonEvent::Dispatch('pirep_filed', 'PIREPS');
 		
 		# Set them as non-retired
-		PilotData::setPilotRetired($pilotid, false);
+		PilotData::setPilotRetired($pilotid, 0);
 		
 		# Delete the bid, if the value for it is set
 		if($this->post->bid != '')

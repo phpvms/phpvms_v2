@@ -272,6 +272,7 @@ CREATE TABLE `phpvms_pireps` (
   `fuelprice` FLOAT NOT NULL DEFAULT 5.10,
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
+  `gross` FLOAT NOT NULL,
   `pilotpay` FLOAT NOT NULL,
   `expenses` FLOAT NOT NULL,
   `expenselist` BLOB NOT NULL,

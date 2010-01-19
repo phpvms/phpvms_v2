@@ -5,3 +5,5 @@ CREATE TABLE `phpvms_expenselog` (
 	`cost` FLOAT NOT NULL ,
 	INDEX ( `dateadded` )
 ) ENGINE = MYISAM ;
+
+ALTER TABLE `phpvms_pireps` ADD `gross` FLOAT NOT NULL AFTER `flighttype`;

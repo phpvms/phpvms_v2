@@ -190,7 +190,7 @@ echo 'Starting the update...<br />';
 
 
 	/* Manually specify a revenue value for all PIREPs */
-	$allpireps = PIREPData::GetAllReports();
+	$allpireps = PIREPData::findPIREPS(array());
 	if(is_array($allpireps))
 	{
 		foreach($allpireps as $pirep)
@@ -203,10 +203,11 @@ echo 'Starting the update...<br />';
 				'flighttime' => $pirep->flighttime,
 				);
 
+			$gross = $pirep->load * $pirep->price;
 			$revenue = PIREPData::getPIREPRevenue($data);
 			
 			$update = "UPDATE ".TABLE_PREFIX."pireps 
-						SET `revenue`={$revenue} 
+						SET `revenue`={$revenue}, gross={$gross}
 						WHERE `pirepid`={$pirep->pirepid}";
 						
 			DB::query($update);

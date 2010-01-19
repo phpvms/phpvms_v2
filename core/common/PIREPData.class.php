@@ -179,7 +179,7 @@ class PIREPData extends CodonData
 					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
 					COUNT(p.pirepid) AS total,
 					SUM(p.revenue) as revenue,
-					(SUM(p.price) * SUM(p.load)) as gross,
+					SUM(p.gross) as gross,
 					SUM(p.fuelprice) as fuelprice,
 					SUM(p.price) as price,
 					SUM(p.expenses) as expenses,
@@ -716,6 +716,7 @@ class PIREPData extends CodonData
 		# Update any pilot's information
 		$pilotinfo = PilotData::getPilotData($pirepdata['pilotid']);
 		$pilotcode = PilotData::getPilotCode($pilotinfo->code, $pilotinfo->pilotid);
+		PilotData::UpdateLastPIREPDate($pilotinfo->pilotid);
 		
 		# Send an email to the admin that a PIREP was submitted
 		$sub = "A PIREP has been submitted by {$pilotcode} ({$pirepdata['depicao']} - {$pirepdata['arricao']})";
@@ -801,6 +802,7 @@ class PIREPData extends CodonData
 			'flighttime_stamp' => $flighttime_stamp,
 			'load' => $pirepdata['load'],
 			'price' => $pirepdata['price'],
+			'gross' => $pirepdata['load'] * $pirepdata['price'],
 			'pilotpay' => $pirepdata['pilotpay'],
 			'fuelused' => $pirepdata['fuelused'],
 			'fuelunitcost' => $pirepdata['fuelunitcost'],
@@ -971,6 +973,7 @@ class PIREPData extends CodonData
 		$fields = array(
 			'price' => $sched->price,
 			'load' => $pirep->load,
+			'gross' => $pirep->load * $sched->price,
 			'fuelprice' => $pirep->fuelprice,
 			'fuelunitcost' => $pirep->fuelunitcost,
 			'expenses' => $total_ex,

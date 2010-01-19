@@ -188,6 +188,8 @@ echo 'Starting the update...<br />';
 
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 
+	/* Update expenses */
+	FinanceData::updateAllExpenses();
 
 	/* Manually specify a revenue value for all PIREPs */
 	$allpireps = PIREPData::findPIREPS(array());

@@ -106,15 +106,13 @@ class FinanceData extends CodonData
 					$ex->total = $month_info->gross * ($ex->cost / 100);
 					
 					break;
-				
 			}
-			
 			
 			$running_total += $ex->total;
 		}
 		
-		$month_info->expenses_total = $running_total;
 		$month_info->expenses = $expenses;
+		$month_info->expenses_total = $running_total;
 		
 		$month_info->revenue = $month_info->gross - $month_info->fuelprice - $month_info->pilotpay - $running_total;
 		
@@ -151,6 +149,34 @@ class FinanceData extends CodonData
 		}
 	}
 	
+	
+	/**
+	 * Populates any expenses which are missing from the table
+	 * Goes month by month
+	 *
+	 */
+	public static function updateAllExpenses()
+	{
+		$times = StatsData::GetMonthsSinceStart();
+		
+		foreach($times as $timestamp)
+		{
+			$exp = self::getExpensesForMonth($timestamp);
+			
+			if(!$exp)
+			{
+				self::setExpensesforMonth($timestamp);
+			}
+		}
+	}
+	
+	
+	/**
+	 * Re-populates all expenses, deleteing all the old ones
+	 *
+	 * @return mixed This is the return value description
+	 *
+	 */
 	public static function populateAllExpenses()
 	{
 		$times = StatsData::GetMonthsSinceStart();

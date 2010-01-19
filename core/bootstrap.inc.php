@@ -49,10 +49,16 @@ function post_module_load()
 			PilotData::findRetiredPilots();
 			CronData::set_lastupdate('find_retired_pilots');
 		}
-	
 	}
 	
-	
+	/* Expenses, make sure they're all populated */
+	$within_timelimit = CronData::check_hoursdiff('populate_expenses', '18');
+	if($within_timelimit == false)
+	{
+		FinanceData::updateAllExpenses();
+		CronData::set_lastupdate('populate_expenses');
+	}
+
 	// @TODO: Clean ACARS records older than one month
 		
    return true;

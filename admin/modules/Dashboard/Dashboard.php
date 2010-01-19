@@ -49,7 +49,7 @@ class Dashboard extends CodonModule
 	{
 		# Create the chart
 		//$reportcounts = '';
-		$data = PIREPData::getIntervalDataByDays(array(), 7);
+		$data = PIREPData::getIntervalDataByDays(array(), 30);
 		
 		if(!$data)
 		{
@@ -64,7 +64,8 @@ class Dashboard extends CodonModule
 			$bar_values[] = floatval($val->total);
 		}
 		
-		echo OFCharts::create_line_graph('Past 30 days PIREPS', $bar_values, $bar_titles);
+		OFCharts::add_data_set($bar_titles, $bar_values);
+		echo OFCharts::create_line_graph('Past 30 days PIREPS');
 	}
 	
 	public function about()

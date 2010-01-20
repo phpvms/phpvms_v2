@@ -21,6 +21,8 @@ require_once '../core/lib/simpletest/autorun.php';
 require_once '../core/lib/simpletest/unit_tester.php';
 require_once '../core/lib/simpletest/reporter.php';
 
+error_reporting(E_ALL & E_NOTICE ^ E_DEPRECATED);
+
 $test = &new GroupTest('phpVMS API Unit Tests');
 
 # Include all the test files

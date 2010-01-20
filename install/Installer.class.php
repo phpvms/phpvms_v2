@@ -264,9 +264,9 @@ class Installer
 			'code' => $_POST['vacode'],
 			'location' => 'US',
 			'hub' => 'KJFK',
-			'confirm' => true);
-			
-
+			'confirm' => true
+		);
+		
 		if(!RegistrationData::AddUser($data))
 		{
 			self::$error = DB::$error;

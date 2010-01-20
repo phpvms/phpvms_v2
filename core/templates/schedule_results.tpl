@@ -108,7 +108,7 @@ foreach($allroutes as $route)
 		}
 		else
 		{
-			if (Auth::LoggedIn())
+			if(Auth::LoggedIn())
 			{
 			 ?>
 				<a id="<?php echo $route->id; ?>" class="addbid" 

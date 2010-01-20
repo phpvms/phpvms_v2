@@ -5,8 +5,7 @@ var airport_lookup = "<?php echo Config::Get('AIRPORT_LOOKUP_SERVER'); ?>";
 var phpvms_api_server = "<?php echo Config::Get('PHPVMS_API_SERVER'); ?>";
 </script>
 
-<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>-->
-<script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.min.js'); ?>"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo fileurl('lib/js/jqModal.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.form.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo fileurl('lib/js/jquery.bigiframe.js'); ?>"></script>

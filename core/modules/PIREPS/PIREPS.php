@@ -192,7 +192,6 @@ class PIREPS extends CodonModule
 		}
 		
 		$pirep = PIREPData::GetReportDetails($this->get->id);
-		
 		if(!$pirep)
 		{
 			$this->set('message', 'Invalid PIREP');
@@ -232,7 +231,7 @@ class PIREPS extends CodonModule
 		
 		$this->title = 'My Flight Map';
 		
-		$pireps = PIREPData::GetAllReportsForPilot(Auth::$userinfo->pilotid);
+		$pireps = PIREPData::findPIREPS(array('p.pilotid' => Auth::$userinfo->pilotid));
 		
 		if(!$pireps)
 		{
@@ -241,8 +240,8 @@ class PIREPS extends CodonModule
 			return;
 		}
 		
-		$this->set('allroutes', $pireps);
-		$this->render('profile_myroutesmap.tpl');
+		$this->set('allschedules', $pireps);
+		$this->render('flown_routes_map.tpl');
 	}
 	
 	public function file()

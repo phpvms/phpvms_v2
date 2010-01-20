@@ -18,25 +18,6 @@
  
 class Schedules extends CodonModule
 {
-	
-	public $gMap;
-	
-	public function __construct()
-	{
-		parent::__construct();
-		$this->gMap = new GoogleMapAPI('routemap', 'phpVMS');
-		$this->gMap->setAPIKey(GOOGLE_KEY);
-	}
-	
-	public function HTMLHead()
-	{
-		if($this->get->page == 'detail' || $this->get->page == 'details')
-		{
-			$this->gMap->printHeaderJS();
-    		$this->gMap->printMapJS();			
-		}
-	}
-	
 	public function index()
 	{
 		$this->view();

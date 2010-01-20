@@ -41,4 +41,3 @@ swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>",
 */
 ?>
 </div>
-

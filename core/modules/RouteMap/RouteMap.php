@@ -39,58 +39,7 @@ class RouteMap extends CodonModule
 			$allschedules = SchedulesData::findSchedules(array('s.enabled'=>1), Config::Get('ROUTE_MAP_SHOW_NUMBER'));
 		}
 		
-		$this->ShowMap($allschedules);
-	}
-	
-	public function ShowMap($allschedules)
-	{
-		$map = new GoogleMapAPI('routemap', 'phpVMS');
-		$map->sidebar=false;
-		
-		$shownroutes = array();
-		
-		$centerlat = 0;
-		$centerlong = 0;
-		
-		# Create map		
-		foreach($allschedules as $schedule)
-		{
-			
-			$route = $schedule->depicao.$schedule->arricao;
-			
-			if(in_array($route, $shownroutes))
-			{
-				continue;
-			}
-			else
-			{
-				$shownroutes[] = $route;
-			}
-			
-			$map->addMarkerByCoords($schedule->deplong, $schedule->deplat, '', "$schedule->depname ($schedule->depicao)");
-			$map->addMarkerByCoords($schedule->arrlong, $schedule->arrlat, '', "$schedule->arrname ($schedule->arricao)");
-			
-			$map->addPolyLineByCoords($schedule->deplong, $schedule->deplat, $schedule->arrlong, $schedule->arrlat, 
-					Config::Get('MAP_LINE_COLOR'), 5, 50);
-			
-			$centerlat = ($schedule->deplat + $schedule->arrlat) / 2;
-			$centerlong = ($schedule->deplong + $schedule->arrlong) / 2;
-		}
-		
-		$centerlat = $centerlat / count($allschedules);
-		$centerlong = $centerlong / count($allschedules);
-		
-		# Show the map				
-		$map->adjustCenterCoords($centerlong, $centerlat);
-		$map->setHeight(Config::Get('MAP_HEIGHT'));
-		$map->setWidth(Config::Get('MAP_WIDTH'));
-		$map->setMapType(Config::Get('MAP_TYPE'));
-		
-		$map->setAPIKey(GOOGLE_KEY);
-		$map->printHeaderJS();
-		$map->printMapJS();
-		
-		$map->printMap();
-		$map->printOnLoad();
+		$this->set('allschedules', $allschedules);
+		$this->render('flown_routes_map.tpl');
 	}
 }

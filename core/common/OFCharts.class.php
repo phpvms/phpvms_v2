@@ -52,8 +52,8 @@ class OFCharts extends CodonData
 				$range['min'] = $v;
 		}
 		
-		$diff = round(abs($range['max'] - $range['min']), 0);
-		$step = $diff / 10;
+		$diff = intval(abs($range['max'] - $range['min']));
+		$step = ceil(($diff / 90));
 		
 		$range['max'] += $step;
 		$range['min'] -= $step;
@@ -94,7 +94,8 @@ class OFCharts extends CodonData
 					'#848484',    // <-- grey
 					'#CACFBE',    // <-- green
 					'#DEF799'    // <-- light green
-					) );
+				) 
+			);
 
 		$pie->set_values( $d );
 
@@ -121,7 +122,7 @@ class OFCharts extends CodonData
 			$area->set_default_dot_style($d);
 			$area->set_colour($data['color']);
 			$area->set_fill_colour($data['color']);
-			$area->set_fill_alpha( 0.7 );
+			$area->set_fill_alpha( .3 );
 			$area->on_show(new line_on_show('pop-up', 2, 0.5));
 			$area->set_key($data['line_title'], 10);
 			$area->set_values($data['values']);

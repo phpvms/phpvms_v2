@@ -367,8 +367,8 @@ class ACARSData extends CodonData
 				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
 				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
-				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
-				WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao';
+				//WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 	}

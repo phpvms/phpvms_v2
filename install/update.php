@@ -35,7 +35,6 @@ Template::Show('header.tpl');
 # Ew
 echo '<h3 align="left">phpVMS Updater</h3>';
 
-
 # Check versions for mismatch, unless ?force is passed
 if(!isset($_GET['force']) && !isset($_GET['test']))
 {
@@ -203,7 +202,7 @@ echo 'Starting the update...<br />';
 				'fuelprice' => $pirep->fuelprice,
 				'pilotpay' => $pirep->pilotpay,
 				'flighttime' => $pirep->flighttime,
-				);
+			);
 
 			$gross = floatval($pirep->load) * floatval($pirep->price);
 			$revenue = PIREPData::getPIREPRevenue($data);

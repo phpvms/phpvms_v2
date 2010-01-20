@@ -69,14 +69,6 @@
 			<p >This is your airline's code (ie: VMS)</p>
 		</td>
 	</tr>
-
-	<tr>
-		<td align="right" width="1px" nowrap valign="top"><strong>Google API Code: * </strong></td>
-		<td><input type="text" name="googlekey" value="<?php echo $_POST['googlekey']?>" />
-			<p>Get an API Key from here: <a href="http://code.google.com/apis/maps/signup.html" target="_new">Google Maps API Signup</a></p>	
-		</td>
-	</tr>
-	
 	<tr>
 		<td><input type="hidden" name="action" value="submitsetup" /></td>
 		<td><input type="submit" name="submit" value="Finish!" /></td>

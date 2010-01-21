@@ -22,13 +22,7 @@
   * time I have to create a new graph
   */
   
-  
-# Include the pChart library
-include_once SITE_ROOT.'/core/lib/pchart/pCache.class.php';
-include_once SITE_ROOT.'/core/lib/pchart/pChart.class.php';
-include_once SITE_ROOT.'/core/lib/pchart/pData.class.php';
- 
- class ChartGraph
+class ChartGraph
  {
 	
 	# Options

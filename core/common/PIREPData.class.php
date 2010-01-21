@@ -553,19 +553,27 @@ class PIREPData extends CodonData
 					
 		/* Check if this PIREP was just submitted, check the last 10 minutes 
 		*/
-		
-		$sql = "SELECT `pirepid` FROM ".TABLE_PREFIX."pireps
-				WHERE `pilotid`={$pirepdata['pilotid']} 
-					AND `code`='{$pirepdata['code']}'
-					AND `flightnum`='{$pirepdata['flightnum']}' 
-					AND DATE_SUB(NOW(), INTERVAL 10 MINUTE) <= `submitdate`";
-					  
-		$res = DB::get_row($sql);
-		
-		if($res)
+		if(Config::Get('PIREP_CHECK_DUPLICATE') == true)
 		{
-			self::$lasterror = 'This PIREP was just submitted!';
-			return;
+			$time_limit = Config::Get('PIREP_TIME_CHECK');
+			if(empty($time_limit))
+			{
+				$time_limit = 1;
+			}
+			
+			$sql = "SELECT `pirepid` FROM ".TABLE_PREFIX."pireps
+					WHERE `pilotid`={$pirepdata['pilotid']} 
+						AND `code`='{$pirepdata['code']}'
+						AND `flightnum`='{$pirepdata['flightnum']}' 
+						AND DATE_SUB(NOW(), INTERVAL {$time_limit} MINUTE) <= `submitdate`";
+						  
+			$res = DB::get_row($sql);
+			
+			if($res)
+			{
+				self::$lasterror = 'This PIREP was just submitted!';
+				return;
+			}
 		}
 		
 		if(isset($pirepdata['log']))

@@ -65,6 +65,10 @@ Config::Set('RANKS_AUTOCALCULATE', true);
 # For how many hours a pilot can edit their submitted PIREP (custom fields only)
 Config::Set('PIREP_CUSTOM_FIELD_EDIT', '48');
 
+# The time to wait to be allowed to submit identical PIREPS
+Config::Set('PIREP_CHECK_DUPLICATE', true);
+Config::Set('PIREP_TIME_CHECK', '1'); #  Minutes, to wait in between duplicate submits
+
 /* What to order schedules by. Use s.[column_name] [ASC/DESC],
 	with the column name being from the schedules table */
 Config::Set('SCHEDULES_ORDER_BY', 's.flightnum ASC');

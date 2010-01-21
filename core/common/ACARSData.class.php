@@ -342,15 +342,11 @@ class ACARSData extends CodonData
 	public static function GetACARSData($cutofftime = '')
 	{
 		//cutoff time in days
-		if($cutofftime == '')
+		if(empty($cutofftime))
 		{
 			// Go from minutes to hours
 			$cutofftime = Config::Get('ACARS_LIVE_TIME');
 			//$cutofftime = $cutofftime / 60;			
-		}
-		else
-		{
-			$cutofftime = 720;
 		}
 		
 		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a

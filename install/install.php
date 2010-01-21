@@ -23,7 +23,7 @@ ini_set('display_errors', 'on');
 $revision = file_get_contents(dirname(__FILE__).'/version');
 
 define('ADMIN_PANEL', true);
-define('INSTALLER_VERSION', '1.2.'.$revision);
+define('INSTALLER_VERSION', '2.0.'.$revision);
 
 include dirname(__FILE__).'/loader.inc.php';
 

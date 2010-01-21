@@ -26,6 +26,7 @@ var acars_map_defaults = {
 	zoom: 4,
     center: new google.maps.LatLng(<?php echo Config::Get('MAP_CENTER_LAT'); ?>, <?php echo Config::Get('MAP_CENTER_LNG'); ?>),
     mapTypeId: google.maps.MapTypeId.TERRAIN,
+    refreshTime: 6000 // In seconds, times 1000
 };
 </script>
 <div class="mapcenter" align="center">

@@ -322,11 +322,11 @@ class ACARSData extends CodonData
 	{
 		$sql = 'SELECT a.*, c.name as aircraftname, c.registration as registration,
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname
-					FROM ' . TABLE_PREFIX .'acarsdata a
-					LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
-					LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
-					LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
-					LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`';
+				FROM ' . TABLE_PREFIX .'acarsdata a
+				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
+				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
+				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`';
 		
 		return DB::get_results($sql);
 	}
@@ -363,8 +363,8 @@ class ACARSData extends CodonData
 				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
 				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
-				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
-				WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao';
+				//WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 	}

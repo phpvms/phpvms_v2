@@ -53,8 +53,8 @@ class Maintenance extends CodonModule
 		# Check 'em
 		foreach($allschedules as $sched)
 		{
-			$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplong, 
-																$sched->arrlat, $sched->arrlong);	
+			$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplng, 
+																$sched->arrlat, $sched->arrlng);	
 																
 			$distance = sprintf("%.2f", $distance);						
 			echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname "

@@ -145,18 +145,13 @@ class PilotData extends CodonData
 	 */
 	public static function getPilotByEmail($email)
 	{
-		/*$pilot = self::findPilots(array('p.email'=>$email));
+		$pilot = self::findPilots(array('p.email'=>$email));
 		if(!$pilot)
 		{
 			return false;
 		}
 		
-		return $pilot[0];*/
-		$sql = 'SELECT * 
-				FROM '. TABLE_PREFIX.'pilots 
-				WHERE `email`=\''.$email.'\'';
-				
-		return DB::get_row($sql);
+		return $pilot[0];
 	}
 
 	/**
@@ -164,14 +159,11 @@ class PilotData extends CodonData
 	 */
 	public static function getPendingPilots($count='')
 	{
-		$sql = 'SELECT * 
-				FROM '.TABLE_PREFIX.'pilots 
-				WHERE `confirmed`='.PILOT_PENDING;
-
-		if($count!='')
-			$sql .= ' LIMIT '.intval($count);
-
-		return DB::get_results($sql);
+		$params = array(
+			'p.confirmed' => PILOT_PENDING
+		);
+		
+		return self::findPilots($params, $count);
 	}
 	
 	public static function getLatestPilots($count=10)

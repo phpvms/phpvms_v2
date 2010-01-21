@@ -9,7 +9,7 @@
 	<dd>
 		<select name="type">
 		<option value="text">Text</option>
-		<option value="text">Textarea</option>
+		<option value="textarea">Textarea</option>
 		<option value="dropdown">Dropdown</option>
 		</select>
 	</dd>

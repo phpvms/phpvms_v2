@@ -374,6 +374,7 @@ class DB
 		
 		foreach($fields as $col => $value)
 		{
+			
 			/* If there's a value just added */
 			if(is_int($col))
 			{
@@ -382,14 +383,23 @@ class DB
 			}
 			
 			$tmp = "`{$col}`=";
-			if($value == 'NOW()')
+			
+			if(is_int($value))
 			{
-				$tmp.='NOW()';
+				$tmp .= $value;
 			}
 			else
 			{
-				$value = DB::escape($value);
-				$tmp.="'{$value}'";
+				if($value == "NOW()")
+				{
+					echo 'I think im a NOW(). what the fuck<br />';
+					$tmp.='NOW()';
+				}
+				else
+				{
+					$value = DB::escape($value);
+					$tmp.="'{$value}'";
+				}
 			}
 			
 			$sql_cols[] = $tmp;
@@ -447,7 +457,7 @@ class DB
 		self::$last_query = $query;
 		
 		// Log any erronious queries
-		if(self::$DB->errno != 0)
+		if(self::$DB->errno != 0 || Config::Get('DEBUG_LEVEL') > 1)
 		{
 			self::write_debug();
 		}
@@ -476,7 +486,7 @@ class DB
 		self::$last_query = $query;
 		
 		// Log any erronious queries
-		if(self::$DB->errno != 0)
+		if(self::$DB->errno != 0 || Config::Get('DEBUG_LEVEL') > 1)
 		{
 			self::write_debug();
 		}
@@ -503,7 +513,7 @@ class DB
 		self::$last_query = $query;
 		
 		// Log any erronious queries
-		if(self::$DB->errno != 0)
+		if(self::$DB->errno != 0 || Config::Get('DEBUG_LEVEL') > 1)
 		{
 			self::write_debug();
 		}

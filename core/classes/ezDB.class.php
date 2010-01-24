@@ -392,7 +392,6 @@ class DB
 			{
 				if($value == "NOW()")
 				{
-					echo 'I think im a NOW(). what the fuck<br />';
 					$tmp.='NOW()';
 				}
 				else

@@ -1,7 +1,7 @@
 [Log]
-Log=<?php echo SITE_URL?>/action.php/ACARS/fsacars/pirep
+Log=<?php echo SITE_URL?>/action.php/acars/fsacars/pirep
 Mail=
-URL=<?php echo SITE_URL?>/action.php/ACARS/fsacars
+URL=<?php echo SITE_URL?>/index.php/profile/view
 passwd=
 [FSacars]
 CompanyICAO=<?php echo $userinfo->code ?>
@@ -17,9 +17,9 @@ PilotNumber=<?php echo $pilotcode?>
 
 CompanyIATA=FLIGHT #
 CallsignUses=
-AcarsSite=<?php echo SITE_URL?>/action.php/ACARS/fsacars/acars
-StatusSite=<?php echo SITE_URL?>/action.php/ACARS/fsacars/status
-FPSite=<?php echo SITE_URL?>/action.php/ACARS/fsacars/flightplans
+AcarsSite=<?php echo SITE_URL?>/action.php/acars/fsacars/acars
+StatusSite=<?php echo SITE_URL?>/action.php/acars/fsacars/status
+FPSite=<?php echo SITE_URL?>/action.php/acars/fsacars/flightplans
 AcarsUplinkResetSite=
 AcarsUplinkSite=
 Antic=

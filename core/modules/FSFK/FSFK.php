@@ -204,11 +204,13 @@ class FSFK extends CodonModule
 			
 			
 		$this->log("Method: {$method}", 'fsfk');
+		
+		$fields = array();
 			
 		# Go through each method now
 		if($method == 'TEST')
 		{
-			$pilot_id = $value;
+			$pilotid = $value;
 			
 			echo '1|30';
 			return;
@@ -233,6 +235,11 @@ class FSFK extends CodonModule
 			$depicao = $route[0];
 			$arricao = $route[count($route)-1];
 			
+			unset($route[0]);
+			unset($route[count($route) - 1]);
+			
+			$route = implode(' ', $route);
+			
 			$flightinfo = SchedulesData::getProperFlightNum($flight_data[2]);
 			$code = $flightinfo['code'];
 			$flightnum = $flightinfo['flightnum'];
@@ -245,14 +252,29 @@ class FSFK extends CodonModule
 			$time_remain = 0;
 			$deptime = time();
 			$online = 0;
+			
+			$fields = array(
+				'pilotid'=>$pilotid,
+				'flightnum'=>$code.$flightnum,
+				'aircraft'=>$aircraft,
+				'lat'=>$coords['lat'],
+				'lng'=>$coords['lng'],
+				'heading'=>$heading,
+				'route' => $route,
+				'alt'=>$alt,
+				'gs'=>$gs,
+				'depicao'=>$depicao,
+				'arricao'=>$arricao,
+				'distremain'=>$dist_remain,
+				'timeremaining'=>$time_remain,
+				'phasedetail'=>'On the ground',
+				'online'=>$online,
+				'client'=>'fsfk',
+			);
         }
         elseif($method == 'MESSAGE')
         {
-			$pilotid = $value;
-			
-			/*$this->log('acars_message');
-			$this->log($message, 'fsfk');*/
-			
+			$pilotid = $value;			
 			$flight_data = ACARSData::get_flight_by_pilot($pilotid);
 			
 			// Get the flight
@@ -291,6 +313,17 @@ class FSFK extends CodonModule
 			// Get our speed
 			preg_match("/\/IAS.(.*)\//", $message, $matches);
 			$gs = $matches[1];
+			
+			$fields = array(
+				'pilotid'=>$pilotid,
+				'aircraft' => $aircraft,
+				'lat'=>$coords['lat'],
+				'lng'=>$coords['lng'],
+				'heading'=>$heading,
+				'alt'=>$alt,
+				'gs'=>$gs,
+				'phasedetail'=>'Enroute',
+			);
 		}
 		elseif($method == 'UPDATEFLIGHTPLAN')
 		{
@@ -309,31 +342,14 @@ class FSFK extends CodonModule
 			$time_remain = $dist_remain / $gs;
 		else
 			$time_remain = '0';
-		
-		$fields = array(
-			'pilotid'=>$pilotid,
-			'flightnum'=>$code.$flightnum,
-			'pilotname'=>'',
-			'aircraft'=>$aircraft,
-			'lat'=>$coords['lat'],
-			'lng'=>$coords['lng'],
-			'heading'=>$heading,
-			'alt'=>$alt,
-			'gs'=>$gs,
-			'depicao'=>$depicao,
-			'arricao'=>$arricao,
-			'distremain'=>$dist_remain,
-			'timeremaining'=>$time_remain,
-			'phasedetail'=>'Enroute',
-			'online'=>$online,
-			'client'=>'fsfk',
-		);
+			
+		$fields['distremain'] = $dist_remain;
+		$fields['timeremaining'] = $time_remain;
 		
 		if($deptime != '')
 		{
 			$fields['deptime'] = $deptime;
 		}
-		
 		
 		if($arrtime != '')
 		{
@@ -341,7 +357,7 @@ class FSFK extends CodonModule
 		}
 		
 		Debug::log(print_r($fields, true), 'fsfk');
-		ACARSData::UpdateFlightData($fields);
+		ACARSData::updateFlightData($pilotid, $fields);
 		$id = DB::$insert_id;
         
         if($method == 'BEGINFLIGHT')

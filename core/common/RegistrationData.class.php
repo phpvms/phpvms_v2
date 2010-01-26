@@ -104,7 +104,6 @@ class RegistrationData extends CodonData
 		
 		
 		$res = DB::query($sql);
-		
 		if(DB::errno() != 0)
 		{
 			if(DB::errno() == 1062)
@@ -118,9 +117,7 @@ class RegistrationData extends CodonData
 		}
 		
 		//Grab the new pilotid, we need it to insert those "custom fields"
-		$pilotid = DB::$insert_id;
-		$fields = self::GetCustomFields();
-		
+		$pilotid = DB::$insert_id;	
 		RanksData::CalculateUpdatePilotRank($pilotid);
 		PilotData::GenerateSignature($pilotid);
 		
@@ -128,12 +125,14 @@ class RegistrationData extends CodonData
 		self::$pilotid = $pilotid;
 					
 		//Get customs fields
+		$fields = self::GetCustomFields();
 		if(!$fields)
 			return true;
 			
 		foreach($fields as $field)
 		{
 			$value = Vars::POST($field->fieldname);
+			$value = DB::escape($value);
 		
 			if($value != '')
 			{
@@ -199,4 +198,3 @@ class RegistrationData extends CodonData
 		return true;
 	}
 }
-?>

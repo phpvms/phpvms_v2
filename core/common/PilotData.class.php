@@ -292,7 +292,7 @@ class PilotData extends CodonData
 	
 	public static function setPilotRetired($pilotid, $retired)
 	{
-		if($retired == true || $retired == 1)
+		if($retired === true || $retired == '1')
 		{
 			$retired = 1;
 		}
@@ -300,7 +300,7 @@ class PilotData extends CodonData
 		{
 			$retired = 0;
 		}
-		
+			
 		return self::updateProfile($pilotid, array('retired'=>$retired));
 	}
 	
@@ -397,7 +397,7 @@ class PilotData extends CodonData
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function DeletePilot($pilotid)
+	public static function deletePilot($pilotid)
 	{
 		$sql = array();
 		unset(self::$pilot_data[$pilotid]);
@@ -774,7 +774,7 @@ class PilotData extends CodonData
 	 */
 	public static function getFieldData($pilotid, $inclprivate=false)
 	{
-		$sql = 'SELECT f.fieldid, f.title, f.type, f.fieldname, v.value, f.public
+		$sql = 'SELECT f.fieldid, f.title, f.type, f.fieldname, f.value as fieldvalues, v.value, f.public
 					FROM '.TABLE_PREFIX.'customfields f
 					LEFT JOIN '.TABLE_PREFIX.'fieldvalues v
 						ON f.fieldid=v.fieldid

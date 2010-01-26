@@ -123,8 +123,12 @@ if(isset($message))
 	
 	<dt>Flight Time</dt>
 	<dd><input type="text" name="flighttime" value="<?php echo $_POST['flighttime'] ?>" />
-		<p>Enter as hours - "5.3" is five hours and thirty minutes</p></dd>
+		<p>Enter as hours - "5.30" is five hours and thirty minutes</p></dd>
 		
+	<dt>Route</dt>
+	<dd><textarea name="route" style="width: 100%"><?php echo (!isset($_POST['route'])) ? $bid->route : $_POST['route']; ?></textarea>
+		<p>Enter the route flown, or default will be from the schedule</p></dd>
+	
 	<dt>Comment</dt>
 	<dd><textarea name="comment" style="width: 100%"><?php echo $_POST['comment'] ?></textarea></dd>
 	

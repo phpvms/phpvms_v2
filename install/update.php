@@ -186,6 +186,7 @@ echo 'Starting the update...<br />';
 	
 
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
+	Installer::sql_file_update(SITE_ROOT . '/install/airways.sql');
 
 	/* Update expenses */
 	FinanceData::updateAllExpenses();

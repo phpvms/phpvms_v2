@@ -68,6 +68,18 @@ class ACARS extends CodonModule
 		$this->acarsflights = array();
 		foreach($flights as $flight)
 		{	
+			/* Try to get the flight route from the parent
+				schedule, if at all possible */
+			if(empty($flight->route_details) && !empty($flight->route))
+			{
+				$flight->route_details = NavData::parseRoute($flight);
+			}
+			elseif(!empty($flight->route_details))
+			{
+				$flight->route_details = unserialize($flight->route_details);
+			}
+			
+			
 			$c = (array) $flight; // Convert the object to an array
 			
 			$c['pilotid'] = PilotData::GetPilotCode($c['code'], $c['pilotid']);
@@ -107,7 +119,7 @@ class ACARS extends CodonModule
 				}
 			}
 			
-			$c['icon'] = SITE_URL.'/lib/images/inair/'.$flight->heading.'.png';
+			//$c['icon'] = SITE_URL.'/lib/images/inair/'.$flight->heading.'.png';
 		
 			// Little one-off fixes to normalize data
 			$c['distremaining'] = $c['distremain'];

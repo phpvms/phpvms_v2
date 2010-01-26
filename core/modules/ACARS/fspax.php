@@ -169,6 +169,7 @@ if($_POST['FsPAskToRegister'] == 'yes')
 					'depicao'=>$depicao,
 					'arricao'=>$arricao,
 					'aircraft'=>$aircraft,
+					'route' => '',
 					'flighttime'=>$flighttime,
 					'landingrate'=>$_POST['TouchDownVertSpeedFt'],
 					'submitdate'=>'NOW()',

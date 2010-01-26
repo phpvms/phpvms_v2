@@ -101,6 +101,8 @@ CREATE TABLE `phpvms_acarsdata` (
   `deptime` time NOT NULL default '00:00:00',
   `timeremaining` varchar(6) NOT NULL default '',
   `arrtime` time NOT NULL default '00:00:00',
+  `route` TEXT NOT NULL,
+  `route_details` TEXT NOT NULL,
   `distremain` varchar(6) NOT NULL default '',
   `phasedetail` varchar(255) NOT NULL default '',
   `online` varchar(10) NOT NULL default '',
@@ -137,6 +139,26 @@ CREATE TABLE `phpvms_aircraft` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS `phpvms_airways` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `airway` varchar(5) NOT NULL,
+  `points` text NOT NULL,
+  `type` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `phpvms_navdb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
+  `name` varchar(5) NOT NULL,
+  `title` varchar(10) NOT NULL,
+  `freq` varchar(7) NOT NULL,
+  `lat` float NOT NULL,
+  `lng` float NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM;
+
 CREATE TABLE `phpvms_airports` (
   `id` int(11) NOT NULL auto_increment,
   `icao` varchar(5) NOT NULL default '',
@@ -159,6 +181,7 @@ CREATE TABLE `phpvms_schedules` (
   `depicao` varchar(4) NOT NULL default '',
   `arricao` varchar(4) NOT NULL default '',
   `route` text NOT NULL,
+  `route_details` TEXT NOT NULL,
   `aircraft` text NOT NULL,
   `flightlevel` VARCHAR( 6 ) NOT NULL,
   `distance` float NOT NULL default '0',
@@ -258,6 +281,8 @@ CREATE TABLE `phpvms_pireps` (
   `flightnum` varchar(10) NOT NULL default '0',
   `depicao` varchar(4) NOT NULL default '',
   `arricao` varchar(4) NOT NULL default '',
+  `route` TEXT NOT NULL,
+  `route_details` TEXT NOT NULL,
   `aircraft` varchar(12) NOT NULL default '',
   `flighttime` varchar(10) NOT NULL default '',
   `flighttime_stamp` TIME NOT NULL,

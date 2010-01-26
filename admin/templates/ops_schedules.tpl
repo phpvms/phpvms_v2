@@ -38,6 +38,7 @@ if(!$schedules && !isset($paginate))
 	<th>Distance</th>
 	<th>Times Flown</th>
 	<th>Details</th>
+	<th>Route</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -56,6 +57,20 @@ foreach($schedules as $sched)
 	<td align="center"><?php echo $sched->timesflown; ?></td>
 	<td align="center">
 		<?php echo $sched->flighttype . ' ('.$sched->maxload.'/'.$sched->price.')'; ?>
+	</td>
+	<td align="center">
+		<?php
+		if(!empty($sched->route))
+		{ ?>
+		<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/operations/viewmap?type=schedule&id=<?php echo $sched->id;?>">View Route</a>
+		<?php 
+		}
+		else
+		{
+			echo '-';
+		}
+		?>
 	</td>
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/operations/editschedule?id=<?php echo $sched->id;?>">

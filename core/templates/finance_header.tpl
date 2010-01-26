@@ -1,5 +1,5 @@
-<span style="float: right;">
-<form action="<?php echo url('/finances/viewreport');?>" method="get">
+<br /><div style="float: right;">
+<form action="<?php echo url('/finances/viewreport'); ?>" method="get">
 <strong>Select Report: </strong>
 <?php
 $years = StatsData::GetYearsSinceStart();
@@ -44,5 +44,5 @@ foreach($months as $monthname=>$timestamp)
 ?>
 </select>
 <input type="submit" name="submit" value="View Report" />
-</span>
 </form>
+</div><br />

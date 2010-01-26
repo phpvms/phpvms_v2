@@ -62,6 +62,38 @@ class Util
 		echo $contents;
 	} 
 	
+	
+	public static function get_coordinates($line)
+	{
+		/* Get the lat/long */
+		preg_match('/^([A-Za-z])(\d*).(\d*.\d*).([A-Za-z])(\d*).(\d*.\d*)/', $line, $coords);
+		
+		$lat_dir = $coords[1];
+		$lat_deg = $coords[2];
+		$lat_min = $coords[3];
+		
+		$lng_dir = $coords[4];
+		$lng_deg = $coords[5];
+		$lng_min = $coords[6];
+		
+		$lat_deg = ($lat_deg*1.0) + ($lat_min/60.0);
+		$lng_deg = ($lng_deg*1.0) + ($lng_min/60.0);
+		
+		if(strtolower($lat_dir) == 's')
+			$lat_deg = '-'.$lat_deg;
+		
+		if(strtolower($lng_dir) == 'w')
+			$lng_deg = $lng_deg*-1;
+		
+		/* Return container */
+		$coords = array(
+			'lat' => $lat_deg,
+			'lng' => $lng_deg
+		);
+		
+		return $coords;
+	}
+	
 	/**
 	 * Convert PHP 0-6 days to the Compact M T W R F S Su
 	 */
@@ -106,8 +138,8 @@ class Util
 		
 		//self::$trace[] = "Inputted as: $time1 + $time2";
 		
-		$time1 =  number_format($time1, 2);
-		$time2 = number_format($time2, 2);
+		$time1 = number_format((double)$time1, 2);
+		$time2 = number_format((double)$time2, 2);
 		
 		$time1 = str_replace(',', '', $time1);
 		$time2 = str_replace(',', '', $time2);

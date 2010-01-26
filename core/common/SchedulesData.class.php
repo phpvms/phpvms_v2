@@ -41,12 +41,12 @@ class SchedulesData extends CodonData
 	public static function findSchedules($params, $count = '', $start = '')
 	{
 		$sql = 'SELECT s.*, a.id as aircraftid, a.name as aircraft, a.registration,
-					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng
 				FROM '.TABLE_PREFIX.'schedules AS s
-					LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
-					LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
-					LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft ';
+				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+				LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft ';
 	
 		/* Build the select "WHERE" based on the columns passed, this is a generic function */
 		$sql .= DB::build_where($params);
@@ -76,12 +76,7 @@ class SchedulesData extends CodonData
 	 */
 	public static function getSchedule($id)
 	{
-		$schedules = self::findSchedules(array('s.id'=>$id));
-		
-		if(!$schedules)
-			return false;
-			
-		return $schedules[0];
+		return self::getScheduleDetailed($id);
 	}
 	
 	
@@ -204,7 +199,16 @@ class SchedulesData extends CodonData
 		if(!$schedules)
 			return false;
 			
-		return $schedules[0];
+		$schedule =  $schedules[0];
+		unset($schedules);
+		
+		$schedule->route_details = unserialize($schedule->route_details);
+		if(!empty($schedule->route) && !$schedule->route_details)
+		{
+			$schedule->route_details = SchedulesData::getRouteDetails($schedule->id, $schedule->route);
+		}
+		
+		return $schedule;
 	}
 	
 	/**
@@ -361,7 +365,6 @@ class SchedulesData extends CodonData
 	 */
 	public static function addSchedule($data)
 	{
-	
 		if(!is_array($data))
 			return false;
 		
@@ -407,7 +410,7 @@ class SchedulesData extends CodonData
 						'$data[flightnum]',
 						'$data[depicao]', 
 						'$data[arricao]', 
-						'$data[route]', 
+						'$data[route]',
 						'$data[aircraft]', 
 						'$data[flightlevel]',
 						'$data[distance]',
@@ -423,6 +426,11 @@ class SchedulesData extends CodonData
 		
 		$res = DB::query($sql);
 		
+		if(!empty($data['route']))
+		{
+			self::getRouteDetails(DB::$insert_id, $data['route']);
+		}
+		
 		if(DB::errno() != 0)
 			return false;
 			
@@ -431,93 +439,49 @@ class SchedulesData extends CodonData
 
 	/**
 	 * Edit a schedule
-	 * Pass in the following:
-		
-			$data = array(	'scheduleid'=>'',
-							'code'=>'',
-							'flightnum'=''
-							'depicao'=>'',
-							'arricao'=>'',
-							'route'=>'',
-							'aircraft'=>'',
-							'distance'=>'',
-							'deptime'=>'',
-							'arrtime'=>'',
-							'flighttime'=>'',
-							'notes'=>'',
-							'enabled'=>'',
-							'maxload'=>'',
-							'price'=>'',
-							'flighttype'=>'P' OR 'C');
+	 *  Pass in the columns - deprecated
 	 */
-	 
-	public static function updateSchedule($data)
-	{
-		return self::editSchedule($data);
-	}
 	
 	public static function editSchedule($data)
 	{
 		if(!is_array($data))
 			return false;
 		
-		if($data['depicao'] == $data['arricao'])
-			return false;
-			
-		$data['code'] = strtoupper($data['code']);
-		$data['flightnum'] = strtoupper($data['flightnum']);			
-		$data['deptime'] = strtoupper($data['deptime']);
-		$data['arrtime'] = strtoupper($data['arrtime']);
-		$data['depicao'] = strtoupper($data['depicao']);		
-		$data['arricao'] = strtoupper($data['arricao']);
+		$id = $data['id'];
+		unset($data['id']);
 		
-		if($data['enabled'] == true)
-			$data['enabled'] = 1;
-		else
-			$data['enabled'] = 0;
-					
-		# If they didn't specify a flight type, just default to pax
-		$data['flighttype'] = strtoupper($data['flighttype']);
-		if($data['flighttype'] == '')
-			$data['flighttype'] = 'P';
-		
-		$data['flightlevel'] = str_replace(',', '', $data['flightlevel']);
-		$data['maxload'] = str_replace(',', '', $data['maxload']);
-		
-		foreach($data as $key=>$value)
-		{
-			$data[$key] = DB::escape($value);
-		}
-			
-		$data['flighttime'] = str_replace(':', '.', $data['flighttime']);
-		$sql = "UPDATE " . TABLE_PREFIX ."schedules 
-				SET `code`='$data[code]', 
-					`flightnum`='$data[flightnum]',
-					`depicao`='$data[depicao]', 
-					`arricao`='$data[arricao]',
-					`route`='$data[route]', 
-					`aircraft`='$data[aircraft]', 
-					`flightlevel`='$data[flightlevel]',
-					`distance`='$data[distance]', 
-					`deptime`='$data[deptime]',
-					`arrtime`='$data[arrtime]', 
-					`flighttime`='$data[flighttime]', 
-					`daysofweek`='$data[daysofweek]', 
-					`maxload`='$data[maxload]',
-					`price`='$data[price]',
-					`flighttype`='$data[flighttype]',
-					`notes`='$data[notes]', 
-					`enabled`=$data[enabled]
-				WHERE `id`=$data[id]";
-
-		$res = DB::query($sql);
-				
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
+		self::editScheduleFields($id, $data);
 	}
 
+	
+	/**
+	 * Parse a schedule's route, and store it in the route_details
+	 * column for later on. It will store a serialized array of the
+	 * route's details. 
+	 *
+	 * @param int $schedule_id ID of the schedule to parse
+	 * @param string $route Optional route to parse, otherwise it will look it up
+	 * @return array Returns the route's details
+	 *
+	 */
+	public static function getRouteDetails($schedule_id, $route = '')
+	{
+		$schedule = self::findSchedules(array('s.id' => $schedule_id), 1);
+		$schedule = $schedule[0];
+		
+		if(empty($schedule->route))
+		{
+			return;
+		}
+		
+		$route_details = NavData::parseRoute($schedule);
+		$store_details = DB::escape(serialize($route_details));
+		
+		$val = self::editScheduleFields($schedule_id, array('route_details' => $store_details));
+		
+		return $route_details;
+	}
+	
 	/**
 	 * Update any fields in a schedule, other update functions come down to this
 	 *
@@ -544,6 +508,85 @@ class SchedulesData extends CodonData
 		if(!is_array($fields))
 		{
 			return false;
+		}
+		
+		
+		
+		if(isset($fields['depicao']) && isset($fields['arricao']))
+		{
+			if($fields['depicao'] == $fields['arricao'])
+			{
+				return false;
+			}
+		}
+		
+		/* Ensure data is ok and formatted properly */
+		if(isset($fields['code']))
+		{
+			$fields['code'] = strtoupper($fields['code']);
+		}
+		
+		if(isset($fields['flightnum']))
+		{
+			$fields['flightnum'] = strtoupper($fields['flightnum']);
+		}
+		
+		if(isset($fields['depicao']))
+		{
+			$fields['depicao'] = strtoupper($fields['depicao']);
+		}
+		
+		if(isset($fields['arricao']))
+		{
+			$fields['arricao'] = strtoupper($fields['arricao']);
+		}
+	
+		if(isset($fields['deptime']))
+		{
+			$fields['deptime'] = strtoupper($fields['deptime']);
+		}
+		
+		if(isset($fields['arrtime']))
+		{
+			$fields['arrtime'] = strtoupper($fields['arrtime']);
+		}
+		
+		if(isset($fields['enabled']))
+		{
+			if($fields['enabled'] == true)
+				$fields['enabled'] = 1;
+			else
+				$fields['enabled'] = 0;
+		}
+		
+		# If they didn't specify a flight type, just default to pax
+		if(isset($fields['flighttype']))
+		{
+			$fields['flighttype'] = strtoupper($fields['flighttype']);
+			if($fields['flighttype'] == '')
+			{
+				$fields['flighttype'] = 'P';
+			}
+		}
+		
+		if(isset($fields['flightlevel']))
+		{
+			$fields['flightlevel'] = str_replace(',', '', $fields['flightlevel']);
+		}
+		
+		if(isset($fields['maxload']))
+		{
+			$fields['maxload'] = str_replace(',', '', $fields['maxload']);
+		}
+		
+		if(isset($fields['flighttime']))
+		{
+			$fields['flighttime'] = str_replace(':', '.', $fields['flighttime']);
+		}
+		
+		foreach($fields as $key=>$value)
+		{
+			$fields[$key] = DB::escape($value);
 		}
 		
 		$sql = "UPDATE `".TABLE_PREFIX."schedules` SET ";

@@ -15,7 +15,7 @@
  */
 
 error_reporting(E_ALL ^ E_NOTICE);
-ini_set('display_errors', 'off');
+ini_set('display_errors', 'on');
 	
 Debug::log($_SERVER['QUERY_STRING'], 'xacars');
 Debug::log($_SERVER['REQUEST_URI'], 'xacars');
@@ -25,37 +25,6 @@ class Coords {
 	public $lat;
 	public $lng;
 }
-
-function get_coordinates($line)
-{
-	/* Get the lat/long */
-	preg_match('/^([A-Za-z])(\d*).(\d*.\d*).([A-Za-z])(\d*).(\d*.\d*)/', $line, $coords);
-	
-	$lat_dir = $coords[1];
-	$lat_deg = $coords[2];
-	$lat_min = $coords[3];
-	
-	$lng_dir = $coords[4];
-	$lng_deg = $coords[5];
-	$lng_min = $coords[6];
-	
-	$lat_deg = ($lat_deg*1.0) + ($lat_min/60.0);
-	$lng_deg = ($lng_deg*1.0) + ($lng_min/60.0);
-	
-	if(strtolower($lat_dir) == 's')
-		$lat_deg = '-'.$lat_deg;
-		
-	if(strtolower($lng_dir) == 'w')
-		$lng_deg = $lng_deg*-1;
-	
-	/* Return container */
-	$coords = new Coords();
-	$coords->lat = $lat_deg;
-	$coords->lng = $lng_deg;
-	
-	return $coords;
-}
-
 
 switch($acars_action)
 {
@@ -141,6 +110,7 @@ $route->flightlevel
 	
 		# Pass success by default
 		$outstring = 'Success';
+		$fields = array();
 			
 		$_REQUEST['DATA2'] = strtoupper($_REQUEST['DATA2']);	
 		if($_REQUEST['DATA2'] == 'TEST')
@@ -172,12 +142,21 @@ $route->flightlevel
 			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
 			
 			/* Get Coordinates */
-			$coords = get_coordinates($data[6]);
+			$coords = Util::get_coordinates($data[6]);
 						
 			/* Get route */
 			$route = explode('~', $data[5]);
 			$depicao = $route[0];
 			$arricao = $route[count($route)-1];
+			
+			/*	Unset the start and end points of the route,
+				and pass the rest in.
+				
+				@version 2.1
+			*/
+			unset($route[0]);
+			unset($route[count($route)-1]);
+			$route = implode(' ', $route);
 			
 			$flightnum = $data[2];
 			$aircraft = $data[3];
@@ -185,11 +164,29 @@ $route->flightlevel
 			$alt = $data[7];
 			$deptime = time();
 			
+			$fields = array(
+				'flightnum'=>$flightnum,
+				'aircraft'=>$aircraft,
+				'lat'=>$coords['lat'],
+				'lng'=>$coords['lng'],
+				'heading'=>$heading,
+				'route'=>$route,
+				'alt'=>$alt,
+				'gs'=>$gs,
+				'depicao'=>$depicao,
+				'arricao'=>$arricao,
+				'deptime'=>$deptime,
+				'phasedetail'=>'At the gate',
+				'online'=>$_GET['Online'],
+				'client'=>'xacars',
+			);
+			
+			Debug::log(print_r($fields, true), 'xacars');
+			
 			$outstring = $pilotid;			
 		}
 		elseif($_REQUEST['DATA2'] == 'MESSAGE')
 		{
-		
 			$data = $_REQUEST['DATA4'];
 			$pilotid = $_REQUEST['DATA3'];
 			
@@ -204,15 +201,10 @@ $route->flightlevel
 			Debug::log('Flight data:', 'xacars');
 			Debug::log(print_r($_REQUEST, true), 'xacars');
 			Debug::log('PilotID: '.$pilotid, 'xacars');
-			
-			$flightnum = $flight_data->flightnum;
-			$aircraft = $flight_data->aircraft;
-			$depicao = $flight_data->depicao;
-			$arricao = $flight_data->arricao;
-					
+
 			// Get coordinates from ACARS message
 			preg_match("/POS(.*)\n/", $data, $matches);
-			$coords = get_coordinates(trim($matches[1]));
+			$coords = Util::get_coordinates(trim($matches[1]));
 			
 			// Get our heading
 			preg_match("/\/HDG.(.*)\n/", $data, $matches);
@@ -229,10 +221,20 @@ $route->flightlevel
 			// Get the OUT time
 			preg_match("/OUT.(.*) \/ZFW/", $data, $matches);
 			$deptime = $matches[1];
+			
+			/*	We don't need to update every field, just a few of them
+			 */
+			$fields = array(
+				'lat'=>$coords['lat'],
+				'lng'=>$coords['lng'],
+				'heading'=>$heading,
+				'alt'=>$alt,
+				'gs'=>$gs,
+				'phasedetail'=>'Enroute',
+			);
 		}
 		else
 		{
-			Debug::log('else', 'xacars');
 			return;
 		}
 		
@@ -251,30 +253,12 @@ $route->flightlevel
 		}
 
 		ob_start();
-		$fields = array(
-			'pilotid'=>$pilotid,
-			'flightnum'=>$flightnum,
-			'pilotname'=>'',
-			'aircraft'=>$aircraft,
-			'lat'=>$coords->lat,
-			'lng'=>$coords->lng,
-			'heading'=>$heading,
-			'alt'=>$alt,
-			'gs'=>$gs,
-			'depicao'=>$depicao,
-			'arricao'=>$arricao,
-			'deptime'=>$deptime,
-			'arrtime'=>'',
-			'distremain'=>$dist_remain,
-			'timeremaining'=>$time_remain,
-			'phasedetail'=>'Enroute',
-			'online'=>$_GET['Online'],
-			'client'=>'xacars',
-		);
+		
+		$fields['distremain'] = $dist_remain;
+		$fields['timeremaining'] = $time_remain;
 		
 		Debug::log(print_r($fields, true), 'xacars');
-		
-		ACARSData::UpdateFlightData($fields);
+		ACARSData::UpdateFlightData($pilotid, $fields);
 		
 		echo '1|'.$outstring;
 		break;
@@ -282,11 +266,7 @@ $route->flightlevel
 	case 'pirep':
 		
 		$data = explode('~', $_REQUEST['DATA2']);
-				
-		/*preg_match('/^([A-Za-z]*)(\d*)/', $data[2], $matches);
-		$code = $matches[1];
-		$flightnum = $matches[2];*/
-		
+	
 		$flightinfo = SchedulesData::getProperFlightNum($data[2]);
 		$code = $flightinfo['code'];
 		$flightnum = $flightinfo['flightnum'];
@@ -349,6 +329,8 @@ $route->flightlevel
 			$fuelused = $fuelused * .45359237;
 		}
 		
+		$acars_data = ACARSData::get_flight_by_pilot($pilotid);
+		
 		$data = array('pilotid'=>$pilotid,
 				'code'=>$code,
 				'flightnum'=>$flightnum,
@@ -357,6 +339,8 @@ $route->flightlevel
 				'aircraft'=>$ac->id,
 				'flighttime'=>$flighttime,
 				'submitdate'=>'NOW()',
+				'route' => $acars_data->route,
+				'route_details' => $acars_data->route_details,
 				'comment'=>$comment,
 				'fuelused'=>$fuelused,
 				'source'=>'xacars',

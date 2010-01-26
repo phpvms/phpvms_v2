@@ -7,3 +7,31 @@ CREATE TABLE `phpvms_expenselog` (
 ) ENGINE = MYISAM ;
 
 ALTER TABLE `phpvms_pireps` ADD `gross` FLOAT NOT NULL AFTER `flighttype`;
+
+ALTER TABLE `phpvms_pireps` ADD `route` TEXT NOT NULL AFTER `arricao` ,
+ADD `route_details` TEXT NOT NULL AFTER `route`;
+
+ALTER TABLE `phpvms_acarsdata` ADD `route` TEXT NOT NULL AFTER `arrtime`,
+ADD `route_details` TEXT NOT NULL AFTER `route` ;
+
+ALTER TABLE `phpvms_schedules` ADD `route_details` TEXT NOT NULL AFTER `route`;
+
+CREATE TABLE IF NOT EXISTS `phpvms_navdb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
+  `name` varchar(5) NOT NULL,
+  `title` varchar(10) NOT NULL,
+  `freq` varchar(7) NOT NULL,
+  `lat` float NOT NULL,
+  `lng` float NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `phpvms_airways` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `airway` varchar(5) NOT NULL,
+  `points` text NOT NULL,
+  `type` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;

@@ -390,7 +390,7 @@ class DB
 			}
 			else
 			{
-				if($value == "NOW()")
+				if($value === "NOW()")
 				{
 					$tmp.='NOW()';
 				}

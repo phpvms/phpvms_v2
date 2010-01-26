@@ -28,7 +28,7 @@ class ACARSData extends CodonData
 	 * @return mixed Nothing
 	 *
 	 */
-	public static function UpdateFlightData($data)
+	public static function updateFlightData($pilotid, $data)
 	{
 		if(!is_array($data))
 		{
@@ -36,40 +36,14 @@ class ACARSData extends CodonData
 			return false;
 		}
 		
-		// make sure at least the vitals we need are there:
-		if(empty($data['pilotid']))
-		{
-			self::$lasterror = 'No pilot ID specified';
-			return false;
-		}
-		
-		if(empty($data['flightnum']))
-		{
-			self::$lasterror = 'No flight number';
-			return false;
-		}
-		
-		if(empty($data['depicao']) || empty($data['arricao']) 
-			|| empty($data['lat']) || empty($data['lng']))
-		{
-			self::$lasterror = 'Airports are blank';
-			return;
-		}
-
-		if(!is_numeric($data['pilotid']))
-		{
-			preg_match('/^([A-Za-z]*)(\d*)/', $data['pilotid'], $matches);
-			$code = $matches[1];
-			$data['pilotid'] = $matches[2];
-		}
-		
-		if(isset($data['code']))
+		if(isset($data['code']) && isset($data['flightnum']))
 		{
 			$data['flightnum'] = $data['code'].$data['flightnum'];
 		}
 		
 		// Add pilot info		
-		$pilotinfo = PilotData::GetPilotData($data['pilotid']);
+		$pilotinfo = PilotData::getPilotData($pilotid);
+		$data['pilotid'] = $pilotid;
 		$data['pilotname'] = $pilotinfo->firstname . ' ' . $pilotinfo->lastname;
 		
 		// Store for later
@@ -79,32 +53,80 @@ class ACARSData extends CodonData
 			unset($data['registration']);
 		}
 		
-		// Get the airports data
-		$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
-		$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
-		$data['depapt'] = DB::escape($dep_apt->name);
-		$data['arrapt'] = DB::escape($arr_apt->name);
+		if(isset($data['depicao']))
+		{
+			$dep_apt = OperationsData::GetAirportInfo($data['depicao']);
+			$data['depapt'] = DB::escape($dep_apt->name);
+		}
 		
-		unset($dep_apt);
-		unset($arr_apt);
+		if(isset($data['arricao']))
+		{
+			$arr_apt = OperationsData::GetAirportInfo($data['arricao']);
+			$data['arrapt'] = DB::escape($arr_apt->name);
+		}
 		
-		// Clean up times
-		if(!is_numeric($data['deptime']))
-			$data['deptime'] = strtotime($data['deptime']);
+		if(isset($data['route']) && empty($data['route']))
+		{
+			$flight_info = SchedulesData::getProperFlightNum($data['flightnum']);
+			$params = array(
+				's.code' => $flight_info['code'],
+				's.flightnum' => $flight_info['flightnum'],
+			);
 			
-		if(!is_numeric($data['arrtime']))
+			$schedule = SchedulesData::findSchedules($params);
+			$schedule = $schedule[0];
+			
+			$data['route'] = $schedule->route;
+			$data['route_details'] = serialize(SchedulesData::getRouteDetails($schedule->id));
+		}
+		/*	A route was passed in, so get the details about this route */
+		elseif(isset($data['route']) && !empty($data['route']))
+		{
+			$tmp = new stdClass();
+			$tmp->deplat = $dep_apt->lat;
+			$tmp->deplng = $dep_apt->lng;
+			$tmp->route = $data['route'];
+			
+			$data['route_details'] = NavData::parseRoute($tmp);
+			$data['route_details'] = serialize($data['route_details']);
+			unset($tmp);
+		}
+		
+		if(!empty($data['route_details']))
+		{
+			$data['route_details'] = DB::escape($data['route_details']);
+		}
+		
+		if(isset($dep_apt))
+		{
+			unset($dep_apt);
+		}
+		
+		if(isset($arr_apt))
+		{
+			unset($arr_apt);
+		}
+	
+		// Clean up times
+		if(isset($data['deptime']) && !is_numeric($data['deptime']))
+		{
+			$data['deptime'] = strtotime($data['deptime']);
+		}
+			
+		if(isset($data['arrtime']) && !is_numeric($data['arrtime']))
+		{
 			$data['arrtime'] = strtotime($data['arrtime']);
+		}
 		
 		/* Check the heading for the flight
 			If none is specified, then point it straight to the arrival airport */
-		if($data['heading'] == '' || $data['heading'] == null || !isset($data['heading']))
+		if(empty($data['heading']) || !isset($data['heading'])
+			&& isset($data['lat']) && isset($data['lng']))
 		{
 			/* Calculate an angle based on current coords and the
 				destination coordinates */
 			
 			$data['heading'] = intval(atan2(($data['lat'] - $arr_apt->lat), ($data['lng'] - $arr_apt->lng)) * 180/3.14);
-			//$flight->heading *= intval(180/3.14159);
-			
 			if(($data['lat'] - $data['lng']) < 0)
 			{
 				$data['heading'] += 180;
@@ -115,6 +137,10 @@ class ACARSData extends CodonData
 				$data['heading'] += 360;
 			}
 		}
+		else
+		{
+			$data['heading'] = 0;
+		}
 
 		// Manually add the last set
 		$data['lastupdate'] = 'NOW()';
@@ -122,7 +148,7 @@ class ACARSData extends CodonData
 		// first see if we exist:
 		$sql = 'SELECT `id`
 				FROM '.TABLE_PREFIX."acarsdata 
-				WHERE `pilotid`={$data['pilotid']}";
+				WHERE `pilotid`=$pilotid";
 				
 		$exist = DB::get_row($sql);
 			
@@ -130,34 +156,31 @@ class ACARSData extends CodonData
 		
 		if($exist)
 		{ // update
-			
 			$upd = array();
 			$flight_id = $exist->id;
-			
-			/* Unset the pilot id so it's not updating itself
-			 */
-			$pilotid = $data['pilotid'];
-			unset($data['pilotid']);
 			
 			foreach($data as $field => $value)
 			{
 				$value = DB::escape(trim($value));
 				
 				// Append the message log
-				if($field == 'messagelog')
+				if($field === 'messagelog')
 				{
 					$upd[] ="`messagelog`=CONCAT(`messagelog`, '{$value}')";
 				}
-				elseif($field == 'lastupdate')
+				elseif($field === 'lastupdate')
 				{
 					$upd[] = "`lastupdate`=NOW()";
 				}
 				// Update times
-				elseif($field == 'deptime' || $field == 'arrtime')
+				elseif($field === 'deptime' || $field === 'arrtime')
 				{
-					/* If undefined, set a default time to now (penalty for malformed data?)
+					/*	If undefined, set a default time to now (penalty for malformed data?)
 						Won't be quite accurate.... */
-					if($value == '') $value = time();
+					if($value == '') 
+					{
+						$value = time();
+					}
 					
 					$upd[] = "`{$field}`=FROM_UNIXTIME({$value})";
 				}
@@ -184,12 +207,12 @@ class ACARSData extends CodonData
 			foreach($data as $field => $value)
 			{
 				$ins[] = "`{$field}`";
-				if($field == 'deptime' || $field == 'arrtime')
+				if($field === 'deptime' || $field === 'arrtime')
 				{
-					if($value == '') $value = time();
+					if(empty($value)) $value = time();
 					$vals[] = "FROM_UNIXTIME({$value})";
 				}
-				elseif($field == 'lastupdate')
+				elseif($field === 'lastupdate')
 				{
 					$vals[] = 'NOW()';
 				}
@@ -363,8 +386,8 @@ class ACARSData extends CodonData
 				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
 				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
-				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao
-				WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao';
+				//WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
 		
 		return DB::get_results($sql);
 	}

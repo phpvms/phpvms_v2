@@ -163,7 +163,9 @@
 </tr>
 <tr>
 	<td valign="top"><strong>Route (optional)</strong></td>
-	<td><textarea name="route" style="width: 60%; height: 75px"><?php echo $schedule->route?></textarea>
+	<td><textarea name="route" style="width: 60%; height: 75px" id="route"><?php echo $schedule->route?></textarea>
+		<p><a id="dialog" class="preview"
+			href="<?php echo SITE_URL?>/admin/action.php/operations/viewmap?type=preview">View Route</a></p>
 	</td>
 </tr>
 <!--
@@ -205,3 +207,22 @@
 </table>
 </form>
 </div>
+<script type="text/javascript">
+$(".preview").click(function()
+{
+	depicao=$("#depicao").val();
+	arricao=$("#arricao").val();
+	route=$("#route").val();
+	
+	url = this.href
+		+"&depicao="+depicao
+		+"&arricao="+arricao
+		+"&route="+route;
+			
+	$('#jqmdialog').jqm({
+        ajax: url
+	}).jqmShow();
+	
+	return false;
+});
+</script>

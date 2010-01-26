@@ -224,6 +224,8 @@ class Installer
 			}
 		}
 		
+		Installer::sql_file_update(SITE_ROOT . '/install/airways.sql');
+		
 		return true;
 	}
 	

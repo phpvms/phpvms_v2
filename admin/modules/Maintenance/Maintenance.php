@@ -79,8 +79,8 @@ class Maintenance extends CodonModule
 		{
 			
 			# Find the schedule, and the distance supplied by the schedule:
-			$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplong, 
-				$pirep->arrlat, $pirep->arrlong);	
+			$distance = SchedulesData::distanceBetweenPoints($pirep->deplat, $pirep->deplng, 
+				$pirep->arrlat, $pirep->arrlng);	
 			
 			$distance = sprintf("%.2f", $distance);
 											

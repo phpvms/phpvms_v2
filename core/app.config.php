@@ -349,6 +349,7 @@ define('NAV_NDB', 2);
 define('NAV_VOR', 3);
 define('NAV_DME', 4);
 define('NAV_FIX', 5);
+define('NAV_TRACK', 6);
 
 define('LOAD_VARIATION', 5);
 define('SECONDS_PER_DAY', 86400);

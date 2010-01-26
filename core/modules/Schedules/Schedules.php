@@ -56,9 +56,8 @@ class Schedules extends CodonModule
 			$params = array('s.id' => $routeid);
 		}
 		
-		$scheddata = SchedulesData::findSchedules($params);
-		$this->set('schedule', $scheddata[0]);
-		
+		$schedule = SchedulesData::getScheduleDetailed($routeid);
+		$this->set('schedule', $schedule);
 		$this->render('schedule_details.tpl');
 		$this->render('route_map.tpl');
 	}
@@ -72,9 +71,8 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$schedules = SchedulesData::findSchedules(array('s.id' => $routeid));
-		
-		$this->set('schedule', $schedules[0]);
+		$schedule = SchedulesData::getScheduleDetailed($routeid);
+		$this->set('schedule', $schedule);
 		$this->render('schedule_briefing.tpl');
 	}
 	
@@ -87,9 +85,9 @@ class Schedules extends CodonModule
 			return;
 		}
 		
-		$schedules = SchedulesData::findSchedules(array('s.id' => $routeid));
+		$schedule = SchedulesData::getScheduleDetailed($routeid);
 				
-		$this->set('schedule', $schedules[0]);
+		$this->set('schedule', $schedule);
 		$this->render('schedule_boarding_pass.tpl');
 	}
 	

@@ -63,7 +63,7 @@ class PIREPS extends CodonModule
 			/* See if the PIREP is valid, and whether it's being edited
 				by the owner, not someone else */
 				
-			$pirep = PIREPData::GetReportDetails($this->post->pirepid);
+			$pirep = PIREPData::getReportDetails($this->post->pirepid);
 			
 			if(!$pirep)
 			{
@@ -84,7 +84,7 @@ class PIREPS extends CodonModule
 			
 			if($this->post->action == 'addcomment')
 			{
-				$ret = PIREPData::AddComment($this->post->pirepid, Auth::$userinfo->pilotid, $this->post->comment);
+				$ret = PIREPData::addComment($this->post->pirepid, Auth::$userinfo->pilotid, $this->post->comment);
 				
 				$this->set('message', 'Comment added!');
 				$this->render('core_success.tpl');
@@ -93,7 +93,7 @@ class PIREPS extends CodonModule
 			/* Edit the PIREP custom fields */
 			elseif($this->post->action == 'editpirep')
 			{
-				$ret = PIREPData::SaveFields($this->post->pirepid, $_POST);
+				$ret = PIREPData::saveFields($this->post->pirepid, $_POST);
 				
 				$this->set('message', 'PIREP edited!');
 				$this->render('core_success.tpl');
@@ -120,7 +120,7 @@ class PIREPS extends CodonModule
 			return;
 		}
 		
-		$pirep = PIREPData::GetReportDetails($pirepid);
+		$pirep = PIREPData::getReportDetails($pirepid);
 		
 		if(!$pirep)
 		{
@@ -412,6 +412,7 @@ class PIREPS extends CodonModule
 			'arricao'=>$this->post->arricao,
 			'aircraft'=>$this->post->aircraft,
 			'flighttime'=>$this->post->flighttime,
+			'route' => $this->post->route,
 			'submitdate'=>'NOW()',
 			'fuelused'=>$this->post->fuelused,
 			'source'=>'manual',

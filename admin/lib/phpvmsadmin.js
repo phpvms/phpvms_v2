@@ -15,6 +15,9 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
  
+var depicon = baseurl + '/lib/images/towerdeparture.png';
+var arricon = baseurl + '/lib/images/towerarrival.png';
+
 function formInit() 
 {
     $("#form").ajaxForm({
@@ -33,7 +36,6 @@ function formInit()
 			formInit();
 		}
 	});
-	
 		
 	$('#pilotoptionchangepass').ajaxForm({
 		target: '#dialogresult',
@@ -118,13 +120,14 @@ $(document).ready(function() {
             //dialogInit();
         }
     });
+    
+    $('#jqmdialog').jqmAddTrigger('.jqModal');
+    $('.jqModal').live('dblclick', function() { return false; });
 
     formInit();
     reloadGroups();
 
     $("#slidermenu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
-
-    $(".tablesorter").tablesorter();
 
     $("#dialogform").ajaxForm({
         target: '#results'
@@ -167,9 +170,6 @@ $(document).ready(function() {
 
         return false;
     });
-
-    $('#jqmdialog').jqmAddTrigger('.jqModal');
-    $('.jqModal').live('dblclick', function() { return false; });
 
     // Binding the AJAX call clicks
     $('.ajaxcall').live('click', function() {
@@ -216,13 +216,6 @@ $(document).ready(function() {
         $("#row"+$(this).attr("id")).hide();
     });
 
-    //Tablize any lists
-    $("#tabledlist").tablesorter();
-
-    /*if(document.getElementById('editor'))
-    {
-    new nicEditor({iconsPath : baseurl+'/lib/js/nicEditorIcons.gif', fullPanel:true}).panelInstance('editor');
-    }*/
     if (document.getElementById('editor')) {
         var editor = CKEDITOR.replace('editor',
 	    {

@@ -32,7 +32,6 @@ ini_set('display_errors', 'off');
 
 Debug::log(serialize($_SERVER['QUERY_STRING']), 'fsacars');
 
-
 ##################################
 	
 # Our flight phase constants
@@ -91,7 +90,7 @@ switch($acars_action)
 						'messagelog'=>str_ireplace('Message content: £', '', $_GET['mcontent']).'\n');
 		
 		ob_start();
-		ACARSData::UpdateFlightData($fields);
+		ACARSData::updateFlightData($fields['pilotid'], $fields);
 		
 		$cont = ob_get_clean();
 		
@@ -198,39 +197,38 @@ $maxcargo";
 			unset($ac);
 		}
 		
-		$fields = array('pilotid'=>$pilotid,
-						'flightnum'=>$_GET['IATA'],
-						'pilotname'=>'',
-						'aircraft'=>$aircraft,
-						'registration'=>$_GET['Regist'],
-						'lat'=>$_GET['lat'],
-						'lng'=>$_GET['long'],
-						'heading'=>'',
-						'alt'=>$_GET['Alt'],
-						'gs'=>$_GET['GS'],
-						'depicao'=>$_GET['depaptICAO'],
-						'depapt'=>$_GET['depapt'],
-						'arricao'=>$_GET['destaptICAO'],
-						'arrapt'=>$_GET['destapt'],
-						'deptime'=>'',
-						'arrtime'=>'',
-						'distremain'=>$_GET['disdestapt'],
-						'timeremaining'=>$_GET['timedestapt'],
-						'phasedetail'=>$phase_detail[$_GET['detailph']],
-						'online'=>$_GET['Online'],
-						'client'=>'FSACARS');
+		$fields = array(
+			'pilotid'=>$pilotid,
+			'flightnum'=>$_GET['IATA'],
+			'pilotname'=>'',
+			'aircraft'=>$aircraft,
+			'registration'=>$_GET['Regist'],
+			'lat'=>$_GET['lat'],
+			'lng'=>$_GET['long'],
+			'heading'=>'',
+			'alt'=>$_GET['Alt'],
+			'gs'=>$_GET['GS'],
+			'route' => '',
+			'depicao'=>$_GET['depaptICAO'],
+			'depapt'=>$_GET['depapt'],
+			'arricao'=>$_GET['destaptICAO'],
+			'arrapt'=>$_GET['destapt'],
+			'deptime'=>'',
+			'arrtime'=>'',
+			'distremain'=>$_GET['disdestapt'],
+			'timeremaining'=>$_GET['timedestapt'],
+			'phasedetail'=>$phase_detail[$_GET['detailph']],
+			'online'=>$_GET['Online'],
+			'client'=>'FSACARS'
+		);
 
-		ob_start();
-		
 		Debug::log(print_r($fields, true), 'fsacars');
 		
-		ACARSData::UpdateFlightData($fields);
-		$cont = ob_get_clean();
-			
-		ob_end_clean();
+		ACARSData::updateFlightData($pilotid, $fields);
 		
 		Debug::log($cont, 'fsacars');
 		
+		echo 'OK';
 		break;
 	
 	#

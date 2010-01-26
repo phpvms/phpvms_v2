@@ -111,13 +111,13 @@ class XML extends CodonModule
 		$dep->addAttribute('icao', $flightinfo->depicao);
 		$dep->addAttribute('name', $flightinfo->depname);
 		$dep->addAttribute('lat', $flightinfo->deplat);
-		$dep->addAttribute('lng', $flightinfo->deplong);
+		$dep->addAttribute('lng', $flightinfo->deplng);
 		
 		$arr = $xml->addChild('arrival');
 		$arr->addAttribute('icao', $flightinfo->arricao);
 		$arr->addAttribute('name', $flightinfo->arrname);
 		$arr->addAttribute('lat', $flightinfo->arrlat);
-		$arr->addAttribute('lng', $flightinfo->arrlong);
+		$arr->addAttribute('lng', $flightinfo->arrlng);
 		
 		header('Content-type: text/xml');
 		echo $xml->asXML();	

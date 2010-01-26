@@ -26,6 +26,9 @@ $error = false; #IF there are any errors on the report, then don't allow accept
 		?><br />
 		
 		<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/operations/viewmap?type=pirep&id=<?php echo $pirep->pirepid;?>">View Flight Route</a>
+			
+		<a id="dialog" class="jqModal"
 			href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $pirep->pirepid;?>">View Log Details</a>
 	</td>
 	<td align="left" valign="top" >

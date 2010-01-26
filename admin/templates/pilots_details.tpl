@@ -182,8 +182,36 @@ if($customfields)
 ?>
 	<tr>
 		<td><?php echo $field->title;?></td>
-		<td><input type="text" name="<?php echo $field->fieldname?>" 
-							value="<?php echo $field->value?>" /></td>
+		<td>
+		<?php
+		if($field->type == 'dropdown')
+		{
+			echo "<select name=\"{$field->fieldname}\">";
+			$values = explode(',', $field->fieldvalues);
+		
+			if(is_array($values))
+			{						
+				foreach($values as $val)
+				{
+					$sel = ($field->value === $val) ? 'sel="selected"' : '';
+					
+					$val = trim($val);
+					echo "<option value=\"{$val}\" {$sel} >{$val}</option>";
+				}
+			}
+			
+			echo '</select>';
+		}
+		elseif($field->type == 'textarea')
+		{
+			echo '<textarea name="'.$field->fieldname.'" style="width: 400px; height: 100px" class="customfield_textarea">'.$field->value.'</textarea>';
+		}
+		else
+		{
+			echo '<input type="text" name="'.$field->fieldname.'" value="'.$field->value.'" />';
+		}
+		?>
+		</td>
 	</tr>
 <?php
 	}

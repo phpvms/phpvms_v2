@@ -46,8 +46,8 @@ class PIREPData extends CodonData
 		$sql = 'SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, 
 					u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 					a.id AS aircraftid, a.name as aircraft, a.registration,
-					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong						
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng						
 				FROM '.TABLE_PREFIX.'pireps p
 				LEFT JOIN '.TABLE_PREFIX.'aircraft a ON a.id = p.aircraft
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = p.depicao
@@ -324,8 +324,8 @@ class PIREPData extends CodonData
 	{
 		$sql = 'SELECT p.*, s.*, s.id AS scheduleid,
 					u.pilotid, u.firstname, u.lastname, u.email, u.rank,
-					dep.name as depname, dep.lat AS deplat, dep.lng AS deplong,
-					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlong,
+					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
+					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng,
 				    p.code, p.flightnum, p.depicao, p.arricao,  p.price AS price,
 				    a.id as aircraftid, a.name as aircraft, a.registration, p.flighttime,
 				    p.distance, UNIX_TIMESTAMP(p.submitdate) as submitdate, p.accepted, p.log
@@ -337,7 +337,7 @@ class PIREPData extends CodonData
 				WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		$row = DB::get_row($sql);
-		
+	
 		/* Do any specific replacements here */
 		if($row)
 		{
@@ -400,6 +400,17 @@ class PIREPData extends CodonData
 					unset($flightimages);
 				}
 			} /* End "if FSFK" */
+			
+			
+			if(!empty($row->route_details))
+			{
+				$row->route_details = unserialize($row->route_details);
+			}
+			/*elseif(empty($row->route_details) && ! empty($row->route))
+			{
+				$row->route_details = NavData::parseRoute($row);
+			}*/
+			
 		} /* End "if $row" */
 		
 		return $row;
@@ -627,6 +638,54 @@ class PIREPData extends CodonData
 		# Look up the schedule
 		$sched = SchedulesData::getScheduleByFlight($pirepdata['code'], $pirepdata['flightnum']);
 		
+		/*	Get route information, and also the detailed layout of the route
+			Store it cached, in case the schedule changes later, then the route
+			information remains intact. Also, if the nav data changes, then 
+			the route is saved as it was 
+		 */
+		if(empty($pirepdata['route']) && !empty($sched->route))
+		{
+			$pirepdata['route'] = $sched->route;
+			
+			/*	The schedule doesn't have any route_details, so let's populate
+				the schedule while we're here. Then we'll use that same info
+				to populate our details information 
+			 */
+			if(empty($sched->route_details))
+			{
+				$pirepdata['route_details'] = serialize(SchedulesData::getRouteDetails($sched->id));
+			}
+			else
+			{
+				/*	The schedule does have route information, and it's already been cached */
+				$pirepdata['route_details'] = $sched->route_details;
+			}
+		}
+		elseif(!empty($pirepdata['route']) && empty($pirepdata['route_details']))
+		{
+			/*	They supplied some route information, so build up the data
+				based on that. It needs a certain structure passed, so build that */
+			$tmp = new stdClass();
+			$tmp->deplat = $depapt->lat;
+			$tmp->deplng = $depapt->lng;
+			$tmp->route = $pirepdata['route'];
+			
+			$pirepdata['route_details'] = NavData::parseRoute($tmp);
+			$pirepdata['route_details'] = serialize($pirepdata['route_details']);
+			unset($tmp);
+		}
+		else
+		{
+			$pirepdata['route'] = '';
+			$pirepdata['route_details'] = '';
+		}
+		
+		
+		if(!empty($pirepdata['route_details']))
+		{
+			$pirepdata['route_details'] = DB::escape($pirepdata['route_details']);
+		}
+				
 		# Check the load, if it's blank then look it up
 		#	Based on the aircraft that was flown
 		if(!isset($pirepdata['load']) || empty($pirepdata['load']))
@@ -673,6 +732,8 @@ class PIREPData extends CodonData
 							`flightnum`, 
 							`depicao`, 
 							`arricao`, 
+							`route`,
+							`route_details`,
 							`distance`,
 							`aircraft`, 
 							`flighttime`, 
@@ -691,6 +752,8 @@ class PIREPData extends CodonData
 							'{$pirepdata['flightnum']}', 
 							'{$pirepdata['depicao']}', 
 							'{$pirepdata['arricao']}', 
+							'{$pirepdata['route']}',
+							'{$pirepdata['route_details']}',
 							'{$pirepdata['distance']}',
 							'{$pirepdata['aircraft']}', 
 							'{$pirepdata['flighttime']}', 

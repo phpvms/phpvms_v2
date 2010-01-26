@@ -24,7 +24,7 @@
 	$months=array();
 	
 ?>
-<table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
+<table width="670px" align="center" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header" style="text-align: center">
 		<td align="left">Month</td>
@@ -33,62 +33,52 @@
 		<td align="center" nowrap>Pilot Pay</td>
 		<td align="left">Expenses</td>
 		<td align="left">Fuel</td>
-		<td align="center" nowrap>Flight</td>
 		<td align="center">Total</td>
 	</tr>
 	
 <?php 
+echo '<pre>';
+//print_r($allfinances);
+echo '</pre>';
 foreach ($allfinances as $month)
 {
 ?>
 	<tr>
 		<td align="right">
 			<?php 
-			$months[] = date('M', $month['timestamp']);
-			echo date('F', $month['timestamp']);
+			echo $month->ym;
 			?>
 		</td>
 		<td align="center">
 		<?php 
-			$flights[] = $month['pirepfinance']->TotalFlights==''?0:$month['pirepfinance']->TotalFlights;
-			echo ($month['pirepfinance']->TotalFlights=='') ? 0 : $month['pirepfinance']->TotalFlights;
+			echo $month->total;
 		?>
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$revenue[] = ($month['pirepfinance']->Revenue=='')?0:$month['pirepfinance']->Revenue;
-			echo FinanceData::FormatMoney($month['pirepfinance']->Revenue);
+			echo FinanceData::FormatMoney($month->gross);
 			?>
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$pilot_pay[] = $month['pirepfinance']->TotalPay;
-			echo FinanceData::FormatMoney($month['pirepfinance']->TotalPay);
+			echo FinanceData::FormatMoney($month->pilotpay);
 			?>
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$expenses[] = $month['totalexpenses']==''?0:$month['totalexpenses'];
-			echo FinanceData::FormatMoney((-1)*$month['totalexpenses']);
+			echo FinanceData::FormatMoney((-1) * $month->expenses_total);
 			?>
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$fuelexpenses[] = $month['fuelcost']==''?0:$month['fuelcost'];
-			echo FinanceData::FormatMoney((-1)*$month['fuelcost']);
+			echo FinanceData::FormatMoney((-1) * $month->fuelprice);
 			?>
 		</td>
 		<td align="right" nowrap>
 			<?php 
-			$flightexpenses[] = $month['flightexpenses']==''?0:$month['flightexpenses'];
-			echo FinanceData::FormatMoney((-1)*$month['flightexpenses']);
-			?>
-		</td>
-		<td align="right" nowrap>
-			<?php 
-			$profit[] = round($month['total'], 2);
-			$total+=$month['total'];
-			echo FinanceData::FormatMoney($month['total']);
+			$profit[] = round($month->revenue, 2);
+			$total += $month->revenue;
+			echo FinanceData::FormatMoney($month->revenue);
 			?>
 		</td>
 	</tr>
@@ -107,27 +97,30 @@ foreach ($allfinances as $month)
 </table>
 
 <h3>Breakdown</h3>
-
-<?php
-/**
- * Show the revenue details graph
- */
-
-$graph = new ChartGraph('pchart', 'line', 680, 400);
-$graph->setFontSize(8);
-$graph->AddData($profit, $months);
-$graph->setTitles('Monthly Profits', 'Month', 'Revenue ('.htmlspecialchars_decode(Config::Get('MONEY_UNIT')).')');
-$graph->GenerateGraph();
-
-?>
-<br /><br />
+<div align="center">
 <?php
 /*
-	Show the expenses details graph
+	Added in 2.0!
 */
-$graph = new ChartGraph('pchart', 'line', 680, 400);
-$graph->AddData($fuelexpenses, $months);
-$graph->setTitles('Fuel Costs', 'Month', 'Expenses ('.htmlspecialchars_decode(Config::Get('MONEY_UNIT')).')');
-$graph->GenerateGraph();
+$chart_width = '800';
+$chart_height = '500';
 
+/* Don't need to change anything below this here */
 ?>
+<div align="center" style="width: 100%;">
+	<div align="center" id="summary_chart"></div>
+</div>
+
+<script type="text/javascript" src="<?php echo fileurl('/lib/js/ofc/js/json/json2.js')?>"></script>
+<script type="text/javascript" src="<?php echo fileurl('/lib/js/ofc/js/swfobject.js')?>"></script>
+<script type="text/javascript">
+swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
+	"summary_chart", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
+	"9.0.0", "expressInstall.swf", 
+	{"data-file":"<?php echo actionurl('/finances/viewmonthchart?'.$_SERVER['QUERY_STRING']); ?>"});
+</script>
+<?php
+/* End added in 2.0
+*/
+?>
+</div>

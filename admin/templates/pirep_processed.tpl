@@ -54,7 +54,9 @@
 	?><br />
 	<a href="#" onclick="$('#details_dialog_<?php echo $pirep->pirepid;?>').toggle()">View Details</a> | 
 	<a id="dialog" class="jqModal"
-		href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $pirep->pirepid;?>">View Log Details</a>
+		href="<?php echo SITE_URL?>/admin/action.php/pirepadmin/viewlog?pirepid=<?php echo $pirep->pirepid;?>">View Log Details</a> | 
+	<a id="dialog" class="jqModal"
+			href="<?php echo SITE_URL?>/admin/action.php/operations/viewmap?type=pirep&id=<?php echo $pirep->pirepid;?>">View Flight Route</a>
 
 	<div id="details_dialog_<?php echo $pirep->pirepid;?>" style="display:none">
 	<p style="margin-left: 7px">Click "Edit" to view additional details (finances, etc)</p>

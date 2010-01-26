@@ -6,6 +6,7 @@ echo '<pre>';
 $schedules = SchedulesData::findSchedules(array('s.flighttype'=>'P'));
 $idx = rand(0, count($schedules)-1);
 $sched = $schedules[$idx];
+unset($schedules);
 
 echo '<strong>Filing report...</strong><br />';
 $data = array(

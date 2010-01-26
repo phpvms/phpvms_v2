@@ -38,10 +38,12 @@
 
 <h1>Build ##REVISION## (Version 2.0.##REVISION##)</h1>
 <ul>
-    <li>Financial backend overhauled, all data is in real-time, and more accurate.</li>
-    <li>Expenses are saved, so your expenses will stick and stay different, month-to-month.</li>
+	<li>Navigation data included for routes, more accurate maps for schedules, ACARS and PIREPS</li>
+    <li>Financial backend overhauled, all data is in real-time, and more accurate</li>
+    <li>Expenses are saved, so your expenses will stick and stay different, month-to-month</li>
     <li>All charts/graphs replaced with new OFC (Open Flash Charts)</li>
     <li>Google Maps replaced with v3 API (no more key needed! :)</li>
+    <li><a href="http://bugs.phpvms.net/query?status=closed&group=resolution&milestone=phpVMS+2.1.x" target="_blank">And numerous bug fixes</a></li>
 </ul>
 <strong>Templates Changed</strong>:</p>
 <ul>
@@ -49,6 +51,11 @@
 	<li>acarsmap.tpl - Completely changed with map customizations (I would just start from scratch)</li>
 	<li>route_map.tpl - Rewritten to accomodate v3 API (I would just start from scratch) </li>
 	<li>profile_myroutesmap.tpl - Removed, replaced with flown_routes_map.tpl, used for RouteMap</li>
+	<li>pirep_new.tpl - Added field for route</li>
+	<li>registration_customfields.tpl - Bug fixed with textarea field type</li>
+	<li>finance_summarysheet.tpl - Updated for new finances</li>
+	<li>finance_header.tpl - Updated for new finances</li>
+	<li>finances_balancesheet.tpl - Updates for new finances</li>
 </ul>
 
 <h1>Build 854 (Version 2.0.854)</h1>

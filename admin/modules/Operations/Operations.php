@@ -52,6 +52,44 @@ class Operations extends CodonModule
 		$this->schedules();
 	}
 
+	public function viewmap()
+	{
+		if($this->get->type === 'pirep')
+		{
+			$data = PIREPData::getReportDetails($this->get->id);
+		}
+		
+		elseif($this->get->type === 'schedule')
+		{
+			$data = SchedulesData::getScheduleDetailed($this->get->id);
+		}
+		
+		elseif($this->get->type === 'preview')
+		{
+			$data = new stdClass();
+			$data->route = $this->get->route;
+			
+			$depicao = OperationsData::getAirportInfo($this->get->depicao);
+			$arricao = OperationsData::getAirportInfo($this->get->arricao);
+			
+			$data->deplat = $depicao->lat;
+			$data->deplng = $depicao->lng;
+			$data->depname = $depicao->name;
+			
+			$data->arrlat = $arricao->lat;
+			$data->arrlng = $arricao->lng;
+			$data->arrname = $arricao->name;
+			
+			unset($depicao);
+			unset($arricao);
+			
+			$data->route_details = NavData::parseRoute($data);
+		}
+		
+		$this->set('mapdata', $data);
+		$this->render('route_map.tpl');
+	}
+	
 	public function addaircraft()
 	{
 		$this->set('title', 'Add Aircraft');
@@ -628,7 +666,7 @@ class Operations extends CodonModule
 		}
 		
 		# Check if the schedule exists
-		$sched = SchedulesData::GetScheduleByFlight($this->post->code, $this->post->flightnum);
+		$sched = SchedulesData::getScheduleByFlight($this->post->code, $this->post->flightnum);
 		if(is_object($sched))
 		{
 			$this->set('message', 'This schedule already exists!');
@@ -678,7 +716,7 @@ class Operations extends CodonModule
 			$this->render('core_error.tpl');
 			return;
 		}
-
+		
         $this->set('message', 'The schedule "'.$this->post->code.$this->post->flightnum.'" has been added');
 		$this->render('core_success.tpl');
 		
@@ -704,8 +742,7 @@ class Operations extends CodonModule
 		$this->post->flightlevel = str_replace(',', '', $this->post->flightlevel);
 		$this->post->flightlevel = str_replace(' ', '', $this->post->flightlevel);
 		
-		$data = array(	'id'=>$this->post->id,
-						'code'=>$this->post->code,
+		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
 						'depicao'=>$this->post->depicao,
 						'arricao'=>$this->post->arricao,
@@ -723,14 +760,17 @@ class Operations extends CodonModule
 						'notes'=>$this->post->notes,
 						'enabled'=>$enabled);
 		
-		$val = SchedulesData::EditSchedule($data);
+		$val = SchedulesData::editScheduleFields($this->post->id, $data);
 		if(!$val)
 		{
 			$this->set('message', 'There was an error editing the schedule: '.DB::error());
 			$this->render('core_error.tpl');
 			return;
 		}
-
+		
+		# Parse the route:
+		SchedulesData::getRouteDetails($this->post->id, $this->post->route);
+		
 		$this->set('message', 'The schedule "'.$this->post->code.$this->post->flightnum.'" has been edited');
 		$this->render('core_success.tpl');
 		

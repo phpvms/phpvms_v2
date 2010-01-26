@@ -105,7 +105,8 @@ class Registration extends CodonModule
 				return false;
 			}
 			
-			if(RegistrationData::AddUser($data) == false)
+			$val = RegistrationData::AddUser($data);
+			if($val == false)
 			{
 				$this->set('error', RegistrationData::$error);
 				$this->render('registration_error.tpl');

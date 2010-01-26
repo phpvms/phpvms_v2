@@ -110,7 +110,7 @@ var acars_map_defaults = {
 </script>
 
 <?php
-/* This is the template for the little map bubble which pops up when you click on a flight
+/*	This is the template for the little map bubble which pops up when you click on a flight
 	Same principle as above, keep the <%=...%> tags intact. The same variables are available
 	to use here as are available above.
 */
@@ -121,5 +121,36 @@ var acars_map_defaults = {
 <strong>Flight <%=flight.flightnum%></strong> (<%=flight.depicao%> to <%=flight.arricao%>)<br />
 <strong>Status: </strong><%=flight.phasedetail%><br />
 <strong>Dist/Time Remain: </strong><%=flight.distremaining%> <?php echo Config::Get('UNITS');?> / <%=flight.timeremaining%><br />
+</span>
+</script>
+
+<?php
+/*	This is a small template for information about a navpoint popup 
+	
+	Variables available:
+	
+	<%=nav.title%>
+	<%=nav.name%>
+	<%=nav.freq%>
+	<%=nav.lat%>
+	<%=nav.lng%>
+	<%=nav.type%>	2=NDB 3=VOR 4=DME 5=FIX 6=TRACK
+ */
+?>
+<script type="text/html" id="navpoint_bubble">
+<span style="font-size: 10px; text-align:left; width: 100%" align="left">
+<strong>Name: </strong><%=nav.title%> (<%=nav.name%>)<br />
+<strong>Type: </strong>
+<?php	/* Show the type of point */ ?>
+<% if(nav.type == 2) { %> NDB <% } %>
+<% if(nav.type == 3) { %> VOR <% } %>
+<% if(nav.type == 4) { %> DME <% } %>
+<% if(nav.type == 5) { %> FIX <% } %>
+<% if(nav.type == 6) { %> TRACK <% } %>
+<br />
+<?php	/* Only show frequency if it's not a 0*/ ?>
+<% if(nav.freq != 0) { %>
+<strong>Frequency: </strong><%=nav.freq%>
+<% } %>
 </span>
 </script>

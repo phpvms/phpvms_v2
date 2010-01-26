@@ -27,7 +27,7 @@ if($extrafields)
 		}
 		elseif($field->type == 'textarea')
 		{
-			echo '<textarea class="customfield_textarea"></textarea>';
+			echo '<textarea name="'.$field->fieldname.'" class="customfield_textarea"></textarea>';
 		}
 		else
 		{

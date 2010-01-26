@@ -216,17 +216,16 @@ class Import extends CodonModule
 							'flighttype'=>$flighttype);
 				
 			# Check if the schedule exists:
-			if(($schedinfo = SchedulesData::GetScheduleByFlight($code, $flightnum)))
+			if(($schedinfo = SchedulesData::getScheduleByFlight($code, $flightnum)))
 			{
 				# Update the schedule instead
-				$data['id'] = $schedinfo->id;
-				$val = SchedulesData::EditSchedule($data);
+				$val = SchedulesData::updateScheduleFields($schedinfo->id, $data);
 				$updated++;
 			}
 			else
 			{
 				# Add it
-				$val = SchedulesData::AddSchedule($data);
+				$val = SchedulesData::addSchedule($data);
 				$added++;
 			}
 			

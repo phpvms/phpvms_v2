@@ -176,20 +176,18 @@ echo 'Starting the update...<br />';
 		
 		echo 'Found '.StatsData::TotalHours().' total hours, updated<br />';	
 	}
-	
-	
+
 	if($version < 20854)
 	{
 		Installer::add_to_config('USERS_ONLINE_TIME', 20, 'The StatsData::UserOnline() function - how many minutes to check');
 		Installer::sql_file_update(SITE_ROOT . '/install/update_854.sql');
 	}
 	
-
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 	Installer::sql_file_update(SITE_ROOT . '/install/airways.sql');
 
 	/* Update expenses */
-	FinanceData::updateAllExpenses();
+	//FinanceData::updateAllExpenses();
 
 	/* Manually specify a revenue value for all PIREPs */
 	$allpireps = PIREPData::findPIREPS(array());

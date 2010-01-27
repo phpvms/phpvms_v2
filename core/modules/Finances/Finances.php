@@ -38,13 +38,13 @@ class Finances extends CodonModule
 		$finance_data = $this->getmonthly($check);
 		$finance_data = FinanceData::calculateFinances($finance_data[0]);
 		
-		OFCharts::add_data_set('Fuel Costs', $finance_data->fuelprice);
-		OFCharts::add_data_set('Pilot Pay', $finance_data->pilotpay);
+		OFCharts::add_data_set('Fuel Costs', floatval($finance_data->fuelprice));
+		OFCharts::add_data_set('Pilot Pay', floatval($finance_data->pilotpay));
 		
 		// Now expenses
 		foreach($finance_data->expenses as $expense)
 		{
-			OFCharts::add_data_set($expense->name, $expense->total);
+			OFCharts::add_data_set($expense->name, floatval($expense->total));
 		}
 		
 		echo OFCharts::create_pie_graph('Expenses breakdown');
@@ -82,6 +82,11 @@ class Finances extends CodonModule
 		$gross_data = array();
 		$fuel_data = array();
 		$expense_data = array();
+		
+		if(!$finance_data)
+		{
+			$finance_data = array();
+		}
 		
 		foreach($finance_data as $month)
 		{
@@ -156,7 +161,7 @@ class Finances extends CodonModule
 		$params = array(
 			'p.accepted' => PIREP_ACCEPTED,
 			"DATE_FORMAT(p.submitdate, '%Y%m') = {$yearmonth}"
-			);
+		);
 		
 		//$params = array_merge($params, $this->formfilter());
 		return PIREPData::getIntervalData($params);

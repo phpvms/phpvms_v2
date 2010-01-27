@@ -101,6 +101,11 @@ class PIREPData extends CodonData
 		
 		$data = self::getIntervalData($where_params);
 	
+		if(!$data)
+		{
+			return array();
+		}
+		
 		foreach($data as $month)
 		{
 			$month = FinanceData::calculateFinances($month);
@@ -133,7 +138,6 @@ class PIREPData extends CodonData
 		}
 		
 		return self::getIntervalData($where_params, 'D');
-		
 	}
 	
 	

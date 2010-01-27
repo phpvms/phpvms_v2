@@ -3,6 +3,7 @@
  * 
  * 
  */
+ 
 ?>
 <h3>My Routes Map</h3>
 <div class="mapcenter" align="center">
@@ -37,32 +38,31 @@ foreach($allschedules as $route)
 	else
 		$shown[] = $route->code.$route->flightnum;
 	
-	if(empty($route->arrlat) || empty($route->arrlong)
-		|| empty($route->deplat) || empty($route->deplong))
+	if(empty($route->arrlat) || empty($route->arrlng)
+		|| empty($route->deplat) || empty($route->deplng))
 	{
 		continue;
 	}
 ?>
-dep_location = new google.maps.LatLng(<?php echo $route->deplat?>, <?php echo $route->deplong?>);
-arr_location = new google.maps.LatLng(<?php echo $route->arrlat?>, <?php echo $route->arrlong?>);
+	dep_location = new google.maps.LatLng(<?php echo $route->deplat?>, <?php echo $route->deplng?>);
+	arr_location = new google.maps.LatLng(<?php echo $route->arrlat?>, <?php echo $route->arrlng?>);
 
-flightMarkers[flightMarkers.length] = new google.maps.Marker({
-	position: dep_location,
-	map: map,
-	title: "<?php echo "$route->depname ($route->depicao)";?>"
-});
+	flightMarkers[flightMarkers.length] = new google.maps.Marker({
+		position: dep_location,
+		map: map,
+		title: "<?php echo "$route->depname ($route->depicao)";?>"
+	});
 
-flightMarkers[flightMarkers.length] = new google.maps.Marker({
-	position: arr_location,
-	map: map,
-	title: "<?php echo "$route->arrname ($route->arricao)";?>"
-});
+	flightMarkers[flightMarkers.length] = new google.maps.Marker({
+		position: arr_location,
+		map: map,
+		title: "<?php echo "$route->arrname ($route->arricao)";?>"
+	});
 
-var flightPath = new google.maps.Polyline({
-	path: [dep_location, arr_location],
-	strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2
-}).setMap(map);
-
+	var flightPath = new google.maps.Polyline({
+		path: [dep_location, arr_location],
+		strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2
+	}).setMap(map);
 <?php
 }
 ?>

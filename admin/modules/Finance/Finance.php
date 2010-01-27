@@ -52,13 +52,13 @@ class Finance extends CodonModule
 		$finance_data = $this->getmonthly($check);
 		$finance_data = FinanceData::calculateFinances($finance_data[0]);
 		
-		OFCharts::add_data_set('Fuel Costs', $finance_data->fuelprice);
-		OFCharts::add_data_set('Pilot Pay', $finance_data->pilotpay);
+		OFCharts::add_data_set('Fuel Costs', floatval($finance_data->fuelprice));
+		OFCharts::add_data_set('Pilot Pay', floatval($finance_data->pilotpay));
 		
 		// Now expenses
 		foreach($finance_data->expenses as $expense)
 		{
-			OFCharts::add_data_set($expense->name, $expense->total);
+			OFCharts::add_data_set($expense->name, floatval($expense->total));
 		}
 		
 		echo OFCharts::create_pie_graph('Expenses breakdown');
@@ -66,7 +66,8 @@ class Finance extends CodonModule
 	
 	public function viewmonthchart()
 	{
-		$params = $this->formfilter();		
+		$params = $this->formfilter();
+		
 		/**
 		 * Check the first letter in the type
 		 * m#### - month

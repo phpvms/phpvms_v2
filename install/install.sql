@@ -141,7 +141,7 @@ CREATE TABLE `phpvms_aircraft` (
 
 CREATE TABLE IF NOT EXISTS `phpvms_airways` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `airway` varchar(5) NOT NULL,
+  `name` varchar(5) NOT NULL,
   `points` text NOT NULL,
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id`)

@@ -79,6 +79,10 @@ class ACARS extends CodonModule
 				$flight->route_details = unserialize($flight->route_details);
 			}
 			
+			if(empty($flight->route_details))
+			{
+				$flight->route_details = array();
+			}
 			
 			$c = (array) $flight; // Convert the object to an array
 			

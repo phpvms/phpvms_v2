@@ -296,32 +296,53 @@ class SchedulesData extends CodonData
 	 * Also converts to proper type based on UNIT setting
 	 *
 	 */
-	public static function distanceBetweenPoints($lat1, $lon1, $lat2, $lon2)
+	public static function distanceBetweenPoints($lat1, $lng1, $lat2, $lng2)
 	{
-		$distance = (3958 * 3.1415926 * sqrt(($lat2-$lat1) * ($lat2-$lat1) 
-					+ cos($lat2/57.29578) * cos($lat1/57.29578) * ($lon2-$lon1) * ($lon2-$lon1))/180);
-		
-		# Distance is in miles
-		#	Do proper conversions if needed
-		#	Return in nm by default
-		
-		if(strtolower(Config::Get('UNITS')) == 'mi')
-		{
-			# Leave it in miles
-			return $distance;
-		}
-		elseif(strtolower(Config::Get('UNITS')) == 'km')
-		{
-			# Convert to km
-			return $distance * 1.609344;
-		}
+		/*	Use a radius depending on the final units we want to be in 
+			New formula, from http://jan.ucc.nau.edu/~cvm/latlon_formula.html
+		 */
+		if(strtolower(Config::Get('UNITS')) === 'mi') # miles
+			$radius = 3963.192;
+		elseif(strtolower(Config::Get('UNITS')) === 'km') # Convert to km
+			$radius = 6378.14;
 		else
-		{
-			# Convert to nm
-			return $distance * .868976242; # Convert to nautical miles
-		}
+			$radius = 3443.92;
+			
+		/*
+		$distance = ($radius * 3.1415926 * sqrt(($lat2-$lat1) * ($lat2-$lat1)
+					+cos($lat2/57.29578) * cos($lat1/57.29578) * ($lng2-$lng1) * ($lng2-$lng1))/180);
+				
+		return $distance;
+		*/
+		$lat1 = deg2rad(floatval($lat1));
+		$lat2 = deg2rad(floatval($lat2));
+		$lng1 = deg2rad(floatval($lng1));
+		$lng2 = deg2rad(floatval($lng2));
+		
+		$a = sin(($lat2 - $lat1)/2.0);
+		$b = sin(($lng2 - $lng1)/2.0);
+		$h = ($a*$a) + cos($lat1) * cos($lat2) * ($b*$b);
+		$theta = 2 * asin(sqrt($h)); # distance in radians
+		
+		$distance = $theta * $radius;
+		
+		return $distance;
+				
+		/* Convert all decimal degrees to radians */
+		
+		$dlat = $lat2 - $lat1;
+		$dlng = $lng2 - $lng1;
+		
+		$a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlng / 2) * sin($dlng / 2);
+		$c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+		$distance = $r * $c;
+		
+		return $distance;
+		/*$distance = acos(cos($lat1)*cos($lng1)*cos($lat2)*cos($lng2) 
+							+ cos($lat1)*sin($lng1)*cos($lat2)*sin($lng2) 
+							+ sin($lat1)*sin($lat2)) * $r;
 
-		return round($distance, 2);
+		return floatval(round($distance, 2));*/
 	}
 	
 	/**

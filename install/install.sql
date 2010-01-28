@@ -153,8 +153,8 @@ CREATE TABLE IF NOT EXISTS `phpvms_navdb` (
   `name` varchar(5) NOT NULL,
   `title` varchar(10) NOT NULL,
   `freq` varchar(7) NOT NULL,
-  `lat` float NOT NULL,
-  `lng` float NOT NULL,
+  `lat` float (8,6) NOT NULL,
+  `lng` float (9,6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM;

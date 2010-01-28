@@ -123,13 +123,11 @@ class NavData extends CodonData
 					unset($point_name);
 					unset($matches);
 					unset($tmp);
-					
-					continue;
 				}
 				
 				
 				//48N015W
-				preg_match('/^(\d*)([A-Za-z]).(\d*)([A-Za-z])/', $line, $matches);
+				preg_match('/^(\d*)([A-Za-z]).(\d*)([A-Za-z])/', $point_name, $matches);
 				
 				/*	Means it is a track, so go into processing it */
 				if(count($matches) > 0)
@@ -137,6 +135,8 @@ class NavData extends CodonData
 					# Convert to format
 				}
 
+				/* Don't match anything, so skip it */
+				continue;
 			}
 			elseif($results_count == 1)
 			{
@@ -147,29 +147,38 @@ class NavData extends CodonData
 				/* There is more than one, so find the one with the shortest
 					distance from the previous point out of all the ones */
 				
+				print_r($point_array[$point_name]);
 				$index = 0; $dist = 0;
 				
+				echo "starting coords: {$fromlat} {$fromlng}<br>";
 				/* Set the inital settings */
-				$lowest = $point_array[$point_name][0];
+				$lowest_index = 0;
+				$lowest = $point_array[$point_name][$lowest_index];
 				$lowest_dist = SchedulesData::distanceBetweenPoints($fromlat, $fromlng, $lowest->lat, $lowest->lng);
-
+				
+				echo "inital lowest dist is $lowest_dist<br>";
 				foreach($point_array[$point_name] as $p)
 				{
+					print_r($p);
 					$dist = SchedulesData::distanceBetweenPoints($fromlat, $fromlng, $p->lat, $p->lng);
 					
+					echo "dist for $point_name ($fromlat $fromlng x {$p->lat} {$p->lng}) = $dist<br>";
 					if($dist < $lowest_dist)
 					{
-						$lowest = $p;
+						echo "chosing the lowest: $dist<br>";
+						$lowest_index = $index;
 						$lowest_dist = $dist;
 					}
 					
 					$index++;
 				}
 				
-				$fromlat = $lowest->lat;
-				$fromlng = $lowest->lng;
-				$return[] = $lowest;
+				$return[] = $point_array[$point_name][$lowest_index];
 			}
+			
+			$last = count($return);		
+			$fromlat = $return[$last-1]->lat;
+			$fromlng = $return[$last-1]->lng;
 		}
 	
 		return $return;

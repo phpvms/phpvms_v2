@@ -372,12 +372,6 @@ class ACARSData extends CodonData
 			//$cutofftime = $cutofftime / 60;			
 		}
 		
-		/*$sql = "DELETE FROM ".TABLE_PREFIX."acarsdata a
-					WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' HOUR) > a.`lastupdate`'";
-		
-		DB::query($sql);
-		*/	
-		
 		$sql = 'SELECT a.*, c.name as aircraftname,
 					p.code, p.pilotid as pilotid, p.firstname, p.lastname,
 					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
@@ -386,9 +380,14 @@ class ACARSData extends CodonData
 				LEFT JOIN '.TABLE_PREFIX.'aircraft c ON a.`aircraft`= c.`registration`
 				LEFT JOIN '.TABLE_PREFIX.'pilots p ON a.`pilotid`= p.`pilotid`
 				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = a.depicao
-				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao';
-				//WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = a.arricao ';
+		
+		if($cutofftime !== 0)
+		{
+			$sql .= 'WHERE DATE_SUB(NOW(), INTERVAL '.$cutofftime.' MINUTE) <= a.`lastupdate`';
+		}
 		
 		return DB::get_results($sql);
+		DB::debug();
 	}
 }

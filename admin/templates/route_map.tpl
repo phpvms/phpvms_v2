@@ -6,7 +6,7 @@
 <script type="text/javascript">
 var options = {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
-	disableDefaultUI: true,
+	disableDefaultUI: true
 }
 
 var map = new google.maps.Map(document.getElementById("routemap"), options);

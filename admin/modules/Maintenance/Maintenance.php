@@ -42,7 +42,7 @@ class Maintenance extends CodonModule
 		echo '<p><strong>Updating schedules...</strong></p>';
 		
 		//$allschedules = SchedulesData::GetSchedulesNoDistance();
-		$allschedules = SchedulesData::findSchedules(array('s.distance' => 0));
+		$allschedules = SchedulesData::findSchedules(array());
 		
 		if(!$allschedules)
 		{
@@ -56,7 +56,7 @@ class Maintenance extends CodonModule
 			$distance = SchedulesData::distanceBetweenPoints($sched->deplat, $sched->deplng, 
 																$sched->arrlat, $sched->arrlng);	
 																
-			$distance = sprintf("%.2f", $distance);						
+			$distance = sprintf("%.6f", $distance);						
 			echo "$sched->code$sched->flightnum - $sched->depname to $sched->arrname "
 				."is $distance ".Config::Get('UNIT').'<br />';
 				

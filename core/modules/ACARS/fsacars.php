@@ -138,8 +138,8 @@ switch($acars_action)
 echo "OK
 $route->depicao
 $route->arricao
-$route->flightlevel
 
+$route->flightlevel
 $route->aircraft
 
 

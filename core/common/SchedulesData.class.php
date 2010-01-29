@@ -531,8 +531,6 @@ class SchedulesData extends CodonData
 			return false;
 		}
 		
-		
-		
 		if(isset($fields['depicao']) && isset($fields['arricao']))
 		{
 			if($fields['depicao'] == $fields['arricao'])

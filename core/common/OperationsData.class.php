@@ -337,7 +337,7 @@ class OperationsData extends CodonData
 		if($data['icao'] == '')
 			return false;
 			
-		$data['icao'] = strtoupper($data['icao']);
+		$data['icao'] = strtoupper(DB::escape($data['icao']));
 		$data['name'] = DB::escape($data['name']);
 
 		if($data['hub'] === true)
@@ -403,6 +403,7 @@ class OperationsData extends CodonData
 	
 	public static function RemoveAirport($icao)
 	{
+		$icao = DB::escape($icao);
 		$icao = strtoupper($icao);
 		$sql = "DELETE FROM ".TABLE_PREFIX."airports WHERE `icao`='{$icao}'";
 		
@@ -418,6 +419,7 @@ class OperationsData extends CodonData
 	 */
 	public static function getAirportInfo($icao)
 	{
+		$icao = strtoupper(DB::escape($icao));
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
 					WHERE `icao`=\''.$icao.'\'';
 		
@@ -435,11 +437,11 @@ class OperationsData extends CodonData
 	 */
 	public static function getAirportDistance($depicao, $arricao)
 	{
-		if(!is_object($depicao) && is_numeric($depicao))
-			$depicao = self::GetAirportInfo($depicao);
+		if(!is_object($depicao))
+			$depicao = self::getAirportInfo($depicao);
 			
-		if(!is_object($arricao) && is_numeric($arricao))
-			$arricao = self::GetAirportInfo($arricao);
+		if(!is_object($arricao))
+			$arricao = self::getAirportInfo($arricao);
 		
 		return SchedulesData::distanceBetweenPoints($depicao->lat, $depicao->lng, $arricao->lat, $arricao->lng);	
 	}

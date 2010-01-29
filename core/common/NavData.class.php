@@ -146,26 +146,20 @@ class NavData extends CodonData
 			{
 				/* There is more than one, so find the one with the shortest
 					distance from the previous point out of all the ones */
-				
-				print_r($point_array[$point_name]);
+			
 				$index = 0; $dist = 0;
 				
-				echo "starting coords: {$fromlat} {$fromlng}<br>";
 				/* Set the inital settings */
 				$lowest_index = 0;
 				$lowest = $point_array[$point_name][$lowest_index];
 				$lowest_dist = SchedulesData::distanceBetweenPoints($fromlat, $fromlng, $lowest->lat, $lowest->lng);
 				
-				echo "inital lowest dist is $lowest_dist<br>";
 				foreach($point_array[$point_name] as $p)
 				{
-					print_r($p);
 					$dist = SchedulesData::distanceBetweenPoints($fromlat, $fromlng, $p->lat, $p->lng);
 					
-					echo "dist for $point_name ($fromlat $fromlng x {$p->lat} {$p->lng}) = $dist<br>";
 					if($dist < $lowest_dist)
 					{
-						echo "chosing the lowest: $dist<br>";
 						$lowest_index = $index;
 						$lowest_dist = $dist;
 					}

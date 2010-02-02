@@ -651,10 +651,23 @@ class SchedulesData extends CodonData
 		return true;
 	}
 	
+	public static function deleteAllScheduleDetails()
+	{
+		$sql = 'UPDATE '.TABLE_PREFIX."schedules 
+				SET `route_details` = ''";
+				
+			$res = DB::query($sql);
+		
+		if(DB::errno() != 0)
+			return false;
+		
+		return true;
+	}
+	
 	public static function getAllBids()
 	{
 		$sql = 'SELECT  p.*, s.*, 
-						b.bidid as bidid, a.name as aircraft, a.registration
+						b.bidid as bidid, b.dateadded, a.name as aircraft, a.registration
 				FROM '.TABLE_PREFIX.'schedules s, 
 					 '.TABLE_PREFIX.'bids b,
 					 '.TABLE_PREFIX.'aircraft a,
@@ -794,7 +807,7 @@ class SchedulesData extends CodonData
 		$routeid = DB::escape($routeid);
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'bids (pilotid, routeid, dateadded)
-				VALUES ('.$pilotid.', '.$routeid.', CURDATE())';
+				VALUES ('.$pilotid.', '.$routeid.', NOW())';
 		
 		DB::query($sql);
 		

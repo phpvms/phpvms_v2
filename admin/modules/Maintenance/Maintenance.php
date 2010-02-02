@@ -185,4 +185,28 @@ class Maintenance extends CodonModule
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Reset PIREP finances');
 	}
+	
+	public function resetscheduleroute()
+	{
+		echo '<h3>Reset cached schedule routes</h3> 
+				Resetting... <br />';
+				
+		SchedulesData::deleteAllScheduleDetails();
+		
+		echo 'Completed!';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset cached schedule route details');
+	}
+	
+	public function resetpireproute()
+	{
+		echo '<h3>Reset cached PIREP routes</h3> 
+				Resetting... <br />';
+		
+		PIREPData::deleteAllRouteDetails();
+		
+		echo 'Completed!';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Reset cached pirep route details');
+	}
 }

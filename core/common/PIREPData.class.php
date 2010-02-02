@@ -647,6 +647,20 @@ class PIREPData extends CodonData
 			information remains intact. Also, if the nav data changes, then 
 			the route is saved as it was 
 		 */
+		if(!empty($pirepdata['route']))
+		{
+			/*	They supplied some route information, so build up the data
+				based on that. It needs a certain structure passed, so build that */
+			$tmp = new stdClass();
+			$tmp->deplat = $depapt->lat;
+			$tmp->deplng = $depapt->lng;
+			$tmp->route = $pirepdata['route'];
+			
+			$pirepdata['route_details'] = NavData::parseRoute($tmp);
+			$pirepdata['route_details'] = serialize($pirepdata['route_details']);
+			unset($tmp);
+		}
+		
 		if(empty($pirepdata['route']) && !empty($sched->route))
 		{
 			$pirepdata['route'] = $sched->route;
@@ -665,29 +679,17 @@ class PIREPData extends CodonData
 				$pirepdata['route_details'] = $sched->route_details;
 			}
 		}
-		elseif(!empty($pirepdata['route']) && empty($pirepdata['route_details']))
-		{
-			/*	They supplied some route information, so build up the data
-				based on that. It needs a certain structure passed, so build that */
-			$tmp = new stdClass();
-			$tmp->deplat = $depapt->lat;
-			$tmp->deplng = $depapt->lng;
-			$tmp->route = $pirepdata['route'];
-			
-			$pirepdata['route_details'] = NavData::parseRoute($tmp);
-			$pirepdata['route_details'] = serialize($pirepdata['route_details']);
-			unset($tmp);
-		}
-		else
-		{
-			$pirepdata['route'] = '';
-			$pirepdata['route_details'] = '';
-		}
-		
 		
 		if(!empty($pirepdata['route_details']))
 		{
 			$pirepdata['route_details'] = DB::escape($pirepdata['route_details']);
+		}
+		
+		/*	This setting forces the next code to automatically
+			calculate a load value for this current PIREP */
+		if(Config::Get('PIREP_OVERRIDE_LOAD') == true)
+		{
+			$pirepdata['load'] == '';
 		}
 				
 		# Check the load, if it's blank then look it up
@@ -771,7 +773,7 @@ class PIREPData extends CodonData
 							'{$pirepdata['source']}',
 							{$pirepdata['exported']},
 							'{$pirepdata['rawdata']}')";
-							
+		
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
 		
@@ -1115,6 +1117,21 @@ class PIREPData extends CodonData
 		}
 		
 		self::UpdatePIREPFeed();
+	}
+	
+	public static function deleteAllRouteDetails()
+	{
+		$sql = "UPDATE ".TABLE_PREFIX."pireps
+				SET `route_details` = ''";
+		
+		$row = DB::get_row($sql);
+		
+		if(!$row)
+		{
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public static function UpdatePIREPFeed()

@@ -13,6 +13,7 @@ $data = array(
 	'pilotid'=>1,
 	'code'=>$sched->code,
 	'flightnum'=>$sched->flightnum,
+	'route' => 'HYLND DCT PUT J42 RBV J230 BYRDD J48 MOL DCT FLCON',
 	'depicao'=>$sched->depicao,
 	'arricao'=>$sched->arricao,
 	'aircraft'=>$sched->aircraft,

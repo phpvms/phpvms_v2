@@ -177,7 +177,6 @@ class Import extends CodonModule
 			if($daysofweek == '')
 				$daysofweek = '0123456';
 			
-			
 			# Check the distance
 			
 			if($distance == 0 || $distance == '')
@@ -186,7 +185,6 @@ class Import extends CodonModule
 			}
 			
 			$flighttype = strtoupper($flighttype);
-			
 			
 			if($enabled == '0')
 				$enabled = false;
@@ -198,7 +196,6 @@ class Import extends CodonModule
 			
 			$data = array(	'code'=>$code,
 							'flightnum'=>$flightnum,
-							'leg'=>$leg,
 							'depicao'=>$depicao,
 							'arricao'=>$arricao,
 							'route'=>$route,
@@ -246,7 +243,7 @@ class Import extends CodonModule
 			else
 			{
 				$total++;
-				echo "Imported $code$flightnum ($depicao to $arricao)<br />";
+				echo "Imported {$code}{$flightnum} ({$depicao} to {$arricao})<br />";
 			}
 		}
 		

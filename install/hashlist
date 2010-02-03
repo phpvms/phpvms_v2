@@ -296,7 +296,7 @@ e2fbd7d4574fde51e0da839fdece54d9  *./admin/modules/PilotAdmin/PilotAdmin.php
 cf0e7f278179490b5a610846ee6b0cb0  *./admin/modules/MassMailer/MassMailer.php
 9c5a03bde5cab3901a6dfa9eac1fefdb  *./admin/modules/SiteCMS/SiteCMS.php
 c5e38be09ab388d1b32bde4713d5b9bc  *./admin/modules/Operations/Operations.php
-d340ed0e051e7cb825ec9338666310ff  *./admin/modules/Import/Import.php
+bde8ef23e476869b5c137a2b0bc738de  *./admin/modules/Import/Import.php
 08a88d8c1c1658dd6d174e19e296004f  *./admin/modules/Settings/Settings.php
 2b4cef47625cffc5a952c311dc812f01  *./admin/modules/Maintenance/Maintenance.php
 ad9f6b7d319ad6c474e800fea5834e6c  *./admin/modules/Dashboard/Dashboard.php

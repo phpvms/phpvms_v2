@@ -83,7 +83,8 @@ class PilotData extends CodonData
 	 */
 	public static function getPilotAvatar($pilotid)
 	{
-		if(is_numeric($pilotid)){
+		if(is_numeric($pilotid))
+		{
 			$pilot = self::getPilotData($pilotid);
 			$pilotid = self::getPilotCode($pilot->code, $pilot->pilotid);
 		}

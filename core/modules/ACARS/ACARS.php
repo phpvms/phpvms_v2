@@ -70,7 +70,7 @@ class ACARS extends CodonModule
 		{	
 			/* Try to get the flight route from the parent
 				schedule, if at all possible */
-			if(empty($flight->route_details) && !empty($flight->route))
+			/*if(empty($flight->route_details) && !empty($flight->route))
 			{
 				$flight->route_details = NavData::parseRoute($flight);
 			}
@@ -82,6 +82,15 @@ class ACARS extends CodonModule
 			if(empty($flight->route_details))
 			{
 				$flight->route_details = array();
+			}*/
+			
+			if(empty($flight->route))
+			{
+				$flight->route_details = array();
+			}
+			else
+			{
+				$flight->route_details = NavData::parseRoute($flight->route);
 			}
 			
 			$c = (array) $flight; // Convert the object to an array
@@ -99,7 +108,6 @@ class ACARS extends CodonModule
 				$c['phasedetail'] = 'Enroute';
 			}
 			
-			
 			/* If no heading was passed via ACARS app then calculate it
 				This should probably move to inside the ACARSData function, so then
 				 the heading is always there for no matter what the calcuation is
@@ -109,7 +117,7 @@ class ACARS extends CodonModule
 				/* Calculate an angle based on current coords and the
 					destination coordinates */
 				
-				$flight->heading = intval(atan2(($flight->lat - $flight->arrlat), ($flight->lng - $flight->arrlng)) * 180/3.14);
+				$flight->heading = intval(atan2(($flight->lat - $flight->arrlat), ($flight->lng - $flight->arrlng)) * 180 / 3.14);
 				//$flight->heading *= intval(180/3.14159);
 				
 				if(($flight->lng - $flight->arrlng) < 0)
@@ -123,8 +131,6 @@ class ACARS extends CodonModule
 				}
 			}
 			
-			//$c['icon'] = SITE_URL.'/lib/images/inair/'.$flight->heading.'.png';
-		
 			// Little one-off fixes to normalize data
 			$c['distremaining'] = $c['distremain'];
 			$c['pilotname'] = $c['firstname'] . ' ' . $c['lastname'];

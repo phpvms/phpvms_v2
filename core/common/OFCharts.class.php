@@ -187,6 +187,7 @@ class OFCharts extends CodonData
 		
 		$x_labels = new x_axis_labels();
 		$x_labels->set_labels( $x_axis_titles );
+		$x_labels->set_vertical();
 		self::$x_axis->set_labels( $x_labels );
 		
 		$range = self::get_range($range_values);

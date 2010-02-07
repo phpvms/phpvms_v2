@@ -91,13 +91,14 @@ var acars_map_defaults = {
 	<%=flight.aircraft%>				Gives the registration
 	<%=flight.aircraftname%>			Gives the full name
 	<%=flight.client%>					FSACARS/Xacars/FSFK, etc
+	<%=flight.trclass%>					"even" or "odd"
 	
 	You can also use logic in the templating, if you so choose:
 	http://ejohn.org/blog/javascript-micro-templating/
 */
 ?>
 <script type="text/html" id="acars_map_row">
-<tr class="<%=flight.class%>">
+<tr class="<%=flight.trclass%>">
 <td><a href="<?php echo url('/profile/view');?>/<%=flight.pilotid%>"><%=flight.pilotid%> - <%=flight.pilotname%></a></td>
 <td><%=flight.flightnum%></td>
 <td><%=flight.depicao%></td>

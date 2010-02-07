@@ -62,7 +62,7 @@ echo $updateinfo;
 	Added in 2.0!
 */
 $chart_width = '800';
-$chart_height = '200';
+$chart_height = '300';
 
 /* Don't need to change anything below this here */
 ?>

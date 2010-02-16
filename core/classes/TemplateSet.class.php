@@ -195,10 +195,22 @@ class TemplateSet
 			$tpl_name .= $this->tpl_ext;
 		}
 		
-		if($force_base) 
+		if($force_base === true) 
 		{
 			$old_tpl = $this->template_path;
 			$this->template_path = Config::Get('BASE_TEMPLATE_PATH');
+			
+			if($checkskin === true)
+			{
+				if(defined('SKINS_PATH') && file_exists(SKINS_PATH . DS . $tpl_name))
+				{
+					$tpl_path = SKINS_PATH . DS . $tpl_name;
+				}
+				else
+				{
+					$tpl_path = $this->template_path . DS . $tpl_name;
+				}
+			}
 		}
 
 		if((!defined('ADMIN_PANEL') || $force_base == true) && $checkskin == true)

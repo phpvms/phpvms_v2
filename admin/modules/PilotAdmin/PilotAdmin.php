@@ -446,7 +446,7 @@ class PilotAdmin extends CodonModule
 		# Send pilot notification
 		$subject = Lang::gs('email.register.accepted.subject');
 		$this->set('pilot', $pilot);
-		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true);
+		$message = Template::GetTemplate('email_registrationaccepted.tpl', true, true, true);
 	
 		Util::SendEmail($pilot->email, $subject, $message);
 		

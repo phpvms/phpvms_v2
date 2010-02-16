@@ -193,6 +193,10 @@ Config::Set('EMAIL_SMTP_USE_AUTH', false);
 Config::Set('EMAIL_SMTP_USER', '');
 Config::Set('EMAIL_SMTP_PASS', '');
 
+# Set specific email addresses to send notifications to
+Config::Set('EMAIL_NEW_REGISTRATIONS', '');
+Config::Set('EMAIL_NEW_PIREP', '');
+
 /* Can be 'geonames' or 'phpvms'.
 	Geonames will use the geonames.org server to look up the airport info
 	phpvms will use the phpVMS API server

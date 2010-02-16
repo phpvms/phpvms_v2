@@ -207,5 +207,4 @@ class Finances extends CodonModule
 		
 		return $all_finances;
 	}
-
 }

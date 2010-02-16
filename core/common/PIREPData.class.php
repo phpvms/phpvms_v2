@@ -410,10 +410,10 @@ class PIREPData extends CodonData
 			{
 				$row->route_details = unserialize($row->route_details);
 			}
-			/*elseif(empty($row->route_details) && ! empty($row->route))
+			else
 			{
-				$row->route_details = NavData::parseRoute($row);
-			}*/
+				$row->route_details = NavData::parseRow($row);
+			}
 			
 		} /* End "if $row" */
 		

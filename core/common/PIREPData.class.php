@@ -412,7 +412,7 @@ class PIREPData extends CodonData
 			}
 			else
 			{
-				$row->route_details = NavData::parseRow($row);
+				$row->route_details = NavData::parseRoute($row);
 			}
 			
 		} /* End "if $row" */

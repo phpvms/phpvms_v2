@@ -202,11 +202,11 @@ class SchedulesData extends CodonData
 		$schedule =  $schedules[0];
 		unset($schedules);
 		
-		$schedule->route_details = unserialize($schedule->route_details);
-		if(!empty($schedule->route) && !$schedule->route_details)
-		{
+		//$schedule->route_details = unserialize($schedule->route_details);
+		//if(!empty($schedule->route) && !$schedule->route_details)
+		//{
 			$schedule->route_details = SchedulesData::getRouteDetails($schedule->id, $schedule->route);
-		}
+		//}
 		
 		return $schedule;
 	}

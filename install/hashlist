@@ -26,7 +26,7 @@ dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
 66ae8c26a3f3b6fe8f5f30e6ded5cf98  *./install/airways.sql
 2519b58484663ac722794014a590380e  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
-c27fd7d48c5f6667446ae773b697f263  *./core/common/PIREPData.class.php
+007ca36621f959cc0ee7922e813f1d2f  *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411  *./core/common/Auth.class.php
 ec4345ce5e86fe8aa7c7024fc76299f0  *./core/common/RegistrationData.class.php
 e9f366eef6a7edfa08363e53c60b119f  *./core/common/StatsData.class.php
@@ -80,7 +80,7 @@ ad372ec0c4a30353c6f1c5998071ae52  *./core/templates/core_message.tpl
 dcef5ac924069aadba43f118e14e7423  *./core/templates/fsacars_config.tpl
 54e9582c6db85e96b250ce6088482c17  *./core/templates/schedule_briefing.tpl
 f97b700e8d526bb8e1cdcf280c9043fa  *./core/templates/fsfk_log_flightplan.tpl
-a412d1d8e4b01b10a08c606d0deceaf0  *./core/templates/core_htmlhead.tpl
+0fd2acfed1e47f15e2775fc706ccf669  *./core/templates/core_htmlhead.tpl
 2ec64f26aa0a6471617dd4da431cf76a  *./core/templates/registration_complete.tpl
 4414641c28e2edce447d0c539b1fe465  *./core/templates/registration_autoconfirm.tpl
 fb3f5202c70d6a52d95866f3d3921c91  *./core/templates/registration_customfields.tpl
@@ -149,7 +149,7 @@ f751c3edbd7122b5b9af1ad23ab0905a  *./core/classes/Util.class.php
 1966c214a45be09ce31c46df8843d6a5  *./core/classes/CodonModule.class.php
 6e6f0a981036a647df87a9c79557c0fa  *./core/classes/autoload.php
 3bece34fd0d7af246eaf448b3b2ebac8  *./core/classes/CodonAJAX.class.php
-84c84a43bfb70fbdc31efda9e70882eb  *./core/classes/ezDB_Base.class.php
+7394291966587ec33e9234ae8332ad90  *./core/classes/ezDB_Base.class.php
 468eeae842fe91ef425bfba3d59b58be  *./core/classes/Config.class.php
 b893bcd37bb9f4f723eb2a97326131a1  *./core/classes/ezDB.class.php
 ff6daf86c574e3be2722c33f8975cdab  *./core/classes/Template.class.php
@@ -205,7 +205,7 @@ c09144429c87ed3acba6d962f0d0b402  *./admin/templates/finance_summarysheet.tpl
 3ad0ff1e730dddd0bebe60f40e009199  *./admin/templates/pages_allpages.tpl
 d41d8cd98f00b204e9800998ecf8427e  *./admin/templates/pilots_addtogroup.tpl
 1978119c09819e6190c2c29e678b8d36  *./admin/templates/pirep_processed.tpl
-60633f4e6e719800f917be5c20a49091  *./admin/templates/core_htmlhead.tpl
+2dad8b2e464f56c07b0bf7bf282af816  *./admin/templates/core_htmlhead.tpl
 5e9fc7d48231c9df158b2f81e9291c24  *./admin/templates/finance_expenseform.tpl
 d41d8cd98f00b204e9800998ecf8427e  *./admin/templates/sidebar_central.tpl
 7dc531584bbd6ffea8b35c6217f89dcf  *./admin/templates/settings_pirepfieldsform.tpl

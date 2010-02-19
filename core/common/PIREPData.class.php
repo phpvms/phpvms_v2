@@ -750,6 +750,7 @@ class PIREPData extends CodonData
 							`log`,
 							`load`,
 							`fuelused`,
+							`expenselist`,
 							`source`,
 							`exported`,
 							`rawdata`)
@@ -770,6 +771,7 @@ class PIREPData extends CodonData
 							'$pirepdata[log]',
 							'{$pirepdata['load']}',
 							'{$pirepdata['fuelused']}',
+							'0',
 							'{$pirepdata['source']}',
 							{$pirepdata['exported']},
 							'{$pirepdata['rawdata']}')";

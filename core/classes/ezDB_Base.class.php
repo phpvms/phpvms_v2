@@ -529,14 +529,14 @@ class ezDB_Base
 			}
 		}
 			
-		if(!empty($params['order']))
-		{
-			$sql .= 'ORDER BY '.$params['order'];
-		}
-		
 		if(!empty($params['group']))
 		{
 			$sql .= ' GROUP BY '.$params['group'];
+		}
+		
+		if(!empty($params['order']))
+		{
+			$sql .= ' ORDER BY '.$params['order'];
 		}
 		
 		return $this->get_results($sql, $this->default_type);

@@ -19,6 +19,8 @@
 class NavData extends CodonData
 {
 
+	public static $nat_pattern = '/^([0-9]+)([A-Za-z]+)/';
+	
 	/**
 	 * Pass in a string with the route, and return back an array
 	 * with the data about each segment of the route. Pass a schedule
@@ -48,54 +50,110 @@ class NavData extends CodonData
 			return array();
 		}
 
-		$navpoints = explode(' ', $route_string);
-		# Expand out the route, parsing airway segments
-		$navpoints = self::getAllPoints($navpoints);
+		$navpoints = array();
+		$all_points = explode(' ', $route_string);
 		
-		# Now get all the details about the point
-		$point_array = self::getNavDetails($navpoints);
-		$total = count($navpoints);
-		
-		$nat_pattern = '/^([0-9]+)([A-Za-z]+)/';
-				
-		/*	How will this work - loop through each point, and
-			decide which one we'll use, determined by the
-			one which is the shortest distance from the previous 
+		foreach($all_points as $key => $value)
+		{
+			if(empty($value) === true)
+			{
+				continue;
+			}
 			
-			Go in the order of the ones passed in.
-		*/
+			$navpoints[] = strtoupper(trim($value));
+		}
+		
+		$allpoints = array();
+		$total = count($navpoints);
+		$airways = self::getAirways($navpoints);
+		
 		for($i = 0; $i < $total; $i++)
 		{
-			$point_name = $navpoints[$i];
-			$results_count = count($point_array[$point_name]);
-			
-			if($results_count == 0)
+			$name = self::cleanName($navpoints[$i]);
+			/*	the current point is an airway, so go through 
+				the airway list and add each corresponding point
+				between the entry and exit to the list. */
+			if(isset($airways[$name]))
 			{
-				/*	Check here if what's listed is part of a NAT or POT
-					They're listed in pairs
+				$entry_name = self::cleanName($navpoints[$i-1]);
+				$exit_name = self::cleanName($navpoints[$i+1]);
 				
-					5900N
-					02000W
-					
-					6000N
-					03000W
-				 */
-				preg_match($nat_pattern, $point_name, $matches);
-				
-				/*	Means it is a track, so go into processing it */
-				if(count($matches) > 0)
+				$entry = self::getPointIndex($entry_name, $airways[$name]);
+				$exit = self::getPointIndex($exit_name, $airways[$name]);
+								
+				if($entry == -1)
 				{
-					$name = $point_name;
+					$entry = $exit;
+				}
+				else
+				{
+					/*	Add information abotu the entry point in first,
+						if it's valid and exists */
+					$allpoints[$entry_name] = $airways[$name][$entry];
+				}
+				
+				if($exit == -1)
+				{
+					continue;
+				}
+				
+				if($entry < $exit)
+				{
+					# Go forwards through the list adding each one
+					for($l=$entry; $l<=$exit; $l++)
+					{
+						$allpoints[$airways[$name][$l]->name] = $airways[$name][$l];
+					}
+				}
+				elseif($entry > $exit)
+				{
+					# Go backwards through the list
+					for($l=$exit; $l>=$entry; $l--)
+					{
+						$point_name = self::cleanName($airways[$name][$l]->name);
+						$allpoints[$point_name] = $airways[$name][$l];
+					}
+				}
+				elseif($entry == $exit)
+				{
+					$point_name = self::cleanName($airways[$name][$l]->name);
+					$allpoints[$point_name] = $airways[$name][$entry];
+				}
+				
+				# Now add the exit point, and increment the main counter by one
+				if($exit > -1)
+				{
+					$allpoints[$exit_name] = $airways[$name][$exit];
+				}
+				
+				continue;
+			}
+			else
+			{
+				/* This nav point already exists in the list, don't add it
+					again */
+				if(isset($allpoints[$navpoints[$i]]))
+				{
+					continue;
+				}
+				
+				/*	Means it is a track, so go into processing it 
+					See if it's something like XXXX/YYYY
+				 */
+				if(substr_count($navpoints[$i], '/') > 0)
+				{
+					$name = $navpoints[$i];
+					$point_name = explode('/', $name);
+					
+					preg_match(self::$nat_pattern, $point_name[0], $matches);
 					
 					$coord = $matches[1];
 					$lat = $matches[2].$coord[0].$coord[1].'.'.$coord[2].$coord[3];
 					
 					/*	Match the second set of coordinates */
-					$i++;
-					$point_name = $navpoints[$i];
 					
 					# Read the second set
-					preg_match($nat_pattern, $point_name, $matches);
+					preg_match(self::$nat_pattern, $point_name[1], $matches);
 					if($matches == 0)
 					{
 						continue;
@@ -107,8 +165,12 @@ class NavData extends CodonData
 					/*	Now convert into decimal coordinates */
 					$coords = $lat.' '.$lng;
 					$coords = Util::get_coordinates($coords);
-										
-					$name .= "{$point_name}";
+					
+					if(empty($coords['lat']) || empty($coords['lng']))
+					{
+						unset($allpoints[$navpoints[$i]]);
+						continue;
+					}
 					
 					$tmp =  new stdClass();
 					$tmp->id = 0;
@@ -117,30 +179,57 @@ class NavData extends CodonData
 					$tmp->title = $name;
 					$tmp->lat = $coords['lat'];
 					$tmp->lng = $coords['lng'];
+					$tmp->airway = '';
+					$tmp->sequence = 0;
+					$tmp->freq = '';
 					
-					$return[] = $tmp;
-					
+					$allpoints[$navpoints[$i]] = $tmp;					
 					unset($point_name);
 					unset($matches);
 					unset($tmp);
 				}
-				
-				
-				//48N015W
-				preg_match('/^(\d*)([A-Za-z]).(\d*)([A-Za-z])/', $point_name, $matches);
-				
-				/*	Means it is a track, so go into processing it */
-				if(count($matches) > 0)
+				else
 				{
-					# Convert to format
+					$allpoints[$navpoints[$i]] = $navpoints[$i];
+					$navpoint_list[] = $navpoints[$i];
 				}
-
-				/* Don't match anything, so skip it */
+			}
+		}
+		
+		$navpoint_list_details = self::getNavDetails($navpoint_list);
+		
+		foreach($navpoint_list_details as $point => $list)
+		{
+			$allpoints[$point] = $list;
+		}
+		
+		unset($navpoint_list_details);
+		
+		/*	How will this work - loop through each point, and
+			decide which one we'll use, determined by the
+			one which is the shortest distance from the previous 
+			
+			Go in the order of the ones passed in.
+		*/
+		
+		foreach($allpoints as $point_name => $point_details)
+		{
+			if(is_string($point_details))
+			{
+				unset($allpoints[$point_name]);
 				continue;
 			}
-			elseif($results_count == 1)
+			
+			if(!is_array($point_details))
 			{
-				$return[] = $point_array[$point_name][0];
+				continue;
+			}
+			
+			$results_count = count($point_details);
+			
+			if($results_count == 1)
+			{
+				$allpoints[$point_name] = $point_details[0];
 			}
 			elseif($results_count > 1)
 			{
@@ -151,10 +240,10 @@ class NavData extends CodonData
 				
 				/* Set the inital settings */
 				$lowest_index = 0;
-				$lowest = $point_array[$point_name][$lowest_index];
+				$lowest = $point_details[$lowest_index];
 				$lowest_dist = SchedulesData::distanceBetweenPoints($fromlat, $fromlng, $lowest->lat, $lowest->lng);
 				
-				foreach($point_array[$point_name] as $p)
+				foreach($point_details as $p)
 				{
 					$dist = SchedulesData::distanceBetweenPoints($fromlat, $fromlng, $p->lat, $p->lng);
 					
@@ -167,15 +256,14 @@ class NavData extends CodonData
 					$index++;
 				}
 				
-				$return[] = $point_array[$point_name][$lowest_index];
+				$allpoints[$point_name] = $point_details[$lowest_index];
 			}
 			
-			$last = count($return);		
-			$fromlat = $return[$last-1]->lat;
-			$fromlng = $return[$last-1]->lng;
+			$fromlat = $allpoints[$point_name]->lat;
+			$fromlng = $allpoints[$point_name]->lng;
 		}
-	
-		return $return;
+		
+		return $allpoints;
 	}
 	
 	protected static function cleanName($name)
@@ -190,89 +278,53 @@ class NavData extends CodonData
 		return $name;
 	}
 	
-	/**
-	 * This returns all the navpoints - checks if a point
-	 * is an airway, or a "normal" point. If it's an airway,
-	 * it will expand and place all the points in between the
-	 * entry and exit points of that listed airway
-	 *
-	 * @param array $navpoints array of nav points
-	 * @return array Complete list of waypoints
-	 *
-	 */
-	protected static function getAllPoints($navpoints)
+	protected static function getAirways($list)
 	{
-		$allpoints = array();
-		$total = count($navpoints);
-		
-		for($i = 0; $i < $total; $i++)
+		foreach($list as $key => $value)
 		{
-			$name = self::cleanName($navpoints[$i]);
-			$airway = self::getAirway($name);
+			$list[$key] = "'{$value}'";
+		}
+		
+		$in_clause = implode(',', $list);
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."navdata
+				WHERE `airway` IN ({$in_clause})";
+		
+		$list =  DB::get_results($sql);
+		
+		$return = array();
+		
+		if(!$list)
+			return $return;
 			
-			if(is_object($airway))
+		foreach($list as $value)
+		{
+			$return[$value->airway][] = $value;
+		}
+		
+		return $return;
+	}
+	
+	
+	protected static function getPointIndex($point_name, $list)
+	{
+		$total = count($list);
+		
+		for($i=0; $i<$total; $i++)
+		{
+			if($list[$i]->name == $point_name)
 			{
-				$entry_name = self::cleanName($navpoints[$i-1]);
-				$exit_name = self::cleanName($navpoints[$i+1]);
-				$airway_points = explode(' ', $airway->points);
-				
-				# Find the locations of the entry and exit points
-				$entry = array_search($entry_name, $airway_points) + 1;
-				$exit = array_search($exit_name, $airway_points);
-			
-				# Get the lesser - 
-				if($entry < $exit)
-				{
-					$start = $entry;
-				}
-				elseif($entry > $exit)
-				{
-					$start = $exit;
-				}
-				else
-				{
-					continue;
-				}					
-				
-				# Get all of the points in between (if there are any)
-				$points = array_slice($airway_points, $start, abs($exit - ($entry)));
-				
-				if(empty($points))
-				{
-					continue;
-				}
-				
-				// remove the start and ends
-				$idx = array_search($entry_name, $points);
-				unset($points[$idx]);
-				$idx = array_search($exit_name, $points);
-				unset($points[$idx]);
-				
-				$allpoints = array_merge($allpoints, $points);
-			}
-			else
-			{
-				# This isn't an airway, it's a normal point
-				$allpoints[] = $name;
+				return $i;
 			}
 		}
 		
-		return $allpoints;
-	}
-	
-	protected static function getAirway($name)
-	{
-		$sql='SELECT `name`, `points` '
-			.'FROM '.TABLE_PREFIX.'airways '
-			."WHERE `name`='{$name}'";
-			
-		return DB::get_row($sql);
+		return -1;
 	}
 	
 	protected static function getNavDetails($navpoints)
 	{
 		/*	Form an IN clause so we can easily grab all the points
-			which we have cached locally in the navdb table
+			which we have cached locally in the navdata table
 			
 			Check if an array was passed, or a string of points */
 		if(is_array($navpoints) && count($navpoints) > 0)
@@ -280,6 +332,12 @@ class NavData extends CodonData
 			$in_clause = array();
 			foreach($navpoints as $point)
 			{
+				// There's already data about it
+				if(is_array($point) || is_object($point))
+				{
+					continue;
+				}
+				
 				$in_clause[] = "'{$point}'";
 			}
 			
@@ -292,18 +350,37 @@ class NavData extends CodonData
 			$in_clause = "'{$navpoints}'";
 		}
 		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'navdb
-				WHERE name IN ('.$in_clause.')';
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."navdata
+				WHERE `name` IN ({$in_clause}) 
+				GROUP BY `lat`";
 		
 		$results =  DB::get_results($sql);
 		
-		/* Means nothing was returned locally */
 		if(!$results)
+		{
+			return array();
+		}
+		
+		$return_results = array();
+		foreach($results as $key => $point)
+		{	
+			if(empty($point->title))
+			{
+				$point->title = $point->name;
+			}
+			
+			$return_results[$point->name][] = $point;
+		}
+		
+		return $return_results;
+		
+		/* Means nothing was returned locally */
+		/*if(!$results)
 		{
 			return self::navDetailsFromServer($navpoints);
 		}
 		else
-		{
+		{*/
 			/*	Form an array of what to return from the server,
 				see what we did and didn't return */
 			$notfound = array();
@@ -336,7 +413,7 @@ class NavData extends CodonData
 				$point_array = array_merge($point_array, $temp);
 				unset($temp);
 			}
-		}
+		//}
 		
 		return $point_array;
 	}
@@ -373,7 +450,7 @@ class NavData extends CodonData
 		$xml_response = $web_service->post(Config::Get('PHPVMS_API_SERVER').'/navdata/get/json', $xml->asXML());
 		
 		$insert = array();
-		$sql = 'INSERT INTO '.TABLE_PREFIX."navdb
+		$sql = 'INSERT INTO '.TABLE_PREFIX."navdata
 				(`type`, `name`, `title`, `freq`, `lat`, `lng`) VALUES ";
 		
 		if(empty($xml_response))

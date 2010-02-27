@@ -139,24 +139,21 @@ CREATE TABLE `phpvms_aircraft` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `phpvms_airways` (
+CREATE TABLE IF NOT EXISTS `phpvms_navdata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(5) NOT NULL,
-  `points` text NOT NULL,
-  `type` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
-
-CREATE TABLE IF NOT EXISTS `phpvms_navdb` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` int(11) NOT NULL,
-  `name` varchar(5) NOT NULL,
-  `title` varchar(10) NOT NULL,
+  `name` varchar(7) NOT NULL,
+  `title` varchar(25) NOT NULL,
+  `airway` varchar(7) DEFAULT NULL,
+  `airway_type` varchar(1) DEFAULT NULL,
+  `seq` int(11) NOT NULL,
+  `loc` varchar(4) NOT NULL,
+  `lat` float(8,6) NOT NULL,
+  `lng` float(9,6) NOT NULL,
   `freq` varchar(7) NOT NULL,
-  `lat` float (8,6) NOT NULL,
-  `lng` float (9,6) NOT NULL,
+  `type` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `name` (`name`)
+  KEY `name` (`name`),
+  KEY `airway` (`airway`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE `phpvms_airports` (
@@ -417,3 +414,4 @@ INSERT INTO `phpvms_settings` VALUES(NULL, 'Notify for Updates', 'NOTIFY_UPDATE'
 INSERT INTO `phpvms_settings` VALUES(NULL, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 1);
 INSERT INTO `phpvms_settings` VALUES(NULL, 'Google API Key', 'GOOGLE_KEY', '', 'This is your Google API key. You need it for the maps functionality to work', 1);
 INSERT INTO `phpvms_settings` VALUES(NULL, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 1);
+INSERT INTO `phpvms_settings` VALUES(NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your VA''s Total Hours', 0);

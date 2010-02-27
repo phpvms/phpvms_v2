@@ -805,8 +805,14 @@ class PIREPData extends CodonData
 				."Flight Time: {$pirepdata['flighttime']}\n"
 				."Filed using: {$pirepdata['source']}\n\n"
 				."Comment: {$pirepdata['comment']}";
-				 
-		Util::SendEmail(ADMIN_EMAIL, $sub, $message);	
+		
+		$email = Config::Get('EMAIL_NEW_PIREP');
+		if(empty($email))
+		{
+			$email = ADMIN_EMAIL;
+		}
+		
+		Util::SendEmail($email, $sub, $message);	
 		
 		CentralData::send_pirep($pirepid);
 		

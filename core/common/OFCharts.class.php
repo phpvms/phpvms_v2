@@ -52,8 +52,15 @@ class OFCharts extends CodonData
 				$range['min'] = $v;
 		}
 		
-		$diff = intval(abs($range['max'] - $range['min']));
-		$step = ceil(($diff / 90));
+		if($range['max'] == $range['min'])
+		{
+			$step = ceil($range['max']/2);
+		}
+		else
+		{
+			$diff = intval(abs($range['max'] - $range['min']));
+			$step = ceil(($diff / 90));
+		}
 		
 		$range['max'] += $step;
 		$range['min'] -= $step;

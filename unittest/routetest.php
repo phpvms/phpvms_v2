@@ -51,6 +51,8 @@ unset($depicao);
 unset($arricao);
 
 $data->route_details = NavData::parseRoute($data);
+
+print_r($data->route_details);
 $mapdata = $data;
 ?>
 </pre>

@@ -139,7 +139,14 @@ class Registration extends CodonModule
 			// Registration email/show user is waiting for confirmation
 			$sub = 'A user has registered';
 			$message = "The user {$data['firstname']} {$data['lastname']} ({$data['email']}) has registered, and is awaiting confirmation.";
-			Util::SendEmail(ADMIN_EMAIL, $sub, $message);
+			
+			$email = Config::Get('EMAIL_NEW_PIREP');
+			if(empty($email))
+			{
+				$email = ADMIN_EMAIL;
+			}
+			
+			Util::SendEmail($email, $sub, $message);
 			
 			// Send email to user
 			$this->set('firstname', $data['firstname']);

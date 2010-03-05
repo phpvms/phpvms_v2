@@ -144,6 +144,12 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pilotranking/awards">Awards</a></li>
 		<?php 
 		}
+		if(PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN)) 
+		{
+		?>
+			<li><a href="<?php echo SITE_URL?>/admin/index.php/maintenance/changepilotid">Change a Pilot's ID</a></li>
+			<?php 
+		}
 		if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)) 
 		{
 		?>

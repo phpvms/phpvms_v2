@@ -16,16 +16,6 @@
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 
-function writedebug($msg)
-{	
-	$old_value = Config::Get('DEBUG_MODE');
-	Config::Set('DEBUG_MODE', Config::Get('ACARS_DEBUG'));
-	
-	Debug::log($msg, 'acars');
-	
-	Config::Set('DEBUG_MODE', $old_value);
-}
-
 class ACARS extends CodonModule
 {
 	public $title = 'ACARS';
@@ -51,6 +41,8 @@ class ACARS extends CodonModule
 	{
 		$acars_action = $args[0];
 	
+		// clean the name...
+		$name = preg_replace("/[^a-z0-9-]/", "", strtolower($name));
 		if(dirname(__FILE__).DS.$name.'.php')
 		{
 			include_once dirname(__FILE__).DS.$name.'.php';
@@ -84,7 +76,7 @@ class ACARS extends CodonModule
 				$flight->route_details = array();
 			}*/
 			
-			if(empty($flight->route))
+			if($flight->route == '')
 			{
 				$flight->route_details = array();
 			}

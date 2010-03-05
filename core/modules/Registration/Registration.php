@@ -31,6 +31,8 @@ class Registration extends CodonModule
 		
 	public function index()
 	{
+		require_once CORE_LIB_PATH.'/recaptcha/recaptchalib.php';
+
 		if(Auth::LoggedIn()) // Make sure they don't over-ride it
 		{
 			$this->render('login_already.tpl');
@@ -55,19 +57,8 @@ class Registration extends CodonModule
 		$this->set('allairlines', OperationsData::GetAllAirlines(true));
 		$this->set('allhubs', OperationsData::GetAllHubs());
 		$this->set('countries', Countries::getAllCountries());
-				
-		# Just a simple addition
-		$rand1 = rand(1, 10);
-		$rand2 = rand(1, 10);
-		
-		$this->set('rand1', $rand1);
-		$this->set('rand2', $rand2);		
-		
-		$tot = $rand1 + $rand2;
-		SessionManager::Set('captcha_sum', $tot);
 		
 		$this->render('registration_mainform.tpl');
-		
 	}
 	
 	protected function ProcessRegistration()
@@ -140,7 +131,7 @@ class Registration extends CodonModule
 			$sub = 'A user has registered';
 			$message = "The user {$data['firstname']} {$data['lastname']} ({$data['email']}) has registered, and is awaiting confirmation.";
 			
-			$email = Config::Get('EMAIL_NEW_PIREP');
+			$email = Config::Get('EMAIL_NEW_REGISTRATION');
 			if(empty($email))
 			{
 				$email = ADMIN_EMAIL;
@@ -177,12 +168,16 @@ class Registration extends CodonModule
 	{
 		$error = false;
 		
-		$captcha = SessionManager::Get('captcha_sum');
-		
-		if($this->post->captcha != $captcha)
+		$resp = recaptcha_check_answer (Config::Get('RECAPTCHA_PRIVATE_KEY'),
+			$_SERVER["REMOTE_ADDR"],
+			$_POST["recaptcha_challenge_field"],
+			$_POST["recaptcha_response_field"]);
+
+
+		if(!$resp->is_valid)
 		{
 			$error = true;
-			$this->set('captcha_error', 'You failed the human test!');			
+			$this->set('captcha_error', $resp->error);			
 		}
 		else
 			$this->set('captcha_error', '');

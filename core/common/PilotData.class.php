@@ -199,6 +199,34 @@ class PilotData extends CodonData
 		return self::updateProfile($pilotid, $params);
 	}
 	
+	public static function changePilotID($old_pilotid, $new_pilotid)
+	{
+		// List of all the tables which need to update
+		$table_list = array(
+			'adminlog',
+			'awardsgranted',
+			'acarsdata',
+			'sessions',
+			'pilots',
+			'pireps',
+			'pirepcomments',
+			'fieldvalues',
+			'groupmembers',
+			'bids',
+		);
+		
+		foreach($table_list as $table)
+		{
+			$sql = 'UPDATE `'.TABLE_PREFIX.$table.'`
+					SET `pilotid`='.$new_pilotid.'
+					WHERE `pilotid`='.$old_pilotid;
+					
+			DB::query($sql);
+		}
+		
+		return true;
+	}
+	
 	public static function changePilotRank($pilotid, $rankid)
 	{
 		$rank = RanksData::getRankInfo($rankid);

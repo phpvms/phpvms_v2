@@ -88,11 +88,10 @@
 	
 	?>
 	
-	<dt>What does this add up to? <?php echo $rand1 .' + '.$rand2?></dt>
-	<dd><input id="password" type="captcha" name="captcha" value="" />
+	<dt>reCaptcha</dt>
+	<dd>
 		<?php
-			if($captcha_error != '')
-				echo '<p class="error">'.$captcha_error.'</p>';
+			echo recaptcha_get_html(Config::Get('RECAPTCHA_PUBLIC_KEY'), $captcha_error);
 		?>
 	</dd>
 		

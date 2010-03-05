@@ -208,6 +208,11 @@ Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
 Config::Set('VACENTRAL_NEWS_FEED', 'http://feeds.feedburner.com/vacentral');
 Config::Set('GEONAME_API_SERVER', 'http://ws.geonames.org');
 
+/* Keys for recaptcha, you can change these if you want to your own but it's
+	a global key so it should just work */
+Config::Set('RECAPTCHA_PUBLIC_KEY', '6LcklAsAAAAAAJqmghmMPOACeJrAxW3sJulSboxx');
+Config::Set('RECAPTCHA_PRIVATE_KEY', '6LcklAsAAAAAAMeQy5ZBoDu8JOMTP-UL7ek1GedO');
+
 Config::Set('CHECK_BETA_VERSION', false);
 Config::Set('URL_REWRITE', false);
 
@@ -217,17 +222,16 @@ Config::Set('URL_REWRITE', false);
 Config::Set('DAYS_COMPACT',  array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su'));
 
 Config::Set('DAYS_LONG', 
-			array('Sunday',
-				  'Monday',
-				  'Tuesday',
-				  'Wednesday',
-				  'Thursday',
-				  'Friday',
-				  'Saturday',
-				  'Sunday'
-			)
-		);
-
+	array('Sunday',
+		  'Monday',
+		  'Tuesday',
+		  'Wednesday',
+		  'Thursday',
+		  'Friday',
+		  'Saturday',
+		  'Sunday'
+	)
+);
 
 Config::Set('SITE_LANGUAGE', 'en');
 Config::Set('ADMIN_SKIN', 'layout');

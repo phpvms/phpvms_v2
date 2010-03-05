@@ -20,10 +20,9 @@
 	http://www.fspassengers.com
  */
 
-writedebug("FSPAX DEBUG");
-//writedebug($_SERVER['QUERY_STRING']);
-writedebug(print_r($_POST, true));
-writedebug(serialize($_POST));
+Debug::log("FSPAX DEBUG", 'fspax');
+Debug::log(print_r($_POST, true), 'fspax');
+Debug::log(serialize($_POST), 'fspax');
 
 # Check for connection
 if($_POST['FsPAskConnexion'] == 'yes')
@@ -179,7 +178,7 @@ if($_POST['FsPAskToRegister'] == 'yes')
 					'comment'=>$comment,
 					'log'=> $log);
 		
-	writedebug($data);
+	Debug::log($data, 'fspax');
 		
 	$ret = ACARSData::FilePIREP($pilotid, $data);
 	if(!$ret)

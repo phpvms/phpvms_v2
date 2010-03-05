@@ -95,6 +95,67 @@ class Maintenance extends CodonModule
 		LogData::addLog(Auth::$userinfo->pilotid, 'Reset distances');
 	}
 	
+	public function changepilotid()
+	{
+		echo '<h3>Change Pilot ID</h3>';
+		
+		if(isset($this->post->submit))
+		{
+			$error = false;
+			
+			if(!is_numeric($this->post->new_pilotid))
+			{
+				$error = true;
+				$this->set('message', 'The pilot ID isn\'t numeric!');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
+			if(empty($this->post->new_pilotid))
+			{
+				$error = true;
+				$this->set('message', 'The pilot ID is blank!');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
+			if(empty($this->post->old_pilotid) || $this->post->old_pilotid == 0)
+			{
+				$error = true;
+				$this->set('message', 'No pilot selected');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
+			$pilot = PilotData::getPilotData($this->post->new_pilotid);
+			if(is_object($pilot))
+			{
+				$error = true;
+				$this->set('message', 'This ID is already used!');
+				$this->render('core_error.tpl');
+				return;
+			}
+			else
+			{
+				$error = true;
+				$this->set('message', 'Invalid pilot!');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
+			if($error === false)
+			{
+				PilotData::changePilotID($this->post->old_pilotid, $this->post->new_pilotid);
+				
+				$this->set('message', 'Pilot ID changed');
+				$this->render('core_success.tpl');
+			}
+		}
+		
+		$this->set('allpilots', PilotData::findPilots(array()));
+		$this->render('maintenance_changepilotid.tpl');
+	}
+	
 	public function resetacars()
 	{
 		echo '<h3>ACARS Reset</h3>';

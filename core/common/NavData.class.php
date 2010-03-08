@@ -50,6 +50,10 @@ class NavData extends CodonData
 			return array();
 		}
 
+		// Remove any SID/STAR text
+		$route_string = str_replace('SID', '', $route_string);
+		$route_string = str_replace('STAR', '', $route_string);
+		
 		$navpoints = array();
 		$all_points = explode(' ', $route_string);
 		

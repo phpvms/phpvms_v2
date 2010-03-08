@@ -40,7 +40,7 @@ Template::Show('finance_header.tpl');
 
 <?php
 	/* COUNT EXPENSES */
-	if(!$month_data->expenses)
+	if(!is_array($month_data->expenses))
 	{
 		$month_data->expenses = array();
 		?>
@@ -52,6 +52,7 @@ Template::Show('finance_header.tpl');
 	}
 		
 	$type = Config::Get('EXPENSE_TYPES');
+	
 	foreach($month_data->expenses as $expense)
 	{
 	?>		

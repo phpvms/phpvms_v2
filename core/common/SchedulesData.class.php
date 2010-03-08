@@ -608,6 +608,12 @@ class SchedulesData extends CodonData
 			$fields['flighttime'] = str_replace(':', '.', $fields['flighttime']);
 		}
 		
+		if(isset($fields['route']))
+		{
+			$fields['route'] = str_replace('SID', '', $fields['route']);
+			$fields['route'] = str_replace('STAR', '', $fields['route']);
+		}
+		
 		foreach($fields as $key=>$value)
 		{
 			$fields[$key] = DB::escape($value);

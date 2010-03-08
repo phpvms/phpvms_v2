@@ -33,13 +33,13 @@ e9f366eef6a7edfa08363e53c60b119f  *./core/common/StatsData.class.php
 4eba40ca591baa0a18f5896c92c77483  *./core/common/AwardsData.class.php
 ab63202ba065d26ba190dc4c1591f67b  *./core/common/RSSFeed.class.php
 3653e641625c697e8fcff0a41ae7b312  *./core/common/PilotGroups.class.php
-7d2fd8170d8084a6766e6403357b250e  *./core/common/SchedulesData.class.php
+c06f13bef9c649f810f639bf2eb4c0d9  *./core/common/SchedulesData.class.php
 6e69bbf6f5d8b534b77f051a63cd9466  *./core/common/UserGroups.class.php
 b3e6a4926ee94b822c5d74fa158356b1  *./core/common/Countries.class.php
 c751257ac5919eda6e84fdbd382fa697  *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210  *./core/common/GoogleChart.class.php
 36f4b0354b78fb4ad31a64842b388803  *./core/common/SettingsData.class.php
-48a5c15a80e024b777ce7ad430ad7f9c  *./core/common/NavData.class.php
+63d6aad28fc85cf33f930f0841568dfd  *./core/common/NavData.class.php
 7b7530dd33206ff43071aeee9ea823b8  *./core/common/RanksData.class.php
 429fadeedea71158f7d265c3bf523ee5  *./core/common/FuelData.class.php
 bab1cf66b6a740c25a3aea425ce0d194  *./core/common/SiteData.class.php
@@ -106,7 +106,7 @@ bf87b1403005bd886f3b68357b6b6664  *./core/templates/frontpage_recentbids.tpl
 d170c867e1cf8ef86960f5cd903c980b  *./core/templates/login_notfound.tpl
 f22a304b32866122ea5e3a49fb0c1908  *./core/templates/login_already.tpl
 3b1b2b93f731665d82d566fa677b57b9  *./core/templates/core_success.tpl
-a7d7e8c01f0933647a96c9f1affa48ba  *./core/templates/finance_balancesheet.tpl
+b0d8e46e19c5431aa260a350e051fcae  *./core/templates/finance_balancesheet.tpl
 21b61bf066cb0f58ee914bdaaf21981e  *./core/templates/email_registrationaccepted.tpl
 83fc2840a66e53b6e2276837d1599e3a  *./core/templates/core_error.tpl
 19a106cd031148dd5603af7e60d51c7c  *./core/templates/contact_sent.tpl
@@ -296,7 +296,7 @@ c1de104017f08ab3f33a2635c0a6acf2  *./admin/modules/Logs/Logs.php
 56cc4eec3711f0f58fc64ff1f1c64a70  *./admin/modules/Downloads/Downloads.php
 cf0e7f278179490b5a610846ee6b0cb0  *./admin/modules/MassMailer/MassMailer.php
 9c5a03bde5cab3901a6dfa9eac1fefdb  *./admin/modules/SiteCMS/SiteCMS.php
-c5e38be09ab388d1b32bde4713d5b9bc  *./admin/modules/Operations/Operations.php
+fafacc13f11574e6781883eef6df4b1e  *./admin/modules/Operations/Operations.php
 bde8ef23e476869b5c137a2b0bc738de  *./admin/modules/Import/Import.php
 08a88d8c1c1658dd6d174e19e296004f  *./admin/modules/Settings/Settings.php
 5bead5933ad3dccea06a2d591923a7e7  *./admin/modules/Maintenance/Maintenance.php

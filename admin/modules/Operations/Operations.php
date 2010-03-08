@@ -688,6 +688,10 @@ class Operations extends CodonModule
 		$this->post->flightlevel = str_replace(' ', '', $this->post->flightlevel);
 
 		$this->post->route = strtoupper($this->post->route);
+		$this->post->route = str_replace($this->post->depicao, '', $this->post->route);
+		$this->post->route = str_replace($this->post->arricao, '', $this->post->route);
+		$this->post->route = str_replace('SID', '', $this->post->route);
+		$this->post->route = str_replace('STAR', '', $this->post->route);
 	
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,
@@ -741,6 +745,13 @@ class Operations extends CodonModule
 		# Format the flight level
 		$this->post->flightlevel = str_replace(',', '', $this->post->flightlevel);
 		$this->post->flightlevel = str_replace(' ', '', $this->post->flightlevel);
+		
+		# Clear anything invalid out of the route
+		$this->post->route = strtoupper($this->post->route);
+		$this->post->route = str_replace($this->post->depicao, '', $this->post->route);
+		$this->post->route = str_replace($this->post->arricao, '', $this->post->route);
+		$this->post->route = str_replace('SID', '', $this->post->route);
+		$this->post->route = str_replace('STAR', '', $this->post->route);
 		
 		$data = array(	'code'=>$this->post->code,
 						'flightnum'=>$this->post->flightnum,

@@ -1,4 +1,4 @@
-23482761a89d07165f9bb8ca62709eb6  *./gitpush.php
+a6f47853d62af08784feee05333d2d12  *./gitpush.php
 c8262018a5d7da2e092f09bc9a92b011  *./install/navdata.sql.gz
 c53987a61354c3460fdac8e07f5c2cd2  *./install/templates/s0_config_check.tpl
 c714cd154b075e30c60117fc314d719d  *./install/templates/s3_setup_finished.tpl
@@ -235,7 +235,7 @@ d1dc96abcb877dde35ce181b56ea4f28  *./admin/templates/ops_scheduleform.tpl
 d41d8cd98f00b204e9800998ecf8427e  *./admin/templates/core_footer.tpl
 fdf7f7a9ad04e276d263e0db7426df85  *./admin/templates/sidebar_maintenance.tpl
 e802d8521c68d0f88680b0d4da01c9f7  *./admin/templates/pilots_options.tpl
-3f0c21b338c552661eff05f0e0f22462  *./admin/templates/core_navigation.tpl
+d9b24861cb58b5c16949d66a57ee5d6a  *./admin/templates/core_navigation.tpl
 f8dd1b66f0abd59a1908ca5552fb2275  *./admin/templates/pilots_pending.tpl
 8df8fcdc0bd39c38eb80688fad4ad61c  *./admin/templates/sidebar_airports.tpl
 bc241b7ac58cf1030dfb23520781fdac  *./admin/templates/mailer_form.tpl

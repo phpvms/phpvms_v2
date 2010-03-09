@@ -1,1 +1,0 @@
-<div id="sidecolumn"><?php echo $sidebar?></div>

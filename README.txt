@@ -23,5 +23,5 @@ Backup your core/local.config.php. Then, upload all of the files.
 ---
 
  For more information, visit www.phpvms.net
-	Forums: http://www.phpvms.net/forum
-	Documentation: http://www.phpvms.net/docs
+	Forums: http://forum.phpvms.net
+	Documentation: http://docs.phpvms.net

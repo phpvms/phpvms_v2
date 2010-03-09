@@ -1,0 +1,654 @@
+@charset "utf-8";
+body  {
+	font: 100% Verdana, Arial, Helvetica, sans-serif;
+	background: #666666;
+	margin: 0;
+	padding: 0;
+	text-align: center; 
+	color: #000000;
+}
+
+#container { 
+	width: 95%; 
+	background: #FFFFFF;
+	margin: 0 auto; 
+	border: none;
+	text-align: left; 
+} 
+#header { 
+	padding: 0;
+	background: #1D1D1D; /*url(images/background.png) repeat-x;*/
+	border-bottom: 2px solid #FF9033;
+} 
+#header h1 {
+	margin: 0; 
+	padding: 10px 0; 
+}
+
+#sidebar {
+	float: left; 
+	width: 200px;
+	background: #EBEBEB; 
+	padding: 0; 
+	font-size: 8pt;
+}
+#sidebar h3, #sidebar p {
+	margin-left: 10px; 
+	margin-right: 10px;
+}
+
+#sidebar h3
+{
+	background: #333;
+	font-weight: none;
+	font-size: 8pt;
+	color: #fff;	
+	padding: 5px;
+	margin: 0;
+	width: 195px;
+	padding-right: 0;
+	border-bottom: 4px solid #999;
+}
+
+#sidebar h3 a
+{
+	color: #fff;
+	font-weight: none;
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #000;
+}
+
+#mainContent { 
+	margin: 0 15px 0 160pt; 
+	font-size: 8pt;	
+} 
+
+#mainContent h3 {
+	color: #339933;
+	font-size: 16px;
+	font-family: Arial;
+}
+
+#mainContent tr.disabled td {
+	color: #CCC;
+}
+
+#result
+{
+	float: right;
+}
+
+#bodytext
+{
+	padding: 0px;
+	margin: 0px
+}
+
+
+#mainContent h3 {
+	font-size: 11pt;
+	border-bottom: 1px solid #999;
+	padding-bottom: 4px;
+}
+
+#mainContent a {
+	text-decoration: underline;
+}
+
+
+table.balancesheet {
+	border: 2px solid #333;
+	padding: 0px
+}
+
+table.balancesheet tr {
+	border-bottom: 1px solid #CCC;
+}
+
+table.balancesheet td  {
+	padding: 6px;
+}
+
+.balancesheet_header td {
+	border: none;
+	padding: 4px;
+	padding-left: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: #333;
+	color: #FFF;
+	text-align: right;
+}
+
+#error
+{
+	border: 1px solid #FF0000;
+	background: #FFCCDA;
+	padding: 4px;
+	text-align: center;
+	width: auto;
+	margin-top: 10px;
+}
+
+#success
+{
+	border: 1px solid #008020;
+	background: #D8FFCC;
+	padding: 4px;
+	text-align: center;
+	width: auto;
+	margin-top: 10px;
+}
+
+.indent 
+{
+	padding-left: 32px;
+}
+
+
+#footer { 
+	padding: 0 10px;
+	background:#DDDDDD;
+	border-top: 2px solid #000;
+} 
+
+#footer p {
+	margin: 0; 
+	padding: 10px 0;
+	text-align: right;
+	font-size: 7pt;
+}
+
+/* Float right */
+.fltrt {
+	float: right;
+	margin-left: 8px;
+}
+/* Float left */
+.fltlft {
+	float: left;
+	margin-right: 8px;
+}
+
+.clearfloat {
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
+
+.newsitem 
+{
+	margin: 0px; 
+	padding: 0px; 
+	border-bottom: 1px solid #CCC; 
+	padding-top: 6px; 
+	padding-bottom: 8px;
+	line-height: 1.4em;
+}
+
+ul.menu, ul.menu ul {
+  list-style-type:none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-bottom: 1px solid #FFF;
+}
+
+ul.menu a {
+  display: block;
+  text-decoration: none;
+  padding-bottom: 5px;	
+}
+ul.menu a img {
+  padding-bottom: 0px;
+}
+
+ul.menu li {
+  margin-top: 1px;
+}
+
+ul.menu img {
+	padding-right: 5px;
+}
+ul.menu li a {
+  background: #333;
+  color: #fff;	
+  padding: 0.5em;
+}
+ul.menu li a img
+{
+	padding: none;
+}
+
+ul.menu li a:hover {
+  background: #000;
+}
+
+ul.menu li ul li a {
+  background: #ccc;
+  color: #000;
+  padding-left: 20px;
+}
+
+ul.menu li ul li a:hover {
+  background: #aaa;
+  border-left: 5px #000 solid;
+  padding-left: 15px;
+}
+
+/* tables */
+.tablesorter tr, .tablesorter td
+{
+	border: none;
+}
+table.tablesorter {
+	border: none;
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background: #333;
+	color: #fff;	
+	padding: 0.5em;
+}
+table.tablesorter thead tr .header {
+	/*background-image: url(images/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;*/
+	cursor: pointer;
+	background: #333;
+	color: #fff;	
+	padding: 0.5em;
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+	border: none;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
+	border: none;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(images/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(images/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp 
+{
+	background-color: #8dbdd8;
+	border: none;
+}
+
+img
+{
+	border: none;
+}
+
+dl {
+	float: left;
+	z-index: 100;
+	width: 100%;
+}
+
+dt {
+	/*clear: both;
+	width: 200px;*/
+	padding: 0px 0 2px 0;
+	text-align: left;
+	font-weight: bold;
+}
+
+dd {
+	padding-left: 6px;
+}
+
+dd button
+{
+}
+
+dd p
+{
+	margin-top: 0px;
+}
+
+dd input
+{
+	width: 290px;
+	padding: 3px;
+	margin-bottom: 3px;
+	z-index: 1500;
+	font-size: 8pt;
+}
+
+INPUT
+{
+	color: #000000;
+	font-family: Verdana;
+	font-size: 10pt;
+	border: 1px solid #CCCCCC;
+	background-color: #fcfcfc;
+}
+TEXTAREA
+{
+	color: #000000;
+	font-family: Verdana;
+	font-size: 10pt;
+	border: 1px solid #CCCCCC;
+	background-color: #fcfcfc;
+}
+TEXT
+{
+	color: #000000;
+	font-family: Verdana;
+	font-size: 10pt;
+	border: 1px solid #CCCCCC;
+	background-color: #fcfcfc;
+}
+
+/* moodalbox CSS */
+
+div#mb_overlay
+{
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #000;
+	cursor: pointer;
+}
+
+div#mb_center, div#mb_bottom
+{
+	position: absolute;
+	left: 50%;
+	overflow: hidden;
+	background-color: #DDD;
+}
+
+div#mb_center
+{
+	background-color: #FFF;
+}
+
+div#mb_contents
+{
+	width: 400px;
+	height: 400px;
+	border: 10px solid #DDD;
+	overflow: auto;
+	background-color: #FFF;
+	visibility: hidden;
+}
+
+.mb_loading
+{
+	background: #DDD url(lib/images/loading.gif) no-repeat center center;
+}
+
+#mb_error
+{
+	font-size: 1.2em;
+	color: #CD0000;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.5em;
+	font-family: Verdana, Helvetica, sans-serif;
+}
+
+#mb_error em
+{
+	font-size: 0.8em;
+}
+
+div#mb_bottom
+{
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666;
+	line-height: 1.4em;
+	text-align: left;
+	border: 10px solid #DDD;
+	border-top-style: none;
+}
+
+a#mb_close_link
+{
+	display: block;
+	float: right;
+	width: 66px;
+	height: 22px;
+	background: transparent url(lib/images/closelabel.gif) no-repeat center;
+	margin: 5px 0;
+}
+
+div#mb_caption
+{
+	margin-right: 71px;
+}
+
+
+@media projection, screen { 
+    .ui-tabs-hide {
+        display: none;
+    }
+}
+@media print {
+    .ui-tabs-nav {
+        display: none;
+    }
+}
+
+/* fix for IE6 */
+* html .hitarea {
+	display: inline;
+	float:none;
+}
+
+
+/* jqModal base Styling courtesy of;
+	Brice Burgess <bhb@iceburg.net> */
+
+/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
+	the Window's z-index value will be set to 3000 by default (in jqModal.js). You
+	can change this value by either;
+	  a) supplying one via CSS
+	  b) passing the "zIndex" parameter. E.g.  (window).jqm({zIndex: 500}); */
+	
+.jqmWindow {
+    display: none;
+    position: fixed;
+    top: 2%;
+    left: 50%;
+    
+    margin-left: -300px;
+    width: 600px;
+    
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;
+    font-size: 8pt;
+    text-align: left;
+}
+
+.jqmWindow dl {
+	width: 570px;
+}
+
+.jqmOverlay { background-color: #000; }
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+* iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
+	width: expression(this.parentNode.offsetWidth+'px');
+	height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
+#treecontrol { margin: 1em 0; display: none; }
+
+ul.treeview-famfamfam { padding-left: 25px; }
+.treeview-famfamfam li {  list-style: none outside; margin-left: -10px; 
+	background-image: url(images/treeview-famfamfam-line.gif); }
+
+.filetree ul { padding: 0px; }
+.filetree span.folder, .filetree span.file { padding: 1px 0 1px 16px; display: block; }
+.filetree span.folder { background: url(images/folder.gif) 0 0 no-repeat; }
+.filetree li.expandable span.folder { background: url(images/folder-closed.gif) 0 0 no-repeat; }
+.filetree span.file { background: url(images/icon_file.png) 0 0 no-repeat; }
+
+.jqiwarning .jqi{
+      background-color: #b0be96;
+}
+.jqifade{
+      background-color: #ffffff;
+}
+div.jqi{
+      position: absolute;
+      background-color: #c0cEa6;
+      padding: 10px;
+      width: 300px;
+}
+div.jqi .jqiclose{
+      float: right;
+      margin: -35px -10px 0 0;
+      cursor: pointer;
+}
+div.jqi .jqicontainer{
+      background-color: #e0eEc6;
+      padding: 5px;
+      color: #ffffff;
+      font-weight: bold;
+}
+div.jqi .jqimessage{
+      background-color: #c0cEa6;
+      padding: 10px;
+}
+div.jqi .jqibuttons{
+      text-align: center;
+      padding: 5px 0 0 0;
+}
+div.jqi button{
+      padding: 3px 10px 3px 10px;
+      margin: 0 10px;
+}
+
+/* Skin */
+.ui-tabs-nav, .ui-tabs-panel {
+    font-family: "Trebuchet MS", Trebuchet, Verdana, Helvetica, Arial, sans-serif;
+}
+.ui-tabs-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 4px;
+}
+.ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
+    display: block"lib/skins/crystal/styles.css";
+    clear: both;
+    content: " ";
+}
+.ui-tabs-nav li {
+    float: left;
+    margin: 0 0 0 1px;
+    min-width: 84px; /* be nice to Opera */
+}
+.ui-tabs-nav a, .ui-tabs-nav a span {
+    display: block;
+    padding: 0 10px;
+    background: url(images/tab.png) no-repeat;
+}
+.ui-tabs-nav a {
+    margin: 1px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
+    padding-left: 0;
+    color: #27537a;
+    font-weight: bold;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap; /* required in IE 6 */    
+    outline: 0; /* prevent dotted border in Firefox */
+}
+.ui-tabs-nav .ui-tabs-selected a {
+    position: relative;
+    top: 1px;
+    z-index: 2;
+    margin-top: 0;
+    color: #000;
+}
+.ui-tabs-nav a span {
+    width: 64px; /* IE 6 treats width as min-width */
+    min-width: 64px;
+    height: 18px; /* IE 6 treats height as min-height */
+    min-height: 18px;
+    padding-top: 6px;
+    padding-right: 0;
+}
+*>.ui-tabs-nav a span { /* hide from IE 6 */
+    width: auto;
+    height: auto;
+}
+.ui-tabs-nav .ui-tabs-selected a span {
+    padding-bottom: 1px;
+}
+.ui-tabs-nav .ui-tabs-selected a, .ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active {
+    background-position: 100% -150px;
+}
+.ui-tabs-nav a, .ui-tabs-nav .ui-tabs-disabled a:hover, .ui-tabs-nav .ui-tabs-disabled a:focus, .ui-tabs-nav .ui-tabs-disabled a:active {
+    background-position: 100% -100px;
+}
+.ui-tabs-nav .ui-tabs-selected a span, .ui-tabs-nav a:hover span, .ui-tabs-nav a:focus span, .ui-tabs-nav a:active span {
+    background-position: 0 -50px;
+}
+.ui-tabs-nav a span, .ui-tabs-nav .ui-tabs-disabled a:hover span, .ui-tabs-nav .ui-tabs-disabled a:focus span, .ui-tabs-nav .ui-tabs-disabled a:active span {
+    background-position: 0 0;
+}
+.ui-tabs-nav .ui-tabs-selected a:link, .ui-tabs-nav .ui-tabs-selected a:visited, .ui-tabs-nav .ui-tabs-disabled a:link, .ui-tabs-nav .ui-tabs-disabled a:visited { /* @ Opera, use pseudo classes otherwise it confuses cursor... */
+    cursor: text;
+}
+.ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active,
+.ui-tabs-nav .ui-tabs-unselect a:hover, .ui-tabs-nav .ui-tabs-unselect a:focus, .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
+    cursor: pointer;
+}
+.ui-tabs-disabled {
+    opacity: .4;
+    filter: alpha(opacity=40);
+}
+.ui-tabs-panel {
+    padding: 1em 8px;
+    background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+}
+.ui-tabs-loading em {
+    padding: 0 0 0 20px;
+    background: url(loading.gif) no-repeat 0 50%;
+}
+
+/* Additional IE specific bug fixes... */
+* html .ui-tabs-nav { /* auto clear, @ IE 6 & IE 7 Quirks Mode */
+    display: inline-block;
+}
+*:first-child+html .ui-tabs-nav  { /* @ IE 7 Standards Mode - do not group selectors, otherwise IE 6 will ignore complete rule (because of the unknown + combinator)... */
+    display: inline-block;
+}

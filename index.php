@@ -72,10 +72,20 @@ MainController::RunAllActions(Config::Get('RUN_MODULE'));
 $page_data = ob_get_clean();
 
 $BaseTemplate->Set('title', MainController::$page_title .' - '.SITE_NAME);
+$BaseTemplate->Set('page_title', MainController::$page_title .' - '.SITE_NAME);
 
-$BaseTemplate->ShowTemplate('header.tpl');
-echo $page_data;
-$BaseTemplate->ShowTemplate('footer.tpl');
+if(file_exists(SKINS_PATH.'/layout.tpl'))
+{
+	$BaseTemplate->Set('page_content', $page_data);
+	$BaseTemplate->ShowTemplate('layout.tpl');
+}
+else
+{
+
+	$BaseTemplate->ShowTemplate('header.tpl');
+	echo $page_data;
+	$BaseTemplate->ShowTemplate('footer.tpl');
+}
 
 # Force connection close
 DB::close();

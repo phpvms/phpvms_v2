@@ -179,7 +179,7 @@ a5e67fddae9c3f77e262cee30771db05  *./core/modules/Logout/Logout.php
 469b106005f7bae51741e9a20f725708  *./core/modules/Pages/Pages.php
 925c6ea3907403895286aff5d9838916  *./core/modules/Login/Login.php
 a1704e9c69187d041d9a7b5d67e6af0a  *./core/modules/RouteMap/RouteMap.php
-c01d01e667581b22b10ce71ae00b65d2  *./index.php
+bd1cabcd3fc6476da4f65047106b4767  *./index.php
 88e45847491bc3720114b632e32f05bd  *./admin/templates/sidebar_expenses.tpl
 b55dd3d7384a5408860e3096fd032d59  *./admin/templates/sidebar_dashboard.tpl
 94149fc26ee96260432937579fd6a38c  *./admin/templates/maintenance_options.tpl
@@ -304,9 +304,8 @@ ad9f6b7d319ad6c474e800fea5834e6c  *./admin/modules/Dashboard/Dashboard.php
 750fc6ddd0718110195bf19e8977a4af  *./admin/modules/PIREPAdmin/PIREPAdmin.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/avatars/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./lib/signatures/index.php
-510f20076a0a5b7f6db59a34137289ec  *./lib/skins/crystal/header.tpl
 82fc6eab94b5273c25b89e1c65d0c968  *./lib/skins/crystal/javascript.tpl
-f66b7aae232bfec106d66cf6e8b38388  *./lib/skins/crystal/footer.tpl
+bbc4ed6fac7393cbdcd8092f016e7290  *./lib/skins/crystal/layout.tpl
 502e6e50b12f894987f2baaee7130460  *./lib/js/jquery_essentials.js
 ea5ca1e8a3f7fc880d708c2dcbb8e38e  *./lib/js/jquery.autocomplete.js
 11100b527008b87cd8bb1203783b8bba  *./lib/js/ofc/js-ofc-library/open_flash_chart.js

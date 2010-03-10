@@ -16,15 +16,15 @@ d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 55c3722f079209f61fcfce707f077548  *./install/update_400.sql
 56522f3521444add8835afbba7375a11  *./install/update_854.sql
 80b2826f5861390475c49bbb1551906d  *./install/dbtest.php
-eb0ff8fb163d3553696b68f762358e7a  *./install/install.sql
+1184e3ec90a026e2a6bf0451ddc79ad3  *./install/install.sql
 1ee77934d1a602e9c74861c9391a55d9  *./install/update_628.sql
 dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
 822baf3a235831c643f1007fdaedfa9a  *./install/Installer.class.php
-c3d94ec1b45a129af6735ecfb306b71a  *./install/update.php
+c858483b1b6fd12cb564fe91adb2c9f8  *./install/update.php
 6b8d1dc1b006ef2a88e8130ce7bb157a  *./install/update_441.sql
 87a5365aeff06351424ae56fdb561909  *./install/checkdb.php
 d4d204c3560c283fa4d7a3a367473740  *./install/navdata.sql
-2519b58484663ac722794014a590380e  *./install/install.php
+b0bf9020a8fcc2736ef8eb90a21261a7  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
 e2bfdef84552666c87855b3b433a6501  *./core/common/PIREPData.class.php
 a81e2dc2b4a8186d710efc548b3d5411  *./core/common/Auth.class.php
@@ -42,7 +42,7 @@ c751257ac5919eda6e84fdbd382fa697  *./core/common/PilotData.class.php
 63d6aad28fc85cf33f930f0841568dfd  *./core/common/NavData.class.php
 7b7530dd33206ff43071aeee9ea823b8  *./core/common/RanksData.class.php
 429fadeedea71158f7d265c3bf523ee5  *./core/common/FuelData.class.php
-bab1cf66b6a740c25a3aea425ce0d194  *./core/common/SiteData.class.php
+add2fe1851e224b5be4b6526e3ee6772  *./core/common/SiteData.class.php
 00fba43386363e0d67be9469b2929610  *./core/common/AircraftStats.class.php
 c6563953a125f27ad4a5586f7595bc6c  *./core/common/FinanceData.class.php
 5fd6ab8aad8037d0e7cec7a9f62995f9  *./core/common/LogData.class.php
@@ -156,7 +156,7 @@ ff6daf86c574e3be2722c33f8975cdab  *./core/classes/Template.class.php
 74f79f15db7476a6ce4a8521996eeeef  *./core/classes/CodonCondenser.class.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/pages/index.php
-ca79270790fd7c49d1badb14d95a327a  *./core/app.config.php
+609175c3223348cd93932a097b9c1bfc  *./core/app.config.php
 00e89835b48e67d7eaa87ed5dea64ce5  *./core/modules/Schedules/Schedules.php
 540a2876e98c759d58bf0f9ef82ea905  *./core/modules/news/news.php
 935862c6f2d8c067c49c4af2797abebd  *./core/modules/XML/XML.php

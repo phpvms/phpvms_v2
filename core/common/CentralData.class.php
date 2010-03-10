@@ -26,9 +26,11 @@ class CentralData extends CodonData
 	public static $last_error;
 	public static $method;
 	
-	/* DO NOT try to circumvent these limits.
+	/*	DO NOT try to circumvent these limits.
 		They're also tracked server-side. If you change them,
-		you will be penalized or banned. */
+		you will be penalized or banned. 
+		
+		These DO NOT AFFECT YOUR SCORE */
 	public static $limits = array(
 		'update_vainfo' => 6,
 		'update_schedules' => 12,

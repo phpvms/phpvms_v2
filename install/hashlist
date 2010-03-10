@@ -52,7 +52,7 @@ aa5db9a03bb084bce057af97b12085a6  *./core/common/ACARSData.class.php
 897b7636c0822c5c94df4bfa325bbeb0  *./core/common/OperationsData.class.php
 54d08de34e14adf506930c9433320756  *./core/common/CronData.class.php
 e1634f73751a74d4d411612fd3a9f307  *./core/common/OFCharts.class.php
-cbed42896bdd676106613b01d5f8762c  *./core/common/CentralData.class.php
+a6e3a7440c17417e57a829b6f84cd3e1  *./core/common/CentralData.class.php
 0600b921789561619e2a4a83385ff5ec  *./core/templates/email_registrationdenied.tpl
 7d045016c85f668d9e48db530b81535b  *./core/templates/schedule_results.tpl
 c931d63eba29c5891bc3d8738b330631  *./core/templates/pireps_viewall.tpl
@@ -132,7 +132,7 @@ c5e883d68d9e038104dc5ee649514d47  *./core/templates/pilot_public_profile.tpl
 342bc885572f7900c7356d7a3f685b9b  *./core/bootstrap.inc.php
 2ece6541ad7ebff2d80ad6b7f43943c1  *./core/codon.config.php
 3329577ddb4c1cdaba833209d75f7f70  *./core/classes/Lang.class.php
-788c600a0b306c7a96ebd347c387a256  *./core/classes/ezDB_MySQLi.class.php
+5318ffefcf334bc3aed91afc01a7dadf  *./core/classes/ezDB_MySQLi.class.php
 c1e6bb7c33856c0723f1139ccf20ad9f  *./core/classes/CodonData.class.php
 2e48657ff032f0f3c4bc61d0f9c6619c  *./core/classes/Debug.class.php
 68b37e01839b915be209eff87831fa3f  *./core/classes/Vars.class.php

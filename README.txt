@@ -4,7 +4,7 @@ phpVMS - Virtual Airline Administration Software
  phpVMS is licenced under the following license:
    Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
    View license.txt in the root, or visit:
-		http://creativecommons.org/licenses/by-nc-sa/3.0/
+	http://creativecommons.org/licenses/by-nc-sa/3.0/
 ---
 
 INSTALLATION

@@ -32,16 +32,17 @@
  *
  * @author Nabeel Shahzad
  * @copyright Copyright (c) 2008, Nabeel Shahzad
- * @link http://www.nsslive.net/codon
+ * @link http://www.nsslive.net
  * @license BSD License
- * @package codon_core
+ * 
+ * @author Originally by Justin Vincent (justin@visunet.ie)
+ * @link http://php.justinvincent.com
  */
-/**
-  * MySQLi implementation for ezDB
-  * By Nabeel Shahzad
-  */
+/**********************************************************************
+*  ezDB Database specific class - mySQL
+*/
 
-class ezDB_mysqli extends ezDB_Base
+class ezDB_mysql extends ezDB_Base
 {
 
 	/**
@@ -71,7 +72,7 @@ class ezDB_mysqli extends ezDB_Base
 	/**
 	 * Explicitly close the connection on destruct
 	 */
-	
+	 
 	public function __destruct()
 	{
 		$this->close();
@@ -90,7 +91,8 @@ class ezDB_mysqli extends ezDB_Base
 	public function quick_connect($dbuser='', $dbpassword='', $dbname='', $dbhost='localhost')
 	{
 		$this->__construct($dbuser, $dbpassword, $dbname, $dbhost);
-	}	
+	}
+
 	
 	/**
 	 * Connect to MySQL, but not to a database
@@ -103,22 +105,18 @@ class ezDB_mysqli extends ezDB_Base
 	 */
 	public function connect($dbuser='', $dbpassword='', $dbhost='localhost')
 	{
-		$this->dbh =  new mysqli($dbhost, $dbuser, $dbpassword);
-		
-		if(mysqli_connect_errno() != 0)
+		$this->dbh = @mysql_connect($dbhost, $dbuser, $dbpassword, true);
+	
+		if(!$this->dbh)
 		{
 			if($this->use_exceptions)
-				throw new ezDB_Error(mysqli_connect_error(), mysqli_connect_errno());
+				throw new ezDB_Error(mysql_error(), mysql_errno());
 				
-			$this->register_error(mysqli_connect_error(), mysqli_connect_errno());
+			$this->register_error(mysql_error(), mysql_errno());
 			return false;
 		}
-		else
-		{
-			$this->clear_errors();
-			return true;
-		}
-		
+	
+		$this->clear_errors();
 		return true;
 	}
 	
@@ -134,34 +132,32 @@ class ezDB_mysqli extends ezDB_Base
 		// Must have a database name
 		if ($dbname == '')
 		{
-			throw new ezDB_Error('No database name', -1);
+			if($this->use_exceptions)
+				throw new ezDB_Error('No database specified!', -1);
+				
 			$this->register_error('No database name specified!');
+			return false;
 		}
-		
 		// Must have an active database connection
-		if(!$this->dbh)
+		if (!$this->dbh)
 		{
 			if($this->use_exceptions)
-				throw new ezDB_Error(mysqli_connect_error(), mysqli_connect_errno());
+				throw new ezDB_Error('Invalid or inactive connection!');
 				
 			$this->register_error('Can\'t select database, invalid or inactive connection', -1);
 			return false;
 		}
-		
-		if(!$this->dbh->select_db($dbname))
+
+		if(!mysql_select_db($dbname, $this->dbh))
 		{
 			if($this->use_exceptions)
-				throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
-				
-			$this->register_error($this->dbh->error, $this->dbh->errno);
+				throw new ezDB_Error(mysql_error(), mysql_errno());
+			
+			$this->register_error(mysql_error($this->dbh), mysql_errno($this->dbh));
 			return false;
 		}
-		else
-		{
-			$this->clear_errors();
-			return true;
-		}
 		
+		$this->clear_errors();
 		return true;
 	}
 	
@@ -170,7 +166,7 @@ class ezDB_mysqli extends ezDB_Base
 	 */
 	public function close()
 	{
-		return @$this->dbh->close();
+		return @mysql_close($this->dbh);
 	}
 	
 	/**
@@ -183,8 +179,9 @@ class ezDB_mysqli extends ezDB_Base
 	 */
 	public function escape($str)
 	{
-		return $this->dbh->real_escape_string($str);
+		return mysql_real_escape_string(stripslashes($str), $this->dbh);
 	}
+	
 	
 	/**
 	 * Returns the DB specific timestamp function (Oracle: SYSDATE, MySQL: NOW())
@@ -196,7 +193,7 @@ class ezDB_mysqli extends ezDB_Base
 	{
 		return 'NOW()';
 	}
-	
+
 	/**
 	 * Run the SQL query, and get the result. Returns false on failure
 	 *  Check $this->error() and $this->errno() functions for any errors
@@ -205,73 +202,67 @@ class ezDB_mysqli extends ezDB_Base
 	 * @param string $query SQL Query
 	 * @return mixed Return values
 	 *
-	 */	
+	 */
 	public function query($query)
 	{
-		// Initialise return
-		$return_val = true;
-		
 		// Flush cached values..
 		$this->flush();
-		
+
 		// For reg expressions
 		$query = trim($query);
-		
-		// Log how the function was called
-		$this->func_call = "\$db->query(\"$query\")";
-		
-		// Keep track of the last query for debug..
 		$this->last_query = $query;
-		
+
 		// Count how many queries there have been
 		$this->num_queries++;
 		
+		// Reset ourselves
+		$this->clear_errors();
+
 		// Use core file cache function
 		if($cache = $this->get_cache($query))
 		{
 			return $cache;
 		}
-		
-		// If there is no existing database connection then try to connect
-		if ( ! $this->dbh )
+
+		// Make sure connection is ALIVEE!
+		if (!$this->dbh )
 		{
 			if($this->use_exceptions)
-				throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
-				
+				throw new ezDB_Error(mysql_error(), mysql_errno());
+			
 			$this->register_error('There is no active database connection!');
 			return false;
 		}
-		
-		// Perform the query via std mysql_query function..
-		$result = $this->dbh->query($query);
 
-		if(is_bool($result))
+		// Perform the query via std mysql_query function..
+		$this->result = mysql_query($query, $this->dbh);
+
+		// If there is an error then take note of it..
+		if(!$this->result && mysql_errno($this->dbh) != 0)
 		{
-			if($result === false)
-			{
-				if($this->use_exceptions)
-					throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
-					
-				$this->register_error($this->dbh->error, $this->dbh->errno);
-			}
-			else
-			{
-				$this->clear_errors();
-			}
-			
-			return $result;
-		}
+			// Something went wrong		
+			if($this->use_exceptions)		
+				throw new ezDB_Error(mysql_error(), mysql_errno(), $query);
 				
+			$this->register_error(mysql_error(), mysql_errno());
+			return false;
+		}
+		else
+		{
+			$this->clear_errors();
+		}
+
 		// Query was an insert, delete, update, replace
 		$is_insert = false;
-		if (preg_match("/^(insert|delete|update|replace)\s+/i",$query))
+		if(preg_match("/^(insert|delete|update|replace)\s+/i",$query))
 		{
-			$this->rows_affected = $this->dbh->affected_rows;
+			$this->rows_affected = mysql_affected_rows($this->dbh);
 			$this->num_rows = $this->rows_affected;
-					
-			if($this->dbh->insert_id > 0)
+			
+			$insert_id = mysql_insert_id($this->dbh);
+			if($insert_id > 0)
 			{
-				$this->insert_id = $this->dbh->insert_id;
+				$this->insert_id = $insert_id;
 				$is_insert = true;
 			}
 			
@@ -284,72 +275,41 @@ class ezDB_mysqli extends ezDB_Base
 			// Take note of column info
 			$i=0;
 			
-			if($result)
+			if(is_resource($this->result))
 			{
-				while ($finfo = $result->fetch_field())
+				while ($i < mysql_num_fields($this->result))
 				{
-					$this->col_info[$i] = $finfo;
+					$this->col_info[$i] = mysql_fetch_field($this->result);
 					$i++;
 				}
-		
+				
 				// Store Query Results
 				$num_rows=0;
-				while($row = $result->fetch_object())
+				
+				while($row = mysql_fetch_object($this->result))
 				{
+					// Store relults as an objects within main array
 					$this->last_result[$num_rows] = $row;
 					$num_rows++;
 				}
-				
-				$result->close();
+
+				mysql_free_result($this->result);
 			}
 			
 			// Log number of rows the query returned
 			$this->rows_affected = $num_rows;
 			$this->num_rows = $num_rows;
-			
+
 			// Return number of rows selected
 			$return_val = $this->num_rows;
 		}
-		
+
 		// disk caching of queries
 		$this->store_cache($query,$is_insert);
-		
+
 		// If debug ALL queries
 		$this->trace || $this->debug_all ? $this->debug() : null ;
-		
+
 		return $return_val;
 	}
-	
-	
-	/* this is mysqli only
-	 * incomplete implementation
-	 *//*
-	function execute($query, $params)
-	{
-		if($this->mysql_version!=5 || $query == '' || $params == '')
-			return;
-
-		$stmt =  $this->dbh->stmt_init();
-		if(!$stmt->prepare($query))
-			return false;
-
-		//bind our parameters
-		while(list($key, $value) = each($params))
-		{
-			if(is_double($value))
-				$type = 'd';
-			elseif(is_integer($value) || is_numeric($value))
-				$type = 'i';
-			else
-				$type = 's';
-
-			$stmt->bind_param($type, $value);
-		}
-
-		$stmt->execute();
-
-	
-	}*/
 }
-
-?>

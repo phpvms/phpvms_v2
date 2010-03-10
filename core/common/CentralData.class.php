@@ -155,10 +155,13 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 	
-		$within_timelimit = CronData::check_hoursdiff('update_vainfo', self::$limits['update_vainfo']);
-		if($within_timelimit == true)
+		if(self::$debug === false)
 		{
-			return false;
+			$within_timelimit = CronData::check_hoursdiff('update_vainfo', self::$limits['update_vainfo']);
+			if($within_timelimit == true)
+			{
+				return false;
+			}
 		}
 
 		self::set_xml('update_vainfo');
@@ -184,11 +187,14 @@ class CentralData extends CodonData
 	{
 		if(!self::central_enabled())
 			return false;
-			
-		$within_timelimit = CronData::check_hoursdiff('update_schedules', self::$limits['update_schedules']);
-		if($within_timelimit == true)
+		
+		if(self::$debug === false)
 		{
-			return false;
+			$within_timelimit = CronData::check_hoursdiff('update_schedules', self::$limits['update_schedules']);
+			if($within_timelimit == true)
+			{
+				return false;
+			}
 		}
 
 		self::set_xml('update_schedules');
@@ -252,12 +258,15 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 		
-		$within_timelimit = CronData::check_hoursdiff('update_pilots', self::$limits['update_pilots']);
-		if($within_timelimit == true)
+		if(self::$debug === false)
 		{
-			return false;
+			$within_timelimit = CronData::check_hoursdiff('update_pilots', self::$limits['update_pilots']);
+			if($within_timelimit == true)
+			{
+				return false;
+			}
 		}
-			
+		
 		self::set_xml('update_pilots');
 		
 		$allpilots = PilotData::GetAllPilots();
@@ -280,10 +289,13 @@ class CentralData extends CodonData
 		if(!self::central_enabled())
 			return false;
 		
-		$within_timelimit = CronData::check_hoursdiff('update_pireps', self::$limits['update_pireps']);
-		if($within_timelimit == true)
+		if(self::$debug === false)
 		{
-			return false;
+			$within_timelimit = CronData::check_hoursdiff('update_pireps', self::$limits['update_pireps']);
+			if($within_timelimit == true)
+			{
+				return false;
+			}
 		}
 		
 		self::set_xml('update_pireps');

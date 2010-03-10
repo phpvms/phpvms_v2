@@ -24,7 +24,7 @@ include '../core/codon.config.php';
 include dirname(__FILE__).'/Installer.class.php';
  
 # phpVMS Updater 
-$revision = file_get_contents(dirname(__FILE__).'/version');
+$revision = file_get_contents(dirname(dirname(__FILE__)).'/core/version');
 define('INSTALLER_VERSION', '2.0.'.$revision);
 define('UPDATE_VERSION', '2.0.'.$revision);
 define('REVISION', $revision);
@@ -234,14 +234,14 @@ echo 'Starting the update...<br />';
 		
 	
 # Final version update
-if(!isset($_GET['test']))
-{
-	$sql = 'UPDATE `'.TABLE_PREFIX.'settings` 
-				SET value=\''.UPDATE_VERSION.'\' 
-				WHERE name=\'PHPVMS_VERSION\'';
-				
-	DB::query($sql);
-}
+	/*if(!isset($_GET['test']))
+	{
+		$sql = 'UPDATE `'.TABLE_PREFIX.'settings` 
+					SET value=\''.UPDATE_VERSION.'\' 
+					WHERE name=\'PHPVMS_VERSION\'';
+					
+		DB::query($sql);
+	}*/
 
 echo '<p><strong>Update completed!</strong></p>
 		<hr>

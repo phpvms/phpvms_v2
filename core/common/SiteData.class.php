@@ -31,6 +31,9 @@ class SiteData extends CodonData
 		
 		foreach($all_settings as $setting)
 		{
+			if($setting->name == 'PHPVMS_VERSION')
+				continue;
+				
 			//correct value for booleans
 			if($setting->value == 'true')
 			{
@@ -43,6 +46,8 @@ class SiteData extends CodonData
 			
 			define($setting->name, $setting->value);
 		}
+		
+		/*define('PHPVMS_VERSION',file_get_contents(SITE_ROOT.'/core/version'));*/
 	}
 
 	public static function GetNewsItem($id)

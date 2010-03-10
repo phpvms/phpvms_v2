@@ -26,7 +26,6 @@
  * 
  * View the docs for details about these settings
  */
- 
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', false);
@@ -272,6 +271,9 @@ Config::Set('ADMIN_SKIN', 'layout');
  * 
  * 
  */
+
+$revision = file_get_contents(CORE_PATH.'/version');
+define('PHPVMS_VERSION', '2.1.'.$revision);
 
 Config::Set('TEMPLATE_USE_CACHE', false);
 Config::Set('TEMPLATE_CACHE_EXPIRE', '24');

@@ -137,7 +137,7 @@ c1e6bb7c33856c0723f1139ccf20ad9f  *./core/classes/CodonData.class.php
 2e48657ff032f0f3c4bc61d0f9c6619c  *./core/classes/Debug.class.php
 68b37e01839b915be209eff87831fa3f  *./core/classes/Vars.class.php
 957e4ee1ab6724dd1a768f207cd2b5d3  *./core/classes/CodonEvent.class.php
-98fb424190445ecacd5b72dd8b038280  *./core/classes/CodonWebService.class.php
+019c523d1bbaf7d9b799f54cb5e3a7ea  *./core/classes/CodonWebService.class.php
 b4d1c5de45600d4f80e9aae3b1722753  *./core/classes/TemplateSet.class.php
 eeb7740f21730e431531ff7244f4ba15  *./core/classes/MainController.class.php
 813fdcd9cb3adfe70572a25148ce3282  *./core/classes/ezDB_Oracle.class.php

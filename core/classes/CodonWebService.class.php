@@ -230,8 +230,7 @@ class CodonWebService
 	
 		curl_setopt($this->curl, CURLOPT_POST, 1);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, $cleaned_params);
-		
-		
+		curl_setopt ($this->curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt ($this->curl, CURLOPT_URL, $url);
 		if(($ret = curl_exec($this->curl)) === false)
 		{

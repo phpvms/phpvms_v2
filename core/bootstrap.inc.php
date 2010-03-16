@@ -41,22 +41,25 @@ function post_module_load()
 	/* If the setting to auto-retired pilots is on, then do that
 		and only check every 24 hours
 	 */
-	if(Config::Get('PILOT_AUTO_RETIRE') == true)
-	{
-		$within_timelimit = CronData::check_hoursdiff('find_retired_pilots', '24');
+	 if(Config::Get('USE_CRON') === true)
+	 {
+		if(Config::Get('PILOT_AUTO_RETIRE') == true)
+		{
+			$within_timelimit = CronData::check_hoursdiff('find_retired_pilots', '24');
+			if($within_timelimit == false)
+			{
+				PilotData::findRetiredPilots();
+				CronData::set_lastupdate('find_retired_pilots');
+			}
+		}
+		
+		/* Expenses, make sure they're all populated */
+		$within_timelimit = CronData::check_hoursdiff('populate_expenses', '18');
 		if($within_timelimit == false)
 		{
-			PilotData::findRetiredPilots();
-			CronData::set_lastupdate('find_retired_pilots');
+			FinanceData::updateAllExpenses();
+			CronData::set_lastupdate('populate_expenses');
 		}
-	}
-	
-	/* Expenses, make sure they're all populated */
-	$within_timelimit = CronData::check_hoursdiff('populate_expenses', '18');
-	if($within_timelimit == false)
-	{
-		FinanceData::updateAllExpenses();
-		CronData::set_lastupdate('populate_expenses');
 	}
 
 	// @TODO: Clean ACARS records older than one month

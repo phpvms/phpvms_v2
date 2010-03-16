@@ -583,7 +583,7 @@ class PilotData extends CodonData
 	 * @return bool Success
 	 *
 	 */
-	public static function ReplaceFlightData($params)
+	public static function replaceFlightData($params)
 	{
 		/*$data = array(
 			'pilotid' => '',
@@ -941,7 +941,6 @@ class PilotData extends CodonData
 		{
 			imageantialias($img, true);
 		}
-		
 		
 		
 		/* Font stuff */

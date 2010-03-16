@@ -40,6 +40,7 @@ class RanksData extends CodonData
 		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
 					FROM ' .TABLE_PREFIX.'ranks r
 					ORDER BY r.minhours ASC';
+					
 		return DB::get_results($sql);
 	}
 	

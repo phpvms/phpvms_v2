@@ -24,12 +24,30 @@ class OperationsData extends CodonData
 	
 	public static function getAllAirlines($onlyenabled=false)
 	{
-		if($onlyenabled == true) $where = 'WHERE `enabled`=1';
-		else $where = '';
+		if($onlyenabled == true) 
+		{
+			$key = 'all_airline_active';
+			$where = 'WHERE `enabled`=1';
+		}
+		else 
+		{
+			$key = 'all_airline';
+			$where = '';
+		}
 		
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airlines 
-								'.$where.' 
-								ORDER BY `code` ASC');
+		$all_airlines = CodonCache::read($key);
+		
+		if($all_airlines === false)
+		{
+			$sql = 'SELECT * FROM ' . TABLE_PREFIX ."airlines 
+					{$where}
+					ORDER BY `code` ASC";
+					
+			$all_airlines= DB::get_results($sql);
+			CodonCache::write($key, $all_airlines, 'long');
+		}
+		
+		return $all_airlines;
 	}
 	
 	/**
@@ -40,6 +58,7 @@ class OperationsData extends CodonData
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
 				WHERE `hub`=1
 				ORDER BY `icao` ASC';
+				
 		return DB::get_results($sql);
 	}
 	
@@ -48,17 +67,30 @@ class OperationsData extends CodonData
 	 */
 	public static function getAllAircraft($onlyenabled=false)
 	{
-		$sql = 'SELECT * 
-				FROM ' . TABLE_PREFIX .'aircraft';
-					
+		$key = 'all_aircraft';
 		if($onlyenabled == true)
 		{
-			$sql .= ' WHERE `enabled`=1 ';
+			$key .= '_enabled';
 		}
 		
-		$sql .= ' ORDER BY icao ASC';
+		$all_aircraft = CodonCache::read($key);
+		if($all_aircraft === false)
+		{
+			$sql = 'SELECT * 
+					FROM ' . TABLE_PREFIX .'aircraft';
+			
+			if($onlyenabled == true)
+			{
+				$sql .= ' WHERE `enabled`=1 ';
+			}
+			
+			$sql .= ' ORDER BY icao ASC';
+			
+			$all_aircraft = DB::get_results($sql);
+			CodonCache::write($key, $all_aircraft, 'long');
+		}
 		
-		return DB::get_results($sql);
+		return $all_aircraft;
 	}
 	
 	/**
@@ -66,18 +98,31 @@ class OperationsData extends CodonData
 	 */
 	public static function getAllAircraftSearchList($onlyenabled=false)
 	{
-		$sql = 'SELECT * 
-				FROM ' . TABLE_PREFIX .'aircraft';
-		
+		$key = 'all_aircraft_search';
 		if($onlyenabled == true)
 		{
-			$sql .= ' WHERE `enabled`=1 ';
+			$key .= '_enabled';
 		}
 		
-		$sql .= 'GROUP BY `name`
-				 ORDER BY `icao` ASC';
+		$all_aircraft = CodonCache::read($key);
+		if($all_aircraft === false)
+		{
+			$sql = 'SELECT * 
+					FROM ' . TABLE_PREFIX .'aircraft';
+			
+			if($onlyenabled == true)
+			{
+				$sql .= ' WHERE `enabled`=1 ';
+			}
+			
+			$sql .= 'GROUP BY `name`
+					 ORDER BY `icao` ASC';
+			
+			$all_aircraft = DB::get_results($sql);
+			CodonCache::write($key, $all_aircraft, 'long');
+		}
 		
-		return DB::get_results($sql);
+		return $all_aircraft;
 	}
 	
 	/**
@@ -115,12 +160,12 @@ class OperationsData extends CodonData
 	 *  being already used
 	 */
 	 
-	 public static function CheckRegDupe($acid, $reg)
+	 public static function CheckRegDupe($ac_id, $reg)
 	 {
 		# Search for reg that's not on the AC supplied
 		$sql = "SELECT * FROM ".TABLE_PREFIX."aircraft
-				WHERE `id` != $acid
-					AND `registration`='$reg'";
+				WHERE `id` != {$ac_id}
+					AND `registration`='{$reg}'";
 		
 		return DB::get_results($sql);
 	}
@@ -130,8 +175,20 @@ class OperationsData extends CodonData
 	 */
 	public static function getAllAirports()
 	{
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX .'airports 
-								ORDER BY `icao` ASC');
+		$key = 'all_airports';
+		$all_airports = CodonCache::read($key);
+		
+		if($all_airports === false)
+		{
+			$sql = 'SELECT * FROM ' . TABLE_PREFIX .'airports 
+					ORDER BY `icao` ASC';
+				
+			$all_airports= DB::get_results($sql);
+			
+			CodonCache::write($key, $all_airports, 'long');
+		}
+		
+		return $all_airports;
 	}
 	
 	/**
@@ -148,8 +205,19 @@ class OperationsData extends CodonData
 	public static function getAirlineByCode($code)
 	{
 		$code = strtoupper($code);
-		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
+		$key = 'airline_'.$code;
+		
+		$airline = CodonCache::read($key);
+		
+		if($airline === false)
+		{
+			$airline = DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
 							WHERE `code`=\''.$code.'\'');
+			
+			CodonCache::write($key, $airline, 'long');
+		}
+		
+		return $airline;
 	}
 	
 	public static function getAirlineByID($id)
@@ -161,9 +229,8 @@ class OperationsData extends CodonData
 	/**
 	 * Add an airline
 	 */
-	public static function AddAirline($code, $name)
+	public static function addAirline($code, $name)
 	{
-		
 		$code = strtoupper($code);
 		$name = DB::escape($name);
 		
@@ -179,7 +246,7 @@ class OperationsData extends CodonData
 		return true;
 	}
 	
-	public static function EditAirline($id, $code, $name, $enabled=true)
+	public static function editAirline($id, $code, $name, $enabled=true)
 	{
 		$code = DB::escape($code);
 		$name = DB::escape($name);
@@ -195,6 +262,8 @@ class OperationsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
+			
+		CodonCache::delete('airline_'.$code);
 			
 		return true;
 	}
@@ -215,7 +284,7 @@ class OperationsData extends CodonData
 						'maxcargo'=>$this->post->maxcargo,
 						'enabled'=>$this->post->enabled);
 	 */
-	public static function AddAircaft($data)
+	public static function addAircaft($data)
 	{
 		/*$data = array('icao'=>$this->post->icao,
 						'name'=>$this->post->name,
@@ -269,7 +338,7 @@ class OperationsData extends CodonData
 	/**
 	 * Edit an aircraft
 	 */
-	public static function EditAircraft($data)
+	public static function editAircraft($data)
 	{
 		$data['icao'] = DB::escape(strtoupper($data['icao']));
 		$data['name'] = DB::escape(strtoupper($data['name']));
@@ -302,6 +371,11 @@ class OperationsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
+		
+		CodonCache::delete('all_aircraft');
+		CodonCache::delete('all_aircraft_enabled');
+		CodonCache::delete('all_aircraft_search');
+		CodonCache::delete('all_aircraft_search_enabled');
 			
 		return true;
 	}
@@ -320,7 +394,7 @@ class OperationsData extends CodonData
 		);
 		
 	 */
-	public static function AddAirport($data)
+	public static function addAirport($data)
 	{
 		
 		/*$data = array(
@@ -358,7 +432,8 @@ class OperationsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		CodonCache::delete('get_airport_'.$data['icao']);
 		return true;
 	}
 
@@ -374,7 +449,7 @@ class OperationsData extends CodonData
 			'fuelprice' => 0
 		);
 	 */
-	public static function EditAirport($data)
+	public static function editAirport($data)
 	{
 		$data['icao'] = strtoupper(DB::escape($data['icao']));
 		$data['name'] = DB::escape($data['name']);
@@ -398,10 +473,12 @@ class OperationsData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 			
+		CodonCache::delete('get_airport_'.$data['icao']);
+		CodonCache::delete('all_airports');
 		return true;
 	}
 	
-	public static function RemoveAirport($icao)
+	public static function removeAirport($icao)
 	{
 		$icao = DB::escape($icao);
 		$icao = strtoupper($icao);
@@ -411,7 +488,9 @@ class OperationsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		CodonCache::delete('get_airport_'.$icao);
+		CodonCache::delete('all_airports');
 		return true;
 	}
 	/**
@@ -420,10 +499,20 @@ class OperationsData extends CodonData
 	public static function getAirportInfo($icao)
 	{
 		$icao = strtoupper(DB::escape($icao));
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
-					WHERE `icao`=\''.$icao.'\'';
 		
-		return DB::get_row($sql);
+		$key = 'get_airport_'.$icao;
+		
+		$airport_info = CodonCache::read($key);
+		if($airport_info === false)
+		{
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports 
+						WHERE `icao`=\''.$icao.'\'';
+						
+			$airport_info = DB::get_row($sql);
+			CodonCache::write($key, $airport_info, 'long');
+		}
+		
+		return $airport_info;
 	}
 	
 	

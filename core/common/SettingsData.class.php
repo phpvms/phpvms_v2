@@ -18,18 +18,28 @@
 
 class SettingsData extends CodonData
 {
-	public static function GetAllSettings()
+	
+	public static function getAllSettings()
 	{
-		return DB::get_results('SELECT * FROM ' . TABLE_PREFIX.'settings');
+		$all_settings = CodonCache::read('site_settings');
+		if($all_settings === false)
+		{
+			$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'settings';
+			$all_settings = DB::get_results($sql);
+			
+			CodonCache::write('site_settings', $all_settings, 'long');
+		}
+		
+		return $all_settings;
 	}
 	
-	public static function GetSetting($name)
+	public static function getSetting($name)
 	{
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'settings 
 					WHERE name=\''.$name.'\'');
 	}
 	
-	public static function GetSettingValue($name)
+	public static function getSettingValue($name)
 	{
 		$ret = DB::get_row('SELECT value FROM '.TABLE_PREFIX.'settings 
 					WHERE name=\''.$name.'\'');
@@ -41,13 +51,20 @@ class SettingsData extends CodonData
 	/**
 	 * Return all of the custom fields data
 	 */
-	public static function GetAllFields()
+	public static function getAllFields()
 	{
-		return DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
+		$all_fields = CodonCache::read('allfields');
+		if($all_fields === false)
+		{
+			$all_fields = DB::get_results('SELECT * FROM '.TABLE_PREFIX.'customfields');
+			CodonCache::write('allfields', $all_fields, 'long');
+		}
+		
+		return $all_fields;
 	}
 	
 	
-	public static function GetField($fieldid)
+	public static function getField($fieldid)
 	{
 		$fieldid = intval($fieldid);
 		return DB::get_row('SELECT * FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$fieldid);
@@ -63,7 +80,7 @@ class SettingsData extends CodonData
 					 'public'=>,
 					 'showinregistration'=>);
 	 */
-	public static function AddField($data)
+	public static function addField($data)
 	{
 		$fieldname = str_replace(' ', '_', $data['title']);
 		$fieldname = strtoupper($fieldname);
@@ -88,7 +105,9 @@ class SettingsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		CodonCache::delete('allfields');
+		
 		return true;
 	}
 	
@@ -102,7 +121,7 @@ class SettingsData extends CodonData
 					 'public'=>,
 					 'showinregistration'=>);
 	 */
-	public static function EditField($data)
+	public static function editField($data)
 	{				 
 					 
 		$fieldname = strtoupper(str_replace(' ', '_', $data['title']));
@@ -130,7 +149,9 @@ class SettingsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		CodonCache::delete('allfields');
+		
 		return true;
 	}
 	
@@ -141,7 +162,7 @@ class SettingsData extends CodonData
 	 * @param string $value Value of the setting
 	 * @param boolean $core Whether it's "vital" to the engine or not. Bascially blocks deletion
 	 */
-	public static function SaveSetting($name, $value, $descrip='', $core=false)
+	public static function saveSetting($name, $value, $descrip='', $core=false)
 	{
 		if(is_bool($value))
 		{
@@ -165,28 +186,15 @@ class SettingsData extends CodonData
 		$value = DB::escape($value);
 		$descrip = DB::escape($descrip);
 		
-		/*$sql = 'SELECT * FROM '.TABLE_PREFIX.'settings
-					WHERE name=\''.$name.'\'';
-		
-		$res = DB::get_row($sql);
-		
-		if(!$res)
-		{
-			$sql = 'INSERT INTO ' . TABLE_PREFIX . 'settings (name, value, descrip, core)
-						VALUES (\''.$name.'\', \''.$value.'\', \''.$descrip.'\', \''. $core.'\')';
-		}
-		else
-		{*/
-			//update
-			// don't change CORE status on update
-			$sql = 'UPDATE ' . TABLE_PREFIX . 'settings
-						SET value=\''.$value.'\' WHERE name=\''.$name.'\'';
-		//}
+		$sql = 'UPDATE ' . TABLE_PREFIX . 'settings
+					SET value=\''.$value.'\' WHERE name=\''.$name.'\'';
 		
 		$res = DB::query($sql);
 		
 		if(DB::errno() != 0)
 			return false;
+			
+		CodonCache::delete('site_settings');
 			
 		return true;
 	}
@@ -194,7 +202,7 @@ class SettingsData extends CodonData
 	/**
 	 * See if the setting is part of the core
 	 */
-	public static function IsCoreSetting($setting_name)
+	public static function isCoreSetting($setting_name)
 	{
 		$sql = 'SELECT core FROM ' . TABLE_PREFIX .'settings WHERE name=\''.$setting_name.'\'';
 		$res = DB::get_row($sql);
@@ -211,7 +219,7 @@ class SettingsData extends CodonData
 		return false;
 	}
 	
-	public static function DeleteField($id)
+	public static function deleteField($id)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$id;
 
@@ -226,4 +234,3 @@ class SettingsData extends CodonData
 		//$sql = 'DELETE FROM '.TABLE_PREFIX.'
 	}
 }
-?>

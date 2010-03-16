@@ -27,7 +27,7 @@ class FuelData extends CodonData
 	 *
 	 * @version 709 rewritten
 	 */
-	public static function GetFuelPrice($apt_icao)
+	public static function getFuelPrice($apt_icao)
 	{		
 		$price = false;
 		$aptinfo = OperationsData::GetAirportInfo($apt_icao);

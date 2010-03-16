@@ -23,11 +23,19 @@ class PilotGroups extends CodonData
 	 */
 	public static function getAllGroups()
 	{
-		$query = 'SELECT * 
+		$all_groups = CodonCache::read('all_groups');
+		
+		if($all_groups === false)
+		{
+			$sql = 'SELECT * 
 					FROM ' . TABLE_PREFIX .'groups
 					ORDER BY name ASC';
+			
+			$all_groups = DB::get_results($sql);
+			CodonCache::write('all_groups', $all_groups, 'medium');
+		}
 		
-		return DB::get_results($query);
+		return $all_groups;
 	}
 	
 	/**
@@ -35,14 +43,16 @@ class PilotGroups extends CodonData
 	 */
 	public static function AddGroup($groupname, $permissions)
 	{
-		$query = "INSERT INTO " . TABLE_PREFIX . "groups 
-					(`name`, `permissions`) VALUES ('$groupname', $permissions)";
+		$sql = "INSERT INTO " . TABLE_PREFIX . "groups 
+				(`name`, `permissions`) VALUES ('$groupname', $permissions)";
 		
-		$res = DB::query($query);
+		$res = DB::query($sql);
 				
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		CodonCache::delete('all_groups');
+		
 		return true;
 	}
 	
@@ -51,14 +61,16 @@ class PilotGroups extends CodonData
 		$groupid = intval($groupid);
 		$groupname = DB::escape($groupname);
 		
-		$query = 'UPDATE '.TABLE_PREFIX."groups
-					SET `name`='$groupname', `permissions`=$permissions
-					WHERE `groupid`=$groupid";
+		$sql = 'UPDATE '.TABLE_PREFIX."groups
+				SET `name`='$groupname', `permissions`=$permissions
+				WHERE `groupid`=$groupid";
 					
-		$res = DB::query($query);
+		$res = DB::query($sql);
 		
 		if(DB::errno() != 0)
 			return false;
+		
+		CodonCache::delete('all_groups');
 		
 		return true;
 	}
@@ -67,11 +79,11 @@ class PilotGroups extends CodonData
 	{
 		$groupid = intval($groupid);
 		
-		$query = 'SELECT *
-					FROM ' . TABLE_PREFIX .'groups
-					WHERE groupid='.$groupid;
+		$sql = 'SELECT *
+				FROM ' . TABLE_PREFIX .'groups
+				WHERE groupid='.$groupid;
 		
-		return DB::get_row($query);
+		return DB::get_row($sql);
 	}
 	
 	/**
@@ -79,10 +91,10 @@ class PilotGroups extends CodonData
 	 */
 	public static function getGroupID($groupname)
 	{
-		$query = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups
-					WHERE name=\''.$groupname.'\'';
+		$sql = 'SELECT groupid FROM ' . TABLE_PREFIX .'groups
+				WHERE name=\''.$groupname.'\'';
 		
-		$res = DB::get_row($query);
+		$res = DB::get_row($sql);
 	
 		return $res->groupid;
 	}
@@ -192,7 +204,6 @@ class PilotGroups extends CodonData
 	 */
 	public static function CheckUserInGroup($pilotid, $groupid)
 	{
-		
 		if(!is_numeric($groupid))
 		{
 			$groupid = self::getGroupID($groupid);

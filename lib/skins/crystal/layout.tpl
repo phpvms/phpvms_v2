@@ -18,12 +18,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=7">
-<title><?php echo $title; ?></title>
+<title><?php echo $page_title; ?></title>
 
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo SITE_URL?>/lib/skins/crystal/styles.css" />
 
-<?php
-Template::Show('core_htmlhead.tpl');
+<?php 
+/* This is required, so phpVMS can output the necessary libraries it needs */
+echo $page_htmlhead; 
 ?>
 
 <!-- Any custom Javascript should be placed here, after the above Template::Show() call -->
@@ -31,8 +32,9 @@ Template::Show('core_htmlhead.tpl');
 </head>
 <body>
 <?php
-// This should be the first thing you place after a <body> tag
-Template::Show('core_htmlreq.tpl');
+/* This should be the first thing you place after a <body> tag
+	This is also required by phpVMS */
+echo $page_htmlreq;
 ?>
 <div id="body">
 <div id="innerwrapper">
@@ -41,7 +43,6 @@ Template::Show('core_htmlreq.tpl');
 		<?php 
 		/* 
 		Quick example of how to see if they're logged in or not
-				
 		Only show this login form if they're logged in */
 		if(Auth::LoggedIn() == false)
 		{ ?>

@@ -46,6 +46,7 @@ class CodonCache
 		/*	These are the default settings, which will get merged with
 			the incoming settings passed to this function */
 		self::$settings = array(
+			'active' => true,					/* enabled by default, self::setStatus() */
 			'engine' => 'file',					/* "file" or "apc" */
 			'location' => dirname(__FILE__),	/* For the "file" engine type */
 			'prefix' => __CLASS__,				/* Specify a prefix for any entries */
@@ -64,10 +65,14 @@ class CodonCache
 					'duration' => '+5 minutes',
 				),
 				
+				'medium' => array(
+					'duration' => '+1 hour',
+				),
+				
 				'long' => array(
 					'duration' => '+6 hours'
 				),
-			)
+			),
 		);
 		
 		if(is_array($settings))
@@ -75,14 +80,47 @@ class CodonCache
 			self::$settings = array_merge(self::$settings, $settings);
 		}
 		
-		# add a trailing slash
-		if(substr(self::$settings['location'], -1, 1) != '/')
+		if(self::$settings['engine'] == 'file')
 		{
-			self::$settings['location'] .= '/';
+			# Add a trailing slash
+			if(substr(self::$settings['location'], -1, 1) != '/')
+			{
+				self::$settings['location'] .= '/';
+			}
 		}
-		
 	}
 	
+	
+	/**
+	 * Enable or disable the caching engine
+	 *
+	 * @param bool $bool true/false of status
+	 *
+	 */
+	public static function setStatus($bool)
+	{
+		if(!is_bool($bool))
+		{
+			$bool = intval($bool);
+			if($bool === 1)
+				$bool = true;
+			else
+				$bool = false;
+		}
+		
+		self::$settings['active'] = $bool;
+	}
+	
+	/**
+	 * Return the current status of the cache engine
+	 * 
+	 * @param bool true/false
+	 * 
+	 */
+	public static function getStatus()
+	{
+		return self::$settings['active'];
+	}
 	
 	/**
 	 * Read a key'd value from the cache store
@@ -93,9 +131,9 @@ class CodonCache
 	 */
 	public static function read($key)
 	{
-		if($key == '')
+		if(self::$settings['active'] === false || $key == '')
 		{
-			return;
+			return false;
 		}
 		
 		$key = self::$settings['prefix'].$key;
@@ -149,9 +187,9 @@ class CodonCache
 	 */
 	public static function write($key, $value, $profile = 'default')
 	{
-		if($key == '')
+		if(self::$settings['active'] === false || $key == '')
 		{
-			return;
+			return false;
 		}
 		
 		$key = self::$settings['prefix'].$key;
@@ -171,7 +209,6 @@ class CodonCache
 			$seconds = $ttl - time();
 			/*apc_store($key.'_expire', $ttl, 0);
 			apc_store($key, $ttl, $seconds);*/
-			
 			apc_store($key, $value, $seconds);
 		}
 		
@@ -188,8 +225,12 @@ class CodonCache
 	 */
 	public static function delete($key)
 	{
-		$key = self::$settings['prefix'].$key;
+		if(self::$settings['active'] === false || $key == '')
+		{
+			return false;
+		}
 		
+		$key = self::$settings['prefix'].$key;
 		if(self::$settings['engine'] == 'file')
 		{
 			if(file_exists(self::$settings['location'].$key, $value))

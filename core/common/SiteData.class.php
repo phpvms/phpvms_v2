@@ -21,8 +21,8 @@ class SiteData extends CodonData
 	
 	public static function loadSiteSettings()
 	{
-		$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'settings';
-		$all_settings = DB::get_results($sql);
+		
+		$all_settings = SettingsData::getAllSettings();
 		
 		if(!$all_settings)
 		{

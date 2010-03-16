@@ -76,6 +76,9 @@ Lang::set_language(Config::Get('SITE_LANGUAGE'));
 error_reporting(Config::Get('ERROR_LEVEL'));
 Debug::$debug_enabled = Config::Get('DEBUG_MODE');
 
+/* Init caching engine */
+CodonCache::init($cache_settings);
+
 if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 {
 	require CLASS_PATH.DS.'ezDB.class.php';

@@ -41,7 +41,6 @@
 # Load stuff only when it's needed
 function codon_autoload($class_name)
 {
-	
 	# Load a main class, if it exists
 	if(file_exists(CLASS_PATH.DS.$class_name.'.class.php'))
 	{

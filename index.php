@@ -69,19 +69,22 @@ Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
 ob_start();
 MainController::RunAllActions(Config::Get('RUN_MODULE'));
-$page_data = ob_get_clean();
+$page_content = ob_get_clean();
 
 $BaseTemplate->Set('title', MainController::$page_title .' - '.SITE_NAME);
 $BaseTemplate->Set('page_title', MainController::$page_title .' - '.SITE_NAME);
 
 if(file_exists(SKINS_PATH.'/layout.tpl'))
 {
-	$BaseTemplate->Set('page_content', $page_data);
+	$BaseTemplate->Set('page_htmlhead', Template::Get('core_htmlhead.tpl', true));
+	$BaseTemplate->Set('page_htmlreq', Template::Get('core_htmlreq.tpl', true));
+	$BaseTemplate->Set('page_content', $page_content);
+	
 	$BaseTemplate->ShowTemplate('layout.tpl');
 }
 else
 {
-
+	# It's a template sammich!
 	$BaseTemplate->ShowTemplate('header.tpl');
 	echo $page_data;
 	$BaseTemplate->ShowTemplate('footer.tpl');

@@ -87,7 +87,7 @@ class Dashboard extends CodonModule
 	 */
 	public function CheckForUpdates()
 	{
-		if(NOTIFY_UPDATE == true)
+		if(Config::Get('CHECK_RELEASE_VERSION') == true)
 		{
 			$url = Config::Get('PHPVMS_API_SERVER').'/version/get/xml/'.PHPVMS_VERSION;
 			

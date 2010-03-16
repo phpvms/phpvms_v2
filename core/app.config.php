@@ -212,6 +212,13 @@ Config::Set('GEONAME_API_SERVER', 'http://ws.geonames.org');
 Config::Set('RECAPTCHA_PUBLIC_KEY', '6LcklAsAAAAAAJqmghmMPOACeJrAxW3sJulSboxx');
 Config::Set('RECAPTCHA_PRIVATE_KEY', '6LcklAsAAAAAAMeQy5ZBoDu8JOMTP-UL7ek1GedO');
 
+/*	Whether you have the /admin/maintenance.php script added into cron.
+	If you do, set this to true. This saves many DB calls since phpVMS will
+	have to 'fake' a cron-job
+	*/
+Config::Set('USE_CRON', false);
+
+Config::Set('CHECK_RELEASE_VERSION', true);
 Config::Set('CHECK_BETA_VERSION', false);
 Config::Set('URL_REWRITE', false);
 
@@ -318,6 +325,58 @@ else
 	CodonRewrite::AddRule('xml', array('request'));
 }
 
+/* Cache settings */
+$cache_settings = array(
+	'active' => true,
+	'engine' => 'file',					/* "file" or "apc" */
+	'location' => CACHE_PATH,	/* For the "file" engine type */
+	'prefix' => 'phpvms_',				/* Specify a prefix for any entries */
+	'profiles' => array(
+		'default' => array(
+			'duration' => '+10 minutes',
+		),
+		
+		'short' => array(
+			'duration' => '+3 minutes',
+		),
+		
+		'15minute' => array(
+			'duration' => '+15 minutes',
+		),
+		
+		'medium' => array(
+			'duration' => '+1 hour',
+		),
+		
+		'long' => array(
+			'duration' => '+6 hours'
+		),
+	)
+);
+
+Config::Set('CACHE_KEY_LIST', array(
+	'all_airline_active',
+	'all_airlines',
+	'start_date',
+	'months_since_start',
+	'years_since_start',
+	'stats_aircraft_usage',
+	'all_settings',
+	'total_flights',
+	'top_routes',
+	'users_online',
+	'guests_online',
+	'pilot_count',
+	'total_pax_carried',
+	'flights_today',
+	'fuel_burned',
+	'miles_flown',
+	'aircraft_in_fleet',
+	'total_news_items',
+	'total_schedules',
+	'all_groups',
+	)
+);
 
 /* VACentral */
 
@@ -332,18 +391,22 @@ Config::Set('VACENTRAL_API_KEY', '');
  *	Do not modify these! All sorts of weird shit can happen
  */ 
 # Set the type of flights we have
-Config::Set('FLIGHT_TYPES', array(	
+Config::Set(
+	'FLIGHT_TYPES', array(	
 		'P'=>'Passenger',
 		'C'=>'Cargo',
-		'H'=>'Charter')
-	);
+		'H'=>'Charter'
+	)
+);
 			
 # Set the types of expenses we have
-Config::Set('EXPENSE_TYPES', array( 
-	'M'=>'Monthly',
-	'F'=>'Per Flight',
-	'P'=>'Percent (month)',
-	'G'=>'Percent (per flight)')
+Config::Set(
+	'EXPENSE_TYPES', array( 
+		'M'=>'Monthly',
+		'F'=>'Per Flight',
+		'P'=>'Percent (month)',
+		'G'=>'Percent (per flight)'
+	)
 );
 			
 define('SIGNATURE_PATH', '/lib/signatures');

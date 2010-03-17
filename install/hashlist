@@ -11,12 +11,12 @@ fac7c09a2f7b3c46a3c4d20ccb0eb2fb  *./install/templates/s2_site_setup.tpl
 98159de4e2de83127db1931eb35f818c  *./install/update_437.sql
 26ef658d7e68ae3cd8f5e34e9e9c5e65  *./install/checkinstall.php
 c6384626328e54dd77c534d04ff65a44  *./install/update_700.sql
-b588cc4366322cbb6e49175768ed804c  *./install/update.sql
+7dd2b04d7771a2f1311456cea3fdfbb8  *./install/update.sql
 d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 55c3722f079209f61fcfce707f077548  *./install/update_400.sql
 56522f3521444add8835afbba7375a11  *./install/update_854.sql
 80b2826f5861390475c49bbb1551906d  *./install/dbtest.php
-1184e3ec90a026e2a6bf0451ddc79ad3  *./install/install.sql
+2cee82651a3b3887ff052da7bfd1b85e  *./install/install.sql
 1ee77934d1a602e9c74861c9391a55d9  *./install/update_628.sql
 dc6c1d0e7acbea6562eaf7c58e26be74  *./install/loader.inc.php
 822baf3a235831c643f1007fdaedfa9a  *./install/Installer.class.php
@@ -36,7 +36,7 @@ ab63202ba065d26ba190dc4c1591f67b  *./core/common/RSSFeed.class.php
 c06f13bef9c649f810f639bf2eb4c0d9  *./core/common/SchedulesData.class.php
 6e69bbf6f5d8b534b77f051a63cd9466  *./core/common/UserGroups.class.php
 b3e6a4926ee94b822c5d74fa158356b1  *./core/common/Countries.class.php
-d8de73b9f12aabde2b0efd053658dd45  *./core/common/PilotData.class.php
+42bb1b689481ad65145fa559485c8330  *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210  *./core/common/GoogleChart.class.php
 d0b0d982c08b2a7aa8f2cd962d9d45a1  *./core/common/SettingsData.class.php
 63d6aad28fc85cf33f930f0841568dfd  *./core/common/NavData.class.php
@@ -137,7 +137,7 @@ c1e6bb7c33856c0723f1139ccf20ad9f  *./core/classes/CodonData.class.php
 2e48657ff032f0f3c4bc61d0f9c6619c  *./core/classes/Debug.class.php
 68b37e01839b915be209eff87831fa3f  *./core/classes/Vars.class.php
 957e4ee1ab6724dd1a768f207cd2b5d3  *./core/classes/CodonEvent.class.php
-4ad80f057de229254d89a94c7d8cd939  *./core/classes/CodonCache.class.php
+66ee4a8eb93918393ef826321795e358  *./core/classes/CodonCache.class.php
 019c523d1bbaf7d9b799f54cb5e3a7ea  *./core/classes/CodonWebService.class.php
 b4d1c5de45600d4f80e9aae3b1722753  *./core/classes/TemplateSet.class.php
 eeb7740f21730e431531ff7244f4ba15  *./core/classes/MainController.class.php
@@ -180,7 +180,7 @@ a5e67fddae9c3f77e262cee30771db05  *./core/modules/Logout/Logout.php
 469b106005f7bae51741e9a20f725708  *./core/modules/Pages/Pages.php
 925c6ea3907403895286aff5d9838916  *./core/modules/Login/Login.php
 a1704e9c69187d041d9a7b5d67e6af0a  *./core/modules/RouteMap/RouteMap.php
-402c04d40c1f9587571bca4137bf357a  *./index.php
+126588bc71671e1cdd83c1cf2114c204  *./index.php
 a52b21f183e317427277542c9fbd7acc  *./admin/maintenance.php
 88e45847491bc3720114b632e32f05bd  *./admin/templates/sidebar_expenses.tpl
 b55dd3d7384a5408860e3096fd032d59  *./admin/templates/sidebar_dashboard.tpl

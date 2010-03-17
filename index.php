@@ -86,7 +86,7 @@ else
 {
 	# It's a template sammich!
 	$BaseTemplate->ShowTemplate('header.tpl');
-	echo $page_data;
+	echo $page_content;
 	$BaseTemplate->ShowTemplate('footer.tpl');
 }
 

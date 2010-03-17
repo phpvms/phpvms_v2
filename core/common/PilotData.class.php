@@ -201,6 +201,12 @@ class PilotData extends CodonData
 	
 	public static function changePilotID($old_pilotid, $new_pilotid)
 	{
+		$pilot_exists = self::getPilotData($new_pilotid);
+		if(is_object($pilot_exists))
+		{
+			return false;
+		}
+		
 		// List of all the tables which need to update
 		$table_list = array(
 			'adminlog',

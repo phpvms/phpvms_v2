@@ -233,7 +233,7 @@ class CodonCache
 		$key = self::$settings['prefix'].$key;
 		if(self::$settings['engine'] == 'file')
 		{
-			if(file_exists(self::$settings['location'].$key, $value))
+			if(file_exists(self::$settings['location'].$key))
 			{
 				unlink(self::$settings['location'].$key);
 			}

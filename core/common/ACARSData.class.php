@@ -77,19 +77,19 @@ class ACARSData extends CodonData
 			$schedule = $schedule[0];
 			
 			$data['route'] = $schedule->route;
-			$data['route_details'] = serialize(SchedulesData::getRouteDetails($schedule->id));
+			//$data['route_details'] = serialize(SchedulesData::getRouteDetails($schedule->id));
 		}
 		/*	A route was passed in, so get the details about this route */
 		elseif(isset($data['route']) && !empty($data['route']))
 		{
-			$tmp = new stdClass();
+			/*$tmp = new stdClass();
 			$tmp->deplat = $dep_apt->lat;
 			$tmp->deplng = $dep_apt->lng;
 			$tmp->route = $data['route'];
 			
 			$data['route_details'] = NavData::parseRoute($tmp);
 			$data['route_details'] = serialize($data['route_details']);
-			unset($tmp);
+			unset($tmp);*/
 		}
 		
 		if(!empty($data['route_details']))
@@ -120,8 +120,7 @@ class ACARSData extends CodonData
 		
 		/* Check the heading for the flight
 			If none is specified, then point it straight to the arrival airport */
-		if(empty($data['heading']) || !isset($data['heading'])
-			&& isset($data['lat']) && isset($data['lng']))
+		if($data['heading'] == '' || (!isset($data['heading']) && isset($data['lat']) && isset($data['lng'])))
 		{
 			/* Calculate an angle based on current coords and the
 				destination coordinates */
@@ -137,18 +136,14 @@ class ACARSData extends CodonData
 				$data['heading'] += 360;
 			}
 		}
-		else
-		{
-			$data['heading'] = 0;
-		}
-
+		
 		// Manually add the last set
 		$data['lastupdate'] = 'NOW()';
 			
 		// first see if we exist:
 		$sql = 'SELECT `id`
 				FROM '.TABLE_PREFIX."acarsdata 
-				WHERE `pilotid`=$pilotid";
+				WHERE `pilotid`={$pilotid}";
 				
 		$exist = DB::get_row($sql);
 			
@@ -234,7 +229,6 @@ class ACARSData extends CodonData
 			$data['deptime'] = time();
 			$flight_id = DB::$insert_id;
 		}
-		
 		
 		$flight_info = self::get_flight_by_id($flight_id);
 		

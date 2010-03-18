@@ -243,6 +243,9 @@ class OperationsData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 			
+		CodonCache::delete('all_airline_active');
+		CodonCache::delete('all_airline');
+			
 		return true;
 	}
 	
@@ -331,7 +334,12 @@ class OperationsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
+		CodonCache::delete('all_aircraft');
+		CodonCache::delete('all_aircraft_enabled');
+		CodonCache::delete('all_aircraft_search');
+		CodonCache::delete('all_aircraft_search_enabled');
+		
 		return true;
 	}
 	
@@ -433,6 +441,7 @@ class OperationsData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 		
+		CodonCache::delete('all_airports');
 		CodonCache::delete('get_airport_'.$data['icao']);
 		return true;
 	}

@@ -48,8 +48,8 @@ c6563953a125f27ad4a5586f7595bc6c  *./core/common/FinanceData.class.php
 5fd6ab8aad8037d0e7cec7a9f62995f9  *./core/common/LogData.class.php
 8cf715ca3f9710c6fa9cedb383fbab37  *./core/common/ChartGraph.class.php
 035117763e0cad54a737c181aa25f636  *./core/common/DownloadData.class.php
-aa5db9a03bb084bce057af97b12085a6  *./core/common/ACARSData.class.php
-c6c50d5f2f8b38573247527237193bbb  *./core/common/OperationsData.class.php
+8511673219501abab65952bdc1cb7033  *./core/common/ACARSData.class.php
+85be8ba7718a1d7c9c86365f1d58e993  *./core/common/OperationsData.class.php
 54d08de34e14adf506930c9433320756  *./core/common/CronData.class.php
 e1634f73751a74d4d411612fd3a9f307  *./core/common/OFCharts.class.php
 a6e3a7440c17417e57a829b6f84cd3e1  *./core/common/CentralData.class.php

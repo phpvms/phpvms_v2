@@ -40,32 +40,28 @@
 		?>
 		</td>
 	</tr>
-	
-	<?php
-	
-	# This is a simple captcha thing for if they are not logged in
-	if(Auth::LoggedIn() == false)
-	{		
-		echo '<tr>
-				<td><strong>Captcha</strong></td>
-				<td><p>What is the sum of '.$rand1 .' and '.$rand2.'?<br />
-					<input type="text" name="captcha" value="" />
-				</td>
-			  </tr>';
-	}
-	
-	?>
+
 	<tr>
 		<td><strong>Subject: </strong></td>
-		<td><input type="text" name="subject" value=""</td>
+		<td><input type="text" name="subject" value="<?php echo $_POST['subject'];?>" /></td>
 	
 	</tr>
     <tr>
       <td><strong>Message:</strong></td>
       <td>
-		<textarea name="message" cols='45' rows='5'></textarea>
+		<textarea name="message" cols='45' rows='5'><?php echo $_POST['message'];?></textarea>
       </td>
     </tr>
+    
+    <tr>
+		<td width="1%" nowrap><strong>Captcha</strong></td>
+		<td>
+		<?php
+		echo recaptcha_get_html(Config::Get('RECAPTCHA_PUBLIC_KEY'), $captcha_error);
+		?>
+		</td>
+	</tr>
+	
     <tr>
 		<td>
 			<input type="hidden" name="loggedin" value="<?php echo (Auth::LoggedIn())?'true':'false'?>" />

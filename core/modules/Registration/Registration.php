@@ -173,11 +173,10 @@ class Registration extends CodonModule
 			$_POST["recaptcha_challenge_field"],
 			$_POST["recaptcha_response_field"]);
 
-
 		if(!$resp->is_valid)
 		{
 			$error = true;
-			$this->set('captcha_error', $resp->error);			
+			$this->set('captcha_error', $resp->error);
 		}
 		else
 			$this->set('captcha_error', '');

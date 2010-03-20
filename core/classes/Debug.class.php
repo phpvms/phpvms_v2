@@ -74,6 +74,29 @@ class Debug
 	
 	protected static $fp;
 	
+	public static function db_error($debug_info)
+	{
+		$call_list = array();
+		foreach($debug_info['backtrace'] as $caller)
+		{
+			$call_list[] = $caller['class'].$caller['type'].$caller['function'];
+		}
+		$callers = implode(' > ', $call_list);
+		unset($call_list);
+		
+		$debug_info['sql'] = preg_replace('/[\r\n\s]+/xms', ' ', trim($debug_info['sql']));
+		$debug_info['error'] = preg_replace('/[\r\n\s]+/xms', ' ', trim($debug_info['error']));
+				
+		$time = date('m.d.y H:i:s');
+		$log_text="=====\n"
+				 ."Time: {$time}\n"
+				 ."Backtrace: {$callers}\n"
+				 ."Query: {$debug_info['sql']}\n"
+				 ."Error: ({$debug_info['errno']}) - {$debug_info['error']}\n=====\n\n";
+				 
+		self::log($log_text);
+	}
+	
 	public static function log($string, $filename = 'log')
 	{
 		if(Config::Get('DEBUG_MODE') === false){

@@ -1,44 +1,38 @@
 <?php
 /**
- * Codon PHP Framework
- *	www.nsslive.net/codon
- * Software License Agreement (BSD License)
- *
- * Copyright (c) 2008 Nabeel Shahzad, nsslive.net
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2.  Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2010 Nabeel Shahzad
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  * @author Nabeel Shahzad
- * @copyright Copyright (c) 2008, Nabeel Shahzad
- * @link http://www.nsslive.net/codon
- * @license BSD License
- * @package codon_core
+ * @copyright Copyright (c) 2008-2010, Nabeel Shahzad
+ * @link http://github.com/nshahzad/ezdb
+ * @license MIT License
  */
 
-include dirname(__FILE__).'/ezDB_Base.class.php';
+function ezdb_autoloader($class_name)
+{
+	$class_name = strtolower($class_name);
+	include dirname(__FILE__).DIRECTORY_SEPARATOR.$class_name.'.class.php';
+}
 
+spl_autoload_register('ezdb_autoloader');
 
 /**
  * This is the < PHP 5.3 version
@@ -58,8 +52,15 @@ class DB
 	public static $throw_exceptions = true;
 	public static $default_type = OBJECT;
 	public static $show_errors = false;
+	public static $log_errors = false;
+	public static $error_handler = null;
 	
 	public static $table_prefix = '';
+
+	protected static $dbuser;
+	protected static $dbpass;
+	protected static $dbname;
+	protected static $dbserver;
 	
 	/**
 	 * Private contructor, don't allow for
@@ -74,25 +75,6 @@ class DB
 	{
 		@self::$DB->close();
 	}
-	
-	/* So it passes through to the main class */
-	/*public function __get($name)
-	{
-		return self::$DB->{$name};
-	}
-	
-	public function __set($name, $value)
-	{
-		self::$DB->{$name} = $value;
-	}
-	
-	public static function __call($name, $arguments)
-	{
-		if(method_exists(self::$DB, $name))
-		{
-			return call_user_func_array(array(self::$DB, $name), $arguments);
-		}
-	}*/
 	
 	/**
 	 * Return the singleton instance of the DB class
@@ -112,56 +94,40 @@ class DB
 	 */
 	public static function init($type='mysql')
 	{		
-		if($type == 'mysql' || $type == '')
+		$class_name = 'ezdb_'.$type;
+		if(!self::$DB = new $class_name())
 		{
-			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_MySQL.class.php';
+			self::$error = self::$DB->error;
+			self::$errno = self::$DB->errno;
 			
-			if(!self::$DB = new ezDB_mysql())
-			{
-				self::$error = self::$DB->error;
-				self::$errno = self::$DB->errno;
-			
-				return false;
-			}
-			
-			return true;
-		}
-		elseif($type == 'mysqli')
-		{
-			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_MySQLi.class.php';
-			
-			if(!self::$DB = new ezDB_mysqli())
-			{
-				self::$error = self::$DB->error;
-				self::$errno = self::$DB->errno;
-				return false;
-			}
-			
-			return true;
-		}
-		elseif($type == 'oracle')
-		{
-			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_Oracle.class.php';
-			
-			if(!self::$DB = new ezDB_oracle8_9())
-			{
-				self::$error = self::$DB->error;
-				self::$errno = self::$DB->errno;
-				return false;
-			}
-			
-			return true;
-		}
-		else
-		{
-			include dirname(__FILE__).DIRECTORY_SEPARATOR.'ezDB_MySQL.class.php';
-			
-			self::$DB = new ezDB_mysql();
-			self::$error = 'Invalid database type';
-			return true;
+			return false;
 		}
 		
 		return true;
+	}
+	
+	public static function set_log_errors($bool)
+	{
+		self::$log_errors = $bool;
+	}
+	
+	public static function set_use_exceptions($bool)
+	{
+		self::$throw_exceptions = $bool;
+	}
+		
+	/**
+	 * Set a function/class as an error handler. Function is the 
+	 * same parameter sent to 
+	 * 
+	 * http://us.php.net/manual/en/function.call-user-func-array.php
+	 * 
+	 * @param $handler method name or class to call on an error
+	 * 
+	 */
+	public static function set_error_handler($function)
+	{
+		self::$error_handler = $function;		
 	}
 		
 	/**
@@ -246,6 +212,16 @@ class DB
 			return false;
 		}
 		
+		self::$dbuser = $user;
+		self::$dbpass = $pass;
+		self::$dbname = $name;
+		self::$dbserver = $server;
+		
+		self::$DB->dbuser = $user;
+		self::$DB->dbpassword = $pass;
+		self::$DB->dbname = $name;
+		self::$DB->dbhost = $server;
+		
 		self::$DB->throw_exceptions = self::$throw_exceptions;
 		self::$connected = true;
 		return true;
@@ -322,7 +298,6 @@ class DB
 	public static function quick_insert($table, $fields, $flags= '', $allowed_cols='')
 	{
 		self::$DB->throw_exceptions = self::$throw_exceptions;
-		
 		return self::$DB->quick_insert($table, $fields, $flags, $allowed_cols);
 	}
 	
@@ -418,18 +393,25 @@ class DB
 	 */
 	public static function write_debug()
 	{
-		$log = debug_backtrace();
-		$call_list = array();
-		
-		foreach($log as $caller)
+		if(self::$error_handler === null || self::$log_errors == false)
 		{
-			$call_list[] = $caller['class'].$caller['type'].$caller['function'];
+			return;
 		}
-		$callers = implode('->', $call_list);
-		unset($call_list);
 		
-		Debug::log("Caller: ".$callers);
-		Debug::log(self::$last_query."\n".self::$error);
+		$backtrace = debug_backtrace();
+			
+		$debug_info = array(
+			'backtrace' => $backtrace,
+			'sql' => self::$last_query,
+			'error' => self::$error,
+			'errno' => self::$errno,
+			'dbuser' => self::$dbuser,
+			'dbname' => self::$dbname,
+			'dbpass' => self::$dbpass,
+			'dbserver' => self::$dbserver,
+		);
+			
+		call_user_func_array(self::$error_handler, array($debug_info));
 	}
 	
 	/**
@@ -456,7 +438,7 @@ class DB
 		self::$last_query = $query;
 		
 		// Log any erronious queries
-		if(self::$DB->errno != 0 || Config::Get('DEBUG_LEVEL') > 1)
+		if(self::$DB->errno != 0)
 		{
 			self::write_debug();
 		}
@@ -485,7 +467,7 @@ class DB
 		self::$last_query = $query;
 		
 		// Log any erronious queries
-		if(self::$DB->errno != 0 || Config::Get('DEBUG_LEVEL') > 1)
+		if(self::$DB->errno != 0)
 		{
 			self::write_debug();
 		}
@@ -512,7 +494,7 @@ class DB
 		self::$last_query = $query;
 		
 		// Log any erronious queries
-		if(self::$DB->errno != 0 || Config::Get('DEBUG_LEVEL') > 1)
+		if(self::$DB->errno != 0)
 		{
 			self::write_debug();
 		}

@@ -830,6 +830,20 @@ class SchedulesData extends CodonData
 		return true;
 	}
 	
+	public static function deleteExpiredBids()
+	{		
+		$cache_time = Config::Get('BID_EXPIRE_TIME');
+		if($cache_time == '')
+		{
+			return;
+		}
+	
+		$sql = 'DELETE FROM '.TABLE_PREFIX."bids
+				WHERE `dateadded` + INTERVAL {$cache_time} HOUR < NOW()";
+				
+		DB::query($sql);
+		
+	}
 	/**
 	 * Remove a bid, by passing it's bid id
 	 */

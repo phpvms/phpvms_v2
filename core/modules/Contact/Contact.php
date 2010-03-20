@@ -21,20 +21,13 @@ class Contact extends CodonModule
 	
 	public function index()
 	{
+		require_once CORE_LIB_PATH.'/recaptcha/recaptchalib.php';
+
+
 		if($this->post->submit)
 		{
-			$captcha = SessionManager::Get('captcha_sum');
-			
-			if($this->post->loggedin == 'false')
-			{		
-				// Check the captcha thingy
-				if($this->post->captcha != $captcha)
-				{
-					$this->set('message', 'You failed the captcha test!');
-					$this->render('core_error.tpl');
-					return;
-				}
-				
+			if(Auth::LoggedIn() == false)
+			{					
 				# Make sure they entered an email address
 				if(trim($this->post->name) == '' 
 					|| trim($this->post->email) == '')
@@ -43,6 +36,20 @@ class Contact extends CodonModule
 					$this->render('core_error.tpl');
 					return;
 				}
+			}
+			
+			$resp = recaptcha_check_answer (Config::Get('RECAPTCHA_PRIVATE_KEY'),
+				$_SERVER["REMOTE_ADDR"],
+				$_POST["recaptcha_challenge_field"],
+				$_POST["recaptcha_response_field"]);
+			
+			// Check the captcha thingy
+			if(!$resp->is_valid)
+			{
+				$this->set('captcha_error', $resp->error);
+				$this->set('message', 'You failed the captcha test!');
+				$this->render('contact_form.tpl');
+				return;
 			}
 			
 			if($this->post->subject == '' || trim($this->post->message) == '')

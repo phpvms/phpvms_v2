@@ -24,10 +24,20 @@
 
 include dirname(dirname(__FILE__)).'/core/codon.config.php';
 
-/* Find any retired pilots and set them to retired */
-PilotData::findRetiredPilots();
-
 /* Update any expenses */
 FinanceData::updateAllExpenses();
+
+if(Config::Get('PILOT_AUTO_RETIRE') == true)
+{
+	/* Find any retired pilots and set them to retired */
+	PilotData::findRetiredPilots();
+	CronData::set_lastupdate('find_retired_pilots');
+}
+
+if(Config::Get('CLOSE_BIDS_AFTER_EXPIRE') === false)
+{
+	SchedulesData::deleteExpiredBids();
+	CronData::set_lastupdate('check_expired_bids');
+}
 
 /* Send any PIREPs to vaCentral which haven't been exported */

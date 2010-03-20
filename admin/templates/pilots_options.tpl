@@ -1,4 +1,6 @@
 <?php
+if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
+{
 $pilotid = $_GET['pilotid'];
 ?>
 <h3>Reset Pilot Password</h3>
@@ -32,5 +34,6 @@ if($pilotid != Auth::$userinfo->pilotid)
 </dl>
 </form>
 <?php
+}
 }
 ?>

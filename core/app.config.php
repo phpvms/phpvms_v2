@@ -83,6 +83,10 @@ Config::Set('PIREPS_ORDER_BY', 'p.submitdate DESC');
 Config::Set('DISABLE_SCHED_ON_BID', true);
 Config::Set('DISABLE_BIDS_ON_BID', false);
 
+# Whether to close any bids after a certain amount of time
+Config::Set('CLOSE_BIDS_AFTER_EXPIRE', false);
+Config::Set('BID_EXPIRE_TIME', '48'); # How many hours to hold bids for
+
 # If you want to count transfer hours in rank calculations
 Config::Set('TRANSFER_HOURS_IN_RANKS', false);
 

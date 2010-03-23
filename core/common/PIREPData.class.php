@@ -406,13 +406,16 @@ class PIREPData extends CodonData
 			} /* End "if FSFK" */
 			
 			
-			if(!empty($row->route_details))
+			if($row->route_details != '')
 			{
 				$row->route_details = unserialize($row->route_details);
 			}
 			else
 			{
 				$row->route_details = NavData::parseRoute($row);
+				
+				# Save it for future?
+				//PIREPData::updatePIREPFields($row->pirepid, array('route_details'=>serialize($row->route_details)));
 			}
 			
 		} /* End "if $row" */
@@ -647,10 +650,16 @@ class PIREPData extends CodonData
 			information remains intact. Also, if the nav data changes, then 
 			the route is saved as it was 
 		 */
+		
 		if(!empty($pirepdata['route']))
 		{
 			/*	They supplied some route information, so build up the data
 				based on that. It needs a certain structure passed, so build that */
+				
+			$pirepdata['route'] = str_replace('SID', '', $pirepdata['route']);
+			$pirepdata['route'] = str_replace('STAR', '', $pirepdata['route']);
+			$pirepdata['route'] = trim($pirepdata['route']);
+			
 			$tmp = new stdClass();
 			$tmp->deplat = $depapt->lat;
 			$tmp->deplng = $depapt->lng;
@@ -664,6 +673,9 @@ class PIREPData extends CodonData
 		if(empty($pirepdata['route']) && !empty($sched->route))
 		{
 			$pirepdata['route'] = $sched->route;
+			$pirepdata['route'] = str_replace('SID', '', $pirepdata['route']);
+			$pirepdata['route'] = str_replace('STAR', '', $pirepdata['route']);
+			$pirepdata['route'] = trim($pirepdata['route']);
 			
 			/*	The schedule doesn't have any route_details, so let's populate
 				the schedule while we're here. Then we'll use that same info
@@ -768,7 +780,7 @@ class PIREPData extends CodonData
 							'{$pirepdata['landingrate']}',
 							NOW(), 
 							".PIREP_PENDING.", 
-							'$pirepdata[log]',
+							'{$pirepdata['log']}',
 							'{$pirepdata['load']}',
 							'{$pirepdata['fuelused']}',
 							'0',
@@ -852,7 +864,9 @@ class PIREPData extends CodonData
 		*/
 		
 		if(!is_array($pirepdata))
+		{
 			return false;
+		}
 	
 		if($pirepdata['depicao'] == '' || $pirepdata['arricao'] == '')
 		{

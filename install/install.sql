@@ -135,6 +135,7 @@ CREATE TABLE `phpvms_aircraft` (
   `cruise` varchar(15) NOT NULL default '0',
   `maxpax` FLOAT NOT NULL default '0',
   `maxcargo` FLOAT NOT NULL default '0',
+  `minrank` INT NOT NULL DEFAULT '0',
   `enabled` smallint(6) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
@@ -261,6 +262,7 @@ CREATE TABLE `phpvms_pilots` (
   `totalhours` float NOT NULL default '0',
   `totalpay` float NOT NULL default '0',
   `transferhours` float NOT NULL default '0',
+  `rankid` INT NOT NULL DEFAULT '0',
   `rank` varchar(32) NOT NULL default 'Trainee Pilot',
   `confirmed` smallint(5) unsigned NOT NULL default '0',
   `retired` smallint(6) NOT NULL default '0',

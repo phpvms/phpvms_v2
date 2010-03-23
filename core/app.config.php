@@ -182,6 +182,7 @@ Config::Set('AVATAR_MAX_HEIGHT', 80);	# Resized height
 
 # Cookie information
 Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in seconds
+Config::Set('SESSION_GUEST_EXPIRE', '30'); # Clear guest sessions 30 minutes
 //Config::Set('SESSION_COOKIE_NAME', 'VMS_AUTH_COOKIE');
 
 # Email Settings

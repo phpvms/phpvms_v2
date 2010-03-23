@@ -13,6 +13,12 @@
 	<li><strong>Aircraft: </strong><?php echo $pirep->aircraft . " ($pirep->registration)"?></li>
 	<li><strong>Flight Time: </strong> <?php echo $pirep->flighttime; ?></li>
 	<li><strong>Date Submitted: </strong> <?php echo date(DATE_FORMAT, $pirep->submitdate);?></li>
+	<?php
+	if($pirep->route != '')
+	{
+		echo "<li><strong>Route: </strong>{$pirep->route}</li>";
+	}
+	?>
 	<li><strong>Status: </strong>
 		<?php
 

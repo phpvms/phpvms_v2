@@ -70,6 +70,9 @@ function post_module_load()
 			FinanceData::updateAllExpenses();
 			CronData::set_lastupdate('populate_expenses');
 		}
+		
+		/* And finally, clear expired sessions */
+		Auth::clearExpiredSessions();
 	}
 
 	// @TODO: Clean ACARS records older than one month

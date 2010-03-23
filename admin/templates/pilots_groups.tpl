@@ -21,8 +21,14 @@ else
 ?>
 	<tr>
 		<td><?php echo $group->name;?></td>
-		<td><a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" pilotid="<?php echo $pilotid;?>" 
+		<td>
+		<?php
+		if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
+		{ ?>
+			<a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" pilotid="<?php echo $pilotid;?>" 
 				action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax">Remove</a></td>
+		<?php
+		} ?>
 	</tr>		
 	
 <?php
@@ -32,6 +38,10 @@ else
 </tbody>
 </table>
 <div style="clear: both;"></div>
+<?php
+if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
+{
+?>
 <h3>Add to Group</h3>
 
 <?php 
@@ -62,3 +72,6 @@ if($total == 0)
 		<input type="submit" name="submit" value="Add to Group" /></dd>
 </dl>
 </form>
+<?php
+}
+?>

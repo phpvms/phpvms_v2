@@ -56,6 +56,11 @@ class Finance extends CodonModule
 		OFCharts::add_data_set('Pilot Pay', floatval($finance_data->pilotpay));
 		
 		// Now expenses
+		if(!is_array($finance_data->expenses))
+		{
+			$finance_data->expenses = array();
+		}
+		
 		foreach($finance_data->expenses as $expense)
 		{
 			OFCharts::add_data_set($expense->name, floatval($expense->total));

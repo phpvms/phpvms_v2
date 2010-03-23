@@ -152,7 +152,7 @@ class PilotAdmin extends CodonModule
 				}
 				else
 				{
-					RanksData::CalculateUpdatePilotRank($this->post->pilotid);
+					RanksData::calculateUpdatePilotRank($this->post->pilotid);
 				}
 				
 				StatsData::UpdateTotalHours();

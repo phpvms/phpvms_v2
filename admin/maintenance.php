@@ -24,6 +24,9 @@
 
 include dirname(dirname(__FILE__)).'/core/codon.config.php';
 
+/* Clear expired sessions */
+Auth::clearExpiredSessions();
+
 /* Update any expenses */
 FinanceData::updateAllExpenses();
 

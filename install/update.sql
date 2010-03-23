@@ -23,6 +23,9 @@ CREATE TABLE `phpvms_expenselog` (
 	INDEX ( `dateadded` )
 ) ENGINE = MYISAM ;
 
+ALTER TABLE `phpvms_pilots` ADD `rankid` INT NOT NULL DEFAULT '0' AFTER `transferhours` ;
+UPDATE `phpvms_pilots` p SET `rankid` =  ( SELECT `rankid` FROM `phpvms_ranks` WHERE rank = p.rank ) ;
+
 ALTER TABLE `phpvms_pireps` ADD `gross` FLOAT NOT NULL AFTER `flighttype`;
 ALTER TABLE `phpvms_pireps` ADD `route` TEXT NOT NULL AFTER `arricao` ,
 ADD `route_details` TEXT NOT NULL AFTER `route`;
@@ -31,6 +34,7 @@ ALTER TABLE `phpvms_acarsdata` ADD `route` TEXT NOT NULL AFTER `arrtime`,
 ADD `route_details` TEXT NOT NULL AFTER `route` ;
 
 ALTER TABLE `phpvms_schedules` ADD `route_details` TEXT NOT NULL AFTER `route`;
+ALTER TABLE `phpvms_aircraft` ADD `minrank` INT NOT NULL DEFAULT '0' AFTER `maxcargo`;
 
 -- Remove deprecated settings;
 DELETE FROM `phpvms_settings` WHERE `name='NOTIFY_UPDATE';

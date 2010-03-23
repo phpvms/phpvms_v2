@@ -242,7 +242,7 @@ class PilotData extends CodonData
 			return false;
 		}
 		
-		return self::updateProfile($pilotid, array('rank' => $rank->rank));
+		return self::updateProfile($pilotid, array('rankid' => $rank->rankid, 'rank' => $rank->rank));
 	}
 	
 	/**

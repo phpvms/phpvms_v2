@@ -46,7 +46,7 @@ class RanksData extends CodonData
 	
 	public static function getRankImage($rank)
 	{
-		$sql = 'SELECT rankimage FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
+		$sql = 'SELECT `rankid`, `rankimage` FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
 		return DB::get_var($sql);
 	}
 	
@@ -163,12 +163,13 @@ class RanksData extends CodonData
 				if($pilothours >= intval($rank->minhours))
 				{
 					$last_rank = $rank->rank;
+					$last_rankid = $rank->rankid;
 				}
 			}
 			
-			$sql = 'UPDATE '.TABLE_PREFIX.'pilots
-						SET rank="'.$last_rank.'"
-						WHERE pilotid='.$pilot->pilotid;
+			$sql = 'UPDATE '.TABLE_PREFIX."pilots
+						SET `rankid`={$last_rankid}, `rank`='{$last_rank}'
+						WHERE pilotid=".$pilot->pilotid;
 			
 			DB::query($sql);
 		}
@@ -198,12 +199,13 @@ class RanksData extends CodonData
 			if($pilothours >= intval($rank->minhours))
 			{
 				$last_rank = $rank->rank;
+				$last_rankid = $rank->rankid;
 			}
 		}
 		
-		$sql = 'UPDATE '.TABLE_PREFIX.'pilots
-					SET rank="'.$last_rank.'"
-					WHERE pilotid='.$pilot->pilotid;
+		$sql = 'UPDATE '.TABLE_PREFIX."pilots
+						SET `rankid`={$last_rankid}, `rank`='{$last_rank}'
+						WHERE pilotid=".$pilot->pilotid;
 		
 		DB::query($sql);
 	}

@@ -417,6 +417,13 @@ class SchedulesData extends CodonData
 			
 		$data['flightlevel'] = str_replace(',', '', $data['flightlevel']);
 		$data['maxload'] = str_replace(',', '', $data['maxload']);
+		
+		if(isset($fields['route']))
+		{
+			$fields['route'] = str_replace('SID', '', $fields['route']);
+			$fields['route'] = str_replace('STAR', '', $fields['route']);
+			$fields['route'] = trim($fields['route']);
+		}
 			
 		foreach($data as $key=>$value)
 		{
@@ -428,7 +435,8 @@ class SchedulesData extends CodonData
 		$sql = "INSERT INTO " . TABLE_PREFIX ."schedules
 					(`code`, `flightnum`, 
 					 `depicao`, `arricao`, 
-					 `route`, `aircraft`, `flightlevel`, `distance`, 
+					 `route`, `route_details`,
+					 `aircraft`, `flightlevel`, `distance`, 
 					 `deptime`, `arrtime`, 
 					 `flighttime`, `daysofweek`, `maxload`, `price`, 
 					 `flighttype`, `notes`, `enabled`)
@@ -437,6 +445,7 @@ class SchedulesData extends CodonData
 						'$data[depicao]', 
 						'$data[arricao]', 
 						'$data[route]',
+						'',
 						'$data[aircraft]', 
 						'$data[flightlevel]',
 						'$data[distance]',
@@ -612,6 +621,7 @@ class SchedulesData extends CodonData
 		{
 			$fields['route'] = str_replace('SID', '', $fields['route']);
 			$fields['route'] = str_replace('STAR', '', $fields['route']);
+			$fields['route'] = trim($fields['route']);
 		}
 		
 		foreach($fields as $key=>$value)

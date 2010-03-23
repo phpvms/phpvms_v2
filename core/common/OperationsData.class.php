@@ -76,8 +76,9 @@ class OperationsData extends CodonData
 		$all_aircraft = CodonCache::read($key);
 		if($all_aircraft === false)
 		{
-			$sql = 'SELECT * 
-					FROM ' . TABLE_PREFIX .'aircraft';
+			$sql = 'SELECT a.*, r.rank
+					FROM ' . TABLE_PREFIX .'aircraft a
+					LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rankid=a.minrank';
 			
 			if($onlyenabled == true)
 			{
@@ -324,11 +325,11 @@ class OperationsData extends CodonData
 		$sql = "INSERT INTO ".TABLE_PREFIX."aircraft (
 					`icao`, `name`, `fullname`, `registration`, `downloadlink`,
 					`imagelink`, `range`, `weight`, `cruise`, 
-					`maxpax`, `maxcargo`, `enabled`)
+					`maxpax`, `maxcargo`, `minrank`, `enabled`)
 				VALUES (
 					'{$data['icao']}', '{$data['name']}', '{$data['fullname']}', '{$data['registration']}', 
 					'{$data['downloadlink']}', '{$data['imagelink']}', '{$data['range']}', '{$data['weight']}', 
-					'{$data['cruise']}', '{$data['maxpax']}', '{$data['maxcargo']}', {$data['enabled']})";
+					'{$data['cruise']}', '{$data['maxpax']}', '{$data['maxcargo']}', {$data['minrank']}, {$data['enabled']})";
 		
 		$res = DB::query($sql);
 		
@@ -362,6 +363,11 @@ class OperationsData extends CodonData
 		$data['maxpax'] = str_replace(',', '', $data['maxpax']);
 		$data['maxcargo'] = str_replace(',', '', $data['maxcargo']);
 		
+		if(empty($data['minrank']))
+		{
+			$data['minrank'] = 0;
+		}
+		
 		if($data['enabled'] === true)
 			$data['enabled'] = 1;
 		else
@@ -372,7 +378,7 @@ class OperationsData extends CodonData
 					`registration`='{$data['registration']}', `downloadlink`='{$data['downloadlink']}', 
 					`imagelink`='{$data['imagelink']}', `range`='{$data['range']}', `weight`='{$data['weight']}',
 					`cruise`='{$data['cruise']}', `maxpax`='{$data['maxpax']}', `maxcargo`='{$data['maxcargo']}',
-					`enabled`={$data['enabled']}
+					`minrank`={$data['minrank']}, `enabled`={$data['enabled']}
 				WHERE `id`={$data['id']}";
 		
 		$res = DB::query($sql);

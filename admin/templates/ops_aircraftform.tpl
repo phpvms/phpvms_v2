@@ -43,6 +43,25 @@
 <dt>Cruise</dt>
 <dd><input name="cruise" type="text"  value="<?php echo $aircraft->cruise; ?>" /></dd>
 
+<dt>Minimum Rank Required to fly</dt>
+<dd>
+	<select name="minrank">
+		<option value="0" <?php if($aircraft->minrank == 0){ echo 'selected'; } ?>>None</option>
+		<?php
+		foreach($allranks as $rank)
+		{
+			if($aircraft->minrank == $rank->rankid)
+				$sel = 'selected="selected"';
+			else
+				$sel = '';
+				
+			echo "<option value=\"{$rank->rankid}\" {$sel} >{$rank->rank}</option>";
+		}
+		?>
+	</select>
+
+</dd>
+
 <dt>Enabled?</dt>
 <?php $checked = ($aircraft->enabled==1 || !$aircraft)?'CHECKED':''; ?>
 <dd><input type="checkbox" id="enabled" name="enabled" value="1" <?php echo $checked ?> /></dd>

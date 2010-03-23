@@ -30,7 +30,7 @@ if(!file_exists(CORE_PATH.'/local.config.php') || filesize(CORE_PATH.'/local.con
 	define('DS', DIRECTORY_SEPARATOR);
 	
 	/* Include just some basic files to get the install going */
-	include CLASS_PATH . '/ezDB.class.php';
+	include CLASS_PATH . '/ezdb/ezdb.class.php';
 	include CLASS_PATH . '/Config.class.php';
 	include CLASS_PATH . '/Debug.class.php';
 	include CLASS_PATH . '/Template.class.php';

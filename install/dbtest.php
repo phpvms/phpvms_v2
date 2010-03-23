@@ -28,5 +28,3 @@ if(!DB::select($_POST['DBASE_NAME']))
 
 Template::Set('message', 'Database connection is ok!');
 Template::Show('success.tpl');
-
-?>

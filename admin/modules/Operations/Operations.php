@@ -94,6 +94,7 @@ class Operations extends CodonModule
 	{
 		$this->set('title', 'Add Aircraft');
 		$this->set('action', 'addaircraft');
+		$this->set('allranks', RanksData::getAllRanks());
 		$this->render('ops_aircraftform.tpl');	
 	}
 	
@@ -104,6 +105,7 @@ class Operations extends CodonModule
 		$this->set('aircraft', OperationsData::GetAircraftInfo($id));
 		$this->set('title', 'Edit Aircraft');
 		$this->set('action', 'editaircraft');
+		$this->set('allranks', RanksData::getAllRanks());
 		$this->render('ops_aircraftform.tpl');	
 	}
 	
@@ -481,6 +483,7 @@ class Operations extends CodonModule
 						'cruise'=>$this->post->cruise,
 						'maxpax'=>$this->post->maxpax,
 						'maxcargo'=>$this->post->maxcargo,
+						'minrank'=>$this->post->minrank,
 						'enabled'=>$this->post->enabled);
 						
 			
@@ -546,9 +549,10 @@ class Operations extends CodonModule
 			'cruise'=>$this->post->cruise,
 			'maxpax'=>$this->post->maxpax,
 			'maxcargo'=>$this->post->maxcargo,
+			'minrank'=>$this->post->minrank,
 			'enabled'=>$this->post->enabled
 		);
-			
+	
 		OperationsData::EditAircraft($data);
 		
 		if(DB::errno() != 0)

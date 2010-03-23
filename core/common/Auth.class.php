@@ -86,6 +86,8 @@ class Auth extends CodonData
 				}
 			}
 			
+			// Look for an existing session based on ID
+			
 			// No session ID was found anywhere so assign one
 			$assign_id = true;
 			self::$session_id = self::start_session(0);
@@ -162,7 +164,25 @@ class Auth extends CodonData
 	public static function remove_sessions($pilot_id)
 	{
 		$sql = "DELETE FROM ".TABLE_PREFIX."sessions
-			WHERE pilotid={$pilot_id}";
+				WHERE pilotid={$pilot_id}";
+			
+		DB::query($sql);
+	}
+	
+	
+	/**
+	 *  Clear any guest sessions which have expired
+	 *
+	 * @return mixed This is the return value description
+	 *
+	 */
+	public static function clearExpiredSessions()
+	{
+		$time =	Config::Get('SESSION_GUEST_EXPIRE');
+		$sql = "DELETE FROM ".TABLE_PREFIX."sessions 
+				WHERE DATE_SUB(NOW(), INTERVAL {$time} MINUTE) > `logintime`
+					AND `pilotid` = 0";
+		
 		DB::query($sql);
 	}
 	

@@ -67,7 +67,6 @@ class Operations extends CodonModule
 		elseif($this->get->type === 'preview')
 		{
 			$data = new stdClass();
-			$data->route = $this->get->route;
 			
 			$depicao = OperationsData::getAirportInfo($this->get->depicao);
 			$arricao = OperationsData::getAirportInfo($this->get->arricao);
@@ -79,6 +78,8 @@ class Operations extends CodonModule
 			$data->arrlat = $arricao->lat;
 			$data->arrlng = $arricao->lng;
 			$data->arrname = $arricao->name;
+			
+			$data->route = $this->get->route;
 			
 			unset($depicao);
 			unset($arricao);

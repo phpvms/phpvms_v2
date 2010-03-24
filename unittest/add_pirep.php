@@ -13,7 +13,7 @@ $data = array(
 	'pilotid'=>1,
 	'code'=>$sched->code,
 	'flightnum'=>$sched->flightnum,
-	'route' => 'HYLND DCT PUT J42 RBV J230 BYRDD J48 MOL DCT FLCON',
+	//'route' => 'HYLND DCT PUT J42 RBV J230 BYRDD J48 MOL DCT FLCON',
 	'depicao'=>$sched->depicao,
 	'arricao'=>$sched->arricao,
 	'aircraft'=>$sched->aircraft,
@@ -23,6 +23,21 @@ $data = array(
 	'source'=>'unittest',
 	'comment'=>'Test Flight',
 );
+
+$data = array(
+	'pilotid'=>1,
+	'code'=>'vms',
+	'flightnum'=>1,
+	//'route' => 'HYLND DCT PUT J42 RBV J230 BYRDD J48 MOL DCT FLCON',
+	'depicao'=>'lfll',
+	'arricao'=>'egll',
+	'aircraft'=>'1',
+	'flighttime'=>'3',
+	'submitdate'=>'NOW()',
+	'fuelused'=>6000,
+	'source'=>'unittest',
+	'comment'=>'Test Flight',
+	);
 
 $ret = PIREPData::fileReport($data);
 if($ret == false)

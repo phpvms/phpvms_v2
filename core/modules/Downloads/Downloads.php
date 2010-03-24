@@ -32,6 +32,12 @@ class Downloads extends CodonModule
 		$this->render('downloads_list.tpl');
 	}
 	
+	public function show_category($id)
+	{
+		$this->set('allcategories', array(DownloadData::GetAsset($id)));
+		$this->render('downloads_list.tpl');
+	}
+	
 	public function __call($name, $args)
 	{
 		$this->download($name);

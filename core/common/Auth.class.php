@@ -87,7 +87,6 @@ class Auth extends CodonData
 			}
 			
 			// Look for an existing session based on ID
-			
 			// No session ID was found anywhere so assign one
 			$assign_id = true;
 			self::$session_id = self::start_session(0);
@@ -95,6 +94,7 @@ class Auth extends CodonData
 		}
 		else
 		{
+			echo 'has ive';
 			// There's a session ID, so double check that they're logged in
 			if(SessionManager::Get('loggedin') == true)
 			{
@@ -122,7 +122,6 @@ class Auth extends CodonData
 		// Empty session so start one up, and they're not logged in
 		if($assign_id == true)
 		{
-			
 		}
 		
 		return true;

@@ -64,7 +64,7 @@ class DownloadData extends CodonData
 	 * @return array Category row
 	 *
 	 */
-	public static function FindCategory($categoryname)
+	public static function findCategory($categoryname)
 	{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'downloads
 					WHERE name=\''.$categoryname.'\' AND pid=0';

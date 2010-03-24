@@ -212,7 +212,7 @@ $(".preview").click(function()
 {
 	depicao=$("#depicao").val();
 	arricao=$("#arricao").val();
-	route=$("#route").val();
+	route=escape($("#route").val());
 	
 	url = this.href
 		+"&depicao="+depicao

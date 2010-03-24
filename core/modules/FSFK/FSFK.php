@@ -42,7 +42,7 @@ class FSFK extends CodonModule
 		
 		$this->log($data, 'fsfk');
 		$this->log(print_r($xml, true), 'fsfk');
-		$this->log(serialize($xml), 'fsfk');
+		#$this->log(serialize($xml), 'fsfk');
 		
 		preg_match('/^([A-Za-z]*)(\d*)/', $xml->PilotID, $matches);
 		$code = $matches[1];

@@ -44,8 +44,8 @@ class NavData extends CodonData
 		$fromlat = $schedule->deplat;
 		$fromlng = $schedule->deplng;
 		$route_string = $schedule->route;
-				
-		if(empty($route_string))
+		
+		if($route_string == '')
 		{
 			return array();
 		}

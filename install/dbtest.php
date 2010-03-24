@@ -11,7 +11,6 @@ if(!DB::init($_POST['DBASE_TYPE']))
 
 $ret = DB::connect($_POST['DBASE_USER'], $_POST['DBASE_PASS'], $_POST['DBASE_NAME'], $_POST['DBASE_SERVER']);
 
-
 if($ret == false)
 {
 	Template::Set('message', DB::error());

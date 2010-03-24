@@ -144,7 +144,7 @@ var arrMarker = new google.maps.Marker({
 });
 
 var flightPath = new google.maps.Polyline({
-	path: [dep_location, <?php if(is_array($list)) { echo implode(',', $list).','; }?> arr_location],
+	path: [dep_location, <?php if(count($list) > 0) { echo implode(',', $list).','; }?> arr_location],
 	strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2
 }).setMap(map);
 

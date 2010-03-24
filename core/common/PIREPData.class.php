@@ -568,6 +568,11 @@ class PIREPData extends CodonData
 					  
 		if(!is_array($pirepdata))
 			return false;
+			
+		$pirepdata['code'] = strtoupper($pirepdata['code']);
+		$pirepdata['flightnum'] = strtoupper($pirepdata['flightnum']);
+		$pirepdata['depicao'] = strtoupper($pirepdata['depicao']);
+		$pirepdata['arricao'] = strtoupper($pirepdata['arricao']);
 					
 		/* Check if this PIREP was just submitted, check the last 10 minutes 
 		*/

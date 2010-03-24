@@ -210,7 +210,7 @@ class SchedulesData extends CodonData
 		
 		if($schedule->route != '')
 		{
-			$schedule->route_details = NavData::parseRoute($schedule->route);
+			$schedule->route_details = NavData::parseRoute($schedule);
 		}
 		
 		return $schedule;
@@ -423,6 +423,7 @@ class SchedulesData extends CodonData
 			$fields['route'] = str_replace('SID', '', $fields['route']);
 			$fields['route'] = str_replace('STAR', '', $fields['route']);
 			$fields['route'] = trim($fields['route']);
+			$fields['route_details'] = '';
 		}
 			
 		foreach($data as $key=>$value)
@@ -440,24 +441,24 @@ class SchedulesData extends CodonData
 					 `deptime`, `arrtime`, 
 					 `flighttime`, `daysofweek`, `maxload`, `price`, 
 					 `flighttype`, `notes`, `enabled`)
-				VALUES ('$data[code]', 
-						'$data[flightnum]',
-						'$data[depicao]', 
-						'$data[arricao]', 
-						'$data[route]',
-						'',
-						'$data[aircraft]', 
-						'$data[flightlevel]',
-						'$data[distance]',
-						'$data[deptime]', 
-						'$data[arrtime]',
-						'$data[flighttime]',
-						'$data[daysofweek]',
-						'$data[maxload]',
-						'$data[price]', 
-						'$data[flighttype]',
-						'$data[notes]', 
-						$data[enabled])";
+				VALUES ('{$data['code']}', 
+						'{$data['flightnum']}',
+						'{$data['depicao']}', 
+						'{$data['arricao']}', 
+						'{$data['route']}',
+						'{$data['route_details']}',
+						'{$data['aircraft']}', 
+						'{$data['flightlevel']}',
+						'{$data['distance']}',
+						'{$data['deptime']}', 
+						'{$data['arrtime']}',
+						'{$data['flighttime']}',
+						'{$data['daysofweek']}',
+						'{$data['maxload']}',
+						'{$data['price']}', 
+						'{$data['flighttype']}',
+						'{$data['notes']}', 
+						{$data['enabled']})";
 		
 		$res = DB::query($sql);
 		

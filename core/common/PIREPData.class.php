@@ -792,7 +792,6 @@ class PIREPData extends CodonData
 							'{$pirepdata['source']}',
 							{$pirepdata['exported']},
 							'{$pirepdata['rawdata']}')";
-		echo '<pre>';print_r($pirepdata);echo'</pre>';
 
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;

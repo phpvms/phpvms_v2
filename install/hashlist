@@ -26,7 +26,7 @@ c272ba4d5e3656768e851f448face751  *./install/loader.inc.php
 d4d204c3560c283fa4d7a3a367473740  *./install/navdata.sql
 b0bf9020a8fcc2736ef8eb90a21261a7  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
-70a7235b65150ce841af792bb20f8d1a  *./core/common/PIREPData.class.php
+540a0de8a7182767188bb5a66bc6a37f  *./core/common/PIREPData.class.php
 ec4c212e9fbf77fcc2f1c16b32f2e0f2  *./core/common/Auth.class.php
 ec4345ce5e86fe8aa7c7024fc76299f0  *./core/common/RegistrationData.class.php
 3a6a09747ba3865538aca5e90418d4de  *./core/common/StatsData.class.php

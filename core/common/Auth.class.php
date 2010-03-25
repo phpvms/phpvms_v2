@@ -94,7 +94,6 @@ class Auth extends CodonData
 		}
 		else
 		{
-			echo 'has ive';
 			// There's a session ID, so double check that they're logged in
 			if(SessionManager::Get('loggedin') == true)
 			{

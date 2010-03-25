@@ -40,7 +40,9 @@ class SchedulesData extends CodonData
 	 */
 	public static function findSchedules($params, $count = '', $start = '')
 	{
-		$sql = 'SELECT s.*, a.id as aircraftid, a.name as aircraft, a.registration,
+		$sql = 'SELECT s.*, 
+					a.id as aircraftid, a.name as aircraft, a.registration,
+					a.minrank as aircraft_minrank, a.ranklevel as aircraftlevel,
 					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
 					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng
 				FROM '.TABLE_PREFIX.'schedules AS s

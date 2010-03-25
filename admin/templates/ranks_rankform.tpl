@@ -4,8 +4,10 @@
 	<dt>Rank Title</dt>
 	<dd><input name="rank" type="text" value="<?php echo $rank->rank;?>" /></dd>
 	
-	<dt>Minimum Hours</dt>
-	<dd><input name="minhours" type="text" value="<?php echo $rank->minhours;?>" /></dd>
+	<dt>Order/Minimum Hours</dt>
+	<dd><input name="minhours" type="text" value="<?php echo $rank->minhours;?>" />
+		<p>The order of this rank (if ranks are manually set), or the minimum hours required.</p>
+	</dd>
 	
 	<dt>Pay Rate</dt>
 	<dd><input name="payrate" type="text" value="<?php echo $rank->payrate;?>" />

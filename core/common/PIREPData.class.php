@@ -19,7 +19,7 @@
 class PIREPData extends CodonData
 {	
 	public static $lasterror;
-	public $pirepid;
+	public static $pirepid;
 	
 	
 	/**
@@ -326,7 +326,7 @@ class PIREPData extends CodonData
 	 */
 	public static function getReportDetails($pirepid)
 	{
-		$sql = 'SELECT p.*, s.*, s.id AS scheduleid,
+		$sql = 'SELECT p.*, s.*, s.id AS scheduleid, p.route, p.route_details,
 					u.pilotid, u.firstname, u.lastname, u.email, u.rank,
 					dep.name as depname, dep.lat AS deplat, dep.lng AS deplng,
 					arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng,
@@ -792,7 +792,8 @@ class PIREPData extends CodonData
 							'{$pirepdata['source']}',
 							{$pirepdata['exported']},
 							'{$pirepdata['rawdata']}')";
-		
+		echo '<pre>';print_r($pirepdata);echo'</pre>';
+
 		$ret = DB::query($sql);
 		$pirepid = DB::$insert_id;
 		
@@ -835,6 +836,7 @@ class PIREPData extends CodonData
 		
 		// Reset this ID back
 		DB::$insert_id = $pirepid;
+		self::$pirepid = $pirepid;
 		return true;
 	}
 	

@@ -70,20 +70,37 @@ foreach($allroutes as $route)
 	}
 	/* END DISABLE SCHEDULE ON BID */
 	
+	
+	/*	
+	Skip any schedules which have aircraft that the pilot
+	is not rated to fly (according to RANK) */
+	if(Config::Get('RESTRICT_AIRCRAFT_RANKS') === true)
+	{
+		/*	This means the aircraft rank level is higher than
+			what the pilot's ranklevel, so just do "continue"
+			and move onto the next route in the list 
+		 */
+		if($route->aircraftlevel > Auth::$userinfo->ranklevel)
+		{
+			continue;
+		}
+	}
+	
 	/* THIS BEGINS ONE TABLE ROW */
 ?>
 <tr>
-	<td >
-		<a href="<?php echo url('/schedules/details/'.$route->id);?>"><?php echo $route->code . $route->flightnum?><?php echo '('.$route->depicao.' - '.$route->arricao.')'?></a>
+	<td>
+		<a href="<?php echo url('/schedules/details/'.$route->id);?>"><?php echo $route->code . $route->flightnum?>
+			<?php echo '('.$route->depicao.' - '.$route->arricao.')'?>
+		</a>
 		<br />
 		
 		<strong>Departure: </strong><?php echo $route->deptime;?> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrival: </strong><?php echo $route->arrtime;?><br />
 		<strong>Equipment: </strong><?php echo $route->aircraft; ?> (<?php echo $route->registration;?>)  <strong>Distance: </strong><?php echo $route->distance . Config::Get('UNITS');?>
 		<br />
 		<strong>Days Flown: </strong><?php echo Util::GetDaysCompact($route->daysofweek); ?><br />
-		<?php echo ($route->route=='')?'':'<strong>Route: </strong>'.$route->route.'<br />' ?>
-		<?php echo ($route->notes=='')?'':'<strong>Notes: </strong>'.html_entity_decode($route->notes).'<br />' ?>
-		
+		<?php echo ($route->route=='') ? '' : '<strong>Route: </strong>'.$route->route.'<br />' ?>
+		<?php echo ($route->notes=='') ? '' : '<strong>Notes: </strong>'.html_entity_decode($route->notes).'<br />' ?>
 		<?php
 		# Note: this will only show if the above code to
 		#	skip the schedule is commented out

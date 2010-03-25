@@ -90,6 +90,9 @@ Config::Set('BID_EXPIRE_TIME', '48'); # How many hours to hold bids for
 # If you want to count transfer hours in rank calculations
 Config::Set('TRANSFER_HOURS_IN_RANKS', false);
 
+# Pilot pilots to only fly aircraft they're ranked to
+Config::Set('RESTRICT_AIRCRAFT_RANKS', true);
+
 # The StatsData::UserOnline() function - how many minutes to check
 Config::Set('USERS_ONLINE_TIME', 20);
 
@@ -380,6 +383,7 @@ Config::Set('CACHE_KEY_LIST', array(
 	'total_news_items',
 	'total_schedules',
 	'all_groups',
+	'all_ranks',
 	)
 );
 

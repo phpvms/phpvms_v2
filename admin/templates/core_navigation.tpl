@@ -249,7 +249,7 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)
 ?>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/settings">General Settings</a></li>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/maintenance/options">Maintenance Options</a></li>
-		<li><a href="<?php echo SITE_URL?>/admin/index.php/logs">Admin Activy Logs</a></li>
+		<li><a href="<?php echo SITE_URL?>/admin/index.php/logs">Admin Activity Logs</a></li>
 		<?php 
 		}
 		if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_PROFILE_FIELDS)) 

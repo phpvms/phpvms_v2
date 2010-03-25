@@ -32,6 +32,7 @@ $data = array(
 	'depicao'=>'lfll',
 	'arricao'=>'egll',
 	'aircraft'=>'1',
+	'route' => 'BUSIL UT133 AMORO',
 	'flighttime'=>'3',
 	'submitdate'=>'NOW()',
 	'fuelused'=>6000,
@@ -46,14 +47,18 @@ if($ret == false)
 }
 
 $pirepid = DB::$insert_id;
+$pirepid = PIREPData::$pirepid;
+
+echo "pirep id is {$pirepid}";
+
 $report_info = PIREPData::findPIREPS(array('p.pirepid'=>$pirepid));
 echo '<br />';
+DB::debug();
 print_r($report_info);
 
 
-$pilotinfo = PilotData::findPilots(array('p.pilotid'=>1));
-
-print_r($pilotinfo);
+#$pilotinfo = PilotData::findPilots(array('p.pilotid'=>1));
+#print_r($pilotinfo);
 
 echo '<strong>Deleting...</strong><br />';
 PIREPData::deletePIREP($pirepid);

@@ -37,17 +37,47 @@ class RanksData extends CodonData
 	 */
 	public static function getAllRanks()
 	{
-		$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
+		$allranks = CodonCache::read('all_ranks');
+		
+		if($allranks === false)
+		{
+			$sql = 'SELECT r.*, (SELECT COUNT(*) FROM '.TABLE_PREFIX.'pilots WHERE rank=r.rank) as totalpilots
 					FROM ' .TABLE_PREFIX.'ranks r
 					ORDER BY r.minhours ASC';
-					
-		return DB::get_results($sql);
+						
+			$allranks = DB::get_results($sql);
+			CodonCache::write('all_ranks', $allranks, 'long');
+		}
+		
+		return $allranks;
 	}
 	
 	public static function getRankImage($rank)
 	{
 		$sql = 'SELECT `rankid`, `rankimage` FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
 		return DB::get_var($sql);
+	}
+	
+	/**
+	 * Get the level the passed rank is in the list
+	 */
+	public static function getRankLevel($rankid)
+	{
+		if($rankid == 0) { return 0; }
+		$all_ranks = self::getAllRanks();
+		
+		$i=0;
+		foreach($all_ranks as $rank)
+		{
+			$i++;
+			
+			if($rank->rankid == $rankid)
+			{
+				return $i;
+			}
+		}
+		
+		return 0;
 	}
 	
 	/**
@@ -81,6 +111,7 @@ class RanksData extends CodonData
 			return false;
 		}
 		
+		CodonCache::delete('all_ranks');
 		self::CalculatePilotRanks();
 	
 		return true;
@@ -103,6 +134,8 @@ class RanksData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 		
+		CodonCache::delete('all_ranks');
+		
 		self::CalculatePilotRanks();
 		return true;
 	}
@@ -121,6 +154,7 @@ class RanksData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 		
+		CodonCache::delete('all_ranks');
 		self::CalculatePilotRanks();
 		return true;
 	}
@@ -131,10 +165,10 @@ class RanksData extends CodonData
 	 *  for that rank level, then make $last_rank that text. At the
 	 *  end, update that
 	 */
-	public static function CalculatePilotRanks()
+	public static function calculatePilotRanks()
 	{
 		/* Don't calculate a pilot's rank if this is set */
-		if(Config::Get('RANKS_AUTOCALCULATE') == false)
+		if(Config::Get('RANKS_AUTOCALCULATE') === false)
 		{
 			return;
 		}
@@ -151,27 +185,33 @@ class RanksData extends CodonData
 		{
 			$last_rank = '';
 			
-			foreach($allranks as $rank)
+			$pilothours = intval($pilot->totalhours);
+			if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
 			{
-				$pilothours = intval($pilot->totalhours);
-				
-				if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
-				{
-					$pilothours += $pilot->transferhours;
-				}
-				
-				if($pilothours >= intval($rank->minhours))
-				{
-					$last_rank = $rank->rank;
-					$last_rankid = $rank->rankid;
-				}
+				$pilothours += $pilot->transferhours;
 			}
 			
-			$sql = 'UPDATE '.TABLE_PREFIX."pilots
-						SET `rankid`={$last_rankid}, `rank`='{$last_rank}'
-						WHERE pilotid=".$pilot->pilotid;
+			$i = 1;
+			foreach($allranks as $rank)
+			{
+				if($pilothours >= intval($rank->minhours))
+				{
+					$rank_level = $i;
+					$last_rank = $rank->rank;
+					$last_rankid = $rank->rankid;
+					break;
+				}
+				
+				$i++;
+			}
 			
-			DB::query($sql);
+			$update = array(
+				'rankid' => $last_rankid,
+				'rank' => $last_rank,
+				'ranklevel' => $rank_level,
+			);
+			
+			PilotData::updateProfile($pilot->pilotid, $update);
 		}
 	}
 	
@@ -186,27 +226,32 @@ class RanksData extends CodonData
 		$pilotid = intval($pilotid);
 		$allranks = self::GetAllRanks();
 		$pilot = PilotData::GetPilotData($pilotid);
+		$pilothours = $pilot->totalhours;
 		
+		if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
+		{
+			$pilothours += $pilot->transferhours;
+		}
+		
+		$i = 0;
 		foreach($allranks as $rank)
 		{
-			$pilothours = $pilot->totalhours;
-			
-			if(Config::Get('TRANSFER_HOURS_IN_RANKS') == true)
-			{
-				$pilothours += $pilot->transferhours;
-			}
+			$i++;
 			
 			if($pilothours >= intval($rank->minhours))
 			{
+				$rank_level = $i;
 				$last_rank = $rank->rank;
 				$last_rankid = $rank->rankid;
 			}
 		}
 		
-		$sql = 'UPDATE '.TABLE_PREFIX."pilots
-						SET `rankid`={$last_rankid}, `rank`='{$last_rank}'
-						WHERE pilotid=".$pilot->pilotid;
+		$update = array(
+			'rankid' => $last_rankid,
+			'rank' => $last_rank,
+			'ranklevel' => $rank_level,
+		);
 		
-		DB::query($sql);
+		PilotData::updateProfile($pilot->pilotid, $update);
 	}
 }

@@ -321,15 +321,25 @@ class OperationsData extends CodonData
 			$data['enabled'] = 1;
 		else
 			$data['enabled'] = 0;
+			
+		if($data['minrank'] > 0)
+		{
+			$rank_level = RanksData::getRankLevel($data['minrank']);
+		}
+		else
+		{
+			$rank_level = 0;
+		}
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."aircraft (
 					`icao`, `name`, `fullname`, `registration`, `downloadlink`,
 					`imagelink`, `range`, `weight`, `cruise`, 
-					`maxpax`, `maxcargo`, `minrank`, `enabled`)
+					`maxpax`, `maxcargo`, `minrank`, `ranklevel`, `enabled`)
 				VALUES (
 					'{$data['icao']}', '{$data['name']}', '{$data['fullname']}', '{$data['registration']}', 
 					'{$data['downloadlink']}', '{$data['imagelink']}', '{$data['range']}', '{$data['weight']}', 
-					'{$data['cruise']}', '{$data['maxpax']}', '{$data['maxcargo']}', {$data['minrank']}, {$data['enabled']})";
+					'{$data['cruise']}', '{$data['maxpax']}', '{$data['maxcargo']}', {$data['minrank']}, 
+					{$rank_level}, {$data['enabled']})";
 		
 		$res = DB::query($sql);
 		
@@ -372,13 +382,22 @@ class OperationsData extends CodonData
 			$data['enabled'] = 1;
 		else
 			$data['enabled'] = 0;
+		
+		if($data['minrank'] > 0)
+		{
+			$rank_level = RanksData::getRankLevel($data['minrank']);
+		}
+		else
+		{
+			$rank_level = 0;
+		}
 
 		$sql = "UPDATE " . TABLE_PREFIX."aircraft 
 				SET `icao`='{$data['icao']}', `name`='{$data['name']}', `fullname`='{$data['fullname']}',
 					`registration`='{$data['registration']}', `downloadlink`='{$data['downloadlink']}', 
 					`imagelink`='{$data['imagelink']}', `range`='{$data['range']}', `weight`='{$data['weight']}',
 					`cruise`='{$data['cruise']}', `maxpax`='{$data['maxpax']}', `maxcargo`='{$data['maxcargo']}',
-					`minrank`={$data['minrank']}, `enabled`={$data['enabled']}
+					`minrank`={$data['minrank']}, `ranklevel`={$rank_level}, `enabled`={$data['enabled']}
 				WHERE `id`={$data['id']}";
 		
 		$res = DB::query($sql);
@@ -392,6 +411,23 @@ class OperationsData extends CodonData
 		CodonCache::delete('all_aircraft_search_enabled');
 			
 		return true;
+	}
+	
+	public static function updateAircraftRankLevels()
+	{
+		$all_aircraft = self::getAllAircraft(false);
+		if(!$all_aircraft) { return; }
+		
+		foreach($all_aircraft as $aircraft)
+		{
+			$rank_level = RanksData::getRankLevel($aircraft->minrank);
+			
+			$sql = "UPDATE ".TABLE_PREFIX."aircraft
+					SET `ranklevel`={$rank_level}
+					WHERE `id`={$aircraft->id}";
+		
+			DB::query($sql);
+		}
 	}
 	
 	/**

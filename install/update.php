@@ -184,12 +184,14 @@ echo 'Starting the update...<br />';
 	}
 	
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
+	
+	OperationsData::updateAircraftRankLevels();
 
 	/* Update expenses */
 	//FinanceData::updateAllExpenses();
 
 	/* Manually specify a revenue value for all PIREPs */
-	$allpireps = PIREPData::findPIREPS(array());
+	/*$allpireps = PIREPData::findPIREPS(array());
 	if(is_array($allpireps))
 	{
 		foreach($allpireps as $pirep)
@@ -211,11 +213,11 @@ echo 'Starting the update...<br />';
 						
 			DB::query($update);
 		}
-	}
+	}*/
 	
 	
 	/* Update times */
-	$sql = "SELECT pirepid, flighttime FROM ".TABLE_PREFIX."pireps";
+	/*$sql = "SELECT pirepid, flighttime FROM ".TABLE_PREFIX."pireps";
 	$results = DB::get_results($sql);
 	if(is_array($results))
 	{
@@ -229,11 +231,9 @@ echo 'Starting the update...<br />';
 
 			DB::query($sql);
 		}
-	}
+	}*/
 
-		
-	
-# Final version update
+	# Final version update
 	/*if(!isset($_GET['test']))
 	{
 		$sql = 'UPDATE `'.TABLE_PREFIX.'settings` 

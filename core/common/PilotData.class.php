@@ -40,9 +40,9 @@ class PilotData extends CodonData
 		/* Build the select "WHERE" based on the columns passed, this is a generic function */
 		$sql .= DB::build_where($params);
 		
-		if(strlen($count) != 0)
+		if(strlen($limit) != 0)
 		{
-			$sql .= ' LIMIT '.$count;
+			$sql .= ' LIMIT '.$limit;
 		}
 		
 		if(strlen($start) != 0)
@@ -236,13 +236,19 @@ class PilotData extends CodonData
 	public static function changePilotRank($pilotid, $rankid)
 	{
 		$rank = RanksData::getRankInfo($rankid);
-		
+		$rank_level = RanksData::getRankLevel($rankid);
 		if(!$rank)
 		{
 			return false;
 		}
 		
-		return self::updateProfile($pilotid, array('rankid' => $rank->rankid, 'rank' => $rank->rank));
+		$data = array(
+			'rankid' => $rank->rankid, 
+			'rank' => $rank->rank,
+			'ranklevel' => $rank_level,
+		);
+		
+		return self::updateProfile($pilotid, $data);
 	}
 	
 	/**
@@ -323,6 +329,17 @@ class PilotData extends CodonData
 		}
 				
 		return true;
+	}
+	
+	public static function updatePilotRankLevels()
+	{
+		$all_pilots = self::findPilots(array());
+		
+		foreach($all_pilots as $pilot)
+		{
+			$rank_level = RanksData::getRankLevel($pilot->rankid);
+			self::updateProfile($pilot->pilotid, array('ranklevel'=>$rank_level));
+		}
 	}
 	
 	public static function setPilotRetired($pilotid, $retired)

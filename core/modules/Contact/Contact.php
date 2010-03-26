@@ -62,6 +62,9 @@ class Contact extends CodonModule
 			$subject = 'New message from '.$this->post->name.' - "'.$this->post->subject.'"';
 			$message = DB::escape($this->post->message) . PHP_EOL . PHP_EOL;
 			
+			unset($_POST['recaptcha_challenge_field']);
+			unset($_POST['recaptcha_response_field']);
+			
 			foreach($_POST as $field=>$value)
 			{
 				$message.="-$field = $value".PHP_EOL;

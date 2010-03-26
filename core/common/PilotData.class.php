@@ -480,7 +480,11 @@ class PilotData extends CodonData
 	 */
 	public static function updateLogin($pilotid)
 	{
-		return self::updateProfile($pilotid, array('lastlogin'=>'NOW()'));
+		return self::updateProfile($pilotid, array(
+				'lastlogin'=>'NOW()', 
+				'lastip' => $_SERVER['REMOTE_ADDR'],
+			)
+		);
 	}
 	
 	public static function getPilotHours($pilotid)

@@ -26,6 +26,7 @@ if(!$allpilots)
 	<th>Status</th>
 	<th nowrap="">Total Flights</th>
 	<th nowrap="">Total Hours</th>
+	<th>Last IP</th>
 	<th>Options</th>
 </tr>
 </thead>
@@ -42,6 +43,7 @@ foreach($allpilots as $pilot)
 	<td align="center" width="1%"><?php echo ($pilot->retired==0) ? 'Active' : 'Retired'; ?></td>
 	<td align="center" width="1%"><?php echo $pilot->totalflights; ?></td>
 	<td align="center" width="1%"><?php echo $pilot->totalhours; ?></td>
+	<td align="center" width="1%"><?php echo $pilot->lastip; ?></td>
 	<td align="center" width="1%" nowrap>
 		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/options.png" alt="Options" /></a></td>

@@ -94,6 +94,24 @@ class OperationsData extends CodonData
 		return $all_aircraft;
 	}
 	
+	
+	/**
+	 * Get the aircraft a pilot can fly, pass in their rank level
+	 *
+	 * @param int $rank_level Rank level they're at
+	 * @return array Array of objects of the aircraft
+	 *
+	 */
+	public static function getAircraftWithinRank($rank_level)
+	{
+		$sql = 'SELECT a.*, r.rank
+				FROM ' . TABLE_PREFIX .'aircraft a
+				LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rankid=a.minrank
+				WHERE a.ranklevel > '.$rank_level;
+				
+		return DB::get_results($sql);
+	}
+	
 	/**
 	 * Get all of the aircraft
 	 */

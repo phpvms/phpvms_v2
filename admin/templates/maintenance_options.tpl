@@ -29,6 +29,12 @@
 	distances are required for some reports.<br /></dd>
 	
 	<dt><strong>
+		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpirepcount">Reset Pilot PIREP Count</a>:
+		</strong>
+	</dt>
+	<dd>Reset flight count totals for pilots. Use if the PIREP counts are off.<br /></dd>
+	
+	<dt><strong>
 		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpilotpay">Reset Pilot Payments</a>:
 		</strong>
 	</dt>

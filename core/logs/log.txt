@@ -1,0 +1,2848 @@
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=40 WHERE `pilotid`=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=2 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=2
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=3 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=3
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=7 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=7
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=9 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=9
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=10 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=10
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=12 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=12
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=18 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=18
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=20 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=20
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=21 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=21
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=22 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=22
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=23 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=27 WHERE `pilotid`=23
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=24 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=24
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=29 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=29
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=30 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=30
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=31 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=31
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=32 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=32
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=33 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=33
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=34 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=34
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=35 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=35
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=48 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=48
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=49 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=49
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=51 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=51
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=54 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=54
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=85 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=8 WHERE `pilotid`=85
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=86 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=86
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=87 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=87
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=88 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=88
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=89 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=3 WHERE `pilotid`=89
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=90 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=90
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=91 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=91
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=92 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=2 WHERE `pilotid`=92
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=93 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=93
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=94 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=94
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=95 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=95
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=96 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=96
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=97 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=97
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=98 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=98
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=99 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=99
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=100 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=100
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=101 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=3 WHERE `pilotid`=101
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=102 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=102
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=103 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=9 WHERE `pilotid`=103
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=104 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=104
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=105 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=105
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=106 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=106
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=107 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=107
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=108 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=108
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=109 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=109
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=110 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=110
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=111 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=111
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=112 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=112
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=113 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=113
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=114 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=114
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=115 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=115
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=116 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=116
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=117 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=117
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=118 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=118
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=119 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=119
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=120 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=120
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=121 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=2 WHERE `pilotid`=121
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=122 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=122
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=123 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=123
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=124 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=124
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=125 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=10 WHERE `pilotid`=125
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=126 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=2 WHERE `pilotid`=126
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=127 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=3 WHERE `pilotid`=127
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=128 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=128
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=129 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=129
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=130 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=130
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=131 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=131
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=132 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=132
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=133 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=133
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=134 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=134
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=135 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=135
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=136 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=136
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=137 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=137
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=139 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=139
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=140 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=140
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=141 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=141
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=142 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:02
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=142
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=40 WHERE `pilotid`=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=2 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=2
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=3 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=3
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=7 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=7
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=9 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=9
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=10 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=10
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=12 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=12
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=18 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=18
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=20 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=20
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=21 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=21
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=22 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=22
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=23 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=27 WHERE `pilotid`=23
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=24 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=24
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=29 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=29
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=30 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=30
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=31 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=31
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=32 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=32
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=33 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=33
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=34 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=34
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=35 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=35
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=48 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=48
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=49 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=49
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=51 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=51
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=54 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=54
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=85 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=8 WHERE `pilotid`=85
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=86 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=86
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=87 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=87
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=88 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=88
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=89 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=3 WHERE `pilotid`=89
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=90 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=90
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=91 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=91
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=92 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=2 WHERE `pilotid`=92
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=93 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=93
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=94 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=94
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=95 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=95
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=96 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=96
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=97 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=97
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=98 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=98
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=99 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=99
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=100 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=100
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=101 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=3 WHERE `pilotid`=101
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=102 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=102
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=103 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=9 WHERE `pilotid`=103
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=104 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=104
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=105 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=105
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=106 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=106
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=107 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=107
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=108 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=108
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=109 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=109
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=110 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=110
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=111 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=111
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=112 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=112
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=113 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=113
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=114 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=114
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=115 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=115
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=116 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=116
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=117 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=117
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=118 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=118
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=119 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=119
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=120 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=1 WHERE `pilotid`=120
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=121 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=2 WHERE `pilotid`=121
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=122 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=122
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=123 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=4 WHERE `pilotid`=123
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=124 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=5 WHERE `pilotid`=124
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=125 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=10 WHERE `pilotid`=125
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=126 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=2 WHERE `pilotid`=126
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=127 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=3 WHERE `pilotid`=127
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=128 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=128
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=129 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=129
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=130 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=130
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=131 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=131
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=132 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=132
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=133 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=133
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=134 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=134
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=135 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=135
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=136 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=136
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=137 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=137
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=139 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=139
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=140 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=140
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=141 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=141
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::get_results > PIREPData::getReportsByAcceptStatus > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: SELECT * FROM phpvms_pireps WHERE pilotid=142 AND accepted=1
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:06:21
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Maintenance->resetpirepcount > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `totalpireps`=0 WHERE `pilotid`=142
+Error: (1054) - Unknown column 'totalpireps' in 'field list'
+=====
+
+
+=====
+Time: 03.26.10 10:27:27
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:27:27
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:27:33
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::LogOut > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=0, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:27:48
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:27:48
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:18
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:18
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:38
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:38
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:46
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:46
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+here
+=====
+Time: 03.26.10 10:28:57
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:28:57
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+here
+=====
+Time: 03.26.10 10:29:49
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:29:49
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+here
+=====
+Time: 03.26.10 10:31:08
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:31:08
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+here
+Array
+cookie isnt blank
+=====
+Time: 03.26.10 10:31:44
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:31:44
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+here
+Array
+(
+    [PHPSESSID] => hjodiehm4f9p0ku86a6no511l1
+    [VMSAUTH] => |1|198.181.165.130
+)
+
+cookie isnt blank
+=====
+Time: 03.26.10 10:32:03
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:32:03
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+here
+Array
+(
+    [PHPSESSID] => hjodiehm4f9p0ku86a6no511l1
+    [VMSAUTH] => |1|198.181.165.130
+)
+
+cookie isnt blank
+assinging sessin
+session id: 
+=====
+Time: 03.26.10 10:32:40
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:32:40
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+finding error: 
+=====
+Time: 03.26.10 10:35:30
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:35:30
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+finding error: 
+=====
+Time: 03.26.10 10:36:22
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:36:22
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:38:01
+Backtrace: DB::write_debug > DB::query > Auth::update_session > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_sessions SET `pilotid`=1, `logintime`=NOW(), `ipaddress`='198.181.165.130' WHERE `id`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+=====
+Time: 03.26.10 10:38:01
+Backtrace: DB::write_debug > DB::get_results > PilotGroups::getUserGroups > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT g.* FROM phpvms_groupmembers u, phpvms_groups g WHERE u.pilotid=1 AND g.groupid=u.groupid
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+=====
+
+
+is insert
+insert id is 1558
+is insert
+is insert
+is insert
+is insert
+=====
+Time: 03.26.10 11:04:34
+Backtrace: DB::write_debug > DB::query > PilotData::updateProfile > Auth::ProcessLogin > Login->ProcessLogin > Login->login > Login->index > call_user_func_array > MainController::RunAllActions
+Query: UPDATE phpvms_pilots SET `lastlogin`=NOW(), `lastip`='198.181.165.130' WHERE `pilotid`=
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+=====
+
+

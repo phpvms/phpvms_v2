@@ -98,9 +98,9 @@ class RegistrationData extends CodonData
 			$confirm = 0;
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pilots (firstname, lastname, email,
-					code, location, hub, password, salt, confirmed, joindate)
+					code, location, hub, password, salt, confirmed, joindate, lastip)
 				  VALUES ('{$firstname}', '{$lastname}', '{$data['email']}', '{$code}',
-							'{$location}', '{$data['hub']}', '{$password}', '{$salt}', {$confirm}, NOW())";
+							'{$location}', '{$data['hub']}', '{$password}', '{$salt}', {$confirm}, NOW(), '{$_SERVER['REMOTE_ADDR']}')";
 		
 		
 		$res = DB::query($sql);

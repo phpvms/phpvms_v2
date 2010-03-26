@@ -39,10 +39,9 @@ class Auth extends CodonData
 		self::$session_id = SessionManager::Get('session_id');
 		
 		$assign_id = false;
-		
+	
 		if(self::$session_id == '')
 		{
-			// Check the cookie to see if they're logged in/have an ID
 			if($_COOKIE[VMS_AUTH_COOKIE] != '')
 			{
 				$data = explode('|', $_COOKIE[VMS_AUTH_COOKIE]);
@@ -121,6 +120,7 @@ class Auth extends CodonData
 		// Empty session so start one up, and they're not logged in
 		if($assign_id == true)
 		{
+			
 		}
 		
 		return true;
@@ -250,22 +250,23 @@ class Auth extends CodonData
 		}
 		else
 		{
+			# They're logging in with an email
 			if(preg_match('/^.*\@.*$/i', $useridoremail) > 0)
 			{
 				$emailaddress = DB::escape($useridoremail);
 				$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
-					   WHERE email=\''.$useridoremail.'\'';
+						WHERE email=\''.$useridoremail.'\'';
 			} 
-			
+			# They're loggin in with a pilot id
 			elseif(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $useridoremail, $matches)>0)
 			{
 				$id = trim($matches[2]);
 				$id = $id - intval(Config::Get('PILOTID_OFFSET'));
 				
 				$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
-					   WHERE pilotid='.$id;
+						WHERE pilotid='.$id;
 			}
-			
+			# No idea
 			else
 			{
 				self::$error_message = 'Invalid user ID';
@@ -300,7 +301,12 @@ class Auth extends CodonData
 			SessionManager::Set('loggedin', 'true');	
 			SessionManager::Set('userinfo', $userinfo);
 			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
-			PilotData::UpdateLogin($userinfo->pilotid);
+			
+			PilotData::updateProfile($pilotid, array(
+					'lastlogin'=>'NOW()', 
+					'lastip' => $_SERVER['REMOTE_ADDR'],
+				)
+			);
 			
 			return true;
 		}			

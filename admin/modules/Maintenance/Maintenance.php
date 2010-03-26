@@ -95,6 +95,28 @@ class Maintenance extends CodonModule
 		LogData::addLog(Auth::$userinfo->pilotid, 'Reset distances');
 	}
 	
+	public static function resetpirepcount()
+	{
+		echo '<h3>Reset PIREP Counts</h3>';
+		$all_pilots = PilotData::findPilots(array());
+		
+		foreach($all_pilots as $pilot)
+		{
+			$pireps = PIREPData::getReportsByAcceptStatus($pilot->pilotid, PIREP_ACCEPTED);
+			$total = count($pireps);
+			unset($pireps);
+			
+			$code = PilotData::getPilotCode($pilot->code, $pilot->pilotid);
+			
+			echo "{$code} - {$pilot->firstname} {$pilot->lastname} - {$total} pireps<br />";
+			
+			# Update the pireps table
+			PilotData::updateProfile($pilot->pilotid, array('totalpireps' => $total));
+		}
+		
+		echo 'Completed!';
+	}
+	
 	public function changepilotid()
 	{
 		echo '<h3>Change Pilot ID</h3>';

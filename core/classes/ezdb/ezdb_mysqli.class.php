@@ -235,30 +235,25 @@ class ezDB_mysqli extends ezDB_Base
 		// Perform the query via std mysql_query function..
 		$result = $this->dbh->query($query);
 
-		if(is_bool($result))
+		if($result === false)
 		{
-			if($result === false)
-			{
-				if($this->use_exceptions)
-					throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
-					
-				$this->register_error($this->dbh->error, $this->dbh->errno);
-			}
-			else
-			{
-				$this->clear_errors();
-			}
-			
-			return $result;
-		}
+			if($this->use_exceptions)
+				throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
 				
+			$this->register_error($this->dbh->error, $this->dbh->errno);
+		}
+		else
+		{
+			$this->clear_errors();
+		}
+	
 		// Query was an insert, delete, update, replace
 		$is_insert = false;
 		if (preg_match("/^(insert|delete|update|replace)\s+/i",$query))
 		{
 			$this->rows_affected = $this->dbh->affected_rows;
 			$this->num_rows = $this->rows_affected;
-					
+		
 			if($this->dbh->insert_id > 0)
 			{
 				$this->insert_id = $this->dbh->insert_id;

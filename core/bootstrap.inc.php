@@ -95,6 +95,11 @@ function url($path)
 	return $url.'/index.php'.$path;
 }
 
+function cndebug($txt)
+{
+	Debug::log($txt);
+}
+
 function actionurl($path)
 {
 	$url = SITE_URL;

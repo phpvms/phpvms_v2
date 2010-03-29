@@ -233,6 +233,7 @@ class Util
 		$mail->FromName = $fromname;
 		$mail->Mailer = 'mail';
 		$mail->CharSet = 'UTF-8'; #always use UTF-8
+		$mail->IsHTML(true);
 		
 		if(Config::Get('EMAIL_USE_SMTP') == true)
 		{
@@ -248,7 +249,8 @@ class Util
 			}
 		}
 		
-		$message = nl2br($message);
+		$message = "<html><head></head><body>{$message}</body></html>";
+		//$message = nl2br($message);
 		$alt = strip_tags($message);
 		
 		$mail->AddAddress($email); 

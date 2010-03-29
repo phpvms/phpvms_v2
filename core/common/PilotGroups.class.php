@@ -112,6 +112,11 @@ class PilotGroups extends CodonData
 			$groupidorname = self::getGroupID($groupidorname);
 		}
 		
+		if(self::CheckUserInGroup($pilotid, $groupidorname) === true)
+		{
+			return true;
+		}
+		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'groupmembers (pilotid, groupid)
 					VALUES ('.$pilotid.', '.$groupidorname.')';
 		
@@ -221,7 +226,7 @@ class PilotGroups extends CodonData
 	
 	public static function getUsersInGroup($groupid)
 	{
-		if(!is_int($groupid))
+		if(!is_numeric($groupid))
 		{
 			$groupid = self::getGroupID($groupid);
 		}

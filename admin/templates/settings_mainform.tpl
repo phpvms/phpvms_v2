@@ -55,6 +55,24 @@
 					echo '</SELECT>';
 					break;
 					
+				case 'DEFAULT_GROUP':
+				
+					$allgroups = PilotGroups::getAllGroups();
+					$current = SettingsData::getSetting('DEFAULT_GROUP');
+					
+					echo '<SELECT name="DEFAULT_GROUP">';
+						
+						foreach($allgroups as $group)
+						{
+							$sel = ($current == $group->groupid)? 'selected' : '';
+							echo '<option value="'.$group->groupid.'" '. $sel . '>'.$group->name.'</option>';
+						}
+   
+					echo '</SELECT>';
+					break;
+				
+					break;
+					
 				default:
 					
 					if($setting->value == 'true' || $setting->value == 'false')

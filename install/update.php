@@ -186,6 +186,13 @@ echo 'Starting the update...<br />';
 	Installer::sql_file_update(SITE_ROOT . '/install/update.sql');
 	
 	OperationsData::updateAircraftRankLevels();
+	
+	/* Add them to the default group */
+	$allpilots = PilotData::GetAllPilots();
+	foreach($allpilots as $pilot)
+	{
+		PilotGroups::AddUsertoGroup($pilot->pilotid, DEFAULT_GROUP);
+	}
 
 	/* Update expenses */
 	//FinanceData::updateAllExpenses();

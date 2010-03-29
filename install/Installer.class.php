@@ -168,9 +168,8 @@ class Installer
 		//	run the query
 		
 		$sql = '';
-		
-		$sql_file = file_get_contents(SITE_ROOT . '/install/install.sql');
-		$revision = file_get_contents(dirname(__FILE__).'/version');
+		$sql_file = file_get_contents(SITE_ROOT.'/install/install.sql');
+		$revision = file_get_contents(SITE_ROOT.'/core/version');
 		
 		for($i=0;$i<strlen($sql_file);$i++)
 		{

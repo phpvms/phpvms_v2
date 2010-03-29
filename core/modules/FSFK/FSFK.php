@@ -92,7 +92,7 @@ class FSFK extends CodonModule
 		
 		# Setup the base things
 		$rawdata['FLIGHTMAPS'] = array();
-		$rawdata['FLIGHTDATA'] = array();
+		$rawdata['FLIGHTDATA'] = array();	
 		
 		foreach($xml as $key => $value)
 		{

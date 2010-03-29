@@ -341,6 +341,7 @@ class PIREPData extends CodonData
 				WHERE p.pilotid=u.pilotid AND p.pirepid='.$pirepid;
 
 		$row = DB::get_row($sql);
+		$row->rawdata = unserialize($row->rawdata);
 	
 		/* Do any specific replacements here */
 		if($row)

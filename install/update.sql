@@ -42,5 +42,6 @@ ALTER TABLE `phpvms_aircraft` ADD `minrank` INT NOT NULL DEFAULT '0' AFTER `maxc
 ALTER TABLE `phpvms_aircraft` ADD `ranklevel` INT NOT NULL DEFAULT '0' AFTER `minrank` 
 
 -- Remove deprecated settings;
+DELETE FROM `phpvms_settings` WHERE `name='PHPVMS_VERSION';
 DELETE FROM `phpvms_settings` WHERE `name='NOTIFY_UPDATE';
 DELETE FROM `phpvms_settings` WHERE `name='GOOGLE_KEY';

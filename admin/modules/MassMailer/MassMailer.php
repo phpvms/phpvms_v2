@@ -29,46 +29,62 @@ class MassMailer extends CodonModule
 	
 	public function index()
 	{
-		if($this->post->submit)
-		{
-			echo '<h3>Sending email</h3>';
-			if($this->post->subject == '' || trim($this->post->message) == '')
-			{
-				$this->set('message', 'You must enter a subject and message!');
-				$this->render('core_error.tpl');
-				return;
-			}
-			
-			echo 'Sending email...<br />';
-			
-			$subject = DB::escape($this->post->subject);
-			$message = html_entity_decode($this->post->message). PHP_EOL . PHP_EOL;
-			
-			# Do some quick fixing of obvious formatting errors
-			$message = str_replace('<br>', '<br />', $message);
-			
-			//Begin the nice long assembly of e-mail addresses
-			$pilotarray = PilotData::GetAllPilots();
-			foreach($pilotarray as $pilot)
-			{
-				echo 'Sending for '.$pilot->firstname.' '.$pilot->lastname.'<br />';
-				
-				# Variable replacements
-				$send_message = str_replace('{PILOT_FNAME}', $pilot->firstname, $message);
-				$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $send_message);
-				$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $send_message);
-
-				Util::SendEmail($pilot->email, $subject, $send_message);
-			}
-			
-			echo 'Complete!';
-			
-			LogData::addLog(Auth::$userinfo->pilotid, 'Sent pass mail');
-			return;
-		}		
-		
-		
+		$this->set('allgroups', PilotGroups::getAllGroups());
 		$this->render('mailer_form.tpl');
+	}
+	
+	public function sendmail()
+	{
+		echo '<h3>Sending email</h3>';
+		if($this->post->subject == '' || trim($this->post->message) == '')
+		{
+			$this->set('message', 'You must enter a subject and message!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		if(count($this->post->groups) == 0)
+		{
+			$this->set('message', 'You must select groups to send to!');
+			$this->render('core_error.tpl');
+			return;
+		}
+		
+		echo 'Sending email...<br />';
+		
+		$pilotarray = array();
+		//Begin the nice long assembly of e-mail addresses
+		foreach($this->post->groups as $groupid)
+		{
+			$tmp = PilotGroups::getUsersInGroup($groupid);
+			
+			foreach($tmp as $pilot)
+			{
+				$pilotarray[$pilot->pilotid] = $pilot;
+			}
+		}
+		
+		$subject = DB::escape($this->post->subject);
+		$message = stripslashes($this->post->message). PHP_EOL . PHP_EOL;
+		
+		# Do some quick fixing of obvious formatting errors
+		$message = str_replace('<br>', '<br />', $message);
+		foreach($pilotarray as $pilot)
+		{
+			echo 'Sending for '.$pilot->firstname.' '.$pilot->lastname.'<br />';
+			
+			# Variable replacements
+			$send_message = str_replace('{PILOT_FNAME}', $pilot->firstname, $message);
+			$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $send_message);
+			$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $send_message);
+
+			Util::SendEmail($pilot->email, $subject, $send_message);
+		}
+		
+		echo 'Complete!';
+		
+		LogData::addLog(Auth::$userinfo->pilotid, 'Sent pass mail');
+		return;
 	}
 	
 }

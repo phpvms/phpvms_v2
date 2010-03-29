@@ -121,6 +121,9 @@ class RegistrationData extends CodonData
 		RanksData::CalculateUpdatePilotRank($pilotid);
 		PilotData::GenerateSignature($pilotid);
 		
+		/* Add them to the default group */
+		PilotGroups::AddUsertoGroup($pilotid, DEFAULT_GROUP);
+		
 		// For later
 		self::$pilotid = $pilotid;
 					

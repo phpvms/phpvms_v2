@@ -218,7 +218,6 @@ class Util
 			}
 		}
 		
-		
 		if($fromname == '')
 		{
 			$fromname = Config::Get('EMAIL_FROM_NAME');
@@ -229,8 +228,18 @@ class Util
 			}
 		}
 		
+		$return_path_email = Config::Get('EMAIL_RETURN_PATH');
+		if($return_path_email == '')
+		{
+			$return_path_email = $fromemail;
+		}
+		
 		$mail->From     = $fromemail;
 		$mail->FromName = $fromname;
+		
+		// Fix thanks to jm (Jean-Michel)
+		$mail->Sender = $return_path_email;
+		
 		$mail->Mailer = 'mail';
 		$mail->CharSet = 'UTF-8'; #always use UTF-8
 		$mail->IsHTML(true);

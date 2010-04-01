@@ -188,7 +188,6 @@ CREATE TABLE `phpvms_schedules` (
   `arrtime` varchar(15) NOT NULL default '',
   `flighttime` FLOAT NOT NULL default '0',
   `daysofweek` VARCHAR( 7 ) NOT NULL DEFAULT '0123456',
-  `maxload` INT(11) NOT NULL,
   `price` FLOAT NOT NULL,
   `flighttype` VARCHAR( 1 ) NOT NULL DEFAULT 'P',
   `timesflown` int(11) NOT NULL default '0',

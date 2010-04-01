@@ -20,6 +20,25 @@ class FinanceData extends CodonData
 {
 	public static $lasterror;
 	
+	
+	public static function formatMoney($number)
+	{
+		$isneg = false;
+		if($number < 0)
+		{
+			$isneg = true;
+		}
+		
+		# $ 50.00 - If positive
+		# ($ -50.00)  - If negative
+		$number = Config::Get('MONEY_UNIT') .' '.number_format($number, 2, '.', ', ');
+		
+		if($isneg == true)
+			$number = '('.$number.')';
+		
+		return $number;
+	}
+	
 	/**
 	 * Get the fuel cost, given the airport and the amount of fuel
 	 *
@@ -193,296 +212,6 @@ class FinanceData extends CodonData
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'expenselog WHERE `dateadded`='.$time;
 		DB::query($sql);
 	}
-			
-	/**
-	 * This gets all of the balance data for a year
-	 *
-	 * @param int $yearstamp Any timestamp which is in the year you want
-	 * @return array All the year's balance data
-	 *
-	 */
-	/*public static function getYearBalanceData($yearstamp)
-	{
-		$year = date('Y', $yearstamp);
-		
-		return self::GetRangeBalanceData('January '.$year, 'December '.$year);
-	}*/
- 
-	
-	/**
-	 * Get the financial data for a range of dates
-	 *  Pass in dates as text, or UNIX Timestamps
-	 * 
-	 * @param string $start Start date (any date inside that month)
-	 * @param string $end End date (any date inside that month)
-	 * @return mixed This is the return value description
-	 *
-	 */
-	/*public static function getRangeBalanceData($start, $end)
-	{
-		$times = StatsData::GetMonthsInRange($start, $end);
-		$now = time();
-		
-		$start = StatsData::GetStartDate();
-		if(!$start)
-			$start = intval(date('Ym'));
-		else
-			$start = intval(date('Ym', strtotime($start->submitdate)));
-			
-		$now = intval(date('Ym'));
-		
-		foreach($times as $monthstamp)
-		{
-			# Check if we're asking for something that's before
-			#	The first PIREP, or after this current month
-			
-			$c_monthstamp = intval(date('Ym', $monthstamp));
-			if($c_monthstamp < $start || $c_monthstamp > $now)
-			{
-				$data = array('timestamp'=>$monthstamp);
-			}
-			else
-			{
-				$data = self::GetMonthBalanceData($monthstamp);
-				$data['timestamp'] = $monthstamp;
-			}
-			
-			$ret[] = $data;
-		}
-		
-		return $ret;		
-	}*/
-	
-	/**
-	 * Get the financial data for a month
-	 *  Pass date as a text, or UNIX Timestamp
-	 * 
-	 * This will automatically handle the caching
-	 */
-	/*public static function getMonthBalanceData($monthstamp)
-	{
-		$ret = array();
-					
-		# Check if it's already in our financedata table
-		$report = self::GetCachedFinanceData($monthstamp);
-		if(is_object($report))
-		{
-			$ret = unserialize(stripslashes($report->data));
-		}
-		else
-		{
-			# Set the defaults to 0
-			$ret['total'] = 0;
-			$ret['totalexpenses'] = 0;
-			$ret['flightexpenses'] = 0;
-			
-			# Get fresh copy
-			$ret['pirepfinance'] = self::PIREPForMonth($monthstamp);
-						
-				
-			$ret['allexpenses'] =  self::GetMonthlyExpenses();
-			
-			#
-			# Do all the calculations
-			#
-			
-			# Start
-			$ret['cashreserve'] = 0;
-			$ret['total'] = $ret['pirepfinance']->Revenue;
-			
-			# Subtract the pay
-			$ret['total'] -= $ret['allexpenses']->TotalPay;
-			# Subtract the flight expenses
-			$ret['total'] -= $ret['pirepfinance']->FlightExpenses;
-			# Subtract fuel costs
-			$ret['total'] -= $ret['pirepfinance']->FuelCost;
-			
-			# Subtract the total expenses from the total	
-			
-			if(!$ret['allexpenses']) $ret['allexpenses'] = array();
-			foreach($ret['allexpenses'] as $expense)
-			{
-				// Percentage, of total revenue made and make that
-				if($expense->type == 'P')
-				{
-					$ret['totalexpenses'] += $ret['total'] * ($expense->cost/100);
-					continue;
-				}
-					
-				$ret['totalexpenses'] += $expense->cost;
-			}
-			
-			$ret['total'] -= $ret['totalexpenses'];
-			
-			# Save these separately
-			$ret['flightexpenses'] += $ret['pirepfinance']->FlightExpenses;
-			$ret['fuelcost'] = $ret['pirepfinance']->FuelCost;		
-			
-			# Save it, with all the above calculations
-			#	Remains intact
-			self::AddFinanceDataCache($monthstamp, $ret);
-		}
-		
-		return $ret;
-	}*/
-	
-	/**
-	 * Get an archived financial expenses report
-	 */
-	/*public static function getCachedFinanceData($monthstamp)
-	{
-		if(!is_int($monthstamp))
-			$submit = strtotime($monthstamp);
-		else
-			$submit = $monthstamp;
-			
-		$submitperiod =  date('Ym', $submit);
-		$nowperiod = date('Ym');
-				
-		if($submitperiod >= $nowperiod)
-		{
-			return false;
-		}
-		
-		$month = date('m', $submit);
-		$year = date('Y', $submit);
-		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."financedata
-					WHERE `month`='$month' AND `year`='$year'";
-		
-		$ret = DB::get_row($sql);
-		
-		return $ret;
-	}*/
-	
-	
-	/**
-	 * Add financial data into the cache, saving time and queries
-	 *
-	 * @param int $monthstamp Any timestamp inside the month you are storing
-	 * @param mixed $data This is a description
-	 * @return mixed This is the return value description
-	 *
-	 */
-	/*public static function AddFinanceDataCache($monthstamp, $data)
-	{		
-	
-		if(!is_int($monthstamp))
-			$submit = strtotime($monthstamp);
-		else
-			$submit = $monthstamp;
-			
-		// Don't cache it for the current month
-		//	or any months ahead of it
-		$submitperiod =  date('Ym', $submit);
-		$nowperiod = date('Ym');
-				
-		if($submitperiod >= $nowperiod)
-		{
-			return false;
-		}
-				
-		$month = date('m', $submit);
-		$year = date('Y', $submit);
-		
-		$total = $data['total'];
-		$data = DB::escape(serialize($data));
-		
-		# Check if it exists
-		#	Update it if it does
-		$sql = 'SELECT id FROM '.TABLE_PREFIX."financedata
-					WHERE `month`='$month' AND `year`='$year'";
-					
-		$res = DB::get_row($sql);
-		if($res)
-		{
-			$sql = 'UPDATE '.TABLE_PREFIX."financedata
-						SET `month`='$month', 
-							`year`='$year',
-							`data`='$data',
-							`total`='$total'";
-		}
-		else
-		{
-			$sql = 'INSERT INTO '.TABLE_PREFIX."financedata
-								(`month`, `year`, `data`, `total`)
-						VALUES	('$month', '$year', '$data', '$total')";
-		}
-		
-		DB::query($sql);	
-	}*/
-		
-	/**
-	 * Get PIREP financials for the MONTH that's
-	 *  in the timestamp. Just pass any timestamp,
-	 *  it'll pull the MONTH
-	 */	 
-	/*public static function PIREPForMonth($timestamp)
-	{
-		# Form the timestamp
-		if($timestamp == '')
-		{
-			return false;
-		}
-		
-		# If a numeric date/time is passed
-		#	Otherwise, we convert it to a timestamp
-		if(!is_numeric($timestamp))
-		{
-			$timestamp = strtotime($timestamp);
-		}
-		
-		# %c/$Month = Numeric Month (01..12)
-		# %Y/$Year = Full Year (XXXX)
-		$MonthYear = date('mY', $timestamp);
-		
-		$where_sql = " WHERE DATE_FORMAT(p.`submitdate`, '%m%Y') = '$MonthYear'";	
-		
-		return self::CalculatePIREPS($where_sql);
-	}*/
-	
-	/**
-	 * Get PIREP financials for the YEAR that's
-	 *  in the timestamp. Just pass any timestamp,
-	 *  it'll pull the YEAR
-	 * 
-	 * DEPRICATED
-	 *  "wut? already?" SHEAH
-	 *  use GetYearBalanceData instead
-	 */
-	public static function PIREPForYear($timestamp)
-	{		
-		return self::GetYearBalanceData($timestamp);
-	}
-	 
-	
-	/**
-	 * Calculate a PIREP's finances with optional WHERE clause to restrict results
-	 *
-	 * @param string $where Where clause, to restrict results. Include WHERE
-	 * @return array Finances
-	 *
-	 */
-	/*public static function CalculatePIREPS($where='')
-	{
-		if($where == '')
-		{
-			$where = ' WHERE p.accepted='.PIREP_ACCEPTED;
-		}
-		else
-		{
-			$where .= ' AND p.accepted='.PIREP_ACCEPTED;
-		}
-		
-		$sql = 'SELECT COUNT(*) AS TotalFlights,
-					   ROUND(SUM(p.`pilotpay` * p.`flighttime`), 2) AS TotalPay,
-					   ROUND(SUM(p.`price` * p.`load`), 2) AS Revenue,
-					   ROUND(SUM(p.`expenses`)) AS FlightExpenses,
-					   ROUND(SUM(p.`fuelprice`)) AS FuelCost
-				FROM '.TABLE_PREFIX.'pireps p '.$where;
-					
-		return DB::get_row($sql);
-	}	*/
 	
 	/**
 	 * Get a list of all the expenses
@@ -517,45 +246,7 @@ class FinanceData extends CodonData
 					
 		return DB::get_row($sql);
 	}
-	
-	/**
-	 * Get monthly expenses
-	 */
-	 
-	/*public static function getMonthlyExpenses()
-	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
-					WHERE `type`=\'M\' OR `type`=\'P\'';
 		
-		return DB::get_results($sql);		
-	}*/
-	
-	/*public static function get_total_monthly_expenses()
-	{
-		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
-				 FROM '.TABLE_PREFIX.'expenses
-				 WHERE `type`=\'M\'';
-		
-		return DB::get_row($sql);
-	}*/
-	
-	/*public static function getPercentExpenses()
-	{
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenses
-					WHERE `type`=\'P\'';
-		
-		return DB::get_results($sql);	
-	}*/
-	
-	/*public static function get_total_percent_expenses()
-	{
-		$sql = 'SELECT SUM(cost) as cost, COUNT(*) as total
-				 FROM '.TABLE_PREFIX.'expenses
-				 WHERE `type`=\'P\'';
-		
-		return DB::get_row($sql);
-	}*/
-	
 	/** 
 	 * Get all of the expenses for a flight
 	 */
@@ -697,23 +388,5 @@ class FinanceData extends CodonData
 		$load = ($load / 100);
 		$currload = ceil($count * $load);
 		return $currload;
-	}
-
-	function formatMoney($number)
-	{
-		$isneg = false;
-		if($number < 0)
-		{
-			$isneg = true;
-		}
-		
-		# $ 50.00 - If positive
-		# ($ -50.00)  - If negative
-		$number = Config::Get('MONEY_UNIT') .' '.number_format($number, 2, '.', ', ');
-		
-		if($isneg == true)
-			$number = '('.$number.')';
-			
-		return $number;
 	}
 }

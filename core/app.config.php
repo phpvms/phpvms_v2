@@ -204,6 +204,12 @@ Config::Set('EMAIL_SMTP_PASS', '');
 Config::Set('EMAIL_NEW_REGISTRATIONS', '');
 Config::Set('EMAIL_NEW_PIREP', '');
 
+# This is email to specifically send email sent error to, such
+# as failure notices with an invalid email or something
+# If blank, it'll default to the "from" email that's specified
+Config::Set('EMAIL_RETURN_PATH', '');
+
+
 /* Can be 'geonames' or 'phpvms'.
 	Geonames will use the geonames.org server to look up the airport info
 	phpvms will use the phpVMS API server

@@ -168,15 +168,6 @@
 			href="<?php echo SITE_URL?>/admin/action.php/operations/viewmap?type=preview">View Route</a></p>
 	</td>
 </tr>
-<!--
-<tr>
-	<td valign="top"><strong>Maximum Load:</strong> </td>
-	<td><input type="text" name="maxload" value="<?php echo $schedule->maxload?>" />
-		<p>This is the number of passengers, or the maximum cargo alloted
-			in <?php echo Config::Get('CARGO_UNITS'); ?></p>
-	</td>
-</tr>
--->
 <tr>
 	<td valign="top"><strong>Price</strong> </td>
 	<td><input type="text" name="price" value="<?php echo $schedule->price?>" />

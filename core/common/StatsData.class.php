@@ -18,7 +18,7 @@
  
 class StatsData extends CodonData
 {
-	public static function GetStartDate()
+	public static function getStartDate()
 	{
 		$start_date = CodonCache::read('start_date');
 		
@@ -39,7 +39,7 @@ class StatsData extends CodonData
 	/**
 	 * Get all of the months since the VA started
 	 */
-	public static function GetMonthsSinceStart()
+	public static function getMonthsSinceStart()
 	{
 		$months_list = CodonCache::read('months_since_start');
 		
@@ -62,7 +62,7 @@ class StatsData extends CodonData
 	/**
 	 * Get years since the VA started
 	 */
-	public static function GetYearsSinceStart()
+	public static function getYearsSinceStart()
 	{
 		$key = 'years_since_start';
 		$years_start = CodonCache::read($key);
@@ -96,7 +96,7 @@ class StatsData extends CodonData
 	/**
 	 * Get all of the months since a certain date
 	 */
-	public static function GetMonthsSinceDate($start)
+	public static function getMonthsSinceDate($start)
 	{
 		$key = 'months_since_'.$start;
 		$months = CodonCache::read($key);
@@ -132,7 +132,7 @@ class StatsData extends CodonData
 	 * Get all the months within a certain range
 	 * Pass timestamp, or textual date
 	 */
-	public static function GetMonthsInRange($start, $end)
+	public static function getMonthsInRange($start, $end)
 	{
 		$key = "months_in_{$start}_{$end}";
 		$months = CodonCache::read($key);
@@ -170,7 +170,7 @@ class StatsData extends CodonData
 		return $months;		
 	}
 	
-	public static function UpdateTotalHours()
+	public static function updateTotalHours()
 	{
 		$pireps = PIREPData::findPIREPS(array('p.accepted'=>1));
 		
@@ -245,7 +245,6 @@ class StatsData extends CodonData
 		}
 		
 		$top_routes = CodonCache::read($key);
-		
 		if($top_routes === false)
 		{
 			$sql = 'SELECT * 
@@ -253,7 +252,7 @@ class StatsData extends CodonData
 					
 			if($airline_code != '')
 			{
-				$sql .= " AND `code`='{$airline_code}' GROUP BY `code`";
+				$sql .= " WHERE `code`='{$airline_code}' GROUP BY `code`";
 			}
 			
 			$sql ='	ORDER BY `timesflown` DESC
@@ -329,10 +328,11 @@ class StatsData extends CodonData
 		$aircraft_usage = CodonCache::read($key);
 		if($aircraft_usage === false)
 		{
+			//SEC_TO_TIME(SUM(p.flighttime*60*60)) AS totaltime,
 			$sql = 'SELECT a.*, a.name AS aircraft,
 						COUNT(p.pirepid) AS routesflown,
 						SUM(p.distance) AS distance,
-						SEC_TO_TIME(SUM(p.flighttime*60*60)) AS totaltime,
+						SEC_TO_TIME(SUM(TIME_TO_SEC(p.flighttime_stamp))) as totaltime,
 						AVG(p.distance) AS averagedistance,
 						AVG(p.flighttime) as averagetime
 					FROM   '.TABLE_PREFIX.'aircraft a
@@ -355,9 +355,9 @@ class StatsData extends CodonData
 	{
 		//Select aircraft types
 		$sql = 'SELECT a.name AS aircraft, COUNT(p.aircraft) AS count
-					FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
-					WHERE p.aircraft = a.id
-					GROUP BY a.name';
+				FROM '.TABLE_PREFIX.'pireps p, '.TABLE_PREFIX.'aircraft a 
+				WHERE p.aircraft = a.id
+				GROUP BY a.name';
 		
 		$stats = DB::get_results($sql);
 		

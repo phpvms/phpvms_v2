@@ -387,7 +387,6 @@ class SchedulesData extends CodonData
 						'flighttime'=>'',
 						'notes'=>'',
 						'enabled'=>'',
-						'maxload'=>'',
 						'price'=>''
 						'flighttype'=>'');
 	 */
@@ -418,7 +417,6 @@ class SchedulesData extends CodonData
 			$data['flighttype'] = 'P';
 			
 		$data['flightlevel'] = str_replace(',', '', $data['flightlevel']);
-		$data['maxload'] = str_replace(',', '', $data['maxload']);
 		
 		if(isset($fields['route']))
 		{
@@ -441,7 +439,7 @@ class SchedulesData extends CodonData
 					 `route`, `route_details`,
 					 `aircraft`, `flightlevel`, `distance`, 
 					 `deptime`, `arrtime`, 
-					 `flighttime`, `daysofweek`, `maxload`, `price`, 
+					 `flighttime`, `daysofweek`, `price`, 
 					 `flighttype`, `notes`, `enabled`)
 				VALUES ('{$data['code']}', 
 						'{$data['flightnum']}',
@@ -456,7 +454,6 @@ class SchedulesData extends CodonData
 						'{$data['arrtime']}',
 						'{$data['flighttime']}',
 						'{$data['daysofweek']}',
-						'{$data['maxload']}',
 						'{$data['price']}', 
 						'{$data['flighttype']}',
 						'{$data['notes']}', 
@@ -609,11 +606,7 @@ class SchedulesData extends CodonData
 		{
 			$fields['flightlevel'] = str_replace(',', '', $fields['flightlevel']);
 		}
-		
-		if(isset($fields['maxload']))
-		{
-			$fields['maxload'] = str_replace(',', '', $fields['maxload']);
-		}
+
 		
 		if(isset($fields['flighttime']))
 		{

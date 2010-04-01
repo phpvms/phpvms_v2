@@ -7,7 +7,7 @@
 	<td valign="top" align="center">
 		<img src="<?php echo PilotData::getPilotAvatar($pilotcode); ?>" />
 		<br /><br />
-		<img src="<?php echo RanksData::GetRankImage($userinfo->rank) ?>" />
+		<img src="<?php echo $userinfo->rankimage ?>" />
 	</td>
 	<td valign="top">
 		<ul style="margin-top: 0px;">

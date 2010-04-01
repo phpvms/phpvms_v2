@@ -208,7 +208,6 @@ class Import extends CodonModule
 							'daysofweek'=>$daysofweek,
 							'notes'=>$notes,
 							'enabled'=>$enabled,
-							'maxload'=>$maxload,
 							'price'=>$price,
 							'flighttype'=>$flighttype);
 				

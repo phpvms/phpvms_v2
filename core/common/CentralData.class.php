@@ -220,7 +220,6 @@ class CentralData extends CodonData
 			$schedule_xml->addChild('registration', $sched->registration);
 			$schedule_xml->addChild('distance', $sched->distance);
 			$schedule_xml->addChild('daysofweek', $sched->daysofweek);
-			$schedule_xml->addChild('maxload', $sched->maxload);
 			$schedule_xml->addChild('price', $sched->price);
 			$schedule_xml->addChild('flighttype', $sched->flighttype);
 			$schedule_xml->addChild('notes', $sched->notes);

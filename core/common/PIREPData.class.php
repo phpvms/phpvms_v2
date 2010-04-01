@@ -357,7 +357,7 @@ class PIREPData extends CodonData
 			if($row->source == 'fsfk')
 			{
 				/* Do data stuff in the logs */
-				$data = unserialize($row->rawdata);
+				$data = $row->rawdata;
 				
 				/* Process flight data */
 				if(isset($data['FLIGHTDATA']))

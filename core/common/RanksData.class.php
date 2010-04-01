@@ -54,7 +54,7 @@ class RanksData extends CodonData
 	
 	public static function getRankImage($rank)
 	{
-		$sql = 'SELECT `rankid`, `rankimage` FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
+		$sql = 'SELECT `rankimage` FROM '.TABLE_PREFIX.'ranks WHERE rank="'.$rank.'"';
 		return DB::get_var($sql);
 	}
 	

@@ -56,11 +56,28 @@ class MassMailer extends CodonModule
 		//Begin the nice long assembly of e-mail addresses
 		foreach($this->post->groups as $groupid)
 		{
-			$tmp = PilotGroups::getUsersInGroup($groupid);
-			
-			foreach($tmp as $pilot)
+			if($groupid == 'all')
 			{
-				$pilotarray[$pilot->pilotid] = $pilot;
+				$all_pilots = PilotData::findPilots(array());
+				foreach($all_pilots as $pilot)
+				{
+					$pilotarray[$pilot->pilotid] = $pilot;
+				}
+				
+				break;
+			}
+			else
+			{
+				$tmp = PilotGroups::getUsersInGroup($groupid);
+				if(count($tmp) == 0 || ! is_array($tmp))
+				{
+					continue;
+				}
+				
+				foreach($tmp as $pilot)
+				{
+					$pilotarray[$pilot->pilotid] = $pilot;
+				}
 			}
 		}
 		
@@ -77,7 +94,8 @@ class MassMailer extends CodonModule
 			$send_message = str_replace('{PILOT_FNAME}', $pilot->firstname, $message);
 			$send_message = str_replace('{PILOT_LNAME}', $pilot->lastname, $send_message);
 			$send_message = str_replace('{PILOT_ID}', PilotData::GetPilotCode($pilot->code, $pilot->pilotid), $send_message);
-
+			$send_message = utf8_encode($send_message);
+			
 			Util::SendEmail($pilot->email, $subject, $send_message);
 		}
 		

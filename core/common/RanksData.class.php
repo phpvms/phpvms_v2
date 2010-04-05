@@ -144,7 +144,7 @@ class RanksData extends CodonData
 	 * Delete a rank, and then recalculate
 	 */
 	 
-	public static function DeleteRank($rankid)
+	public static function deleteRank($rankid)
 	{
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'ranks 
 					WHERE rankid='.$rankid;
@@ -173,10 +173,9 @@ class RanksData extends CodonData
 			return;
 		}
 		
-		$pilots = PilotData::GetAllPilots();
-		$allranks = self::GetAllRanks();
-		
-		if(!$pilots)
+		$allranks = self::getAllRanks();
+		$pilots = PilotData::getAllPilots();
+		if(count($pilots) == 0 || !is_array($pilots))
 		{
 			return;
 		}
@@ -199,7 +198,6 @@ class RanksData extends CodonData
 					$rank_level = $i;
 					$last_rank = $rank->rank;
 					$last_rankid = $rank->rankid;
-					break;
 				}
 				
 				$i++;
@@ -215,7 +213,7 @@ class RanksData extends CodonData
 		}
 	}
 	
-	public static function CalculateUpdatePilotRank($pilotid)
+	public static function calculateUpdatePilotRank($pilotid)
 	{
 		/* Don't calculate a pilot's rank if this is set */
 		if(Config::Get('RANKS_AUTOCALCULATE') == false)

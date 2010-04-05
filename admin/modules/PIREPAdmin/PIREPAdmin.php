@@ -308,13 +308,10 @@ class PIREPAdmin extends CodonModule
 		SchedulesData::IncrementFlownCount($pirep_details->code, $pirep_details->flightnum);
 		PIREPData::ChangePIREPStatus($pirepid, PIREP_ACCEPTED); // 1 is accepted
 		PilotData::UpdateFlightData($pirep_details->pilotid, $pirep_details->flighttime, 1);
-		//PilotData::UpdatePilotStats($pirep_details->pilotid);
 		PilotData::UpdatePilotPay($pirep_details->pilotid, $pirep_details->flighttime);
 			
 		RanksData::CalculateUpdatePilotRank($pirep_details->pilotid);
 		PilotData::GenerateSignature($pirep_details->pilotid);
-		StatsData::UpdateTotalHours();
-		//PilotData::resetPilotPay($pirep_details->pilotid);
 		StatsData::UpdateTotalHours();
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Approved PIREP #'.$pirepid);
@@ -379,7 +376,6 @@ class PIREPAdmin extends CodonModule
 	
 	protected function edit_pirep_post()
 	{
-				
 		if($this->post->code == '' || $this->post->flightnum == '' 
 			|| $this->post->depicao == '' || $this->post->arricao == '' 
 			|| $this->post->aircraft == '' || $this->post->flighttime == '')
@@ -388,17 +384,17 @@ class PIREPAdmin extends CodonModule
 			$this->render('core_error.tpl');
 			return false;
 		}
-			
-		/*if($this->post->depicao == $this->post->arricao)
+		
+		$pirepInfo = PIREPData::getReportDetails($this->post_action->pirepid);
+		if(!$pirepInfo)
 		{
-			$this->set('message', 'The departure airport is the same as the arrival airport!');
+			$this->set('message', 'Invalid PIREP!');
 			$this->render('core_error.tpl');
 			return false;
-		}*/
+		}
 		
 		$this->post->fuelused = str_replace(' ', '', $this->post->fuelused);
 		$this->post->fuelused = str_replace(',', '', $this->post->fuelused);
-		
 		$fuelcost = $this->post->fuelused * $this->post->fuelunitcost;
 		
 		# form the fields to submit
@@ -448,6 +444,9 @@ class PIREPAdmin extends CodonModule
 		}
 		
 		StatsData::UpdateTotalHours();
+		
+		# Update a pilot's stats
+		PilotData::updatePilotStats($pirepInfo->pilotid);
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Edited PIREP #'.$this->post->id);
 		return true;

@@ -725,7 +725,7 @@ class SchedulesData extends CodonData
 				WHERE b.routeid = s.id 
 					AND s.aircraft=a.id
 					AND b.pilotid='.$pilotid.'
-				ORDER BY id ASC LIMIT 1';
+				ORDER BY b.bidid ASC LIMIT 1';
 		
 		return DB::get_row($sql);
 	}

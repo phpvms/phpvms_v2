@@ -18,7 +18,6 @@
 
 class Contact extends CodonModule 
 {
-	
 	public function index()
 	{
 		require_once CORE_LIB_PATH.'/recaptcha/recaptchalib.php';
@@ -70,6 +69,7 @@ class Contact extends CodonModule
 				$message.="-$field = $value".PHP_EOL;
 			}
 			
+			$message = utf8_encode($message);
 			Util::SendEmail(ADMIN_EMAIL, $subject, $message);
 			
 			$this->render('contact_sent.tpl');

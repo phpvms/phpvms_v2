@@ -359,7 +359,11 @@ class Operations extends CodonModule
 				
 				if($this->get->start - 1 > 0)
 				{
-					$this->set('prev', $this->get->start - 1);
+					$prev = $this->get->start - 1;
+					if($prev == '')
+						$prev = 0;
+					
+					$this->set('prev', intval($prev));
 				}
 			}
 		}

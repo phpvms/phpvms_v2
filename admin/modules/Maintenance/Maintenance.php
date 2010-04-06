@@ -178,6 +178,17 @@ class Maintenance extends CodonModule
 		$this->render('maintenance_changepilotid.tpl');
 	}
 	
+	public function optimizetables()
+	{
+		echo '<h3>Optimizing Tables...</h3>';
+		$results = MaintenanceData::optimizeTables();
+		
+		foreach($results as $row)
+		{
+			echo "{$row->Table} - {$row->Msg_text}<br />";
+		}
+	}
+	
 	public function resetacars()
 	{
 		echo '<h3>ACARS Reset</h3>';

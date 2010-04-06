@@ -80,12 +80,6 @@ foreach($schedules as $sched)
 			id="<?php echo $sched->id;?>" class="ajaxcall">
 			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" />
 		</a>
-	<?php
-	/*
-	  <a href="action.php?admin=<?php echo Vars::GET('admin'); ?>"
-			class="deleteitem" action="deleteschedule"
-			id="<?php echo $sched->id;?>"><img src="lib/images/delete.gif" alt="Delete" /></a>
-	 */ ?>
 	</td>
 </tr>
 <?php

@@ -69,6 +69,7 @@ class Contact extends CodonModule
 				$message.="-$field = $value".PHP_EOL;
 			}
 			
+			$message = nl2br($message);
 			$message = utf8_encode($message);
 			Util::SendEmail(ADMIN_EMAIL, $subject, $message);
 			

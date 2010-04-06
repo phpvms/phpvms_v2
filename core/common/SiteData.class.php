@@ -18,10 +18,8 @@
  
 class SiteData extends CodonData
 {
-	
 	public static function loadSiteSettings()
 	{
-		
 		$all_settings = SettingsData::getAllSettings();
 		
 		if(!$all_settings)

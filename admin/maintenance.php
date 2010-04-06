@@ -23,6 +23,8 @@
  */
 
 include dirname(dirname(__FILE__)).'/core/codon.config.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
 
 /* Clear expired sessions */
 Auth::clearExpiredSessions();
@@ -43,4 +45,9 @@ if(Config::Get('CLOSE_BIDS_AFTER_EXPIRE') === false)
 	CronData::set_lastupdate('check_expired_bids');
 }
 
-/* Send any PIREPs to vaCentral which haven't been exported */
+MaintenanceData::optimizeTables();
+
+include dirname(__FILE__).'/modules/Maintenance/Maintenance.php';
+$m = new Maintenance();
+$m->resetpirepcount();
+$m->resethours();

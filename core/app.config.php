@@ -393,6 +393,40 @@ Config::Set('CACHE_KEY_LIST', array(
 	)
 );
 
+
+Config::Set('TABLE_LIST', array(
+	'acarsdata', 
+	'adminlog', 
+	'aircraft', 
+	'airlines', 
+	'airports', 
+	'awards', 
+	'awardsgranted',
+	'bids',
+	'customfields',
+	'downloads', 
+	'expenselog', 
+	'expenses', 
+	'fieldvalues', 
+	'financedata', 
+	'fuelprices', 
+	'groupmembers', 
+	'groups', 
+	'navdata', 
+	'news', 
+	'pages', 
+	'pilots', 
+	'pirepcomments', 
+	'pirepfields', 
+	'pireps', 
+	'pirepvalues', 
+	'ranks', 
+	'schedules', 
+	'sessions', 
+	'settings', 
+	'updates' 
+	)
+);
 /* VACentral */
 
 Config::Set('VACENTRAL_ENABLED', false);
@@ -448,6 +482,8 @@ define('SECONDS_PER_DAY', 86400);
 define('GEONAME_URL', 'http://ws.geonames.org');
 
 define('VMS_AUTH_COOKIE', 'VMSAUTH');
+
+
 
 /**
  * Library Includes (from 3rd Party)

@@ -68,6 +68,22 @@ if(isset($message))
 		
 		foreach($allaircraft as $aircraft)
 		{
+			
+			/*	Skip any aircraft which have aircraft that the pilot
+				is not rated to fly (according to RANK) 
+			*/
+			if(Config::Get('RESTRICT_AIRCRAFT_RANKS') === true)
+			{
+				/*	This means the aircraft rank level is higher than
+					what the pilot's ranklevel, so just do "continue"
+					and move onto the next route in the list 
+				 */
+				if($aircraft->ranklevel > Auth::$userinfo->ranklevel)
+				{
+					continue;
+				}
+			}
+			
 			$sel = ($_POST['aircraft'] == $aircraft->name || $bid->registration == $aircraft->registration)?'selected':'';
 			
 			echo '<option value="'.$aircraft->id.'" '.$sel.'>'.$aircraft->name.' - '.$aircraft->registration.'</option>';

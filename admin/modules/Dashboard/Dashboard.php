@@ -158,7 +158,7 @@ class Dashboard extends CodonModule
 				$date_posted = str_replace('-0400', '', (string) $news->pubDate);
 				
 				$contents.="<div class=\"newsitem\">
-								<b>{$news->title}</b> {$news_content}
+								<b>{$news->title}</b> <br />{$news_content}
 								<br /><br />
 								Posted: {$date_posted}
 							</div>";

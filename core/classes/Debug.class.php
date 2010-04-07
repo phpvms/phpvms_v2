@@ -105,9 +105,13 @@ class Debug
 			
 		if($filename == '')
 			$filename = 'log';
+			
+		$string = "=====\n"
+				 ."Time: {$time}\n"
+				 ."{$string}\n=====\n\n";
 					
 		self::$fp = fopen(SITE_ROOT.'/core/logs/'.$filename.'.txt', 'a');
-		fwrite(self::$fp, $string."\n");
+		fwrite(self::$fp, $string);
 	}
 	
 	public static function firebug()

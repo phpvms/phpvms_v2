@@ -1,7 +1,30 @@
-<h3>Administration Panel</h3>
+<h3>VA Stats:</h3>
+<table width="100%">
+	<tr>
+	<td valign="top" width="5%" nowrap="nowrap" style="padding-left: 10px;">		
+	<p>
+		<strong>Users Online: </strong><?php echo count(StatsData::UsersOnline()); ?><br />
+		<strong>Guests Online: </strong><?php echo count(StatsData::GuestsOnline()); ?><br />
+	</p>
+	</td>
+	<td valign="top" width="5%" nowrap="nowrap" style="padding: 10px;">
+	<p>
+		<strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?><br />
+		<strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?><br />
+		<strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?>
+	</p>
+	</td>
+	<td valign="top" width="5%" nowrap="nowrap" style="padding: 10px;">
+	<p>
+		<strong>Miles Flown: </strong><?php echo StatsData::TotalMilesFlown(); ?><br />
+		<strong>Total Schedules: </strong><?php echo StatsData::TotalSchedules(); ?><br />
+		<strong>Flights Today: </strong><?php echo StatsData::TotalFlightsToday();?>
+	</p>
+	</td>
+	</tr>
+</table>
 <?php
 MainController::Run('Dashboard', 'CheckInstallFolder');
-
 echo $updateinfo;
 ?>
 <h3>Pilot Reports for the Past Week</h3>
@@ -11,58 +34,41 @@ echo $updateinfo;
 	Loading...
 	</div>
 </div>
-<table width="100%">
-	<tr>
-		<td valign="top">		
-			<h3>VA Stats:</h3>
-			<ul>
-				<li><strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?></li>
-				<li><strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?></li>
-				<li><strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?></li>
-			</ul>
-		</td>
-		<?php
-		if(Config::Get('VACENTRAL_ENABLED') == true)
-		{
-		?>
-		<td valign="top" width="50%">
-			
-				<h3>vaCentral Status: </h3>
-				<p>You have <strong><?php echo $unexported_count?></strong> PIREPS waiting for export to vaCentral. 
-				<a href="<?php echo SITE_URL ?>/admin/index.php/vacentral/sendqueuedpireps">Click here to send them</a> </p>
-			
-		</td>
-		<?php
-		}
-		?>
-	</tr>
-	<tr>
-		<td valign="top">
-			<h3 style="margin-bottom: 0px;">Latest News</h3>
-			<?php echo $phpvms_news; ?>
-			<p><a href="http://www.phpvms.net" target="_new">View All News</a></p>
-		</td>
-		<?php
-		if(Config::Get('VACENTRAL_ENABLED') == true)
-		{
-		?>
-		<td valign="top" valign="50%">
-			
-			<h3 style="margin-bottom: 0px;">Latest vaCentral News</h3>
-			<?php echo $vacentral_news; ?>
-			<p><a href="http://www.vacentral.net" target="_new">View All News</a></p>
-		</td>
-		<?php
-		}
-		?>
-	</tr>
-</table>
+<?php
+if(Config::Get('VACENTRAL_ENABLED') == true && $unexported_count > 0)
+{ ?>
+	<h3>vaCentral Status: </h3>
+	<p>You have <strong><?php echo $unexported_count?></strong> PIREPS waiting for export to vaCentral. 
+	<a href="<?php echo SITE_URL ?>/admin/index.php/vacentral/sendqueuedpireps">Click here to send them</a> </p>
+<?php
+} ?>
+<h3 style="margin-bottom: 0px;">Latest News</h3>
+	<div style="overflow: auto; height: 400px; border: 1px solid #f5f5f5; margin-bottom: 20px; padding: 7px; padding-top: 0px; padding-bottom: 20px;">
+	<?php echo $phpvms_news; ?>
+	<p><a href="http://www.phpvms.net" target="_new">View All News</a></p>
+	</div>
+</td>
+<!--<?php
+if(Config::Get('VACENTRAL_ENABLED') == true)
+{
+?>
+<td valign="top" valign="50%">
+	
+	<h3 style="margin-bottom: 0px;">Latest vaCentral News</h3>
+	<?php echo $vacentral_news; ?>
+	<p><a href="http://www.vacentral.net" target="_new">View All News</a></p>
+</td>
+<?php
+}
+?>-->
+	
+
 <?php
 /*
 	Added in 2.0!
 */
 $chart_width = '800';
-$chart_height = '300';
+$chart_height = '200';
 
 /* Don't need to change anything below this here */
 ?>

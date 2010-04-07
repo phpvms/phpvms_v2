@@ -38,9 +38,10 @@ switch($acars_action)
 		# They requested latest bid
 		if(strtolower($flight) == 'bid')
 		{
-			preg_match('/^([A-Za-z]*)(\d*)/', $_REQUEST['DATA4'], $matches);
+			/*preg_match('/^([A-Za-z]*)(\d*)/', $_REQUEST['DATA4'], $matches);
 			$code = $matches[1];
-			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');*/
+			$pilotid = PilotData::parsePilotID($_REQUEST['DATA4']);
 		
 			$route = SchedulesData::GetLatestBid($pilotid);
 			
@@ -137,9 +138,10 @@ $route->flightlevel
 			$data = explode('|', $_REQUEST['DATA3']);
 			
 			/* Get the pilot info */
-			preg_match('/^([A-Za-z]*)(\d*)/', $data[0], $matches);
+			/*preg_match('/^([A-Za-z]*)(\d*)/', $data[0], $matches);
 			$code = $matches[1];
-			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');*/
+			$pilotid = PilotData::parsePilotID($data[0]);
 			
 			/* Get Coordinates */
 			$coords = Util::get_coordinates($data[6]);
@@ -271,7 +273,7 @@ $route->flightlevel
 		$code = $flightinfo['code'];
 		$flightnum = $flightinfo['flightnum'];
 		
-		if(!is_numeric($data[0]))
+		/*if(!is_numeric($data[0]))
 		{
 			# see if they are a valid pilot:
 			preg_match('/^([A-Za-z]*)(\d*)/', $data[0], $matches);
@@ -281,7 +283,8 @@ $route->flightlevel
 		else
 		{
 			$pilotid = $data[0];
-		}
+		}*/
+		$pilotid = PilotData::parsePilotID($data[0]);
 		
 		# Make sure airports exist:
 		#  If not, add them.
@@ -331,21 +334,23 @@ $route->flightlevel
 		
 		$acars_data = ACARSData::get_flight_by_pilot($pilotid);
 		
-		$data = array('pilotid'=>$pilotid,
-				'code'=>$code,
-				'flightnum'=>$flightnum,
-				'depicao'=>$depicao,
-				'arricao'=>$arricao,
-				'aircraft'=>$ac->id,
-				'flighttime'=>$flighttime,
-				'submitdate'=>'NOW()',
-				'route' => $acars_data->route,
-				'route_details' => $acars_data->route_details,
-				'comment'=>$comment,
-				'fuelused'=>$fuelused,
-				'source'=>'xacars',
-				'load'=>$load,
-				'log'=> $_GET['log']);
+		$data = array(
+			'pilotid'=>$pilotid,
+			'code'=>$code,
+			'flightnum'=>$flightnum,
+			'depicao'=>$depicao,
+			'arricao'=>$arricao,
+			'aircraft'=>$ac->id,
+			'flighttime'=>$flighttime,
+			'submitdate'=>'NOW()',
+			'route' => $acars_data->route,
+			'route_details' => $acars_data->route_details,
+			'comment'=>$comment,
+			'fuelused'=>$fuelused,
+			'source'=>'xacars',
+			'load'=>$load,
+			'log'=> $_GET['log']
+		);
 				
 		Debug::log(print_r($data, true), 'xacars');
 		

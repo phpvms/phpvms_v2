@@ -44,9 +44,10 @@ class FSFK extends CodonModule
 		$this->log(print_r($xml, true), 'fsfk');
 		#$this->log(serialize($xml), 'fsfk');
 		
-		preg_match('/^([A-Za-z]*)(\d*)/', $xml->PilotID, $matches);
+		$pilotid = PilotData::parsePilotID($xml->PilotID);
+		/*preg_match('/^([A-Za-z]*)(\d*)/', $xml->PilotID, $matches);
 		$code = $matches[1];
-		$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
+		$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');*/
 		
 		$flightinfo = SchedulesData::getProperFlightNum($xml->FlightNumber);
 		$code = $flightinfo['code'];
@@ -170,8 +171,7 @@ class FSFK extends CodonModule
 			'rawdata'=>$rawdata,
 		);
 				
-		//$this->log(print_r($rawdata, true), 'fsfk');
-		
+		$this->log(print_r($data, true), 'fsfk');
 		$ret = ACARSData::FilePIREP($pilotid, $data);
 		
 		if(!$ret)
@@ -225,10 +225,10 @@ class FSFK extends CodonModule
                 return;
             }
 			
-			preg_match('/^([A-Za-z]*)(\d*)/', $flight_data[0], $matches);
+			/*preg_match('/^([A-Za-z]*)(\d*)/', $flight_data[0], $matches);
 			$code = $matches[1];
-			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');
-			
+			$pilotid = intval($matches[2]) - Config::Get('PILOTID_OFFSET');*/
+			$pilotid = PilotData::parsePilotID($flight_data[0]);
 			$coords = $this->get_coordinates($flight_data[6]);
 			
 			$route = explode('~', $flight_data[5]);

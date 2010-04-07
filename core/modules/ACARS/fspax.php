@@ -29,14 +29,16 @@ if($_POST['FsPAskConnexion'] == 'yes')
 {
 	# Validate pilot:
 	$_POST['UserName'] = DB::escape($_POST['UserName']);
+	$pilotid = PilotData::parsePilotID($_POST['UserName']);
 	
-	# Entered as ###
+	/*# Entered as ###
 	if(is_numeric($_POST['UserName']))
 	{
 		$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
 	}
 	else
 	{
+		$pilotid = $pilotid = PilotData::parsePilotID($_POST['UserName']);
 		# Check if they entered as XXX###
 		if(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $_POST['UserName'], $matches)>0)
 		{
@@ -48,7 +50,7 @@ if($_POST['FsPAskConnexion'] == 'yes')
 			echo '#Answer# Error - Invalid pilot ID format;';
 			return;
 		}
-	}
+	}*/
 	
 	$pilotdata = PilotData::GetPilotData($pilotid);
 	if(!$pilotdata)
@@ -70,8 +72,8 @@ if($_POST['FsPAskToRegister'] == 'yes')
 	$comment = '';
 	
 	# Get the pilot id:
-	
-	if(is_numeric($_POST['UserName']))
+	$pilotid = PilotData::parsePilotID($_POST['UserName']);
+	/*if(is_numeric($_POST['UserName']))
 	{
 		$pilotid = intval(intval(trim( $_POST['UserName']))) - Config::Get('PILOTID_OFFSET');
 	}
@@ -84,7 +86,7 @@ if($_POST['FsPAskToRegister'] == 'yes')
 		}
 		
 		$pilotid = intval(intval(trim($matches[2]))) - Config::Get('PILOTID_OFFSET');
-	}
+	}*/
 	
 	# Get the flight ID
 	$flightinfo = SchedulesData::getProperFlightNum($_POST['FlightId']);
@@ -115,30 +117,25 @@ if($_POST['FsPAskToRegister'] == 'yes')
 		OperationsData::RetrieveAirportInfo($arricao);
 	}
 	
-	//if($code == '')
-	//{
-		# Find a flight using just the flight code
-		$sched = SchedulesData::FindFlight($flightnum);
-		
-		# Can't do it. They completely screwed this up
-		if(!$sched)
-		{
-			echo "#Answer# Error - Invalid flight ID;";
-			return;
-		}
-		
-		$code = $sched->code;
-		$flightnum = $sched->flightnum;
-		$leg = $sched->leg;
-		$aircraft = $sched->aircraft;
-		/*$depicao = $sched->depicao;
-		$arricao = $sched->arricao;*/
-		
-		if($depicao != $sched->depicao || $arricao != $sched->arricao)
-		{
-			$comment = 'phpVMS Message: Arrival or Departure does not match schedule. ';
-		}
-	//}
+	# Find a flight using just the flight code
+	$sched = SchedulesData::findFlight($flightnum);
+	
+	# Can't do it. They completely screwed this up
+	if(!$sched)
+	{
+		echo "#Answer# Error - Invalid flight ID;";
+		return;
+	}
+	
+	$code = $sched->code;
+	$flightnum = $sched->flightnum;
+	$leg = $sched->leg;
+	$aircraft = $sched->aircraft;
+	
+	if($depicao != $sched->depicao || $arricao != $sched->arricao)
+	{
+		$comment = 'phpVMS Message: Arrival or Departure does not match schedule. ';
+	}
 
 	# Get the time, don't care about seconds
 	preg_match('/^(\d*):(\d*):(\d*)/', $_POST['TotalBlockTime'], $time);

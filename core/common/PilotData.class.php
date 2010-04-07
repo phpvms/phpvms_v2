@@ -154,6 +154,49 @@ class PilotData extends CodonData
 		
 		return $pilot[0];
 	}
+	
+	
+	/**
+	 * Parse a pilot ID from a passed ID
+	 *
+	 * @param int $pilotid Pass the ID string
+	 * @return int Returns the integer database ID
+	 *
+	 */
+	public static function getProperPilotID($pilotid)
+	{
+		return self::parsePilotID($pilotid);
+	}
+	
+	/**
+	 * Parse a pilot ID from a passed ID
+	 *
+	 * @param int $pilotid Pass the ID string
+	 * @return int Returns the integer database ID
+	 *
+	 */
+	public static function parsePilotID($pilotid)
+	{
+		if(!is_numeric($pilotid))
+		{
+			$airlines = OperationsData::getAllAirlines();
+			foreach($airlines as $a)
+			{
+				$a->code = strtoupper($a->code);
+				
+				if(strpos($pilotid, $a->code) === false)
+				{
+					continue;
+				}
+				
+				
+				$pilotid = intval(str_ireplace($a->code, '', $pilotid));
+				$pilotid = $pilotid - Config::Get('PILOTID_OFFSET');
+			}
+		}
+		
+		return $pilotid;
+	}
 
 	/**
 	 * Get the list of all the pending pilots

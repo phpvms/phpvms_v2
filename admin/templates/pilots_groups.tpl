@@ -25,8 +25,8 @@ else
 		<?php
 		if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
 		{ ?>
-			<a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" pilotid="<?php echo $pilotid;?>" 
-				action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax">Remove</a></td>
+			<button href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" pilotid="<?php echo $pilotid;?>" 
+				action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax button {button:{icons:{primary:'ui-icon-trash'}}}">Remove</button></td>
 		<?php
 		} ?>
 	</tr>		

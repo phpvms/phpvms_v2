@@ -22,7 +22,7 @@ class PilotAdmin extends CodonModule
 
 	public function HTMLHead()
 	{
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
 			case 'viewpilots':
 				$this->set('sidebar', 'sidebar_pilots.tpl');
@@ -206,16 +206,19 @@ class PilotAdmin extends CodonModule
 		{
 			$ret = SchedulesData::RemoveBid($this->post->id);
 			
+			$params = array();
 			if($ret == true)
 			{
-				$this->set('message', 'Bid removed!');
-				$this->render('core_success.tpl');
+				$params['status'] = 'ok';
 			}
 			else
 			{
-				$this->set('message', 'There was an error!');
-				$this->render('core_error.tpl');
+				$params['status'] = 'There was an error';
+				$params['message'] = DB::error();
 			}
+			
+			echo json_encode($params);
+			return;
 		}
 		
 		$this->set('allbids', SchedulesData::getAllBids());
@@ -401,10 +404,6 @@ class PilotAdmin extends CodonModule
 		}
 		else
 		{
-			$this->set('message', Lang::gs('group.user.added'));
-			$this->render('core_success.tpl');
-			
-			
 			LogData::addLog(Auth::$userinfo->pilotid, 'Added pilot #'.$this->post->pilotid.' to group "'.$this->post->groupname.'"');
 		}		
 	}
@@ -423,9 +422,6 @@ class PilotAdmin extends CodonModule
 		}
 		else
 		{
-			$this->set('message', 'Removed');
-			$this->render('core_success.tpl');
-			
 			LogData::addLog(Auth::$userinfo->pilotid, 'Removed pilot #'.$this->post->pilotid.' from group "'.$this->post->groupid.'"');
 		}
 	}

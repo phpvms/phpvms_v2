@@ -8,10 +8,10 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_NEWS)
 )
 {
 ?>
-<li><a class="menu" href="#">
+<li style="padding: 0; margin; 0;"><a class="menu" href="#">
 	<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/site_icon.png" />News & Content
 	</a>
-	<ul>
+	<ul style="padding: 0; margin: 0;">
 		<?php 
 		if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_NEWS)) 
 		{ 
@@ -51,10 +51,10 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_AIRLINES)
 )
 {
 	?>
-<li><a class="menu" href="?admin=airlines">
+<li style="padding: 0; margin: 0;"><a class="menu" href="?admin=airlines">
 	<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/operations_icon.png" />Airline Operations
 	</a>
-	 <ul>
+	<ul style="padding: 0; margin: 0;">
 		<?php
 		if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_AIRLINES)) 
 		{
@@ -88,7 +88,6 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_AIRLINES)
 		<?php 
 		}
 		?>
-		<li></li>
 	</ul>
 </li>
 <?php
@@ -104,9 +103,9 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)
 ) 
 {
 	?>
-<li><a class="menu" href="#">
+<li style="padding: 0; margin: 0;"><a class="menu" href="#">
 	<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/pilots_icon.png" />Pilots & Groups</a>
-	<ul>
+	<ul style="padding: 0; margin: 0;">
 		<?php
 		if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_REGISTRATIONS)) 
 		{
@@ -166,13 +165,12 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)
 if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)
 	|| PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN)
 	|| PilotGroups::group_has_perm(Auth::$usergroups, EDIT_PIREPS_FIELDS)
-	|| PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_REGISTRATIONS)
 )
 {
 ?>
-<li><a class="menu" href="#">
+<li style="padding: 0; margin: 0;"><a class="menu" href="#">
 	<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/pireps_icon.png" />Pilot Reports (PIREPS)</a>
-	<ul>
+	<ul style="padding: 0; margin: 0;">
 		<?php 
 		if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)) 
 		{
@@ -180,7 +178,7 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewpending">View Pending</a></li>
 		<?php 
 		}
-		if(PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN)) 
+		if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)) 
 		{
 		?>
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/pirepadmin/viewrecent">View Recent Reports</a></li>
@@ -210,9 +208,9 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, VIEW_FINANCES)
 )
 {
 ?>
-<li><a class="menu" href="<?php echo SITE_URL?>/admin/index.php/reports">
+<li style="padding: 0; margin: 0;"><a class="menu" href="<?php echo SITE_URL?>/admin/index.php/reports">
 	<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/reports_icon.png" />Reports & Expenses</a>
-	<ul>
+	<ul style="padding: 0; margin: 0;">
 		<?php
 		if(PilotGroups::group_has_perm(Auth::$usergroups, VIEW_FINANCES)) 
 		{
@@ -240,9 +238,9 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)
 )
 {
 	?>
-<li><a class="menu" href="#">
+<li style="padding: 0; margin: 0;"><a class="menu" href="#">
 	<img src="<?php echo  SITE_URL?>/admin/lib/layout/images/settings_icon.gif" />Site & Settings</a>
-	<ul>
+	<ul style="padding: 0; margin: 0;">
 		<?php 
 		if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
 		{

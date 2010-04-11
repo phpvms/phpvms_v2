@@ -9,9 +9,18 @@ if(!$allcategories)
 foreach($allcategories as $category)
 {
 ?>
+<div id="<?php echo $category->id;?>"
 	<h3><?php echo $category->name?> 
-		<span style="font-size: 8pt">[<a id="dialog" class="jqModal" href="<?php echo SITE_URL?>/admin/action.php/downloads/editcategory?id=<?php echo $category->id?>">Edit</a>] | [<a class="ajaxcall" action="deletecategory" id="<?php echo $category->id?>" href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</a>] | [<a id="dialog" class="jqModal" 
-				href="<?php echo SITE_URL?>/admin/action.php/downloads/adddownload?cat=<?php echo $category->id?>">Add Download</a>]</span>
+		<span style="font-size: 8pt">
+		<button id="dialog" class="jqModal button" 
+			href="<?php echo SITE_URL?>/admin/action.php/downloads/editcategory?id=<?php echo $category->id?>">Edit</button>  
+			
+		<button class="ajaxcallconfirm button" action="deletecategory" id="<?php echo $category->id?>" 
+			href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</button>   
+			
+		<button id="dialog" class="jqModal button" 
+			href="<?php echo SITE_URL?>/admin/action.php/downloads/adddownload?cat=<?php echo $category->id?>">Add Download</button>
+		</span>
 	</h3>
 <?php
 	$alldownloads = DownloadData::GetDownloads($category->id);
@@ -28,28 +37,27 @@ foreach($allcategories as $category)
 		<tr>
 			<th>Download Name</th>
 			<th>Description</th>
-			<th>Download Count</th>
+			<th align="center">Download Count</th>
 			<th>Options</th>
 		</tr>
 		</thead>
 		<tbody>
 <?php	foreach($alldownloads as $download) { 
 ?>
-		<tr>
-			<td><?php echo '<a href="'.$download->link.'">'.$download->name.'</a>' ?></td>
-			<td><?php echo $download->description==''?'-':$download->description; ?></td>
-			<td><?php echo ($download->hits=='')? '0' : $download->hits?></td>
+<tr id="row<?php echo $download->id?>">
+	<td><?php echo '<a href="'.$download->link.'">'.$download->name.'</a>' ?></td>
+	<td><?php echo $download->description==''?'-':$download->description; ?></td>
+	<td align="center"><?php echo ($download->hits=='')? '0' : $download->hits?></td>
+	
+	<td width="1%" nowrap>
+		<button id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}" 
+			href="<?php echo SITE_URL?>/admin/action.php/downloads/editdownload?id=<?php echo $download->id?>">
+			Edit</button>
 			
-			<td width="1%" nowrap>
-				<a id="dialog" class="jqModal" 
-					href="<?php echo SITE_URL?>/admin/action.php/downloads/editdownload?id=<?php echo $download->id?>">
-					<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>					
-				<a class="ajaxcall" action="deletedownload" id="<?php echo $download->id?>"
-					href="<?php echo SITE_URL?>/admin/action.php/downloads">
-					<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>	
-					
-			</td>
-		</tr>
+		<button class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}" action="deletedownload" id="<?php echo $download->id?>"
+			href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</button>	
+	</td>
+</tr>
 <?php	} 
 
 ?>
@@ -57,5 +65,8 @@ foreach($allcategories as $category)
 		</table>
 <?php
 	 }
+	 ?>
+	 </div>
+<?php
 }
 ?>

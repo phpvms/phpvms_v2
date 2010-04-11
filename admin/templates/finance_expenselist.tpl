@@ -22,7 +22,7 @@ $expense_list = Config::Get('EXPENSE_TYPES');
 foreach($allexpenses as $expense)
 {
 ?>
-<tr>
+<tr id="row<?php echo $expense->id;?>">
 	<td align="center"><?php echo $expense->name; ?></td>
 	<td align="center"><?php 
 	
@@ -34,13 +34,12 @@ foreach($allexpenses as $expense)
 	?></td>
 	<td align="center"><?php echo $expense_list[$expense->type]; ?></td>
 	<td align="center" width="1%" nowrap>
-		<a id="dialog" class="jqModal" 
+		<button id="dialog" class="jqModal button" 
 			href="<?php echo SITE_URL?>/admin/action.php/finance/editexpense?id=<?php echo $expense->id;?>">
-		<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+		Edit</button>
 		
-		<a href="<?php echo SITE_URL?>/admin/action.php/finance/viewexpenses" action="deleteexpense"
-			id="<?php echo $expense->id;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
+		<button href="<?php echo SITE_URL?>/admin/action.php/finance/viewexpenses" action="deleteexpense"
+			id="<?php echo $expense->id;?>" class="deleteitem button">Delete</button>
 	</td>
 </tr>
 	<?php

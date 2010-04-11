@@ -1,6 +1,6 @@
 <h3>Reports</h3>
 
-<h3>VA Stats: <span>At a Glance</span></h3>
+<h4>VA Stats: At a Glance</h4>
 <div class="outlined">
 	<strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?><br />
 	<strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?><br />
@@ -12,7 +12,7 @@ foreach($allairlines as $airline)
 {
 ?>
 
-<h3>Stats for <?php echo $airline->name?></h3>
+<h4>Stats for <?php echo $airline->name?></h4>
 <div class="outlined">
 	<strong>Total Pilots: </strong><?php echo StatsData::PilotCount($airline->code); ?><br />
 	<strong>Total Flights: </strong><?php echo StatsData::TotalFlights($airline->code); ?><br />
@@ -26,7 +26,7 @@ foreach($allairlines as $airline)
 if(is_array($acstats))
 {
 	?>
-<h3>Aircraft Usage<span> Aircraft Hours and Usage</span></h3>
+<h4>Aircraft Usage<span> Aircraft Hours and Usage</span></h4>
 <table id="tabledlist" class="tablesorter">
 	<thead>
 		<tr>
@@ -55,7 +55,7 @@ if(is_array($acstats))
 <?php
 if(is_array($toproutes)) {
 	?>
-<h3>Routes <span>Top 10 Routes</span></h3>
+<h4>Routes Top 10 Routes</h4>
 
 <table id="tabledlist" class="tablesorter">
 <thead>
@@ -87,9 +87,3 @@ if(is_array($toproutes)) {
 </tbody>
 </table>
 <?php } ?>
-
-<script type="text/javascript">
-$(document).ready(function(){
-	$('.flownchart').sparkline('html', { type:'bullet'});
-});
-</script>

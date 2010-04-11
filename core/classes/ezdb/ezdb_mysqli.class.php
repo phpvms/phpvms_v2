@@ -97,7 +97,7 @@ class ezDB_mysqli extends ezDB_Base
 		
 		if(mysqli_connect_errno() != 0)
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error(mysqli_connect_error(), mysqli_connect_errno());
 				
 			$this->register_error(mysqli_connect_error(), mysqli_connect_errno());
@@ -131,7 +131,7 @@ class ezDB_mysqli extends ezDB_Base
 		// Must have an active database connection
 		if(!$this->dbh)
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error(mysqli_connect_error(), mysqli_connect_errno());
 				
 			$this->register_error('Can\'t select database, invalid or inactive connection', -1);
@@ -140,7 +140,7 @@ class ezDB_mysqli extends ezDB_Base
 		
 		if(!$this->dbh->select_db($dbname))
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
 				
 			$this->register_error($this->dbh->error, $this->dbh->errno);
@@ -225,7 +225,7 @@ class ezDB_mysqli extends ezDB_Base
 		// If there is no existing database connection then try to connect
 		if ( ! $this->dbh )
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
 				
 			$this->register_error('There is no active database connection!');
@@ -237,7 +237,7 @@ class ezDB_mysqli extends ezDB_Base
 
 		if($result === false)
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error($this->dbh->error, $this->dbh->errno);
 				
 			$this->register_error($this->dbh->error, $this->dbh->errno);

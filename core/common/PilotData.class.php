@@ -950,11 +950,11 @@ class PilotData extends CodonData
 		
 		if(Config::Get('TRANSFER_HOURS_IN_RANKS') === true)
 		{
-			$totalhours = floatval($pilot->totalhours) + floatval($pilot->transferhours);
+			$totalhours = $pilot->totalhours + $pilot->transferhours;
 		}
 		else
 		{
-			$totalhours = floatval($pilot->totalhours);
+			$totalhours = $pilot->totalhours;
 		}
 		
 		# Configure what we want to show on each line

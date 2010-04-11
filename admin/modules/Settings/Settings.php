@@ -28,7 +28,7 @@ class Settings extends CodonModule
 	
 	public function HTMLHead()
 	{
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
 			case '':
 			case 'settings':
@@ -139,6 +139,7 @@ class Settings extends CodonModule
 				
 			case 'deletefield':
 				$this->delete_field_post();
+				return;
 				break;
 		}
 		
@@ -251,19 +252,19 @@ class Settings extends CodonModule
 	{
 		$id = DB::escape($this->post->id);
 		
-		$ret = SettingsData::DeleteField($id) == true;
+		$ret = SettingsData::deleteField($id);
 		if(DB::errno() != 0)
 		{
-			$this->set('message', 'There was an error deleting the field: ' . DB::error());
-			$this->render('core_error.tpl');
-		}
-		else
-		{
-			LogData::addLog(Auth::$userinfo->pilotid, 'Deleted custom field');
+			echo json_encode(array(
+					'status' => 'error',
+					'message' => addslashes(DB::error())
+				)
+			);
 			
-			$this->set('message', 'The field was deleted');
-			$this->render('core_success.tpl');
+			return;
 		}
+		
+		echo json_encode(array('status' => 'ok'));
 	}
 	
 	protected function ShowSettings()

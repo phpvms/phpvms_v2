@@ -1,5 +1,4 @@
-<h3>Bids List</h3>
-<p>These are all the bids which currently are open.</p>
+<h3>Current Open Bids</h3>
 <?php /*echo '<pre>'; print_r($allbids); echo '</pre>';*/ 
 if(!$allbids)
 {
@@ -20,13 +19,14 @@ if(!$allbids)
 <?php
 foreach($allbids as $bid)
 {?>
-	<tr>
+<tr id="row<?php echo $bid->bidid?>">
 	<td><?php echo $bid->code.$bid->flightnum."({$bid->depicao} - {$bid->arricao})"?></td>
 	<td><?php echo PilotData::GetPilotCode($bid->code, $bid->flightnum).' - '.$bid->firstname.' '.$bid->lastname; ?></td>
 	<td><?php echo $bid->dateadded; ?></td>
-	<td><a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewbids" action="deletebid"
-			id="<?php echo $bid->bidid;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a>
+	<td>
+	<button href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewbids" action="deletebid"
+		id="<?php echo $bid->bidid;?>" class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}">
+			Delete</button>
 		</td>
 	</tr>
 <?php } ?>

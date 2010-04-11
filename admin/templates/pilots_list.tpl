@@ -47,8 +47,9 @@ foreach($allpilots as $pilot)
 	<td align="center" width="1%"><?php echo $pilot->totalhours; ?></td>
 	<td align="center" width="1%"><?php echo $pilot->lastip; ?></td>
 	<td align="center" width="1%" nowrap>
-		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/options.png" alt="Options" /></a></td>
+		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}"
+			onclick="window.location='<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>';">
+			Edit</button></td>
 </tr>
 <?php
 }

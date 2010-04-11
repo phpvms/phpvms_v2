@@ -71,10 +71,10 @@ foreach($allroutes as $route)
 	/* END DISABLE SCHEDULE ON BID */
 	
 	
-	/*	
-	Skip any schedules which have aircraft that the pilot
-	is not rated to fly (according to RANK) */
-	if(Config::Get('RESTRICT_AIRCRAFT_RANKS') === true)
+	/*	Skip any schedules which have aircraft that the pilot
+		is not rated to fly (according to RANK), only skip them if
+		they are logged in. */
+	if(Config::Get('RESTRICT_AIRCRAFT_RANKS') === true && Auth::LoggedIn())
 	{
 		/*	This means the aircraft rank level is higher than
 			what the pilot's ranklevel, so just do "continue"

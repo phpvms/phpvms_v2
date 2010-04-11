@@ -33,5 +33,5 @@
 </div>
 
 <script type="text/javascript">
-$("#tabcontainer > ul").tabs();
+$("#tabcontainer").tabs();
 </script>

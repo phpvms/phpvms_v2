@@ -32,8 +32,9 @@ foreach($allaircraft as $aircraft)
 	<td align="center"><?php echo $aircraft->maxpax; ?></td>
 	<td align="center"><?php echo $aircraft->maxcargo; ?></td>
 	<td align="center" width="1%" nowrap>
-			<a href="<?php echo SITE_URL?>/admin/index.php/operations/editaircraft?id=<?php echo $aircraft->id;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/options.png" alt="Options" /></a></td>
+		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}" 
+			onclick="window.location='<?php echo SITE_URL?>/admin/index.php/operations/editaircraft?id=<?php echo $aircraft->id;?>';">Edit</button>
+	</td>
 </tr>
 <?php
 }

@@ -61,7 +61,7 @@ print_r($report_info);
 #print_r($pilotinfo);
 
 echo '<strong>Deleting...</strong><br />';
-PIREPData::deletePIREP($pirepid);
+#PIREPData::deletePIREP($pirepid);
 $report_info = PIREPData::findPIREPS(array('p.pirepid'=>$pirepid));
 
 if(!$report_info)

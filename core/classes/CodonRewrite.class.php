@@ -41,8 +41,8 @@
 class CodonRewrite 
 {
 	public static $rewrite_rules = array();
-	public static $get;
-	
+	public static $get;	
+	public static $controller;
 	public static $current_module;
 	public static $current_action;
 	
@@ -117,7 +117,6 @@ class CodonRewrite
 		
 		# Now we split it all out, and store the peices
 		self::$peices = explode('/', $split_parameters);
-			
 		$module_name = strtolower(self::$peices[0]);
 		
 		if($module_name == '') # If it's blank, check $_GET
@@ -128,16 +127,17 @@ class CodonRewrite
 		self::$current_module = $module_name;
 		self::$current_action = strtolower(self::$peices[1]);
 		
-		//echo '<pre>'; print_r(self::$peices); echo '</pre>';
-		
-		$_GET['module'] = $module_name;
-		$_GET['action'] = self::$current_action;
-		$_GET['page'] = self::$current_action;
-		
 		unset(self::$peices[0]);
 		unset(self::$peices[1]);
-		self::$params = array();
 		
+		self::$controller = new stdClass;
+		self::$controller->module = $module_name;
+		self::$controller->controller = $module_name;
+		self::$controller->function = self::$current_action;
+		self::$controller->action = self::$current_action;
+		self::$controller->page = self::$current_action;
+		
+		self::$params = array();
 		foreach(self::$peices as $peice)
 		{
 			self::$params[] = $peice;
@@ -159,7 +159,7 @@ class CodonRewrite
 				
 		# And this tacks on our $_GET rules
 		parse_str($_SERVER['QUERY_STRING'], $get_extra);
-		$_GET = array_merge($_GET, $get_extra);		
+		$_GET = array_merge($_GET, $get_extra);
 			
 		# Add the $_GET to our object
 		foreach($_GET as $key=>$value)
@@ -167,14 +167,8 @@ class CodonRewrite
 			self::$get->$key = $value;
 		}
 		
-		// Backwards compat
-		self::$get->page = self::$current_action;
-
 		self::$run = true;	
 	}
-	
-	
-	
 	
 	/**
 	 * Process an individual module based on the latest rules	

@@ -104,7 +104,7 @@ if(is_array($mapdata->route_details))
 			title: "<?php echo $route->title ?>",
 			type: "<?php echo $route->type ?>",
 			lat: "<?php echo $route->lat ?>",
-			lng: "<?php echo $route->lng ?>",
+			lng: "<?php echo $route->lng ?>"
 		};
 		
 		var v<?php echo $route->name?>_navpoint_info = tmpl("navpoint_bubble", {nav: v<?php echo $route->name?>_info});
@@ -115,7 +115,7 @@ if(is_array($mapdata->route_details))
 			icon: "<?php echo $icon; ?>",
 			title: "<?php echo $route->title; ?>",
 			infowindow_content: v<?php echo $route->name?>_navpoint_info
-		});
+		})
 		
 		bounds.extend(v<?php echo $route->name?>_coords);
 		

@@ -21,19 +21,18 @@ if(!$allfields)
 foreach($allfields as $field)
 {
 ?>
-<tr>
+<tr id="row<?php echo $field->fieldid;?>">
 	<td align="center"><?php echo $field->title;?></td>
 	<td align="center"><?php echo $field->value;?></td>
 	<td align="center"><?php echo $field->type;?></td>
 	<td align="center" nowrap width="1%">
-		<a id="dialog" class="jqModal" 
-				href="<?php echo SITE_URL?>/admin/action.php/settings/editfield?id=<?php echo $field->fieldid;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+		<button id="dialog" class="jqModal button" 
+			href="<?php echo SITE_URL?>/admin/action.php/settings/editfield?id=<?php echo $field->fieldid;?>">
+			Edit</button>
 			
-		<a href="<?php echo SITE_URL?>/admin/action.php/settings/customfields" 
-				action="deletefield" id="<?php echo $field->fieldid;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" />
-		</a>
+		<button href="<?php echo SITE_URL?>/admin/action.php/settings/customfields" 
+				action="deletefield" id="<?php echo $field->fieldid;?>" class="deleteitem button">
+			Delete</button>
 	</td>
 </tr>
 <?php

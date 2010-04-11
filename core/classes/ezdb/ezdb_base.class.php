@@ -526,6 +526,11 @@ class ezDB_Base
 			$sql .= ' ORDER BY '.$params['order'];
 		}
 		
+		if(!empty($params['limit']))
+		{
+			$sql .= ' LIMIT '.$params['limit'];
+		}
+		
 		return $this->get_results($sql, $this->default_type);
 	}
 	

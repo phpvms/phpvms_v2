@@ -22,12 +22,13 @@ foreach($ranks as $rank)
 	<td align="center"><?php echo Config::Get('MONEY_UNIT').$rank->payrate.'/hr'; ?></td>
 	<td align="center"><?php echo $rank->totalpilots; ?></td>
 	<td align="center" width="1%" nowrap>
-		<a id="dialog" class="jqModal" 
-			href="<?php echo SITE_URL?>/admin/action.php/pilotranking/editrank?rankid=<?php echo $rank->rankid;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
-		<a href="<?php echo SITE_URL?>/admin/action.php/pilotranking/pilotranks" action="deleterank" 
-			id="<?php echo $rank->rankid;?>" class="deleteitem">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a></td>
+	
+		<button href="<?php echo SITE_URL?>/admin/action.php/pilotranking/editrank?rankid=<?php echo $rank->rankid;?>"
+			id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}">Edit</button>
+			
+		<button href="<?php echo SITE_URL?>/admin/action.php/pilotranking/pilotranks" action="deleterank" 
+			id="<?php echo $rank->rankid;?>" class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}">
+			Delete</button>
 	</td>
 </tr>
 <?php

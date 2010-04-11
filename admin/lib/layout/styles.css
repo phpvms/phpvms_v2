@@ -6,7 +6,7 @@ body{font-family:"segoe ui",tahoma,arial,helvetica,clean,sans-serif; font-size:1
 #header{padding:0; background:url(images/background.png) repeat-x 0 0 #fff}
 
 #header h1{margin:0; padding:10px 0}
-#sidebar{ font-size: 12px; float:left; width:200px; border-right:solid 1px #CCC; padding:0}
+#sidebar{ font-size: 12px; float:left; width:200px;  padding:0; border-right:solid 1px #CCC;}
 
 #sidebar h3, #sidebar p{margin-left:10px; margin-right:10px}
 #sidebar h3{background:url(images/heading.png) repeat-x 0 0 #fff; color:#000; padding:5px; margin:0; width:195px; padding-right:0; border-bottom:4px solid #F63}
@@ -17,23 +17,22 @@ a{color:#333; text-decoration:none}
 
 a:hover{color:#000}
 
-#mainContent{margin:0 15px 0 160pt; height:100%}
-
-#mainContent tr.disabled td{color:#CCC}
-
 #result{float:right}
 
 #bodytext{padding:0px; margin:0px}
-#mainContent h3{color:#36F; border-bottom:1px solid #F5F5F5; font-size:18px; font-weight:400; margin:0 0 15px; padding:15px 0}
-
+#mainContent{margin:0 15px 0 160pt; height:100%}
+#mainContent h1{color:#36F; border-bottom:1px solid #F5F5F5; font-size:22px; font-weight:400; margin:5px 0 15px; padding:15px 0}
+#mainContent h2{color:#36F; border-bottom:1px solid #F5F5F5; font-size:20px; font-weight:400; margin:5px 0 15px; padding:15px 0}
+#mainContent h3{color:#36F; border-bottom:1px solid #F5F5F5; font-size:18px; font-weight:400; margin:5px 0 15px; padding:15px 0}
+#mainContent h4{color:#36F; border-bottom:1px solid #F5F5F5; font-size:15px; font-weight:400; margin:5px 0 15px; padding:15px 0}
 #mainContent a{text-decoration:underline}
+#mainContent tr.disabled td{color:#CCC}
+
+.ui-button { font-size: 12px; }
 
 table.balancesheet{border:2px solid #333; padding:0px}
-
 table.balancesheet tr{border-bottom:1px solid #CCC}
-
 table.balancesheet td{padding:6px}
-
 .balancesheet_header td{border:none; padding:4px; padding-left:30px; font-weight:bold; text-transform:uppercase; background-color:#333; color:#FFF; text-align:right}
 
 table tbody tr.background_yellow td{background-color:#FFFFB3}
@@ -56,32 +55,34 @@ table tbody tr.background_yellow td{background-color:#FFFFB3}
 
 .newsitem{margin:0px; padding:0px; border-bottom:1px solid #CCC; padding-top:6px; padding-bottom:8px; line-height:1.4em}
 
-ul.menu, ul.menu ul{  list-style-type:none;   margin:0;   padding:0;   width:100%}
+ul.menu, ul.menu ul{  list-style-type:none;   margin:0;   padding:0;   /*width:100%*/}
 
-ul.menu a{  display:block;   text-decoration:none;   padding-bottom:5px}
+ul.menu a{  display:block;   text-decoration:none;   padding-bottom:5px; font-weight: normal}
 ul.menu a img{  padding-bottom:0px}
 
 ul.menu li{  margin-top:1px}
 
 ul.menu img{padding-right:5px}
-ul.menu li a{  background:url(images/heading.png) repeat-x 0 0 #fff;  color:#000;  padding:0.5em;   border-bottom:solid 1px #999}
+ul.menu li a{  background:url(images/heading.png) repeat-x 0 0 #fff;  color:#000;  padding:0.5em;   border-bottom:solid 1px #999; }
 ul.menu li a img{padding:none}
 
 ul.menu li a:hover{font-weight:bold}
 
 ul.menu li ul li a{ background:#FFF;  color:#000;  padding-left:20px}
-
-ul.menu li ul li a:hover{ border-left:solid 5px #F63;  padding-left:15px}
+ul.menu li ul li a:hover{ border-left:solid 5px #F63;  padding-left:15px; font-weight: normal}
 
 .tablesorter tr, .tablesorter td{border:none; font-size: 12px;}
-table.tablesorter{border:none; background:url(images/heading.png) repeat-x 0 0 #fff; margin:10px 0pt 15px; width:100%; text-align:left}
-table.tablesorter thead tr th, table.tablesorter tfoot tr th{background:url(images/heading.png) repeat-x 0 0 #fff; color:#000; padding:0.5em}
+table.tablesorter{border:none; repeat-x 0 0 #fff; margin:10px 0pt 15px; width:100%; text-align:left}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th{background: #5c9ccc url(../css/flick/images/ui-bg_highlight-soft_100_f6f6f6_1x100.png) 50% 50% repeat-x; color:#000; padding:0.5em}
 table.tablesorter thead tr .header{cursor:pointer; color:#333; font-size:13px; padding:0.5em}
-table.tablesorter tbody td{color:#3D3D3D; padding:4px; background-color:#FFF; vertical-align:top; border:none; border-bottom:solid 1px #ccc; padding-top:6px; padding-bottom:6px}
-table.tablesorter tbody tr:odd{background-color:#F0F0F6; border:none}
 table.tablesorter thead tr .headerSortUp{background-image:url(images/asc.gif)}
 table.tablesorter thead tr .headerSortDown{background-image:url(images/desc.gif)}
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp{background-color:#8dbdd8; border:none}
+
+table.tablesorter tbody td{color:#3D3D3D; padding: 12px 6px 12px 6px; background-color:#FFF; border:none; border-bottom:solid 1px #ccc; }
+table.tablesorter tbody td.pending{background: #FFF0C2;}
+
+table.tablesorter tbody tr:odd{background-color:#F0F0F6; border:none}
 
 img{border:none}
 
@@ -97,9 +98,9 @@ dd p{margin-top:0px}
 
 dd input{width:290px; padding:3px; margin-bottom:3px; z-index:1500; font-size:8pt}
 
-INPUT{color:#000; font-size:10pt; border:1px solid #CCC; background-color:#fcfcfc}
-TEXTAREA{color:#000; font-size:10pt; border:1px solid #CCC; background-color:#fcfcfc}
-TEXT{color:#000; font-size:10pt; border:1px solid #CCC; background-color:#fcfcfc}
+INPUT{color:#000; font-size:14px; border:1px solid #CCC;  padding: 4px; background: #fff; }
+TEXTAREA{color:#000; font-size:14px; border:1px solid #CCC; }
+TEXT{color:#000; font-size:14px; border:1px solid #CCC; }
 
 div#mb_overlay{position:absolute; left:0; width:100%; background-color:#000; cursor:pointer}
 
@@ -159,27 +160,3 @@ div.jqi .jqicontainer{ background-color:#FFF;  padding:5px;  color:#36F;  font-w
 div.jqi .jqimessage{ background-color:#FFF;   padding:10px}
 div.jqi .jqibuttons{ text-align:center;  padding:5px 0 0 0}
 div.jqi button{ padding:3px 10px 3px 10px;  margin:0 10px}
-
-.ui-tabs-nav, .ui-tabs-panel{ font-family:"Trebuchet MS",Trebuchet,Verdana,Helvetica,Arial,sans-serif}
-.ui-tabs-nav{ list-style:none;  margin:0;  padding:0 0 0 4px}
-.ui-tabs-nav:after{    display:block"lib/skins/crystal/styles.css";  clear:both;  content:""}
-.ui-tabs-nav li{ float:left;  margin:0 0 0 1px;  min-width:84px}
-.ui-tabs-nav a, .ui-tabs-nav a span{    display:block;     padding:0 10px;     background:url(images/tab.png) no-repeat}
-.ui-tabs-nav a{ margin:1px 0 0;  padding-left:0;  color:#27537a;  font-weight:bold;  line-height:1.2;  text-align:center;  text-decoration:none;  white-space:nowrap;   outline:0}
-.ui-tabs-nav .ui-tabs-selected a{ position:relative;  top:1px;  z-index:2;  margin-top:0;  color:#000}
-.ui-tabs-nav a span{ width:64px;  min-width:64px;  height:18px;  min-height:18px;  padding-top:6px;  padding-right:0}
-*>.ui-tabs-nav a span{ width:auto;  height:auto}
-.ui-tabs-nav .ui-tabs-selected a span{ padding-bottom:1px}
-.ui-tabs-nav .ui-tabs-selected a, .ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active{ background-position:100% -150px}
-.ui-tabs-nav a, .ui-tabs-nav .ui-tabs-disabled a:hover, .ui-tabs-nav .ui-tabs-disabled a:focus, .ui-tabs-nav .ui-tabs-disabled a:active{ background-position:100% -100px}
-.ui-tabs-nav .ui-tabs-selected a span, .ui-tabs-nav a:hover span, .ui-tabs-nav a:focus span, .ui-tabs-nav a:active span{ background-position:0 -50px}
-.ui-tabs-nav a span, .ui-tabs-nav .ui-tabs-disabled a:hover span, .ui-tabs-nav .ui-tabs-disabled a:focus span, .ui-tabs-nav .ui-tabs-disabled a:active span{ background-position:0 0}
-.ui-tabs-nav .ui-tabs-selected a:link, .ui-tabs-nav .ui-tabs-selected a:visited, .ui-tabs-nav .ui-tabs-disabled a:link, .ui-tabs-nav .ui-tabs-disabled a:visited{ cursor:text}
-.ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active, 
-.ui-tabs-nav .ui-tabs-unselect a:hover, .ui-tabs-nav .ui-tabs-unselect a:focus, .ui-tabs-nav .ui-tabs-unselect a:active{ cursor:pointer}
-.ui-tabs-disabled{ opacity:.4;  filter:alpha(opacity=40)}
-.ui-tabs-panel{ padding:1em 8px;  background:#fff}
-.ui-tabs-loading em{ padding:0 0 0 20px;  background:url(loading.gif) no-repeat 0 50%}
-
-* html .ui-tabs-nav{ display:inline-block}
-*:first-child+html .ui-tabs-nav{ display:inline-block}

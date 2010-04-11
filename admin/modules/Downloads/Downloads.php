@@ -20,7 +20,6 @@ class Downloads extends CodonModule
 {
 	public function HTMLHead()
 	{
-		
 		$this->set('sidebar', 'sidebar_downloads.tpl');
 	}
 	
@@ -55,6 +54,7 @@ class Downloads extends CodonModule
 			
 			case 'deletedownload':
 				$this->DeleteDownloadPost();
+				return;
 				break;
 			
 		}
@@ -222,17 +222,17 @@ class Downloads extends CodonModule
 	
 	protected function DeleteDownloadPost()
 	{
+		$params = array();
 		if($this->post->id=='')
 		{
-			$this->set('message', 'Invalid download ID!');
-			$this->render('core_error.tpl');
+			$params['status'] = 'Invalid Download ID';
+			echo json_encode($params);
 			return;
 		}
 		
 		DownloadData::RemoveAsset($this->post->id);
-		
-		$this->set('message', 'Download removed!');
-		$this->render('core_success.tpl');
-		
+		$params['status'] = 'ok';
+		echo json_encode($params);
+		return;
 	}
 }

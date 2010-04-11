@@ -93,7 +93,7 @@ class ezDB_mysql extends ezDB_Base
 	
 		if(!$this->dbh)
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error(mysql_error(), mysql_errno());
 				
 			$this->register_error(mysql_error(), mysql_errno());
@@ -116,7 +116,7 @@ class ezDB_mysql extends ezDB_Base
 		// Must have a database name
 		if ($dbname == '')
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error('No database specified!', -1);
 				
 			$this->register_error('No database name specified!');
@@ -125,7 +125,7 @@ class ezDB_mysql extends ezDB_Base
 		// Must have an active database connection
 		if (!$this->dbh)
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error('Invalid or inactive connection!');
 				
 			$this->register_error('Can\'t select database, invalid or inactive connection', -1);
@@ -134,7 +134,7 @@ class ezDB_mysql extends ezDB_Base
 
 		if(!mysql_select_db($dbname, $this->dbh))
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error(mysql_error(), mysql_errno());
 			
 			$this->register_error(mysql_error($this->dbh), mysql_errno($this->dbh));
@@ -211,7 +211,7 @@ class ezDB_mysql extends ezDB_Base
 		// Make sure connection is ALIVEE!
 		if (!$this->dbh )
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error(mysql_error(), mysql_errno());
 			
 			$this->register_error('There is no active database connection!');
@@ -225,7 +225,7 @@ class ezDB_mysql extends ezDB_Base
 		if(!$this->result && mysql_errno($this->dbh) != 0)
 		{
 			// Something went wrong		
-			if($this->use_exceptions)		
+			if($this->throw_exceptions)		
 				throw new ezDB_Error(mysql_error(), mysql_errno(), $query);
 				
 			$this->register_error(mysql_error(), mysql_errno());

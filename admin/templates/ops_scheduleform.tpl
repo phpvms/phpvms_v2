@@ -1,10 +1,7 @@
 <div id="wrapper">
 <h3><?php echo $title?></h3>
-<?php
-//id="form"
-?>
 <form action="<?php echo SITE_URL?>/admin/index.php/operations/schedules" method="post">
-<table width="100%" class="highlight">
+<table width="100%" class="tablesorter">
 <tr>
 	<td valign="top"><strong>Code: </strong></td>
 	<td>
@@ -20,7 +17,6 @@
 	
 			echo '<option value="'.$airline->code.'" '.$sel.'>'.$airline->code.' - '.$airline->name.'</option>';
 		}
-		
 		?>
 		</select>
 	</td>
@@ -33,29 +29,16 @@
 </tr>
 <tr>
 	<td width="3%" nowrap><strong>Departure Airport:</strong></td>
-	<td><select name="depicao" id="depicao">
-		<?php
-		foreach($allairports as $airport)
-		{
-			if($airport->icao == $schedule->depicao)
-			{
-				$sel = 'selected';
-			}
-			else
-			{
-				$sel = '';
-			}
-	
-			echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao.' ('.$airport->name.')</option>';
-		}
-		?>
-		</select>
+	<td><input name="depicao" class="airport_select" value="<?php echo $schedule->depicao;?>" onclick="" />
 	</td>
 </tr>
 <tr>
 	<td><strong>Arrival Airport:</strong></td>
-	<td><select name="arricao" id="arricao">
+	<td><input name="arricao" class="airport_select" value="<?php echo $schedule->arricao;?>" onclick="" />
+	
+		<br />
 		<?php
+		/*<select name="arricao" id="arricao">
 		foreach($allairports as $airport)
 		{
 	        if($airport->icao == $schedule->arricao)
@@ -71,6 +54,7 @@
 		}
 		?>
 		</select>
+		*/?>
 	</td>
 </tr>
 <tr>
@@ -216,4 +200,21 @@ $(".preview").click(function()
 	
 	return false;
 });
+
+<?php
+$airport_list = array();
+foreach($allairports as $airport)
+{
+	$airport->name = addslashes($airport->name);
+	$airport_list[] = "{label:\"{$airport->icao} ({$airport->name})\", value: \"{$airport->icao}\"}";
+}
+$airport_list = implode(',', $airport_list);
+?>
+var airport_list = [<?php echo $airport_list; ?>];
+$(".airport_select").autocomplete({
+	source: airport_list,
+	minLength: 2,
+	delay: 0
+});
+
 </script>

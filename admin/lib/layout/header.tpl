@@ -13,12 +13,7 @@
 Template::Show('core_htmlhead.tpl');
 ?>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	val = $("table.tablesorter tbody tr:even td, table.highlight tbody tr:even td").css("background-color", "#F5F7FF");
-});
-</script>
-
+<link href="<?php echo SITE_URL?>/admin/lib/css/flick/jquery-ui-1.8.custom.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo SITE_URL?>/admin/lib/layout/styles.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
 <style type="text/css"> 
@@ -41,9 +36,9 @@ Template::Show('core_htmlreq.tpl');
 	<?php
 	Template::Show('core_sidebar.tpl');
 	?>
-	<h3>Options</h3>
 	
-	<ul class="menu">
+	<h3 >Options</h3>
+	<ul class="menu" style="padding: 0px">
 		<li><a href="<?php echo SITE_URL?>/admin/index.php/dashboard" class="menu">
 				<img src="<?php echo SITE_URL?>/admin/lib/layout/images/dashboard_icon.png" />Dashboard
 			</a>

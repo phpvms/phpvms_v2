@@ -100,7 +100,7 @@ class ezDB_oracle extends ezDB_Base
 		{
 			$err = ocierror();
 			
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error($err['message'], $err['code']);
 			
 			$this->register_error($err['message'], $err['code']);
@@ -219,7 +219,7 @@ class ezDB_oracle extends ezDB_Base
 		// If there is no existing database connection then try to connect
 		if ( ! $this->dbh )
 		{
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error('No active connection', -1);
 				
 			$this->register_error('There is no active database connection!');
@@ -238,7 +238,7 @@ class ezDB_oracle extends ezDB_Base
 			}
 			else
 			{
-				if($this->use_exceptions)
+				if($this->throw_exceptions)
 					throw new ezDB_Error($error['message'], $error['code']);
 					
 				$this->register_error($error['message'], $error['code']);
@@ -257,7 +257,7 @@ class ezDB_oracle extends ezDB_Base
 				return true;
 			}
 			
-			if($this->use_exceptions)
+			if($this->throw_exceptions)
 				throw new ezDB_Error($error['message'], $error['code']);
 				
 			$this->register_error($error['message'], $error['code']);

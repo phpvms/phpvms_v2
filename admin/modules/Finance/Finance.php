@@ -21,7 +21,7 @@ class Finance extends CodonModule
 	
 	public function HTMLHead()
 	{
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
 			case 'addexpense':
 			case 'editexpense':
@@ -267,6 +267,9 @@ class Finance extends CodonModule
 		{
 			FinanceData::removeExpense($this->post->id);
 			FinanceData::setExpensesforMonth(time());
+			
+			echo json_encode(array('status' => 'ok'));
+			return;
 		}
 	
 		$this->set('allexpenses', FinanceData::GetAllExpenses());

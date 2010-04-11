@@ -221,16 +221,12 @@ class SettingsData extends CodonData
 	
 	public static function deleteField($id)
 	{
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE fieldid='.$id;
-
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'customfields WHERE `fieldid`='.$id;
+		$res = DB::query($sql);
+	
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'fieldvalues WHERE `fieldid`='.$id;
 		$res = DB::query($sql);
 		
-		if(DB::errno() != 0)
-			return false;
-			
-		return true;
-
-		//TODO: delete all of the field values!
-		//$sql = 'DELETE FROM '.TABLE_PREFIX.'
+		CodonCache::delete('allfields');
 	}
 }

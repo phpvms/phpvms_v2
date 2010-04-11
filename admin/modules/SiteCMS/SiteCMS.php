@@ -21,7 +21,7 @@ class SiteCMS extends CodonModule
 {
 	function HTMLHead()
 	{
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
 			case 'addnews':
 			case 'viewnews':
@@ -71,6 +71,7 @@ class SiteCMS extends CodonModule
 		elseif($isset && $this->post->action == 'deleteitem')
 		{	
 			$this->DeleteNewsItem();	
+			echo json_encode(array('status' => 'ok'));
 		}
 		
 		$this->set('allnews', SiteData::GetAllNews());
@@ -163,7 +164,8 @@ class SiteCMS extends CodonModule
 		
 				$pageid = $this->get->pageid;
 				SiteData::DeletePage($pageid);
-				
+				echo json_encode(array('status' => 'ok'));
+				return;
 				break;
 		}
 		

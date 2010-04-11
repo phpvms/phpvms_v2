@@ -42,9 +42,12 @@ class Finances extends CodonModule
 		OFCharts::add_data_set('Pilot Pay', floatval($finance_data->pilotpay));
 		
 		// Now expenses
-		foreach($finance_data->expenses as $expense)
+		if(is_array($finances_data->expenses))
 		{
-			OFCharts::add_data_set($expense->name, floatval($expense->total));
+			foreach($finance_data->expenses as $expense)
+			{
+				OFCharts::add_data_set($expense->name, floatval($expense->total));
+			}
 		}
 		
 		echo OFCharts::create_pie_graph('Expenses breakdown');

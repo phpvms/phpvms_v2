@@ -16,19 +16,18 @@ if(!$awards){ echo 'No awards have been added yet!'; return;}
 foreach($awards as $aw)
 {
 ?>
-<tr>
+<tr id="row<?php echo $aw->awardid;?>">
 	<td align="center"><?php echo $aw->name; ?></td>
 	<td align="center"><?php echo $aw->descrip; ?></td>
 	<td align="center"><img src="<?php echo $aw->image; ?>" /></td>
 	<td align="center" width="1%" nowrap>
-	
-		<a id="dialog" class="jqModal" 
+		<button id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}" 
 			href="<?php echo SITE_URL?>/admin/action.php/pilotranking/editaward?awardid=<?php echo $aw->awardid;?>">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
+			Edit</button>
 			
-		<a href="<?php echo SITE_URL?>/admin/action.php/pilotranking/awards" action="deleteaward" 
-			id="<?php echo $aw->awardid;?>" class="ajaxcall">
-			<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="Delete" /></a></td>
+		<button href="<?php echo SITE_URL?>/admin/action.php/pilotranking/awards" action="deleteaward" 
+			id="<?php echo $aw->awardid;?>" class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}">
+			Delete</button>
 	</td>
 </tr>
 <?php

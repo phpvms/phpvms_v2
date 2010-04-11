@@ -20,7 +20,7 @@ class Import extends CodonModule
 {
 	function HTMLHead()
 	{		
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
 			case '':
 			default:

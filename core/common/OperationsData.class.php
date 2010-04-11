@@ -210,6 +210,44 @@ class OperationsData extends CodonData
 		return $all_airports;
 	}
 	
+	public static function getAllAirportsJSON()
+	{
+		$key = 'all_airports_json';
+		$all_airports_json = CodonCache::read($key);
+		$all_airports_json = false;
+		if($all_airports_json === false)
+		{
+			$json_string = array();
+			$allairports = self::getAllAirports();
+			foreach($allairports as $airport)
+			{
+				//$airport->name = DB::escape($airport->name);
+				
+				$tmp = array(
+					'label' => "{$airport->icao} ({$airport->name})",
+					'value' => $airport->icao,
+					'id' => $airport->id,
+				);
+							
+				$json_string[] = $tmp;
+			}
+
+			$all_airports_json = json_encode($json_string);
+			CodonCache::write($key, $all_airports_json, 'long');
+		}
+		
+		return $all_airports_json;
+	}
+	
+	public static function findAirport($airport)
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."airports
+				WHERE `icao` LIKE '%{$airport}%' OR
+						`name` LIKE '%{$airport}%'";
+		
+		return DB::get_results($sql);
+	}
+	
 	/**
 	 * Get information about a specific aircraft
 	 */
@@ -262,8 +300,9 @@ class OperationsData extends CodonData
 		if(DB::errno() != 0)
 			return false;
 			
+		CodonCache::delete('all_airlines');
+		CodonCache::delete('all_airports_json');
 		CodonCache::delete('all_airline_active');
-		CodonCache::delete('all_airline');
 			
 		return true;
 	}
@@ -286,6 +325,7 @@ class OperationsData extends CodonData
 			return false;
 			
 		CodonCache::delete('airline_'.$code);
+		CodonCache::delete('all_airports_json');
 			
 		return true;
 	}
@@ -502,6 +542,7 @@ class OperationsData extends CodonData
 			return false;
 		
 		CodonCache::delete('all_airports');
+		CodonCache::delete('all_airports_json');
 		CodonCache::delete('get_airport_'.$data['icao']);
 		return true;
 	}
@@ -543,6 +584,7 @@ class OperationsData extends CodonData
 			return false;
 			
 		CodonCache::delete('get_airport_'.$data['icao']);
+		CodonCache::delete('all_airports_json');
 		CodonCache::delete('all_airports');
 		return true;
 	}
@@ -559,6 +601,7 @@ class OperationsData extends CodonData
 			return false;
 		
 		CodonCache::delete('get_airport_'.$icao);
+		CodonCache::delete('all_airports_json');
 		CodonCache::delete('all_airports');
 		return true;
 	}

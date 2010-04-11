@@ -27,8 +27,9 @@ foreach($allgroups as $group)
 	if($group->name!='Administrators')
 	{
 	?>
-		<a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/editgroup/?groupid=<?php echo $group->groupid?>">
-					<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>	
+		<a class="button {button:{icons:{primary:'ui-icon-wrench'}}}" 
+			href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/editgroup/?groupid=<?php echo $group->groupid?>">
+			Edit</a>	
 	<?php
 	}
 	else
@@ -41,4 +42,3 @@ foreach($allgroups as $group)
 ?>
 </tbody>
 </table>
-<br />

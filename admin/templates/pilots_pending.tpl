@@ -13,7 +13,7 @@ if(!$allpilots)
 	<th>Email Address</th>
 	<th>Location</th>
 	<th>Hub</th>
-	<th>Options (* double click)</th>
+	<th>Options</th>
 </tr>
 </thead>
 <tbody>
@@ -27,12 +27,11 @@ foreach($allpilots as $pilot)
 	<td align="center"><?php echo $pilot->location; ?></td>
 	<td align="center"><?php echo $pilot->hub; ?></td>
 	<td align="center" width="1%" nowrap>
-        <a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pendingpilots" action="approvepilot"
-			id="<?php echo $pilot->pilotid;?>" class="ajaxcall">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/accept.png" alt="Accept" /></a>
-        <a href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pendingpilots" action="rejectpilot"
-			id="<?php echo $pilot->pilotid;?>" class="ajaxcall">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/reject.png" alt="Reject" /></a>
+        <button href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pendingpilots" action="approvepilot"
+			id="<?php echo $pilot->pilotid;?>" class="ajaxcall {button:{icons:{primary:'ui-icon-circle-check'}}}">Accept</button>
+				
+        <button href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pendingpilots" action="rejectpilot"
+			id="<?php echo $pilot->pilotid;?>" class="ajaxcall {button:{icons:{primary:'ui-icon-circle-close'}}}">Reject</button>
 	</td>
 </tr>
 <?php

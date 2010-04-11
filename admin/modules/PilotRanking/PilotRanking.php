@@ -21,14 +21,16 @@ class PilotRanking extends CodonModule
 {
 	public function HTMLHead()
 	{
-		if($this->get->page == 'pilotranks'
-			|| $this->get->page == 'calculateranks')
+		switch($this->controller->function)
 		{
-			$this->set('sidebar', 'sidebar_ranks.tpl');
-		}
-		elseif($this->get->page == 'awards')
-		{
-			$this->set('sidebar', 'sidebar_awards.tpl');
+			case 'pilotranks':
+			case 'calculateranks':
+				$this->set('sidebar', 'sidebar_ranks.tpl');
+				break;
+				
+			case 'awards':
+				$this->set('sidebar', 'sidebar_awards.tpl');
+				break;
 		}
 	}
 	
@@ -52,8 +54,9 @@ class PilotRanking extends CodonModule
 				
 				$ret = RanksData::DeleteRank($this->post->id);
 				
-				$this->set('message', 'Rank deleted!');
-				$this->render('core_success.tpl');
+				echo json_encode(array('status'=>'ok'));
+				
+				return;
 				break;
 		}
 		
@@ -93,6 +96,9 @@ class PilotRanking extends CodonModule
 				case 'deleteaward':
 					$ret = AwardsData::DeleteAward($this->post->id);
 					LogData::addLog(Auth::$userinfo->pilotid, 'Deleted an award');
+					
+					echo json_encode(array('status' => 'ok'));
+					return;
 					break;
 			}
 		}

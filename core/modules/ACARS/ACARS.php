@@ -172,7 +172,7 @@ class ACARS extends CodonModule
 	 * @return mixed Nothing, sends the file to the user
 	 *
 	 */
-	protected function write_config($template_name, $save_as)
+	public function write_config($template_name, $save_as)
 	{
 		if(!Auth::LoggedIn())
 		{

@@ -20,9 +20,10 @@
 
 class Operations extends CodonModule
 {
+	
 	public function HTMLHead()
 	{
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
 			case 'airlines':
 				$this->set('sidebar', 'sidebar_airlines.tpl');
@@ -51,6 +52,8 @@ class Operations extends CodonModule
 	{
 		$this->schedules();
 	}
+	
+	
 
 	public function viewmap()
 	{
@@ -158,6 +161,29 @@ class Operations extends CodonModule
 		echo '<span style="color: #33CC00">OK! Found - current price: <strong>'.$price.'</strong></span>';
 	}
 	
+	public function findairport()
+	{
+		$results = OperationsData::findAirport($this->get->term);
+		
+		if(count($results) > 0)
+		{
+			$return = array();
+			
+			foreach($results as $row)
+			{
+				$tmp = array(
+					'label' => "{$row->icao} ({$row->name})",
+					'value' => $row->icao,
+					'id' => $row->id,
+				);
+				
+				$return[] = $tmp;
+			}
+			
+			echo json_encode($return);
+		}	
+	}
+	
 	public function airlines()
 	{
 		if(isset($this->post->action))
@@ -245,6 +271,7 @@ class Operations extends CodonModule
         $this->set('allairlines', OperationsData::GetAllAirlines());
 		$this->set('allaircraft', OperationsData::GetAllAircraft());
 		$this->set('allairports', OperationsData::GetAllAirports());
+		//$this->set('airport_json_list', OperationsData::getAllAirportsJSON());
 		$this->set('flighttypes', Config::Get('FLIGHT_TYPES'));
 
 		$this->render('ops_scheduleform.tpl');
@@ -275,6 +302,87 @@ class Operations extends CodonModule
 	public function inactiveschedules()
 	{
 		$this->schedules('inactiveschedules');
+	}
+	
+	public function schedulegrid()
+	{
+		$page = $this->get->page; // get the requested page 
+		$limit = $this->get->rows; // get how many rows we want to have into the grid 
+		$sidx = $this->get->sidx; // get index row - i.e. user click to sort 
+		$sord = $this->get->sord; // get the direction 
+		
+		# http://dev.phpvms.net/admin/action.php/operations/
+		# ?_search=true&nd=1270940867171&rows=20&page=1&sidx=flightnum&sord=asc&searchField=code&searchString=TAY&searchOper=eq
+		
+		# Set the order, from what's passed
+		Config::Set('SCHEDULES_ORDER_BY', "{$sidx} {$sord}");
+		if($this->get->_search === 'true')
+		{
+			$where = array(
+				$this->get->searchField => $this->get->searchString
+			);
+		}
+		
+		$count = count(SchedulesData::findSchedules($where));
+		if( $count > 0)
+			$total_pages = ceil($count/$limit);
+		else
+			$total_pages = 0; 
+		
+		if ($page > $total_pages) 
+		{
+			$page = $total_pages; 
+		}
+			
+		$start = $limit * $page - $limit;
+		if($start < 0) { $start = 0; }
+	
+		$schedules = SchedulesData::findSchedules($where, $limit, $start);
+		$json = array(
+			'page' => $page,
+			'total' => $count,
+			'records' => $page,
+			'rows' => array()
+		);
+		
+		foreach($schedules as $row)
+		{
+			if($row->route != '')
+			{
+				$route = '<a id="dialog" class="jqModal" '
+						.'href="'.SITE_URL.'/admin/action.php/operations/viewmap?type=schedule&id='.$sched->id.'">View</a>';
+			}
+			else
+			{
+				$route = '-';
+			}
+			
+			$edit = '<a href="'.SITE_URL.'/admin/index.php/operations/editschedule?id='.$row->id.'">Edit</a>';
+			$delete = '<a href="#" onclick="deleteschedule('.$row->id.'); return false;">Delete</a>';
+			
+			$tmp = array(
+				'id' => $row->id,
+				'cell' => array(
+					$row->code,
+					$row->flightnum,
+					$row->depicao,
+					$row->arricao,
+					$row->aircraft,
+					$row->registration,
+					$route,
+					Util::GetDaysCompact($row->daysofweek),
+					$row->distance,
+					$row->timesflown,
+					$edit,
+					$delete,
+				),
+			);
+			
+			$json['rows'][] = $tmp;
+		}
+		
+		header("Content-type: text/x-json");
+		echo json_encode($json);	
 	}
 	
 	public function schedules($type='activeschedules')
@@ -333,6 +441,7 @@ class Operations extends CodonModule
 				
 			case 'deleteschedule':
 				$this->delete_schedule_post();
+				return;
 				break;			
 		}
 	
@@ -800,15 +909,17 @@ class Operations extends CodonModule
 		$schedule = SchedulesData::findSchedules(array('s.id'=>$this->post->id));
 		SchedulesData::DeleteSchedule($this->post->id);
 		
+		$params = array();
         if(DB::errno() != 0)
 		{
-			$this->set('message', 'There was an error deleting the schedule');
-			$this->render('core_error.tpl');
+			$params['status'] = 'There was an error deleting the schedule';
+			$params['error'] = DB::error();
+			echo json_encode($params);
 			return;
 		}
 
-		$this->set('message', 'The schedule has been deleted');
-		$this->render('core_success.tpl');
+		$params['status'] = 'ok';
+		echo json_encode($params);
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Deleted schedule "'.$schedule->code.$schedule->flightnum.'"');
 	}

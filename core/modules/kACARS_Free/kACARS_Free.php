@@ -25,7 +25,7 @@ class kACARS_Free extends CodonModule
 	{
 		if ( $_SERVER['REQUEST_METHOD'] === 'POST' )
 		{ 
-			$rec_xml = "<?xml version=\"1.0\" encoding='UTF-8'?>".trim(utf8_encode(file_get_contents('php://input')));
+			$rec_xml = trim(utf8_encode(file_get_contents('php://input')));
 			$this->xml = simplexml_load_string($rec_xml);	
 			
 			if(!$this->xml)
@@ -282,6 +282,11 @@ class kACARS_Free extends CodonModule
 					
 					$send = $this->sendXML($params);	
 					break;	
+					
+				case 'aircraft':
+					
+					self::getAllAircraft();
+					break;
 			}
 		}
 	}
@@ -317,6 +322,28 @@ class kACARS_Free extends CodonModule
 		}
 		$tHours = $iHours .":". $Minutes;
 		return $tHours;
+	}
+	
+	public static function getAllAircraft()
+	{
+		$results = OperationsData::getAllAircraft(true);
+	
+		$xml = new SimpleXMLElement("<aircraftdata />");
+		$info_xml = $xml->addChild('info');
+		
+		foreach($results as $row)
+		{
+			$info_xml->addChild('aircraftICAO', $row->icao);
+			$info_xml->addChild('aircraftReg', $row->registration);
+		}			
+			
+		header('Content-type: text/xml'); 		
+		echo $xml->asXML();
+			
+		# For debug
+		$this->log("Sending: \n".print_r($xml_string, true), 'kacars');
+		
+		return;
 	}
 		
 	public function sendXML($params)

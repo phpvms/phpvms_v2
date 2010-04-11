@@ -21,18 +21,17 @@ if(!$allpages)
 foreach($allpages as $page)
 {
 ?>
-<tr>
+<tr id="row<?php echo $page->pageid;?>">
 	<td align="center"><?php echo $page->pagename; ?></td>
 	<td align="center"><?php echo $page->postedby; ?></td>
 	<td align="center"><?php echo $page->postdate; ?></td>
 	<td align="center"><a href="<?php echo SITE_URL?>/index.php/pages/<?php echo $page->filename; ?>"><?php echo $page->filename; ?></a></td>
 	<td align="center" width="1%" nowrap>
-		<a href="<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/edit.png" alt="Edit" /></a>
-				
-		<a href="<?php echo SITE_URL?>/admin/action.php/sitecms/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>" 
-				class="confirm">
-				<img src="<?php echo SITE_URL?>/admin/lib/images/delete.png" alt="delete" /></a>
+		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}" onclick="window.location='<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>';">Edit</button>
+
+		<button class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}" 
+			id="<?php echo $page->pageid;?>"
+			href="<?php echo SITE_URL?>/admin/action.php/sitecms/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>">Delete</button>
 	</td>
 </tr>
 <?php

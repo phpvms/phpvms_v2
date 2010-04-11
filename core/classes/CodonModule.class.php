@@ -44,6 +44,7 @@ class CodonModule
 {
 	public static $post;
 	public static $get;
+	public static $controller;
 	public static $activeModule;
 	public $action;
 	
@@ -66,6 +67,7 @@ class CodonModule
 		$this->post = Vars::$post;
 		$this->get = CodonRewrite::$get;
 		$this->request = Vars::$request;
+		$this->controller = CodonRewrite::$controller;
 			
 		$this->init = true;
 		$this->activeModule = MainController::$activeModule;

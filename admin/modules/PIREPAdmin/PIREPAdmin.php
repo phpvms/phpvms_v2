@@ -20,9 +20,11 @@ class PIREPAdmin extends CodonModule
 {
 	public function HTMLHead()
 	{
-		switch($this->get->page)
+		switch($this->controller->function)
 		{
-			case 'viewpending': case 'viewrecent': case 'viewall':
+			case 'viewpending': 
+			case 'viewrecent': 
+			case 'viewall':
 				$this->set('sidebar', 'sidebar_pirep_pending.tpl');
 				break;
 		}

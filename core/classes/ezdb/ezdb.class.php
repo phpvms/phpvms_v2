@@ -111,7 +111,7 @@ class DB
 		self::$log_errors = $bool;
 	}
 	
-	public static function set_use_exceptions($bool)
+	public static function set_throw_exceptions($bool)
 	{
 		self::$throw_exceptions = $bool;
 	}

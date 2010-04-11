@@ -37,7 +37,7 @@ class News extends CodonModule
 			$this->set('subject', $row->subject);
 			$this->set('body', $row->body);
 			$this->set('postedby', $row->postedby);
-			$this->set('postdate', date('m/d/Y', $row->postdate));
+			$this->set('postdate', date(DATE_FORMAT, $row->postdate));
 		
 			$this->show('news_newsitem.tpl');
 		}

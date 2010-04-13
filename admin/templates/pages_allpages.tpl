@@ -25,13 +25,14 @@ foreach($allpages as $page)
 	<td align="center"><?php echo $page->pagename; ?></td>
 	<td align="center"><?php echo $page->postedby; ?></td>
 	<td align="center"><?php echo $page->postdate; ?></td>
-	<td align="center"><a href="<?php echo SITE_URL?>/index.php/pages/<?php echo $page->filename; ?>"><?php echo $page->filename; ?></a></td>
+	<td align="center"><a href="<?php echo url('/pages/'.$page->filename); ?>"><?php echo $page->filename; ?></a></td>
 	<td align="center" width="1%" nowrap>
-		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}" onclick="window.location='<?php echo SITE_URL?>/admin/index.php/sitecms/editpage?pageid=<?php echo $page->pageid;?>';">Edit</button>
+		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}" 
+		onclick="window.location='<?php echo adminurl('/sitecms/editpage?pageid='.$page->pageid);?>';">Edit</button>
 
 		<button class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}" 
 			id="<?php echo $page->pageid;?>"
-			href="<?php echo SITE_URL?>/admin/action.php/sitecms/viewpages?action=deletepage&pageid=<?php echo $page->pageid;?>">Delete</button>
+			href="<?php echo adminaction('/sitecms/viewpages?action=deletepage&pageid='.$page->pageid);?>">Delete</button>
 	</td>
 </tr>
 <?php

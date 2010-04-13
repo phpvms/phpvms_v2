@@ -1,25 +1,19 @@
 <h3>VA Stats:</h3>
 <table width="100%">
 	<tr>
-	<td valign="top" width="5%" nowrap="nowrap" style="padding-left: 10px;">		
-	<p>
+	<td valign="top" width="33%" nowrap="nowrap">		
 		<strong>Users Online: </strong><?php echo count(StatsData::UsersOnline()); ?><br />
-		<strong>Guests Online: </strong><?php echo count(StatsData::GuestsOnline()); ?><br />
-	</p>
+		<strong>Guests Online: </strong><?php echo count(StatsData::GuestsOnline()); ?>
 	</td>
-	<td valign="top" width="5%" nowrap="nowrap" style="padding: 10px;">
-	<p>
+	<td valign="top" width="33%" nowrap="nowrap" >
 		<strong>Total Pilots: </strong><?php echo StatsData::PilotCount(); ?><br />
 		<strong>Total Flights: </strong><?php echo StatsData::TotalFlights(); ?><br />
 		<strong>Total Hours Flown: </strong><?php echo StatsData::TotalHours(); ?>
-	</p>
 	</td>
-	<td valign="top" width="5%" nowrap="nowrap" style="padding: 10px;">
-	<p>
+	<td valign="top" width="33%" nowrap="nowrap" >
 		<strong>Miles Flown: </strong><?php echo StatsData::TotalMilesFlown(); ?><br />
 		<strong>Total Schedules: </strong><?php echo StatsData::TotalSchedules(); ?><br />
 		<strong>Flights Today: </strong><?php echo StatsData::TotalFlightsToday();?>
-	</p>
 	</td>
 	</tr>
 </table>
@@ -30,7 +24,7 @@ echo $updateinfo;
 <h3>Pilot Reports for the Past Week</h3>
 <div align="center" style="width=98%">
 	<div id="reportcounts" align="center" width="400px" >
-	<img src="<?php echo SITE_URL?>/lib/images/loading.gif" /><br /><br />
+	<img src="<?php echo fileurl('/lib/images/loading.gif');?>" /><br /><br />
 	Loading...
 	</div>
 </div>
@@ -39,7 +33,7 @@ if(Config::Get('VACENTRAL_ENABLED') == true && $unexported_count > 0)
 { ?>
 	<h3>vaCentral Status: </h3>
 	<p>You have <strong><?php echo $unexported_count?></strong> PIREPS waiting for export to vaCentral. 
-	<a href="<?php echo SITE_URL ?>/admin/index.php/vacentral/sendqueuedpireps">Click here to send them</a> </p>
+	<a href="<?php echo adminurl('/vacentral/sendqueuedpireps'); ?>">Click here to send them</a> </p>
 <?php
 } ?>
 <h3 style="margin-bottom: 0px;">Latest News</h3>
@@ -48,8 +42,8 @@ if(Config::Get('VACENTRAL_ENABLED') == true && $unexported_count > 0)
 	<p><a href="http://www.phpvms.net" target="_new">View All News</a></p>
 	</div>
 </td>
-<!--<?php
-if(Config::Get('VACENTRAL_ENABLED') == true)
+<?php
+/*if(Config::Get('VACENTRAL_ENABLED') == true)
 {
 ?>
 <td valign="top" valign="50%">
@@ -59,10 +53,8 @@ if(Config::Get('VACENTRAL_ENABLED') == true)
 	<p><a href="http://www.vacentral.net" target="_new">View All News</a></p>
 </td>
 <?php
-}
-?>-->
-	
-
+}*/
+?>
 <?php
 /*
 	Added in 2.0!
@@ -77,5 +69,5 @@ $chart_height = '200';
 swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
 	"reportcounts", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
 	"9.0.0", "expressInstall.swf", 
-	{"data-file":"<?php echo SITE_URL;?>/admin/action.php/dashboard/pirepcounts"});
+	{"data-file":"<?php echo adminaction('/dashboard/pirepcounts');?>"});
 </script>

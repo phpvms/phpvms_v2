@@ -1,7 +1,7 @@
+<h3><?php echo $title?></h3>
 <?php
 Template::Show('finance_header.tpl'); 
 ?>
-<h3><?php echo $title?></h3>
 <table width="600px" class="balancesheet" cellpadding="0" cellspacing="0">
 
 	<tr class="balancesheet_header">
@@ -106,7 +106,7 @@ $chart_height = '500';
 swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
 	"summary_chart", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
 	"9.0.0", "expressInstall.swf", 
-	{"data-file":"<?php echo SITE_URL ?>/admin/action.php/finance/viewexpensechart?<?php echo $_SERVER['QUERY_STRING']?>"});
+	{"data-file":"<?php echo adminaction('/finance/viewexpensechart?'.$_SERVER['QUERY_STRING']);?>"});
 </script>
 <?php
 /* End added in 2.0

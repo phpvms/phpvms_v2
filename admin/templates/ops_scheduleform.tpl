@@ -1,6 +1,6 @@
 <div id="wrapper">
 <h3><?php echo $title?></h3>
-<form action="<?php echo SITE_URL?>/admin/index.php/operations/schedules" method="post">
+<form action="<?php echo adminurl('/operations/schedules');?>" method="post">
 <table width="100%" class="tablesorter">
 <tr>
 	<td valign="top"><strong>Code: </strong></td>
@@ -35,26 +35,6 @@
 <tr>
 	<td><strong>Arrival Airport:</strong></td>
 	<td><input name="arricao" class="airport_select" value="<?php echo $schedule->arricao;?>" onclick="" />
-	
-		<br />
-		<?php
-		/*<select name="arricao" id="arricao">
-		foreach($allairports as $airport)
-		{
-	        if($airport->icao == $schedule->arricao)
-			{
-				$sel = 'selected';
-			}
-			else
-			{
-				$sel = '';
-			}
-	
-			echo '<option value="'.$airport->icao.'" '.$sel.'>'.$airport->icao.' ('.$airport->name.')</option>';
-		}
-		?>
-		</select>
-		*/?>
 	</td>
 </tr>
 <tr>

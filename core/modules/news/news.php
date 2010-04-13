@@ -18,6 +18,11 @@
 
 class News extends CodonModule
 {
+	public function index()
+	{
+		$this->ShowNewsFront(5);
+	}
+	
 	// This function gets called directly in the template
 	public function ShowNewsFront($count=5)
 	{

@@ -31,7 +31,8 @@ foreach($airports as $airport)
 	<td align="center"><?php echo $airport->lng; ?></td>
 	<td align="center"><?php echo  $airport->fuelprice == 0 ? 'live' : $airport->fuelprice; ?></td>
 	<td align="center" width="1%" nowrap>
-		<button id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}" href="<?php echo SITE_URL?>/admin/action.php/operations/editairport?icao=<?php echo $airport->icao?>">Edit</button></td>
+		<button id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}" 
+		href="<?php echo adminaction('/operations/editairport?icao='.$airport->icao);?>">Edit</button></td>
 </tr>
 <?php
 }

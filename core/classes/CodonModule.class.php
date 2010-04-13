@@ -111,4 +111,12 @@ class CodonModule
 		$args = func_get_args();
 		return call_user_func_array(array($instance,'fb'),$args);
 	}
+	
+	public function callHook($hook_name)
+	{
+		if(file_exists(SITE_ROOT.'/core/hooks/'.$hook_name))
+		{
+			include SITE_ROOT.'/core/hooks/'.$hook_name;
+		}
+	}
 }

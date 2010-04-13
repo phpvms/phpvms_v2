@@ -1,5 +1,5 @@
 <h3><?php echo $title?></h3>
-<form id="form" method="post" action="<?php echo SITE_URL?>/admin/action.php/downloads/overview">
+<form id="form" method="post" action="<?php echo adminaction('/downloads/overview'); ?>">
 <dl>
 	<dt>Category Name</dt>
 	<dd><input name="name" type="text" value="<?php echo $category->name; ?>" /></dd>

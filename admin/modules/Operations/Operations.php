@@ -310,59 +310,79 @@ class Operations extends CodonModule
 		$limit = $this->get->rows; // get how many rows we want to have into the grid 
 		$sidx = $this->get->sidx; // get index row - i.e. user click to sort 
 		$sord = $this->get->sord; // get the direction 
+		if(!$sidx) $sidx =1;
 		
 		# http://dev.phpvms.net/admin/action.php/operations/
 		# ?_search=true&nd=1270940867171&rows=20&page=1&sidx=flightnum&sord=asc&searchField=code&searchString=TAY&searchOper=eq
 		
-		# Set the order, from what's passed
-		Config::Set('SCHEDULES_ORDER_BY', "{$sidx} {$sord}");
-		if($this->get->_search === 'true')
+		/* Do the search using jqGrid */
+		$where = array();
+		if($this->get->_search == 'true') 
 		{
-			$where = array(
-				$this->get->searchField => $this->get->searchString
-			);
-		}
-		
-		$count = count(SchedulesData::findSchedules($where));
-		if( $count > 0)
-			$total_pages = ceil($count/$limit);
-		else
-			$total_pages = 0; 
-		
-		if ($page > $total_pages) 
-		{
-			$page = $total_pages; 
-		}
+			$searchstr = jqgrid::strip($this->get->filters);
+			$where_string = jqgrid::constructWhere($searchstr);
 			
-		$start = $limit * $page - $limit;
-		if($start < 0) { $start = 0; }
+			# Append to our search, add 1=1 since it comes with AND
+			#	from above
+			$where[] = "1=1 {$where_string}";
+		}
+		
+		Config::Set('SCHEDULES_ORDER_BY', "{$sidx} {$sord}");
+		
+		# Do a search without the limits so we can find how many records
+		$count = count(SchedulesData::findSchedules($where));
 	
+		if($count > 0) 
+		{
+			$total_pages = ceil($count/$limit);
+		} 
+		else 
+		{
+			$total_pages = 0;
+		}
+		
+        if ($page > $total_pages) 
+        {
+			$page = $total_pages;
+		}
+		
+		$start = $limit * $page - $limit; // do not put $limit*($page - 1)
+		if ($start < 0) 
+		{
+			$start = 0;
+		}
+		
+		# And finally do a search with the limits
 		$schedules = SchedulesData::findSchedules($where, $limit, $start);
+		
+		# Form the json header
 		$json = array(
 			'page' => $page,
-			'total' => $count,
-			'records' => $page,
+			'total' => $total_pages,
+			'records' => $count,
 			'rows' => array()
 		);
 		
+		# Add each row to the above array
 		foreach($schedules as $row)
 		{
 			if($row->route != '')
 			{
-				$route = '<a id="dialog" class="jqModal" '
-						.'href="'.SITE_URL.'/admin/action.php/operations/viewmap?type=schedule&id='.$sched->id.'">View</a>';
+				$route = '<a href="#" onclick="showroute(\''.$row->id.'\'); return false;">View</a>';
 			}
 			else
 			{
 				$route = '-';
 			}
 			
-			$edit = '<a href="'.SITE_URL.'/admin/index.php/operations/editschedule?id='.$row->id.'">Edit</a>';
+			$edit = '<a href="'.adminurl('/operations/editschedule?id='.$row->id).'">Edit</a>';
 			$delete = '<a href="#" onclick="deleteschedule('.$row->id.'); return false;">Delete</a>';
 			
 			$tmp = array(
 				'id' => $row->id,
 				'cell' => array(
+					# Each column, in order
+					$row->id,
 					$row->code,
 					$row->flightnum,
 					$row->depicao,

@@ -35,10 +35,10 @@ foreach($allexpenses as $expense)
 	<td align="center"><?php echo $expense_list[$expense->type]; ?></td>
 	<td align="center" width="1%" nowrap>
 		<button id="dialog" class="jqModal button" 
-			href="<?php echo SITE_URL?>/admin/action.php/finance/editexpense?id=<?php echo $expense->id;?>">
+			href="<?php echo adminaction('/finances/editexpense'.$expense->id);?>">
 		Edit</button>
 		
-		<button href="<?php echo SITE_URL?>/admin/action.php/finance/viewexpenses" action="deleteexpense"
+		<button href="<?php echo adminaction('/finances/viewexpenses');?>" action="deleteexpense"
 			id="<?php echo $expense->id;?>" class="deleteitem button">Delete</button>
 	</td>
 </tr>

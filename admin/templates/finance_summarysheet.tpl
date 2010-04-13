@@ -123,7 +123,7 @@ $chart_height = '500';
 swfobject.embedSWF("<?php echo fileurl('/lib/js/ofc/open-flash-chart.swf');?>", 
 	"summary_chart", "<?php echo $chart_width;?>", "<?php echo $chart_height;?>", 
 	"9.0.0", "expressInstall.swf", 
-	{"data-file":"<?php echo SITE_URL ?>/admin/action.php/finance/viewmonthchart?<?php echo $_SERVER['QUERY_STRING']?>"});
+	{"data-file":"<?php echo adminaction('/finance/viewmonthchart?'.$_SERVER['QUERY_STRING']); ?>"});
 </script>
 <?php
 /* End added in 2.0

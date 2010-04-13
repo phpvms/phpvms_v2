@@ -26,7 +26,7 @@ foreach($allairlines as $airline)
 	<td align="center"><?php echo ($airline->enabled == 1) ? 'Yes' : 'No'; ?></td>
 	<td align="center" width="1%" nowrap>
 	<button id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}" 
-		href="<?php echo SITE_URL?>/admin/action.php/operations/editairline?id=<?php echo $airline->id;?>">
+		href="<?php echo adminaction('/operations/editairline?id='.$airline->id);?>">
 		Edit</button>
 	</td>
 </tr>

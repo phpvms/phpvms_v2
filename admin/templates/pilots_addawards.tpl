@@ -9,7 +9,7 @@ if(!$allawards)
 }
 ?>
 
-<form id="addaward" method="POST" action="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pilotawards">
+<form id="addaward" method="POST" action="<?php echo adminaction('/pilotadmin/pilotawards');?>">
 <select name="awardid">
 <?php
 foreach($allawards as $award)

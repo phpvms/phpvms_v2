@@ -35,7 +35,6 @@ class PIREPAdmin extends CodonModule
 		$this->viewpending();
 	}
 	
-	
 	protected function post_action()
 	{
 		if(isset($this->post->action))
@@ -304,6 +303,7 @@ class PIREPAdmin extends CodonModule
 			
 		$pirep_details  = PIREPData::GetReportDetails($pirepid);
 		
+		# See if it's already been accepted
 		if(intval($pirep_details->accepted) == PIREP_ACCEPTED) return;
 	
 		# Update pilot stats
@@ -317,6 +317,9 @@ class PIREPAdmin extends CodonModule
 		StatsData::UpdateTotalHours();
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Approved PIREP #'.$pirepid);
+		
+		# Call the event
+		CodonEvent::Dispatch('pirep_accepted', 'PIREPAdmin', $pirep_details);
 	}
 	
 	/** 
@@ -328,10 +331,12 @@ class PIREPAdmin extends CodonModule
 		$pirepid = $this->post->id;
 		if($pirepid == '') return;
 		
+		# Call the event
+		CodonEvent::Dispatch('pirep_deleted', 'PIREPAdmin', $pirepid);
+		
 		PIREPData::DeleteFlightReport($pirepid);
 		StatsData::UpdateTotalHours();
 	}
-		
 	
 	/**
 	 * Reject the report, and then send them the comment
@@ -374,6 +379,9 @@ class PIREPAdmin extends CodonModule
 		}
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Rejected PIREP #'.$pirepid);
+		
+		# Call the event
+		CodonEvent::Dispatch('pirep_rejected', 'PIREPAdmin', $pirep_details);
 	}
 	
 	protected function edit_pirep_post()
@@ -400,22 +408,23 @@ class PIREPAdmin extends CodonModule
 		$fuelcost = $this->post->fuelused * $this->post->fuelunitcost;
 		
 		# form the fields to submit
-		$data = array('pirepid'=>$this->post->pirepid,
-					  'code'=>$this->post->code,
-					  'flightnum'=>$this->post->flightnum,
-					  'leg'=>$this->post->leg,
-					  'depicao'=>$this->post->depicao,
-					  'arricao'=>$this->post->arricao,
-					  'aircraft'=>$this->post->aircraft,
-					  'flighttime'=>$this->post->flighttime,
-					  'load'=>$this->post->load,
-					  'price'=>$this->post->price,
-					  'pilotpay' => $this->post->pilotpay,
-					  'fuelused'=>$this->post->fuelused,
-					  'fuelunitcost'=>$this->post->fuelunitcost,
-					  'fuelprice'=>$fuelcost,
-					  'expenses'=>$this->post->expenses
-				);
+		$data = array(
+			'pirepid'=>$this->post->pirepid,
+			'code'=>$this->post->code,
+			'flightnum'=>$this->post->flightnum,
+			'leg'=>$this->post->leg,
+			'depicao'=>$this->post->depicao,
+			'arricao'=>$this->post->arricao,
+			'aircraft'=>$this->post->aircraft,
+			'flighttime'=>$this->post->flighttime,
+			'load'=>$this->post->load,
+			'price'=>$this->post->price,
+			'pilotpay' => $this->post->pilotpay,
+			'fuelused'=>$this->post->fuelused,
+			'fuelunitcost'=>$this->post->fuelunitcost,
+			'fuelprice'=>$fuelcost,
+			'expenses'=>$this->post->expenses
+		);
 					 		
 		if(!PIREPData::UpdateFlightReport($this->post->pirepid, $data))
 		{

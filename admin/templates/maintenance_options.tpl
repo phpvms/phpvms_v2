@@ -10,7 +10,7 @@
 <tbody>
 	<tr>
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resethours">Reset Hours</a>
+		<a href="<?php echo adminurl('/maintenance/resethours');?>">Reset Hours</a>
 		</strong>
 	</td>
 	<td>This will reset your VA's total hours count<br /></td>
@@ -19,7 +19,7 @@
 	<tr>
 		<td>
 			<strong>
-			<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetacars">Reset ACARS</a>
+			<a href="<?php echo adminurl('/maintenance/resetacars');?>">Reset ACARS</a>
 			</strong>
 		</td>
 		<td>Empties the ACARS table, if you're having problems with ACARS updates<br /></td>
@@ -28,7 +28,7 @@
 	
 	<tr>
 		<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetsignatures">Reset Signatures</a>
+		<a href="<?php echo adminurl('/maintenance/resetsignatures');?>">Reset Signatures</a>
 		</strong>
 	</td>
 	<td>Select this option to reset your member's signatures. If you change the background, regenerate them.
@@ -39,7 +39,7 @@
 	<tr>
 	
 		<td><strong>
-			<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetdistances">Recalculate Distances</a>
+			<a href="<?php echo adminurl('/maintenance/resetdistances');?>">Recalculate Distances</a>
 			</strong>
 		</td>
 		<td>
@@ -51,7 +51,7 @@
 	
 	<tr>
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpirepcount">Reset Pilot PIREP Count</a>
+		<a href="<?php echo adminurl('/maintenance/resetpirepcount');?>">Reset Pilot PIREP Count</a>
 		</strong>
 	</td>
 	<td>Reset flight count totals for pilots. Use if the PIREP counts are off.</td>
@@ -59,7 +59,7 @@
 
 	<tr>
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpilotpay">Reset Pilot Payments</a>
+		<a href="<?php echo adminurl('/maintenance/resetpilotpay');?>">Reset Pilot Payments</a>
 		</strong>
 	</td>
 	<td>Scans the PIREPs and flighttimes, adjust pilot pay to the rate indicated for that pilot in that PIREP.</td>
@@ -68,7 +68,7 @@
 	<tr>
 	
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpirepfinance">Reset PIREP Finances</a>
+		<a href="<?php echo adminurl('/maintenance/resetpirepfinance');?>">Reset PIREP Finances</a>
 		</strong>
 	</td>
 	<td>This resets financial data to existing PIREPS which do not have any. NOTICE! This will reset <strong>all</strong> of your PIREPS to the current finances (expenses, fuel prices, etc)</td>
@@ -76,7 +76,7 @@
 	
 	<tr>
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetscheduleroute">Reset cached Schedule routes</a>
+		<a href="<?php echo adminurl('/maintenance/resetscheduleroute');?>">Reset cached Schedule routes</a>
 		</strong>
 	</td>
 	<td>The details of a route are cached, this resets the cache (doesn't affect the entered route), for schedules.<br /></td>
@@ -84,7 +84,7 @@
 	
 	<tr>
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/resetpireproute">Reset cached PIREP routes</a>
+		<a href="<?php echo adminurl('/maintenance/resetpireproute');?>">Reset cached PIREP routes</a>
 		</strong>
 	</td>
 	<td>The details of a route are cached, this resets the cache (doesn't affect the entered route), for PIREPs. <br /></td>
@@ -92,7 +92,7 @@
 	
 	<tr>
 	<td><strong>
-		<a href="<?php echo SITE_URL?>/admin/index.php/maintenance/optimizetables">Optimize Tables</a>
+		<a href="<?php echo adminurl('/maintenance/optimizetables');?>">Optimize Tables</a>
 		</strong>
 	</td>
 	<td>Optimize and reindex all of your tables. Good to do often.<br /></td>

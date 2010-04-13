@@ -1,5 +1,5 @@
 <h3>Mass Mailer</h3>
-<form method="post" action="<?php echo SITE_URL ?>/admin/index.php/massmailer/sendmail">
+<form method="post" action="<?php echo adminurl('/massmailer/sendmail');?>">
 <p>
 	<strong>Subject: </strong> <input type="text" name="subject" value="" />
 </p>

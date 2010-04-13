@@ -15,7 +15,7 @@ must be done:</p>
 	
 </ol>
 
-<form enctype="multipart/form-data" action="<?php echo SITE_URL?>/admin/index.php/import/processimport" method="post">
+<form enctype="multipart/form-data" action="<?php echo adminurl('/import/processimport');?>" method="post">
 Choose your import file (*.csv): <br />
 	<input name="uploadedfile" type="file" /><br />
 	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />

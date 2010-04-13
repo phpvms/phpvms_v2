@@ -25,8 +25,9 @@ else
 		<?php
 		if(PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN)) 
 		{ ?>
-			<button href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" pilotid="<?php echo $pilotid;?>" 
-				action="removegroup" id="<?php echo $group->groupid;?>" class="pilotgroupajax button {button:{icons:{primary:'ui-icon-trash'}}}">Remove</button></td>
+			<button href="<?php echo adminaction('/pilotadmin/viewpilots');?>" pilotid="<?php echo $pilotid;?>" 
+				action="removegroup" id="<?php echo $group->groupid;?>" 
+				class="pilotgroupajax button {button:{icons:{primary:'ui-icon-trash'}}}">Remove</button></td>
 		<?php
 		} ?>
 	</tr>		
@@ -53,8 +54,7 @@ if($total == 0)
 	return;
 }
 ?>
-<form id="selectpilotgroup" action="<?php echo SITE_URL?>/admin/action.php/pilotadmin/viewpilots" method="post">
-
+<form id="selectpilotgroup" action="<?php echo adminaction('/pilotadmin/viewpilots');?>" method="post">
 <dl>
 	<dt>Select Group:</dt>
 	<dd><select name="groupname">

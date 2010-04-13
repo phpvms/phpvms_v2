@@ -1,6 +1,6 @@
 <h3><?php echo $title;?></h3>
 <p>* Denotes required fields</p>
-<form action="<?php echo SITE_URL?>/admin/index.php/operations/aircraft" method="post">
+<form action="<?php echo adminurl('/operations/aircraft');?>" method="post">
 <dl>
 <dt>* Aircraft ICAO Code</dt>
 <dd><input name="icao" type="text" value="<?php echo $aircraft->icao; ?>" /></dd>

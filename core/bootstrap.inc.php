@@ -80,19 +80,25 @@ function post_module_load()
    return true;
 }
 
+function adminurl($path)
+{
+	if($path[0] != '/')
+		$path='/'.$path;
+	
+	return SITE_URL.'/admin/index.php'.$path;
+}
+
 function url($path)
 {
-	$url = SITE_URL;
-		
 	if($path[0] != '/')
 		$path='/'.$path;
 			
 	if(Config::Get('URL_REWRITE') == true)
 	{
-		return $url.$path;
+		return SITE_URL.$path;
 	}
 		
-	return $url.'/index.php'.$path;
+	return SITE_URL.'/index.php'.$path;
 }
 
 function cndebug($txt)
@@ -100,19 +106,25 @@ function cndebug($txt)
 	Debug::log($txt);
 }
 
+function adminaction($path)
+{
+	if($path[0] != '/')
+		$path='/'.$path;
+			
+	return SITE_URL.'/admin/action.php'.$path;
+}
+
 function actionurl($path)
 {
-	$url = SITE_URL;
-	
 	if($path[0] != '/')
 		$path='/'.$path;
 	
 	if(Config::Get('URL_REWRITE') == true)
 	{
-		return $url.$path;
+		return SITE_URL.$path;
 	}
 	
-	return $url.'/action.php'.$path;
+	return SITE_URL.'/action.php'.$path;
 }
 
 function fileurl($path)

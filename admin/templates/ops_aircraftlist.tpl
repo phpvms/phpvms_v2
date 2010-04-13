@@ -33,7 +33,7 @@ foreach($allaircraft as $aircraft)
 	<td align="center"><?php echo $aircraft->maxcargo; ?></td>
 	<td align="center" width="1%" nowrap>
 		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}" 
-			onclick="window.location='<?php echo SITE_URL?>/admin/index.php/operations/editaircraft?id=<?php echo $aircraft->id;?>';">Edit</button>
+			onclick="window.location='<?php echo adminurl('/operations/editaircraft?id='.$aircraft->id);?>';">Edit</button>
 	</td>
 </tr>
 <?php

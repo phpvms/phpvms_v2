@@ -28,7 +28,7 @@ foreach($allgroups as $group)
 	{
 	?>
 		<a class="button {button:{icons:{primary:'ui-icon-wrench'}}}" 
-			href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/editgroup/?groupid=<?php echo $group->groupid?>">
+			href="<?php echo adminurl('/pilotadmin/editgroup/?groupid='.$group->groupid);?>">
 			Edit</a>	
 	<?php
 	}

@@ -12,18 +12,18 @@ foreach($allcategories as $category)
 <div id="<?php echo $category->id;?>"
 	<h3><?php echo $category->name?> 
 		<span style="font-size: 8pt">
-		<button id="dialog" class="jqModal button" 
-			href="<?php echo SITE_URL?>/admin/action.php/downloads/editcategory?id=<?php echo $category->id?>">Edit</button>  
+		<button id="dialog" class="jqModal button {button:{icons:{primary:'ui-icon-wrench'}}}" 
+			href="<?php echo adminaction('/downloads/editcategory?id='.$category->id);?>">Edit</button>  
 			
-		<button class="ajaxcallconfirm button" action="deletecategory" id="<?php echo $category->id?>" 
-			href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</button>   
+		<button class="ajaxcallconfirm button {button:{icons:{primary:'ui-icon-trash'}}}" action="deletecategory" id="<?php echo $category->id?>" 
+			href="<?php echo adminaction('/downloads')?>">Delete</button>   
 			
-		<button id="dialog" class="jqModal button" 
-			href="<?php echo SITE_URL?>/admin/action.php/downloads/adddownload?cat=<?php echo $category->id?>">Add Download</button>
+		<button id="dialog" class="jqModal button {button:{icons:{primary:'ui-icon-circle-plus'}}}" 
+			href="<?php echo adminaction('/downloads/adddownload?cat='.$category->id);?>">Add Download</button>
 		</span>
 	</h3>
 <?php
-	$alldownloads = DownloadData::GetDownloads($category->id);
+	$alldownloads = DownloadData::getDownloads($category->id);
 	
 	if(!$alldownloads)
 	{
@@ -42,7 +42,9 @@ foreach($allcategories as $category)
 		</tr>
 		</thead>
 		<tbody>
-<?php	foreach($alldownloads as $download) { 
+<?php	
+foreach($alldownloads as $download) 
+{ 
 ?>
 <tr id="row<?php echo $download->id?>">
 	<td><?php echo '<a href="'.$download->link.'">'.$download->name.'</a>' ?></td>
@@ -51,15 +53,14 @@ foreach($allcategories as $category)
 	
 	<td width="1%" nowrap>
 		<button id="dialog" class="jqModal {button:{icons:{primary:'ui-icon-wrench'}}}" 
-			href="<?php echo SITE_URL?>/admin/action.php/downloads/editdownload?id=<?php echo $download->id?>">
-			Edit</button>
+			href="<?php echo adminaction('/downloads/editdownload?id='.$download->id);?>">Edit</button>
 			
 		<button class="deleteitem {button:{icons:{primary:'ui-icon-trash'}}}" action="deletedownload" id="<?php echo $download->id?>"
-			href="<?php echo SITE_URL?>/admin/action.php/downloads">Delete</button>	
+			href="<?php echo adminaction('/downloads');?>">Delete</button>	
 	</td>
 </tr>
-<?php	} 
-
+<?php	
+}
 ?>
 		</tbody>
 		</table>

@@ -1,5 +1,5 @@
 <h3><?php echo $title; ?></h3>
-<form action="<?php echo SITE_URL;?>/admin/index.php/pilotadmin/pilotgroups" method="post">
+<form action="<?php echo adminurl('/pilotadmin/pilotgroups');?>" method="post">
 
 <table id="tabledlist" class="tablesorter">
 <tbody>

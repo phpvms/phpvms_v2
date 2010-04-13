@@ -1,5 +1,5 @@
 <h3><?php echo $title?></h3>
-<form id="form" action="<?php echo SITE_URL?>/admin/action.php/operations/airports" method="post">
+<form id="form" action="<?php echo adminaction('/operations/airports');?>" method="post">
 <dl>
 <dt>Airport ICAO Code *</dt>
 <dd><input id="airporticao" name="icao" type="text" value="<?php echo $airport->icao?>" /> 
@@ -50,7 +50,7 @@
 <script type="text/javascript">
 $("#airporticao").bind("blur", function()
 {
-	$.get(baseurl+"/admin/action.php/operations/getfuelprice?icao="+$(this).val(), function(data) {
+	$.get(<?php echo adminaction('/operations/getfuelprice')?>?icao="+$(this).val(), function(data) {
 		$("#livepriceavailable").html(data);
 	});
 });

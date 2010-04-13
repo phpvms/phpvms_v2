@@ -16,20 +16,20 @@ if(!$allawards)
 </thead>
 <tbody>
 <?php 
-	foreach($allawards as $award)
-	{
+foreach($allawards as $award)
+{
 ?>
-	<tr>
-		<td><?php echo $award->name .': '.$award->descrip?></td>
-		<td>
-		<button href="<?php echo SITE_URL?>/admin/action.php/pilotadmin/pilotawards" action="deleteaward" 
-			id="<?php echo $award->id;?>" class="awardajaxcall {button:{icons:{primary:'ui-icon-trash'}}}" pilotid="<?php echo $award->pilotid?>">
-			Delete</a>
-		</td>
-	</tr>
+<tr>
+	<td><?php echo $award->name .': '.$award->descrip?></td>
+	<td>
+	<button href="<?php echo adminaction('/pilotadmin/pilotawards');?>" action="deleteaward" 
+		id="<?php echo $award->id;?>" class="awardajaxcall {button:{icons:{primary:'ui-icon-trash'}}}" pilotid="<?php echo $award->pilotid?>">
+		Delete</a>
+	</td>
+</tr>
 
 <?php		
-	}
+}
 ?>
 </tbody>
 </table>

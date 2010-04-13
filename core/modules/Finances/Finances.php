@@ -100,7 +100,7 @@ class Finances extends CodonModule
 		}
 		
 		// Add each set
-		OFCharts::add_data_set($titles, $gross_data, 'Total Revenue', '#FF6633');
+		OFCharts::add_data_set($titles, $gross_data, 'Net Profit', '#FF6633');
 		OFCharts::add_data_set($titles, $expense_data, 'Expenses', '#2EB800');
 		OFCharts::add_data_set($titles, $fuel_data, 'Fuel Costs', '#008AB8');
 		

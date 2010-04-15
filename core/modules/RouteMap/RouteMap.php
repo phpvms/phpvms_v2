@@ -3,11 +3,6 @@
 class RouteMap extends CodonModule 
 {
 	
-	public function __construct()
-	{
-		CodonRewrite::AddRule('routemap', array('maptype', 'hub'));		
-	}
-	
 	public function index()
 	{
 		

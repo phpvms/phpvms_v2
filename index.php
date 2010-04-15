@@ -39,17 +39,6 @@
 
 include 'core/codon.config.php';
 
-# Check if we're in maintenance mode, disable the site to non-admins
-if(Config::Get('MAINTENANCE_MODE') == true  
-	&& !Auth::LoggedIn() 
-	&& !PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN))
-{
-	echo '<html><head><title>Down for maintenance - '.SITE_NAME.'</title></head><body>';
-	Debug::showCritical(Config::Get('MAINTENANCE_MESSAGE'), 'Down for maintenance');
-	echo '</body></html>';
-	die();
-}
-
 if(Config::Get('XDEBUG_BENCHMARK'))
 {
 	$memory_start = xdebug_memory_usage();
@@ -68,7 +57,7 @@ Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
 ob_start();
-MainController::RunAllActions(Config::Get('RUN_MODULE'));
+MainController::RunAllActions();
 $page_content = ob_get_clean();
 
 $BaseTemplate->Set('title', MainController::$page_title .' - '.SITE_NAME);

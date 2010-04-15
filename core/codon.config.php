@@ -106,13 +106,6 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 		Debug::showCritical(Lang::gs('database.connection.failed').' ('.DB::$errno.': '.DB::$error.')');
 		die();
 	}
-	
-	/* Include doctrine and all of it's options */
-	/*include CORE_PATH.DS.'lib'.DS.'doctrine'.DS.'Doctrine.php';
-	spl_autoload_register(array('Doctrine', 'autoload'));
-	$conn = Doctrine_Manager::connection(DBASE_TYPE.'://'.DBASE_USER.':'.DBASE_PASS.'@'.DBASE_SERVER.'/'.DBASE_NAME);
-	$conn->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
-	Doctrine::loadModels(DOCTRINE_MODELS_PATH);*/
 }
 
 include CORE_PATH.DS.'bootstrap.inc.php';
@@ -126,5 +119,5 @@ MainController::loadEngineTasks();
 
 if(function_exists('post_module_load'))
 	post_module_load();
-
+	
 define('SKINS_PATH', LIB_PATH.DS.'skins'.DS.CURRENT_SKIN);

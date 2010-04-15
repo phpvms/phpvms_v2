@@ -29,12 +29,12 @@
 </tr>
 <tr>
 	<td width="3%" nowrap><strong>Departure Airport:</strong></td>
-	<td><input name="depicao" class="airport_select" value="<?php echo $schedule->depicao;?>" onclick="" />
+	<td><input id="depicao" name="depicao" class="airport_select" value="<?php echo $schedule->depicao;?>" onclick="" />
 	</td>
 </tr>
 <tr>
 	<td><strong>Arrival Airport:</strong></td>
-	<td><input name="arricao" class="airport_select" value="<?php echo $schedule->arricao;?>" onclick="" />
+	<td><input id="arricao" name="arricao" class="airport_select" value="<?php echo $schedule->arricao;?>" onclick="" />
 	</td>
 </tr>
 <tr>
@@ -174,9 +174,7 @@ $(".preview").click(function()
 		+"&arricao="+arricao
 		+"&route="+route;
 			
-	$('#jqmdialog').jqm({
-        ajax: url
-	}).jqmShow();
+	$('#jqmdialog').jqm({ajax: url}).jqmShow();
 	
 	return false;
 });

@@ -307,36 +307,17 @@ if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 {	
 	Template::SetTemplatePath(SITE_ROOT.'/admin/templates');
 	
-	Config::Set('RUN_SINGLE_MODULE', true);
 	Config::Set('MODULES_PATH', SITE_ROOT.'/admin/modules');
 	Config::Set('DEFAULT_MODULE', 'Dashboard');
 	Config::Set('MODULES_AUTOLOAD', true);
-	Config::Set('ACTIVE_MODULES', array());
-	
-	CodonRewrite::AddRule('default', array('page'));
 }
 else 
 {	
 	Template::SetTemplatePath(Config::Get('BASE_TEMPLATE_PATH'));
 	
-	Config::Set('RUN_SINGLE_MODULE', true);
 	Config::Set('MODULES_PATH', SITE_ROOT.'/core/modules');
 	Config::Set('DEFAULT_MODULE', 'Frontpage');
 	Config::Set('MODULES_AUTOLOAD', true);
-	Config::Set('ACTIVE_MODULES', array());
-	
-	/* Deprecated!!!! */
-	/* Rules for the controllers */
-	CodonRewrite::AddRule('default', array('page'));
-	CodonRewrite::AddRule('acars', array('page', 'action'));
-	CodonRewrite::AddRule('downloads', array('id'));
-	CodonRewrite::AddRule('login', array('page', 'redir'));
-	CodonRewrite::AddRule('logout', array('page', 'redir'));
-	CodonRewrite::AddRule('pireps', array('page', 'id', 'icao'));
-	CodonRewrite::AddRule('pilots', array('page', 'pilotid'));
-	CodonRewrite::AddRule('profile', array('page', 'pilotid'));
-	CodonRewrite::AddRule('schedules', array('page', 'id'));
-	CodonRewrite::AddRule('xml', array('request'));
 }
 
 /* Cache settings */

@@ -51,44 +51,6 @@ class CodonRewrite
 	public static $peices;
 	public static $run=false;
 	
-		
-	/**
-	 * Add a rewrite rule for the module
-	 *
-	 * @param string $module Module name
-	 * @param array $params The rewrite rules in order array('parameter1'=>'type', 'parameter2')
-	 *			Type can be 'string', 'int', 'float', optional, blank defaults to string
-	 * @return mixed This is the return value description
-	 */
-	public static function AddRule($module, $params)
-	{	
-		# Clean
-		$set_params=array();
-		$module = strtolower($module);
-		
-		# Format the rules, make sure we arrange
-		foreach($params as $key=>$value)
-		{
-			# If it wasn't done as $key=>$value, just $key,
-			#	set the default value type as a string
-			if(is_numeric($key))
-				$set_params[$value]='string';
-			else
-				$set_params[$key]=$value;
-		}	
-		
-		
-		self::$rewrite_rules[$module] = $set_params;
-		
-		# This is for if we've already processed the rules 
-		#	once. This will allow the rules to be changed
-		#	"on the fly", for example, inside a controller
-		if(self::$run == true)
-		{
-			# Reprocess the rules
-			self::ProcessModuleRewrite($module);
-		}
-	}
 	
 	/**
 	 * Process the rewrite rules, store the results 
@@ -130,6 +92,9 @@ class CodonRewrite
 		unset(self::$peices[0]);
 		unset(self::$peices[1]);
 		
+		# Restored, some addons are relying on this
+		$_GET['module'] = $module_name;
+				
 		self::$controller = new stdClass;
 		self::$controller->module = $module_name;
 		self::$controller->controller = $module_name;
@@ -145,7 +110,7 @@ class CodonRewrite
 		
 		# Create the object to hold all of our stuff
 		self::$get = new stdClass;
-		self::$get->action = self::$current_action;
+		//self::$get->action = self::$current_action;
 					
 		# If we haven't specified specific rules for a module,
 		#	Then we use the rules we made for "default"
@@ -155,7 +120,7 @@ class CodonRewrite
 		}
 		
 		# This parses now the rules for a specific module
-		self::ProcessModuleRewrite($module_name);
+		//self::ProcessModuleRewrite($module_name);
 				
 		# And this tacks on our $_GET rules
 		parse_str($_SERVER['QUERY_STRING'], $get_extra);
@@ -171,14 +136,56 @@ class CodonRewrite
 	}
 	
 	/**
+	 * Add a rewrite rule for the module
+	 * 
+	 * @deprecated
+	 *
+	 * @param string $module Module name
+	 * @param array $params The rewrite rules in order array('parameter1'=>'type', 'parameter2')
+	 *			Type can be 'string', 'int', 'float', optional, blank defaults to string
+	 * @return mixed This is the return value description
+	 */
+	/*public static function AddRule($module, $params)
+	{	
+		# Clean
+		$set_params=array();
+		$module = strtolower($module);
+		
+		# Format the rules, make sure we arrange
+		foreach($params as $key=>$value)
+		{
+			# If it wasn't done as $key=>$value, just $key,
+			#	set the default value type as a string
+			if(is_numeric($key))
+				$set_params[$value]='string';
+			else
+				$set_params[$key]=$value;
+		}	
+		
+		
+		self::$rewrite_rules[$module] = $set_params;
+		
+		# This is for if we've already processed the rules 
+		#	once. This will allow the rules to be changed
+		#	"on the fly", for example, inside a controller
+		if(self::$run == true)
+		{
+			# Reprocess the rules
+			#self::ProcessModuleRewrite($module);
+		}
+	}*/
+	
+	/**
 	 * Process an individual module based on the latest rules	
 	 * DEPRECATED
+	 * 
+	 * @deprecated
 	 *
 	 * @param string $module_name Name of the module to re-process
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public static function ProcessModuleRewrite($module_name)
+	/*public static function ProcessModuleRewrite($module_name)
 	{
 		$i=1;
 		
@@ -212,5 +219,5 @@ class CodonRewrite
 				$_GET[$key] = $val;
 			}
 		}
-	}
+	}*/
 }

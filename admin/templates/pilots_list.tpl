@@ -1,58 +1,43 @@
 <h3>Pilots List</h3>
-<div align="center">
-	Find by Last Name: <a href="?admin=viewpilots&letter=">View All</a>
-<?php
-for($i=65;$i<91;$i++)
-{
-	echo '<a href="'.SITE_URL.'/admin/index.php/pilotadmin/viewpilots?letter='.chr($i).'">'.chr($i).'</a> ';
-}
-?>
-</div>
+
+<table id="grid"></table>
+<div id="pager"></div>
 <br />
-<?php
-if(!$allpilots)
-{
-	echo '<p>There are no pilots!</p>';
-	return;
-}
-?>
-<table id="tabledlist" class="tablesorter">
-<thead>
-<tr>
-	<th width="1%">Pilot ID</th>
-	<th>Pilot Name</th>
-	<th>Email</th>
-	<th>Location</th>
-	<th>Status</th>
-	<th nowrap="nowrap" align="center">Rank</th>
-	<th nowrap="">Total Flights</th>
-	<th nowrap="">Total Hours</th>
-	<th>Last IP</th>
-	<th>Options</th>
-</tr>
-</thead>
-<tbody>
-<?php
-foreach($allpilots as $pilot)
-{
-?>
-<tr>
-	<td nowrap><?php echo PilotData::GetPilotCode($pilot->code, $pilot->pilotid);?> </td>
-	<td width="1%" nowrap><a href="<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>"><?php echo $pilot->firstname . ' ' . $pilot->lastname; ?></a></td>
-	<td align="left"><?php echo $pilot->email; ?></td>
-	<td align="center" width="1%"><img src="<?php echo Countries::getCountryImage($pilot->location);?>" </td>
-	<td align="center" width="1%"><?php echo ($pilot->retired==0) ? 'Active' : 'Retired'; ?></td>
-	<td align="center" width="1%" nowrap=""><?php echo $pilot->rank; ?></td>
-	<td align="center" width="1%"><?php echo $pilot->totalflights; ?></td>
-	<td align="center" width="1%"><?php echo $pilot->totalhours; ?></td>
-	<td align="center" width="1%"><?php echo $pilot->lastip; ?></td>
-	<td align="center" width="1%" nowrap>
-		<button class="{button:{icons:{primary:'ui-icon-wrench'}}}"
-			onclick="window.location='<?php echo SITE_URL?>/admin/index.php/pilotadmin/viewpilots?action=viewoptions&pilotid=<?php echo $pilot->pilotid;?>';">
-			Edit</button></td>
-</tr>
-<?php
-}
-?>
-</tbody>
-</table>
+
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo fileurl('/lib/js/jqgrid/css/ui.jqgrid.css');?>" />
+<script src="<?php echo fileurl('/lib/js/jqgrid/js/i18n/grid.locale-en.js');?>" type="text/javascript"></script>
+<script src="<?php echo fileurl('/lib/js/jqgrid/js/jquery.jqGrid.min.js');?>" type="text/javascript"></script>
+
+<script type="text/javascript">
+$("#grid").jqGrid({
+   url: '<?php echo adminaction('/pilotadmin/getpilotsjson');?>',
+   datatype: 'json',
+   mtype: 'GET',
+   colNames: ['','First', 'Last', 'Email', 'Location', 'Status', 'Rank', 'Flights', 'Hours', 'IP', 'Edit'],
+   colModel : [
+		{index: 'id', name: 'id', hidden: true, search: false },
+		{index: 'firstname', name : 'firstname',sortable : true, align: 'left', search: 'true', searchoptions:{sopt:['in']}},
+		{index: 'lastname', name : 'lastname',  sortable : true, align: 'left', searchoptions:{sopt:['in']}},
+		{index: 'email', name : 'email', sortable : true, align: 'left',searchoptions:{sopt:['li']}},
+		{index: 'location', name : 'location',  sortable : true, align: 'center',searchoptions:{sopt:['eq','ne']}},
+		{index: 'status', name : 'status', sortable : true, align: 'center',searchoptions:{sopt:['in']}},
+		{index: 'rank', name : 'rank', sortable : true, align: 'center', searchoptions:{sopt:['eq','ne']}},
+		{index: 'totalflights', name : 'totalflights', sortable : true, align: 'center',searchoptions:{sopt:['lt','gt']}},
+		{index: 'totalhours', name : 'totalhours', sortable : true, align: 'center',searchoptions:{sopt:['lt','gt']}},
+		{index: 'lastip', name : 'lastip', sortable : true, align: 'center', searchoptions:{sopt:['in']}},
+		{index: '', name : '', sortable : true, align: 'center', search: false}
+	],
+    pager: '#pager', rowNum: 25,
+    sortname: 'lastname', sortorder: 'asc',
+    viewrecords: true, autowidth: true,
+    height: '100%'
+});
+
+jQuery("#grid").jqGrid('navGrid','#pager', 
+	{edit:false,add:false,del:false,search:true,refresh:true},
+	{}, // edit 
+	{}, // add 
+	{}, //del 
+	{multipleSearch:true} // search options 
+); 
+</script>

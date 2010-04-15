@@ -65,33 +65,38 @@ class Template
 	{
 		self::$tplset->ClearVars();
 	}
+
+	public static function showVars()
+	{
+		return self::$tplset->showvars();
+	}
 	
-	public static function Set($name, $value)
+	public static function set($name, $value)
 	{
 		return self::$tplset->Set($name, $value);
 	}
 	
-	public static function Show($tpl_name)
+	public static function show($tpl_name)
 	{
 		return self::$tplset->ShowTemplate($tpl_name);
 	}
 	
-	public static function Get($tpl_path, $ret=false, $checkskin=true, $force_base=false)
+	public static function get($tpl_path, $ret=false, $checkskin=true, $force_base=false)
 	{
 		return self::$tplset->GetTemplate($tpl_path, $ret, $checkskin, $force_base);
 	}
 	
-	public static function ShowTemplate($tpl_name, $checkskin=true)
+	public static function showTemplate($tpl_name, $checkskin=true)
 	{
 		return self::$tplset->ShowTemplate($tpl_name, $checkskin);
 	}
 	
-	public static function GetTemplate($tpl_path, $ret=false, $checkskin=true, $force_base=false)
+	public static function getTemplate($tpl_path, $ret=false, $checkskin=true, $force_base=false)
 	{
 		return self::$tplset->GetTemplate($tpl_path, $ret, $checkskin, $force_base);
 	}
 	
-	public static function ShowModule($ModuleName, $Method)
+	public static function showModule($ModuleName, $Method)
 	{
 		return self::$tplset->ShowModule($ModuleName, $Method);
 	}

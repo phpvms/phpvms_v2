@@ -40,6 +40,12 @@ class PilotData extends CodonData
 		/* Build the select "WHERE" based on the columns passed, this is a generic function */
 		$sql .= DB::build_where($params);
 		
+		// Order matters
+		if(Config::Get('PILOT_ORDER_BY') != '')
+		{
+			$sql .= ' ORDER BY '.Config::Get('PILOT_ORDER_BY');
+		}
+		
 		if(strlen($limit) != 0)
 		{
 			$sql .= ' LIMIT '.$limit;

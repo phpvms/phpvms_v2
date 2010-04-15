@@ -57,7 +57,7 @@ class TemplateSet
 	 * 
 	 * @param string $path Path to the templates folder
 	 */
-	public function SetTemplatePath($path)
+	public function setTemplatePath($path)
 	{
 		# Remove trailing directory separator
 		$len = strlen($path);
@@ -67,7 +67,7 @@ class TemplateSet
 		$this->template_path = $path;
 	}
 	
-	public function EnableCaching($bool=true)
+	public function enableCaching($bool=true)
 	{
 		$this->enable_caching = $bool;
 	}
@@ -75,7 +75,7 @@ class TemplateSet
 	/**
 	 * Clear all variables
 	 */
-	public function ClearVars()
+	public function clearVars()
 	{
 		$this->vars = array();
 	}
@@ -87,7 +87,7 @@ class TemplateSet
 	 * @param mixed $name Variable name
 	 * @param mixed $value Variable value
 	 */
-	public function Set($name, $value)
+	public function set($name, $value)
 	{
 		// See if they're setting the template as a file
 		//	Check if the file exists 
@@ -108,9 +108,18 @@ class TemplateSet
 	 * @param string $tpl_name Template name including extention
 	 * @param bool $checkskin Check the skin folder or not
 	 */
-	public function Show($tpl_name, $checkskin=true, $force_base=false)
+	public function show($tpl_name, $checkskin=true, $force_base=false)
 	{
 		return $this->ShowTemplate($tpl_name, $checkskin, $force_base);
+	}
+	
+	public function showVars()
+	{
+		extract($this->vars, EXTR_OVERWRITE);
+
+		echo '<pre>';
+		print_r(get_defined_vars());
+		echo '</pre>';
 	}
 	
 	
@@ -125,7 +134,7 @@ class TemplateSet
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public function ShowTemplate($tpl_name, $checkskin=true, $force_base=false)
+	public function showTemplate($tpl_name, $checkskin=true, $force_base=false)
 	{		
 		if($this->enable_caching == true)
 		{
@@ -155,7 +164,7 @@ class TemplateSet
 		}
 		else
 		{
-			return $this->GetTemplate($tpl_name, false, $checkskin, $force_base);
+			return $this->getTemplate($tpl_name, false, $checkskin, $force_base);
 		}
 	}
 	
@@ -169,9 +178,9 @@ class TemplateSet
 	 * @return mixed Returns template text is $ret is true
 	 *
 	 */
-	public function Get($tpl_name, $ret=false, $checkskin=true, $force_base=false)
+	public function get($tpl_name, $ret=false, $checkskin=true, $force_base=false)
 	{
-		return $this->GetTemplate($tpl_name, $ret, $checkskin, $force_base);
+		return $this->getTemplate($tpl_name, $ret, $checkskin, $force_base);
 	}
 	
 	/**
@@ -186,7 +195,7 @@ class TemplateSet
 	 * @return mixed Returns template text is $ret is true
 	 *
 	 */
-	public function GetTemplate($tpl_name, $ret=false, $checkskin=true, $force_base=false)
+	public function getTemplate($tpl_name, $ret=false, $checkskin=true, $force_base=false)
 	{
 		/* See if the file has been over-rided in the skin directory
 		 */
@@ -265,7 +274,7 @@ class TemplateSet
 	 * @return mixed This is the return value description
 	 *
 	 */
-	public function ShowModule($ModuleName, $MethodName='ShowTemplate')
+	public function showModule($ModuleName, $MethodName='ShowTemplate')
 	{
 		return MainController::Run($ModuleName, $MethodName);
 	}

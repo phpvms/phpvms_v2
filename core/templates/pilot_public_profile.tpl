@@ -1,5 +1,4 @@
 <?php
-
 if(!$userinfo)
 {
 	echo '<h3>This pilot does not exist!</h3>';

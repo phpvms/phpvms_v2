@@ -90,6 +90,10 @@ class CodonCache
 		}
 	}
 	
+	public static function setEnabled($bool)
+	{
+		self::setStatus($bool);
+	}
 	
 	/**
 	 * Enable or disable the caching engine

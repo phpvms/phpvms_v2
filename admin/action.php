@@ -55,10 +55,7 @@ if(!Auth::LoggedIn() && !PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_A
 }
 
 Template::SetTemplatePath(dirname(__FILE__).'/templates');
-//$modules = MainController::getModulesFromPath(dirname(__FILE__).'/modules');
-//MainController::loadModules($modules);
-
-MainController::RunAllActions();
+MainController::runAllActions();
 
 # Force connection close
 DB::close();

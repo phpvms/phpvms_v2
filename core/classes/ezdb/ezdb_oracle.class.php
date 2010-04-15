@@ -33,6 +33,7 @@
 *  Desc..: Oracle 8i/9i component (part of ezDB databse abstraction library)
 *
 */
+include_once dirname(__FILE__).'/ezdb_base.class.php';
 
 class ezDB_oracle extends ezDB_Base
 {

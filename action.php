@@ -57,7 +57,7 @@ $BaseTemplate->template_path = SKINS_PATH;
 Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
-MainController::RunAllActions(Config::Get('RUN_MODULE'));
+MainController::RunAllActions();
 
 # Force connection close
 DB::close();

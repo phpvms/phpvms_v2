@@ -30,10 +30,21 @@ if($pilotid != Auth::$userinfo->pilotid)
 	<dt></dt>
 	<dd><input type="hidden" name="pilotid" value="<?php echo $pilotid;?>" />
 		<input type="hidden" name="action" value="deletepilot" />
-		<input type="submit" name="submit" value="Delete Pilot" /></dd>
+		<input type="submit" name="submit" onclick="return doublecheck();" value="Delete Pilot" /></dd>
 </dl>
 </form>
 <?php
 }
 }
 ?>
+<script type="text/javascript">
+function doublecheck()
+{
+	var answer = confirm("Are you sure you want to delete?")
+	if (answer) {
+		return true;
+	}
+	
+	return false;
+}
+</script>

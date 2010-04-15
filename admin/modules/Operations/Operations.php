@@ -131,12 +131,12 @@ class Operations extends CodonModule
 	
 	public function calculatedistance($depicao='', $arricao='')
 	{
+		cndebug(print_r($this->get, true));
 		if($depicao == '')
 			$depicao = $this->get->depicao;
 		
 		if($arricao == '')
 			$arricao = $this->get->arricao;
-			
 			
 		echo OperationsData::getAirportDistance($depicao, $arricao);
 	}

@@ -51,80 +51,22 @@ class MainController
 	{		
 		CodonRewrite::ProcessRewrite();
 		Vars::setParameters();
-		@ob_end_clean();
-		/**
-		 * load the modules from the modules, or the list.
-		 */
-		$modules = array();
 				
-		if(Config::Get('MODULES_AUTOLOAD') == true)
-		{
-			$modules = self::getModulesFromPath(Config::Get('MODULES_PATH'));
-		}
-		else 
-		{
-			if(!is_array(Config::Get('MODULE_LIST')))
-			{
-				Debug::showCritical('No modules found to run!');
-			}
-			
-			// If they specified the list, build it:
-			$list = array();	
-			
-			foreach($module_list as $key => $value)
-			{
-				# If they provide just a list, or include the entire path
-				#	in Name=>Path format
-				if(is_numeric($key))
-				{
-					$path = Config::Get('MODULE_PATH').DS.$module_list[$key].DS.$module_list[$i].'.php';
-					$modules[$module_list[$i]] = $path;
-				}
-				else
-				{
-					$modules[$key] = Config::Get('MODULE_PATH').DS.$value;
-				}
-			}			
-		}
-		
-		// See what our default module is:		
-		if(Config::Get('RUN_SINGLE_MODULE') == true)
-		{
-			$module = CodonRewrite::$current_module;
-			Config::Set('RUN_MODULE', strtoupper($module));
-		}
-		
-		self::loadModules($modules);		
-		Config::LoadSettings();
+		self::$activeModule = CodonRewrite::$current_module;
+		Config::loadSettings();
+		self::loadModules();
 	}
-	
-	/**
-	 * Load any PHP files which are in the core/common folder
-	 */
-	public static function loadCommonFolder()
-	{
-		$files = scandir(COMMON_PATH);
-
-		foreach($files as $file)
-		{
-    		if($file == '.' || $file == '..') continue;
-    		
-			if(strstr($file, '.php') !== false)
-				include_once COMMON_PATH.DIRECTORY_SEPARATOR.$file;
-		}
-	}
-	
+		
 	/**
 	 * Search for any modules in the core/modules directory
 	 * 	Then call loadModules() after building the list
 	 *
 	 * @param string $path Base folder from where to run modules
 	 */
-	public static function getModulesFromPath($path)
+	protected static function getModulesFromPath($path)
 	{
 		$dh = opendir($path);
-		$modules = array();
-				
+			
 		while (($file = readdir($dh)) !== false)
 		{
 		    if($file != "." && $file != "..")
@@ -138,7 +80,6 @@ class MainController
 						$file = strtoupper($file);
 						$modules[$file] = $fullpath;
 					}
-						
 				}
 		    }
 		}
@@ -152,12 +93,18 @@ class MainController
 	 *
 	 * @param array $ModuleList List of modules. $key is name, $value is path
 	 */
-	public static function loadModules(&$ModuleList)
+	public static function loadModules()
 	{
 		global $NAVBAR;
 		global $HTMLHead;
 		
-		self::$ModuleList = $ModuleList;
+		self::$ModuleList = self::getModulesFromPath(Config::Get('MODULES_PATH'));
+		if(empty(self::$ModuleList))
+		{
+			Debug::showCritical('No modules were found in module path! ('.Config::Get('MODULES_PATH').')');
+			return;
+		}
+		
 		self::$listSize = sizeof(self::$ModuleList);
 		self::$keys = array_keys(self::$ModuleList);
 		
@@ -165,10 +112,7 @@ class MainController
 		{
 			$ModuleName = self::$keys[$i];
 			$ModuleController = self::$ModuleList[$ModuleName];
-			
-			//formulate proper module path
-			//$mpath = MODULES_PATH . '/' . $ModuleName . '/'.$ModuleController;
-					
+						
 			if(file_exists($ModuleController))
 			{
 				include_once $ModuleController;
@@ -177,13 +121,11 @@ class MainController
 				{
 					$ModuleName = strtoupper($ModuleName);
 					global $$ModuleName;
-					
-					self::$activeModule = $ModuleName;
 				
 					$$ModuleName = new $ModuleName();
 					$$ModuleName->init($ModuleName); // Call the parent constructor
 					
-					if(Config::Get('RUN_MODULE') == $ModuleName)
+					if(self::$activeModule == $ModuleName)
 					{
 						# Skip it for now, run it last since it's the active
 						#	one, and may overwrite some other parameters
@@ -194,9 +136,7 @@ class MainController
 						ob_start();
 						self::Run($ModuleName, 'NavBar');
 						$NAVBAR .= ob_get_clean();
-						//ob_end_clean();
 						
-						//ob_start();
 						self::Run($ModuleName, 'HTMLHead');
 						$HTMLHead .= ob_get_clean();
 						
@@ -208,12 +148,10 @@ class MainController
 			
 		# Run the init tasks
 		ob_start();
-		self::Run(Config::Get('RUN_MODULE'), 'NavBar');
+		self::Run(self::$activeModule, 'NavBar');
 		$NAVBAR .= ob_get_clean();
-		//ob_end_clean();
 		
-		//ob_start();
-		self::Run(Config::Get('RUN_MODULE'), 'HTMLHead');
+		self::Run(self::$activeModule, 'HTMLHead');
 		$HTMLHead .= ob_get_clean();
 		
 		@ob_end_clean();
@@ -249,78 +187,43 @@ class MainController
 	 *	exists (for backwards compat), if it doesn't then run the function
 	 *	defined by the "action" bit in the URL
 	 */
-	public static function RunAllActions($module_priority='')
+	public static function RunAllActions()
 	{
-		if(Config::Get('RUN_SINGLE_MODULE') === true)
-		{
-			$call_function = 'Controller';
-			$ModuleName = strtoupper(Config::Get('RUN_MODULE'));
-			global $$ModuleName;
-			
-			// Make sure this module is valid
-			if(!is_object($$ModuleName))
-			{	
-				Debug::showCritical("The module \"{$ModuleName}\" doesn't exist!");
-				return;
-			}
-			
-			if(!method_exists($$ModuleName, $call_function))
-			{
-				// Check if we have a function for the page we are calling
-				//$name = $$ModuleName->get->page;
-				$name = CodonRewrite::$current_action;
-				if($name == '')
-				{
-					$call_function = 'index';
-				}
-				else
-				{
-					$call_function = $name;
-				}
-			}
-						
-			/*if(!method_exists($$ModuleName, $call_function))
-			{
-				Debug::showCritical("Function \"{$call_function}()\" in module {$ModuleName} doesn't exist!");
-				return;
-			}*/
-			
-			/* Don't call self::Run() - parameters could change. They have to stay the same
-				due to the fact that outside modules, etc will still use Run(), so it has
-				to stay the same */
-			
-			$ret = call_user_func_array(array($$ModuleName, $call_function), CodonRewrite::$params);
-			//$ret = call_user_method_array(, , );
-			
-			/* Set the title, based on what the module has, if it's blank,
-				then just set it to the module name */
-			self::$page_title = $$ModuleName->title;
-			if(self::$page_title == '')
-			{
-				self::$page_title = ucwords(strtolower($ModuleName));
-			}
+		//$call_function = 'Controller';
+		$ModuleName = strtoupper(self::$activeModule);
+		global $$ModuleName;
 		
-			//self::Run($ModuleName, $call_function, CodonRewrite::$peices);
+		// Make sure this module is valid
+		if(!is_object($$ModuleName))
+		{	
+			Debug::showCritical("The module \"{$ModuleName}\" doesn't exist!");
+			return;
 		}
-		/*else
+
+		// Check if we have a function for the page we are calling
+		$name = CodonRewrite::$current_action;
+		if($name == '')
 		{
-			for ($i=0; $i<self::$listSize; $i++)
-			{
-				$ModuleName = self::$keys[$i];				
-				//skip over it if we called it already
-				if($ModuleName == $PModule)
-					continue;
-					
-				// Check if a module has called stop, if it has then abort
-				if(self::$stop_execute == true)
-				{
-					self::$stop_execute = false;
-					return true;
-				}
-				
-				self::Run($ModuleName, 'Controller');
-			}			
-		}*/
+			$call_function = 'index';
+		}
+		else
+		{
+			$call_function = $name;
+		}
+		
+		/* Don't call self::Run() - parameters could change. They have to stay the same
+			due to the fact that outside modules, etc will still use Run(), so it has
+			to stay the same */
+		
+		$ret = call_user_func_array(array($$ModuleName, $call_function), CodonRewrite::$params);
+			
+		/* Set the title, based on what the module has, if it's blank,
+			then just set it to the module name */
+		self::$page_title = $$ModuleName->title;
+		if(strlen(self::$page_title) === 0)
+		{
+			self::$page_title = ucwords(strtolower($ModuleName));
+		}
 		
 		return true;	
 	}

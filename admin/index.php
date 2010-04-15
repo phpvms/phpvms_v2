@@ -82,7 +82,7 @@ $BaseTemplate->Show('header.tpl');
 
 flush();
 
-MainController::RunAllActions(Config::Get('RUN_MODULE'));
+MainController::runAllActions();
 
 $BaseTemplate->Show('footer.tpl');
 

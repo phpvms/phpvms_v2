@@ -26,6 +26,8 @@
  * @license MIT License
  */
 
+include_once dirname(__FILE__).'/ezdb_base.class.php';
+
 class ezDB_mysql extends ezDB_Base
 {
 

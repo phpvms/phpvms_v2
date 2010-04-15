@@ -52,7 +52,8 @@ class CodonWebService
 		CURLOPT_AUTOREFERER => true,
 		CURLOPT_CONNECTTIMEOUT => 30,
 		CURLOPT_HEADER => false,
-		CURLOPT_FOLLOWLOCATION => true);
+		CURLOPT_FOLLOWLOCATION => true
+	);
 			
 	public function __construct()
 	{

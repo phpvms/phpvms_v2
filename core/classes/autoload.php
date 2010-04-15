@@ -61,4 +61,9 @@ function codon_autoload($class_name)
 		require COMMON_PATH.DS.$class_name.'.class.php';
 		return;
 	}
+	
+	if(file_exists(SITE_ROOT.'/core/hooks/system/autoload.php'))
+	{
+		include SITE_ROOT.'/core/hooks/system/autoload.php';
+	}
 }

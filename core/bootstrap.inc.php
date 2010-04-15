@@ -76,6 +76,15 @@ function post_module_load()
 	}
 
 	// @TODO: Clean ACARS records older than one month
+	if(Config::Get('MAINTENANCE_MODE') == true  
+		&& !Auth::LoggedIn() 
+		&& !PilotGroups::group_has_perm(Auth::$usergroups, FULL_ADMIN))
+	{
+		echo '<html><head><title>Down for maintenance - '.SITE_NAME.'</title></head><body>';
+		Debug::showCritical(Config::Get('MAINTENANCE_MESSAGE'), 'Down for maintenance');
+		echo '</body></html>';
+		die();
+	}
 		
    return true;
 }

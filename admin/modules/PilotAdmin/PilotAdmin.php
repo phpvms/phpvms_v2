@@ -286,13 +286,100 @@ class PilotAdmin extends CodonModule
 		$this->set('allawards', AwardsData::GetPilotAwards($_REQUEST['pilotid']));
 		$this->render('pilots_awards.tpl');
 	}
-		
+	
 	protected function ShowPilotsList()
 	{
-		$this->set('allpilots', PilotData::GetAllPilots(Vars::GET('letter')));
 		$this->render('pilots_list.tpl');
 	}
 	
+	public function getpilotsjson()
+	{
+		$page = $this->get->page; // get the requested page 
+		$limit = $this->get->rows; // get how many rows we want to have into the grid 
+		$sidx = $this->get->sidx; // get index row - i.e. user click to sort 
+		$sord = $this->get->sord; // get the direction 
+		if(!$sidx) $sidx =1;
+		
+		/* Do the search using jqGrid */
+		$where = array();
+		if($this->get->_search == 'true') 
+		{
+			$searchstr = jqgrid::strip($this->get->filters);
+			$where_string = jqgrid::constructWhere($searchstr);
+			
+			# Append to our search, add 1=1 since it comes with AND
+			#	from above
+			$where[] = "1=1 {$where_string}";
+		}
+		
+		Config::Set('PILOT_ORDER_BY', "{$sidx} {$sord}");
+		
+		# Do a search without the limits so we can find how many records
+		$count = count(PilotData::findPilots($where));
+		
+		if($count > 0) 
+		{
+			$total_pages = ceil($count/$limit);
+		} 
+		else 
+		{
+			$total_pages = 0;
+		}
+		
+		if ($page > $total_pages) 
+		{
+			$page = $total_pages;
+		}
+		
+		$start = $limit * $page - $limit; // do not put $limit*($page - 1)
+		if ($start < 0) 
+		{
+			$start = 0;
+		}
+		
+		# And finally do a search with the limits
+		$allpilots = PilotData::findPilots($where, $limit, $start);
+		
+		# Form the json header
+		$json = array(
+			'page' => $page,
+			'total' => $total_pages,
+			'records' => $count,
+			'rows' => array()
+		);
+		
+		# Add each row to the above array
+		foreach($allpilots as $row)
+		{
+			$status = ($row->retired==0) ? 'Active' : 'Retired';
+			$location = '<img src="'.Countries::getCountryImage($row->location).'" alt="'.$row->location.'" />';
+			$edit = '<a href="'.adminurl('/pilotadmin/viewpilots?action=viewoptions&pilotid='.$row->pilotid).'">Edit</a>';
+			
+			$tmp = array(
+				'id' => $row->id,
+				'cell' => array(
+					# Each column, in order
+					$row->id,
+					$row->firstname,
+					$row->lastname,
+					$row->email,
+					$location,
+					$status,
+					$row->rank,
+					$row->totalflights,
+					$row->totalhours,
+					$row->lastip,
+					$edit,
+				),
+			);
+			
+			$json['rows'][] = $tmp;
+		}
+		
+		header("Content-type: text/x-json");
+		echo json_encode($json);
+	}
+			
 	protected function ViewPilotDetails()
 	{
 		//This is for the main tab

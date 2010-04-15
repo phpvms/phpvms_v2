@@ -32,6 +32,9 @@ foreach($allpilots as $pilot)
 
 			echo PilotData::GetFieldValue($pilot->pilotid, 'IVAO Callsign');		
 	 */
+	 
+	 // To skip a retired pilot, uncomment the next line:
+	 //if($pilot->retired == 1) { continue; }
 ?>
 <tr>
 	<td width="1%" nowrap><a href="<?php echo url('/profile/view/'.$pilot->pilotid);?>">

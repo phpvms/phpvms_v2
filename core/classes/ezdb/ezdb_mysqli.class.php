@@ -261,25 +261,19 @@ class ezDB_mysqli extends ezDB_Base
 				$is_insert = true;
 			}
 			
-			// Return number fo rows affected
+			// Return number of rows affected
 			$return_val = $this->rows_affected;
 		}
 		// Query was a select
 		else
 		{
 			// Take note of column info
-			$i=0;
-			
-			if($result)
-			{
-				while ($finfo = $result->fetch_field())
-				{
-					$this->col_info[$i] = $finfo;
-					$i++;
-				}
-		
+			$num_rows = 0;
+			if($result instanceof MySQLi_Result)
+			{	
+				$this->col_info = $result->fetch_fields();
+						
 				// Store Query Results
-				$num_rows=0;
 				while($row = $result->fetch_object())
 				{
 					$this->last_result[$num_rows] = $row;

@@ -52,7 +52,7 @@ class MainController
 		CodonRewrite::ProcessRewrite();
 		Vars::setParameters();
 				
-		self::$activeModule = CodonRewrite::$current_module;
+		self::$activeModule = strtoupper(CodonRewrite::$current_module);
 		Config::loadSettings();
 		self::loadModules();
 	}

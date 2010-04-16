@@ -13,10 +13,9 @@ $("#grid").jqGrid({
    url: '<?php echo adminaction('/operations/schedulegrid');?>',
    datatype: 'json',
    mtype: 'GET',
-   colNames: ['','Code', 'Flight Num', 'Departure', 'Arrival', 'Aircraft', 'Registration', 'Route', 'Days',
+   colNames: ['Code', 'Flight Num', 'Departure', 'Arrival', 'Aircraft', 'Registration', 'Route', 'Days',
 				'Distance', 'Flown', 'Edit', 'Delete'],
    colModel : [
-		{index: 'id', name: 'id', hidden: true, search: false },
 		{index: 'code', name : 'code', width: 40, sortable : true, align: 'center', search: 'true', searchoptions:{sopt:['eq','ne']}},
 		{index: 'flightnum', name : 'flightnum', width: 65, sortable : true, align: 'center', searchoptions:{sopt:['eq','ne']}},
 		{index: 'depicao', name : 'depicao', width: 60, sortable : true, align: 'center',searchoptions:{sopt:['eq','ne']}},
@@ -55,7 +54,8 @@ function deleteschedule(id)
 
 function showroute(schedule_id)
 {
-	$('#jqmdialog').jqm({ajax:'<?php echo adminaction('/operations/viewmap');?>?type=schedule&id='+schedule_id}); 
-	$("#jqmdialog").jqmShow();
+	$('#jqmdialog').jqm({
+		ajax:'<?php echo adminaction('/operations/viewmap');?>?type=schedule&id='+schedule_id
+	}).jqmShow();
 }
 </script>

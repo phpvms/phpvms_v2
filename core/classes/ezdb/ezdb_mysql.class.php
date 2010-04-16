@@ -260,7 +260,7 @@ class ezDB_mysql extends ezDB_Base
 		{
 			// Take note of column info
 			$i=0;
-			
+			$num_rows = 0;
 			if(is_resource($this->result))
 			{
 				while ($i < mysql_num_fields($this->result))
@@ -270,8 +270,6 @@ class ezDB_mysql extends ezDB_Base
 				}
 				
 				// Store Query Results
-				$num_rows=0;
-				
 				while($row = mysql_fetch_object($this->result))
 				{
 					// Store relults as an objects within main array

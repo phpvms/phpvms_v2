@@ -106,6 +106,12 @@ if(DBASE_NAME != '' && DBASE_SERVER != '' && DBASE_NAME != 'DBASE_NAME')
 		Debug::showCritical(Lang::gs('database.connection.failed').' ('.DB::$errno.': '.DB::$error.')');
 		die();
 	}
+	
+	# Set the charset type to send to mysql
+	if(Config::Get('DB_CHARSET_NAME') !== '')
+	{
+		DB::query('SET NAMES \''.Config::Get('DB_CHARSET_NAME').'\'');
+	}
 }
 
 include CORE_PATH.DS.'bootstrap.inc.php';

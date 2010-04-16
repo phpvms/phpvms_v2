@@ -382,7 +382,6 @@ class Operations extends CodonModule
 				'id' => $row->id,
 				'cell' => array(
 					# Each column, in order
-					$row->id,
 					$row->code,
 					$row->flightnum,
 					$row->depicao,

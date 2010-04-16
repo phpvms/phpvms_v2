@@ -132,7 +132,7 @@ d41d8cd98f00b204e9800998ecf8427e  *./core/templates/profile_myroutesmap.tpl
 5b06756bb3b7c86aaf9d5c43f4bff27c  *./core/templates/fsfk_pirep_config.tpl
 12b22ed160deeac0c98fa1ee6de251e5  *./core/templates/pirep_editform.tpl
 dacd66a26ab705b8ac74131635e2d28a  *./core/bootstrap.inc.php
-34db6d6ad1e0825d3685c0a5c3547ec7  *./core/codon.config.php
+abb06860202b982b28e7061df7db8867  *./core/codon.config.php
 3329577ddb4c1cdaba833209d75f7f70  *./core/classes/Lang.class.php
 c1e6bb7c33856c0723f1139ccf20ad9f  *./core/classes/CodonData.class.php
 e925bb9b152fd0ea94e888cde3927b9f  *./core/classes/Debug.class.php
@@ -141,7 +141,7 @@ e925bb9b152fd0ea94e888cde3927b9f  *./core/classes/Debug.class.php
 3db6aa18a749c9d6b5afa028038e34bd  *./core/classes/CodonCache.class.php
 5ba6c886b93edf142519b533b573d547  *./core/classes/CodonWebService.class.php
 8e037ce1a5333ee8c02e7b0f533e013c  *./core/classes/TemplateSet.class.php
-709768f0cb31537a47c7b8387fcaf663  *./core/classes/MainController.class.php
+f2b45112b95baf6d5ad06a174306297b  *./core/classes/MainController.class.php
 fd37aa8d637c2ba981952ab95c5f89f5  *./core/classes/CodonForm.class.php
 4e7d803938f29eabaa2f26ec3fb51982  *./core/classes/Util.class.php
 d410514a6b5f8e3f436b8ae3ffd47b8c  *./core/classes/CodonRewrite.class.php
@@ -153,15 +153,15 @@ a9028d246a90f26f329f3c76af93f4a1  *./core/classes/Template.class.php
 74f79f15db7476a6ce4a8521996eeeef  *./core/classes/CodonCondenser.class.php
 9f4fc814a95c20dc8e12aad766d108ea  *./core/classes/ezdb/ezdb.class.php
 acb1aa72916605b20258cc487c19f106  *./core/classes/ezdb/ezdb_base.class.php
-fec4c80f40a7e42ba74c22fe90c02080  *./core/classes/ezdb/ezdb_mysqli.class.php
-3ad770e4a3ceb958e42d4a64783ab46a  *./core/classes/ezdb/ezdb_mysql.class.php
+b91d08223cbd16892191af87870e0bcf  *./core/classes/ezdb/ezdb_mysqli.class.php
+cbc5eb7865a3f59a4f679b386377d0c1  *./core/classes/ezdb/ezdb_mysql.class.php
 f45b5714e950fb9f0b7baadb5b1f08d1  *./core/classes/ezdb/ezdb_oracle.class.php
 189019f52bcd504a7bd357f79089f3df  *./core/hooks/client/post-load.php
 51b3757f22b72a957adfa28cc3b53d5f  *./core/hooks/system/autoload.php.1
 c56b2790383f5891808777c40c03e269  *./core/hooks/system/postmoduleload.php.1
 d41d8cd98f00b204e9800998ecf8427e  *./core/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/pages/index.php
-c1a8c3426e8b8c96d39a8f32ec3e5b24  *./core/app.config.php
+c7e138b27019ee369b9e31eec21df39f  *./core/app.config.php
 00e89835b48e67d7eaa87ed5dea64ce5  *./core/modules/Schedules/Schedules.php
 e58ee78f8e857ad150badae9ba04dddc  *./core/modules/news/news.php
 935862c6f2d8c067c49c4af2797abebd  *./core/modules/XML/XML.php
@@ -182,7 +182,7 @@ b01833a6d48116007100f0d4e7b1b198  *./core/modules/ACARS/xacars.php
 a5e67fddae9c3f77e262cee30771db05  *./core/modules/Logout/Logout.php
 48ddf21cb9e0b7f226b597914bd96550  *./core/modules/PIREPS/PIREPS.php
 11ac1fae888d5cfdd25eef39b4037749  *./core/modules/Finances/Finances.php
-469b106005f7bae51741e9a20f725708  *./core/modules/Pages/Pages.php
+713228773df8c23688125f98e9cb8f17  *./core/modules/Pages/Pages.php
 925c6ea3907403895286aff5d9838916  *./core/modules/Login/Login.php
 ad702069274d2c2fcafebc86806fc55f  *./core/modules/RouteMap/RouteMap.php
 b6a7b95650eefadf97f1ee941b42e430  *./index.php
@@ -228,7 +228,7 @@ d074c0e9c23845e55f9a2b3dcb6063f2  *./admin/templates/settings_addcustomfield.tpl
 1b0a33f246cfde24ddb15a080ebc8702  *./admin/templates/ops_airportlist.tpl
 713a3b7f8bc9f3976664dfa43aba820a  *./admin/templates/sidebar_pirepfields.tpl
 c6e5f16b6f088fb5f455e1b84c84e687  *./admin/templates/import_form.tpl
-9aac8266ea765f8ef6d246c22758f342  *./admin/templates/ops_schedules.tpl
+add3241ab1d897d16f88069c99ee3679  *./admin/templates/ops_schedules.tpl
 f6859dd73bb69367fa470ec32ee4096b  *./admin/templates/settings_customfieldsform.tpl
 998c822282b68f3eaf12e3f178b6fa85  *./admin/templates/core_htmlreq.tpl
 81011a56d0b63f6d66f4343fccfc0f00  *./admin/templates/pilots_addawards.tpl
@@ -301,7 +301,7 @@ c1de104017f08ab3f33a2635c0a6acf2  *./admin/modules/Logs/Logs.php
 7f8afe3dfe944a0a010c23bcbd7e2467  *./admin/modules/Downloads/Downloads.php
 2184a2fe0b3e89301b3c0171b9435d0a  *./admin/modules/MassMailer/MassMailer.php
 fb4ca464f4e518e63c31b409e48588bf  *./admin/modules/SiteCMS/SiteCMS.php
-350e370e18818cd9abe481e4b7b909f9  *./admin/modules/Operations/Operations.php
+aadc3acff1299ac81e7fe8bb45a6481d  *./admin/modules/Operations/Operations.php
 daa524b086eb1068ae81f9110688ff6d  *./admin/modules/Import/Import.php
 086a4da89e7f2c4f6dba1284cc3ddc3a  *./admin/modules/Settings/Settings.php
 e5e27bd5fd7b8b5732f173cdfeed7a0d  *./admin/modules/Maintenance/Maintenance.php
@@ -323,7 +323,7 @@ a73cd5d722a7390595c51e0ccf6fa82f  *./lib/js/jquery.colorbox.js
 7c6967f5c1ddbb9d61f69e7b19d88056  *./lib/js/acarsmap.js
 168c89d09d780812785edabdcc649b2e  *./lib/js/jquery.bigiframe.js
 fdf811e16f70717f1082e279a1cc52cc  *./lib/js/jquery.colorbox-min.js
-4a0c8b810f30144b184910f6dd1b034c  *./lib/js/phpvms.js
+5a7a34667a27f8469854ed332c261447  *./lib/js/phpvms.js
 ccf14f48623a2413286b3dfb7e43d163  *./lib/js/jquery.metadata.js
 2e06583b6d440b4cc60bf7484e696311  *./lib/js/jquery.pstrength.js
 0e35751d9b92233a155bbf2b9fde9bcb  *./lib/js/jquery-calendar.js

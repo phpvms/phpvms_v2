@@ -21,7 +21,7 @@ class Pages extends CodonModule
 {
 	public function NavBar()
 	{
-		$this->set('allpages', SiteData::GetAllPages(true, Auth::$loggedin));
+		$this->set('allpages', SiteData::getAllPages(true, Auth::$loggedin));
 		$this->render('pages_items.tpl');
 	}
 	

@@ -34,6 +34,7 @@ Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
 
 # Page encoding options
 Config::Set('PAGE_ENCODING', 'UTF-8');
+Config::Set('DB_CHARSET_NAME', 'utf8');
 
 # Maintenance mode - this disables the site to non-admins
 Config::Set('MAINTENANCE_MODE', false);

@@ -339,6 +339,10 @@ class PilotAdmin extends CodonModule
 		
 		# And finally do a search with the limits
 		$allpilots = PilotData::findPilots($where, $limit, $start);
+		if(!$allpilots)
+		{
+			$allpilots = array();
+		}
 		
 		# Form the json header
 		$json = array(

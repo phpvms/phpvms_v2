@@ -141,11 +141,26 @@ class FinanceData extends CodonData
 	public static function getExpensesForMonth($timestamp)
 	{
 		$time = date('Ym', $timestamp);
+
+		# If it's the current month, just return the latest expenses
+		if($time == date('Ym'))
+		{
+			return self::getAllExpenses();
+		}			
 		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'expenselog
 				WHERE `dateadded`='.$time;
 		
-		return DB::get_results($sql);
+		$ret = DB::get_results($sql);
+		
+		/*if(empty($ret))
+		{
+			# Save and query again
+			self::setExpensesforMonth($timestamp);
+			return DB::get_results($sql);
+		}*/
+		
+		return $ret;
 	}
 	
 	public function setExpensesforMonth($timestamp)

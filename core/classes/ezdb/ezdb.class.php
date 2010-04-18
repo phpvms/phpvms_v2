@@ -273,11 +273,10 @@ class DB
 	 * @param constant $type
 	 * @return resultset
 	 */
-	public static function quick_select($params)
+	public static function quick_select($table, $fields='', $cond='')
 	{
 		self::$DB->throw_exceptions = self::$throw_exceptions;
-		
-		return self::$DB->quick_select($params);
+		return self::$DB->quick_select($table, $fields, $cond);
 	}
 	
 	/**
@@ -310,6 +309,14 @@ class DB
 		return self::$DB->quick_update($table, $fields, $cond, $allowed_cols);
 	}
 	
+	/**
+	 * Build a SELECT statement
+	 *
+	 */
+	public static function build_select($params)
+	{
+		return self::$DB->build_select($params);
+	}
 	
 	/**
 	 * Build a WHERE clause for an SQL statement with supplied parameters

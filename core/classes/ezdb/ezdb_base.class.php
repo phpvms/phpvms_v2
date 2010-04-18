@@ -470,6 +470,135 @@ class ezDB_Base
 		return '\''.$value.'\'';
 	}	
 	
+	
+	/**
+	 * Build a SELECT SQL Query. All values except for
+	 *  numeric and NOW() will be put in quotes
+	 * 
+	 * Values are NOT escaped
+	 *
+	 * @param string $table Table to build update on
+	 * @param array $fields Associative array, with [column]=value
+	 * @param string $cond Extra conditions, without WHERE
+	 * @return array Results
+	 *
+	 */
+	public function quick_select($table, $fields='', $cond='')
+	{
+		if($table == '') return false;
+
+		$sql = 'SELECT ';
+		$list = array();
+		if(is_array($fields))
+		{
+			$fields = implode(',', $fields);
+		}
+		
+		$sql .= $fields;
+		$sql .= ' FROM '.$table;
+
+		$sql .= $this->build_where($cond);
+		
+		return	$this->get_results($sql);
+	}
+	
+	
+	/**
+	 * Build a quick INSERT query. For simplistic INSERTs only,
+	 *  all values except numeric and NOW() are put in quotes
+	 * 
+	 * Values are NOT escaped
+	 *
+	 * @param string $table Table to insert into
+	 * @param array $fields Associative array [column] = value
+	 * @param string $flags Extra INSERT flags to add
+	 * @return bool Results
+	 *
+	 */
+	public function quick_insert($table, $fields, $flags= '', $allowed_cols='')
+	{
+		if($table ==  '') return false;
+		
+		$sql = 'INSERT '. $flags .' INTO '.$table.' ';
+		
+		if(is_array($allowed_cols) && count($allowed_cols) > 0)
+		{
+			foreach($allowed_cols as $column)
+			{
+				$cols .= $column.',';
+				$col_values .= $this->escape($fields[$column]).',';
+			}
+		}
+		else
+		{
+			if(is_array($fields))
+			{
+				foreach($fields as $key=>$value)
+				{
+					// build both strings
+					$cols .= $key.',';
+					$col_values .= $this->escape($value).',';
+				}
+			}
+		}
+		
+		$cols[strlen($cols)-1] = ' ';
+		$col_values[strlen($col_values)-1] = ' ';
+		
+		$sql .= '('.$cols.') VALUES ('.$col_values.')';
+			
+		return $this->query($sql);
+	}
+	
+	
+	/**
+	 * Build a UPDATE SQL Query. All values except for
+	 *  numeric and NOW() will be put in quotes
+	 * 
+	 * Values are NOT escaped
+	 *
+	 * @param string $table Table to build update on
+	 * @param array $fields Associative array, with [column]=value
+	 * @param string $cond Extra conditions, without WHERE
+	 * @return bool Results
+	 *
+	 */
+	public function quick_update($table, $fields, $cond='', $allowed_cols='')
+	{
+		if($table ==  '') return false;
+		
+		$sql = 'UPDATE '.$table.' SET ';
+		
+		/* If they passed an associative array of col=>value */
+		if(is_array($fields))
+		{
+			/* Passed an array with the allowed columns */
+			if(is_array($allowed_cols) && count($allowed_cols) > 0)
+			{
+				$allowed = array();
+				foreach($allowed_cols as $column)
+				{
+					$allowed[$column] = $fields[$column];
+				}
+
+				$sql .= $this->build_update($allowed);
+			}
+			/* No specific columns, just process all the $fields */
+			else
+			{
+				$sql.= $this->build_update($fields);
+			}
+		}
+		else
+		{
+			$sql .= $fields;
+		}
+		
+		$sql .= $this->build_where($cond);
+		
+		return $this->query($sql);
+	}
+
 	/**
 	 * Build a SELECT query, specifying the table, fields and extra conditions
 	 *
@@ -486,7 +615,7 @@ class ezDB_Base
 	 * @return type Array of results
 	 *
 	 */
-	public function quick_select($params)
+	public function build_select($params)
 	{
 		if(!is_array($params)) return;
 		if($params['table'] == '') return false;
@@ -531,123 +660,24 @@ class ezDB_Base
 			$sql .= ' LIMIT '.$params['limit'];
 		}
 		
-		return $this->get_results($sql, $this->default_type);
-	}
-	
-	
-	/**
-	 * Build a quick INSERT query. For simplistic INSERTs only,
-	 *  all values except numeric and NOW() are put in quotes
-	 * 
-	 * Values are NOT escaped
-	 *
-	 * @param string $table Table to insert into
-	 * @param array $fields Associative array [column] = value
-	 * @param string $flags Extra INSERT flags to add
-	 * @return bool Results
-	 *
-	 */
-	public function quick_insert($table, $fields, $flags= '', $allowed_cols='')
-	{
-		if($table ==  '') return false;
-		
-		$sql = 'INSERT '. $flags .' INTO '.$table.' ';
-		
-		if(is_array($allowed_cols) && count($allowed_cols) > 0)
-		{
-			foreach($allowed_cols as $column)
-			{
-				$cols .= $column.',';
-				$col_values .= $this->quote($fields[$column]).',';
-			}
-		}
-		else
-		{
-			if(is_array($fields))
-			{
-				foreach($fields as $key=>$value)
-				{
-					// build both strings
-					$cols .= $key.',';
-					$col_values .= $this->quote($value).',';
-				}
-			}
-		}
-		
-		$cols[strlen($cols)-1] = ' ';
-		$col_values[strlen($col_values)-1] = ' ';
-		
-		$sql .= '('.$cols.') VALUES ('.$col_values.')';
-			
-		return $this->query($sql);
-	}
-	
-	
-	/**
-	 * Build a UPDATE SQL Query. All values except for
-	 *  numeric and NOW() will be put in quotes
-	 * 
-	 * Values are NOT escaped
-	 *
-	 * @param string $table Table to build update on
-	 * @param array $fields Associative array, with [column]=value
-	 * @param string $cond Extra conditions, without WHERE
-	 * @return bool Results
-	 *
-	 */
-	public function quick_update($table, $fields, $cond='', $allowed_cols='')
-	{
-		if($table ==  '') return false;
-		
-		$sql = 'UPDATE '.$table.' SET ';
-		
-		/* If they passed an associative array of col=>value */
-		if(is_array($fields))
-		{
-			/* Passed an array with the allowed columns */
-			if(is_array($allowed_cols) && count($allowed_cols) > 0)
-			{
-				foreach($allowed_cols as $column)
-				{
-					$sql .= $column.'=';
-					$sql .= $this->quote($fields[$column]).',';
-				}				
-			}
-			/* No specific columns, just process all the $fields */
-			else
-			{
-				foreach($fields as $key=>$value)
-				{
-					$sql.= "$key=";
-					$sql .= $this->quote($value).',';
-				}
-			}
-			
-			$sql = substr($sql, 0, strlen($sql)-1);
-		}
-		else
-		{
-			$sql .= $fields;
-		}
-		
-		$cols[strlen($cols)-1] = ' ';
-		$col_values[strlen($col_values)-1] = ' ';
-		
-		if($cond != '')
-			$sql .= ' WHERE '.$cond;
-		
-		return $this->query($sql);
+		return $sql;
 	}
 	
 	public function build_where($fields)
 	{
 		$sql='';
 		
-		if(!is_array($fields) || empty($fields))
+		if(!is_array($fields))
 		{
-			return false;
+			$fields = str_ireplace('WHERE', '', $fields);
+			return ' WHERE '.$fields;
 		}
 		
+		if(count($fields) === 0)
+		{
+			return '';
+		}
+
 		$sql .= ' WHERE ';
 		
 		$where_clauses = array();
@@ -661,7 +691,7 @@ class ezDB_Base
 				$value_list = array();
 				foreach($value as $in)
 				{
-					$in = DB::escape($in);
+					$in = $this->escape($in);
 					$value_list[] = "'{$in}'";
 				}
 				
@@ -680,7 +710,7 @@ class ezDB_Base
 				# If there's a % (wildcard) in there, so it should use a LIKE
 				if(substr_count($value, '%') > 0)
 				{
-					$value = DB::escape($value);
+					$value = $this->escape($value);
 					$where_clauses[] = "{$column_name} LIKE '{$value}'";
 					continue;
 				}
@@ -692,7 +722,7 @@ class ezDB_Base
 					continue;
 				}
 				
-				$value = DB::escape($value);
+				$value = $this->escape($value);
 				$where_clauses[] = "{$column_name} = '{$value}'";
 			}
 		}
@@ -706,9 +736,9 @@ class ezDB_Base
 	
 	public function build_update($fields)
 	{
-		if(!is_array($fields) || empty($fields))
+		if(!is_array($fields))
 		{
-			return false;
+			return $fields;
 		}
 		
 		$sql = '';
@@ -737,7 +767,7 @@ class ezDB_Base
 				}
 				else
 				{
-					$value = DB::escape($value);
+					$value = $this->escape($value);
 					$tmp.="'{$value}'";
 				}
 			}

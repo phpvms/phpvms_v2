@@ -18,6 +18,33 @@
  
 class OperationsData extends CodonData
 {
+	
+	public static function findAirport($params, $count = '', $start = '', $order_by = '')
+	{
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'airports ';
+	
+		/* Build the select "WHERE" based on the columns passed, this is a generic function */
+		$sql .= DB::build_where($params);
+		
+		// Order matters
+		if(strlen($order_by) > 0)
+		{
+			$sql .= ' ORDER BY '.$order_by;
+		}
+		
+		if(strlen($count) != 0)
+		{
+			$sql .= ' LIMIT '.$count;
+		}
+		
+		if(strlen($start) != 0)
+		{
+			$sql .= ' OFFSET '. $start;
+		}
+		
+		$ret = DB::get_results($sql);
+		return $ret;
+	}
 	/**
 	 * Get all aircraft from database
 	 */
@@ -239,7 +266,7 @@ class OperationsData extends CodonData
 		return $all_airports_json;
 	}
 	
-	public static function findAirport($airport)
+	public static function searchAirport($airport)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."airports
 				WHERE `icao` LIKE '%{$airport}%' OR

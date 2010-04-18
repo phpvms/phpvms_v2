@@ -131,7 +131,6 @@ class Operations extends CodonModule
 	
 	public function calculatedistance($depicao='', $arricao='')
 	{
-		cndebug(print_r($this->get, true));
 		if($depicao == '')
 			$depicao = $this->get->depicao;
 		
@@ -163,7 +162,7 @@ class Operations extends CodonModule
 	
 	public function findairport()
 	{
-		$results = OperationsData::findAirport($this->get->term);
+		$results = OperationsData::searchAirport($this->get->term);
 		
 		if(count($results) > 0)
 		{
@@ -259,8 +258,100 @@ class Operations extends CodonModule
 			}
 		}
 							
-		$this->set('airports', OperationsData::GetAllAirports());
+		//$this->set('airports', OperationsData::getAllAirports());
 		$this->render('ops_airportlist.tpl');
+	}
+
+	public function airportgrid()
+	{
+		$page = $this->get->page; // get the requested page 
+		$limit = $this->get->rows; // get how many rows we want to have into the grid 
+		$sidx = $this->get->sidx; // get index row - i.e. user click to sort 
+		$sord = $this->get->sord; // get the direction 
+		if(!$sidx) $sidx =1;
+		
+		# http://dev.phpvms.net/admin/action.php/operations/
+		# ?_search=true&nd=1270940867171&rows=20&page=1&sidx=flightnum&sord=asc&searchField=code&searchString=TAY&searchOper=eq
+		
+		/* Do the search using jqGrid */
+		$where = array();
+		if($this->get->_search == 'true') 
+		{
+			$searchstr = jqgrid::strip($this->get->filters);
+			$where_string = jqgrid::constructWhere($searchstr);
+			
+			# Append to our search, add 1=1 since it comes with AND
+			#	from above
+			$where[] = "1=1 {$where_string}";
+		}
+		
+		# Do a search without the limits so we can find how many records
+		$count = count(OperationsData::findAirport($where));
+		
+		if($count > 0) 
+		{
+			$total_pages = ceil($count/$limit);
+		} 
+		else 
+		{
+			$total_pages = 0;
+		}
+		
+		if ($page > $total_pages) 
+		{
+			$page = $total_pages;
+		}
+		
+		$start = $limit * $page - $limit; // do not put $limit*($page - 1)
+		if ($start < 0) 
+		{
+			$start = 0;
+		}
+		
+		# And finally do a search with the limits
+		$airports = OperationsData::findAirport($where, $limit, $start, "{$sidx} {$sord}");
+		if(!$airports)
+		{
+			$airports = array();
+		}
+
+		# Form the json header
+		$json = array(
+			'page' => $page,
+			'total' => $total_pages,
+			'records' => $count,
+			'rows' => array()
+			);
+		
+		# Add each row to the above array
+		foreach($airports as $row)
+		{
+			if($row->fuelprice == 0)
+			{
+				$row->fuelprice = 'Live';
+			}
+
+			$edit = '<a href="#" onclick="editairport(\''.$row->icao.'\'); return false;">Edit</a>';
+			
+			$tmp = array(
+				'id' => $row->id,
+				'cell' => array(
+						# Each column, in order
+						$row->icao,
+						$row->name,
+						$row->country,
+						$row->fuelprice,
+						$row->lat,
+						$row->lng,
+						$edit,
+						),
+					);
+			
+			$json['rows'][] = $tmp;
+		}
+		
+		header("Content-type: text/x-json");
+		echo json_encode($json);	
 	}
 	
 	public function addschedule()
@@ -354,6 +445,10 @@ class Operations extends CodonModule
 		
 		# And finally do a search with the limits
 		$schedules = SchedulesData::findSchedules($where, $limit, $start);
+		if(!$schedules)
+		{
+			$schedules = array();
+		}
 		
 		# Form the json header
 		$json = array(
@@ -605,20 +700,21 @@ class Operations extends CodonModule
 			return;
 		}
 		
-		$data = array(	'icao'=>$this->post->icao,
-						'name'=>$this->post->name,
-						'fullname'=>$this->post->fullname,
-						'registration'=>$this->post->registration,
-						'downloadlink'=>$this->post->downloadlink,
-						'imagelink'=>$this->post->imagelink,
-						'range'=>$this->post->range,
-						'weight'=>$this->post->weight,
-						'cruise'=>$this->post->cruise,
-						'maxpax'=>$this->post->maxpax,
-						'maxcargo'=>$this->post->maxcargo,
-						'minrank'=>$this->post->minrank,
-						'enabled'=>$this->post->enabled);
-						
+		$data = array(	
+			'icao'=>$this->post->icao,
+			'name'=>$this->post->name,
+			'fullname'=>$this->post->fullname,
+			'registration'=>$this->post->registration,
+			'downloadlink'=>$this->post->downloadlink,
+			'imagelink'=>$this->post->imagelink,
+			'range'=>$this->post->range,
+			'weight'=>$this->post->weight,
+			'cruise'=>$this->post->cruise,
+			'maxpax'=>$this->post->maxpax,
+			'maxcargo'=>$this->post->maxcargo,
+			'minrank'=>$this->post->minrank,
+			'enabled'=>$this->post->enabled
+		);
 			
 		OperationsData::AddAircaft($data);
 		

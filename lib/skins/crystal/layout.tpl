@@ -108,12 +108,13 @@ echo $page_htmlreq;
 	 */
 	 
 	echo $page_content;
+	
 	?>
 	
 	</div>
 	</div>
 	<div id="footer">
-	<p>copyright &copy; 2007 - <?php echo date('Y') ?><br />
+	<p>copyright &copy; 2007 - <?php echo date('Y') ?> - <?php echo SITE_NAME; ?><br />
 	<!-- Please retain this!! It's part of the phpVMS license. You must display a
 			"powered by phpVMS" somewhere on your page. Thanks! -->
 	<a href="http://www.phpvms.net" target="_blank">powered by phpVMS</a></p>

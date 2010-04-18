@@ -483,7 +483,8 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
 			if(!$results)
 			{
 				$total = 0;
@@ -533,7 +534,8 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
 			if(!$results)
 			{
 				$total = 0;
@@ -579,7 +581,8 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
 			if(!$results)
 			{
 				$total = 0;
@@ -625,7 +628,8 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
 			if(!$results)
 			{
 				$total = 0;
@@ -672,7 +676,8 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
 			if(!$results)
 			{
 				$total = 0;
@@ -717,7 +722,9 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
+
 			if(!$results)
 			{
 				$total = 0;
@@ -802,7 +809,9 @@ class StatsData extends CodonData
 				$params['group'] = 'code';
 			}
 			
-			$results = DB::quick_select($params);
+			$sql = DB::build_select($params);
+			$results = DB::get_results($sql);
+
 			if(!$results)
 			{
 				$total = 0;

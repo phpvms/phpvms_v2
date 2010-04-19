@@ -55,6 +55,7 @@ c811db29accce3ea2beff8804a012daa  *./core/common/DownloadData.class.php
 54d08de34e14adf506930c9433320756  *./core/common/CronData.class.php
 e1634f73751a74d4d411612fd3a9f307  *./core/common/OFCharts.class.php
 a3311e897e99e5d9f331fabc56ddbc2b  *./core/common/CentralData.class.php
+ad22d5c59925bc27a300dd27675a2ff8  *./core/templates/profile_badge.tpl
 0600b921789561619e2a4a83385ff5ec  *./core/templates/email_registrationdenied.tpl
 b195f3a46b86daad7fb6f99a6d080594  *./core/templates/schedule_results.tpl
 c931d63eba29c5891bc3d8738b330631  *./core/templates/pireps_viewall.tpl
@@ -97,7 +98,7 @@ ddd67f7377a1b4747119b8fb25b22a7d  *./core/templates/login_form.tpl
 3afdefb8393afab5cee8174fe28c5473  *./core/templates/fsfk_log_flightcritique.tpl
 37ac801fad11dc936bda9ecd26200470  *./core/templates/email_pilot_retired.tpl
 998c822282b68f3eaf12e3f178b6fa85  *./core/templates/core_htmlreq.tpl
-88368b2a00e12f68611534420a663c8c  *./core/templates/profile_main.tpl
+1ad816eaaa5f089be2ac414aa5bdb5e3  *./core/templates/profile_main.tpl
 6ffdadcaec3c299e53b691e7d524dc5f  *./core/templates/schedule_searchform.tpl
 b8aed2d4da2c4ba6fe32d79114ff0766  *./core/templates/fsfk_vaconfig.tpl
 2086f78d54974ea983b7b1d2b1f8f764  *./core/templates/login_rejected.tpl
@@ -152,7 +153,7 @@ cf7005129f40c0b800ed987809debd89  *./core/classes/autoload.php
 a9028d246a90f26f329f3c76af93f4a1  *./core/classes/Template.class.php
 74f79f15db7476a6ce4a8521996eeeef  *./core/classes/CodonCondenser.class.php
 b95046044516e5a08b913ac039cc8e0d  *./core/classes/ezdb/ezdb.class.php
-7615be2566f77eae0a96c6b31c4eae45  *./core/classes/ezdb/ezdb_base.class.php
+f8c11762506a382e3dfa7ef4f41ef1b3  *./core/classes/ezdb/ezdb_base.class.php
 b91d08223cbd16892191af87870e0bcf  *./core/classes/ezdb/ezdb_mysqli.class.php
 cbc5eb7865a3f59a4f679b386377d0c1  *./core/classes/ezdb/ezdb_mysql.class.php
 f45b5714e950fb9f0b7baadb5b1f08d1  *./core/classes/ezdb/ezdb_oracle.class.php
@@ -166,7 +167,7 @@ c7e138b27019ee369b9e31eec21df39f  *./core/app.config.php
 e58ee78f8e857ad150badae9ba04dddc  *./core/modules/news/news.php
 935862c6f2d8c067c49c4af2797abebd  *./core/modules/XML/XML.php
 b29f26b4ddb98f0f2eeba802855a7872  *./core/modules/Contact/Contact.php
-398b6c003a8a3e42cb70d08413350fee  *./core/modules/Profile/Profile.php
+e989746517699422f43d3d1d5ba0d799  *./core/modules/Profile/Profile.php
 db56836cad01ef0f2b40a482e1b49828  *./core/modules/Registration/Registration.php
 fe8673f5292627c7589eed45b591a20b  *./core/modules/Downloads/Downloads.php
 e6eb59f2814008a2a20eb01591c12447  *./core/modules/Pilots/Pilots.php
@@ -180,7 +181,7 @@ b01833a6d48116007100f0d4e7b1b198  *./core/modules/ACARS/xacars.php
 9e03ee827a384a0b885d4ebd822e141e  *./core/modules/FSFK/FSFK.php
 8882059eb244446de66944aa53df28d3  *./core/modules/FrontBids/FrontBids.php
 a5e67fddae9c3f77e262cee30771db05  *./core/modules/Logout/Logout.php
-48ddf21cb9e0b7f226b597914bd96550  *./core/modules/PIREPS/PIREPS.php
+9bb1554cdef361abd5e1b76a35ef7dbf  *./core/modules/PIREPS/PIREPS.php
 11ac1fae888d5cfdd25eef39b4037749  *./core/modules/Finances/Finances.php
 713228773df8c23688125f98e9cb8f17  *./core/modules/Pages/Pages.php
 925c6ea3907403895286aff5d9838916  *./core/modules/Login/Login.php

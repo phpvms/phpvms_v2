@@ -38,7 +38,7 @@ ALTER TABLE `phpvms_schedules` ADD `route_details` TEXT NOT NULL AFTER `route`;
 
 -- Aircraft account for ranks;
 ALTER TABLE `phpvms_aircraft` ADD `minrank` INT NOT NULL DEFAULT '0' AFTER `maxcargo`;
-ALTER TABLE `phpvms_aircraft` ADD `ranklevel` INT NOT NULL DEFAULT '0' AFTER `minrank` 
+ALTER TABLE `phpvms_aircraft` ADD `ranklevel` INT NOT NULL DEFAULT '0' AFTER `minrank` ;
 
 -- Remove deprecated settings;
 DELETE FROM `phpvms_settings` WHERE `name='PHPVMS_VERSION';

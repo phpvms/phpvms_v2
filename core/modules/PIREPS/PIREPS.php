@@ -462,7 +462,7 @@ class PIREPS extends CodonModule
 	 */
 	public function RecentFrontPage($count = 10)
 	{
-		$this->set('reports', PIREPData::GetRecentReportsByCount($count));
+		$this->set('reports', PIREPData::getRecentReportsByCount($count));
 		$this->render('frontpage_reports.tpl');
 	}
 }

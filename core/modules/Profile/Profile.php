@@ -105,6 +105,13 @@ class Profile extends CodonModule
 		
 		$this->render('profile_stats.tpl');
 	}
+
+	public function badge()
+	{
+		$this->set('badge_url', fileurl(SIGNATURE_PATH.'/'.PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid).'.png'));
+		$this->set('pilotcode', PilotData::GetPilotCode(Auth::$userinfo->code, Auth::$userinfo->pilotid));
+		$this->render('profile_badge.tpl');
+	}
 		
 	public function editprofile()
 	{

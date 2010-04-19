@@ -1,0 +1,120 @@
+=====
+Time: 
+=====
+Time: 04.18.10 16:53:26
+Backtrace: DB::write_debug > DB::get_results > StatsData::TotalFlightsToday > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Dashboard->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT COUNT(*) AS `total` FROM phpvms_pirepsDATE(`submitdate`) = CURDATE()
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(`submitdate`) = CURDATE()' at line 1
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 16:53:28
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 16:53:31
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:00:06
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:02:39
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:06:34
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:06:47
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:06:59
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:08:10
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+
+=====
+Time: 
+=====
+Time: 04.18.10 17:08:34
+Backtrace: DB::write_debug > DB::get_results > PIREPData::findPIREPS > PIREPData::getRecentReportsByCount > PIREPS->RecentFrontPage > call_user_func_array > MainController::Run > include > TemplateSet->getTemplate > TemplateSet->showTemplate > Template::show > CodonModule->render > Frontpage->index > call_user_func_array > MainController::RunAllActions
+Query: SELECT p.*, UNIX_TIMESTAMP(p.submitdate) as submitdate, u.pilotid, u.firstname, u.lastname, u.email, u.rank, a.id AS aircraftid, a.name as aircraft, a.registration, dep.name as depname, dep.lat AS deplat, dep.lng AS deplng, arr.name as arrname, arr.lat AS arrlat, arr.lng AS arrlng FROM phpvms_pireps p LEFT JOIN phpvms_aircraft a ON a.id = p.aircraft LEFT JOIN phpvms_airports AS dep ON dep.icao = p.depicao LEFT JOIN phpvms_airports AS arr ON arr.icao = p.arricao LEFT JOIN phpvms_pilots u ON u.pilotid = p.pilotid WHERE ORDER BY p.submitdate DESC LIMIT 5
+Error: (1064) - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY p.submitdate DESC LIMIT 5' at line 10
+=====
+
+
+=====
+

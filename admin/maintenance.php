@@ -21,8 +21,10 @@
 	You should either point to this file directly in your web-host's control panel
 	Or add an entry into the crontab file. I recommend running this maybe 2-3am, 
  */
-
+define('ADMIN_PANEL', true);
 include dirname(dirname(__FILE__)).'/core/codon.config.php';
+Auth::$userinfo->pilotid = 0;
+
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
@@ -47,7 +49,5 @@ if(Config::Get('CLOSE_BIDS_AFTER_EXPIRE') === false)
 
 MaintenanceData::optimizeTables();
 
-include dirname(__FILE__).'/modules/Maintenance/Maintenance.php';
-$m = new Maintenance();
-$m->resetpirepcount();
-$m->resethours();
+MainController::Run('Maintenance', 'resetpirepcount');
+MainController::Run('Maintenance', 'resethours');

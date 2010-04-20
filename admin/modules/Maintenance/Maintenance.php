@@ -133,6 +133,14 @@ class Maintenance extends CodonModule
 				return;
 			}
 			
+			if($this->post->new_pilotid < 1)
+			{
+				$error = true;
+				$this->set('message', 'You cannot have an ID less than 1');
+				$this->render('core_error.tpl');
+				return;
+			}
+			
 			if(empty($this->post->new_pilotid))
 			{
 				$error = true;
@@ -157,19 +165,12 @@ class Maintenance extends CodonModule
 				$this->render('core_error.tpl');
 				return;
 			}
-			else
-			{
-				$error = true;
-				$this->set('message', 'Invalid pilot!');
-				$this->render('core_error.tpl');
-				return;
-			}
 			
 			if($error === false)
 			{
 				PilotData::changePilotID($this->post->old_pilotid, $this->post->new_pilotid);
 				
-				$this->set('message', 'Pilot ID changed');
+				$this->set('message', "Pilot ID changed from {$this->post->old_pilotid} to {$this->post->new_pilotid}");
 				$this->render('core_success.tpl');
 			}
 		}
@@ -263,7 +264,6 @@ class Maintenance extends CodonModule
 		
 		StatsData::UpdateTotalHours();
 		echo 'Found '.StatsData::TotalHours().' total hours, updated<br /></p>';
-		
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Reset hours');
 	}

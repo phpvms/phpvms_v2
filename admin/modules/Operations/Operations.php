@@ -256,6 +256,8 @@ class Operations extends CodonModule
 					$this->edit_airport_post();
 					break;
 			}
+			
+			return;
 		}
 							
 		//$this->set('airports', OperationsData::getAllAirports());
@@ -801,7 +803,8 @@ class Operations extends CodonModule
 	{
 		
 		if($this->post->icao == '' || $this->post->name == '' 
-				|| $this->post->country == '' || $this->post->lat == '' || $this->post->long == '')
+			|| $this->post->country == '' 
+			|| $this->post->lat == '' || $this->post->lng == '')
 		{
 			$this->set('message', 'Some fields were blank!');
 			$this->render('core_error.tpl');
@@ -818,7 +821,7 @@ class Operations extends CodonModule
 			'name' => $this->post->name,
 			'country' => $this->post->country,
 			'lat' => $this->post->lat,
-			'lng' => $this->post->long,
+			'lng' => $this->post->lng,
 			'hub' => $this->post->hub,
 			'chartlink' => $this->post->chartlink,
 			'fuelprice' => $this->post->fuelprice
@@ -837,8 +840,8 @@ class Operations extends CodonModule
 			return;
 		}
 
-		$this->set('message', 'The airport has been added');
-		$this->render('core_success.tpl');
+		/*$this->set('message', 'The airport has been added');
+		$this->render('core_success.tpl');*/
 		
 		LogData::addLog(Auth::$userinfo->pilotid, 'Added the airport "'.$this->post->icao.' - '.$this->post->name.'"');
 	}
@@ -846,7 +849,7 @@ class Operations extends CodonModule
 	protected function edit_airport_post()
 	{
 		if($this->post->icao == '' || $this->post->name == '' 
-				|| $this->post->country == '' || $this->post->lat == '' || $this->post->long == '')
+				|| $this->post->country == '' || $this->post->lat == '' || $this->post->lng == '')
 		{
 			$this->set('message', 'Some fields were blank!');
 			$this->render('core_message.tpl');
@@ -864,7 +867,7 @@ class Operations extends CodonModule
 			'name' => $this->post->name,
 			'country' => $this->post->country,
 			'lat' => $this->post->lat,
-			'lng' => $this->post->long,
+			'lng' => $this->post->lng,
 			'hub' => $this->post->hub,
 			'chartlink' => $this->post->chartlink,
 			'fuelprice' => $this->post->fuelprice

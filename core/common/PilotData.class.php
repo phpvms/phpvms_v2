@@ -256,17 +256,18 @@ class PilotData extends CodonData
 			return false;
 		}
 		
+		DB::query('SET foreign_key_checks = 0;');
 		// List of all the tables which need to update
 		$table_list = array(
+			'groupmembers',
+			'pilots',
 			'adminlog',
 			'awardsgranted',
 			'acarsdata',
 			'sessions',
-			'pilots',
 			'pireps',
 			'pirepcomments',
 			'fieldvalues',
-			'groupmembers',
 			'bids',
 		);
 		
@@ -277,6 +278,7 @@ class PilotData extends CodonData
 					WHERE `pilotid`='.$old_pilotid;
 					
 			DB::query($sql);
+			//DB::debug();
 		}
 		
 		return true;

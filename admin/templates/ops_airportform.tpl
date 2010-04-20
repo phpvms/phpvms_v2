@@ -1,5 +1,5 @@
 <h3><?php echo $title?></h3>
-<form id="form" action="<?php echo adminaction('/operations/airports');?>" method="post">
+<form id="flashForm" action="<?php echo adminaction('/operations/airports');?>" method="post">
 <dl>
 <dt>Airport ICAO Code *</dt>
 <dd><input id="airporticao" name="icao" type="text" value="<?php echo $airport->icao?>" /> 
@@ -18,7 +18,7 @@
 <dd><input id="airportlat" name="lat" type="text" value="<?php echo $airport->lat?>" /></dd>
 
 <dt>Longitude *</dt>
-<dd><input id="airportlong" name="long" type="text" value="<?php echo $airport->lng?>" /></dd>
+<dd><input id="airportlong" name="lng" type="text" value="<?php echo $airport->lng?>" /></dd>
 
 <dt>Chart Link</dt>
 <dd><input id="chartlink" name="chartlink" type="text" value="<?php echo $airport->chartlink?>" /></dd>
@@ -47,6 +47,7 @@
 </dd>
 </dl>
 </form>
+
 <script type="text/javascript">
 $("#airporticao").bind("blur", function()
 {

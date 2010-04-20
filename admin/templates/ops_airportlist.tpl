@@ -1,5 +1,5 @@
 <h3>Airports List</h3>
-
+<div id="results"></div>
 <table id="grid"></table>
 <div id="pager"></div>
 <br />

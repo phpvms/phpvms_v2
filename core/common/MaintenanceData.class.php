@@ -19,7 +19,7 @@
 class MaintenanceData extends CodonData
 {
 	
-	public function optimizeTables()
+	public static function optimizeTables()
 	{
 		$tables = Config::Get('TABLE_LIST');
 		
@@ -31,6 +31,11 @@ class MaintenanceData extends CodonData
 		$tables = implode(', ', $tables);
 		$sql = 'OPTIMIZE TABLE '.$tables;
 		return DB::get_results($sql);
+	}
+	
+	public static function resetPIREPCount()
+	{
+		
 	}
 	
 }

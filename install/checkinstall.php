@@ -125,14 +125,15 @@ while(!feof($fp))
 {
 	$line = fgets($fp);
 	
+	$line = trim($line);
 	if(empty($line))
 		continue;
 	
 	fscanf($fp, '%s %s', $checksum, $file);
 	$total ++;
 	$file = str_replace('*./', '../', $file);
-	
-	if($file == '../core/local.config.php' || substr_count($file, 'unittest') > 0)
+		
+	if($file == '../core/local.config.php' || substr_count($file, 'unittest') > 0 || empty($file))
 	{
 		continue;
 	}
@@ -159,6 +160,13 @@ while(!feof($fp))
 		error('Checksum failed', "{$file} did not match, possibly corrupt or out of date");
 		continue;
 	}
+	
+	$file = '';
+}
+
+if($errors == 0)
+{
+	success('OK', 'No errors found!');
 }
 
 echo "<br /><strong> -- Checked {$total} files, found {$errors} errors</strong><br />";

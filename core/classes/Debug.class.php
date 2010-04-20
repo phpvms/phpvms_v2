@@ -106,6 +106,7 @@ class Debug
 		if($filename == '')
 			$filename = 'log';
 			
+		$time = date('m.d.y H:i:s');
 		$string = "=====\n"
 				 ."Time: {$time}\n"
 				 ."{$string}\n=====\n\n";

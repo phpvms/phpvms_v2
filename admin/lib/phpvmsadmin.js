@@ -18,73 +18,15 @@
 var depicon = baseurl + '/lib/images/towerdeparture.png';
 var arricon = baseurl + '/lib/images/towerarrival.png';
 
-function formInit() 
-{
-	$("#form").ajaxForm({
-		target: '#bodytext',
-		success: function() {
-			$('#bodytext').fadeIn('slow');
-			formInit();
-			$("button, input:button, input:submit, a.button").button();
-		}
-	});
-
-	$("#flashForm").ajaxForm({
-		target: '#results',
-		success: function() {
-			formInit();
-			$("button, input:button, input:submit, a.button").button();
-		}
-	});
-
-	$('#pilotoptionchangepass').ajaxForm({
-		target: '#dialogresult',
-		success: function() {
-			formInit();
-		}
-	});
-
-	$('#selectpilotgroup').ajaxForm({
-		target: '#pilotgroups',
-		success: function() {
-			formInit();
-		}
-	});
-
-	$('#addaward').ajaxForm({
-		target: '#awardslist',
-		success: function() {
-			formInit();
-		}
-	});
-	
-	$("button, input:button, input:submit, a.button").button();
-}
-
-function reloadGroups() {
-	$('.pilotgroupajax').live('click', function() {
-		$("#pilotgroups").load($(this).attr("href"),
-		    { action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id") },
-		    function() {
-		    	reloadGroups();
-		    });
-	});
-
-	$('a.button').button();
-	$('button').button();
-}
-
-function calcDistance() {
-	$("#distance").val("Calculating...");
-	$.get(baseurl + "/admin/action.php/operations/calculatedistance",
-        { depicao: $("#depicao").val(), arricao: $("#arricao").val() },
-        function(data) {
-        	$("#distance").val(data);
-        });
-}
+$(document).ready(function() {
+	initListeners();
+});
 
 function initListeners()
 {
+	formInit();
+	reloadGroups();
+	
 	$('#jqmdialog').jqm({
 		ajax: '@href',
 		onLoad: function(h) {
@@ -122,9 +64,6 @@ function initListeners()
 
 	$('a.button, button, input[type=submit]').button();
 	
-	formInit();
-	reloadGroups();
-
 	$("#slidermenu").accordion({ clearStyle: true, autoHeight: false, navigation: true });
 
 	$("#dialogform").ajaxForm({
@@ -227,9 +166,71 @@ function initListeners()
 	}
 }
 
-$(document).ready(function() {
-	initListeners();
-});
+
+function formInit() 
+{
+	$("#form").ajaxForm({
+		target: '#bodytext',
+		success: function() {
+			formInit();
+			$("button, input:button, input:submit, a.button").button();
+		}
+	});
+
+	$("#flashForm").ajaxForm({
+		target: '#results',
+		success: function() {
+			formInit();
+			$("button, input:button, input:submit, a.button").button();
+			$("#grid").trigger("reloadGrid");
+		}
+	});
+	
+	$('#pilotoptionchangepass').ajaxForm({
+		target: '#dialogresult',
+		success: function() {
+			formInit();
+		}
+	});
+
+	$('#selectpilotgroup').ajaxForm({
+		target: '#pilotgroups',
+		success: function() {
+			formInit();
+		}
+	});
+
+	$('#addaward').ajaxForm({
+		target: '#awardslist',
+		success: function() {
+			formInit();
+		}
+	});
+	
+	$("button, input:button, input:submit, a.button").button();
+}
+
+function reloadGroups() {
+	$('.pilotgroupajax').live('click', function() {
+		$("#pilotgroups").load($(this).attr("href"),
+		    { action: $(this).attr("action"), pilotid: $(this).attr("pilotid"), groupid: $(this).attr("id") },
+		    function() {
+		    	reloadGroups();
+		    });
+	});
+
+	$('a.button').button();
+	$('button').button();
+}
+
+function calcDistance() {
+	$("#distance").val("Calculating...");
+	$.get(baseurl + "/admin/action.php/operations/calculatedistance",
+        { depicao: $("#depicao").val(), arricao: $("#arricao").val() },
+        function(data) {
+        	$("#distance").val(data);
+        });
+}
 
 function lookupICAO() {
 	icao = $("#airporticao").val();

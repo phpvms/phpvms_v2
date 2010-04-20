@@ -107,3 +107,4 @@
 </p>
 <p>It's recommended to run this sometime between 2-6am (pick an artibrary time when you would least-likely have any flights). 
 Also, remember to change in local.config.php, USE_CRON to true, so phpVMS doesn't try to automatically schedule these tasks to run.</p>
+<p><strong>Note: </strong> If you setup the cron to run, it's recommended to also run it by hand once to ensure data is populated, unless you want to wait for it to run automatically.</p>

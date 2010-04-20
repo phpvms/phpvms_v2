@@ -635,14 +635,7 @@ class ezDB_Base
 		
 		if(!empty($params['where']))
 		{
-			if(is_array($params['where']))
-			{
-				$sql .= $this->build_where($params['where']);
-			}
-			else
-			{
-				$sql .= $params['where'];
-			}
+			$sql .= $this->build_where($params['where']);
 		}
 			
 		if(!empty($params['group']))

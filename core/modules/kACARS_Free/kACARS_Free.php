@@ -17,12 +17,12 @@
  */
 
 
+
 class kACARS_Free extends CodonModule
 {
-	
 	public function index()
 	{
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' )
+		if($_SERVER['REQUEST_METHOD'] === 'POST')
 		{ 
 			$postText = file_get_contents('php://input');		
 			
@@ -31,11 +31,11 @@ class kACARS_Free extends CodonModule
 			
 			if(!$xml)
 			{
-				$this->log("Invalid XML Sent: \n".$rec_xml, 'kacars');
+				#$this->log("Invalid XML Sent: \n".$rec_xml, 'kacars');
 				return;	
 			}
 			
-			$this->log(print_r($xml->asXML(), true), 'kacars');
+			#$this->log(print_r($xml->asXML(), true), 'kacars');
 			
 			$case = strtolower($xml->switch->data);
 			switch($case)
@@ -198,7 +198,7 @@ class kACARS_Free extends CodonModule
 						'client'         =>'kACARS',
 						);
 					
-					$this->log("UpdateFlightData: \n".print_r($fields, true), 'kacars');
+					#$this->log("UpdateFlightData: \n".print_r($fields, true), 'kacars');
 					ACARSData::UpdateFlightData($pilotid, $fields);	
 					
 					break;
@@ -269,7 +269,7 @@ class kACARS_Free extends CodonModule
 						'log'=>$xml->pirep->log
 					);
 					
-					$this->log("File PIREP: \n".print_r($data, true), 'kacars');
+					#$this->log("File PIREP: \n".print_r($data, true), 'kacars');
 					$ret = ACARSData::FilePIREP($pilotid, $data);		
 					
 					if ($ret)
@@ -359,7 +359,7 @@ class kACARS_Free extends CodonModule
 		echo $xml_string;
 		
 		# For debug
-		$this->log("Sending: \n".print_r($xml_string, true), 'kacars');
+		#$this->log("Sending: \n".print_r($xml_string, true), 'kacars');
 		
 		return;	
 	}
@@ -379,7 +379,7 @@ class kACARS_Free extends CodonModule
 		}
 		
 		# For debug
-		$this->log("Sending: \n".print_r($xml_string, true), 'kacars');
+		#$this->log("Sending: \n".print_r($xml_string, true), 'kacars');
 		
 		header('Content-type: text/xml');
 		echo $xml->asXML();

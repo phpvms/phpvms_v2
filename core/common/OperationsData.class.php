@@ -94,7 +94,7 @@ class OperationsData extends CodonData
 	 */
 	public static function getAllAircraft($onlyenabled=false)
 	{
-		$key = 'all_aircraft';
+		/*$key = 'all_aircraft';
 		if($onlyenabled == true)
 		{
 			$key .= '_enabled';
@@ -102,7 +102,7 @@ class OperationsData extends CodonData
 		
 		$all_aircraft = CodonCache::read($key);
 		if($all_aircraft === false)
-		{
+		{*/
 			$sql = 'SELECT a.*, r.rank
 					FROM ' . TABLE_PREFIX .'aircraft a
 					LEFT JOIN '.TABLE_PREFIX.'ranks r ON r.rankid=a.minrank';
@@ -115,8 +115,8 @@ class OperationsData extends CodonData
 			$sql .= ' ORDER BY icao ASC';
 			
 			$all_aircraft = DB::get_results($sql);
-			CodonCache::write($key, $all_aircraft, 'long');
-		}
+		//	CodonCache::write($key, $all_aircraft, 'long');
+		//}
 		
 		return $all_aircraft;
 	}
@@ -245,11 +245,10 @@ class OperationsData extends CodonData
 		if($all_airports_json === false)
 		{
 			$json_string = array();
+			
 			$allairports = self::getAllAirports();
 			foreach($allairports as $airport)
 			{
-				//$airport->name = DB::escape($airport->name);
-				
 				$tmp = array(
 					'label' => "{$airport->icao} ({$airport->name})",
 					'value' => $airport->icao,

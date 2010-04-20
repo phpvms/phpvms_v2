@@ -1,5 +1,5 @@
 <h3><?php echo $title;?></h3>
-<form id="form" action="<?php echo adminaction('/finances/viewexpenses');?>" method="post">
+<form id="form" action="<?php echo adminaction('/finance/viewexpenses');?>" method="post">
 <dl>
 <dt>* Expense Name:</dt>
 <dd><input name="name" type="text" value="<?php echo $expense->name; ?>" /></dd>

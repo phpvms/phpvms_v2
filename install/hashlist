@@ -11,7 +11,7 @@ fac7c09a2f7b3c46a3c4d20ccb0eb2fb  *./install/templates/s2_site_setup.tpl
 98159de4e2de83127db1931eb35f818c  *./install/update_437.sql
 26ef658d7e68ae3cd8f5e34e9e9c5e65  *./install/checkinstall.php
 c6384626328e54dd77c534d04ff65a44  *./install/update_700.sql
-78ac341bb1c1ae65d37cc37cc4bef4c5  *./install/update.sql
+0bb6976bcc06e209c28b684afca2b2bf  *./install/update.sql
 d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 55c3722f079209f61fcfce707f077548  *./install/update_400.sql
 56522f3521444add8835afbba7375a11  *./install/update_854.sql
@@ -20,11 +20,11 @@ d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 1ee77934d1a602e9c74861c9391a55d9  *./install/update_628.sql
 c272ba4d5e3656768e851f448face751  *./install/loader.inc.php
 20aed0ce417ba947f254459309b4ac1f  *./install/Installer.class.php
-d79871df7bcc5aaabb166feb2d0252fc  *./install/update.php
+d617e0d979ec50733d2040661038b738  *./install/update.php
 6b8d1dc1b006ef2a88e8130ce7bb157a  *./install/update_441.sql
 87a5365aeff06351424ae56fdb561909  *./install/checkdb.php
 d4d204c3560c283fa4d7a3a367473740  *./install/navdata.sql
-b0bf9020a8fcc2736ef8eb90a21261a7  *./install/install.php
+654a8ef74503b880f8526873986da3af  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
 ca3ba6576a81f6107b9017187bc2f484  *./core/common/MaintenanceData.class.php
 66ac4c7de16bb72aaeefa00e949da84c  *./core/common/PIREPData.class.php
@@ -171,7 +171,7 @@ e989746517699422f43d3d1d5ba0d799  *./core/modules/Profile/Profile.php
 db56836cad01ef0f2b40a482e1b49828  *./core/modules/Registration/Registration.php
 fe8673f5292627c7589eed45b591a20b  *./core/modules/Downloads/Downloads.php
 e6eb59f2814008a2a20eb01591c12447  *./core/modules/Pilots/Pilots.php
-20e1a65966388952372b1089c50cae29  *./core/modules/kACARS_Free/kACARS_Free.php
+be83521d9521fbf0078d27e114f32faf  *./core/modules/kACARS_Free/kACARS_Free.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/modules/index.php
 c75e1f34d88a90272e8b4f665e62ea3d  *./core/modules/Frontpage/Frontpage.php
 4745bff609adac50676f834dbf25f46c  *./core/modules/ACARS/fsacars.php

@@ -35,9 +35,9 @@ class kACARS_Free extends CodonModule
 				return;	
 			}
 			
-			$this->log(print_r($this->xml->asXML(), true), 'kacars');
+			$this->log(print_r($xml->asXML(), true), 'kacars');
 			
-			$case = strtolower($this->xml->switch->data);
+			$case = strtolower($xml->switch->data);
 			switch($case)
 			{
 				case 'verify':		
@@ -60,7 +60,7 @@ class kACARS_Free extends CodonModule
 				
 				case 'getbid':							
 					
-					$pilotid = PilotData::parsePilotID($this->xml->verify->pilotID);
+					$pilotid = PilotData::parsePilotID($xml->verify->pilotID);
 					$pilotinfo = PilotData::getPilotData($pilotid);
 					$biddata = SchedulesData::getLatestBid($pilotid);
 					$aircraftinfo = OperationsData::getAircraftByReg($biddata->registration);
@@ -108,7 +108,7 @@ class kACARS_Free extends CodonModule
 				
 				case 'getflight':
 					
-					$flightinfo = SchedulesData::getProperFlightNum($this->xml->pirep->flightNumber);
+					$flightinfo = SchedulesData::getProperFlightNum($xml->pirep->flightNumber);
 					
 					$params = array(
 						's.code' => $flightinfo['code'],
@@ -153,7 +153,7 @@ class kACARS_Free extends CodonModule
 				
 				case 'liveupdate':	
 					
-					$pilotid = PilotData::parsePilotID($this->xml->verify->pilotID);
+					$pilotid = PilotData::parsePilotID($xml->verify->pilotID);
 					
 					# Get the distance remaining
 					$depapt = OperationsData::GetAirportInfo($xml->liveupdate->depICAO);
@@ -209,7 +209,7 @@ class kACARS_Free extends CodonModule
 					$code = $flightinfo['code'];
 					$flightnum = $flightinfo['flightnum'];
 					
-					$pilotid = PilotData::parsePilotID($this->xml->verify->pilotID);
+					$pilotid = PilotData::parsePilotID($xml->verify->pilotID);
 					
 					# Make sure airports exist:
 					#  If not, add them.
@@ -414,7 +414,6 @@ class kACARS_Free extends CodonModule
 				$sql = 'SELECT * FROM '.TABLE_PREFIX.'pilots
 					   WHERE pilotid='.$id;
 			}
-			
 			else
 			{				
 				return false;

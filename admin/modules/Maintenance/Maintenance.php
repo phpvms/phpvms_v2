@@ -198,6 +198,31 @@ class Maintenance extends CodonModule
 		
 	}
 	
+	public function clearcache()
+	{
+		echo '<h3>Clearing Cache</h3>';
+		
+		$dir_iterator = new RecursiveDirectoryIterator(CACHE_PATH);
+		$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::SELF_FIRST);
+
+		foreach ($iterator as $file) 
+		{
+			if($file->getType() != 'file')
+			{
+				continue;
+			}
+			
+			$file_name = $file->getBaseName();
+			if($file_name === 'index.php')
+				continue;
+				
+			echo "Removing \"{$file_name}\"<br />";
+			unlink($file);
+		}
+		
+		echo 'Cache cleared!';
+	}
+	
 	public function calculateranks()
 	{
 		echo '<h3>Resetting Ranks</h3>';
@@ -273,7 +298,7 @@ class Maintenance extends CodonModule
 		echo '<h3>Reset PIREP Data</h3> 
 				Resetting PIREPs...<br />';
 				
-		PIREPData::PopulateEmptyPIREPS();
+		//PIREPData::PopulateEmptyPIREPS();
 		
 		echo 'Complete';
 		

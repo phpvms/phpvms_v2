@@ -72,11 +72,9 @@ if(file_exists($settings_file))
 $BaseTemplate->template_path = SITE_ROOT . '/admin/lib/'.$tplname;
 $BaseTemplate->Set('title', SITE_NAME);
 
-if(isset($_GLOBALS['NAVBAR']))
-	Template::Set('MODULE_NAV_INC', $_GLOBALS['NAVBAR']);
-	
-if(isset($_GLOBALS['HTMLHead']))
-	Template::Set('MODULE_HEAD_INC', $_GLOBALS['HTMLHead']);
+
+Template::Set('MODULE_NAV_INC', $NAVBAR);
+Template::Set('MODULE_HEAD_INC', $HTMLHead);
 
 $BaseTemplate->Show('header.tpl');
 

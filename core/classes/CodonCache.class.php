@@ -50,6 +50,7 @@ class CodonCache
 			'engine' => 'file',					/* "file" or "apc" */
 			'location' => dirname(__FILE__),	/* For the "file" engine type */
 			'prefix' => __CLASS__,				/* Specify a prefix for any entries */
+			'suffix' => '.cache',
 			
 			/*	Setup different profiles. There must be a "default" one.
 				You can pass a specific "profile" to use in the write() function
@@ -140,7 +141,7 @@ class CodonCache
 			return false;
 		}
 		
-		$key = self::$settings['prefix'].$key;
+		$key = self::$settings['prefix'].$key.self::$settings['suffix'];
 		if(self::$settings['engine'] == 'file')
 		{
 			if(!file_exists(self::$settings['location'].$key))
@@ -196,7 +197,7 @@ class CodonCache
 			return false;
 		}
 		
-		$key = self::$settings['prefix'].$key;
+		$key = self::$settings['prefix'].$key.self::$settings['suffix'];
 		$ttl = strtotime(self::$settings['profiles'][$profile]['duration']);
 		$value = serialize($value);
 		
@@ -234,7 +235,7 @@ class CodonCache
 			return false;
 		}
 		
-		$key = self::$settings['prefix'].$key;
+		$key = self::$settings['prefix'].$key.self::$settings['suffix'];
 		if(self::$settings['engine'] == 'file')
 		{
 			if(file_exists(self::$settings['location'].$key))

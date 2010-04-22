@@ -42,7 +42,7 @@ if(isset($message))
 	<td style="font-weight: bold;">Select Arrival Airport:</td>
 	<td>
 		<div id="arrairport">
-		<input name="arricao" class="airport_select" value="<?php echo $pirep->depicao;?>" onclick="$(this).search();" />
+		<input name="arricao" class="airport_select" value="<?php echo $pirep->arricao;?>" onclick="" />
 		</div>
 	</td>
 </tr>

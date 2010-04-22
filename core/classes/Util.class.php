@@ -204,6 +204,7 @@ class Util
 	 */
 	public static function SendEmail($email, $subject, $message, $fromname='', $fromemail='')
 	{
+		ob_start();
 		# PHPMailer
 		include_once(SITE_ROOT.'/core/lib/phpmailer/class.phpmailer.php');
 		$mail = new PHPMailer(); 
@@ -240,6 +241,8 @@ class Util
 		// Fix thanks to jm (Jean-Michel)
 		$mail->Sender = $return_path_email;
 		
+		
+		
 		$mail->Mailer = 'mail';
 		$mail->CharSet = 'UTF-8'; #always use UTF-8
 		$mail->IsHTML(true);
@@ -258,6 +261,9 @@ class Util
 			}
 		}
 		
+		$mail->SetFrom($fromemail, $fromname);
+		$mail->AddReplyTo($fromemail, $fromname);
+		
 		$message = "<html><head></head><body>{$message}</body></html>";
 		//$message = nl2br($message);
 		$alt = strip_tags($message);
@@ -268,5 +274,6 @@ class Util
 		$mail->AltBody = $alt;
 		
 		$mail->Send();
+		ob_end_clean();
 	}
 }

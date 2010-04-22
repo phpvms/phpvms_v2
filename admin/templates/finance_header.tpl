@@ -2,7 +2,7 @@
 <table width="100%">
 <tr>
 <td align="right">
-<form action="<?php echo adminurl('finance/viewreport');?>" method="get">
+<form action="<?php echo adminurl('/finance/viewreport');?>" method="get">
 <strong>Select Report: </strong>
 <?php
 $years = StatsData::GetYearsSinceStart();
@@ -50,7 +50,7 @@ foreach($months as $monthname=>$timestamp)
 </form>
 </td>
 <td align="right">
-<form action="<?php echo adminurl('finances/viewreport'.$_SERVER['QUERY_STRING']);?>" method="get">
+<form action="<?php echo adminurl('finance/viewreport'.$_SERVER['QUERY_STRING']);?>" method="get">
 	<strong>Filter Financials: </strong>
 	<input type="text" name="query" 
 		value="<?php if($_GET['query']) { echo $_GET['query'];} else { echo '(Use % for wildcard)';}?>" onClick="this.value='';" />

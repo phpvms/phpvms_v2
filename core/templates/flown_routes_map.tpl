@@ -22,17 +22,7 @@ var flightMarkers = [];
 $shown = array();
 foreach($allschedules as $route)
 {	
-	// Dont show repeated routes
-	if(in_array($route->depicao, $shown))
-		continue;
-	else
-		$shown[] = $route->depicao;
-	
-	if(in_array($route->arricao, $shown))
-		continue;
-	else
-		$shown[] = $route->arricao;
-		
+	// Dont show repeated routes		
 	if(in_array($route->code.$route->flightnum, $shown))
 		continue;
 	else

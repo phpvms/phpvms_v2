@@ -23,7 +23,6 @@
 			</strong>
 		</td>
 		<td>Empties the ACARS table, if you're having problems with ACARS updates<br /></td>
-	
 	</tr>
 	
 	<tr>
@@ -67,12 +66,12 @@
 	
 	<tr>
 	
-	<td><strong>
+	<!--<td><strong>
 		<a href="<?php echo adminurl('/maintenance/resetpirepfinance');?>">Reset PIREP Finances</a>
 		</strong>
 	</td>
 	<td>This resets financial data to existing PIREPS which do not have any. NOTICE! This will reset <strong>all</strong> of your PIREPS to the current finances (expenses, fuel prices, etc)</td>
-	</tr>
+	</tr>-->
 	
 	<tr>
 	<td><strong>
@@ -88,6 +87,15 @@
 		</strong>
 	</td>
 	<td>The details of a route are cached, this resets the cache (doesn't affect the entered route), for PIREPs. <br /></td>
+	</tr>
+	
+	<tr>
+		<td>
+			<strong>
+			<a href="<?php echo adminurl('/maintenance/clearcache');?>">Clear Cache</a>
+			</strong>
+		</td>
+		<td>This deletes all cached data</td>
 	</tr>
 	
 	<tr>

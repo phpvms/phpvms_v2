@@ -23,7 +23,7 @@
  */
 
 class Dashboard extends CodonModule
-{
+{	
 	public function HTMLHead()
 	{
 		$this->set('sidebar', 'sidebar_dashboard.tpl');
@@ -39,10 +39,6 @@ class Dashboard extends CodonModule
 		
 		$this->set('unexported_count', count(PIREPData::getReportsByExportStatus(false)));
 		$this->render('dashboard.tpl');
-		
-		
-		/*$this->set('allpilots', PilotData::GetPendingPilots());
-		$this->render('pilots_pending.tpl');*/
 	}
 	
 	public function pirepcounts()
@@ -93,7 +89,6 @@ class Dashboard extends CodonModule
 			
 			# Default to fopen(), if that fails it'll use CURL
 			$file = new CodonWebService();
-			//$file->setType('fopen'); 
 			$contents = @$file->get($url);
 			
 			# Something should have been returned

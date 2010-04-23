@@ -103,7 +103,7 @@ class Schedules extends CodonModule
 	{
 		if(!Auth::LoggedIn()) return;
 				
-		$routeid = $this->post->id;
+		$routeid = $this->get->id;
 		
 		if($routeid == '')
 		{

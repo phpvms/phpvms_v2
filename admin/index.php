@@ -72,7 +72,6 @@ if(file_exists($settings_file))
 $BaseTemplate->template_path = SITE_ROOT . '/admin/lib/'.$tplname;
 $BaseTemplate->Set('title', SITE_NAME);
 
-
 Template::Set('MODULE_NAV_INC', $NAVBAR);
 Template::Set('MODULE_HEAD_INC', $HTMLHead);
 

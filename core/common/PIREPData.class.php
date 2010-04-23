@@ -698,6 +698,8 @@ class PIREPData extends CodonData
 			}
 		}
 		
+		$pirepdata['route'] = DB::escape($pirepdata['route']);
+		
 		if(!empty($pirepdata['route_details']))
 		{
 			$pirepdata['route_details'] = DB::escape($pirepdata['route_details']);

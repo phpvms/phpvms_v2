@@ -11,7 +11,7 @@ fac7c09a2f7b3c46a3c4d20ccb0eb2fb  *./install/templates/s2_site_setup.tpl
 98159de4e2de83127db1931eb35f818c  *./install/update_437.sql
 fb61f59a4e1eb0f51ca5c9201b571ba5  *./install/checkinstall.php
 c6384626328e54dd77c534d04ff65a44  *./install/update_700.sql
-0bb6976bcc06e209c28b684afca2b2bf  *./install/update.sql
+dba6000718fa86a775d0c3b5b1d3b77e  *./install/update.sql
 d41d8cd98f00b204e9800998ecf8427e  *./install/index.php
 55c3722f079209f61fcfce707f077548  *./install/update_400.sql
 56522f3521444add8835afbba7375a11  *./install/update_854.sql
@@ -27,7 +27,7 @@ d4d204c3560c283fa4d7a3a367473740  *./install/navdata.sql
 654a8ef74503b880f8526873986da3af  *./install/install.php
 0ce9f88088bd78d869525b8b202fb1bd  *./core/lang/en.lang.php
 02813e8f573062b56012fea15bccde90  *./core/common/MaintenanceData.class.php
-66ac4c7de16bb72aaeefa00e949da84c  *./core/common/PIREPData.class.php
+a7f3dcafa34f2484a5be9cac106d5f6a  *./core/common/PIREPData.class.php
 38c88cbada3413d09adc5255428fa579  *./core/common/Auth.class.php
 26e225d004bd0b758c49f994453aaac7  *./core/common/jqgrid.class.php
 d8cc600bc66b4e2afb1cca5b433fdeb7  *./core/common/RegistrationData.class.php
@@ -163,7 +163,7 @@ c56b2790383f5891808777c40c03e269  *./core/hooks/system/postmoduleload.php.1
 d41d8cd98f00b204e9800998ecf8427e  *./core/index.php
 d41d8cd98f00b204e9800998ecf8427e  *./core/pages/index.php
 c7e138b27019ee369b9e31eec21df39f  *./core/app.config.php
-00e89835b48e67d7eaa87ed5dea64ce5  *./core/modules/Schedules/Schedules.php
+1e7faecc8a132a2691e2dd66a38b38dc  *./core/modules/Schedules/Schedules.php
 e58ee78f8e857ad150badae9ba04dddc  *./core/modules/news/news.php
 935862c6f2d8c067c49c4af2797abebd  *./core/modules/XML/XML.php
 b29f26b4ddb98f0f2eeba802855a7872  *./core/modules/Contact/Contact.php
@@ -285,7 +285,7 @@ d09d63e66e3dc5077990329100d227d3  *./admin/templates/sidebar_mailer.tpl
 00b5070a20404be0c4fff66f9b871135  *./admin/templates/pirep_addcomment.tpl
 41c5a1e1d22c034a19e44136a061c9d9  *./admin/templates/ranks_rankform.tpl
 651c1a89417a676c8737cc0fcc2de6cd  *./admin/templates/downloads_downloadform.tpl
-6055a62e0ad30422a4f0075c98452d6c  *./admin/index.php
+db51741d41836a2f96de6b82d249ed38  *./admin/index.php
 54610ae6edfcb9fca44114b104a027fb  *./admin/lib/layout/layout.php
 764c064e3cb5da3119901a266fd9deae  *./admin/lib/layout/header.tpl
 98460347f7f55d7659d03260572bf8bc  *./admin/lib/layout/footer.tpl
@@ -326,7 +326,7 @@ a73cd5d722a7390595c51e0ccf6fa82f  *./lib/js/jquery.colorbox.js
 7c6967f5c1ddbb9d61f69e7b19d88056  *./lib/js/acarsmap.js
 168c89d09d780812785edabdcc649b2e  *./lib/js/jquery.bigiframe.js
 fdf811e16f70717f1082e279a1cc52cc  *./lib/js/jquery.colorbox-min.js
-5a7a34667a27f8469854ed332c261447  *./lib/js/phpvms.js
+cc6783059b04b075d46e5cf8574b241f  *./lib/js/phpvms.js
 ccf14f48623a2413286b3dfb7e43d163  *./lib/js/jquery.metadata.js
 2e06583b6d440b4cc60bf7484e696311  *./lib/js/jquery.pstrength.js
 0e35751d9b92233a155bbf2b9fde9bcb  *./lib/js/jquery-calendar.js

@@ -157,27 +157,20 @@ class PIREPData extends CodonData
 	 */
 	public static function getIntervalData($where_params, $grouping='M')
 	{
-		if(strtolower($grouping) == 'y')
+		$grouping = strtolower($grouping);
+		
+		if($grouping == 'y')
 		{
 			$format = '%Y';
 		}
-		elseif(strtolower($grouping) == 'm')
+		elseif($grouping == 'm')
 		{
 			$format = '%Y-%m';
 		}
-		elseif(strtolower($grouping) == 'd') /* go by day */
+		elseif($grouping == 'd') /* go by day */
 		{
 			$format = '%Y-%m-%d';
 		}
-		
-		/*if(is_array($where_params))
-		{
-			$where_params['p.price'] = '> 0';
-		}
-		else
-		{
-			$where_params = array('p.price' => '> 0');
-		}*/
 		
 		$sql = "SELECT DATE_FORMAT(p.submitdate, '{$format}') AS ym,
 					UNIX_TIMESTAMP(p.submitdate) AS timestamp,
@@ -187,7 +180,7 @@ class PIREPData extends CodonData
 					SUM(p.fuelprice) as fuelprice,
 					SUM(p.price) as price,
 					SUM(p.expenses) as expenses,
-					(SUM(p.pilotpay) * SUM(p.flighttime)) as pilotpay
+					SUM(p.pilotpay * p.flighttime) as pilotpay
 				FROM ".TABLE_PREFIX."pireps p";
 		
 		$sql .= DB::build_where($where_params);

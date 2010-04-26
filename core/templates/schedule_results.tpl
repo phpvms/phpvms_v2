@@ -46,6 +46,10 @@ foreach($allroutes as $route)
 	Comment out these two lines if you don't want to.
 	*/
 	
+	/*	Check if a 7 is being used for Sunday, since PHP
+		thinks 0 is Sunday */
+	$route->daysofweek = str_replace('7', '0', $route->daysofweek);
+	
 	if(strpos($route->daysofweek, date('w')) === false)
 		continue;
 		

@@ -65,7 +65,21 @@ else
 {
 	success('OK', "PHP version is {$version}.x");
 }
+echo '<br />';
 
+echo '<strong>ASP Tags</strong><br />';
+$version = phpversion();
+$version = substr($version, 0, 3);
+
+$val = ini_get('asp_tags');
+if(!empty($val))
+{
+	error('Error!', 'The setting "asp_tags" in php.ini must be off!');
+}
+else
+{
+	success('OK', 'ASP-style tags are disabled');
+}
 
 
 

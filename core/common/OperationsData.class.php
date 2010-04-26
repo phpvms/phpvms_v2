@@ -53,12 +53,12 @@ class OperationsData extends CodonData
 	{
 		if($onlyenabled == true) 
 		{
-			$key = 'all_airline_active';
+			$key = 'all_airlines_active';
 			$where = 'WHERE `enabled`=1';
 		}
 		else 
 		{
-			$key = 'all_airline';
+			$key = 'all_airlines';
 			$where = '';
 		}
 		
@@ -288,17 +288,17 @@ class OperationsData extends CodonData
 	public static function getAirlineByCode($code)
 	{
 		$code = strtoupper($code);
-		$key = 'airline_'.$code;
+		/*$key = 'airline_'.$code;
 		
 		$airline = CodonCache::read($key);
 		
 		if($airline === false)
-		{
+		{*/
 			$airline = DB::get_row('SELECT * FROM '.TABLE_PREFIX.'airlines 
 							WHERE `code`=\''.$code.'\'');
 			
-			CodonCache::write($key, $airline, 'long');
-		}
+			/*CodonCache::write($key, $airline, 'long');
+		}*/
 		
 		return $airline;
 	}
@@ -327,8 +327,7 @@ class OperationsData extends CodonData
 			return false;
 			
 		CodonCache::delete('all_airlines');
-		CodonCache::delete('all_airports_json');
-		CodonCache::delete('all_airline_active');
+		CodonCache::delete('all_airlines_active');
 			
 		return true;
 	}
@@ -349,9 +348,10 @@ class OperationsData extends CodonData
 		
 		if(DB::errno() != 0)
 			return false;
-			
+		
 		CodonCache::delete('airline_'.$code);
-		CodonCache::delete('all_airports_json');
+		CodonCache::delete('all_airlines');
+		CodonCache::delete('all_airlines_active');
 			
 		return true;
 	}

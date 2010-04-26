@@ -40,6 +40,9 @@ ALTER TABLE `phpvms_schedules` ADD `route_details` TEXT NOT NULL AFTER `route`;
 ALTER TABLE `phpvms_aircraft` ADD `minrank` INT NOT NULL DEFAULT '0' AFTER `maxcargo`;
 ALTER TABLE `phpvms_aircraft` ADD `ranklevel` INT NOT NULL DEFAULT '0' AFTER `minrank` ;
 
+-- It's sometimes missing
+INSERT INTO `phpvms_settings` VALUES(NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your total hours', 0);
+
 -- Remove deprecated settings;
 DELETE FROM `phpvms_settings` WHERE `name`='PHPVMS_VERSION';
 DELETE FROM `phpvms_settings` WHERE `name`='NOTIFY_UPDATE';

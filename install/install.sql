@@ -415,4 +415,4 @@ INSERT INTO `phpvms_settings` VALUES(NULL, 'Webmaster Email Address', 'ADMIN_EMA
 INSERT INTO `phpvms_settings` VALUES(NULL, 'Date Format', 'DATE_FORMAT', 'm/d/Y', 'This is the date format to be used around the site.', 1);
 INSERT INTO `phpvms_settings` VALUES(NULL, 'Current Skin', 'CURRENT_SKIN', 'crystal', 'Available skins', 1);
 INSERT INTO `phpvms_settings` VALUES(NULL, 'Default User Group', 'DEFAULT_GROUP', 'Active Pilots', 'This is the default group if they are not explicitly denied', 1);
-INSERT INTO `phpvms_settings` VALUES(NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your VA''s Total Hours', 0);
+INSERT INTO `phpvms_settings` VALUES(NULL , 'Total VA Hours', 'TOTAL_HOURS', '0', 'Your total hours', 0);

@@ -35,7 +35,7 @@ foreach($allexpenses as $expense)
 	<td align="center"><?php echo $expense_list[$expense->type]; ?></td>
 	<td align="center" width="1%" nowrap>
 		<button id="dialog" class="jqModal button" 
-			href="<?php echo adminaction('/finance/editexpense'.$expense->id);?>">
+			href="<?php echo adminaction('/finance/editexpense/'.$expense->id);?>">
 		Edit</button>
 		
 		<button href="<?php echo adminaction('/finance/viewexpenses');?>" action="deleteexpense"

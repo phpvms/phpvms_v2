@@ -40,7 +40,7 @@ jQuery("#grid").jqGrid('navGrid','#pager',
 function editairport(icao)
 {
 	$('#jqmdialog').jqm({
-		ajax:'<?php echo adminaction('/operations/editairport?icao=');?>'+icao,
+		ajax:'<?php echo adminaction('/operations/editairport?icao=');?>'+icao
 	}).jqmShow();
 }
 </script>

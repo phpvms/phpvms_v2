@@ -74,7 +74,7 @@ class CodonRewrite
 		#	Which would eq. passing index.php/news/showall
 		if($split_parameters == '')
 		{
-			$split_parameters = Config::Get('DEFAULT_MODULE');
+			$split_parameters = CODON_DEFAULT_MODULE;
 		}		
 		
 		# Now we split it all out, and store the peices

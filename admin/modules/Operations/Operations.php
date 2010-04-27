@@ -423,8 +423,7 @@ class Operations extends CodonModule
 		Config::Set('SCHEDULES_ORDER_BY', "{$sidx} {$sord}");
 		
 		# Do a search without the limits so we can find how many records
-		$count = count(SchedulesData::findSchedules($where));
-	
+		$count = SchedulesData::countSchedules($where);
 		if($count > 0) 
 		{
 			$total_pages = ceil($count/$limit);

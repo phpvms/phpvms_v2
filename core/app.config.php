@@ -308,17 +308,19 @@ if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
 {	
 	Template::SetTemplatePath(SITE_ROOT.'/admin/templates');
 	
-	Config::Set('MODULES_PATH', SITE_ROOT.'/admin/modules');
-	Config::Set('DEFAULT_MODULE', 'Dashboard');
-	Config::Set('MODULES_AUTOLOAD', true);
+	define('CODON_MODULES_PATH', SITE_ROOT.'/admin/modules');
+	define('CODON_DEFAULT_MODULE', 'Dashboard');
 }
 else 
 {	
 	Template::SetTemplatePath(Config::Get('BASE_TEMPLATE_PATH'));
 	
-	Config::Set('MODULES_PATH', SITE_ROOT.'/core/modules');
+	define('CODON_MODULES_PATH', SITE_ROOT.'/core/modules');
+	define('CODON_DEFAULT_MODULE', 'Frontpage');
+	
+	/*Config::Set('MODULES_PATH', SITE_ROOT.'/core/modules');
 	Config::Set('DEFAULT_MODULE', 'Frontpage');
-	Config::Set('MODULES_AUTOLOAD', true);
+	Config::Set('MODULES_AUTOLOAD', true);*/
 }
 
 /* Cache settings */
@@ -409,12 +411,12 @@ Config::Set('TABLE_LIST', array(
 	'updates' 
 	)
 );
-/* VACentral */
 
+/* VACentral */
 Config::Set('VACENTRAL_ENABLED', false);
 Config::Set('VACENTRAL_DEBUG_MODE', false);
 Config::Set('VACENTRAL_DEBUG_DETAIL', 0);
-Config::Set('VACENTRAL_API_SERVER', 'http://apidev.phpvms.net');
+Config::Set('VACENTRAL_API_SERVER', 'http://api.phpvms.net');
 Config::Set('VACENTRAL_API_KEY', '');
 
 /**

@@ -98,10 +98,10 @@ class MainController
 		global $NAVBAR;
 		global $HTMLHead;
 		
-		self::$ModuleList = self::getModulesFromPath(Config::Get('MODULES_PATH'));
+		self::$ModuleList = self::getModulesFromPath(CODON_MODULES_PATH);
 		if(empty(self::$ModuleList))
 		{
-			Debug::showCritical('No modules were found in module path! ('.Config::Get('MODULES_PATH').')');
+			Debug::showCritical('No modules were found in module path! ('.CODON_MODULES_PATH.')');
 			return;
 		}
 		

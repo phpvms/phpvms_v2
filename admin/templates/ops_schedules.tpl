@@ -48,7 +48,11 @@ function deleteschedule(id)
 	var answer = confirm("Are you sure you want to delete?")
 	if (answer) {
 		$.post("<?php echo adminaction('/operations/schedules');?>", { action: "deleteschedule", id: id },
-		function() { $("#grid").trigger("reloadGrid"); });
+			function() 
+			{ 
+				$("#grid").trigger("reloadGrid"); 
+			}
+		);
 	}
 }
 

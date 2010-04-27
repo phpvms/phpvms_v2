@@ -52,6 +52,8 @@ function success($title, $txt)
 
 
 /* Rest of the script begins here */
+echo "<strong>phpVMS Build Number: </strong> ".file_get_contents(ROOT_PATH.'/core/version');
+echo '<br /><br />';
 
 echo '<strong>Checking PHP version</strong><br />';
 $version = phpversion();
@@ -63,13 +65,12 @@ if($version[0] == '4' || $version == '5.0' || $version == '5.1')
 }
 else
 {
+	$version = phpversion();
 	success('OK', "PHP version is {$version}.x");
 }
 echo '<br />';
 
 echo '<strong>ASP Tags</strong><br />';
-$version = phpversion();
-$version = substr($version, 0, 3);
 
 $val = ini_get('asp_tags');
 if(!empty($val))
@@ -89,7 +90,6 @@ else
 echo '<br />';
 echo '<strong>Checking connectivity...</strong><br />';
 $file = new CodonWebService();
-//$file->setType('fopen'); 
 $contents = @$file->get(PHPVMS_API_SERVER.'/version');
 
 if($contents == '')

@@ -177,6 +177,9 @@ class Import extends CodonModule
 			if($daysofweek == '')
 				$daysofweek = '0123456';
 			
+			// Replace a 7 (Sunday) with 0 (since PHP thinks 0 is Sunday)
+			$daysofweek = str_replace('7', '0', $daysofweek);
+			
 			# Check the distance
 			
 			if($distance == 0 || $distance == '')

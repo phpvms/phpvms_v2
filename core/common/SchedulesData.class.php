@@ -73,6 +73,28 @@ class SchedulesData extends CodonData
 		return $ret;
 	}
 	
+	
+	/**
+	 * Get the total number of schedules based on criterea
+	 *
+	 * @param array $params key => value list
+	 * @return int Returns the total number
+	 *
+	 */
+	public static function countSchedules($params)
+	{
+		$sql = 'SELECT COUNT(s.id) as total
+				FROM '.TABLE_PREFIX.'schedules AS s
+				LEFT JOIN '.TABLE_PREFIX.'airports AS dep ON dep.icao = s.depicao
+				LEFT JOIN '.TABLE_PREFIX.'airports AS arr ON arr.icao = s.arricao
+				LEFT JOIN '.TABLE_PREFIX.'aircraft AS a ON a.id = s.aircraft ';
+	
+		$sql .= DB::build_where($params);
+		$res = DB::get_row($sql);
+		
+		return $res->total;
+	}
+	
 	/**
 	 * Return information about a schedule (pass the ID)
 	 */

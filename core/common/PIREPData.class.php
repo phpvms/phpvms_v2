@@ -180,7 +180,7 @@ class PIREPData extends CodonData
 					SUM(p.fuelprice) as fuelprice,
 					SUM(p.price) as price,
 					SUM(p.expenses) as expenses,
-					SUM(p.pilotpay * p.flighttime) as pilotpay
+					SUM((TIME_TO_SEC(flighttime_stamp)/60) * (pilotpay/60)) as pilotpay
 				FROM ".TABLE_PREFIX."pireps p";
 		
 		$sql .= DB::build_where($where_params);

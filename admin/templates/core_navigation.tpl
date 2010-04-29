@@ -134,7 +134,7 @@ if(PilotGroups::group_has_perm(Auth::$usergroups, MODERATE_PIREPS)
 		if(PilotGroups::group_has_perm(Auth::$usergroups, EMAIL_PILOTS)) 
 		{
 		?>
-		<li><a href="<?php echo adminurl('/massmamiler'); ?>">Email all Pilots</a></li>
+		<li><a href="<?php echo adminurl('/massmailer'); ?>">Email all Pilots</a></li>
 		<?php 
 		}
 		if(PilotGroups::group_has_perm(Auth::$usergroups, EDIT_AWARDS)) 

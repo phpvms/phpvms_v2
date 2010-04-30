@@ -38,7 +38,7 @@ ab63202ba065d26ba190dc4c1591f67b  *./core/common/RSSFeed.class.php
 7effd313a0c2f3de986a4dc3d5825102  *./core/common/SchedulesData.class.php
 6e69bbf6f5d8b534b77f051a63cd9466  *./core/common/UserGroups.class.php
 b3e6a4926ee94b822c5d74fa158356b1  *./core/common/Countries.class.php
-d0680d4301fa638e605d0248a46cd4f8  *./core/common/PilotData.class.php
+82ae35dc0c48e2b65670bfa45cc7945c  *./core/common/PilotData.class.php
 26e531f8277d02302cb015bdd5ef1210  *./core/common/GoogleChart.class.php
 38194165ce248461f6cad42f49e63341  *./core/common/SettingsData.class.php
 f8184cef63518b12c6e94ae96b2fe96c  *./core/common/NavData.class.php

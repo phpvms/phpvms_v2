@@ -905,7 +905,7 @@ class PilotData extends CodonData
 	public static function getFieldValue($pilotid, $title)
 	{
 		$sql = "SELECT f.fieldid, v.value 
-					FROM phpvms_customfields f, phpvms_fieldvalues v 
+					FROM ".TABLE_PREFIX."customfields f, ".TABLE_PREFIX."fieldvalues v 
 					WHERE f.fieldid=v.fieldid 
 						AND f.title='$title' 
 						AND v.pilotid=$pilotid";

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,10 +33,16 @@
 	&nbsp;&nbsp;&nbsp;&nbsp;View license.txt in the root, or visit:<br />
 	&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"
 		target="_blank">http://creativecommons.org/licenses/by-nc-sa/3.0/</a></p>
-<p class="header"><em>Last Update: Oct 23, 2009</em><br /></p>
+<p class="header"><em>Last Update: Sept 30, 2013</em><br /></p>
 <hr />
 
-<h1>Build ##REVISION## (Version 2.1.##REVISION##)</h1>
+<h1>Build 938 (Version 2.1.938)</h1>
+<ul>
+    <li>Patched the php-ofc-library to remove an exploit</li>
+</ul>
+<br/>
+
+<h1>Build 937 (Version 2.1.937)</h1>
 <ul>
 	<li>Navigation data included for routes, more accurate maps for schedules, ACARS and PIREPS</li>
     <li>Financial backend overhauled, all data is in real-time, and more accurate</li>
@@ -255,23 +261,23 @@
 </ul>
 <p>
 	<strong>New Settings:</strong></p>
-<pre>Config::Set('LOAD_FACTOR', '72'); 
-This setting determines the % of MAXLOAD which are on a flight. 
+<pre>Config::Set('LOAD_FACTOR', '72');
+This setting determines the % of MAXLOAD which are on a flight.
 The system will generate a passenger/cargo load based off of this number.
-The industry load factor at this time is 72% (according to ATA). 
+The industry load factor at this time is 72% (according to ATA).
 Can be adjusted, not more than 90%. phpVMS will decide between +/- 10% of LOAD_FACTOR
 
 Config::Set('CARGO_UNITS', 'lbs');
 This is your units for cargo flights - lbs/kg/newtons ;)
 
-Config::Set('UNITS', 'nm'); 
+Config::Set('UNITS', 'nm');
 Enter nm (nautical miles), mi (miles), or km (kilometers)
 This will affect distance calculations
 
 Config::Set('VA_START_DATE', 'October 2008');
 <br />	This is the month your VA started, used for stats.
 
-Config::Set('MONEY_UNIT', '$'); 
+Config::Set('MONEY_UNIT', '$');
 This is the unit of money. For non-dollars, use :
 	Euro (&#8364;), enter &quot;&amp;#8364;&quot;
     Yen (&yen;), enter &quot;&amp;yen;&quot;
@@ -307,7 +313,7 @@ There are also various settings for FSPAX, please make sure those are proper    
 
 schedule_details.tpl - Chart change
 
-pirep_new.tpl - Added &quot;Fuel Used&quot; field, and removed flight leg field 
+pirep_new.tpl - Added &quot;Fuel Used&quot; field, and removed flight leg field
 
 profile_edit.tpl - Select box for signature background images</pre>
 <hr />

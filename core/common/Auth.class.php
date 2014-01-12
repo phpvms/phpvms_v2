@@ -255,8 +255,8 @@ class Auth extends CodonData
 			{
 				$emailaddress = DB::escape($useridoremail);
 				$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
-						WHERE email=\''.$useridoremail.'\'';
-			} 
+						WHERE email=\''.$emailaddress.'\'';
+			}
 			# They're loggin in with a pilot id
 			elseif(preg_match('/^([A-Za-z]*)(.*)(\d*)/', $useridoremail, $matches)>0)
 			{
@@ -273,7 +273,7 @@ class Auth extends CodonData
 				return false;
 			}
 		}
-		
+
 		$password = DB::escape($password);
 		$userinfo = DB::get_row($sql);
 

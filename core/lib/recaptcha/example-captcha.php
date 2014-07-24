@@ -5,7 +5,7 @@
 
 require_once('recaptchalib.php');
 
-// Get a key from http://recaptcha.net/api/getkey
+// Get a key from https://www.google.com/recaptcha/admin/create
 $publickey = "";
 $privatekey = "";
 

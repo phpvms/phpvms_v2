@@ -148,7 +148,7 @@ class Login extends CodonModule
 				#$this->set('redir', SITE_URL . '/' . $this->post->redir);
 				#$this->render('login_complete.tpl');
 				
-				CodonEvent::Dispatch('login_success', 'Login');
+				CodonEvent::Dispatch('login_success', 'Login', Auth::$userinfo);
 				
 				$this->post->redir = str_replace('index.php/', '', $this->post->redir);
 				header('Location: '.url('/'.$this->post->redir));

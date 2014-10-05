@@ -170,6 +170,8 @@ class Maintenance extends CodonModule
 			{
 				PilotData::changePilotID($this->post->old_pilotid, $this->post->new_pilotid);
 				
+				CodonEvent::Dispatch('pilotid_changed', 'Maintenance', array('old_pilotid' => $this->post->old_pilotid, 'new_pilotid' => $this->post->new_pilotid));
+				
 				$this->set('message', "Pilot ID changed from {$this->post->old_pilotid} to {$this->post->new_pilotid}");
 				$this->render('core_success.tpl');
 			}

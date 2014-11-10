@@ -811,7 +811,7 @@ class SchedulesData extends CodonData
 		return DB::get_row($sql);
 	}
 	
-	public function setBidOnSchedule($scheduleid, $bidid)
+	public static function setBidOnSchedule($scheduleid, $bidid)
 	{
 		$scheduleid = intval($scheduleid);
 		$bidid = intval($bidid);

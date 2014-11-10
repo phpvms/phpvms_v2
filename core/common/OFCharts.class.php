@@ -204,7 +204,7 @@ class OFCharts extends CodonData
 		self::show_chart($title);
 	}
 	
-	protected function show_chart($title)
+	protected static function show_chart($title)
 	{
 		$title = new title($title);
 		

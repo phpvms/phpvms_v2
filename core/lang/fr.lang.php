@@ -21,9 +21,9 @@
 $trans = array(
 
 /* Define some core language stuff */
-'invalid.php.version'	=> 'Vous n'utilisez pas PHP version 5.0 +',
+'invalid.php.version'	=> 'Vous n\'utilisez pas PHP version 5.0 +',
 'database.connection.failed'	=> 'La connexion à la base de données à échouée',
-'error'	=> 'Une erreur s'est produite (%s)', /* %s est la chaîne d\'erreur */
+'error'	=> 'Une erreur s\'est produite (%s)', /* %s est la chaîne d\'erreur */
 
 /*
 * Module language replacements

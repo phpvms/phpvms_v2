@@ -172,20 +172,14 @@ class StatsData extends CodonData
 	
 	public static function updateTotalHours()
 	{
-		$pireps = PIREPData::findPIREPS(array('p.accepted'=>1));
+		$sql = 'SELECT SEC_TO_TIME(SUM(p.flighttime)) as totaltime
+			FROM '.TABLE_PREFIX.'pireps p WHERE p.accepted=1';
+
+		$total = DB::get_row($sql);
+		$totaltime = $total->totaltime;
 		
-		if(!$pireps)
-		{
-			return;
-		}
-		
-		$totaltime = 0;
-		foreach($pireps as $pirep)
-		{
-			$totaltime = Util::AddTime($totaltime, $pirep->flighttime);
-		}
-		
-		SettingsData::SaveSetting('TOTAL_HOURS', $totaltime);		
+		SettingsData::SaveSetting('TOTAL_HOURS', $totaltime);
+		return $totaltime;
 	}
 	
 	/**

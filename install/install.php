@@ -15,7 +15,7 @@
  * @link http://www.phpvms.net
  * @license http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
- 
+
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'on');
 
@@ -34,7 +34,7 @@ switch($_GET['page'])
 {
 	case 'dbsetup':
 	case '':
-		
+
 		if(!Installer::CheckServer())
 		{
 			Template::Show('s0_config_check.tpl');
@@ -43,60 +43,61 @@ switch($_GET['page'])
 		{
 			Template::Show('s1_db_setup.tpl');
 		}
-		
+
 		break;
-		
+
 	case 'installdb':
-	
+
 		if($_POST['action'] == 'submitdb')
 		{
 			echo '<h2>Installing the tables...</h2>';
-			if($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == '' || $_POST['DBASE_TYPE'] == ''
+            $_POST['DBASE_TYPE'] = 'mysqli';
+			if($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == ''
 				|| $_POST['DBASE_SERVER'] == '' || $_POST['SITE_URL'] == '')
 			{
 				echo '<div id="error">You must fill out all the required fields</div>';
 				break;
 			}
-		
+
 			if(!Installer::AddTables())
 			{
 				echo '<div id="error">'.Installer::$error.'</div>';
 				break;
 			}
-			
+
 			if(!Installer::WriteConfig())
 			{
 				echo '<div id="error">'.Installer::$error.'</div>';
 				break;
 			}
-			
+
 			echo '<div align="center" style="font-size: 18px;"><br />
 					<a href="install.php?page=sitesetup">Continue to the next step</a>
-				  </div>';	
+				  </div>';
 		}
-		
+
 		break;
-		
+
 	case 'sitesetup':
-		
+
 		Template::Show('s2_site_setup.tpl');
 		break;
-		
+
 	case 'complete':
-		
+
 		if($_POST['action'] == 'submitsetup')
 		{
-			if($_POST['firstname'] == '' || $_POST['lastname'] == '' 
-					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == '' 
+			if($_POST['firstname'] == '' || $_POST['lastname'] == ''
+					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == ''
 					|| $_POST['vacode'] == '')
 			{
 				Template::Set('message', 'You must fill out all of the fields');
 				Template::Show('s2_site_setup.tpl');
 				break;
 			}
-			
+
 			$_POST['SITE_NAME'] = $_POST['vaname'];
-				
+
 			if(!Installer::SiteSetup())
 			{
 				Template::Set('message', Installer::$error);
@@ -108,8 +109,8 @@ switch($_GET['page'])
 				Template::Show('s3_setup_finished.tpl');
 			}
 		}
-		
+
 		break;
-}	
+}
 
 Template::Show('footer.tpl');

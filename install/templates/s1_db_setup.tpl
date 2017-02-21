@@ -9,7 +9,7 @@
 		Welcome to the phpVMS installer! Enter your database information below. You must have the following
 			permissions on your database: SELECT, UPDATE, DELETE, ALTER, CREATE. For more information,
 			<a href="http://www.phpvms.net/docs/installation" target="_blank">view this page (opens in new window)</a>.
-		<?php 
+		<?php
 		if($message!='')
 		{
 			echo '<div id="error">'.$message.'</div>';
@@ -23,20 +23,20 @@
 		<td>
 			<input type="text" name="SITE_URL" value="<?php echo $_POST['SITE_URL']==''?$siteurl:$_POST['SITE_URL'];?>" />
 			<p>The URL to your base phpVMS install.</p>
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td align="right" valign="top"><strong>Database Name: * </strong></td>
 		<td><input type="text" id="DBASE_NAME" name="DBASE_NAME" value="<?php echo $_POST['DBASE_NAME']?>" />
 			<p>Enter the name of the database.</p>
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td align="right" valign="top"><strong>Database Server: * </strong></td>
-		<td><input type="text" id="DBASE_SERVER" name="DBASE_SERVER" 
+		<td><input type="text" id="DBASE_SERVER" name="DBASE_SERVER"
 				value="<?php echo $_POST['DBASE_SERVER']==''?'localhost':$_POST['DBASE_SERVER']; ?>" />
 			<p>Enter the address to your database (usually <i>localhost</i>).</p>
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td align="right" width="1px" nowrap valign="top"><strong>Database Username: * </strong></td>
@@ -48,34 +48,24 @@
 		<td align="right" valign="top"><strong>Database Password: * </strong></td>
 		<td><input type="text" id="DBASE_PASS" name="DBASE_PASS" value="<?php echo $_POST['DBASE_PASS']?>" />
 			<p>Enter the password to access your database.</p>
-		</td>	
-	</tr>
-	<tr>
-		<td align="right" valign="top"><strong>Database Type: * </strong></td>
-		<td>
-			<select id="DBASE_TYPE" name="DBASE_TYPE">
-				<option value="mysql">MySQL</option>
-				<option value="mysqli">MySQLi (Extended)</option>
-			</select>
-			<p>Select the database connect ("MySQL" is your best bet).</p>
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td align="right" valign="top"><strong>Table Prefix: </strong></td>
 		<td>
-			<input type="text" name="TABLE_PREFIX" 
+			<input type="text" name="TABLE_PREFIX"
 				value="<?php echo $_POST['TABLE_PREFIX']==''?'phpvms_':$_POST['TABLE_PREFIX'];?>" />
 			<p>If you share this database with another application, use a prefix to the tables, so there
 				are no collisions.</p>
-		</td>	
+		</td>
 	</tr>
-		
+
 	<tr>
 		<td></td>
 		<td align="center">
 			<div id="dbtest"></div><br />
 			<input type="button" id="dbcheck" value="Check Database Connection" />
-		</td>	
+		</td>
 	</tr>
 	<tr>
 		<td><input type="hidden" name="action" value="submitdb" /></td>

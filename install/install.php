@@ -3,8 +3,8 @@
  * phpVMS - Virtual Airline Administration Software
  * Copyright (c) 2008 Nabeel Shahzad
  * For more information, visit www.phpvms.net
- *	Forums: http://www.phpvms.net/forum
- *	Documentation: http://www.phpvms.net/docs
+ *    Forums: http://www.phpvms.net/forum
+ *    Documentation: http://www.phpvms.net/docs
  *
  * phpVMS is licenced under the following license:
  *   Creative Commons Attribution Non-commercial Share Alike (by-nc-sa)
@@ -20,97 +20,86 @@ error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'on');
 
 # Get the version info from the version file
-$revision = file_get_contents(dirname(dirname(__FILE__)).'/core/version');
+$revision = file_get_contents(dirname(dirname(__FILE__)) . '/core/version');
 
 define('ADMIN_PANEL', true);
-define('INSTALLER_VERSION', '2.1.'.$revision);
+define('INSTALLER_VERSION', '2.1.' . $revision);
 
-include dirname(__FILE__).'/loader.inc.php';
+include dirname(__FILE__) . '/loader.inc.php';
 
 Template::Show('header.tpl');
 
 // Controller
-switch($_GET['page'])
-{
-	case 'dbsetup':
-	case '':
+switch ($_GET['page']) {
+    case 'dbsetup':
+    case '':
 
-		if(!Installer::CheckServer())
-		{
-			Template::Show('s0_config_check.tpl');
-		}
-		else
-		{
-			Template::Show('s1_db_setup.tpl');
-		}
+        if (!Installer::CheckServer()) {
+            Template::Show('s0_config_check.tpl');
+        } else {
+            Template::Show('s1_db_setup.tpl');
+        }
 
-		break;
+        break;
 
-	case 'installdb':
+    case 'installdb':
 
-		if($_POST['action'] == 'submitdb')
-		{
-			echo '<h2>Installing the tables...</h2>';
+        if ($_POST['action'] == 'submitdb') {
+            echo '<h2>Installing the tables...</h2>';
             $_POST['DBASE_TYPE'] = 'mysqli';
-			if($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == ''
-				|| $_POST['DBASE_SERVER'] == '' || $_POST['SITE_URL'] == '')
-			{
-				echo '<div id="error">You must fill out all the required fields</div>';
-				break;
-			}
+            if ($_POST['DBASE_NAME'] == '' || $_POST['DBASE_USER'] == ''
+                || $_POST['DBASE_SERVER'] == '' || $_POST['SITE_URL'] == ''
+            ) {
+                echo '<div id="error">You must fill out all the required fields</div>';
+                break;
+            }
 
-			if(!Installer::AddTables())
-			{
-				echo '<div id="error">'.Installer::$error.'</div>';
-				break;
-			}
+            if (!Installer::AddTables()) {
+                echo '<div id="error">' . Installer::$error . '</div>';
+                break;
+            }
 
-			if(!Installer::WriteConfig())
-			{
-				echo '<div id="error">'.Installer::$error.'</div>';
-				break;
-			}
+            if (!Installer::WriteConfig()) {
+                echo '<div id="error">' . Installer::$error . '</div>';
+                break;
+            }
 
-			echo '<div align="center" style="font-size: 18px;"><br />
+            echo '<div align="center" style="font-size: 18px;"><br />
 					<a href="install.php?page=sitesetup">Continue to the next step</a>
 				  </div>';
-		}
+        }
 
-		break;
+        break;
 
-	case 'sitesetup':
+    case 'sitesetup':
 
-		Template::Show('s2_site_setup.tpl');
-		break;
+        Template::Show('s2_site_setup.tpl');
+        break;
 
-	case 'complete':
+    case 'complete':
 
-		if($_POST['action'] == 'submitsetup')
-		{
-			if($_POST['firstname'] == '' || $_POST['lastname'] == ''
-					|| $_POST['email'] == '' ||  $_POST['password'] == '' || $_POST['vaname'] == ''
-					|| $_POST['vacode'] == '')
-			{
-				Template::Set('message', 'You must fill out all of the fields');
-				Template::Show('s2_site_setup.tpl');
-				break;
-			}
+        if ($_POST['action'] == 'submitsetup') {
+            if ($_POST['firstname'] == '' || $_POST['lastname'] == ''
+                || $_POST['email'] == '' || $_POST['password'] == '' || $_POST['vaname'] == ''
+                || $_POST['vacode'] == ''
+            ) {
+                Template::Set('message', 'You must fill out all of the fields');
+                Template::Show('s2_site_setup.tpl');
+                break;
+            }
 
-			$_POST['SITE_NAME'] = $_POST['vaname'];
+            $_POST['SITE_NAME'] = $_POST['vaname'];
 
-			if(!Installer::SiteSetup())
-			{
-				Template::Set('message', Installer::$error);
-				Template::Show('s2_site_setup.tpl');
-			}
-			else
-			{
-				Installer::RegisterInstall(INSTALLER_VERSION);
-				Template::Show('s3_setup_finished.tpl');
-			}
-		}
+            if (!Installer::SiteSetup()) {
+                Template::Set('message', Installer::$error);
+                Template::Show('s2_site_setup.tpl');
+            } else {
+                Installer::RegisterInstall(INSTALLER_VERSION);
+                Template::Show('s3_setup_finished.tpl');
+            }
+        }
 
-		break;
+        break;
 }
 
 Template::Show('footer.tpl');

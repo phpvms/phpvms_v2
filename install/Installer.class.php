@@ -36,17 +36,8 @@ class Installer
 		$wf[] = 'lib/signatures';
 
 		// Check the PHP version
-		if($version[0] != '5')
-		{
-			$noerror = false;
-			$type = 'error';
-			$message = 'You need PHP 5 (your version: '.$version.')';
-		}
-		else
-		{
-			$type = 'success';
-			$message = 'OK! (your version:'.$version.')';
-		}
+        $type = 'success';
+        $message = 'OK! (your version:'.$version.')';
 
 		Template::Set('phpversion', '<div id="'.$type.'">'.$message.'</div>');
 

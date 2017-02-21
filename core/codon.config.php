@@ -55,11 +55,6 @@ define('PAGES_PATH', CORE_PATH.DS.'pages');
 define('LIB_PATH', SITE_ROOT.DS.'lib');
 define('DOCTRINE_MODELS_PATH', CORE_PATH.DS.'models');
 
-//$version = phpversion();
-//if($version[0] != '5') {
-//	die('You are not running PHP 5+');
-//}
-
 require CLASS_PATH.DS.'autoload.php';
 spl_autoload_register('codon_autoload');
 

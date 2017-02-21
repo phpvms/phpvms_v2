@@ -39,13 +39,14 @@
 
 class CodonWebService
 {
+	public $errors = array();
+
 	protected $type = 'curl';
 	protected $curl = null;
+	protected $_separator = '&';
 	protected $curl_exists = true;
-	public $_separator = '&';	
-	
-	public $errors = array();
-	public $options = array(
+
+	protected $options = [
 		/*CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; pl; rv:1.9) Gecko/2008052906 Firefox/3.0',*/
 		CURLOPT_FOLLOWLOCATION => true,
 		CURLOPT_RETURNTRANSFER => true,
@@ -53,18 +54,18 @@ class CodonWebService
 		CURLOPT_CONNECTTIMEOUT => 30,
 		CURLOPT_HEADER => false,
 		CURLOPT_FOLLOWLOCATION => true
-	);
-			
+	];
+
 	public function __construct()
 	{
 		# Make sure cURL is installed
-		
+
 		if(!function_exists('curl_init'))
 		{
 			$this->curl_exists = false;
 			$this->error('cURL not installed');
 		}
-		
+
 		if($this->curl_exists == true)
 		{
 			if(!$this->curl = curl_init())
@@ -73,7 +74,7 @@ class CodonWebService
 				$this->setType('fopen');
 				$this->curl = null;
 			}
-			
+
 			$this->setType('curl');
 			@curl_setopt_array($this->curl, $this->options);
 		}
@@ -83,13 +84,13 @@ class CodonWebService
 			$this->setType('fopen');
 		}
 	}
-	
+
 	public function __destruct()
 	{
 		if($this->curl)
 			curl_close($this->curl);
 	}
-	
+
 	/**
 	 * Internal error handler
 	 *
@@ -97,14 +98,15 @@ class CodonWebService
 	 */
 	protected function error($txt='')
 	{
-		if($txt != '')
+		if($txt != '') {
 			$last = $txt;
-		else
+		} else {
 			$last = curl_error($this->curl) .' ('.curl_errno($this->curl).')';
-		
+        }
+
 		$this->errors[] = $last;
 	}
-	
+
 	/**
 	 * Set the transfer type (curl or fopen). cURL is better
 	 * POST cannot be done by fopen, it will be ignored
@@ -119,10 +121,10 @@ class CodonWebService
 			$this->error('Invalid connection type');
 			return false;
 		}
-		
+
 		$this->type = $type;
 	}
-	
+
 	/**
 	 * Set the curl options, that are different from the default
 	 *
@@ -136,10 +138,10 @@ class CodonWebService
 			$this->error('No valid cURL session');
 			return false;
 		}
-		
+
 		curl_setopt_array($this->curl, $opt);
 	}
-	
+
 	/**
 	 * Grab a URL, but use SSL. Returns the reponse
 	 *
@@ -151,10 +153,10 @@ class CodonWebService
 	{
 		// set SSL options and then go
 		curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, 0);
-		
+
 		$this->get($url, $params, $type);
 	}
-	
+
 	/**
 	 * Grab a URL, return the reponse
 	 *
@@ -171,11 +173,11 @@ class CodonWebService
 			{
 				$q_string .= $name.'='.urlencode($value).$this->_separator;
 			}
-			
+
 			$q_string = substr($q_string, 0, strlen($q_string)-1);
 			$url = $url.'?'.$q_string;
 		}
-		
+
 		if($this->type == 'fopen')
 		{
 			if(strtolower(ini_get('allow_url_fopen')) == 'on')
@@ -183,13 +185,13 @@ class CodonWebService
 				return file_get_contents($url);
 			}
 		}
-		
+
 		if(!$this->curl || $this->curl == null)
 		{
 			$this->error('cURL not installed or initialized!');
 			return false;
 		}
-		
+
 		curl_setopt ($this->curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt ($this->curl, CURLOPT_URL, $url);
 		if(($ret = curl_exec($this->curl)) === false)
@@ -200,7 +202,7 @@ class CodonWebService
 
 		return $ret;
 	}
-	
+
 	/**
 	 * Grab a URL, return the reponse, POST params
 	 *
@@ -208,19 +210,19 @@ class CodonWebService
 	 * @param array $params Associative array of key=value
 	 */
 	public function post($url, $params='')
-	{		
+	{
 		if(!$this->curl)
 		{
 			$this->error('cURL not initialized');
 			return false;
 		}
-		
+
 		//encode our url data properly
 		if(is_array($params))
 		{
 			foreach($params as $key=>$value)
-			{				
-				
+			{
+
 				$cleaned_params[$key] = urlencode($value);
 			}
 		}
@@ -228,7 +230,7 @@ class CodonWebService
 		{
 			$cleaned_params = urlencode($params);
 		}
-	
+
 		curl_setopt($this->curl, CURLOPT_POST, 1);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, $cleaned_params);
 		curl_setopt ($this->curl, CURLOPT_RETURNTRANSFER, true);
@@ -238,10 +240,10 @@ class CodonWebService
 			$this->error();
 			return false;
 		}
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Download a file from $url to the $tofile
 	 *
@@ -251,7 +253,7 @@ class CodonWebService
 	 */
 	public function download($url, $tofile)
 	{
-		
+
 		if($this->type == 'fopen')
 		{
 			if(strtolower(ini_get('allow_url_fopen')) == 'on')
@@ -263,20 +265,20 @@ class CodonWebService
 				}
 			}
 		}
-		
+
 		if(!$this->curl || $this->curl == null)
 			return false;
-			
+
 		if(($fp = fopen($tofile, 'wb')) == false)
 		{
 			$this->error('Error opening '.$tofile);
 			return false;
 		}
-		
+
 		curl_setopt($this->curl, CURLOPT_BINARYTRANSFER, true);
 		curl_setopt($this->curl, CURLOPT_FILE, $fp);
 		curl_setopt ($this->curl, CURLOPT_URL, $url);
-		
+
 		if(($ret = curl_exec($this->curl)) === false)
 		{
 			$this->error();

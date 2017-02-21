@@ -5,16 +5,6 @@
 // will see the 'echo' text in a new window.
 //
 
-/*
-
-print_r( $_GET );
-print_r( $_POST );
-print_r( $_FILES );
-
-print_r( $GLOBALS );
-print_r( $GLOBALS["HTTP_RAW_POST_DATA"] );
-
-*/
 
 exit(); // NS
 
@@ -29,24 +19,6 @@ $name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_URL);
 $destination = $default_path . basename( $_GET[ 'name' ] );
 
 echo 'Saving your image to: '. $destination;
-// print_r( $_POST );
-// print_r( $_SERVER );
-// echo $HTTP_RAW_POST_DATA;
-
-//
-// POST data is usually string data, but we are passing a RAW .png
-// so PHP is a bit confused and $_POST is empty. But it has saved
-// the raw bits into $HTTP_RAW_POST_DATA
-//
-
-// NS - commented out
-/*$jfh = fopen($destination, 'w') or die("can't open file");
-fwrite($jfh, $HTTP_RAW_POST_DATA);
-fclose($jfh);*/
-
-//
-// LOOK:
-//
 exit();
 
 

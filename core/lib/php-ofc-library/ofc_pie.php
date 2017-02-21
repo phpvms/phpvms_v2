@@ -2,41 +2,41 @@
 
 class pie_value
 {
-	function pie_value( $value, $label )
+	function __construct( $value, $label )
 	{
 		$this->value = $value;
 		$this->label = $label;
 	}
-	
+
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;
 	}
-	
+
 	function set_label( $label, $label_colour, $font_size )
 	{
 		$this->label = $label;
-		
+
 		$tmp = 'label-colour';
 		$this->$tmp = $label_colour;
-		
+
 		$tmp = 'font-size';
 		$this->$tmp = $font_size;
-		
+
 	}
-	
+
 	function set_tooltip( $tip )
 	{
 		$this->tip = $tip;
 	}
-	
+
 	function on_click( $event )
 	{
 		$tmp = 'on-click';
 		$this->$tmp = $event;
 	}
-	
-	
+
+
 	/**
 	 * An object that inherits from base_pie_animation
 	 */
@@ -44,9 +44,9 @@ class pie_value
 	{
 		if( !isset( $this->animate ) )
 			$this->animate = array();
-			
+
 		$this->animate[] = $animation;
-		
+
 		return $this;
 	}
 }
@@ -58,7 +58,7 @@ class base_pie_animation{}
  */
 class pie_fade extends base_pie_animation
 {
-	function pie_fade()
+	function __construct()
 	{
 		$this->type="fade";
 	}
@@ -72,7 +72,7 @@ class pie_bounce extends base_pie_animation
 	/**
 	 * @param $distance as integer, distance to bounce in pixels
 	 */
-	function pie_bounce( $distance )
+	function __construct( $distance )
 	{
 		$this->type="bounce";
 		$this->distance = $distance;
@@ -84,16 +84,16 @@ class pie_bounce extends base_pie_animation
  */
 class pie
 {
-	function pie()
+	function __construct()
 	{
-		$this->type      		= 'pie';
+		$this->type = 'pie';
 	}
-	
+
 	function set_colours( $colours )
 	{
 		$this->colours = $colours;
 	}
-	
+
 	/**
 	 * Sugar wrapped around set_colours
 	 */
@@ -102,7 +102,7 @@ class pie
 		$this->set_colours( $colours );
 		return $this;
 	}
-	
+
 	/**
 	 * @param $alpha as float (0-1) 0.75 = 3/4 visible
 	 */
@@ -110,7 +110,7 @@ class pie
 	{
 		$this->alpha = $alpha;
 	}
-	
+
 	/**
 	 *sugar wrapped set_alpha
 	 **/
@@ -119,7 +119,7 @@ class pie
 		$this->set_alpha( $alpha );
 		return $this;
 	}
-	
+
 	/**
 	 * @param $v as array containing one of
 	 *  - null
@@ -128,7 +128,7 @@ class pie
 	 */
 	function set_values( $v )
 	{
-		$this->values = $v;		
+		$this->values = $v;
 	}
 
 	/**
@@ -139,7 +139,7 @@ class pie
 		$this->set_values( $v );
 		return $this;
 	}
-	
+
 	/**
 	 * HACK to keep old code working.
 	 */
@@ -147,9 +147,9 @@ class pie
 	{
 		if( $bool )
 			$this->add_animation( new pie_fade() );
-			
+
 	}
-	
+
 	/**
 	 * An object that inherits from base_pie_animation
 	 */
@@ -157,12 +157,12 @@ class pie
 	{
 		if( !isset( $this->animate ) )
 			$this->animate = array();
-			
+
 		$this->animate[] = $animation;
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * @param $angle as real number
 	 */
@@ -171,7 +171,7 @@ class pie
 		$tmp = 'start-angle';
 		$this->$tmp = $angle;
 	}
-	
+
 	/**
 	 * sugar for set_start_angle
 	 */
@@ -180,7 +180,7 @@ class pie
 		$this->set_start_angle( $angle );
 		return $this;
 	}
-	
+
 	/**
 	 * @param $tip as string. The tooltip text. May contain magic varibles
 	 */
@@ -188,7 +188,7 @@ class pie
 	{
 		$this->tip = $tip;
 	}
-	
+
 	/**
 	 * sugar for set_tooltip
 	 */
@@ -197,37 +197,37 @@ class pie
 		$this->set_tooltip( $tip );
 		return $this;
 	}
-	
+
 	function set_gradient_fill()
 	{
 		$tmp = 'gradient-fill';
 		$this->$tmp = true;
 	}
-	
+
 	function gradient_fill()
 	{
 		$this->set_gradient_fill();
 		return $this;
 	}
-	
+
 	/**
 	 * By default each label is the same colour as the slice,
 	 * but you can ovveride that behaviour using this method.
-	 * 
+	 *
 	 * @param $label_colour as string HEX colour;
 	 */
 	function set_label_colour( $label_colour )
 	{
 		$tmp = 'label-colour';
-		$this->$tmp = $label_colour;	
+		$this->$tmp = $label_colour;
 	}
-	
+
 	function label_colour( $label_colour )
 	{
 		$this->set_label_colour( $label_colour );
 		return $this;
 	}
-	
+
 	/**
 	 * Turn off the labels
 	 */
@@ -236,17 +236,17 @@ class pie
 		$tmp = 'no-labels';
 		$this->$tmp = true;
 	}
-	
+
 	function on_click( $event )
 	{
 		$tmp = 'on-click';
 		$this->$tmp = $event;
 	}
-	
+
 	/**
 	 * Fix the radius of the pie chart. Take a look at the magic variable #radius#
 	 * for helping figure out what radius to set it to.
-	 * 
+	 *
 	 * @param $radius as number
 	 */
 	function radius( $radius )

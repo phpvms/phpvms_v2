@@ -24,27 +24,27 @@ class line_on_show
 
 class line
 {
-	function line()
+	function __construct()
 	{
 		$this->type      = "line";
 		$this->values    = array();
 	}
-	
+
 	/**
 	 * Set the default dot that all the real
 	 * dots inherit their properties from. If you set the
 	 * default dot to be red, all values in your chart that
 	 * do not specify a colour will be red. Same for all the
 	 * other attributes such as tooltip, on-click, size etc...
-	 * 
+	 *
 	 * @param $style as any class that inherits base_dot
 	 */
 	function set_default_dot_style( $style )
 	{
 		$tmp = 'dot-style';
-		$this->$tmp = $style;	
+		$this->$tmp = $style;
 	}
-	
+
 	/**
 	 * @param $v as array, can contain any combination of:
 	 *  - integer, Y position of the point
@@ -53,9 +53,9 @@ class line
 	 */
 	function set_values( $v )
 	{
-		$this->values = $v;		
+		$this->values = $v;
 	}
-	
+
 	/**
      * Append a value to the line.
      *
@@ -63,19 +63,19 @@ class line
      */
     function append_value($v)
     {
-        $this->values[] = $v;       
+        $this->values[] = $v;
     }
-	
+
 	function set_width( $width )
 	{
-		$this->width = $width;		
+		$this->width = $width;
 	}
-	
+
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;
 	}
-	
+
 	/**
 	 * sytnatical sugar for set_colour
 	 */
@@ -84,63 +84,63 @@ class line
 		$this->set_colour( $colour );
 		return $this;
 	}
-	
+
 	function set_halo_size( $size )
 	{
 		$tmp = 'halo-size';
-		$this->$tmp = $size;		
+		$this->$tmp = $size;
 	}
-	
+
 	function set_key( $text, $font_size )
 	{
 		$this->text      = $text;
 		$tmp = 'font-size';
 		$this->$tmp = $font_size;
 	}
-	
+
 	function set_tooltip( $tip )
 	{
 		$this->tip = $tip;
 	}
-	
+
 	/**
 	 * @param $text as string. A javascript function name as a string. The chart will
 	 * try to call this function, it will pass the chart id as the only parameter into
 	 * this function. E.g:
-	 * 
+	 *
 	 */
 	function set_on_click( $text )
 	{
 		$tmp = 'on-click';
 		$this->$tmp = $text;
 	}
-	
+
 	function loop()
 	{
 		$this->loop = true;
 	}
-	
+
 	function line_style( $s )
 	{
 		$tmp = "line-style";
 		$this->$tmp = $s;
 	}
-	
+
 	    /**
      * Sets the text for the line.
      *
      * @param string $text
-     */   
+     */
     function set_text($text)
     {
         $this->text = $text;
     }
-	
+
 	function attach_to_right_y_axis()
 	{
 		$this->axis = 'right';
 	}
-	
+
 	/**
 	 *@param $on_show as line_on_show object
 	 */
@@ -148,7 +148,7 @@ class line
 	{
 		$this->{'on-show'} = $on_show;
 	}
-	
+
 	function on_show($on_show)
 	{
 		$this->set_on_show($on_show);

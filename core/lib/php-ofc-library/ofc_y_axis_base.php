@@ -2,8 +2,8 @@
 
 class y_axis_base
 {
-	function y_axis_base(){}
-	
+	function __construct(){}
+
 	/**
 	 * @param $s as integer, thickness of the Y axis line
 	 */
@@ -11,7 +11,7 @@ class y_axis_base
 	{
 		$this->stroke = $s;
 	}
-	
+
 	/**
 	 * @param $val as integer. The length of the ticks in pixels
 	 */
@@ -20,29 +20,29 @@ class y_axis_base
 		$tmp = 'tick-length';
 		$this->$tmp = $val;
 	}
-	
+
 	function set_colours( $colour, $grid_colour )
 	{
 		$this->set_colour( $colour );
 		$this->set_grid_colour( $grid_colour );
 	}
-	
+
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;
 	}
-	
+
 	function set_grid_colour( $colour )
 	{
 		$tmp = 'grid-colour';
 		$this->$tmp = $colour;
 	}
-	
+
 	/**
 	 * Set min and max values, also (optionally) set the steps value.
 	 * You can reverse the chart by setting min larger than max, e.g. min = 10
 	 * and max = 0.
-	 * 
+	 *
 	 * @param $min as integer
 	 * @param $max as integer
 	 * @param $steps as integer.
@@ -53,7 +53,7 @@ class y_axis_base
 		$this->max = $max;
 		$this->set_steps( $steps );
 	}
-	
+
 	/**
 	 * Sugar for set_range
 	 */
@@ -62,7 +62,7 @@ class y_axis_base
 		$this->set_range( $min, $max, $steps );
 		return $this;
 	}
-	
+
 	/**
 	 * @param $off as Boolean. If true the Y axis is nudged up half a step.
 	 */
@@ -70,7 +70,7 @@ class y_axis_base
 	{
 		$this->offset = $off?1:0;
 	}
-	
+
 	/**
 	 * @param $y_axis_labels as an y_axis_labels object
 	 * Use this to customize the labels (colour, font, etc...)
@@ -79,14 +79,14 @@ class y_axis_base
 	{
 		$this->labels = $y_axis_labels;
 	}
-	
+
 	/**
 	 * Pass in some text for each label. This can contain magic variables "#val#" which
 	 * will get replaced with the value for that Y axis label. Useful for:
-	 * - "£#val#"
+	 * - "ï¿½#val#"
 	 * - "#val#%"
 	 * - "#val# million"
-	 * 
+	 *
 	 * @param $text as string.
 	 */
 	function set_label_text( $text )
@@ -95,7 +95,7 @@ class y_axis_base
 		$tmp->set_text( $text );
 		$this->labels = $tmp;
 	}
-	
+
 	/**
 	 * @param $steps as integer.
 	 *
@@ -103,9 +103,9 @@ class y_axis_base
 	 */
 	function set_steps( $steps )
 	{
-		$this->steps = $steps;	
+		$this->steps = $steps;
 	}
-	
+
 	/**
 	 * Make the labels show vertical
 	 */

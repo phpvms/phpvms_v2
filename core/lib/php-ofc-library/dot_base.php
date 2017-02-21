@@ -3,20 +3,20 @@
 /**
  * A private class. All the other line-dots inherit from this.
  * Gives them all some common methods.
- */ 
+ */
 class dot_base
 {
 	/**
 	 * @param $type string
 	 * @param $value integer
 	 */
-	function dot_base($type, $value=null)
+	function __construct($type, $value=null)
 	{
 		$this->type = $type;
 		if( isset( $value ) )
 			$this->value( $value );
 	}
-	
+
 	/**
 	 * For line charts that only require a Y position
 	 * for each point.
@@ -26,11 +26,11 @@ class dot_base
 	{
 		$this->value = $value;
 	}
-	
+
 	/**
 	 * For scatter charts that require an X and Y position for
 	 * each point.
-	 * 
+	 *
 	 * @param $x as integer
 	 * @param $y as integer
 	 */
@@ -39,7 +39,7 @@ class dot_base
 		$this->x = $x;
 		$this->y = $y;
 	}
-	
+
 	/**
 	 * @param $colour is a string, HEX colour, e.g. '#FF0000' red
 	 */
@@ -48,7 +48,7 @@ class dot_base
 		$this->colour = $colour;
 		return $this;
 	}
-	
+
 	/**
 	 * The tooltip for this dot.
 	 */
@@ -57,7 +57,7 @@ class dot_base
 		$this->tip = $tip;
 		return $this;
 	}
-	
+
 	/**
 	 * @param $size is an integer. Size of the dot.
 	 */
@@ -67,7 +67,7 @@ class dot_base
 		$this->$tmp = $size;
 		return $this;
 	}
-	
+
 	/**
 	 * a private method
 	 */
@@ -76,7 +76,7 @@ class dot_base
 		$this->type = $type;
 		return $this;
 	}
-	
+
 	/**
 	 * @param $size is an integer. The size of the hollow 'halo' around the dot that masks the line.
 	 */
@@ -86,7 +86,7 @@ class dot_base
 		$this->$tmp = $size;
 		return $this;
 	}
-	
+
 	/**
 	 * @param $do as string. One of three options (examples):
 	 *  - "http://example.com" - browse to this URL
@@ -107,10 +107,10 @@ class dot_base
  * Draw a hollow dot
  */
 class hollow_dot extends dot_base
-{	
-	function hollow_dot($value=null)
+{
+	function __construct($value=null)
 	{
-		parent::dot_base( 'hollow-dot', $value );
+		parent::__construct( 'hollow-dot', $value );
 	}
 }
 
@@ -122,11 +122,11 @@ class star extends dot_base
 	/**
 	 * The constructor, takes an optional $value
 	 */
-	function star($value=null)
+	function __construct($value=null)
 	{
-		parent::dot_base( 'star', $value );
+		parent::__construct( 'star', $value );
 	}
-	
+
 	/**
 	 * @param $angle is an integer.
 	 */
@@ -135,7 +135,7 @@ class star extends dot_base
 		$this->rotation = $angle;
 		return $this;
 	}
-	
+
 	/**
 	 * @param $is_hollow is a boolean.
 	 */
@@ -153,11 +153,11 @@ class bow extends dot_base
 	/**
 	 * The constructor, takes an optional $value
 	 */
-	function bow($value=null)
+	function __construct($value=null)
 	{
-		parent::dot_base( 'bow', $value );
+		parent::__construct( 'bow', $value );
 	}
-	
+
 	/**
 	 * Rotate the anchor object.
 	 * @param $angle is an integer.
@@ -177,11 +177,11 @@ class anchor extends dot_base
 	/**
 	 * The constructor, takes an optional $value
 	 */
-	function anchor($value=null)
+	function __construct($value=null)
 	{
-		parent::dot_base( 'anchor', $value );
+		parent::__construct( 'anchor', $value );
 	}
-	
+
 	/**
 	 * Rotate the anchor object.
 	 * @param $angle is an integer.
@@ -191,7 +191,7 @@ class anchor extends dot_base
 		$this->rotation = $angle;
 		return $this;
 	}
-	
+
 	/**
 	 * @param $sides is an integer. Number of sides this shape has.
 	 */
@@ -210,9 +210,9 @@ class dot extends dot_base
 	/**
 	 * The constructor, takes an optional $value
 	 */
-	function dot($value=null)
+	function __construct($value=null)
 	{
-		parent::dot_base( 'dot', $value );
+		parent::__construct( 'dot', $value );
 	}
 }
 
@@ -224,8 +224,8 @@ class solid_dot extends dot_base
 	/**
 	 * The constructor, takes an optional $value
 	 */
-	function solid_dot($value=null)
+	function __construct($value=null)
 	{
-		parent::dot_base( 'solid-dot', $value );
+		parent::__construct( 'solid-dot', $value );
 	}
 }

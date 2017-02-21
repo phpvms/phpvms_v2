@@ -6,11 +6,11 @@
  */
 class title
 {
-	function title( $text='' )
+	function __construct( $text='' )
 	{
 		$this->text = $text;
 	}
-	
+
 	/**
 	 * A css string. Can optionally contain:
      * - font-size
@@ -34,6 +34,6 @@ class title
 	function set_style( $css )
 	{
 		$this->style = $css;
-		//"{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}";		
+		//"{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}";
 	}
 }

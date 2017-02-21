@@ -6,7 +6,7 @@
  * @GNU public dec 2007
  * modify it and change it as much as you'd like
  * I made it quickly for what I needed so its not optimized for a 15,000 charts per second server
- * 
+ *
 
 
 Examples after these quick field/function descriptions
@@ -14,11 +14,11 @@ Examples after these quick field/function descriptions
 The chart is displayed as an image. The style sheet class is class="googleChart"
 
 If your new to using classes then look at the examples section.
-For the below "var something;" entries, instance is a references to 
+For the below "var something;" entries, instance is a references to
 the $blah variable in $blah=new googleChart();
 
 Google charts require supplied data to be separated using commas and | pipes so I
-keep the commas and pipes in check inside the functions. If things don't work 
+keep the commas and pipes in check inside the functions. If things don't work
 right then look at the examples so see what to do.
 
 If the supplied data is negative numbers then set negativeMode=true and load the data using ->loadData();.
@@ -43,15 +43,15 @@ var $showGrid;							//if 1 tries to auto calc grid. If > 1 then show this many 
 	instance->showGrid=30;
 
 f googleChart($data=null,$type=null,$title=null,$dimensions=null);
-	-data is an array or a comma separated string. 
-	
+	-data is an array or a comma separated string.
+
 f setLabels(string or array,string); default 'left'
 	-sets labels on the chart, 2nd param is 'top' 'left' 'bottom' or 'right'
-	
+
 f draw(boolean,$append='&chxr.png'); default (true,'&chxr.png')
 	-prints an img tag with the chart, if set to false, returns the chart url.
 	-The value of $append is append to the chart url. By default it will append &chxr.png so the url is detected as an image
-	
+
 f smartDataLabel(array);
 	-Adds a legend and data based on array keys
 	$dat2=array(
@@ -59,14 +59,14 @@ f smartDataLabel(array);
 		'dogs'=>array(6,1,4,2,6),
 		'peas'=>array(5.4,9,1,6,2)
 	);
-	
+
 f simpleDataMode()
 	-for 0..61 different plottable values. Default options can plot 1000 values
 f setLabelsMinMax(integer,string); default (3,'left')
 	-
 f setType(string) default ('line')
 	-sets the type of chart (pie,pie3d,barx,bary,line)
-	
+
 ******EXAMPLES******
 
 BASIC CHART:
@@ -84,8 +84,8 @@ CHART BASIC WITH LABELS
 	$chart1= new googleChart('4,1,6,8,1','pie','foods','300x200');
 	$chart1->setLabels('cake|pie|muffins|cookies|icecream');
 	$chart1->draw();
-	
-	
+
+
 CHART WITH LABEL AND MIN/MAX VALUES ON RIGHT
 	$moo= new googleChart('4,6,21,7,1,6,17,5,2,1,7,9');
 	$moo->setLabelsMinMax(5,'right'); //call before other funcs that make labels
@@ -97,7 +97,7 @@ PIE CHART WITH LABELS
 	$moo= new googleChart($data,'pie');
 	$moo->setLabels('cows|dogs|peas');
 	$moo->draw(true);
-	
+
 	//or an alternative to above 'pie' you can use $moo->setType('pie');
 
 CHART WITH 3 DIFFERENT DATA SETS using smartDataLabel(), A LEGEND AND MINMAX LABELS
@@ -108,7 +108,7 @@ CHART WITH 3 DIFFERENT DATA SETS using smartDataLabel(), A LEGEND AND MINMAX LAB
 	);
 	$moo= new googleChart();
 	$moo->smartDataLabel($data);
-	$moo->setLabelsMinMax(5,'left'); 
+	$moo->setLabelsMinMax(5,'left');
 	$moo->draw(true);
 
 CHART USING NEGATIVE NUMBERS
@@ -118,7 +118,7 @@ CHART USING NEGATIVE NUMBERS
 	$chart->setLabelsMinMax();
 	$chart->draw();
 
-CHART WITH LOTS OF OPTIONS, data sets are supplied in a string 
+CHART WITH LOTS OF OPTIONS, data sets are supplied in a string
 	$data='1,4,6,8,2|3,7,8,3,2';
 	$chart1=new googleChart($data);
 	$chart1->dimensions='400x125';
@@ -148,13 +148,13 @@ CHART USING NEGATIVE NUMBERS AND GRID
 	$chart->setLabels($month,'bottom');
 	$chart->showGrid=1;
 	$chart->draw();
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 TO ADD A LEGEND MANUALLY:
 $moo->legend='cows|dogs|carrots|rubber';
 
@@ -162,7 +162,7 @@ CHART WITH OTHER FUNCTIONS
 
 To convert data to simple mode (for smaller data sets I guess. I don't see a purpose)
 	$moo->simpleDataMode();
-	
+
 To changes some colors (you can supply more than needed)
 	$moo->colors='8888ff,4444ff,670032';
 */
@@ -175,17 +175,18 @@ To changes some colors (you can supply more than needed)
  * Put -1 for any missing values
  * If the last parameter set is 'noreturn' then the chart is output as an image
  * EXAMPLE: googleChart('4,6,2.3,5|7,9.2,1,12','noreturn');
- * 
+ *
  * @param string or array $data
  * @param string $type
  * @param string $label
  * @param string $dimensions
  */
 class googleChart {
+
 	var $url='http://chart.apis.google.com/chart?';
 	var $simple = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; //simple data chart
 	var $numericBase='t'; //'t' = numeric 0-1000 url data, 's' = simple 0..61 data
-	var $dimensions='450x200'; 
+	var $dimensions='450x200';
 	var $data=''; //array of 0.0 to 100.0 or comman separated string (use -1 for missing values)
 	var $type='lc'; //type of chart
 	var $title;	//chart's title
@@ -202,14 +203,14 @@ class googleChart {
 	var $min=0; //is autoset when data is supplied
 	var $negativeMode=false; //negative mode converts numbers to positive so google can display them
 	var $barWidth=null; //sets the width of the bars for vert/horiz bar charts.
-	
-	function googleChart($data=null,$type=null,$title=null,$dimensions=null) {
+
+	function __construct($data=null,$type=null,$title=null,$dimensions=null) {
 		if ($data) $this->loadData($data);
 		if ($type) $this->setType($type);
 		if ($title) $this->title=$title;
 		if ($dimensions) $this->dimensions=$dimensions;
-	} 
-	
+	}
+
 	/**
 	 * Draw chart or return chart
 	 *
@@ -219,8 +220,8 @@ class googleChart {
 	function draw($noReturn=true,$append='&chxr.png') {
 		//convert arrays
 		if ($this->numericBase=='t') $this->normalDataMode();
-		if (is_array($this->data)) $this->data=implode(',',$this->data); 
-		if (is_array($this->legend)) $this->legend=implode('|',$this->legend); 
+		if (is_array($this->data)) $this->data=implode(',',$this->data);
+		if (is_array($this->legend)) $this->legend=implode('|',$this->legend);
 		//build chart url
 		$return=$this->url.'chs='.$this->dimensions;
 		$return.='&cht='.$this->type; //chart type
@@ -229,7 +230,7 @@ class googleChart {
 		if ($this->labels) $return.='&chl='.$this->labels;
 		if ($this->barWidth) $return.='&chbh='.$this->barWidth;
 		if ($this->minMaxLabel) {
-			
+
 		}
 		if ($this->lineLabelAxis) {
 			$this->lineLabelAxis=rtrim($this->lineLabelAxis,'|');
@@ -241,16 +242,16 @@ class googleChart {
 				$items=substr_count($this->data,',');
 				$sets=substr_count($this->data,'|')+1;
 				$items+=$sets;
-				if ($sets>=1) 
+				if ($sets>=1)
 					$gridx=round($items/$sets);//get count of items per set
-				else 
+				else
 					$gridx=0;
 				if ($gridx==0) $gridx=$this->showGrid;
 				if ($this->type=='lc') $gridx--;
 			}
-			if ($this->minMaxLabel) 
+			if ($this->minMaxLabel)
 				$gridy=round(100/($this->minMaxLabel));
-			else 
+			else
 				$gridy=25;
 			$return.='&chg='.(floor(10000/$gridx)/100).','.$gridy.',1';
 		}
@@ -259,7 +260,7 @@ class googleChart {
 		$return.='&chxr=';
 		if ($noReturn) echo '<img class="googleChart" src="'.$return.$append.'" />'; else return $return.$append;
 	}
-	
+
 	/**
 	 * Sets the type of chart
 	 *
@@ -276,7 +277,7 @@ class googleChart {
 		}
 		$this->type=$type;
 	}
-	
+
 	/**
 	 * Put labels on the sides of the chart. This must be called first before any other labels
 	 *
@@ -285,7 +286,7 @@ class googleChart {
 		$this->minMaxLabel=$spread-1;
 		$this->setLabels('minmax',$side);
 	}
-	
+
 	/**
 	 * Put labels on the sides of the chart
 	 *
@@ -293,7 +294,7 @@ class googleChart {
 	 * @param string(left,right,bottom,top) $side
 	 */
 	function setLabels($labels,$side='left') {
-		if (is_array($labels)) $labels=implode('|',$labels); 
+		if (is_array($labels)) $labels=implode('|',$labels);
 		$labels=str_replace(' ','+',$labels);
 		switch ($side) {
 			case 'top':$type='t';break;
@@ -306,30 +307,30 @@ class googleChart {
 				$this->labels='';
 				$xLabel=round($this->max/$this->minMaxLabel);
 				for ($i=0;$i++;$i<=$xLabel) {
-					if ($this->labels) $this->labels.='|'; 
+					if ($this->labels) $this->labels.='|';
 					$this->labels.=$xLabel*$i;
 				}
-					
-			} 
+
+			}
 			else if ($this->labels) $this->labels.='|'; //do pie chart label
 				$this->labels.=$labels;
-			
+
 		} else { //non pie charts
 			if ($labels=='minmax') { //auto set min/max range
 				$this->lineLabels='';
 				$this->labels='';
-				
+
 				if($this->minMaxLabel == 0)
 					$this->minMaxLabel = 1;
-					
+
 				$xLabel=round($this->max/$this->minMaxLabel);
 				$this->lineLabels=$type; //set side to display on
 				$this->lineLabelAxis='0:';
-				if ($this->lineLabelAxis!='') $this->lineLabelAxis.='|'; 
+				if ($this->lineLabelAxis!='') $this->lineLabelAxis.='|';
 				for ($i=0;$i<=($this->minMaxLabel);$i++) {
-					
+
 					$this->lineLabelAxis.=($xLabel*$i);
-					$this->lineLabelAxis.='|'; 
+					$this->lineLabelAxis.='|';
 				}
 				$this->labelCount++;
 			} else {
@@ -340,7 +341,7 @@ class googleChart {
 			}
 		}
 	}
-	
+
 	/**
 	 * Is auto loaded, don't need to call this func
 	 *
@@ -352,14 +353,14 @@ class googleChart {
 		//determine min/max
 		$data=str_replace('|',',',$data);
 		$data=explode(',',$data);
-		if ($this->negativeMode) 
+		if ($this->negativeMode)
 			foreach ($data as &$datum)
 				$datum=abs($datum);
 		$this->max=max($data);
 		$this->min=min($data);
-		
+
 	}
-	
+
 	/**
 	 * Sets mode to Allow for 1000 different values. Is default. Don't need to call this func
 	 *
@@ -385,14 +386,14 @@ class googleChart {
 				$innerData.=$val;
 			}
 			$newData.=$innerData;
-			
+
 		}echo '<br/>';
 		if ($newData) {
 			$this->numericBase='t';//simple mode
 			$this->data=$newData;
 		}
 	}
-	
+
 	/**
 	 * Sets the chart mode to simple (62 different values. Only call this mode if data was already specified
 	 *
@@ -421,22 +422,22 @@ class googleChart {
 			$this->data=$newData;
 		}
 	}
-	
+
 	function smartDataLabel($labelData) {
 		$newData='';
 		foreach ($labelData as $label => $data) {
 			$this->legend.=str_replace(' ','+',$label).'|';
 			$label=str_replace(' ','+',$label);
-			if (is_array($data)) $this->data.=implode(',',$data).'|'; 
+			if (is_array($data)) $this->data.=implode(',',$data).'|';
 			else $this->data.=$data.'|';
 		}
 		$this->legend=rtrim($this->legend,'|'); //trim trailing pipe
 		$this->loadData(rtrim($this->data,'|')); //load Data
 	}
-	
-	
-	
-	
+
+
+
+
 }
 
 ?>

@@ -4,7 +4,7 @@
 
 class bar_base
 {
-	function bar_base(){}
+	function __construct(){}
 
 	/**
 	 * @param $text as string the key text
@@ -16,7 +16,7 @@ class bar_base
 		$tmp = 'font-size';
 		$this->$tmp = $size;
 	}
-	
+
 	/**
 	 * syntatical sugar.
 	 */
@@ -32,25 +32,25 @@ class bar_base
 	 */
 	function set_values( $v )
 	{
-		$this->values = $v;		
+		$this->values = $v;
 	}
-	
+
 	/**
 	 * see set_values
 	 */
 	function append_value( $v )
 	{
-		$this->values[] = $v;		
+		$this->values[] = $v;
 	}
-	
+
 	/**
 	 * @param $colour as string, a HEX colour, e.g. '#ff0000' red
 	 */
 	function set_colour( $colour )
 	{
-		$this->colour = $colour;	
+		$this->colour = $colour;
 	}
-	
+
 	/**
 	 *syntatical sugar
 	 */
@@ -64,17 +64,17 @@ class bar_base
 	 */
 	function set_alpha( $alpha )
 	{
-		$this->alpha = $alpha;	
+		$this->alpha = $alpha;
 	}
-	
+
 	/**
 	 * @param $tip as string, the tip to show. May contain various magic variables.
 	 */
 	function set_tooltip( $tip )
 	{
-		$this->tip = $tip;	
+		$this->tip = $tip;
 	}
-	
+
 	/**
 	 *@param $on_show as line_on_show object
 	 */
@@ -82,13 +82,13 @@ class bar_base
 	{
 		$this->{'on-show'} = $on_show;
 	}
-	
+
 	function set_on_click( $text )
 	{
 		$tmp = 'on-click';
 		$this->$tmp = $text;
 	}
-	
+
 	function attach_to_right_y_axis()
 	{
 		$this->axis = 'right';

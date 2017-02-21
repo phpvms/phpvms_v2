@@ -2,8 +2,8 @@
 
 class y_axis extends y_axis_base
 {
-	function y_axis(){}
-	
+	function __construct(){}
+
 	/**
 	 * @param $colour as string. The grid are the lines inside the chart.
 	 * HEX colour, e.g. '#ff0000'
@@ -13,5 +13,5 @@ class y_axis extends y_axis_base
 		$tmp = 'grid-colour';
 		$this->$tmp = $colour;
 	}
-	
+
 }

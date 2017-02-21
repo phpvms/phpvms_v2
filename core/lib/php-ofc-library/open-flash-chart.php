@@ -62,27 +62,27 @@ include_once 'ofc_menu.php';
 
 class open_flash_chart
 {
-	function open_flash_chart()
+	function __construct()
 	{
 		//$this->title = new title( "Many data lines" );
 		$this->elements = array();
 	}
-	
+
 	function set_title( $t )
 	{
 		$this->title = $t;
 	}
-	
+
 	function set_x_axis( $x )
 	{
-		$this->x_axis = $x;	
+		$this->x_axis = $x;
 	}
-	
+
 	function set_y_axis( $y )
 	{
 		$this->y_axis = $y;
 	}
-	
+
 	function add_y_axis( $y )
 	{
 		$this->y_axis = $y;
@@ -92,12 +92,12 @@ class open_flash_chart
 	{
 		$this->y_axis_right = $y;
 	}
-	
+
 	function add_element( $e )
 	{
 		$this->elements[] = $e;
 	}
-	
+
 	function set_x_legend( $x )
 	{
 		$this->x_legend = $x;
@@ -107,22 +107,22 @@ class open_flash_chart
 	{
 		$this->y_legend = $y;
 	}
-	
+
 	function set_bg_colour( $colour )
 	{
-		$this->bg_colour = $colour;	
+		$this->bg_colour = $colour;
 	}
-	
+
 	function set_radar_axis( $radar )
 	{
 		$this->radar_axis = $radar;
 	}
-	
+
 	function set_tooltip( $tooltip )
 	{
-		$this->tooltip = $tooltip;	
+		$this->tooltip = $tooltip;
 	}
-	
+
 	/**
 	 * This is a bit funky :(
 	 *
@@ -141,17 +141,17 @@ class open_flash_chart
 		$this->is_decimal_separator_comma = $is_decimal_separator_comma;
 		$this->is_thousand_separator_disabled = $is_thousand_separator_disabled;
 	}
-	
+
 	/**
 	 * This is experimental and will change as we make it work
-	 * 
+	 *
 	 * @param $m as ofc_menu
 	 */
 	function set_menu($m)
 	{
 		$this->menu = $m;
 	}
-	
+
 	function toString()
 	{
 		if (function_exists('json_encode'))
@@ -164,7 +164,7 @@ class open_flash_chart
 			return $json->encode( $this );
 		}
 	}
-	
+
 	function toPrettyString()
 	{
 		return json_format( $this->toString() );

@@ -362,7 +362,7 @@ class Installer
         $params->addChild('email', SettingsData::GetSettingValue('ADMIN_EMAIL'));
         $params->addChild('version', $version);
         $params->addChild('php', phpversion());
-        $params->addChild('mysql', @mysql_get_server_info());
+        $params->addChild('mysql', @mysqli_get_server_info());
         $params->addChild('ext', $ext);
 
         $url = 'http://api.phpvms.net/register';

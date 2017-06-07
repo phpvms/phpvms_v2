@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d668bebb0a3c46bda381af16ce3d9450)](https://www.codacy.com/app/nabeelio/phpvms?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nabeelio/phpvms&amp;utm_campaign=Badge_Grade)
+
 phpVMS - Virtual Airline Administration Software
  Copyright (c) 2008 Nabeel Shahzad
 
@@ -26,4 +28,3 @@ Backup your core/local.config.php. Then, upload all of the files.
 	Forums: http://forum.phpvms.net
 	Documentation: http://docs.phpvms.net
 
-Codacy Badge

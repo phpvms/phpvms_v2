@@ -40,8 +40,8 @@
 class CodonWebService
 {
 
-    public $options = [];
-    public $errors = [];
+    public $options = array();
+    public $errors = array();
 
     protected $type = 'curl';
     protected $curl = null;
@@ -61,14 +61,14 @@ class CodonWebService
         }
 
         $this->setType('curl');
-        $this->setOptions([
+        $this->setOptions(array(
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_AUTOREFERER => true,
             CURLOPT_CONNECTTIMEOUT => 30,
             CURLOPT_HEADER => false,
             CURLOPT_FOLLOWLOCATION => true,
-        ]);
+        ));
     }
 
     public function __destruct()
@@ -146,7 +146,7 @@ class CodonWebService
      * @param array $params Associative array of key=value
      * @return string
      */
-    public function get($url, $params = [])
+    public function get($url, $params = array())
     {
         # Builds the parameters list
         if (is_array($params)) {
@@ -182,7 +182,7 @@ class CodonWebService
      * @param array $params Associative array of key=value
      * @return bool
      */
-    public function post($url, $params = [])
+    public function post($url, $params = array())
     {
         if (!$this->curl) {
             $this->error('cURL not initialized');

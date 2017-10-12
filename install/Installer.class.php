@@ -25,7 +25,7 @@ class Installer
     {
         $noerror = true;
         $version = phpversion();
-        $wf = [];
+        $wf = array();
 
         // These needa be writable
         $wf[] = 'core/pages';
@@ -217,7 +217,7 @@ class Installer
         }
 
         // Add an initial airport/hub, because I love KJFK so much
-        $data = [
+        $data = array(
             'icao' => 'KJFK',
             'name' => 'Kennedy International',
             'country' => 'USA',
@@ -225,12 +225,12 @@ class Installer
             'lng' => '-73.7787',
             'hub' => false,
             'fuelprice' => 0,
-        ];
+        );
 
         $ret = OperationsData::AddAirport($data);
 
         // Add the user
-        $data = [
+        $data = array(
             'firstname' => $_POST['firstname'],
             'lastname' => $_POST['lastname'],
             'email' => $_POST['email'],
@@ -240,11 +240,10 @@ class Installer
             'location' => 'US',
             'hub' => 'KJFK',
             'confirm' => true,
-        ];
+        );
 
         if (!RegistrationData::AddUser($data)) {
             self::$error = DB::$error;
-
             return false;
         }
 

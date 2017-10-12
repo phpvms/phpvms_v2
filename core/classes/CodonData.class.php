@@ -62,6 +62,6 @@ class CodonData
 		include_once CORE_PATH.DS.'lib'.DS.'firebug'.DS.'FirePHP.class.php';
 
 		$instance = FirePHP::getInstance(true);
-		return call_user_func_array([$instance, 'fb'], func_get_args());
+		return call_user_func_array(array($instance, 'fb'), func_get_args());
 	}
 }

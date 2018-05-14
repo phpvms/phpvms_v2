@@ -18,19 +18,19 @@
 
 /**
  * DO NOT MODIFY THESE SETTINGS HERE!!
- * They will get over-ridden in an update. These are just defaults 
+ * They will get over-ridden in an update. These are just defaults
  * To change, copy-paste and change the line/option/setting into your
  *  local.config.php file
  *
  * Most of these are in your local.config.php already
- * 
+ *
  * View the docs for details about these settings
  */
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', false);
 Config::Set('DEBUG_LEVEL', 1); // 1 logs query errors, 2 logs all queries
-Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
+Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE ^ E_WARNING ^ E_STRICT);
 
 # Page encoding options
 Config::Set('PAGE_ENCODING', 'UTF-8');
@@ -45,7 +45,7 @@ Config::Set('PAGE_EXT', '.htm');	# .htm is fine. You can still run PHP
 Config::Set('PILOTID_OFFSET', 0);	# What # to start pilot ID's from
 Config::Set('PILOTID_LENGTH', 4);	# Length of the Pilot ID
 Config::Set('UNITS', 'nm');			# Your units: nm, mi or km
-Config::Set('LOAD_FACTOR', '82');	# %age load factor 
+Config::Set('LOAD_FACTOR', '82');	# %age load factor
 Config::Set('CARGO_UNITS', 'lbs');
 Config::Set('DEFAULT_MAX_CARGO_LOAD', 10000);
 Config::Set('DEFAULT_MAX_PAX_LOAD', 250);
@@ -109,7 +109,7 @@ Config::Set('MAP_ZOOM_LEVEL', 12);
 # ACARS options
 #  Minutes, flights to show on the ACARS
 #  Default is 720 minutes (12 hours)
-Config::Set('ACARS_LIVE_TIME', 720); 
+Config::Set('ACARS_LIVE_TIME', 720);
 Config::Set('ACARS_DEBUG', false);
 
 /*
@@ -118,20 +118,20 @@ Config::Set('ACARS_DEBUG', false);
 	Euro (�), enter "&#8364;"
 	Yen (�), enter "&yen;"
 	Pounds (�), enter "&pound;"
-	
+
   For example, to set EUROS:
 	Config::Set('MONEY_UNIT', '&#8364;');
  */
- 
+
 Config::Set('MONEY_UNIT', '$');
 
 /*
  To change the money format, look at:
   http://us3.php.net/money_format
- 
+
  However, I do not recommend changing this
  */
- 
+
 Config::Set('MONEY_FORMAT', '%(#10n');
 
 
@@ -139,7 +139,7 @@ Config::Set('MONEY_FORMAT', '%(#10n');
 /* Default fuel price, for airports that don't have
 	And the surcharge percentage. View the docs
 	for more details about these
-*/ 
+*/
 Config::Set('FUEL_GET_LIVE_PRICE', true);
 Config::Set('FUEL_DEFAULT_PRICE', '5.10');
 Config::Set('FUEL_SURCHARGE', '5');
@@ -149,7 +149,7 @@ Config::Set('FUEL_SURCHARGE', '5');
 Config::Set('WeightUnit', '1');		# 0=Kg 1=lbs
 Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
 Config::Set('SpeedUnit', '1');		# 0=Km/H 1=Kts
-Config::Set('AltUnit', '1');		# 0=Meter 1=Feet 
+Config::Set('AltUnit', '1');		# 0=Meter 1=Feet
 Config::Set('LiquidUnit', '3');		# 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
@@ -157,8 +157,8 @@ Config::Set('LIQUID_UNIT_NAMES', array('liter','gal','kg', 'lbs'));
 /* FSFK Settings
 	Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
 	ftp://phpvms.net/phpvms/lib/fsfk or ftp://phpvms.net/public_html/phpvms/lib/fsfk
-	
-	You want the path from when you connect to the FTP down to where the /lib/fsfk folder is 
+
+	You want the path from when you connect to the FTP down to where the /lib/fsfk folder is
 */
 Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
@@ -167,14 +167,14 @@ Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
 Config::Set('FSFK_IMAGE_PATH', '/lib/fsfk'); // web path from SITE_ROOT
 
-# Options for the signature that's generated 
+# Options for the signature that's generated
 Config::Set('SIGNATURE_TEXT_COLOR', '#000');
 Config::Set('SIGNATURE_USE_CUSTOM_FONT', true);
 Config::Set('SIGNATURE_FONT_PATH', SITE_ROOT.'/lib/fonts/tahoma.ttf');
 Config::Set('SIGNATURE_FONT_SIZE', '10');
 Config::Set('SIGNATURE_X_OFFSET', '10');
 Config::Set('SIGNATURE_Y_OFFSET', '17');
-Config::Set('SIGNATURE_FONT_PADDING', 4); 
+Config::Set('SIGNATURE_FONT_PADDING', 4);
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
 Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);
@@ -216,7 +216,7 @@ Config::Set('EMAIL_RETURN_PATH', '');
 	phpvms will use the phpVMS API server
 */
 
-Config::Set('AIRPORT_LOOKUP_SERVER', 'geonames'); 
+Config::Set('AIRPORT_LOOKUP_SERVER', 'geonames');
 Config::Set('PHPVMS_API_SERVER', 'http://api.phpvms.net');
 Config::Set('PHPVMS_NEWS_FEED', 'http://feeds.feedburner.com/phpvms');
 Config::Set('VACENTRAL_NEWS_FEED', 'http://feeds.feedburner.com/vacentral');
@@ -242,7 +242,7 @@ Config::Set('URL_REWRITE', false);
  */
 Config::Set('DAYS_COMPACT',  array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su'));
 
-Config::Set('DAYS_LONG', 
+Config::Set('DAYS_LONG',
 	array('Sunday',
 		  'Monday',
 		  'Tuesday',
@@ -260,38 +260,38 @@ Config::Set('ADMIN_SKIN', 'layout');
 
 /**
  * *******************************************************
- * 
- * 
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
+ *
+ *
  * Advanced options, don't edit unless you
  * know what you're doing!!
- * 
+ *
  * Actually, don't change them, at all. Please.
  * For your sake. And mine. :)
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 
 $revision = file_get_contents(CORE_PATH.'/version');
@@ -305,19 +305,19 @@ Config::Set('TPL_EXTENSION', '.tpl');
 Config::Set('BASE_TEMPLATE_PATH', SITE_ROOT.'/core/templates');
 
 if(defined('ADMIN_PANEL') && ADMIN_PANEL === true)
-{	
+{
 	Template::SetTemplatePath(SITE_ROOT.'/admin/templates');
-	
+
 	define('CODON_MODULES_PATH', SITE_ROOT.'/admin/modules');
 	define('CODON_DEFAULT_MODULE', 'Dashboard');
 }
-else 
-{	
+else
+{
 	Template::SetTemplatePath(Config::Get('BASE_TEMPLATE_PATH'));
-	
+
 	define('CODON_MODULES_PATH', SITE_ROOT.'/core/modules');
 	define('CODON_DEFAULT_MODULE', 'Frontpage');
-	
+
 	/*Config::Set('MODULES_PATH', SITE_ROOT.'/core/modules');
 	Config::Set('DEFAULT_MODULE', 'Frontpage');
 	Config::Set('MODULES_AUTOLOAD', true);*/
@@ -333,19 +333,19 @@ $cache_settings = array(
 		'default' => array(
 			'duration' => '+10 minutes',
 		),
-		
+
 		'short' => array(
 			'duration' => '+3 minutes',
 		),
-		
+
 		'15minute' => array(
 			'duration' => '+15 minutes',
 		),
-		
+
 		'medium' => array(
 			'duration' => '+1 hour',
 		),
-		
+
 		'long' => array(
 			'duration' => '+6 hours'
 		),
@@ -379,36 +379,36 @@ Config::Set('CACHE_KEY_LIST', array(
 
 
 Config::Set('TABLE_LIST', array(
-	'acarsdata', 
-	'adminlog', 
-	'aircraft', 
-	'airlines', 
-	'airports', 
-	'awards', 
+	'acarsdata',
+	'adminlog',
+	'aircraft',
+	'airlines',
+	'airports',
+	'awards',
 	'awardsgranted',
 	'bids',
 	'customfields',
-	'downloads', 
-	'expenselog', 
-	'expenses', 
-	'fieldvalues', 
-	'financedata', 
-	'fuelprices', 
-	'groupmembers', 
-	'groups', 
-	'navdata', 
-	'news', 
-	'pages', 
-	'pilots', 
-	'pirepcomments', 
-	'pirepfields', 
-	'pireps', 
-	'pirepvalues', 
-	'ranks', 
-	'schedules', 
-	'sessions', 
-	'settings', 
-	'updates' 
+	'downloads',
+	'expenselog',
+	'expenses',
+	'fieldvalues',
+	'financedata',
+	'fuelprices',
+	'groupmembers',
+	'groups',
+	'navdata',
+	'news',
+	'pages',
+	'pilots',
+	'pirepcomments',
+	'pirepfields',
+	'pireps',
+	'pirepvalues',
+	'ranks',
+	'schedules',
+	'sessions',
+	'settings',
+	'updates'
 	)
 );
 
@@ -422,26 +422,26 @@ Config::Set('VACENTRAL_API_KEY', '');
 /**
  * Constants
  *	Do not modify these! All sorts of weird shit can happen
- */ 
+ */
 # Set the type of flights we have
 Config::Set(
-	'FLIGHT_TYPES', array(	
+	'FLIGHT_TYPES', array(
 		'P'=>'Passenger',
 		'C'=>'Cargo',
 		'H'=>'Charter'
 	)
 );
-			
+
 # Set the types of expenses we have
 Config::Set(
-	'EXPENSE_TYPES', array( 
+	'EXPENSE_TYPES', array(
 		'M'=>'Monthly',
 		'F'=>'Per Flight',
 		'P'=>'Percent (month)',
 		'G'=>'Percent (per flight)'
 	)
 );
-			
+
 define('SIGNATURE_PATH', '/lib/signatures');
 define('AVATAR_PATH', '/lib/avatars');
 
@@ -476,10 +476,10 @@ define('VMS_AUTH_COOKIE', 'VMSAUTH');
 # Bit-masks for permission sets
 $permission_set = array
 	 (/*'NO_ADMIN_ACCESS'			=> 0,*/
-	  'EDIT_NEWS'				=> 0x1, 
-	  'EDIT_PAGES'				=> 0x2, 
+	  'EDIT_NEWS'				=> 0x1,
+	  'EDIT_PAGES'				=> 0x2,
 	  'EDIT_DOWNLOADS'			=> 0x4,
-	  'EMAIL_PILOTS'			=> 0x8, 
+	  'EMAIL_PILOTS'			=> 0x8,
 	  'EDIT_AIRLINES'			=> 0x10,
 	  'EDIT_FLEET'				=> 0x20,
 	  'EDIT_SCHEDULES'			=> 0x80,
@@ -499,7 +499,7 @@ $permission_set = array
 	  'ACCESS_ADMIN'			=> 0x2000000,
 	  'FULL_ADMIN'				=> 35651519);
 
-Config::Set('permission_set', $permission_set);  
+Config::Set('permission_set', $permission_set);
 define('NO_ADMIN_ACCESS', 0);
 foreach($permission_set as $key=>$value)
 {

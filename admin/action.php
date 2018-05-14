@@ -46,7 +46,7 @@ define('ADMIN_PANEL', true);
 
 include '../core/codon.config.php';
 
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_STRICT);
 
 if(!Auth::LoggedIn() || !PilotGroups::group_has_perm(Auth::$usergroups, ACCESS_ADMIN))
 {

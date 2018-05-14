@@ -5,7 +5,7 @@
  *
  * This file won't be modified/touched by future versions
  * of phpVMS, you can change your settings here
- * 
+ *
  * There may also be additional settings in app.config.php
  * To change it, copy the line into this file here, for the
  * settings to take effect
@@ -33,7 +33,7 @@ Config::Set('PAGE_EXT', '.htm');	# .htm is fine. You can still run PHP
 Config::Set('PILOTID_OFFSET', 0);	# What # to start pilot ID's from
 Config::Set('PILOTID_LENGTH', 4);	# Length of the Pilot ID
 Config::Set('UNITS', 'nm');			# Your units: nm, mi or km
-Config::Set('LOAD_FACTOR', '82');	# %age load factor 
+Config::Set('LOAD_FACTOR', '82');	# %age load factor
 Config::Set('CARGO_UNITS', 'lbs');
 
 # After how long to mark a pilot inactive, in days
@@ -72,37 +72,37 @@ Config::Set('MAP_ZOOM_LEVEL', 12);
 # ACARS options
 #  Minutes, flights to show on the ACARS
 #  Default is 720 minutes (12 hours)
-Config::Set('ACARS_LIVE_TIME', 720); 
+Config::Set('ACARS_LIVE_TIME', 720);
 Config::Set('ACARS_DEBUG', false);
 
 
 /*
   This is the unit of money. For non-dollars, use :
 	Dollars ($), enter "$"
-	Euro (€), enter "&#8364;"
-	Yen (¥), enter "&yen;"
-	Pounds (£), enter "&pound;"
-	
+	Euro (ï¿½), enter "&#8364;"
+	Yen (ï¿½), enter "&yen;"
+	Pounds (ï¿½), enter "&pound;"
+
   For example, to set EUROS:
 	Config::Set('MONEY_UNIT', '&#8364;');
  */
 
 Config::Set('MONEY_UNIT', '$');
- 
+
 # FSPassengers Settings
 # Units settings
 Config::Set('WeightUnit', '1');   # 0=Kg 1=lbs
 Config::Set('DistanceUnit', '2');   # 0=KM 1= Miles 2=NMiles
 Config::Set('SpeedUnit', '1');   # 0=Km/H 1=Kts
-Config::Set('AltUnit', '1');   # 0=Meter 1=Feet 
+Config::Set('AltUnit', '1');   # 0=Meter 1=Feet
 Config::Set('LiquidUnit', '2');   # 0=liter 1=gal 2=kg 3=lbs
 Config::Set('WelcomeMessage', 'phpVMS/FSPAX ACARS'); # Welcome Message
 
 /* FSFK Settings
 	Your FTP Server, and path to the lib/images folder (from where the FTP connects from), IE
 	ftp://phpvms.net/phpvms/lib/fsfk or ftp://phpvms.net/public_html/phpvms/lib/fsfk
-	
-	You want the path from when you connect to the FTP down to where the /lib/fsfk folder is 
+
+	You want the path from when you connect to the FTP down to where the /lib/fsfk folder is
 */
 Config::Set('FSFK_FTP_SERVER', '');
 Config::Set('FSFK_FTP_PORT', '21');
@@ -111,14 +111,14 @@ Config::Set('FSFK_FTP_PASS', '');
 Config::Set('FSFK_FTP_PASSIVE_MODE', 'TRUE');
 Config::Set('FSFK_IMAGE_PATH', '/lib/fsfk'); // web path from SITE_ROOT
 
-# Options for the signature that's generated 
+# Options for the signature that's generated
 Config::Set('SIGNATURE_TEXT_COLOR', '#000');
 Config::Set('SIGNATURE_SHOW_EARNINGS', true);
 Config::Set('SIGNATURE_SHOW_RANK_IMAGE', true);
 Config::Set('SIGNATURE_SHOW_COPYRIGHT', true);
 
 # Avatar information
-Config::Set('AVATAR_FILE_SIZE', 50000); 
+Config::Set('AVATAR_FILE_SIZE', 50000);
 Config::Set('AVATAR_MAX_WIDTH', 80);
 Config::Set('AVATAR_MAX_HEIGHT', 80);
 
@@ -136,7 +136,7 @@ Config::Set('EMAIL_SMTP_PASS', '');
 
 # Debug mode is off by default
 Config::Set('DEBUG_MODE', false);
-Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE);
+Config::Set('ERROR_LEVEL', E_ALL ^ E_NOTICE ^ E_STRICT);
 
 Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in seconds
 
@@ -146,7 +146,7 @@ Config::Set('SESSION_LOGIN_TIME', (60*60*24*30)); # Expire after 30 days, in sec
  */
 Config::Set('DAYS_COMPACT',  array('Su', 'M', 'T', 'W', 'Th', 'F', 'S', 'Su'));
 
-Config::Set('DAYS_LONG', 
+Config::Set('DAYS_LONG',
 		array('Sunday',
 			  'Monday',
 			  'Tuesday',

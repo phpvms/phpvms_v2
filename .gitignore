@@ -5,3 +5,5 @@ Liur
 _headers
 ed
 phpvms.iml
+core/local.config.php
+*.iml

@@ -56,9 +56,10 @@
     <tr>
 		<td width="1%" nowrap><strong>Captcha</strong></td>
 		<td>
-		<?php
-		echo recaptcha_get_html(Config::Get('RECAPTCHA_PUBLIC_KEY'), $captcha_error);
-		?>
+		<div class="g-recaptcha" data-sitekey="<?php echo Config::Get('RECAPTCHA_PUBLIC_KEY'); ?>"></div>
+		<script type="text/javascript"
+				src="https://www.google.com/recaptcha/api.js?hl=en">
+		</script>
 		</td>
 	</tr>
 	

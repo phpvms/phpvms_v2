@@ -20,9 +20,6 @@ class Contact extends CodonModule
 {
 	public function index()
 	{
-		require_once CORE_LIB_PATH.'/recaptcha/recaptchalib.php';
-
-
 		if($this->post->submit)
 		{
 			if(Auth::LoggedIn() == false)
@@ -37,13 +34,11 @@ class Contact extends CodonModule
 				}
 			}
 			
-			$resp = recaptcha_check_answer (Config::Get('RECAPTCHA_PRIVATE_KEY'),
-				$_SERVER["REMOTE_ADDR"],
-				$_POST["recaptcha_challenge_field"],
-				$_POST["recaptcha_response_field"]);
+		    $recaptcha = new \ReCaptcha\ReCaptcha(Config::Get('RECAPTCHA_PRIVATE_KEY'));
+		    $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 			
 			// Check the captcha thingy
-			if(!$resp->is_valid)
+			if(!$resp->isSuccess())
 			{
 				$this->set('captcha_error', $resp->error);
 				$this->set('message', 'You failed the captcha test!');

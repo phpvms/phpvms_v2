@@ -62,12 +62,11 @@ Config::Set('USERS_ONLINE_TIME', 20);
 # Google Map Options
 Config::Set('MAP_WIDTH', '800px');
 Config::Set('MAP_HEIGHT', '600px');
-# Valid types are G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP, G_PHYSICAL_MAP
-Config::Set('MAP_TYPE', 'G_PHYSICAL_MAP');
+Config::Set('MAP_TYPE', 'OpenStreetMap.Mapnik');
 Config::Set('MAP_LINE_COLOR', '#ff0000');
 Config::Set('MAP_CENTER_LAT', '45.484400');
 Config::Set('MAP_CENTER_LNG', '-62.334821');
-Config::Set('MAP_ZOOM_LEVEL', 12);
+Config::Set('MAP_ZOOM_LEVEL', 5);
 
 # ACARS options
 #  Minutes, flights to show on the ACARS
